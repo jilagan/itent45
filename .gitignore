@@ -1,0 +1,5 @@
+# created on first run of the Django starter
+starter/itent45.sqlite3
+__pycache__/
+*.pyc
+.DS_Store

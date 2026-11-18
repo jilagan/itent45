@@ -5,8 +5,8 @@
       </div>
 
       <div class="sec" data-sec="fog" data-title="Start with a hill in the fog">
-        <p>Suppose you are standing on a hillside in thick fog and want to reach the bottom. You cannot see it, but you can feel which way the ground slopes under your feet. So you step downhill, feel the slope again and repeat.</p>
-        <div class="scene" data-art="fog-hillside" data-art-desc="A hiker standing on a hillside in thick fog, one foot forward, feeling the slope of the ground with a walking stick and unable to see the bottom." role="group" aria-label="The hiker is the training program, feeling the slope is measuring the loss">
+        <p>Suppose you are standing on a hillside in thick fog and want to reach the bottom. You can feel which way the ground slopes under your feet. So you step downhill, feel the slope again and repeat.</p>
+        <div class="scene" role="group" aria-label="The hiker is the training program, feeling the slope is measuring the loss" data-art="fog-hillside" data-art-desc="A hiker stands on a foggy hillside with one foot forward, feeling the slope of the ground with a walking stick.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>You, in the fog</b><span>The training program</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Feel the slope, step downhill</b><span>Measure the <dfn title="One number for how wrong the line is across all the examples">loss</dfn>, nudge the line</span></figcaption></figure>
         </div>
@@ -14,7 +14,7 @@
       </div>
 
       <div class="sec" data-sec="walk" data-title="Walk downhill">
-        <p>Press Run 200 and watch the loss fall as the line settles. Then move the step size, also called the <dfn title="The size of each nudge the training program gives the line">learning rate</dfn>, to its largest setting, press Start over and run 200 steps again.</p>
+        <p>Press Run 200 and watch the loss fall as the line settles. Then move the step size, also called the <dfn title="The size of each nudge the training program gives the line">learning rate</dfn>, to its largest setting, press Reset and run 200 steps again.</p>
         <div class="srv">
           <div>
             <div class="scatter" id="trPlot"></div>
@@ -24,9 +24,9 @@
               <div class="g" id="trStep"><div class="gl">Steps taken</div><div class="gv">0</div></div>
             </div>
             <div class="ctrls" style="margin-top:13px">
-              <button class="btn primary" id="trStepBtn">One step</button>
+              <button class="btn primary" id="trStepBtn">Step</button>
               <button class="btn" id="trRun">Run 200</button>
-              <button class="btn" id="trReset">Start over</button>
+              <button class="btn" id="trReset">Reset</button>
             </div>
             <div class="verdict" id="trVerdict" style="margin-top:13px"></div>
           </div>
@@ -52,6 +52,7 @@
 
       <div class="sec" data-sec="adjusted" data-title="What gets adjusted">
         <p>The line you just moved has three numbers. A <dfn title="A number that sets how strongly one measurement counts">weight</dfn> sets how much hours studied counts, another weight does the same for attendance, and the <dfn title="A number that moves the line up or down">bias</dfn> shifts the line. Each step nudges all three to lower the loss. Nobody writes the final line down.</p>
+        <p class="outcome">You can now explain how a model finds its numbers by repeated nudging.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>The terms on this screen</h4>

@@ -75,7 +75,7 @@ function renderTxn(){
   const v=$("#txnVerdict");
   if(txnAt<t.steps.length){
     v.className="verdict";
-    v.innerHTML=`<b>${txnAt} of ${t.steps.length} steps</b>Press Step or Run it, and watch the Seats left column.`;
+    v.innerHTML=`<b>${txnAt} of ${t.steps.length} steps</b>Press Play or Step, and watch the Seats left column.`;
   } else {
     v.className="verdict "+(t.ok?"ok":"bad");
     v.innerHTML=t.v;

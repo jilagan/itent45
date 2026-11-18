@@ -6,11 +6,11 @@
 
       <div class="sec" data-sec="keyboard" data-title="Start with phone autocomplete">
         <p>When you type a message, your phone keyboard suggests the next word. It has not understood your message. It has learned which words usually follow the ones you typed. A language model works on the same idea at a much larger scale.</p>
-        <div class="scene" role="group" aria-label="Your message so far is the context, the suggestions are probabilities">
+        <div class="scene" role="group" aria-label="Your message so far is the context, the suggestions are probabilities" data-art="phone-autocomplete" data-art-desc="A person holds a phone in both hands and types a message while three blank suggestion chips float above the keyboard.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Your message so far</b><span><dfn title="All the text the model has read so far">Context</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-keyboard"/></svg></div><figcaption><b>Suggested next words</b><span><dfn title="A number from 0 to 1 that says how likely something is">Probability</dfn> for each</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> A model has read "The capital of France is". How much probability does it give its top word: about 30, 60 or 90 percent? You will check it in the next step.</div>
+        <div class="ask"><b>Think first.</b> A model has read "The capital of France is". Does it give its top word about 30, 60 or 90 percent probability? You will check in the next step.</div>
         <div class="instructor">Collect guesses before students open the widget. Most pick 90 percent or more, and the widget shows 89 percent. The distinction between recalling a fact and continuing a pattern comes up again in the code example under "Try other prompts".</div>
       </div>
 
@@ -50,17 +50,18 @@
       </div>
 
       <div class="sec" data-sec="the-loop" data-title="Repeat the step to write an answer">
-        <p>A full answer is the same step repeated. The model adds the word it picked to the prompt and asks again, and it never goes back. A model that works this way is called <dfn title="Able to produce new text, not just choose from a fixed set of answers">generative</dfn>. Press Next word and watch the list change each time.</p>
+        <p>A full answer is the same step repeated. The model adds the word it picked to the prompt and asks again, and it never goes back. A model that works this way is called <dfn title="Able to produce new text of its own">generative</dfn>. Press Next word and watch the list change each time.</p>
         <div>
           <div class="art" id="gnOut" style="min-height:96px"></div>
           <div class="probs" id="gnProbs" style="margin-top:12px"></div>
           <div class="ctrls" style="margin-top:12px">
             <button class="btn primary" id="gnStep">Next word</button>
             <button class="btn" id="gnRun">Finish it</button>
-            <button class="btn" id="gnReset">Start again</button>
+            <button class="btn" id="gnReset">Reset</button>
           </div>
           <div class="verdict" id="gnVerdict" style="margin-top:13px"></div>
         </div>
+        <p class="outcome">You can now explain why a model writes one word at a time and why an error carries forward.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>What changes in the loop</h4>

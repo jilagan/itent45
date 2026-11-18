@@ -169,6 +169,7 @@ input[type=range]::-moz-range-thumb{width:22px;height:22px;background:var(--res)
 
 /* grids: no stretching */
 .layer-wrap,.jrn,.bytes,.srv,.trace,.cards2,.rea,.models,.pflow,.stacks,.arch,.scale2,.era,.split,.fan,.cmp,.confuse,.urlcmp,.bk-top,.flow,.lane{align-items:start}
+.split,.cmp,.cards2,.era,.confuse,.urlcmp{align-items:stretch}
 .panel [style*="grid-template-columns"]{align-items:start}
 .panel svg,.panel canvas,.panel img{max-width:100%}
 

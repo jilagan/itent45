@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="sari-sari-sale" data-title="Start with a sari-sari store">
         <p>At a sari-sari store, the owner hands over a bottle of soda and takes 20 pesos, or writes the amount in the utang notebook to be paid later. The goods going out and the payment coming back are two separate records.</p>
-        <div class="scene" role="group" aria-label="The soda is the resource, the sale is the event, the owner and customer are the agents" data-art="sari-sari-sale" data-art-desc="A sari-sari store counter where the owner hands a bottle of soda to a customer while the customer holds out a 20-peso bill, and the utang notebook lies open on the counter.">
+        <div class="scene" role="group" aria-label="The soda is the resource, the sale is the event, the owner and customer are the agents" data-art="sari-sari-sale" data-art-desc="A sari-sari store owner hands a bottle of soda to a customer across the counter, with an open notebook lying beside the till.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-package"/></svg></div><figcaption><b>The soda</b><span><dfn title="Something of value, such as stock, cash or a seat">Resource</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></div><figcaption><b>The sale</b><span><dfn title="A record that a resource changed hands at a moment in time">Event</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Owner and customer</b><span><dfn title="A person or organization taking part in an event">Agents</dfn></span></figcaption></figure>
@@ -58,13 +58,14 @@
 
       <div class="sec" data-sec="templates" data-title="Ready-made models">
         <p>Because the same shape repeats, the industry publishes ready-made templates for common domains, called <dfn title="Published templates of the tables a common kind of business needs">universal data models</dfn>. Django's user and login tables are one example. A template shows which entities other people found necessary. The one you would not have thought of is usually the event in the middle.</p>
+        <p class="outcome">You can now describe a sale, a payment or an enrollment with the REA pattern.</p>
         <details class="more">
           <summary>More detail</summary>
           <p>Other examples are a Supabase starter schema and a ready-made set of tables for an online store. Each is somebody else's solution to a model you were about to draw yourself. Use them, and read them.</p>
           <h4>Where to put the boxes (optional)</h4>
           <p>A diagram of tables can be laid out in many ways, and most people place the boxes wherever there is room. One convention costs nothing: draw every crow's foot pointing up and to the left. A crow's foot is the three-pronged symbol on the many side of a relationship. The many side is almost always the entity that records what happens, so the tables that grow fastest end up in the top left, and every foreign key points down and to the right.</p>
           <div class="ctab" id="erdTab"></div>
-          <div class="art" id="erdDia" style="padding:10px"></div>
+          <div class="art" id="erdDia" style="padding:0"></div>
           <div class="verdict" id="erdVerdict" style="margin-top:13px"></div>
         </details>
       </div>

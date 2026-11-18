@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="last-seat" data-title="Start with the last seat">
         <p>Picture the last seat in a class and two cashiers selling it at the same moment. Each cashier looks at the seat map, sees one free seat and sells it. Both customers are told the seat is theirs. A database has the same problem when two users change one row.</p>
-        <div class="scene" data-art="last-seat-two-cashiers" data-art-desc="Two cashiers at side-by-side counters both point at the same seat map that shows one free seat, and each is handing a ticket to a different customer." role="group" aria-label="The cashiers are sessions and the seat map is a row in the courses table">
+        <div class="scene" role="group" aria-label="The cashiers are sessions and the seat map is a row in the courses table" data-art="last-seat-two-cashiers" data-art-desc="Two cashiers at side-by-side counters both point at the same seat map showing one free seat, and each hands a ticket to a different customer.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Two cashiers</b><span>Two <dfn title="One user's connection to the database">sessions</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Seat map</b><span>Course row</span></figcaption></figure>
         </div>
@@ -15,16 +15,16 @@
       </div>
 
       <div class="sec" data-sec="attempts" data-title="Try four ways to sell the seat">
-        <p>Each tab is a different way to sell the last seat. Press Run it on each tab, from left to right, and watch the Seats left column.</p>
+        <p>Each tab is a different way to sell the last seat. Press Play on each tab, from left to right, and watch the Seats left column.</p>
         <div class="ctab" id="txnTab"></div>
         <div class="srv">
           <div>
-            <div class="tln" id="txnLine"></div>
-            <div class="ctrls" style="margin-top:13px">
-              <button class="btn primary" id="txnStep">Step</button>
-              <button class="btn" id="txnPlay">Run it</button>
+            <div class="ctrls" style="margin:0 0 13px">
+              <button class="btn primary" id="txnPlay">Play</button>
+              <button class="btn" id="txnStep">Step</button>
               <button class="btn" id="txnReset">Reset</button>
             </div>
+            <div class="tln" id="txnLine"></div>
             <div class="verdict" id="txnVerdict" style="margin-top:13px"></div>
           </div>
           <div class="card">
@@ -80,6 +80,7 @@ UPDATE courses SET slots = slots - 1
           <div class="ac"><div class="k">D</div><h5>Durability</h5>
             <p>After a save, the change survives a power failure.</p></div>
         </div>
+        <p class="outcome">You can now say why two users need a transaction and what it guarantees.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>Atomicity</h4>

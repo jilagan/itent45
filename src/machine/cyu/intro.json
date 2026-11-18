@@ -84,34 +84,6 @@
      "feedback": "A yes or no output can still come from a deep learning model. What matters is that Version 2 finds its own features from raw input."
     }
    ]
-  },
-  {
-   "id": "intro-5",
-   "sec": null,
-   "type": "mc",
-   "stem": "A tool takes a one-line product description and returns a new 100-word advertisement. What makes this generative AI?",
-   "options": [
-    {
-     "text": "It writes new text that did not exist before.",
-     "correct": true,
-     "feedback": "Generative AI produces new content. A spam filter only chooses between two labels."
-    },
-    {
-     "text": "It was trained on many example advertisements.",
-     "correct": false,
-     "feedback": "Every machine learning system is trained on examples, so this does not separate generative AI from a spam filter."
-    },
-    {
-     "text": "It follows rules that people wrote by hand.",
-     "correct": false,
-     "feedback": "Hand-written rules describe AI without machine learning, such as a chess engine. A system that writes new text was trained on examples."
-    },
-    {
-     "text": "It needs a connection to the internet to run.",
-     "correct": false,
-     "feedback": "Where a system runs does not decide which kind of system it is."
-    }
-   ]
   }
  ]
 }

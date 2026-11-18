@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="intern" data-title="Start with an intern at the registrar">
         <p>Suppose you send an intern to the registrar's office to fix a student's record. The intern decides what to do, does it, looks at what happened, and decides what to do next. A chat model can only produce text. An agent is a model that can also act and see the result.</p>
-        <div class="scene" data-art="registrar-window" data-art-desc="A student intern at the registrar's window picks up a student's file, writes a correction on it, then looks at the file again to check the result." role="group" aria-label="Deciding is a thought, doing is an action, looking at the result is an observation">
+        <div class="scene" role="group" aria-label="Deciding is a thought, doing is an action, looking at the result is an observation" data-art="registrar-file-check" data-art-desc="A student intern at a registrar window picks up a student's file, writes a correction on it, then looks at the file again to check the result.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Decides what to do</b><span><dfn title="A line where the model reasons about what to do next">Thought</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Does it</b><span><dfn title="A request to a tool, such as reading a file or running tests">Action</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bowl-food"/></svg></div><figcaption><b>Looks at what happened</b><span><dfn title="The result a tool sends back to the model">Observation</dfn></span></figcaption></figure>
@@ -18,8 +18,8 @@
       <div class="sec" data-sec="trace" data-title="Watch an agent fix a bug">
         <p>The agent is asked to fix a bug: some students are enrolled in the same course twice. Press Step to add one line at a time. Thought and Action lines come from the model. Observation lines come from a tool, such as a <dfn title="A program that checks whether code still works">test runner</dfn>. The task is done at step 15, so watch what happens next.</p>
         <div class="ctrls">
-          <button class="btn primary" id="lpStep">Step</button>
-          <button class="btn" id="lpPlay">Run it</button>
+          <button class="btn primary" id="lpPlay">Play</button>
+          <button class="btn" id="lpStep">Step</button>
           <button class="btn" id="lpReset">Reset</button>
         </div>
         <div class="verdict" id="lpVerdict" style="margin-top:13px;margin-bottom:13px"></div>
@@ -43,6 +43,7 @@
 
       <div class="sec" data-sec="wrong" data-title="Where agent loops go wrong">
         <p>Four things go wrong in long loops. The model may not stop when the task is done. The <dfn title="The amount of text the model can see at once">context window</dfn> fills up and pushes out your first instruction. A wrong observation is treated as fact in every later step. Each step costs more than the one before.</p>
+        <p class="outcome">You can now name four ways an agent goes wrong and what a person should watch.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>It does not know when to stop</h4>

@@ -128,7 +128,7 @@ function renderRegion(){
   REGIONS.forEach((q,i)=>{
     if(i===REG.idx || i===0 || (isMulti && q===dr)) return;
     svg+=`<circle cx="${projX(q.ll[0])}" cy="${projY(q.ll[1])}" r="3.5" fill="var(--line3)"/>
-          <text x="${projX(q.ll[0])}" y="${projY(q.ll[1])-8}" fill="var(--dim)" font-size="18" text-anchor="middle">${q.s}</text>`;
+          <text x="${projX(q.ll[0])}" y="${projY(q.ll[1])-8}" fill="var(--dim)" font-size="23" text-anchor="middle">${q.s}</text>`;
   });
 
   // replication arc to the standby, when there is one
@@ -137,7 +137,7 @@ function renderRegion(){
     const dcol=regDead?"var(--res)":"var(--faint)";
     svg+=`<circle cx="${projX(dr.ll[0])}" cy="${projY(dr.ll[1])}" r="7" fill="none" stroke="${dcol}" stroke-width="2"/>
           <circle cx="${projX(dr.ll[0])}" cy="${projY(dr.ll[1])}" r="3" fill="${dcol}"/>
-          <text x="${projX(dr.ll[0])}" y="${projY(dr.ll[1])-13}" fill="${dcol}" font-size="18" text-anchor="middle">${regDead?"NRT now primary":"NRT standby"}</text>`;
+          <text x="${projX(dr.ll[0])}" y="${projY(dr.ll[1])-13}" fill="${dcol}" font-size="23" text-anchor="middle">${regDead?"NRT now primary":"NRT standby"}</text>`;
   }
 
   // the arc that matters: users to primary
@@ -149,7 +149,7 @@ function renderRegion(){
   const px=projX(r.ll[0]), py=projY(r.ll[1]);
   svg+=`<circle cx="${px}" cy="${py}" r="11" fill="${acol}" opacity=".18"/>
         <circle cx="${px}" cy="${py}" r="5.5" fill="${acol}"/>
-        <text x="${px}" y="${py-15}" fill="${acol}" font-size="20" font-weight="600" text-anchor="middle">${r.s}${regDead?" ✕":""}</text>`;
+        <text x="${px}" y="${py-15}" fill="${acol}" font-size="24" font-weight="600" text-anchor="middle">${r.s}${regDead?" ✕":""}</text>`;
   // availability zones as small satellites
   for(let i=0;i<azCount;i++){
     const dead = regDead || (REG.dead.az && i===0);
@@ -162,7 +162,7 @@ function renderRegion(){
   const ux=projX(MANILA[0]), uy=projY(MANILA[1]);
   svg+=`<circle cx="${ux}" cy="${uy}" r="13" fill="var(--res)" opacity=".14"/>
         <circle cx="${ux}" cy="${uy}" r="5" fill="var(--res)"/>`;
-  if(REG.idx!==0) svg+=`<text x="${ux+16}" y="${uy+6}" fill="var(--res)" font-size="18">MNL</text>`;
+  if(REG.idx!==0) svg+=`<text x="${ux+16}" y="${uy+6}" fill="var(--res)" font-size="23">MNL</text>`;
 
   // clickable hit areas, last so nothing is drawn over them
   REGIONS.forEach((q,i)=>{

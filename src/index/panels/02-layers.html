@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="parcel" data-title="Start with a parcel">
         <p>When you send a parcel by LBC, you put your item in a box, the branch adds a waybill with the destination, and a hub may stick on a new label. Nobody opens the box until it reaches the receiver. A network message travels the same way.</p>
-        <div class="scene" role="group" aria-label="The sender is your browser, the labeled parcel is a packet, the receiver is the server" data-art="lbc-parcel" data-art-desc="A sender hands a taped box to a clerk at an LBC counter, and the clerk sticks a waybill label with the destination on the outside; a second label from a hub is already stuck on the same box.">
+        <div class="scene" role="group" aria-label="The sender is your browser, the labeled parcel is a packet, the receiver is the server" data-art="courier-parcel" data-art-desc="A sender hands a taped box to a courier clerk at a counter, and the clerk presses a plain shipping label onto the outside of the box.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Sender</b><span>Your browser</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-package"/></svg></div><figcaption><b>Box with labels</b><span>Packet with headers</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>Receiver</b><span>The server</span></figcaption></figure>
@@ -16,7 +16,7 @@
       </div>
 
       <div class="sec" data-sec="layers" data-title="The five layers">
-        <p>Each layer wraps what it receives from the layer above in its own header and passes the result down. The receiving machine unwraps the layers in reverse order. The application's message is 24 bytes. Click each layer to see what its header adds.</p>
+        <p>Each layer wraps what it receives from the layer above in its own header and passes the result down. The receiving machine unwraps them in reverse order. A router reads only the IP header and writes a new Ethernet header for the next hop. Click each layer to see what its header adds.</p>
         <div class="layer-wrap">
           <div class="nest" id="nest"></div>
           <div class="card">
@@ -74,6 +74,7 @@
             </div>
           </div>
         </div>
+        <p class="outcome">You can now explain why a large reply needs several round trips.</p>
         <details class="more">
           <summary>More detail</summary>
           <p>Each packet carries up to 1,460 bytes of your data and 54 bytes of Ethernet, IP and TCP headers. Header overhead is the share of all bytes that are headers. A round trip is a message out and the reply back.</p>

@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="cashiers" data-title="Start with the cashiers">
         <p>A fast-food branch has a few cashiers and one line. Customers arrive whether or not a cashier is free, and each cashier serves one customer at a time. If customers arrive faster than the cashiers can serve them, the line keeps growing.</p>
-        <div class="scene" data-art="fast-food-counters" data-art-desc="A fast-food counter with three cashiers, each serving one customer, and a single line of customers waiting behind them that gets longer when new customers keep arriving." role="group" aria-label="Customers are requests, the line is the queue, the cashiers are workers">
+        <div class="scene" role="group" aria-label="Customers are requests, the line is the queue, the cashiers are workers" data-art="fast-food-counters" data-art-desc="Two cashiers stand ready at their fast-food counters while a single line of two customers waits to be called forward.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Customers</b><span><dfn title="A message from a browser asking for a page or for data">Requests</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg></div><figcaption><b>The line</b><span>Queue</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Cashiers</b><span>Workers</span></figcaption></figure>
@@ -16,7 +16,7 @@
       </div>
 
       <div class="sec" data-sec="limit" data-title="Find the maximum rate">
-        <p><dfn title="The number of requests finished per second">Throughput</dfn> cannot pass the maximum rate under Machine and load. Press Start, then raise the arrival rate above that maximum. Watch the queue and the <dfn title="The time that 95 out of 100 requests stay under">p95 latency</dfn>.</p>
+        <p><dfn title="The number of requests finished per second">Throughput</dfn> cannot pass the maximum rate under Machine and load. Press Play, then raise the arrival rate above that maximum. Watch the queue and the <dfn title="The time that 95 out of 100 requests stay under">p95 latency</dfn>.</p>
         <div class="srv">
           <div>
             <canvas id="simCanvas"></canvas>
@@ -31,7 +31,7 @@
               <div class="g" id="gP95"><div class="gl">p95 latency</div><div class="gv">0<span class="gu">ms</span></div></div>
               <div class="g" id="gCpu"><div class="gl">Worker utilization</div><div class="gv">0<span class="gu">%</span></div></div>
             </div>
-            <div class="verdict" id="verdict"><b>Idle</b>Press Start to send requests to the server.</div>
+            <div class="verdict" id="verdict"><b>Idle</b>Press Play to send requests to the server.</div>
           </div>
 
           <div class="card">
@@ -52,7 +52,7 @@
               </div>
             </div>
             <div class="ctrls" style="margin-top:18px">
-              <button class="btn primary" id="simRun">▶ Start</button>
+              <button class="btn primary" id="simRun">▶ Play</button>
               <button class="btn" id="simReset">Reset</button>
             </div>
             <div class="rtt-note" style="margin-top:14px">
@@ -64,7 +64,7 @@
         <details class="more">
           <summary>More detail</summary>
           <h4>Add a memory limit</h4>
-          <p>Each request being handled or waiting uses RAM. Lower Total RAM or raise RAM per request, then press Start. The Memory gauge shows when the limit is reached.</p>
+          <p>Each request being handled or waiting uses RAM. Lower Total RAM or raise RAM per request, then press Play. The Memory gauge shows when the limit is reached.</p>
           <div class="sliders">
             <div class="field">
               <label>RAM per request <span class="val" id="vMem">12 MB</span></label>
@@ -86,9 +86,12 @@
       </div>
 
       <div class="sec" data-sec="memory" data-title="Memory sets a second limit">
-        <p>Every request that is being handled or waiting also uses RAM. When the machine runs out of RAM, the operating system stops processes. Extra workers then make things worse, because each one needs RAM too. To test it, go back to "Find the maximum rate", open More detail and lower Total RAM.</p>
+        <p>Every request that is being handled or waiting also uses RAM. When the machine runs out of RAM, the operating system stops processes. Extra workers then make things worse, because each one needs RAM too.</p>
+        <p class="outcome">You can now find a server's maximum rate and name what limits it.</p>
         <details class="more">
           <summary>More detail</summary>
+          <h4>Test the memory limit</h4>
+          <p>Go back to "Find the maximum rate", open its More detail and lower Total RAM.</p>
           <h4>The smallest web server</h4>
           <p>Below is the smallest possible web server, written in Python with no framework. It waits for a connection, prints the request it receives and sends back a short answer. To try it, save it as a file, run it, then run the <code>curl</code> command from the first comment in a second terminal window.</p>
           <div class="srv-code" id="srvCode"></div>

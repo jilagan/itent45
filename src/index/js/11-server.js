@@ -153,7 +153,7 @@ function updateGauges(){
 
   const v=$("#verdict"); const rho=S.lam/cap;
   v.className="verdict"+(!running?"":rho<.7?" ok":rho<1?" warn":" bad");
-  if(!running){ v.innerHTML="<b>Idle</b>Press Start to send requests to the server."; return; }
+  if(!running){ v.innerHTML="<b>Idle</b>Press Play to send requests to the server."; return; }
   if(mem>S.ram*.9){
     v.className="verdict bad";
     v.innerHTML=`<b>Out of memory</b>${inFlight} requests being handled or waiting at ${S.memReq} MB each is over the ${S.ram} MB limit. The operating system starts stopping processes, and more workers would not help because each one needs RAM too.`;
@@ -188,11 +188,11 @@ bind("#sMem","memReq",v=>v+" MB","#vMem");
 bind("#sRam","ram",v=>v+" MB","#vRam");
 
 $("#simRun").onclick=e=>{
-  running=!running; e.target.textContent=running?"❚❚ Pause":"▶ Start";
+  running=!running; e.target.textContent=running?"❚❚ Pause":"▶ Play";
   if(running){ last=performance.now(); requestAnimationFrame(loop); } else updateGauges();
 };
 $("#simReset").onclick=()=>{
-  running=false; $("#simRun").textContent="▶ Start"; resetSim();
+  running=false; $("#simRun").textContent="▶ Play"; resetSim();
 };
 
 $("#srvCode").innerHTML=

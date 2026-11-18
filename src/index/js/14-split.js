@@ -35,8 +35,8 @@ function renderSplit(){
     (m.mInst>14?`<div class="ibox m" style="border-style:dashed">+${m.mInst-14}</div>`:"");
   const hMax=Math.max(...m.svc.map(x=>x.inst));
   $("#svcBoxes").innerHTML=m.svc.map(x=>{
-    const h=Math.round(22+ (x.inst/hMax)*30);
-    return `<div class="ibox s" style="width:46px;height:${h}px" title="${x.n}">${x.n.split(" ")[0].toLowerCase()}<br>${x.inst}</div>`;
+    const h=Math.round(44+ (x.inst/hMax)*28);
+    return `<div class="ibox s" style="height:${h}px" title="${x.n}">${x.n.split(" ")[0].toLowerCase()}<br>${x.inst} machine${x.inst===1?"":"s"}</div>`;
   }).join("");
 
   $("#monoRam").textContent=gb(m.mRam);

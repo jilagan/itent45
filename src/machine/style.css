@@ -475,12 +475,15 @@ html[data-theme="light"] .wd:hover{background:rgba(0,0,0,.05)}
 .ctxlegend b{width:9px;height:9px;border-radius:4px;display:inline-block}
 .trace{display:flex;flex-direction:column;gap:5px}
 .tr{display:grid;grid-template-columns:96px 1fr;gap:10px;padding:7px 10px;border-radius:6px;
-  background:var(--panel2);border:1px solid var(--line2);font-family:var(--mono);font-size:max(14px,.68em);
+  background:var(--panel2);border:1px solid var(--line2);font-size:max(14px,.9em);
   opacity:.25;transition:.2s}
 .tr.on{opacity:1}
+.tr:not(.on){display:none}
 .tr .lb{font-size:.85em}
 .tr.th .lb{color:var(--dim)} .tr.ac .lb{color:var(--req)} .tr.ob .lb{color:var(--res)}
 .tr.ob{border-color:var(--res)}
 .tr.lost{opacity:.3;text-decoration:line-through}
 
 #nxTally{white-space:pre-wrap}
+
+.plainlines p{margin:0 0 8px;line-height:1.5}.plainlines p:first-child{font-size:1.1em}

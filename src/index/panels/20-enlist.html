@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="registrar" data-title="Start with the registrar's office">
         <p>On enlistment day thousands of students crowd around the schedule board, and each needs only a few seconds to read it. Only one window can reserve seats, and it must give the last seat in a section to exactly one student.</p>
-        <div class="scene" data-art="registrar-window" data-art-desc="Many students crowd around a schedule board and read it, while a long line forms at a single registrar window where one clerk reserves seats one student at a time." role="group" aria-label="Students are requests, the schedule board is the web tier, the reservation window is the primary database">
+        <div class="scene" role="group" aria-label="Students are requests, the schedule board is the web tier, the reservation window is the primary database" data-art="registrar-window" data-art-desc="Two students read a schedule board on the wall while a clerk at a single registrar window serves a third student.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg></div><figcaption><b>Students</b><span>Requests</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Schedule board</b><span><dfn title="The servers that receive requests and build the pages">Web tier</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Reservation window</b><span><dfn title="The one database that accepts changes, such as seat reservations">Primary database</dfn></span></figcaption></figure>
@@ -105,6 +105,7 @@
 
       <div class="sec" data-sec="lesson" data-title="What the case shows">
         <p>Autoscaling fixed the web tier. The database is still one primary, because every seat reservation must be exactly right. Two changes help without buying hardware. Staggering flattens the peak, and sending browsing to read-only copies leaves the primary with only reservations.</p>
+        <p class="outcome">You can now say which tier fails first on a busy day and how to relieve it.</p>
         <details class="more">
           <summary>More detail</summary>
           <p>Such systems have often run on a handful of application servers with a single relational database behind them. Many have since moved to cloud hosting, where web tier capacity can be bought in minutes. "Load balancers and scaling" showed that once the web tier is fixed, the database is the next bottleneck.</p>

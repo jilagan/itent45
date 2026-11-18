@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="pieces" data-title="Start with sounding out a word">
         <p>A child sounding out a long word reads it in pieces, such as con-ver-sa-tion. The pieces vary in length, and the child does not look at each letter inside a piece. A language model reads text in pieces too: a whole word, part of a word or a punctuation mark.</p>
-        <div class="scene" data-art="child-sounding-out-word" data-art-desc="A child at a desk reading a long word written on a card, with the word divided into syllable pieces by slashes and a finger pointing at one piece." role="group" aria-label="The child is the model, the pieces of the word are tokens">
+        <div class="scene" role="group" aria-label="The child is the model, the pieces of the word are tokens" data-art="child-sounding-out-word" data-art-desc="A child at a desk points at one piece of a long word that has been broken into separate paper tiles.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>The child reading in pieces</b><span>The model</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Pieces such as con-ver-sa-tion</b><span>Tokens, cut by a <dfn title="A program that cuts text into tokens before the model sees it">tokenizer</dfn></span></figcaption></figure>
         </div>
@@ -39,6 +39,7 @@
 
       <div class="sec" data-sec="explain" data-title="What tokens explain">
         <p>The model cannot see inside a token, so counting letters is unreliable. The <dfn title="The most text a model can handle at once, measured in tokens">context window</dfn> is measured in tokens. Providers charge per token, so the same sentence costs more in a language that the tokenizer splits into more pieces, such as Filipino.</p>
+        <p class="outcome">You can now explain why a model miscounts letters and why some languages cost more.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>Why it miscounts letters</h4>

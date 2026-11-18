@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="filing" data-title="Start with two ways to file records">
         <p>Think of two ways to keep student records. One is a set of spreadsheets with fixed columns, where the student sheet points to a course sheet. The other is a folder for each student, with everything about that student written on one page, including the course titles.</p>
-        <div class="scene" data-art="student-folders" data-art-desc="A registrar's shelf with one thick folder per student holding everything on one page, and beside it two printed sheets: a student sheet and a course sheet." role="group" aria-label="Linked sheets are a relational database, a folder for each student is a document database">
+        <div class="scene" role="group" aria-label="Linked sheets are a relational database, a folder for each student is a document database" data-art="student-folders" data-art-desc="A registrar's shelf holds one thick folder per student, and beside it two thin sheets lie on a table, one for students and one for courses.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Linked sheets</b><span>Relational</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>A folder for each student</b><span>Document</span></figcaption></figure>
         </div>
@@ -41,26 +41,26 @@
           <summary>More detail</summary>
           <h4>The four families, and what "schema" means in each</h4>
           <p>The common split between SQL and NoSQL databases is a split in where the schema is enforced. Both families have a schema. In a relational database, the database enforces it. In the others, your code does.</p>
-          <div class="famgrid">
-            <div class="fam s">
+          <div class="dbfamgrid">
+            <div class="dbfam s">
               <div class="ft">Structured: the database enforces the schema</div>
               <h5>Relational</h5>
               <p>Tables with fixed columns and declared types. The schema is written down once, and the database rejects any data that does not fit it. Joins let you ask questions you did not plan for.</p>
               <span class="eg">Postgres &middot; MySQL &middot; SQL Server &middot; Supabase</span>
             </div>
-            <div class="fam u">
+            <div class="dbfam u">
               <div class="ft">Unstructured: your code enforces the schema</div>
               <h5>Document</h5>
               <p>Each record is a self-describing document. Two documents in the same collection can have different fields, so a typo creates a new field and no error is raised. The schema still exists, and it lives in your application code.</p>
               <span class="eg">MongoDB &middot; Firebase &middot; DynamoDB</span>
             </div>
-            <div class="fam u">
+            <div class="dbfam u">
               <div class="ft">Unstructured: almost no schema</div>
               <h5>Key-value</h5>
               <p>A key, a value and nothing else. It is very fast and has no structure for asking questions. It is used more often as a cache in front of another database than as the main store of the data.</p>
               <span class="eg">Redis &middot; Memcached</span>
             </div>
-            <div class="fam u">
+            <div class="dbfam u">
               <div class="ft">Unstructured: built for connections</div>
               <h5>Graph</h5>
               <p>Stores relationships as records in their own right and does not use foreign keys. Use it when the main question is how one thing is connected to another across several steps, such as friends of friends.</p>
@@ -73,7 +73,8 @@
       </div>
 
       <div class="sec" data-sec="choose" data-title="Choosing for your capstone">
-        <p>Start relational. At your data volumes nothing you choose will be slow, and a relational design is easier to fix when you get the schema wrong. You will get it wrong at first. Being able to ask a question you had not thought of, without rewriting how everything is stored, is worth more in a semester project than any speed difference you could measure.</p>
+        <p>Start relational. At your data volumes nothing will be slow, and a relational design is easier to fix when you get the schema wrong, as you will at first. Asking a question you had not planned for, without rewriting the storage, is worth more in a semester project than any speed difference.</p>
+        <p class="outcome">You can now choose between a relational and a document database.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>What each shape does well</h4>

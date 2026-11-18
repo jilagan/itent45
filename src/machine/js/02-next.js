@@ -142,7 +142,7 @@ function gnRender(){
     v.innerHTML=`<b>${GN.toks.length} word${GN.toks.length>1?"s":""} added</b>The list is different from last time, because the word you added is now part of the prompt.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>The sentence is finished</b>Each word was picked as a likely continuation of the words before it, and none could be taken back. Press <em>Start again</em> for a different sentence.`;
+    v.innerHTML=`<b>The sentence is finished</b>Each word was picked as a likely continuation of the words before it, and none could be taken back. Press <em>Reset</em> for a different sentence.`;
   }
 }
 $("#gnStep").onclick=()=>{

@@ -167,8 +167,8 @@ function termsOf(P){
   return out;
 }
 function buildTerms(list){
-  const box=el("section","keyterms");
-  box.appendChild(el("h4",null,"Key terms"));
+  const box=el("details","keyterms more");
+  box.appendChild(el("summary",null,"Key terms ("+list.length+")"));
   const dl=el("dl");
   list.forEach(t=>{ dl.appendChild(el("dt",null,t.term)); dl.appendChild(el("dd",null,t.def)); });
   box.appendChild(dl);

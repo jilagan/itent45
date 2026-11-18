@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="excel" data-title="Start with an Excel sheet">
         <p>In Excel you can filter rows, add a row, change a cell and delete a row. A database table does the same four things, and a command in SQL does each one.</p>
-        <div class="scene" role="group" aria-label="The Excel sheet is a table, a row is one record, the four actions are SQL commands" data-art="class-list" data-art-desc="A class list printed as a table: student names and ID numbers in rows, one student per row, and a teacher's finger pointing at one row.">
+        <div class="scene" role="group" aria-label="The Excel sheet is a table, a row is one record, the four actions are SQL commands" data-art="class-list" data-art-desc="A teacher at a desk points a finger at one row of a printed class list laid out as a table, with a student standing beside the desk.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Excel sheet</b><span>Table</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>One row</b><span>One record</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Filter, add, change, delete</b><span><code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></span></figcaption></figure>
@@ -28,11 +28,11 @@
           </div>
           <div class="card">
             <div class="card-t">Pick a statement</div>
-            <div class="reqlist" id="sqlList"></div>
-            <div class="ctrls" style="margin-top:14px">
+            <div class="ctrls" style="margin:0 0 12px">
               <button class="btn primary" id="sqlRun">Run</button>
-              <button class="btn" id="sqlReset">Reset table</button>
+              <button class="btn" id="sqlReset">Reset</button>
             </div>
+            <div class="reqlist" id="sqlList"></div>
             <div class="rtt-note" style="margin-top:14px" id="sqlNote"></div>
           </div>
         </div>
@@ -59,6 +59,7 @@
             <tr><td>Remove a row</td><td><code>DELETE</code></td><td><code>DELETE</code></td><td class="y">already gone, still gone</td></tr>
           </tbody></table>
         </div>
+        <p class="outcome">You can now read a simple SQL command and say what it does when run twice.</p>
         <details class="more">
           <summary>More detail</summary>
           <p>The table in this step is the same one used in "HTTP verbs and status codes", this time with no API in front of it. An API that exposes resources is easy to build on top of a relational database.</p>

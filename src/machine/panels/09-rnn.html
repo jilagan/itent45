@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="lecture" data-title="Start with a lecture">
         <p>Imagine sitting through a long lecture with a single sticky note. After each sentence you rewrite the note to summarize everything so far, and then you forget the sentence. At the end you can answer questions only from the note. The model's note is called its <dfn title="The fixed-size summary a recurrent network rewrites after each word">hidden state</dfn>.</p>
-        <div class="scene" data-art="lecture-sticky-note" data-art-desc="A student in a lecture hall holds one small sticky note, rewriting it after each sentence while the lecturer keeps talking." role="group" aria-label="The student is the network, the sticky note is the hidden state, the sentence is the next word">
+        <div class="scene" role="group" aria-label="The student is the network, the sticky note is the hidden state, the sentence is the next word" data-art="lecture-sticky-note" data-art-desc="A student in a lecture hall holds one small sticky note and rewrites it after each sentence while the lecturer keeps talking.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>Student</b><span>Recurrent network</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Sticky note</b><span>Hidden state</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Each sentence heard</b><span>Next word</span></figcaption></figure>
@@ -34,7 +34,7 @@
           <div class="ctrls" style="margin-top:13px">
             <button class="btn primary" id="rnStep">Read the next word</button>
             <button class="btn" id="rnAll">Read it all and ask</button>
-            <button class="btn" id="rnReset">Start over</button>
+            <button class="btn" id="rnReset">Reset</button>
           </div>
           <div class="verdict" id="rnVerdict" style="margin-top:13px"></div>
         </div>
@@ -51,6 +51,7 @@
 
       <div class="sec" data-sec="problems" data-title="Two problems">
         <p><b>Distance.</b> Early words fade, so anything that depends on a connection across a long gap is lost. <b>Order.</b> Word fifty cannot be read until word forty-nine has been read, so training cannot be spread across many machines. A fifty-page contract shows both problems.</p>
+        <p class="outcome">You can now name the two problems that led to transformers.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>One fix for both problems</h4>

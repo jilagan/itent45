@@ -58,34 +58,6 @@
    ]
   },
   {
-   "id": "deep-3",
-   "sec": null,
-   "type": "mc",
-   "stem": "A neural network for the dropout problem has four units in its hidden layer. What does each unit correspond to on the plot of students?",
-   "options": [
-    {
-     "text": "One straight line, set by that unit's weights and bias",
-     "correct": true,
-     "feedback": "A unit is one line. Its two input weights set the angle and its bias sets how far out it sits."
-    },
-    {
-     "text": "One student in the data, shown as a point on the plot",
-     "correct": false,
-     "feedback": "Students are the points on the plot. The circles in the diagram are units."
-    },
-    {
-     "text": "One of the four regions of the plot where students stay",
-     "correct": false,
-     "feedback": "The stay region is the overlap of all the lines. It is not assigned to one unit."
-    },
-    {
-     "text": "One of the measurements a person chose to feed into the network",
-     "correct": false,
-     "feedback": "The measurements are the inputs to the network. The hidden units are set up by the network itself."
-    }
-   ]
-  },
-  {
    "id": "deep-4",
    "sec": null,
    "type": "mc",

@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="clerk" data-title="Start with a file clerk">
         <p>Picture asking a clerk for 50 files. You can ask for them one at a time, and the clerk walks to the cabinet 50 times. Or you can ask for all 50 at once, and the clerk makes one trip with a cart. A web page that lists 50 enrollments with course titles can behave either way.</p>
-        <div class="scene" data-art="file-clerk-cart" data-art-desc="A student at a counter asks a clerk for folders. One clerk carries a single folder back from the filing cabinet, and beside it a second clerk pushes a cart stacked with all the folders in one trip." role="group" aria-label="You are the application server, the clerk and cabinet are the database, the files are rows">
+        <div class="scene" role="group" aria-label="You are the application server, the clerk and cabinet are the database, the files are rows" data-art="file-clerk-cart" data-art-desc="A student asks at a counter while one clerk carries a single folder from a filing cabinet and a second clerk pushes a cart stacked with many folders.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bell-simple"/></svg></div><figcaption><b>You, at the window</b><span>Application server</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cooking-pot"/></svg></div><figcaption><b>Clerk and cabinet</b><span>Database</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-table"/></svg></div><figcaption><b>The files</b><span>Rows</span></figcaption></figure>
@@ -56,5 +56,6 @@
 
       <div class="sec" data-sec="testing" data-title="Why testing misses it">
         <p>With three rows in your test database, the page makes four queries and takes about 1.6 milliseconds, which nobody notices. The number of queries grows with the number of rows, and test data rarely has enough rows. The problem appears only in <dfn title="The live system that real users use">production</dfn>, where the data is large and your tests do not run.</p>
+              <p class="outcome">You can now count the queries a page makes and spot the N+1 problem.</p>
       </div>
     </section>

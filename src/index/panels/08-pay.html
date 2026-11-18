@@ -4,9 +4,9 @@
         <p>A <dfn title="A company such as PayMongo, Stripe or Xendit that handles card payments for shops">payment gateway</dfn> handles card payments for shops. This lesson follows one payment from the shopper's browser to the bank.</p>
       </div>
 
-      <div class="sec" data-sec="cashier" data-title="Start at the cashier">
+      <div class="sec" data-sec="cashier" data-title="Start with a cashier">
         <p>At a store counter you pay the cashier and get a claim stub. The shop does not process your card itself, because the cashier's terminal talks to the bank. Online, the shop's server hands the payment to a payment gateway and gets back a token, which works like the claim stub.</p>
-        <div class="scene" role="group" aria-label="The shopper is the browser, the shop is your server, the cashier and claim stub are the gateway and the token" data-art="cashier-claim-stub" data-art-desc="A shopper hands cash to a cashier at a store counter and receives a numbered claim stub, while the shop owner stands to one side and never touches the money.">
+        <div class="scene" role="group" aria-label="The shopper is the browser, the shop is your server, the cashier and claim stub are the gateway and the token" data-art="cashier-claim-stub" data-art-desc="A shopper hands payment to a cashier at a store counter and receives a small claim stub, while the shop owner stands to one side.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Shopper</b><span>Browser</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-storefront"/></svg></div><figcaption><b>Shop</b><span>Your server</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-ticket"/></svg></div><figcaption><b>Cashier and claim stub</b><span>Gateway and token</span></figcaption></figure>
@@ -19,9 +19,9 @@
         <p>Four parties take part in a checkout: the shopper's browser, your server, the gateway and the bank. Press Play and watch where the card number goes. Your server receives only a <dfn title="A code that stands in for the card number">token</dfn>.</p>
 
         <div class="ctrls">
-          <button class="btn primary" id="pyPlay">▶ Play flow</button>
-          <button class="btn" id="pyPrev">←</button>
-          <button class="btn" id="pyNext">→</button>
+          <button class="btn primary" id="pyPlay">▶ Play</button>
+          <button class="btn" id="pyPrev">Previous</button>
+          <button class="btn" id="pyNext">Next</button>
           <button class="btn" id="pyRst">Reset</button>
         </div>
 
@@ -135,6 +135,7 @@
           <p style="margin:14px 0 0">If your server waits for the payment gateway, your site is as slow as the gateway. Moving the call out of the request gives twenty times the capacity here.</p>
         </div>
 
+        <p class="outcome">You can now explain how a payment stays safe, charged once and fast.</p>
         <details class="more">
           <summary>More detail</summary>
           <p>Here rps means requests per second. In the second case the gateway reports the result later by webhook, which is a request the gateway sends to your server. The same change solves Card C in "Group exercises". "Server capacity" shows how to measure capacity.</p>

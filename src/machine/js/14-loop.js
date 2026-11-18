@@ -1,23 +1,23 @@
 /* ================= 06 THE LOOP ================= */
 const STEPS=[
  ["th","Thought","Some students are enrolled twice. I should look at the code that handles enrollment."],
- ["ac","Action",'read_file("views.py")'],
- ["ob","Observation","def enroll(request): … 38 lines returned"],
+ ["ac","Action","Open the file views.py"],
+ ["ob","Observation","The file opens. The enroll function is 38 lines long."],
  ["th","Thought","It calls save() without checking for an existing row."],
- ["ac","Action",'edit_file("views.py", add get_or_create)'],
- ["ob","Observation","edit applied, 1 file changed"],
+ ["ac","Action","Edit views.py: look for an existing row before saving"],
+ ["ob","Observation","The edit is applied to 1 file."],
  ["th","Thought","I should confirm the tests still pass."],
- ["ac","Action","run_tests()"],
- ["ob","Observation","FAILED test_double_enroll: 2 rows, expected 1"],
+ ["ac","Action","Run the tests"],
+ ["ob","Observation","The double-enrollment test failed: 2 rows, expected 1."],
  ["th","Thought","The check runs, but two requests can still pass it at the same time."],
- ["ac","Action",'edit_file("views.py", add unique constraint)'],
- ["ob","Observation","edit applied"],
+ ["ac","Action","Edit views.py: add a rule that blocks duplicate rows"],
+ ["ob","Observation","The edit is applied."],
  ["th","Thought","Re-run."],
- ["ac","Action","run_tests()"],
- ["ob","Observation","PASSED, 14 tests"],
+ ["ac","Action","Run the tests"],
+ ["ob","Observation","All 14 tests passed."],
  ["th","Thought","Done. I will also tidy the imports while I am here."],
- ["ac","Action",'edit_file("views.py", reorder imports)'],
- ["ob","Observation","edit applied, 1 file changed"]
+ ["ac","Action","Edit views.py: reorder the imports"],
+ ["ob","Observation","The edit is applied to 1 file."]
 ];
 let lpAt=0, lpTimer=null;
 function lpRender(){

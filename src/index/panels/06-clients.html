@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="kitchen" data-title="Start with one kitchen">
         <p>A restaurant kitchen can serve dine-in customers, the drive-thru window and a delivery app. It prepares the same order for all three, and each channel presents it in its own way. A website, an iPhone app and an Android app can share one backend in the same way.</p>
-        <div class="scene" role="group" aria-label="The kitchen is the backend, the dish is the data, and the dining channels are the web, iOS and Android clients" data-art="kitchen-three-channels" data-art-desc="One restaurant kitchen passes the same dish out through three windows: a dine-in table, a drive-thru window and a delivery rider collecting a bag.">
+        <div class="scene" role="group" aria-label="The kitchen is the backend, the dish is the data, and the dining channels are the web, iOS and Android clients" data-art="kitchen-three-channels" data-art-desc="A cook passes dishes out of one kitchen through three openings, to a seated customer, a car at a drive-thru window and a delivery rider.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cooking-pot"/></svg></div><figcaption><b>Kitchen</b><span>Backend</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bowl-food"/></svg></div><figcaption><b>The same dish</b><span><dfn title="A plain-text format for data">JSON</dfn> data</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg></div><figcaption><b>Dine-in, drive-thru, delivery</b><span>Web, iOS, Android</span></figcaption></figure>
@@ -33,18 +33,29 @@
         </div>
 
         <div class="cmp">
-          <div>
+          <div class="card">
             <div class="card-t">What this client sends <span class="diff">Differs</span></div>
-            <div class="art" id="clReq"></div>
+            <p id="clReqPlain"></p>
           </div>
-          <div>
+          <div class="card">
             <div class="card-t">What the server sends back <span class="same">Same</span></div>
-            <div class="art" id="clRes"></div>
+            <p>The course list as JSON, a plain text format for data. Every client receives the same reply.</p>
           </div>
         </div>
 
         <details class="more">
           <summary>More detail</summary>
+          <h4>The two messages as text</h4>
+          <div class="cmp">
+            <div>
+              <div class="card-t">What this client sends</div>
+              <div class="art" id="clReq"></div>
+            </div>
+            <div>
+              <div class="card-t">What the server sends back</div>
+              <div class="art" id="clRes"></div>
+            </div>
+          </div>
           <h4>The code each client uses</h4>
           <div class="cmp">
             <div>
@@ -65,21 +76,34 @@
       </div>
 
       <div class="sec" data-sec="no-api" data-title="A system with no API">
-        <p>Older systems, such as the enlistment system, are <dfn title="Build each page on the server and send it as finished HTML">server-rendered</dfn>. They return finished web pages, with the data mixed into the layout. A phone app cannot use that page directly. Compare the two replies for the same two courses.</p>
+        <p>Older systems, such as the enlistment system, are <dfn title="Build each page on the server and send it as finished HTML">server-rendered</dfn>. They return finished web pages, with the data mixed into the layout. A phone app cannot use that page directly. Compare what each kind of system returns.</p>
 
         <div class="cmp">
-          <div>
-            <div class="card-t">What a server-rendered system returns <span class="diff">HTML</span></div>
-            <div class="art" id="enlistHtml"></div>
+          <div class="card">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-browser"/></svg>
+            <div class="card-t">Server-rendered system <span class="diff">HTML</span></div>
+            <p>Returns a finished web page. The data is mixed into the layout.</p>
           </div>
-          <div>
-            <div class="card-t">What an API would return <span class="same">JSON</span></div>
-            <div class="art" id="enlistJson"></div>
+          <div class="card">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-table"/></svg>
+            <div class="card-t">API <span class="same">JSON</span></div>
+            <p>Returns only the data. Each app decides how it looks.</p>
           </div>
         </div>
 
         <details class="more">
           <summary>More detail</summary>
+          <h4>The two replies</h4>
+          <div class="cmp">
+            <div>
+              <div class="card-t">What a server-rendered system returns <span class="diff">HTML</span></div>
+              <div class="art" id="enlistHtml"></div>
+            </div>
+            <div>
+              <div class="card-t">What an API would return <span class="same">JSON</span></div>
+              <div class="art" id="enlistJson"></div>
+            </div>
+          </div>
           <h4>The same data in two forms</h4>
           <p>All the data a mobile app needs is in the HTML reply, mixed with table widths, CSS class names (labels that control appearance) and a decision about column order. An iOS app cannot use that reply directly. It would have to scrape it, which means reading HTML written for a browser and hoping the layout never changes. The layout changes often.</p>
           <h4>Why teams build it this way</h4>
@@ -118,6 +142,7 @@
           </div>
         </div>
 
+        <p class="outcome">You can now decide whether an API change is safe for old apps.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>Rule for changing an API</h4>

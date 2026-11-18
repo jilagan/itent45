@@ -43,9 +43,11 @@ def embed_index(out_dir):
             secs=[attrs(t) for t in re.findall(r'<div[^>]*class="sec"[^>]*>',h)]
             base=f"@@BASE@@{page}.html?embed=1"
             if len(secs)>=2:
-                row(title+" (whole panel, with section tabs)",f"{base}#{pid}",900,"panel")
+                row(title+" (whole lesson, with step strip)",f"{base}#{pid}",900,"panel")
                 for a in secs:
                     row(f"{title}: {a.get('data-title',a.get('data-sec',''))}",f"{base}#{pid}/{a.get('data-sec','')}",900,"sec")
+                if (d/"cyu"/f"{pid}.json").exists():
+                    row(f"{title}: Check your understanding",f"{base}#{pid}/check",900,"sec")
             else:
                 px=hts.get((mod,pid)); ht=int(math.ceil((px+80)/50.0)*50) if px else 900
                 row(title,f"{base}#{pid}",ht,"panel")

@@ -46,7 +46,7 @@ const TRACE=[
    express:`<span class="kw">async function</span> enrollmentList(req, res) {\n  <span class="kw">if</span> (!req.user) <span class="kw">return</span> res.status(<span class="s">401</span>).json({...});\n  <span class="kw">const</span> sid = req.query.student;`,
    laravel:`<span class="kw">public function</span> index(Request $request) {\n    <span class="kw">if</span> (! $request->user()) {\n        <span class="kw">return</span> response()->json([...], <span class="s">401</span>);\n    }\n    $sid = $request->query(<span class="s">'student'</span>);`}},
  {t:2,h:"The ORM writes SQL for you",
-  x:"An ORM (object-relational mapper) is a library that turns your code's objects into SQL text and rows back into objects. The lines below describe the data you want, and the ORM writes the SQL.",
+  x:"An ORM (object-relational mapper) is a library that turns your code's objects into SQL text and rows back into objects. Your code describes the data you want, and the ORM writes the SQL.",
   lv:{django:"The Django ORM (tier 2)", express:"The Prisma ORM (tier 2)", laravel:"The Eloquent ORM (tier 2)"},
   av:{
    django:`qs = (Enrollment.objects\n        .filter(student_id=sid)\n        .select_related(<span class="s">"course"</span>))\n\n<span class="c"># select_related fetches each course in the same query,</span>\n<span class="c"># so the total stays at one query</span>`,
@@ -316,10 +316,10 @@ renderTrace();
 const SHELLS=[
  {id:"unix", n:"macOS / Linux", py:"python3", curl:"curl",
   post:`curl -X POST localhost:8080/enrollments \\\n  -H 'Content-Type: application/json' \\\n  -d '{"code":"ITENT 45"}'`,
-  note:"The single quotes around the JSON stop the terminal from changing the double quotes inside it."},
+  note:"The single quotes keep the terminal from changing the JSON."},
  {id:"win", n:"Windows PowerShell", py:"python", curl:"curl.exe",
   post:`curl.exe -X POST localhost:8080/enrollments ^\n  -H "Content-Type: application/json" ^\n  --data-raw "{\\"code\\":\\"ITENT 45\\"}"`,
-  note:"Two things differ on Windows. Type <code>curl.exe</code>, because plain <code>curl</code> in PowerShell is a shortcut to a different command with different arguments. The double quotes inside the JSON need a backslash before each one, because single quotes do not protect them as they do on macOS."}
+  note:"On Windows, type <code>curl.exe</code>, because plain <code>curl</code> in PowerShell is a different command. Each double quote inside the JSON needs a backslash."}
 ];
 let shellSel="unix";
 function esc(t){ return t.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;"); }
@@ -338,24 +338,24 @@ function renderRun(){
   let i=0;
   const steps=[
     {h:"Get the files",
-     p:"Download the course files once. With Git, the command below copies them to your computer. Otherwise, download the ZIP from the same page and unzip it.",
+     p:"Download the course files. With Git, this command copies them. Otherwise download the ZIP and unzip it.",
      c:[`git clone https://github.com/jilagan/itent45.git\ncd itent45`]},
     {h:"Start the server and leave it running",
-     p:"The server prints every byte that any client sends it. Keep this terminal where you can see it.",
+     p:"The server prints every byte it receives. Keep this terminal visible.",
      c:[`${sh.py} start.py demo`]},
     {h:"In a second terminal, look at the messages",
-     p:"<code>curl</code> is a program that sends HTTP requests from the terminal. The two commands below send the same request, and the second also prints the headers (<code>-v</code> means verbose). Count the headers curl sends, then think about why a browser sends many more.",
+     p:"<code>curl</code> sends HTTP requests from the terminal. The second command also prints the headers (<code>-v</code> means verbose). Count the headers curl sends.",
      c:[`${sh.curl} http://localhost:8080/courses`,
         `${sh.curl} -v http://localhost:8080/courses`]},
     {h:"Send a body and find the blank line",
-     p:"This command sends a POST request with a body. In the server log, find the empty line. Everything above it is headers and everything below it is the body.",
+     p:"This sends a POST request with a body. In the server log, find the empty line. Headers come before it and the body after it.",
      c:[sh.post]},
     {h:"Trigger an error and a slow reply",
-     p:"The first request asks for a page that does not exist and gets a 404. The second asks for a page that takes two seconds to answer. Read the Content-Length on the 404 response, then count the characters in its body to check it.",
+     p:"The first request asks for a missing page and gets a 404. The second page takes two seconds to answer. Compare the Content-Length of the 404 with the length of its body.",
      c:[`${sh.curl} http://localhost:8080/nope`,
         `${sh.curl} http://localhost:8080/slow`]},
     {h:"Type a request by hand",
-     p:"No client program is involved. <code>nc</code> (netcat) opens a plain connection to the server, so you can type to it directly. Type the request line, press Enter twice, and read the reply. Then try again without the Host line.",
+     p:"<code>nc</code> (netcat) opens a plain connection, so you can type the request yourself. Type the request line, press Enter twice, and read the reply.",
      c:[`nc localhost 8080`,
         `GET /courses HTTP/1.1\nHost: localhost`]}
   ];
@@ -365,7 +365,7 @@ function renderRun(){
       <div><h5>${s.h}</h5><p>${s.p}</p>
       ${s.c.map(c=>cmdBlock(c,i++)).join("")}
       ${n===3?`<p class="cmdnote">${sh.note}</p>`:""}
-      ${n===5&&shellSel==="win"?`<p class="cmdnote"><code>nc</code> is not installed on Windows by default. You can use <code>Test-NetConnection</code> to check that the port is open, or watch a classmate do this step. The aim is to see a request that a person typed.</p>`:""}
+      ${n===5&&shellSel==="win"?`<p class="cmdnote"><code>nc</code> is not installed on Windows by default. Watch a classmate do this step, or skip it.</p>`:""}
       </div></div>`).join("");
 
   $$("#runSteps .cmd button").forEach(el=>el.onclick=async()=>{

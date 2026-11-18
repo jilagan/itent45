@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="tricycle" data-title="Start with a tricycle ride">
         <p>Tell a tricycle driver "somewhere near the market" and you could be dropped at any of a dozen places. Say "the Loyola Heights gate on Katipunan" and only one place fits. A prompt works the same way. Every fact you add rules out some of the answers the model might give.</p>
-        <div class="scene" data-art="tricycle-directions" data-art-desc="A passenger tells a tricycle driver where to go. A vague 'near the market' could mean many stops, while a named gate points to one place." role="group" aria-label="Your directions are the prompt, the driver is the model, where you are dropped off is the answer">
+        <div class="scene" role="group" aria-label="Your directions are the prompt, the driver is the model, where you are dropped off is the answer" data-art="tricycle-directions" data-art-desc="A passenger points at one gate along a road lined with several stops while a tricycle driver listens.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Your directions</b><span>Prompt</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-taxi"/></svg></div><figcaption><b>Driver</b><span>Model</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bowl-food"/></svg></div><figcaption><b>Where you are dropped off</b><span>Answer</span></figcaption></figure>
@@ -47,14 +47,15 @@
       </div>
 
       <div class="sec" data-sec="facts" data-title="What to put in a prompt">
-        <p>A fact helps when it rules out answers. "Be careful" rules out none, so it changes little. The facts that matter are the ones the model could not know: the framework you use, that two requests can overlap, and what your tables look like. Most examples the model learned from check first and write second, which fails as a <dfn title="A bug that appears only when two actions overlap in time">race condition</dfn>.</p>
+        <p>A fact helps when it rules out answers. "Be careful" rules out none, so it changes little. The facts that matter are the ones the model could not know: your framework, that two requests can overlap, and your tables. Most examples it learned from check first and write second, which fails as a <dfn title="A bug that appears only when two actions overlap in time">race condition</dfn>.</p>
+        <p class="outcome">You can now write a prompt that adds the facts a model could not guess.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>System prompts and context</h4>
           <p>A system prompt is text placed ahead of every conversation. It holds rules that are true every time, such as the framework you use, your house style and what the model must never do without asking. Context is what applies to one task: the table definitions, the file, an example. Both narrow the range of answers.</p>
           <h4>Why the most likely answer is wrong</h4>
           <p>With nothing specified, the most likely answer reads the seat count, checks it and then creates the row. Both of two simultaneous requests can read the same count before either one writes. The model gives this answer because it is the most common pattern in the text it learned from, and nothing in the prompt ruled it out.</p>
-          <p>See the Module 1 site, "Transactions", and later "Finding mistakes in AI-written code".</p>
+          <p>See the Module 1 site, "Transactions", and later "Reviewing AI-written code".</p>
           <h4>Lock or conditional update</h4>
           <p>Two answers survive every fact. One locks the course row, which makes other requests wait. The other runs one conditional update and checks how many rows changed. The second holds no lock, which helps on enlistment morning.</p>
         </details>

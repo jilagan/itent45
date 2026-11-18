@@ -61,7 +61,7 @@ function trRender(){
       `<svg viewBox="0 0 224 52" style="width:100%;height:auto;display:block;margin-top:4px">
          <polyline points="${pts}" fill="none" stroke="${up?"var(--warn)":"var(--res)"}" stroke-width="1.6"/>
        </svg>`;
-  } else $("#trCurve").innerHTML=`<span class="c">Press One step to start.</span>`;
+  } else $("#trCurve").innerHTML=`<span class="c">Press Step to start.</span>`;
 
   $("#vLr").textContent=LRS[TR.lr][0];
   $("#trNote").innerHTML={
@@ -74,7 +74,7 @@ function trRender(){
   const v=$("#trVerdict");
   if(TR.step===0){
     v.className="verdict";
-    v.innerHTML=`<b>A line placed at random</b>Loss ${L.toFixed(3)}, with ${ok} of ${TRD.length} right, which is about what guessing gets you. Press <em>One step</em> a few times, or <em>Run 200</em>.`;
+    v.innerHTML=`<b>A line placed at random</b>Loss ${L.toFixed(3)}, with ${ok} of ${TRD.length} right, which is about what guessing gets you. Press <em>Step</em> a few times, or <em>Run 200</em>.`;
     return;
   }
   const rising = h.length>6 && h[h.length-1] > h[Math.max(0,h.length-6)];
@@ -86,7 +86,7 @@ function trRender(){
     v.innerHTML=`<b>Loss ${L.toFixed(3)} after ${TR.step} step${TR.step===1?"":"s"}, ${ok} of ${TRD.length} correct</b>The line stopped moving because the slope under it flattened out. No straight line can catch the two students it still gets wrong.`;
   } else {
     v.className="verdict warn";
-    v.innerHTML=`<b>Loss ${L.toFixed(3)}, ${ok} of ${TRD.length} correct after ${TR.step} step${TR.step===1?"":"s"}</b>The loss is still falling. Keep pressing <em>One step</em>, or press <em>Run 200</em>.`;
+    v.innerHTML=`<b>Loss ${L.toFixed(3)}, ${ok} of ${TRD.length} correct after ${TR.step} step${TR.step===1?"":"s"}</b>The loss is still falling. Keep pressing <em>Step</em>, or press <em>Run 200</em>.`;
   }
 }
 $("#trStepBtn").onclick=()=>{trStep();trRender()};

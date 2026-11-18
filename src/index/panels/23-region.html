@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="bank" data-title="Start with two bank branches">
         <p>A bank has branches in Manila and Cebu. A customer in Manila is served faster at the Manila branch. If a typhoon closes that branch, the Cebu branch can keep serving customers only if it already has a copy of the records.</p>
-        <div class="scene" role="group" aria-label="A branch in a city is a region, one building in the city is an availability zone, the copy of the records in Cebu supports failover" data-art="bank-branches" data-art-desc="Two bank branches in different cities with tellers and customers, a storm closing the first while the second still holds a copy of its records.">
+        <div class="scene" role="group" aria-label="A branch in a city is a region, one building in the city is an availability zone, the copy of the records in Cebu supports failover" data-art="bank-branches" data-art-desc="Two bank branches in different cities, with a storm closing the first while a teller at the second serves a customer.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bank"/></svg></div><figcaption><b>Branch in a city</b><span>Region</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-building-apartment"/></svg></div><figcaption><b>One building in the city</b><span><dfn title="One data center inside a region">Availability zone</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Cebu has a copy of the records</b><span><dfn title="Switching to a standby copy when the main one fails">Failover</dfn></span></figcaption></figure>
@@ -17,6 +17,14 @@
 
       <div class="sec" data-sec="distance" data-title="What distance costs">
         <p>Distance sets the <dfn title="The delay before a response arrives, which grows with distance">latency</dfn> your users feel. Move the slider or click a region on the map, then read the <dfn title="The wait before the first part of the page arrives">time to first byte</dfn>.</p>
+        <div class="card">
+            <div class="sliders">
+              <div class="field">
+                <label>Region <span class="val" id="vRegion">Singapore</span></label>
+                <input type="range" id="sRegion" min="0" max="7" value="1">
+              </div>
+            </div>
+          </div>
         <div class="worldwrap">
           <svg id="worldMap" viewBox="0 0 960 470" preserveAspectRatio="xMidYMid meet"></svg>
           <div class="maplegend">
@@ -27,23 +35,13 @@
           </div>
         </div>
 
-        <div class="srv">
-          <div class="card">
+        <div class="card">
             <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-bank"/></svg>
             <div class="card-t">What the distance costs</div>
             <div class="legend2" id="latStats"></div>
             <div class="verdict" id="latVerdict"></div>
           </div>
-          <div class="card">
-            <div class="card-t">Choose a region</div>
-            <div class="sliders">
-              <div class="field">
-                <label>Region <span class="val" id="vRegion">Singapore</span></label>
-                <input type="range" id="sRegion" min="0" max="7" value="1">
-              </div>
-            </div>
-          </div>
-        </div>
+
         <details class="more">
           <summary>More detail</summary>
           <h4>How the figures are worked out</h4>
@@ -77,7 +75,7 @@
         <details class="more">
           <summary>More detail</summary>
           <h4>Load balancers and data center failures</h4>
-          <p>A load balancer uses health checks to stop sending traffic to a failed machine, as in "Load balancers and scaling". A data center failure takes every machine in it, so it needs one of the options above.</p>
+          <p>A load balancer uses health checks to stop sending traffic to a failed machine, as in "Load balancers and scaling". A data center failure takes every machine in it, so it needs one of the options in the failure step.</p>
           <h4>Two ways to copy data</h4>
           <p>Multi-AZ saves each write in both data centers before confirming it. This is called synchronous replication, and it works because the buildings are milliseconds apart.</p>
           <p>Multi-region copies each write to Tokyo after confirming it. This is called asynchronous replication, and the newest writes can be lost if the primary region fails.</p>
@@ -88,6 +86,7 @@
 
       <div class="sec" data-sec="choose" data-title="Choose for your capstone">
         <p>Every user of your capstone is in Metro Manila, so choose Singapore. Use multi-AZ, which means two data centers in one region, if the provider offers it by default. It costs little and protects against a data center failure. Skip multi-region, which doubles the cost and needs code to resolve conflicting writes.</p>
+        <p class="outcome">You can now choose a region setup for a project.</p>
         <details class="more">
           <summary>More detail</summary>
           <p>Multi-region also accepts a window of lost data, all to survive an event that has never happened to your users. It makes sense when a region outage costs more than running two of everything. Know that number before you decide.</p>

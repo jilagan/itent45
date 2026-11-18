@@ -1,12 +1,12 @@
     <section class="panel" id="p-vibe">
       <div class="head">
-        <h2>Finding mistakes in AI-written code</h2>
+        <h2>Reviewing AI-written code</h2>
         <p>AI-written code can look correct and still be wrong. Four short snippets show where to look.</p>
       </div>
 
       <div class="sec" data-sec="receipt" data-title="Start with a receipt">
         <p>Imagine proofreading a receipt. Every word is spelled correctly and the layout is clean, but the total at the bottom is wrong. Checking the spelling will not find the problem. Code written by an AI model can be like that receipt: it reads cleanly and still does the wrong thing.</p>
-        <div class="scene" data-art="wrong-total-receipt" data-art-desc="A person with a pen looks at a neatly printed receipt. Every item is spelled correctly, but the total at the bottom does not add up." role="group" aria-label="The neat receipt is the AI-written code, the wrong total is the hidden defect, the proofreader is you">
+        <div class="scene" role="group" aria-label="The neat receipt is the AI-written code, the wrong total is the hidden defect, the proofreader is you" data-art="wrong-total-receipt" data-art-desc="A person with a pen studies a neatly printed receipt whose total at the bottom looks wrong.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></div><figcaption><b>Neat receipt</b><span>AI-written code</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Wrong total</b><span>Hidden defect</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Proofreader</b><span>You, the reviewer</span></figcaption></figure>
@@ -24,7 +24,7 @@
         <div class="verdict" id="vbVerdict" style="margin-top:13px"></div>
         <div class="ctrls" style="margin-top:13px">
           <button class="btn primary" id="vbNext" style="display:none">Next snippet</button>
-          <button class="btn" id="vbReset">Start over</button>
+          <button class="btn" id="vbReset">Reset</button>
         </div>
         <div class="verdict" id="vbSum" style="margin-top:13px;display:none"></div>
         <details class="more">
@@ -66,6 +66,7 @@
             <p style="margin:0;font-size:.85em;color:var(--dim);line-height:1.6">An agent runs commands and edits your files in a loop. It acts as well as suggests.</p>
           </div>
         </div>
+        <p class="outcome">You can now tell vibe coding from agentic coding and say which needs more review.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>Where vibe coding comes from</h4>

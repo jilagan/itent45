@@ -32,6 +32,19 @@ can and uses your system fonts when it cannot.
 
 The tables come from the navigation in each `shell.html`. Run `python3 tools/panels.py` to regenerate them.
 
+### How a lesson is laid out
+
+Each panel is a lesson made of three to five steps shown one at a time, followed by a "Check your understanding" step that the platform adds. The head holds the title and one lede of at most 35 words.
+
+- Step 1 is the everyday picture: an analogy of at most 60 words, a small picture or icon row that maps it to the technical terms, and a "Think first" question of at most 30 words. Its title starts "Start with a ...".
+- Each later step has at most 70 words of prose, one widget and one instruction for using it. New terms are marked `<dfn title="...">` and show their definition on hover or focus.
+- The last authored step ends with a line that begins "You can now ...", saying what the student can say or decide.
+- Anything deeper sits in a closed `<details class="more">` called "More detail". Code a student does not need to read is in "Show the code" (`<details class="more showcode">`). Only the HTTP messages, SQL basics and Reviewing AI-written code lessons show a short code sample by default.
+- The check step lists the lesson's three or four questions, then a collapsed "Key terms" list built from the `dfn` terms of the lesson.
+- Group exercises is the one panel that is not divided into steps.
+
+Icons are inline SVG from `src/shared/icons/*.svg`, written as `<use href="#i-name"/>`, and each role keeps one icon across lessons (customer and browser use the user icon, waiter and application server the bell, kitchen and database the cooking pot).
+
 ### Module 1 and related modules (index.html)
 
 | Group | Panel | Opens with the heading |
@@ -67,23 +80,23 @@ The tables come from the navigation in each `shell.html`. Run `python3 tools/pan
 
 | Group | Panel | Opens with the heading |
 |---|---|---|
-|  | AI, ML and generative AI | AI, machine learning, deep learning and generative AI |
-|  | Predicting the next word | How a language model writes: predicting the next word |
-|  | Training and test data | Training data and test data |
-|  | How training works | Training: adjusting a model to reduce its errors |
-|  | Neural networks | Neural networks: combining several lines |
-|  | Backpropagation | Backpropagation |
-|  | Tokens | Tokens: how text is fed to a model |
-|  | Word embeddings | Word embeddings: how words get positions |
-|  | Vectors and similarity | Vectors and similarity of meaning |
-|  | Recurrent networks | Recurrent networks: the approach before transformers |
-|  | Attention and transformers | Attention and the transformer |
-|  | The context window | The context window |
-|  | Writing prompts | Writing better prompts |
-|  | AI agents | AI agents: the think, act and observe loop |
-|  | Tool calls and MCP | Tool calls and the Model Context Protocol (MCP) |
-|  | Checking AI-written code | Finding mistakes in AI-written code |
-|  | The math behind it | The math behind it: vectors, slopes and probabilities |
+| Foundations | AI, ML and generative AI | AI, machine learning, deep learning and generative AI |
+| Foundations | Predicting the next word | How a language model writes: predicting the next word |
+| Foundations | Training and test data | Training data and test data |
+| Foundations | How training works | Training: adjusting a model to reduce its errors |
+| Foundations | Neural networks | Neural networks: combining several lines |
+| Foundations | Backpropagation | Backpropagation |
+| How language models work | Tokens | Tokens: how text is fed to a model |
+| How language models work | Word embeddings | Word embeddings: how words get positions |
+| How language models work | Vectors and similarity | Vectors and similarity of meaning |
+| How language models work | Recurrent networks | Recurrent networks: the approach before transformers |
+| How language models work | Attention and transformers | Attention and the transformer |
+| How language models work | The context window | The context window |
+| Using AI well | Writing prompts | Writing better prompts |
+| Using AI well | AI agents | AI agents: the think, act and observe loop |
+| Using AI well | Tool calls and MCP | Tool calls and the Model Context Protocol (MCP) |
+| Using AI well | Reviewing AI-written code | Reviewing AI-written code |
+| Using AI well | The math behind it | The math behind it: vectors, slopes and probabilities |
 
 ## How the site is built
 
@@ -98,8 +111,11 @@ The two pages are generated from `src/`. Edit the files in `src/`, never `index.
 | `src/<page>/cyu/<id>.json` | check-your-understanding questions for panel `<id>` |
 | `src/<page>/videos.json` | video slots |
 | `src/shared/theme.css` | the shared look |
-| `src/shared/platform.css`, `platform.js` | routing, sections, embed mode, questions, video |
-| `tools/` | `check.py` (click-through test), `panels.py` (README tables) |
+| `src/shared/platform.css`, `platform.js` | routing, steps, More detail, key terms, embed mode, questions, video |
+| `src/shared/icons/*.svg` | the icon set, built into one sprite |
+| `src/shared/analytics.js`, `analytics.json` | optional Google Analytics 4 |
+| `src/shared/art/<slug>.webp` | scene pictures for step 1 (made by `tools/make_art.py`, listed below) |
+| `tools/` | `check.py` (click-through test), `panels.py` (README tables), `make_art.py` (scene pictures) |
 
 Build and check:
 
@@ -117,15 +133,15 @@ Build and check:
     index.html?instructor=1          shows the instructor notes
     index.html?theme=dark            starts in the dark theme
 
-A panel with two or more sections shows a tab strip and Previous and Next buttons. A section is a
+A panel shows a numbered step strip and Back and Next buttons. The last step is always "Check your understanding". A step is a
 `<div class="sec" data-sec="slug" data-title="Title">` directly inside the panel, after its `.head`.
 
 ## Embed mode
 
 Add `?embed=1` to any address. The rail is hidden and the shortcuts are off.
 
-    index.html?embed=1#rest                 the whole panel, with its section tabs
-    index.html?embed=1#rest/status-codes    one section, no tabs
+    index.html?embed=1#rest                 the whole panel, with its step strip
+    index.html?embed=1#rest/status-codes    one step, no strip
     ...&cyu=0                               hide the questions
     ...&video=0                             hide the video
 
@@ -159,8 +175,8 @@ Events. Every event also carries `module` (index or machine), `embedded` and `in
 
 | Event | When | Parameters |
 |---|---|---|
-| `page_view` | a panel or section is shown, once per view | `page_title`, `page_location`, `panel_id`, `section_id` |
-| `select_content` | a click on the rail or a section tab | `content_type` (panel or section), `item_id` |
+| `page_view` | a lesson or one of its steps is shown, once per view (a lesson with five steps and the check step gives one per step) | `page_title`, `page_location`, `panel_id`, `section_id` |
+| `select_content` | a click on the rail or on a step in the step strip | `content_type` (panel or section), `item_id` |
 | `widget_click` | a button, slider, menu or checkbox in a panel, not the questions | `panel_id`, `section_id`, `control`, `control_type` |
 | `cyu_answer` | a question is checked | `panel_id`, `section_id`, `item_id`, `item_type`, `correct`, `attempt` |
 | `cyu_complete` | every question in a panel is answered correctly | `panel_id`, `item_count`, `attempts` |
@@ -178,12 +194,22 @@ For testing, set `"debug":true` in `analytics.json` or add `?gadebug=1` to the a
 
 In Canvas the pages run as third-party iframes, so the analytics cookie is set with `SameSite=None;Secure`. Browsers that block third-party cookies (Safari, Firefox in strict mode, some Chrome settings) give a returning student a new identity on every visit in an embed. Users counts then run high in embeds. Event counts stay correct.
 
+## Scene pictures
+
+Step 1 of every lesson except Group exercises has a picture, set on the `.scene` element with `data-art="slug"` and `data-art-desc="one sentence"`. The sentence is the alt text and the prompt for the image model. A slug that appears in two lessons must carry the same sentence in both. `docs/ART-STYLE.md` has the style rules and the model details.
+
+    python3 tools/make_art.py --dry-run      # lists every scene, the prompt and the cost, writes nothing
+    python3 tools/make_art.py --anchor <slug> --candidates 4    # pick the style anchor first
+    python3 tools/make_art.py                # generates the rest with Nano Banana 2.1 on Replicate
+
+It needs a `REPLICATE_API_TOKEN`. Originals go to `art-src/` (not committed) and the 1200 px web files to `src/shared/art/<slug>.webp`. `build.py` copies them to `art/` and lists them in `window.COURSE.art`. A scene with no file keeps the icon row, so the site works before any picture exists. The pictures are not generated yet.
+
 ## Questions
 
 Each panel can have `src/<page>/cyu/<panelId>.json`. Items are `mc` (one answer), `multi` (several answers)
 or `predict` (a prediction, then a `try` line that points at the widget). Each option has `text`, `correct`
-and `feedback`. An item with `sec` set to a section slug appears at the end of that section.
-An item with `sec` null appears at the end of the panel. Backticks in text become `code`. Nothing is stored
+and `feedback`. An item with `sec` set to a step slug appears at the end of that step.
+An item with `sec` null appears in the final "Check your understanding" step. A step holds at most one item of its own. A lesson has three or four items in all. Backticks in text become `code`. Nothing is stored
 and nothing is sent. The score line counts only the current visit.
 
 ## Videos

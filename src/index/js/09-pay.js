@@ -188,13 +188,13 @@ addEventListener("resize",()=>{ if($(".panel.on")?.id==="p-pay"){ layoutBypass()
 
 $("#pyNext").onclick=()=>{clearInterval(pyTimer);pyI=Math.min(PAYFLOW.length-1,pyI+1);renderPay()};
 $("#pyPrev").onclick=()=>{clearInterval(pyTimer);pyI=Math.max(0,pyI-1);renderPay()};
-$("#pyRst").onclick=()=>{clearInterval(pyTimer);pyI=0;renderPay();$("#pyPlay").dataset.on="";$("#pyPlay").textContent="▶ Play flow"};
+$("#pyRst").onclick=()=>{clearInterval(pyTimer);pyI=0;renderPay();$("#pyPlay").dataset.on="";$("#pyPlay").textContent="▶ Play"};
 $("#pyPlay").onclick=e=>{
   clearInterval(pyTimer);
-  if(e.target.dataset.on==="1"){e.target.dataset.on="";e.target.textContent="▶ Play flow";return}
+  if(e.target.dataset.on==="1"){e.target.dataset.on="";e.target.textContent="▶ Play";return}
   e.target.dataset.on="1"; e.target.textContent="❚❚ Pause";
   pyTimer=setInterval(()=>{
-    if(pyI>=PAYFLOW.length-1){clearInterval(pyTimer);$("#pyPlay").dataset.on="";$("#pyPlay").textContent="▶ Play flow";return}
+    if(pyI>=PAYFLOW.length-1){clearInterval(pyTimer);$("#pyPlay").dataset.on="";$("#pyPlay").textContent="▶ Play";return}
     pyI++; renderPay();
   }, REDUCED?900:3000);
 };

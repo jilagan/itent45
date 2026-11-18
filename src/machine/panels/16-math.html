@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="grade" data-title="Start with a weighted grade">
         <p>Your grade in a course is a weighted sum. Exams count 0.6 and projects count 0.4. You score 80 on exams and 90 on projects, so your grade is 80 &times; 0.6 + 90 &times; 0.4 = 84. You multiplied each score by its weight and added the results.</p>
-        <div class="scene" data-art="weighted-grade" data-art-desc="A grade sheet with an exam score and a project score, each with its weight written beside it, and the final grade at the bottom." role="group" aria-label="Your scores and the weights are two vectors, and your grade is their dot product">
+        <div class="scene" role="group" aria-label="Your scores and the weights are two vectors, and your grade is their dot product" data-art="weighted-grade" data-art-desc="A teacher at a desk balances an exam folder and a project folder on a two-pan scale, with the heavier pan tilting down.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Your scores</b><span><dfn title="A list of numbers, such as 80 and 90">Vector</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>The weights</b><span>Vector</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>Your grade</b><span><dfn title="Multiply each pair of numbers, then add the results">Dot product</dfn></span></figcaption></figure>
@@ -73,7 +73,7 @@
           <h4>Gradient</h4>
           <p>A gradient is the slope worked out for every number at once. With three numbers it is three slopes. With a billion numbers it is a billion slopes, and the arithmetic for each one is the same.</p>
           <h4>Where you have met it</h4>
-          <p>The One step button in "How training works" does exactly this. It works out the slope for each of the three numbers, moves each one against its slope and repeats. The learning-rate slider sets how far each move goes.</p>
+          <p>The Step button in "How training works" does exactly this. It works out the slope for each of the three numbers, moves each one against its slope and repeats. The learning-rate slider sets how far each move goes.</p>
         </details>
       </div>
 
@@ -94,6 +94,7 @@
             </div>
           </div>
         </div>
+        <p class="outcome">You can now read a weighted sum, a slope and a probability distribution.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>Loss</h4>

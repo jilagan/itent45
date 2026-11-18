@@ -114,9 +114,8 @@ dfn:focus-visible{outline:2px solid var(--res,#0b4a8f);outline-offset:2px;border
   position:fixed;z-index:300;max-width:280px;padding:9px 12px;border-radius:4px;pointer-events:none;
   background:var(--ink,#1a1d23);color:var(--bg,#fff);font-size:14px;line-height:1.45;box-shadow:0 2px 10px rgba(0,0,0,.2);
 }
-.keyterms{margin:0 0 36px}
-.keyterms h4{margin:0 0 8px;font-size:1.05em}
-.keyterms dl{margin:0;display:grid;grid-template-columns:minmax(0,max-content) minmax(0,1fr);gap:8px 24px}
+.keyterms{margin:0 0 8px}
+.keyterms dl{margin:8px 0 0;display:grid;grid-template-columns:minmax(0,max-content) minmax(0,1fr);gap:8px 24px}
 .keyterms dt{font-weight:600}
 .keyterms dd{margin:0;color:var(--ink2,#2b3037)}
 
@@ -124,15 +123,15 @@ dfn:focus-visible{outline:2px solid var(--res,#0b4a8f);outline-offset:2px;border
 .cyu{margin:36px 0 0;padding:0;border:0;border-top:1px solid var(--line,#d8dce3);border-radius:0;background:none}
 .cyu.cyu-final{margin-top:0;border-top:0}
 .panel .cyu-title{margin:16px 0 4px;font-size:1.05em;font-weight:700;color:var(--ink,#1a1d23)}
-.cyu-item{padding:22px 0;border-top:1px solid var(--line,#d8dce3)}
+.cyu-item{padding:16px 0;border-top:1px solid var(--line,#d8dce3)}
 .cyu-title + .cyu-item,.cyu-final > .cyu-item:first-child{border-top:0;padding-top:12px}
 .cyu-fs{border:0;margin:0;padding:0;min-width:0}
-.cyu-q{padding:0;margin:0 0 14px;font-size:1em;font-weight:600;line-height:1.5;color:var(--ink,#1a1d23)}
+.cyu-q{padding:0;margin:0 0 10px;font-size:1em;font-weight:600;line-height:1.5;color:var(--ink,#1a1d23)}
 .cyu code,.cyu-q code{font-family:var(--mono);font-size:.92em;background:var(--bg2,#f1f3f6);padding:1px 5px;border-radius:4px}
-.cyu-opts{display:flex;flex-direction:column;gap:8px}
+.cyu-opts{display:flex;flex-direction:column;gap:6px}
 .cyu-opt{
   display:grid;grid-template-columns:auto 1fr;align-items:start;column-gap:12px;
-  padding:11px 14px;min-height:44px;border:1px solid var(--line,#d8dce3);border-radius:6px;
+  padding:8px 14px;min-height:44px;border:1px solid var(--line,#d8dce3);border-radius:6px;
   font-size:.95em;line-height:1.5;color:var(--ink,#1a1d23);cursor:pointer;background:var(--bg,#fff);
 }
 .cyu-opt:hover{border-color:var(--res,#0b4a8f)}
@@ -248,3 +247,6 @@ html.embed-sec .panel.embed-sec .sec-title{position:static;width:auto;height:aut
 html.embed-sec .panel.embed-sec .head h2{font-size:1em;font-weight:500;color:var(--dim,#5b6270);margin:0 0 4px}
 html.embed-sec .panel.embed-sec .head{margin-bottom:12px;padding-bottom:12px}
 html.embed-sec .panel.embed-sec:not(.embed-first) .head{border-bottom:0;padding-bottom:0}
+
+/* closing line of a lesson's last step */
+.sec > p.outcome{margin-top:24px;padding-top:16px;border-top:1px solid var(--line,#d8dce3);font-weight:600}

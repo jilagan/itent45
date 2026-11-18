@@ -46,7 +46,7 @@
      "feedback": "The workers keep finishing requests at their maximum rate. The users who suffer are the ones stuck waiting in the queue."
     }
    ],
-   "try": "Set the arrival rate to 120 and press Start. Watch Queue depth and p95 latency."
+   "try": "In the step \"Find the maximum rate\", set the arrival rate to 120 and press Play. Watch Queue depth and p95 latency."
   },
   {
    "id": "server-3",

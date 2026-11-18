@@ -49,7 +49,7 @@
   },
   {
    "id": "scale-4",
-   "sec": "bottleneck",
+   "sec": null,
    "type": "mc",
    "stem": "The load is 400 requests per second, each machine handles 80, and each request needs 3 database queries. The database handles 300 queries per second. You turn on the load balancer and set 5 application machines. Which part limits the system now?",
    "options": [

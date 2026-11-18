@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="court" data-title="Start with a carinderia and a food court">
         <p>A small carinderia has one cook who prepares every dish. When it gets busy, you hire more identical cooks. A food court has a stall for each kind of food, each staffed for how busy that food is, and runners carry orders between the stalls.</p>
-        <div class="scene" role="group" aria-label="The carinderia is a monolith, the food court is microservices, the runner is a network call" data-art="one-cook-or-food-court" data-art-desc="A small carinderia where one cook prepares every dish, beside a food court where each stall cooks one kind of food and runners carry orders between stalls.">
+        <div class="scene" role="group" aria-label="The carinderia is a monolith, the food court is microservices, the runner is a network call" data-art="one-cook-or-food-court" data-art-desc="A cook at a small carinderia stands beside a food court where each stall prepares one kind of food and a runner carries an order between two stalls.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-fork-knife"/></svg></div><figcaption><b>Carinderia, one cook</b><span><dfn title="One application that does everything">Monolith</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-storefront"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-storefront"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-storefront"/></svg></div><figcaption><b>Food court, one stall per food</b><span><dfn title="Several small applications, each doing one job">Microservices</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></div><figcaption><b>Runner with an order</b><span>Network call</span></figcaption></figure>
@@ -126,21 +126,22 @@
           <summary>More detail</summary>
           <h4>The assumptions behind the figures</h4>
           <p>Each call to another service takes about 3 ms longer than the same work done inside one program. The extra time covers opening a connection, converting data to a message and back (serialization), and the network. That figure is for a good day inside one data center.</p>
-          <p>Each service is up 99.9% of the time, which is the share of time it is working, and 1% of its calls are slow. These are good numbers for one service. The figures above show what they become when one request needs several services.</p>
+          <p>Each service is up 99.9% of the time, which is the share of time it is working, and 1% of its calls are slow. These are good numbers for one service. The widget in this lesson shows what they become when one request needs several services.</p>
           <h4>A similar problem one layer down</h4>
           <p>The problem in "The N+1 query problem" has the same pattern: many small requests where one would do. A database option such as <code>select_related</code> cannot fix it here.</p>
         </details>
       </div>
 
       <div class="sec" data-sec="capstone" data-title="What to do in your capstone">
-        <p>Build the monolith, and keep its parts in separate modules with no code that reads another module's tables. Then a boundary exists if you ever need to split along it. Split a part only when its needs differ from the rest and you can say which part and why. If two services call each other on every request, treat them as one service.</p>
+        <p>Build the monolith, with its parts in separate modules and no code that reads another module's tables. Then a boundary exists if you ever need to split. Split a part only when its needs differ and you can say why. If two services call each other on every request, treat them as one service.</p>
+        <p class="outcome">You can now decide whether a part of a project should be its own service.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>Distributed monolith</h4>
           <p>Splitting an application whose parts still need each other on every request produces a <dfn title="Separate services that still depend on each other on every request">distributed monolith</dfn>. It has all the costs of separation and all the dependence between parts, so it is slower, fails more often and is harder to debug than the single application you started with.</p>
           <p>Split only where the parts do not need each other. That depends on your business domain.</p>
           <h4>Why most capstones stay as one application</h4>
-          <p>At low load, four services use more memory than one monolith, and most capstone projects run at low load. Most microservices failures start with a team that split before it had a reason, and paid the four costs above to solve a scaling problem it did not yet have.</p>
+          <p>At low load, four services use more memory than one monolith, and most capstone projects run at low load. Most microservices failures start with a team that split before it had a reason, and paid the four costs of splitting to solve a scaling problem it did not yet have.</p>
         </details>
       </div>
     </section>

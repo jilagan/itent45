@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="branch" data-title="Start with a fast-food branch">
         <p>When the line at a fast-food branch gets too long, the owner can rebuild it with more counters or open more branches. With several branches, a guard at the entrance sends each customer to a counter that is open and not too busy.</p>
-        <div class="scene" role="group" aria-label="Customers are requests, the guard is the load balancer, the counters are servers">
+        <div class="scene" role="group" aria-label="Customers are requests, the guard is the load balancer, the counters are servers" data-art="branch-guard-counters" data-art-desc="A guard at the entrance of a fast-food branch points one customer toward the open counter of two, where a cashier is waiting.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg></div><figcaption><b>Customers</b><span>Requests</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-traffic-signal"/></svg></div><figcaption><b>Guard</b><span>Load balancer</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Counters</b><span>Servers</span></figcaption></figure>
@@ -19,11 +19,13 @@
         <p>There are two ways to get more capacity. Read the two cards side by side.</p>
         <div class="scale2">
           <div class="sc2 vert">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg>
             <h4><dfn title="Make one machine bigger, with more memory and processor cores">Scale up</dfn></h4>
             <p>Buy a bigger machine. It has a size limit, and one failure takes the whole site down.</p>
           </div>
           <div class="sc2 horiz">
-            <h4><dfn title="Run several identical machines side by side instead of one bigger one">Scale out</dfn></h4>
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-arrows-split"/></svg>
+            <h4><dfn title="Run several identical machines side by side">Scale out</dfn></h4>
             <p>Run several copies behind a load balancer. Each copy must be able to answer any request.</p>
           </div>
         </div>
@@ -37,7 +39,7 @@
       </div>
 
       <div class="sec" data-sec="balancer" data-title="Share the traffic">
-        <p>A load balancer has one public address and passes each request to one machine behind it. Press Send traffic. Machine E is four times slower than the others, so watch its in-progress count, then switch to Least connections.</p>
+        <p>A load balancer has one public address and passes each request to one machine behind it. Press Play. Machine E is four times slower than the others, so watch its in-progress count, then switch to Least connections.</p>
         <div class="srv">
           <div class="lbwrap">
             <div class="lbbox">
@@ -59,7 +61,7 @@
               <button class="tg" data-algo="lc" aria-pressed="false"><span class="dot"></span><span>Least connections<small>The machine with the fewest requests in progress.</small></span></button>
             </div>
             <div class="ctrls" style="margin-top:16px">
-              <button class="btn primary" id="lbRun">▶ Send traffic</button>
+              <button class="btn primary" id="lbRun">▶ Play</button>
               <button class="btn" id="lbKill">Take E down</button>
               <button class="btn" id="lbReset">Reset</button>
             </div>
@@ -138,6 +140,7 @@
             </div>
           </div>
         </div>
+        <p class="outcome">You can now find the part that limits a system and say what to add.</p>
         <details class="more">
           <summary>More detail</summary>
           <p>The system starts at 400 requests per second (rps). Each application machine is a copy of the machine in "Server capacity". The database is measured in queries per second (qps). A queue of background jobs lets a request finish before slow work, such as sending an email, is done. An application that keeps no user data in the machine is called stateless, and scaling out depends on that. Turn on the last switch with several machines and see what happens.</p>

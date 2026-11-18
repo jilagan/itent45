@@ -4,16 +4,18 @@ For the instructor. Built from the final state of the `overhaul` branch.
 
 ## 1. What changed
 
-1. Every panel opens with an everyday analogy, then names the technical term.
-2. Panels are split into sections with short openings, so one section works alone in Canvas.
-3. Rail labels and headings are plain words, and the rail labels match the quoted panel names in the text.
-4. Every section has a Check your understanding item; about 170 items in `src/<page>/cyu/`. Prediction items ask before the widget is used.
-5. Every "Think first." prompt uses one label and can be answered before the widget.
-6. Diagram and canvas text is at least 14px on desktop and 12px on phones; wide diagrams scroll sideways on phones.
-7. Section tabs scroll sideways on phones and the page no longer overflows at 390px.
-8. `?embed=1` hides the rail, `?instructor=1` shows instructor notes, and `embed.html` lists every embed address.
-9. `build.py` makes the three pages from `src/`, and `tools/check.py` clicks through every panel and embed view.
-10. Widget numbers and the text beside them were checked against each other (section 3).
+1. Every panel is a lesson of three to five steps shown one at a time, with a numbered step strip, Back and Next. The platform adds a last step, "Check your understanding", holding three or four questions and a collapsed "Key terms" list.
+2. Step 1 of each lesson is an everyday picture (analogy of at most 60 words, an icon row, a "Think first" question). Its title starts "Start with a ...". The last authored step ends "You can now ..." and says what a student can say or decide.
+3. Each later step has at most 70 words of prose, one widget and one instruction. Depth sits in closed "More detail" blocks. Code sits in "Show the code" blocks, except in HTTP messages, SQL basics and Reviewing AI-written code, which show a short sample by default.
+4. Controls use one wording: Play, Step, Reset, Next, and sit above the list, trace or map they drive. Each role keeps one icon across lessons.
+5. Rail labels, headings, `data-desc` lines and the README tables agree, and cross-references use the current rail labels and sit inside More detail.
+6. Every lesson except Group exercises has a `data-art` slug and a one-sentence scene description for the picture pipeline (`tools/make_art.py`). The pictures are not generated yet, so step 1 shows the icon row.
+7. Questions: 152 items in `src/<page>/cyu/`, 3 to 4 per lesson, at most one per step. Each key can be worked out without opening More detail.
+8. Diagram and canvas text is at least 14px on desktop and 12px on phones, and the page does not overflow at 390px.
+9. `?embed=1` hides the rail, `?instructor=1` shows instructor notes, and `embed.html` lists every lesson and step.
+10. Analytics (GA4) reports one `page_view` per lesson step, `select_content` on a step or rail click and `cyu_answer` on a checked question. It was tested with stubbed Google requests. The measurement ID in `src/shared/analytics.json` is the real one.
+11. `build.py` makes the three pages from `src/`, and `tools/check.py` clicks through every lesson, step and embed view.
+12. Widget numbers and the text beside them were checked against each other (section 3).
 
 ## 2. Decisions made for you
 
@@ -54,23 +56,23 @@ For the instructor. Built from the final state of the `overhaul` branch.
 
 | Group | Panel | Opens with the heading |
 |---|---|---|
-|  | AI, ML and generative AI | AI, machine learning, deep learning and generative AI |
-|  | Predicting the next word | How a language model writes: predicting the next word |
-|  | Training and test data | Training data and test data |
-|  | How training works | Training: adjusting a model to reduce its errors |
-|  | Neural networks | Neural networks: combining several lines |
-|  | Backpropagation | Backpropagation |
-|  | Tokens | Tokens: how text is fed to a model |
-|  | Word embeddings | Word embeddings: how words get positions |
-|  | Vectors and similarity | Vectors and similarity of meaning |
-|  | Recurrent networks | Recurrent networks: the approach before transformers |
-|  | Attention and transformers | Attention and the transformer |
-|  | The context window | The context window |
-|  | Writing prompts | Writing better prompts |
-|  | AI agents | AI agents: the think, act and observe loop |
-|  | Tool calls and MCP | Tool calls and the Model Context Protocol (MCP) |
-|  | Checking AI-written code | Finding mistakes in AI-written code |
-|  | The math behind it | The math behind it: vectors, slopes and probabilities |
+| Foundations | AI, ML and generative AI | AI, machine learning, deep learning and generative AI |
+| Foundations | Predicting the next word | How a language model writes: predicting the next word |
+| Foundations | Training and test data | Training data and test data |
+| Foundations | How training works | Training: adjusting a model to reduce its errors |
+| Foundations | Neural networks | Neural networks: combining several lines |
+| Foundations | Backpropagation | Backpropagation |
+| How language models work | Tokens | Tokens: how text is fed to a model |
+| How language models work | Word embeddings | Word embeddings: how words get positions |
+| How language models work | Vectors and similarity | Vectors and similarity of meaning |
+| How language models work | Recurrent networks | Recurrent networks: the approach before transformers |
+| How language models work | Attention and transformers | Attention and the transformer |
+| How language models work | The context window | The context window |
+| Using AI well | Writing prompts | Writing better prompts |
+| Using AI well | AI agents | AI agents: the think, act and observe loop |
+| Using AI well | Tool calls and MCP | Tool calls and the Model Context Protocol (MCP) |
+| Using AI well | Reviewing AI-written code | Reviewing AI-written code |
+| Using AI well | The math behind it | The math behind it: vectors, slopes and probabilities |
 
 ### Analogy per panel
 
@@ -127,7 +129,6 @@ For the instructor. Built from the final state of the `overhaul` branch.
 | [index.html#layers](index.html#layers) | "the 24-byte request GET /courses" | A 24-byte message as an example; the widget shows the headers adding up to 145 bytes at the bottom layer. |
 | [index.html#journey](index.html#journey) | 103 ms first byte, with 13 ms unexplained | The 103 ms and the five round trips now agree with what the widget shows. |
 | [index.html#rest](index.html#rest) | "Each verb makes two promises" | GET, PUT, PATCH and DELETE make promises that POST does not. Safe and idempotent are defined separately. |
-| [index.html#clients](index.html#clients) | "The server does not check who is calling." | "The server does not care whether the caller is a browser, an iPhone or an Android app." Authentication is covered by the cookie paragraph. |
 | [index.html#mem](index.html#mem) | table in the second section was empty on first load; verdict said "not short of memory" | Table fills; verdict says the second machine doubled the cost and every request spends 0.8 ms on the network. The RAM slider is now repeated in that section. |
 | [index.html#server](index.html#server) | queue "grows without limit" | The queue fills, new requests are rejected, p95 latency stays high and throughput stays at the maximum. |
 | [index.html#vm](index.html#vm) | four of five characteristics claimed, while the widget lit five | The widget lights four. Resource pooling is the shared host in the first section. |
@@ -148,6 +149,10 @@ For the instructor. Built from the final state of the `overhaul` branch.
 - [machine.html#tools](machine.html#tools): the text says the client, not MCP itself, provides approval. Does this match what you teach?
 - [index.html#cost](index.html#cost): is the 120-unit starting point a fair "wrong both ways" example for your class?
 - [embed.html](embed.html): the base URL points at https://jilagan.github.io/itent45/. Is that the address you will publish?
+- [index.html#server](index.html#server): the simulator's default memory is now 4096 MB, not 512 MB, so the first run is not memory-limited. Lower the slider to show the memory limit.
+- [index.html#split](index.html#split): the "Think first" memory figure is now 120 MB for the three small parts, not 90 MB, to match the widget.
+- Widget behaviour changes: the trace code in Three tiers is under "Show the code"; REST body fields are under "Edit the body"; the Send, Run, Play and Step controls sit above what they drive; the clients and tools widgets show plain-language lines first and the request text only in More detail; the region map is shorter and the transaction timeline starts with Play. Do the demos you plan still work in that order?
+- Pictures: no scene picture has been generated. Run `python3 tools/make_art.py --dry-run`, choose an anchor, then generate. Until then step 1 shows only the icon row.
 - [index.html#region](index.html#region): distances are straight-line figures rounded for the exercise. Acceptable?
 
 ## 5. Embedding in Canvas

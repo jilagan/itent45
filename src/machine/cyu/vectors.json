@@ -61,7 +61,7 @@
    "id": "vectors-3",
    "sec": "sentences",
    "type": "mc",
-   "stem": "The sentences \"How do I sign up for a class?\" and \"How do I drop a class?\" share five words. What will their similarity score be?",
+   "stem": "The sentences \"How do I sign up for a class?\" and \"How do I drop a class?\" share five words. In the demo, what is their similarity score?",
    "options": [
     {
      "text": "Low, because the two sentences mean opposite things.",

@@ -112,7 +112,7 @@ function lbRender(){
   set("#lbG3",LB.lost,LB.lost>0,LB.lost===0&&LB.total>0);
 
   const v=$("#lbVerdict"), fl=LB.flight;
-  if(!LB.total){ v.className="verdict"; v.innerHTML="<b>Idle</b>Press Send traffic and watch which machine each request goes to."; return; }
+  if(!LB.total){ v.className="verdict"; v.innerHTML="<b>Idle</b>Press Play and watch which machine each request goes to."; return; }
   if(LB.algo==="sticky" && LB.lost>0){
     v.className="verdict bad";
     v.innerHTML=`<b>${LB.lost} session${LB.lost===1?"":"s"} lost</b>Sticky sessions tied those clients to machine E, which went down. Their session data was in E's memory, so those users are logged out.`;
@@ -121,7 +121,7 @@ function lbRender(){
     v.innerHTML=`<b>Equal counts, unequal load</b>Round robin gave every machine the same number of requests, but E is slower, so it has ${fl[4]} in progress and the others about ${Math.round((fl[0]+fl[1]+fl[2])/3)}. Try least connections.`;
   } else if(LB.algo==="lc"){
     v.className="verdict ok";
-    v.innerHTML=`<b>Balanced by current work</b>Least connections sends fewer requests to E because E is still busy. The in-progress counts are now about equal, and that is what users wait behind.`;
+    v.innerHTML=`<b>Balanced by current work</b>Least connections sends fewer requests to E because E is still busy. The in-progress counts are now about equal.`;
   } else if(LB.dead>=0){
     v.className="verdict ok";
     v.innerHTML=`<b>Machine E removed, no user affected</b>E stopped answering the health check, so the load balancer stopped sending it requests. Scaling out improves availability, which means the site keeps working when a machine fails.`;
@@ -152,7 +152,7 @@ $$("[data-algo]").forEach(b=>b.onclick=()=>{
   LB.algo=b.dataset.algo; LB.count=[0,0,0,0,0]; LB.total=0; LB.lost=0; LB.rr=0; lbRender();
 });
 $("#lbRun").onclick=e=>{
-  if(LB.timer){ clearInterval(LB.timer); LB.timer=null; e.target.textContent="▶ Send traffic"; return; }
+  if(LB.timer){ clearInterval(LB.timer); LB.timer=null; e.target.textContent="▶ Play"; return; }
   e.target.textContent="❚❚ Pause";
   LB.timer=setInterval(lbDispatch, REDUCED?260:110);
 };
@@ -162,7 +162,7 @@ $("#lbKill").onclick=e=>{
   lbRender();
 };
 $("#lbReset").onclick=()=>{
-  clearInterval(LB.timer); LB.timer=null; $("#lbRun").textContent="▶ Send traffic";
+  clearInterval(LB.timer); LB.timer=null; $("#lbRun").textContent="▶ Play";
   LB.count=[0,0,0,0,0]; LB.flight=[0,0,0,0,0]; LB.total=0; LB.lost=0; LB.rr=0; LB.dead=-1;
   $("#lbKill").textContent="Take E down"; lbRender();
 };

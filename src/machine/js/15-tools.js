@@ -76,15 +76,11 @@ function tlCounts(){
   const hosts=["Claude Code","Cursor","an in-house agent","Copilot"];
   const sys=["your files","Postgres","Jira","Google Drive","Slack"];
   $("#tlBefore").innerHTML=
-    `<span class="c">// ${hosts.length} applications x ${sys.length} systems</span>\n`+
-    `${hosts.length} \u00d7 ${sys.length} = <span style="color:var(--warn);font-weight:600">${hosts.length*sys.length} adapters</span>\n`+
-    `<span class="c">// each written, tested and maintained separately</span>\n`+
-    `<span class="c">// add one more system and you write ${hosts.length} more</span>`;
+    `<p>${hosts.length} applications \u00d7 ${sys.length} systems = <b style="color:var(--warn)">${hosts.length*sys.length} adapters</b></p>`+
+    `<p>Each one is written, tested and maintained separately. Add one more system and you write ${hosts.length} more.</p>`;
   $("#tlAfter").innerHTML=
-    `<span class="c">// each side implements the protocol once</span>\n`+
-    `${hosts.length} + ${sys.length} = <span style="color:var(--res);font-weight:600">${hosts.length+sys.length} pieces</span>\n`+
-    `<span class="c">// add one more system and you write 1 more</span>\n`+
-    `<span class="c">// it then works in all ${hosts.length} applications</span>`;
+    `<p>${hosts.length} + ${sys.length} = <b style="color:var(--res)">${hosts.length+sys.length} pieces</b></p>`+
+    `<p>Each side implements the protocol once. Add one more system and you write 1 more. It then works in all ${hosts.length} applications.</p>`;
 }
 tlCounts(); tlRender();
 

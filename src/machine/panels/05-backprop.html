@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="dish" data-title="Start with a dish sent back">
         <p>Suppose a dish is sent back to the kitchen because it is too salty. Several people handled it before it reached the customer. To decide who should change what they do, you start from the complaint and work backward through each person, asking how much that person's work affected the result.</p>
-        <div class="scene" data-art="dish-sent-back" data-art-desc="A customer at a restaurant table pointing at a bowl and saying it is too salty, while a waiter carries it back toward a kitchen where several cooks stand at their stations." role="group" aria-label="The complaint is the loss, the kitchen stations are the units, each person changing their work is a weight update">
+        <div class="scene" role="group" aria-label="The complaint is the loss, the kitchen stations are the units, each person changing their work is a weight update" data-art="dish-sent-back" data-art-desc="A customer at a restaurant table points at a bowl while a waiter carries it back toward a kitchen where two cooks stand at their stations.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>The complaint</b><span><dfn title="One number for how wrong the network's answer is">Loss</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cooking-pot"/></svg></div><figcaption><b>People who handled the dish</b><span>Units in each layer</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Each person adjusts their work</b><span>Weight update</span></figcaption></figure>
@@ -15,14 +15,14 @@
       </div>
 
       <div class="sec" data-sec="trace" data-title="Trace the blame">
-        <p>A <dfn title="How much the loss would change if a weight were nudged up a little">slope</dfn> tells a weight which way to move. Press Step to run the network forward, then follow the blame backward until every weight has a slope. Run it through plays all the steps.</p>
+        <p>A <dfn title="How much the loss would change if a weight were nudged up a little">slope</dfn> tells a weight which way to move. Press Step to run the network forward, then follow the blame backward until every weight has a slope. Play runs all the steps.</p>
         <div class="srv">
           <div>
             <div class="scatter" id="bpNet"></div>
             <div class="trace" id="bpTrace" style="margin-top:12px"></div>
             <div class="ctrls" style="margin-top:13px">
-              <button class="btn primary" id="bpStep">Step</button>
-              <button class="btn" id="bpAll">Run it through</button>
+              <button class="btn primary" id="bpAll">Play</button>
+              <button class="btn" id="bpStep">Step</button>
               <button class="btn" id="bpReset">Reset</button>
             </div>
             <div class="verdict" id="bpVerdict" style="margin-top:13px"></div>
@@ -45,7 +45,8 @@
       </div>
 
       <div class="sec" data-sec="cheap" data-title="Why it is cheap">
-        <p>Each number on the trace is built from a number already worked out one step earlier, so nothing is computed twice. Backpropagation gets every slope in one backward pass, which costs about the same as one forward pass. Nudging each weight and running the network again would need a full run per weight, a billion runs for a real model.</p>
+        <p>Each number on the trace is built from a number already worked out one step earlier, so nothing is computed twice. Backpropagation gets every slope in one backward pass, which costs about the same as one forward pass. Nudging each weight and rerunning the network would need a run per weight, a billion for a real model.</p>
+        <p class="outcome">You can now say why training a large network is feasible.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>History</h4>

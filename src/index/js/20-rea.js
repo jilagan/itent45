@@ -17,6 +17,7 @@ const ERD_POS={
   messy:{payment:[473,330],enrollment:[77,198],section:[671,66],
          student:[275,44],course:[484,154],room:[88,352]}
 };
+Object.values(ERD_POS).forEach(m=>Object.values(m).forEach(q=>{q[0]=Math.round(q[0]*0.83);}));   // fit a 760 px column
 let erdMode="messy";
 const ERD_W=180, ERD_H=54;
 function erdFill(v){ return v==="high"?"var(--req)":v==="mid"?"var(--line3)":"var(--res)"; }
@@ -40,11 +41,11 @@ function crow(ex,ey,tx,ty){
 function renderErd(){
   const P=ERD_POS[erdMode];
   const c=id=>[P[id][0]+ERD_W/2, P[id][1]+ERD_H/2];
-  let svg=`<svg viewBox="0 0 880 430" style="min-width:880px" xmlns="http://www.w3.org/2000/svg">`;
+  let svg=`<svg viewBox="0 0 760 430" style="min-width:760px" xmlns="http://www.w3.org/2000/svg">`;
   if(erdMode==="tidy")
-    svg+=`<text x="250" y="22" fill="var(--faint)" font-family="var(--sans)" font-size="14">changes often &#8598;</text>
-          <text x="400" y="420" fill="var(--faint)" font-family="var(--sans)" font-size="14">&#8600; changes rarely</text>
-          <line x1="18" y1="34" x2="862" y2="398" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 6"/>`;
+    svg+=`<text x="208" y="22" fill="var(--faint)" font-family="var(--sans)" font-size="14">changes often &#8598;</text>
+          <text x="332" y="420" fill="var(--faint)" font-family="var(--sans)" font-size="14">&#8600; changes rarely</text>
+          <line x1="18" y1="34" x2="742" y2="398" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 6"/>`;
   ERD_R.forEach(([ch,pa])=>{
     const [cx1,cy1]=c(ch), [cx2,cy2]=c(pa);
     const [x1,y1]=edgePt(P[ch][0],P[ch][1],ERD_W,ERD_H,cx2,cy2);   // leaves the child's edge
@@ -113,9 +114,9 @@ function reaBox(x,y,kind,label,val,sub){
   const bg =kind==="evt"?"rgba(194,65,12,.08)":"var(--panel2)";
   return `<g transform="translate(${x},${y})">
     <rect width="${RB_W}" height="${RB_H}" rx="7" fill="${bg}" stroke="${col}" stroke-width="1.7"/>
-    <text x="12" y="18" fill="${col}" font-family="var(--sans)" font-size="13" font-weight="600">${label}</text>
+    <text x="12" y="18" fill="${col}" font-family="var(--sans)" font-size="14" font-weight="600">${label}</text>
     <text x="12" y="37" fill="var(--ink)" font-family="var(--sans)" font-size="15" font-weight="600">${val}</text>
-    <text x="12" y="54" fill="var(--faint)" font-family="var(--sans)" font-size="13">${sub}</text>
+    <text x="12" y="54" fill="var(--faint)" font-family="var(--sans)" font-size="14">${sub}</text>
   </g>`;
 }
 function reaSide(d, dir, ox){
@@ -133,7 +134,7 @@ function reaSide(d, dir, ox){
       +`<circle cx="${x2}" cy="${y2}" r="3" fill="var(--res)"/>`
       +crow(x1,y1,x2,y2);
     g+=`<text x="${ox+RB_W/2+8}" y="${(y1+y2)/2+3}" fill="var(--faint)"
-          font-family="var(--sans)" font-size="13">${dirn>0?"changes":"acts in"}</text>`;
+          font-family="var(--sans)" font-size="14">${dirn>0?"changes":"acts in"}</text>`;
   });
   return g;
 }
@@ -152,7 +153,7 @@ function renderRea(){
     <text x="${(L+RB_W+R)/2}" y="${yE+RB_H/2-10}" fill="var(--req)" text-anchor="middle"
           font-family="var(--sans)" font-size="14" font-weight="600">Duality</text>
     <text x="${(L+RB_W+R)/2}" y="${yE+RB_H/2+20}" fill="var(--faint)" text-anchor="middle"
-          font-family="var(--sans)" font-size="13">one pays for the other</text>
+          font-family="var(--sans)" font-size="14">one pays for the other</text>
   </svg>`;
   $("#reaDia").innerHTML=svg;
 

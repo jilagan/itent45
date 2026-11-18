@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="order-slip" data-title="Start with an order slip">
         <p>At a restaurant counter, the order slip says what to do (place, change or cancel) and which order it applies to. A web request has the same two parts, a verb and a URL. Place the same order twice and you get two meals. Cancel it twice and it stays cancelled.</p>
-        <div class="scene" role="group" aria-label="The order slip is the request, the waiter is the server, the reply is the response with a status code" data-art="order-slip" data-art-desc="A customer at a restaurant counter hands a handwritten order slip to a waiter; the slip shows an action (new order or cancel) and an order number.">
+        <div class="scene" role="group" aria-label="The order slip is the request, the waiter is the server, the reply is the response with a status code" data-art="order-slip" data-art-desc="A waiter at a restaurant table writes the customer's order on a small slip while the customer waits.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></div><figcaption><b>Order slip</b><span>Request: verb and URL</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bell-simple"/></svg></div><figcaption><b>Waiter</b><span>Server</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bowl-food"/></svg></div><figcaption><b>The reply</b><span>Response: status code</span></figcaption></figure>
@@ -18,7 +18,7 @@
       <div class="sec" data-sec="try-requests" data-title="Send a request">
         <p>The table holds three courses. A request is a verb and a URL, plus a <dfn title="The data sent along with a request, here written in JSON text">body</dfn> when it carries data. POST asks the server to create a course. Press Send, then Send the same one again, and count the rows.</p>
 
-        <div class="srv" style="margin-bottom:22px">
+        <div class="srv" style="margin-bottom:12px">
           <div class="dbwrap">
             <div class="dbtitle">
               <span class="t">courses</span>
@@ -33,22 +33,25 @@
 
           <div class="card">
             <div class="card-t">Pick a request</div>
-            <div class="reqlist" id="reqList"></div>
-            <div class="ctrls" style="margin-top:14px">
+            <div class="ctrls" style="margin:0 0 12px">
               <button class="btn primary" id="reqSend">Send</button>
               <button class="btn" id="reqAgain" disabled>Send the same one again</button>
-              <button class="btn" id="reqReset">Reset table</button>
+              <button class="btn" id="reqReset">Reset</button>
             </div>
+            <div class="reqlist" id="reqList"></div>
             <div id="bodyForm" style="display:none;margin-top:13px;padding:13px;border:1px solid var(--req);border-radius:7px;background:var(--panel2)">
               <div style="font-weight:600;color:var(--req);margin-bottom:4px">Compose the body</div>
+              <details class="more showcode"><summary>Edit the body</summary>
               <p style="margin:0 0 10px;color:var(--faint);line-height:1.5">Untick a field to leave it out of the body. PUT and PATCH differ only in how they treat the missing field.</p>
               <label class="bf"><input type="checkbox" id="bfOnTitle" checked><span>title</span><input type="text" id="bfTitle" value="Data Structures" maxlength="40"></label>
               <label class="bf"><input type="checkbox" id="bfOnUnits" checked><span>units</span><input type="number" id="bfUnits" value="3" min="0" max="9"></label>
               <label class="bf"><input type="checkbox" id="bfOnSlots" checked><span>slots</span><input type="number" id="bfSlots" value="3" min="0" max="99"></label>
               <div class="art" id="bfBody" style="margin-top:11px;white-space:pre-wrap;overflow-wrap:anywhere"></div>
+              </details>
             </div>
             <div id="postForm" style="display:none;margin-top:13px;padding:13px;border:1px solid var(--req);border-radius:7px;background:var(--panel2)">
-              <div style="font-weight:600;color:var(--req);margin-bottom:9px">The body you are sending</div>
+              <div style="font-weight:600;color:var(--req);margin-bottom:4px">The body you are sending</div>
+              <details class="more showcode"><summary>Edit the body</summary>
               <label class="pf"><span>Course code</span><input id="pfCode" type="text" placeholder="MATH 11" value="MATH 11" maxlength="12"></label>
               <label class="pf"><span>Title</span><input id="pfTitle" type="text" placeholder="Linear Algebra" value="Linear Algebra" maxlength="44"></label>
               <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
@@ -56,6 +59,7 @@
                 <label class="pf stack"><span>Slots open</span><input id="pfSlots" type="number" value="12" min="0" max="99"></label>
               </div>
               <div class="art" id="pfBody" style="margin-top:11px;white-space:pre-wrap;overflow-wrap:anywhere"></div>
+              </details>
             </div>
             <div class="rtt-note" style="margin-top:14px" id="reqNote"></div>
           </div>
@@ -233,6 +237,7 @@ Content-Type: application/json
           <p class="hint">The meaning appears here.</p>
         </div>
 
+        <p class="outcome">You can now pick the right verb for a task and read a status code.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>Two pairs that are easy to mix up</h4>

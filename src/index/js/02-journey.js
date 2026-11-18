@@ -128,7 +128,7 @@ function fragMeters(){
   set("#sgOver", m.pct.toFixed(1)+"%", m.pct>15, m.pct<5);
   set("#sgRtt", m.rtts, m.rtts>3, m.rtts===1);
   set("#sgTime", (m.rtts*FRAG.rtt)+" ms", m.rtts*FRAG.rtt>200, false);
-  $("#waveLine").innerHTML=m.waves.map((w,i)=>`<span>Round trip ${i+1}: ${w}</span>`).join("");
+  $("#waveLine").innerHTML=m.waves.map((w,i)=>`<span>Round trip ${i+1}: ${w} packet${w===1?"":"s"}</span>`).join("");
   fragVerdict(m);
 }
 function fragVerdict(m){

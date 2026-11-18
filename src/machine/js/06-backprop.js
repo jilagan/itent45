@@ -40,16 +40,16 @@ function bpRender(){
     g+=edge(hx[i]+11,hy[i],ox-11,oy, bpAt>=2, phase==="b"&&bpAt>=5&&bpAt<7);
   const node=(x,y,lb,val,on,col)=>`<circle cx="${x}" cy="${y}" r="19" fill="var(--panel2)"
      stroke="${on?col:"var(--line3)"}" stroke-width="${on?2.2:1.4}"/>
-    <text x="${x}" y="${y+4}" text-anchor="middle" font-size="12"
+    <text x="${x}" y="${y+4}" text-anchor="middle" font-size="13.5"
      fill="${on?col:"var(--faint)"}">${val}</text>
-    <text x="${x}" y="${y-26}" text-anchor="middle" font-size="12" fill="var(--faint)">${lb}</text>`;
+    <text x="${x}" y="${y-26}" text-anchor="middle" font-size="13.5" fill="var(--faint)">${lb}</text>`;
   for(let j=0;j<2;j++) g+=node(ix[j],iy[j],"x"+(j+1),BPX[j].toFixed(1),bpAt>=1,"var(--res)");
   for(let i=0;i<2;i++) g+=node(hx[i],hy[i],"h"+(i+1),bpAt>=1?bpH[i].toFixed(2):"?",bpAt>=1,
       (phase==="b"&&bpAt>=6)?"var(--req)":"var(--res)");
   g+=node(ox,oy,"out",bpAt>=2?bpO.toFixed(2):"?",bpAt>=2,(phase==="b")?"var(--req)":"var(--res)");
-  if(bpAt>=3) g+=`<text x="${ox}" y="${oy+40}" text-anchor="middle" font-size="12"
+  if(bpAt>=3) g+=`<text x="${ox}" y="${oy+40}" text-anchor="middle" font-size="13.5"
      fill="var(--warn)">target ${BPT}</text>`;
-  g+=`<text x="${(ix[0]+hx[0])/2}" y="16" text-anchor="middle" font-size="12"
+  g+=`<text x="${(ix[0]+hx[0])/2}" y="16" text-anchor="middle" font-size="13.5"
      fill="${phase==="b"?"var(--req)":"var(--faint)"}">${phase==="b"?"&larr; blame flows back":"forward &rarr;"}</text>`;
   $("#bpNet").innerHTML=g+`</svg>`;
 

@@ -8,7 +8,7 @@
    "stem": "An agent's trace contains these four lines. Which one could the model not have written by itself?",
    "options": [
     {
-     "text": "PASSED, 14 tests",
+     "text": "All 14 tests passed.",
      "correct": true,
      "feedback": "This is an Observation. It comes from the test runner. The model can write a guess about the tests, but it cannot know the result without running them."
     },
@@ -18,7 +18,7 @@
      "feedback": "This is a Thought. The model writes its own thoughts."
     },
     {
-     "text": "run_tests()",
+     "text": "Run the tests",
      "correct": false,
      "feedback": "This is an Action. The model writes the request. A separate program carries it out."
     },

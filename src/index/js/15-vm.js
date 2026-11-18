@@ -262,7 +262,7 @@ function elRender(){
 
   const v=$("#elVerdict");
   const spikePct=EL.spikeTot? EL.spikeDrop/EL.spikeTot : 0;
-  if(!EL.running && !EL.hist.length){ v.className="verdict"; v.innerHTML="<b>Not started</b>Press \"Start the day\"."; return; }
+  if(!EL.running && !EL.hist.length){ v.className="verdict"; v.innerHTML="<b>Not started</b>Press Play."; return; }
   if(!EL.auto){
     v.className="verdict warn";
     v.innerHTML=`<b>Four machines all day, whatever the load</b>${Math.round(EL.dropped).toLocaleString()} requests have been turned away so far, and in quiet periods most of that capacity sits idle.`;
@@ -294,10 +294,10 @@ $("#sBoot").oninput=e=>{EL.boot=+e.target.value;$("#vBoot").textContent=EL.boot+
 $("#tgAuto").onclick=()=>{EL.auto=!EL.auto;$("#tgAuto").setAttribute("aria-pressed",EL.auto);elResetState();elRender()};
 $("#elRun").onclick=e=>{
   EL.running=!EL.running;
-  e.target.textContent=EL.running?"❚❚ Pause":"▶ Start the day";
+  e.target.textContent=EL.running?"❚❚ Pause":"▶ Play";
   if(EL.running) elLoop(); else clearTimeout(EL.raf);
 };
-$("#elReset").onclick=()=>{EL.running=false;clearTimeout(EL.raf);$("#elRun").textContent="▶ Start the day";elResetState();elRender()};
+$("#elReset").onclick=()=>{EL.running=false;clearTimeout(EL.raf);$("#elRun").textContent="▶ Play";elResetState();elRender()};
 elRender();
 
 /* ---- what inter-service chatter costs ---- */

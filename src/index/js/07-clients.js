@@ -9,7 +9,7 @@ Content-Length: 118
 ]}`;
 
 const CLIENTS=[
- {id:"web", ic:"browser", n:"Web browser", s:"Runs in a browser on a laptop",
+ {id:"web", plain:"A GET request for the course list, with a session cookie that proves who the user is.", ic:"browser", n:"Web browser", s:"Runs in a browser on a laptop",
   req:`<span class="kw">GET</span> /api/courses HTTP/1.1
 Host: enlist.university.edu
 Accept: application/json
@@ -27,7 +27,7 @@ User-Agent: Mozilla/5.0 (Macintosh...)`,
   note:"The browser attaches the session cookie by itself, because the server set it at login. Cookies need protection against CSRF (cross-site request forgery), since the browser also attaches them to a request that another website triggers.",
   cons:["Stable network","Large screen","You control every deploy","Cookie login, automatic"]},
 
- {id:"ios", ic:"device-mobile", n:"iOS app", s:"Native app written in Swift",
+ {id:"ios", plain:"A GET request for the course list, with a token that proves who the user is.", ic:"device-mobile", n:"iOS app", s:"Native app written in Swift",
   req:`<span class="kw">GET</span> /api/courses HTTP/1.1
 Host: enlist.university.edu
 Accept: application/json
@@ -48,7 +48,7 @@ req.setValue(<span class="s">"Bearer \\(token)"</span>,
   note:"A native app is built for one phone system. It keeps a token (a code that proves who the user is) in the Keychain, the phone's secure storage, and attaches it to every request. The User-Agent line carries the app version, which shows how many people still run old versions.",
   cons:["Mobile data, high latency","Small screen","App Store review to ship","Bearer token, manual","Payload size costs battery"]},
 
- {id:"android", ic:"device-mobile", n:"Android app", s:"Native app written in Kotlin",
+ {id:"android", plain:"A GET request for the course list, with a token that proves who the user is.", ic:"device-mobile", n:"Android app", s:"Native app written in Kotlin",
   req:`<span class="kw">GET</span> /api/courses HTTP/1.1
 Host: enlist.university.edu
 Accept: application/json
@@ -78,6 +78,7 @@ function renderClients(){
       <div class="cn">${ICO(c.ic)} ${c.n}</div><div class="cs">${c.s}</div></button>`).join("");
   const c=CLIENTS[clSel];
   $("#clReq").innerHTML=c.req;
+  $("#clReqPlain").textContent=c.plain;
   $("#clCode").innerHTML=c.code;
   $("#clRes").innerHTML=SHARED_RES;
   $("#clRender").innerHTML=c.render;

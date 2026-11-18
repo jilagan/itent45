@@ -1,0 +1,89 @@
+{
+ "lesson": "rules",
+ "items": [
+  {
+   "id": "rules-1",
+   "sec": "table",
+   "type": "mc",
+   "stem": "A sign gives students 10 percent off and orders over 1,000 pesos 5 percent off. A student buys 1,200 pesos of books. Two cashiers charge 1,080 and 1,020 pesos. What caused the gap?",
+   "options": [
+    {
+     "text": "One of the cashiers cannot do basic arithmetic.",
+     "feedback": "Each amount follows from a rule: 10 percent off gives 1,080 and 15 percent off gives 1,020. The arithmetic is fine."
+    },
+    {
+     "text": "The sign never said what happens when both rules apply.",
+     "correct": true,
+     "feedback": "The table has a row for a student with a large order, and the sign left it blank, so each cashier chose an answer."
+    },
+    {
+     "text": "Students should never get the large-order discount.",
+     "feedback": "The sign did not say so, so each cashier made a guess."
+    }
+   ]
+  },
+  {
+   "id": "rules-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "A rule says \"orders over 1,000 pesos get 5 percent off.\" A customer pays exactly 1,000 pesos and gets no discount. The customer is upset. What is the best fix?",
+   "options": [
+    {
+     "text": "Write the edge in the rule: \"1,000 pesos or more.\"",
+     "correct": true,
+     "feedback": "Stating the edge in words, and testing it, removes the argument at the counter."
+    },
+    {
+     "text": "Tell the customer that the sign was clear.",
+     "feedback": "The sign said \"over,\" and the customer expected \"at least.\" The store has to choose one on purpose."
+    },
+    {
+     "text": "Remove the rule so that nobody gets a discount.",
+     "feedback": "Removing the rule loses a discount that works for most orders."
+    }
+   ]
+  },
+  {
+   "id": "rules-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "A decision table has two yes or no conditions. A third condition, member or not, is added. How many rows does the table need?",
+   "options": [
+    {
+     "text": "Six rows, since each new condition adds two rows.",
+     "feedback": "Each new condition doubles the rows, so adding two would leave combinations out."
+    },
+    {
+     "text": "Three rows, one for each condition.",
+     "feedback": "A row exists for every combination of conditions, so three conditions need more than three rows."
+    },
+    {
+     "text": "Eight rows, since each new condition doubles the count.",
+     "correct": true,
+     "feedback": "Four rows doubled is eight."
+    }
+   ]
+  },
+  {
+   "id": "rules-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "A developer writes the check for \"the first 50 members get a gift\" as member number less than 50. The 50th member gets no gift. Which test would have caught it?",
+   "options": [
+    {
+     "text": "Test member number 10.",
+     "feedback": "A value far from the edge gives the same answer under both versions of the rule."
+    },
+    {
+     "text": "Test member numbers 49, 50 and 51.",
+     "correct": true,
+     "feedback": "A value below, at and above the edge shows which side each value falls on."
+    },
+    {
+     "text": "Test member number 5,000.",
+     "feedback": "A value far above the edge also gives the same answer under both versions."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,72 @@
+<section class="panel" id="p-sorting">
+  <div class="head">
+    <h2>Sorting and searching</h2>
+    <p>Putting a list in order, called <dfn title="Putting items in order, such as by ID number">sorting</dfn>, takes work once. After that, any item can be found in a few guesses.</p>
+  </div>
+
+  <div class="sec" data-sec="cards" data-title="Start with a card pile">
+    <p>On enlistment day, 40 student cards pile up on the registrar's desk. To find one ID, a clerk flips through the pile card by card. If the cards are in ID order, the clerk opens the pile in the middle, sees which half holds the ID and repeats on that half.</p>
+    <div class="scene" role="group" aria-label="The clerk is the program, the pile of cards is the list, cards in ID order are a sorted list" data-art="registrar-card-pile" data-art-desc="A registrar at a desk holds a short stack of blank cards while a student waits at the window.">
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Clerk</b><span>Program</span></figcaption></figure>
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>Pile of cards</b><span>List</span></figcaption></figure>
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Cards in ID order</b><span>Sorted list</span></figcaption></figure>
+    </div>
+    <div class="ask"><b>Think first.</b> You must find one ID in 1,000 unsorted cards and in 1,000 sorted cards. About how many cards do you check in each pile?</div>
+    <div class="instructor">Most students say 1,000 for both, or 500 for the unsorted pile on average. Collect guesses before step 3. The sorted answer is 10.</div>
+  </div>
+
+  <div class="sec" data-sec="sort" data-title="Sort by comparing">
+    <p>These cards are face down. When you compare two cards, you learn which one is larger. That check is a <dfn title="One check of two items to see which is larger">comparison</dfn>. Put the cards in order, smallest on the left, with as few comparisons as you can.</p>
+    <p>Press two cards to compare them. Swap them if they are in the wrong order, then press Check order.</p>
+    <div class="card" id="srtBox">
+      <div class="srt-row" id="srtRow"></div>
+      <p class="srt-line" id="srtLine" aria-live="polite">Press two cards to compare them.</p>
+      <div class="srt-meter"><div class="g"><div class="gl">Comparisons so far</div><div class="gv" id="srtCount">0</div></div></div>
+      <div class="ctrls">
+        <button class="btn" id="srtSwap" disabled>Swap the two cards</button>
+        <button class="btn primary" id="srtCheck">Check order</button>
+        <button class="btn" id="srtReset">Reset</button>
+      </div>
+      <div class="verdict" id="srtVerdict" hidden></div>
+    </div>
+    <details class="more">
+      <summary>More detail</summary>
+      <h4>How few comparisons are enough?</h4>
+      <p>Eight cards can be arranged in 40,320 ways. Each comparison can at best cut the ways in half. Fifteen halvings leave 32,768 ways, which is too few, so 16 comparisons are the least that always works. Comparing every pair of cards takes 28.</p>
+    </details>
+  </div>
+
+  <div class="sec" data-sec="halve" data-title="Find by halving">
+    <p>In a sorted list, one guess can rule out half of the cells. Finding an item this way is called <dfn title="Finding an item in a sorted list by guessing the middle and halving">binary search</dfn>. IDs rise from left to right.</p>
+    <p>Press a cell to see its ID. Keep going until you reach the ID you want.</p>
+    <div class="card" id="hvBox">
+      <div class="hv-top">
+        <div class="hv-goal">Find ID <b id="hvTarget">0</b></div>
+        <div class="viewtog" id="hvSizes" role="group" aria-label="Number of cards"></div>
+      </div>
+      <div class="hv-grid" id="hvGrid" role="group" aria-label="Cells in ID order"></div>
+      <p class="srt-line" id="hvLine" aria-live="polite">Press any cell to start. The middle cell is a good first guess.</p>
+      <div class="srt-meter">
+        <div class="g"><div class="gl">Guesses</div><div class="gv" id="hvGuesses">0</div></div>
+        <div class="g"><div class="gl">Cells still open</div><div class="gv" id="hvOpen">0</div></div>
+      </div>
+      <div class="ctrls"><button class="btn" id="hvReset">Reset</button></div>
+      <div class="verdict" id="hvVerdict" hidden></div>
+    </div>
+  </div>
+
+  <div class="sec" data-sec="guesses" data-title="How many guesses">
+    <p>Each guess halves the cells still open. A list of 15 needs at most 4 guesses, 31 needs 5 and 63 needs 6. Doubling the list adds one guess.</p>
+    <p>Sorting costs work once, so it pays off for a list that is searched many times.</p>
+    <p class="outcome">You can now sort a list by comparing, find an item by halving, and say how many guesses a list needs.</p>
+    <details class="more">
+      <summary>More detail</summary>
+      <h4>Guesses for larger lists</h4>
+      <p>A list of 1,000 needs at most 10 guesses. One million needs 20, and one billion needs 30.</p>
+      <h4>When sorting is not worth it</h4>
+      <p>Sorting 500 cards takes thousands of comparisons. A list searched only once is faster to scan from the start.</p>
+      <h4>In databases</h4>
+      <p>An index is a sorted copy of one column, so the database can halve its search. Without an index, a search reads every row, as in <a data-lesson="query">The N+1 query problem</a>. <a data-lesson="sql">SQL basics</a> shows how queries ask for rows.</p>
+    </details>
+  </div>
+</section>

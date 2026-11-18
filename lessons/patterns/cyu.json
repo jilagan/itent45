@@ -1,0 +1,117 @@
+{
+ "lesson": "patterns",
+ "items": [
+  {
+   "id": "patterns-1",
+   "sec": "together",
+   "type": "mc",
+   "stem": "An owner sees that noodles and sardines share 6 of 12 receipts. She puts them on the same shelf. What does the pattern tell her?",
+   "options": [
+    {
+     "text": "Buying noodles makes people want sardines.",
+     "correct": false,
+     "feedback": "Receipts show what was bought together. They do not show that one purchase causes the other."
+    },
+    {
+     "text": "Half the receipts is too few to act on.",
+     "correct": false,
+     "feedback": "Half of all receipts is a large share. A pair on 3 of 12 receipts would be a weaker case."
+    },
+    {
+     "text": "Shoppers often buy the two together, so a shared shelf suits them.",
+     "correct": true,
+     "feedback": "A pair on half the receipts is common enough to act on."
+    },
+    {
+     "text": "Both items sell out every day.",
+     "correct": false,
+     "feedback": "The count covers pairs on one receipt. It says nothing about daily totals."
+    }
+   ]
+  },
+  {
+   "id": "patterns-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "A rider's message is SSSLSSSLSSSL. A teammate shortens it to \"SSSL, repeat 3 times.\" A rider follows the short version and goes straight twice, then turns left. What went wrong?",
+   "options": [
+    {
+     "text": "The message has no repeat, so it cannot be shortened.",
+     "correct": false,
+     "feedback": "SSSL repeats three times, so the shortening is valid."
+    },
+    {
+     "text": "The block should have been 6 symbols long.",
+     "correct": false,
+     "feedback": "A block of 6 does not rebuild the message. SSSLSS and SLSSSL differ."
+    },
+    {
+     "text": "The short version is longer than the original.",
+     "correct": false,
+     "feedback": "The short version has 5 symbols and the original has 12."
+    },
+    {
+     "text": "The rider dropped one S from the block, so the block became SSL.",
+     "correct": true,
+     "feedback": "SSSL means straight three times, then left. Two straights and a left is a different block."
+    }
+   ]
+  },
+  {
+   "id": "patterns-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "Saturdays sold 60 and 58 cups in weeks 1 and 3, and 20 cups in week 2. Every other day is close to its twin in the other weeks. What should the owner do before changing next week's order?",
+   "options": [
+    {
+     "text": "Order only 20 cups on Saturdays from now on.",
+     "correct": false,
+     "feedback": "One low Saturday does not replace two high ones."
+    },
+    {
+     "text": "Find out what happened that Saturday, such as a typhoon.",
+     "correct": true,
+     "feedback": "One odd day is a signal to ask why. The reason decides whether next week needs a change."
+    },
+    {
+     "text": "Ignore the day, because an outlier is always an error.",
+     "correct": false,
+     "feedback": "An outlier can be an error or a real event. Check it before dropping it."
+    },
+    {
+     "text": "Order the average of the three Saturdays, 46 cups.",
+     "correct": false,
+     "feedback": "The average of 46 matches none of the three Saturdays. The odd one needs a reason before it joins the average."
+    }
+   ]
+  },
+  {
+   "id": "patterns-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "A file has 10,000 rows, and each row repeats the same 40-character course title. A developer stores the title once in a separate table and points each row to it. Which idea is this?",
+   "options": [
+    {
+     "text": "Storing a repeated fact once and pointing to it.",
+     "correct": true,
+     "feedback": "This is the same move as shortening a repeating message. The repeat is stored once."
+    },
+    {
+     "text": "Sorting the rows by course title.",
+     "correct": false,
+     "feedback": "Sorting changes the order of rows. The title is still stored 10,000 times."
+    },
+    {
+     "text": "Deleting rows that look alike.",
+     "correct": false,
+     "feedback": "Deleting would lose students. The rows differ even though the title repeats."
+    },
+    {
+     "text": "Finding an outlier among the rows.",
+     "correct": false,
+     "feedback": "An outlier is one value that differs from the rest. Here every row holds the same title."
+    }
+   ]
+  }
+ ]
+}

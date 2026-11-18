@@ -1,0 +1,102 @@
+    <section class="panel" id="p-growth">
+      <div class="head">
+        <h2>How work grows with the list</h2>
+        <p>Some methods take twice as long when a list doubles. Others take four times as long, and some barely slow down. This lesson shows how to tell which is which.</p>
+      </div>
+
+      <div class="sec" data-sec="registrar" data-title="Start with a registrar line">
+        <p>At the registrar, a clerk checks each of 50 students against the class list. With 100 students the line takes twice as long. Now suppose every student must also compare notes with every other student. Then 100 students need about four times as many comparisons as 50. How the work gets bigger as the job gets bigger is called <dfn title="How the number of steps changes as the list gets longer">growth</dfn>.</p>
+        <div class="scene" role="group" aria-label="The students in line are the items, the clerk is the method, the checks are the steps" data-art="registrar-line-clerk" data-art-desc="A clerk with a clipboard checks one student at a desk while two more students wait in line behind.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>Students in line</b><span>Items in the list</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>The clerk</b><span>The method</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-checks"/></svg></div><figcaption><b>Checks made</b><span>Steps</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> A job takes 10 minutes for 100 items. How long for 200 items if it checks each item once? How long if it compares every pair?</div>
+        <div class="instructor">The usual answers are 20 and 20, or 20 and 40. Checking each item once gives 20 minutes. Comparing every pair gives 40 minutes, four times as many comparisons. Collect the guesses before anyone opens the next step.</div>
+      </div>
+
+      <div class="sec" data-sec="count" data-title="Count the steps">
+        <style>
+          #p-growth .ctrls .btn,#p-growth .ctab button{min-height:44px}
+          #p-growth input[type=range]{height:44px;background:transparent;margin:0}
+          #p-growth input[type=range]::-webkit-slider-runnable-track{height:4px;background:var(--line2);border-radius:2px}
+          #p-growth input[type=range]::-moz-range-track{height:4px;background:var(--line2);border-radius:2px}
+          #p-growth input[type=range]::-webkit-slider-thumb{margin-top:-9px}
+          #p-growth .gbars{display:grid;gap:18px;margin:6px 0 18px}
+          #p-growth .gb-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+          #p-growth .gb-h span{display:block;color:var(--dim);font-size:15px}
+          #p-growth .gb-n{font-family:var(--mono);font-weight:600;white-space:nowrap}
+          #p-growth .gb-t{height:14px;margin-top:6px;background:var(--bg2);border-radius:2px}
+          #p-growth .gb-f{height:100%;min-width:4px;background:var(--dim);border-radius:2px}
+          #p-growth .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+          #p-growth .pgrid .g{padding-top:10px}
+          #p-growth .pgrid .g.slow{border-top:3px solid var(--req);padding-top:8px}
+          #p-growth .gt{font-weight:600;margin-bottom:8px}
+          #p-growth .gr{display:flex;justify-content:space-between;gap:10px;font-size:15px;color:var(--dim)}
+          #p-growth .gr b{font-family:var(--mono);color:var(--ink)}
+          #p-growth .gf{min-height:22px;margin-top:6px;font-size:15px;font-weight:600;color:var(--req-deep)}
+          #p-growth #gcBox .ctrls{margin:6px 0 18px}
+          #p-growth #gpBox .ctrls{margin:14px 0 0}
+          @media(max-width:520px){#p-growth .pgrid{grid-template-columns:1fr}}
+        </style>
+        <p>Three jobs run on a list of <dfn title="The number of items in the list">n</dfn> items. Job A looks at each item once. Job B compares every item with every item. Job C cuts the list in half until one item is left, as in a search of a sorted list. Press Double the list a few times and compare the three bars.</p>
+        <div class="card" id="gcBox">
+          <div class="field">
+            <label for="gcN">List size <span class="val" id="gcNv">4 items</span></label>
+            <input type="range" id="gcN" min="1" max="64" step="1" value="4">
+          </div>
+          <div class="ctrls">
+            <button class="btn primary" id="gcDbl" type="button">Double the list</button>
+            <button class="btn" id="gcReset" type="button">Reset</button>
+          </div>
+          <div class="gbars">
+            <div id="gcA"><div class="gb-h"><div><b>Job A</b><span>Look at each item once</span></div><div class="gb-n">4 steps</div></div><div class="gb-t"><div class="gb-f"></div></div></div>
+            <div id="gcB"><div class="gb-h"><div><b>Job B</b><span>Compare every item with every item</span></div><div class="gb-n">16 steps</div></div><div class="gb-t"><div class="gb-f"></div></div></div>
+            <div id="gcC"><div class="gb-h"><div><b>Job C</b><span>Cut the list in half until one item is left</span></div><div class="gb-n">3 steps</div></div><div class="gb-t"><div class="gb-f"></div></div></div>
+          </div>
+          <div class="verdict" id="gcVerdict" role="status"></div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>How the steps are counted</h4>
+          <p>Job A takes n steps. Job B takes n times n steps. Job C takes one step for each halving, plus a last look at the one item left. For 64 items the list goes 64, 32, 16, 8, 4, 2, 1. That is 6 halvings and 1 last look, 7 steps in all.</p>
+          <h4>Names for the three jobs</h4>
+          <p>Computer scientists write the jobs as O(n), O(n squared) and O(log n). The notation is not needed for an estimate. Double the list and see whether the steps double, quadruple or go up by one.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="page" data-title="Apply it to a web page">
+        <p>A page lists courses with their teachers. One method asks the database one question for the course list, then one more for each course. This is the <dfn title="One question for the list, then one more question for each item">N+1 problem</dfn>. The other method asks one question for everything. Each question takes 5 milliseconds (thousandths of a second). Move the slider to change the number of courses and compare the load times.</p>
+        <div class="card" id="gpBox">
+          <div class="field">
+            <label for="gpN">Courses on the page <span class="val" id="gpNv">40</span></label>
+            <input type="range" id="gpN" min="0" max="8" step="1" value="2">
+          </div>
+          <div class="pgrid">
+            <div class="g" id="gpA"><div class="gt">One question per course</div><div class="gr"><span>Questions</span><b class="gq">41</b></div><div class="gr"><span>Load time</span><b class="gm">205 ms</b></div><div class="gf"></div></div>
+            <div class="g" id="gpB"><div class="gt">One question for everything</div><div class="gr"><span>Questions</span><b class="gq">1</b></div><div class="gr"><span>Load time</span><b class="gm">5 ms</b></div><div class="gf"></div></div>
+          </div>
+          <div class="verdict" id="gpV" role="status"></div>
+          <div class="ctrls">
+            <button class="btn" id="gpReset" type="button">Reset</button>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Where the times come from</h4>
+          <p>One question per course takes (1 + courses) times 5 milliseconds. One question for everything takes 5 milliseconds plus 0.01 milliseconds for each course sent back. At 2,000 courses that is 10,005 milliseconds against 25. These are teaching figures. Real times depend on the network and the database.</p>
+          <h4>Why small numbers can hide the problem</h4>
+          <p>A job that does 100 steps for each item is slower than one that does 3, even though both double when the list doubles. Growth shows what happens at large sizes. Measure to compare small ones. <a data-lesson="query">The N+1 query problem</a> follows this case in detail.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="estimate" data-title="Estimating growth">
+        <p>Double the list and watch the steps. Twice as many means the job looks at each item once. Four times as many means it compares every pair. One more step means it halves the list. Comparing every pair of 100,000 customers takes 10 billion comparisons.</p>
+        <p class="outcome">You can now count a method's steps, say what happens when the list doubles and judge whether the method will finish in reasonable time.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Growth and money</h4>
+          <p>A cloud bill grows with the work done. A method that quadruples its work when users double can need four times the servers. A design that is fine at 100 users can fail at 10,000. <a data-lesson="server">Server capacity</a> and <a data-lesson="scale">Load balancers and scaling</a> show what adding machines can and cannot fix.</p>
+        </details>
+      </div>
+    </section>

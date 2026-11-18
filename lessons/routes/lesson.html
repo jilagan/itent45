@@ -1,0 +1,65 @@
+<section class="panel" id="p-routes">
+  <div class="head">
+    <h2>Finding the shortest route</h2>
+    <p>Many problems ask for the best way through connected places. A <dfn title="A path through a network from a start to a goal">route</dfn> has a total cost, and the cheapest one is often hard to spot by eye.</p>
+  </div>
+
+  <div class="sec" data-sec="commute" data-title="Start with a commute">
+    <p>To get from home to school, you can ride one long jeepney route or change jeepneys. The long ride needs one fare. Changing needs two fares and a wait. Picking the best way through connected places is a routing problem.</p>
+    <div class="scene" role="group" aria-label="The commuter is the route finder, a jeepney line is a link with a cost, the route map is a network" data-art="commuter-route-map" data-art-desc="A commuter at a jeepney stop studies a hand-drawn map of lines.">
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Commuter</b><span>Route finder</span></figcaption></figure>
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bus"/></svg></div><figcaption><b>Jeepney line</b><span>Link with a cost</span></figcaption></figure>
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-map-trifold"/></svg></div><figcaption><b>Route map</b><span>Network</span></figcaption></figure>
+    </div>
+    <div class="ask"><b>Think first.</b> One jeepney takes 40 minutes. Two jeepneys take 15 and 20 minutes plus a 10 minute wait. Which is faster, and what else would you check?</div>
+    <div class="instructor">The single jeepney is faster, 40 minutes against 45. Listen for fare, comfort and the risk of a missed transfer. These come back in the last step.</div>
+  </div>
+
+  <div class="sec" data-sec="build" data-title="Build a route">
+    <p>A map of stops joined by rides is a <dfn title="Places joined by links, such as stops joined by rides">network</dfn>. Each number is the minutes for that ride, and every ride costs 13 pesos. Try to reach School in under 40 minutes.</p>
+    <p>Press the stops in order, starting next to Home. Press Compare when you reach School.</p>
+    <div class="card" id="rtBuildBox">
+      <div class="rt-map" id="rtMapA"></div>
+      <p class="rt-line" id="rtALine" aria-live="polite">Press a stop that has a ride from Home.</p>
+      <div class="rt-meter">
+        <div class="g"><div class="gl">Minutes</div><div class="gv" id="rtAMin">0</div></div>
+        <div class="g"><div class="gl">Rides</div><div class="gv" id="rtARides">0</div></div>
+        <div class="g"><div class="gl">Fare in pesos</div><div class="gv" id="rtAFare">0</div></div>
+      </div>
+      <div class="ctrls">
+        <button class="btn" id="rtAUndo">Undo</button>
+        <button class="btn primary" id="rtACompare" disabled>Compare</button>
+        <button class="btn" id="rtAReset">Reset</button>
+      </div>
+      <div class="verdict" id="rtAVerdict" hidden></div>
+    </div>
+  </div>
+
+  <div class="sec" data-sec="close" data-title="Plan again">
+    <p>Floods and parades close roads. When a line closes, a method that searches the current map still finds a way.</p>
+    <p>Press a number to close that line. Close Marikina to Ortigas first, then a line on the new best route.</p>
+    <div class="card" id="rtCloseBox">
+      <div class="rt-map" id="rtMapB"></div>
+      <div class="rt-meter">
+        <div class="g"><div class="gl">Best route, minutes</div><div class="gv" id="rtBMin">0</div></div>
+        <div class="g"><div class="gl">Extra minutes</div><div class="gv" id="rtBExtra">0</div></div>
+      </div>
+      <div class="ctrls"><button class="btn" id="rtBReset">Reset</button></div>
+      <div class="verdict" id="rtBVerdict" aria-live="polite"></div>
+    </div>
+  </div>
+
+  <div class="sec" data-sec="choose" data-title="Choosing a route">
+    <p>On this map the fastest route takes 38 minutes and four rides. The route with the fewest rides takes 43 minutes and three rides, so it costs 13 pesos less. Gaining on one measure while losing on another is a <dfn title="Gaining on one measure while losing on another">trade-off</dfn>. The commuter decides which measure counts more.</p>
+    <p class="outcome">You can now read a map as a network, total a route's cost, and replan when a line closes.</p>
+    <details class="more">
+      <summary>More detail</summary>
+      <h4>Taking the shortest next ride</h4>
+      <p>Suppose a rider takes the shortest ride from each stop and never returns to a stop already visited. On this map that rider goes Home, Marikina, Ortigas, Katipunan, Cubao, Loyola, School, which takes 57 minutes. Totaling whole routes finds 38.</p>
+      <h4>Costs besides time</h4>
+      <p>Waiting time and the risk of a missed transfer also matter. A route app can let the traveler weight them.</p>
+      <h4>The same idea in other systems</h4>
+      <p>A web request crosses several links, as in <a data-lesson="journey">Round trips and latency</a>. A load balancer in <a data-lesson="scale">Load balancers and scaling</a> picks a path for each request. Failover in <a data-lesson="region">Regions and failover</a> sends traffic along another path when a link fails.</p>
+    </details>
+  </div>
+</section>

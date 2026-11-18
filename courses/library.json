@@ -87,6 +87,23 @@
    "lessons": [
     "break"
    ]
+  },
+  {
+   "id": "computational-thinking",
+   "label": "Computational thinking",
+   "about": "How to frame a problem, break it into parts, find patterns, and write steps that someone else or a computer can follow.",
+   "lessons": [
+    "frame",
+    "decompose",
+    "patterns",
+    "abstract",
+    "algorithm",
+    "rules",
+    "sorting",
+    "routes",
+    "growth",
+    "debug"
+   ]
   }
  ]
 }

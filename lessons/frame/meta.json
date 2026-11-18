@@ -1,0 +1,21 @@
+{
+ "id": "frame",
+ "title": "Framing a problem",
+ "label": "Framing a problem",
+ "desc": "Turn a vague request into inputs, outputs and limits.",
+ "outcomes": [
+  "Name the inputs, outputs and limits of a problem",
+  "Say what makes a success test checkable by anyone",
+  "Name the facts still unknown before work starts"
+ ],
+ "tags": [
+  "problem framing",
+  "inputs",
+  "outputs",
+  "limits",
+  "success test"
+ ],
+ "area": "computational-thinking",
+ "needs": [],
+ "video": null
+}

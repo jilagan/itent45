@@ -1,0 +1,102 @@
+{
+ "lesson": "debug",
+ "items": [
+  {
+   "id": "debug-1",
+   "sec": "trace",
+   "type": "mc",
+   "stem": "A program shows a subtotal of 123 for 3 milk teas at 120 pesos, and the total at the end is also wrong. A teammate rewrites the last step. Why is that a poor choice?",
+   "options": [
+    {
+     "text": "The subtotal is the first wrong value, so the cause is in step 3.",
+     "correct": true,
+     "feedback": "Changing a later step hides the symptom and leaves the cause in place."
+    },
+    {
+     "text": "The last step is always correct, so nobody should edit it.",
+     "correct": false,
+     "feedback": "Last steps can be wrong. In this program an earlier step caused the error."
+    },
+    {
+     "text": "Rewriting any step breaks the program.",
+     "correct": false,
+     "feedback": "Rewriting is fine when it changes the step that caused the error."
+    }
+   ]
+  },
+  {
+   "id": "debug-2",
+   "sec": "test",
+   "type": "mc",
+   "stem": "A fix makes 3 teas at 120 pesos total 324, as expected, and the developer ships it. Later a customer buys 2 teas at 150 pesos, pays exactly 300 and gets no discount. Which test would have caught this?",
+   "options": [
+    {
+     "text": "An order of 50 teas at 120 pesos.",
+     "correct": false,
+     "feedback": "A large order is over 300 and gets the discount under either comparison. The mistake sits at exactly 300."
+    },
+    {
+     "text": "An order that totals exactly 300 pesos.",
+     "correct": true,
+     "feedback": "The rule says 300 or more. Only a test at 300 shows whether step 4 includes it."
+    },
+    {
+     "text": "A second order of 3 teas at 120 pesos.",
+     "correct": false,
+     "feedback": "That repeats a case that already passed."
+    }
+   ]
+  },
+  {
+   "id": "debug-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "A developer fixes a failing test by typing that order's expected total into the program. The test now passes. What is the problem?",
+   "options": [
+    {
+     "text": "The program gets longer and harder to read.",
+     "correct": false,
+     "feedback": "Length is a small cost. The steps are still wrong."
+    },
+    {
+     "text": "The test will fail again the next time someone runs it.",
+     "correct": false,
+     "feedback": "The test passes every time. The trouble is every other order."
+    },
+    {
+     "text": "Every other order still gets a wrong total, so the bug is still there.",
+     "correct": true,
+     "feedback": "Typing in one answer satisfies one test and leaves the steps wrong."
+    }
+   ]
+  },
+  {
+   "id": "debug-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "An AI assistant writes a discount function and says it works. You have 30 seconds before it goes live. What is the best use of the time?",
+   "options": [
+    {
+     "text": "Read the function's name and trust what it says it does.",
+     "correct": false,
+     "feedback": "A name describes what the author meant. The steps decide the result."
+    },
+    {
+     "text": "Ask the assistant a second time whether the code works.",
+     "correct": false,
+     "feedback": "A second answer from the same source is not a test."
+    },
+    {
+     "text": "Read the code once from top to bottom.",
+     "correct": false,
+     "feedback": "Reading can miss a boundary. Running a case shows the result."
+    },
+    {
+     "text": "Run a normal order, an empty order and an order of exactly 300.",
+     "correct": true,
+     "feedback": "Three quick cases cover a typical input, an empty input and a boundary, where mistakes often sit."
+    }
+   ]
+  }
+ ]
+}

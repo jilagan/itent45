@@ -1,0 +1,90 @@
+{
+ "lesson": "algorithm",
+ "items": [
+  {
+   "id": "algorithm-1",
+   "sec": "write",
+   "type": "mc",
+   "stem": "A student writes: take cup, add tea, add milk, seal, add pearls, serve. The robot stops at step 5. Why?",
+   "options": [
+    {
+     "text": "The robot has no instruction for adding pearls.",
+     "feedback": "Add pearls is one of the seven instructions. The order of the steps caused the stop."
+    },
+    {
+     "text": "The cup was sealed at step 4, so nothing more can be added.",
+     "correct": true,
+     "feedback": "Order matters. The pearls had to go in before the seal."
+    },
+    {
+     "text": "The list has too many steps for the robot.",
+     "feedback": "The robot can follow a list of this length. Step 4 closed the cup too early."
+    }
+   ]
+  },
+  {
+   "id": "algorithm-2",
+   "sec": "repeat",
+   "type": "predict",
+   "stem": "A program serves customers with \"repeat 6 times.\" On a busy afternoon the line has 9 people. What happens?",
+   "options": [
+    {
+     "text": "The robot serves all 9, because it checks the line.",
+     "feedback": "The count is fixed at 6, so the robot stops after six drinks whatever the line holds."
+    },
+    {
+     "text": "The robot makes 6 drinks and 3 half-made drinks.",
+     "feedback": "Each pass makes a complete drink. The robot stops after pass 6."
+    },
+    {
+     "text": "Three customers wait with no drink, because the program stops after 6.",
+     "correct": true,
+     "feedback": "A fixed count ignores the real line. 9 minus 6 leaves 3 customers waiting."
+    }
+   ],
+   "try": "Choose 6 times, press Add customer three times, then press Run line."
+  },
+  {
+   "id": "algorithm-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "A shop owner wants the robot to serve every customer, whatever the length of the line. Which rule gives that behavior?",
+   "options": [
+    {
+     "text": "Repeat the steps until the line is empty.",
+     "correct": true,
+     "feedback": "The stop rule follows the real line, so it works for a line of any length."
+    },
+    {
+     "text": "Repeat 10 times every time the shift runs.",
+     "feedback": "A line of 12 leaves two customers waiting, and a line of 5 makes five cups for nobody."
+    },
+    {
+     "text": "Repeat forever, with no stopping rule.",
+     "feedback": "A loop with no stopping rule keeps making drinks after the last customer leaves."
+    }
+   ]
+  },
+  {
+   "id": "algorithm-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "An AI assistant is asked to \"make the form better.\" It changes the colors, and the team wanted fewer fields. What would have prevented this?",
+   "options": [
+    {
+     "text": "A longer chat that thanks the assistant after each answer.",
+     "feedback": "Polite words do not make an instruction exact."
+    },
+    {
+     "text": "An exact instruction, such as \"keep only name, email and phone.\"",
+     "correct": true,
+     "feedback": "Exact steps leave the reader nothing to guess, whether the reader is a robot or an AI assistant."
+    },
+    {
+     "text": "Asking the same request three times in a row.",
+     "feedback": "Repeating a vague request gives three vague answers."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,83 @@
+    <section class="panel" id="p-rules">
+      <div class="head">
+        <h2>Decision rules and tables</h2>
+        <p>Rules that look clear can clash or leave a case open. A table of every case, plus tests at the edges, finds the gaps before customers do.</p>
+      </div>
+
+      <div class="sec" data-sec="store-sign" data-title="Start with the store sign">
+        <p>The campus store posts a sign: students get 10 percent off, and orders over 1,000 pesos get 5 percent off. A student arrives with a 1,200 peso order. The cashier wonders whether to give 10, 5 or 15 percent. A table that lists every case gives one clear answer for each.</p>
+        <div class="scene" role="group" aria-label="The cashier applies the rules, the sign holds the rules, the student's order is the input" data-art="campus-store-discount-sign" data-art-desc="A cashier at a campus store counter points at a blank chart on the wall while a student holds out a stack of books.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Cashier</b><span>Applies the rules</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Sign</b><span>Rules</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>Student with an order</b><span>Input</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> Which discount should the 1,200 peso student get? What would you add to the sign so that every cashier gives the same answer?</div>
+        <div class="instructor">Expect answers of 10, 5 and 15. Ask each group to say which rule they used to choose, then move to the table.</div>
+      </div>
+
+      <div class="sec" data-sec="table" data-title="Fill the decision table">
+        <p>A <dfn title="A table with one row for every combination of conditions and the result for each">decision table</dfn> has a row for every combination of <dfn title="A yes or no test, such as order over 1,000 pesos">conditions</dfn>. Two conditions make four rows, and each new condition doubles the rows. The store takes the larger discount when two rules apply. Choose a discount for each row, then press Check.</p>
+        <div class="rtw" id="rtTable">
+          <div class="rtgrid" id="rtRows" role="group" aria-label="Decision table"></div>
+          <div class="ctrls">
+            <button type="button" class="btn primary" id="rtCheck">Check</button>
+            <button type="button" class="btn" id="rtReset">Reset</button>
+          </div>
+          <div class="meter">
+            <div class="g" id="rtCount"><div class="gl">Rows in the table</div><div class="gv">4</div></div>
+            <div class="g" id="rtRight"><div class="gl">Rows right</div><div class="gv">—</div></div>
+          </div>
+          <div class="verdict" id="rtVerdict" role="status" aria-live="polite"></div>
+          <div class="rttry" id="rtTry" hidden>
+            <div class="card-t">Try an order</div>
+            <div class="rtform">
+              <label class="rtcheck"><input type="checkbox" id="rtStudent" checked> Student</label>
+              <label class="rtamt">Order amount in pesos <input type="number" id="rtAmount" value="1200" min="0" step="1" inputmode="numeric"></label>
+              <button type="button" class="btn primary" id="rtTryBtn">Try order</button>
+            </div>
+            <div class="verdict" id="rtTryVerdict" role="status" aria-live="polite"></div>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>How many rows</h4>
+          <p>Two conditions make 4 rows, three make 8 and ten make 1,024. A table stays readable for a few conditions, so large rule sets are split into smaller tables.</p>
+          <h4>In software</h4>
+          <p>An if statement, a SQL <code>WHERE</code> clause and a spreadsheet IF formula each write a decision table in a different notation. <a data-lesson="sql">Reading and changing data with SQL</a> shows <code>WHERE</code>.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="gap" data-title="Find the problems">
+        <p>Rules written as sentences can clash or leave a case open. Press an order to run the rules on it. Flag an order when two discounts compete, or when its amount sits exactly on the edge of a rule.</p>
+        <div class="rtw" id="rtTester">
+          <div class="rtrules" id="rtRulesBox"></div>
+          <div class="rtresult" id="rtResult" role="status" aria-live="polite"></div>
+          <div class="rtorders" id="rtOrders" role="group" aria-label="Test orders"></div>
+          <div class="ctrls">
+            <button type="button" class="btn primary" id="rtFlagCheck">Check my flags</button>
+            <button type="button" class="btn" id="rtFlagReset">Reset</button>
+          </div>
+          <div class="meter">
+            <div class="g" id="rtTested"><div class="gl">Orders tested</div><div class="gv">0 of 8</div></div>
+            <div class="g" id="rtFlagged"><div class="gl">Orders flagged</div><div class="gv">0</div></div>
+            <div class="g" id="rtFound"><div class="gl">Problems found</div><div class="gv">—</div></div>
+          </div>
+          <div class="verdict" id="rtFlagVerdict" role="status" aria-live="polite"></div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Two rules firing</h4>
+          <p>Two rules can fire on one order without a problem when they change different things. A member order over 1,000 pesos gets 5 percent off and free shipping.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="edges" data-title="Testing the edges">
+        <p>Most rule mistakes sit at an edge. A <dfn title="A value at the exact edge of a rule">boundary value</dfn> for "over 1,000" is 1,000. Test one value below, one at and one above: 999, 1,000 and 1,001 pesos. Write the edge in words, such as "1,000 pesos or more," so every cashier reads it the same way.</p>
+        <p class="outcome">You can now list every case of a rule in a table, find where rules clash, and test the edges.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Other edges</h4>
+          <p>A birthday on the cutoff date, member number 50 in "the first 50 members," and an empty list are all edges. Test the values on both sides of each one.</p>
+        </details>
+      </div>
+    </section>

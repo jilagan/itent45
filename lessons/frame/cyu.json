@@ -1,0 +1,97 @@
+{
+ "lesson": "frame",
+ "items": [
+  {
+   "id": "frame-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "The treasurer says, \"Keep the booth cheap.\" The team spends 4,200 pesos on a banner and then cannot afford tables. Which part of the framing was missing?",
+   "options": [
+    {
+     "text": "A limit written as a number, such as a total of 5,000 pesos.",
+     "correct": true,
+     "feedback": "\"Cheap\" gave no number, so each person picked a different ceiling. With a total of 5,000 pesos, a 4,200-peso banner would have raised a flag at once."
+    },
+    {
+     "text": "A longer list of volunteers to share the work.",
+     "correct": false,
+     "feedback": "More volunteers do not say how much money each item may use. The overspending came from the missing number."
+    },
+    {
+     "text": "A larger booth with room for more tables.",
+     "correct": false,
+     "feedback": "A larger booth costs more, and the team would still not know its ceiling."
+    }
+   ]
+  },
+  {
+   "id": "frame-2",
+   "sec": "test",
+   "type": "mc",
+   "stem": "One team writes the goal \"A good turnout.\" Another writes \"At least 80 visitors sign the sheet.\" At 5 PM the sheet has 62 names. What can each team say?",
+   "options": [
+    {
+     "text": "Both teams missed, since turnout cannot be measured at all.",
+     "correct": false,
+     "feedback": "Turnout can be measured by counting names. The first goal never named a count."
+    },
+    {
+     "text": "The second team missed by 18 names. The first team can argue either way.",
+     "correct": true,
+     "feedback": "80 minus 62 is 18. The first goal has no count, so its result is open to debate."
+    },
+    {
+     "text": "Both teams succeeded, because 62 visitors is a fair crowd.",
+     "correct": false,
+     "feedback": "The second goal sets 80 as the line, so 62 misses it."
+    }
+   ]
+  },
+  {
+   "id": "frame-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "A developer is asked to \"build a sign-up page.\" The page works, but the org wanted every name copied into a shared spreadsheet. Which part of the problem was left out?",
+   "options": [
+    {
+     "text": "The input: which fields visitors fill in.",
+     "correct": false,
+     "feedback": "The page collected names, so the input was clear. The gap came after the form was submitted."
+    },
+    {
+     "text": "The limit: how fast the page loads.",
+     "correct": false,
+     "feedback": "Nobody asked about speed. The missing piece is what happens to the names."
+    },
+    {
+     "text": "The output: what must be produced and where it ends up.",
+     "correct": true,
+     "feedback": "The spreadsheet was the real output, and nobody wrote it down. The page produced a result nobody wanted."
+    }
+   ]
+  },
+  {
+   "id": "frame-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "Two teammates plan the booth layout. One assumes there is a power outlet and the other assumes there is none. What should the team do first?",
+   "options": [
+    {
+     "text": "Plan for no outlet and skip the question.",
+     "correct": false,
+     "feedback": "This avoids one risk but may waste a laptop demo that would have worked."
+    },
+    {
+     "text": "Ask the organizers and write down the answer.",
+     "correct": true,
+     "feedback": "The organizers know the fact, and one message settles it. The plan then rests on a checked fact."
+    },
+    {
+     "text": "Vote on which assumption is likelier.",
+     "correct": false,
+     "feedback": "A vote counts opinions. The organizers have the answer."
+    }
+   ]
+  }
+ ]
+}

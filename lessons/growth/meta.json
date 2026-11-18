@@ -1,0 +1,20 @@
+{
+ "id": "growth",
+ "title": "How work grows with the list",
+ "label": "How work grows",
+ "desc": "Estimate how the number of steps grows when a list doubles.",
+ "outcomes": [
+  "Say what happens to the steps of a job when its list doubles",
+  "Name which of three jobs grows fastest as the list gets longer",
+  "Predict whether a method will finish in reasonable time for a longer list"
+ ],
+ "tags": [
+  "growth",
+  "steps",
+  "estimation",
+  "N+1"
+ ],
+ "area": "computational-thinking",
+ "needs": [],
+ "video": null
+}

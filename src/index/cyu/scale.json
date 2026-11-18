@@ -1,0 +1,122 @@
+{
+ "panel": "scale",
+ "items": [
+  {
+   "id": "scale-1",
+   "sec": "balancer",
+   "type": "mc",
+   "stem": "An application keeps each user's login session in the memory of the machine that handled the login. The team adds a second machine behind a load balancer that uses round robin. What do users experience?",
+   "options": [
+    {
+     "text": "Some users are logged out at random.",
+     "correct": true,
+     "feedback": "A user who logs in on machine 1 may send the next request to machine 2, which has no record of the login. The session data has to be kept outside the application machine."
+    },
+    {
+     "text": "Nothing changes, because the two machines share their memory.",
+     "correct": false,
+     "feedback": "Each machine has its own memory, and machines do not share it automatically."
+    },
+    {
+     "text": "The site goes down, because a load balancer needs a single machine.",
+     "correct": false,
+     "feedback": "A load balancer is designed for several machines. The problem comes from where the application keeps the session data."
+    }
+   ]
+  },
+  {
+   "id": "scale-2",
+   "sec": "balancer",
+   "type": "predict",
+   "stem": "Before you try it: machine E is four times slower than the others and the load balancer uses round robin. While traffic is running, what will the in-progress counts show?",
+   "options": [
+    {
+     "text": "About the same number on every machine.",
+     "correct": false,
+     "feedback": "Round robin gives every machine the same number of requests, but E finishes them more slowly, so its requests pile up."
+    },
+    {
+     "text": "More requests in progress on E than on the others.",
+     "correct": true,
+     "feedback": "Every machine receives the same number of requests, and E takes four times as long to finish each one. Requests accumulate on E."
+    },
+    {
+     "text": "Fewer requests in progress on E, because it is slower.",
+     "correct": false,
+     "feedback": "A slower machine holds each request for longer, so more of them are in progress at the same time."
+    }
+   ],
+   "try": "Press Send traffic with round robin selected and watch the in-progress count on E. Then switch to least connections."
+  },
+  {
+   "id": "scale-3",
+   "sec": "balancer",
+   "type": "mc",
+   "stem": "Machine C crashes while the load balancer is running health checks. What happens to requests after the next failed check?",
+   "options": [
+    {
+     "text": "The load balancer stops sending requests to C and the other machines take its share.",
+     "correct": true,
+     "feedback": "This is what a health check is for. A few requests sent before the check fails may get errors, but after that users are not affected."
+    },
+    {
+     "text": "Every request fails until someone restarts C.",
+     "correct": false,
+     "feedback": "The load balancer routes around a machine that fails its health check."
+    },
+    {
+     "text": "Requests wait in the load balancer until C comes back.",
+     "correct": false,
+     "feedback": "The load balancer sends requests to machines that are working. It does not hold requests for a failed machine."
+    }
+   ]
+  },
+  {
+   "id": "scale-4",
+   "sec": "bottlenecks",
+   "type": "predict",
+   "stem": "Before you try it: the load is 400 requests per second, each machine handles 80, and each request needs 3 database queries. The database handles 300 queries per second. You turn on the load balancer and set 5 application machines. Which part limits the system now?",
+   "options": [
+    {
+     "text": "The application machines.",
+     "correct": false,
+     "feedback": "Five machines handle 5 × 80 = 400 requests per second, which is enough for the load."
+    },
+    {
+     "text": "The database.",
+     "correct": true,
+     "feedback": "At 3 queries per request, 300 queries per second allows only 100 requests per second. Five machines can send far more than that."
+    },
+    {
+     "text": "The load balancer.",
+     "correct": false,
+     "feedback": "The load balancer is not the limit in this model. The database is."
+    }
+   ],
+   "try": "Turn on the load balancer, set Application machines to 5 and read the verdict."
+  },
+  {
+   "id": "scale-5",
+   "sec": "bottlenecks",
+   "type": "mc",
+   "stem": "The database is the bottleneck: 3 queries per request and 300 queries per second allow only 100 requests per second. Which change raises the limit the most?",
+   "options": [
+    {
+     "text": "Add a cache that answers 70% of the queries.",
+     "correct": true,
+     "feedback": "Only 30% of the queries reach the database, which is 0.9 queries per request. The database can then serve about 333 requests per second."
+    },
+    {
+     "text": "Add more application machines.",
+     "correct": false,
+     "feedback": "The machines are not the limit. More of them would send more queries to the same database."
+    },
+    {
+     "text": "Make the handler faster.",
+     "correct": false,
+     "feedback": "A faster handler helps the application machines, but the limit here is the number of queries the database can answer."
+    }
+   ]
+  }
+ ]
+}

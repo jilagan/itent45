@@ -1,0 +1,118 @@
+{
+ "panel": "txn",
+ "items": [
+  {
+   "id": "txn-1",
+   "sec": null,
+   "type": "predict",
+   "stem": "Before you try it: two sessions both read slots = 1, with no transaction. Both pass the check and both write. How many enrollments exist at the end?",
+   "options": [
+    {
+     "text": "Two, so the seat is sold twice.",
+     "correct": true,
+     "feedback": "Correct. Both sessions read 1 before either one wrote, so both believed a seat was free."
+    },
+    {
+     "text": "One, because the database stops the second session.",
+     "correct": false,
+     "feedback": "Nothing stops the second session. The database does not know that the two sessions are competing for the same seat."
+    },
+    {
+     "text": "One, because the second UPDATE fails when slots is already 0.",
+     "correct": false,
+     "feedback": "The UPDATE sets slots to 0 whatever the current value is, so it does not fail."
+    },
+    {
+     "text": "Zero, because the two sessions cancel each other.",
+     "correct": false,
+     "feedback": "Neither session is undone. Both insert an enrollment."
+    }
+   ],
+   "try": "Open the \"No transaction\" tab in the widget above, press Run it, and read the Seats left column and the final result."
+  },
+  {
+   "id": "txn-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "A developer wraps the same statements in BEGIN and COMMIT and expects the problem to disappear. What happens?",
+   "options": [
+    {
+     "text": "Both sessions can still read 1 and both enroll, because a transaction does not stop another session from reading the row.",
+     "correct": true,
+     "feedback": "Correct. A transaction groups statements into one unit, but at the default isolation level it does not lock the row."
+    },
+    {
+     "text": "The second session is blocked until the first one commits.",
+     "correct": false,
+     "feedback": "Blocking happens only when you ask for a lock, for example with SELECT ... FOR UPDATE. A plain transaction does not lock."
+    },
+    {
+     "text": "The database rolls back the second enrollment automatically.",
+     "correct": false,
+     "feedback": "The database rolls back only on an error. Nothing is wrong with the second session's statements."
+    },
+    {
+     "text": "Only one session can run BEGIN at a time.",
+     "correct": false,
+     "feedback": "Many sessions can have transactions open at once."
+    }
+   ]
+  },
+  {
+   "id": "txn-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "Which fix lets the second student find out that the seat is gone, without anyone waiting?",
+   "options": [
+    {
+     "text": "One UPDATE statement with `WHERE slots > 0`, then check how many rows it changed.",
+     "correct": true,
+     "feedback": "Correct. The check and the change happen in one statement, so there is no gap, and a row count of 0 tells the second student that the seat is gone."
+    },
+    {
+     "text": "Lock the row with SELECT ... FOR UPDATE before deciding.",
+     "correct": false,
+     "feedback": "This also works, but the second session waits for the first to finish. The question asks for a fix with no waiting."
+    },
+    {
+     "text": "Read the seat count twice before writing.",
+     "correct": false,
+     "feedback": "A second read still leaves a gap between reading and writing. Another session can write in that gap."
+    },
+    {
+     "text": "Add more web servers.",
+     "correct": false,
+     "feedback": "More web servers add more sessions that read the same row. The seat is contested in the database."
+    }
+   ]
+  },
+  {
+   "id": "txn-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "A COMMIT returns successfully and then the server loses power. After the restart, the enrollment is still in the table. Which guarantee made that happen?",
+   "options": [
+    {
+     "text": "Durability.",
+     "correct": true,
+     "feedback": "Correct. Durability means a committed change has been written to disk and survives a power failure."
+    },
+    {
+     "text": "Atomicity.",
+     "correct": false,
+     "feedback": "Atomicity means all of a transaction's statements happen or none do. It does not cover power failures after the commit."
+    },
+    {
+     "text": "Consistency.",
+     "correct": false,
+     "feedback": "Consistency means declared rules stay true. It does not decide whether a change survives a restart."
+    },
+    {
+     "text": "Isolation.",
+     "correct": false,
+     "feedback": "Isolation controls what sessions see of each other's work while they run. It has nothing to do with restarts."
+    }
+   ]
+  }
+ ]
+}

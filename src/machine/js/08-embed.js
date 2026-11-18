@@ -81,19 +81,19 @@ function emRender(){
   });
   $("#emMap").innerHTML=svg+`</svg>`;
   $("#emFeed").innerHTML = EM.last
-    ? `<span class="c">// sentence ${EM.seen}</span>\n<span class="kw">${EM.last.join("  ")}</span>\n<span class="c">// those three just moved toward each other; everything else drifted out</span>`
-    : `<span class="c">// nothing read yet. Every word is where it was dropped.</span>`;
+    ? `<span class="c">Sentence ${EM.seen}</span>\n<span class="kw">${EM.last.join("  ")}</span>\n<span class="c">These three words have moved closer together. All other words drifted slightly apart.</span>`
+    : `<span class="c">No sentences read yet. Every word is still at its starting position.</span>`;
   const sep=EM.seen?emSep():null;
   const set=(id,v,good)=>{const g=$(id);g.querySelector(".gv").firstChild.nodeValue=v;g.classList.toggle("good",!!good)};
   set("#emSeen", EM.seen);
   set("#emSep", sep===null?"\u2014":sep.toFixed(1)+"\u00d7", sep!==null&&sep>6);
   const v=$("#emVerdict");
   if(EM.seen===0){ v.className="verdict";
-    v.innerHTML=`<b>Fifteen words, dropped at random</b>No structure, no grouping, nothing meaning anything. Press <em>Run the training</em>.`;
+    v.innerHTML=`<b>Sixteen words at random positions</b>The words have no grouping yet. Press <em>Run the training</em>.`;
   } else if(sep<5){ v.className="verdict warn";
-    v.innerHTML=`<b>${EM.seen} sentences in, groups ${sep.toFixed(1)}× apart</b>Words are starting to drift toward the ones they appear with. Keep going.`;
+    v.innerHTML=`<b>${EM.seen} sentences in, groups ${sep.toFixed(1)}× apart</b>Words are starting to move toward the words they appear with. Keep going.`;
   } else { v.className="verdict ok";
-    v.innerHTML=`<b>Three clusters, and nobody named any of them</b>Groups are now <b>${sep.toFixed(1)}×</b> further from each other than from their own members. Royalty ended up together, places together, the hospital words together.<br><br>The rule that produced this was: words in the same sentence move closer, all words push apart a little. The algorithm has no further steps. No definition of <em>king</em> was supplied, and no category was declared.<br><br>Now go to the next panel, where those positions get used.`;
+    v.innerHTML=`<b>Three clusters have formed</b>Words from different groups are now <strong>${sep.toFixed(1)}×</strong> further apart, on average, than words in the same group. The royalty words are together, the place words are together and the hospital words are together. Nobody named these clusters.<br><br>The training rule had two parts: words in the same sentence move closer, and all words push apart a little. There were no other steps. Nobody supplied a definition of <em>king</em> or declared a category.<br><br>The next panel uses positions like these.`;
   }
 }
 $("#emStep").onclick=()=>{ emOne(EMC[EM.seen % EMC.length]); emRender(); };

@@ -1,19 +1,19 @@
     <section class="panel on" id="p-tiers">
       <div class="head">
-        <div class="eyebrow">01 — Orientation</div>
-        <h2>A web app is three programs on different machines, passing messages</h2>
-        <p>An agent will write most of this code for you. The shape underneath still earns an afternoon. You have used Django views and SQL queries; what is usually left vague is where each piece runs and what has to happen between them. There are three tiers. Two run on a machine you control. One runs on a stranger's laptop, and that difference decides most of what follows.</p>
-        <div class="ask"><b>Ask the room</b> Point at any part of a page you use daily. Which tier produced it? Most people cannot say, and that is the gap this session closes.</div>
+        <h2>The three tiers of a web application</h2>
+        <p>In a restaurant, the customer never walks into the kitchen. The customer tells a waiter what they want, the waiter goes to the kitchen, collects the food and brings it back. A web application is divided in the same way. The customer is the browser, the waiter is the application server, and the kitchen is the database. Each of these three parts is called a tier. AI tools can write much of this code for you, but you still need to know where each tier runs and what passes between them. Two tiers run on servers you manage. The third runs on your user's own device, which you do not control.</p>
+        <div class="ask"><b>Think first</b> Pick any part of a page you use every day, such as the list of courses you enrolled in. Which tier produced it: the browser, the application server or the database? Write down your answer, then check it against the steps below.</div>
+        <div class="instructor">Most students cannot say which tier produced a given part of a page. The trace below fills that gap. Ask a few students for their answers before anyone presses Play.</div>
       </div>
 
       <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-        <span style="font-family:var(--mono);font-size:.6em;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)">Stack</span>
+        <span style="color:var(--faint)">Framework</span>
         <div class="viewtog" style="margin:0" id="stackTog">
-          <button data-st="django" aria-pressed="true">DJANGO · PYTHON</button>
-          <button data-st="express" aria-pressed="false">EXPRESS · NODE</button>
-          <button data-st="laravel" aria-pressed="false">LARAVEL · PHP</button>
+          <button data-st="django" aria-pressed="true">Django (Python)</button>
+          <button data-st="express" aria-pressed="false">Express (Node)</button>
+          <button data-st="laravel" aria-pressed="false">Laravel (PHP)</button>
         </div>
-        <span style="font-size:.74em;color:var(--faint);margin-left:auto">Same twelve steps. Different words.</span>
+        <span style="font-size:.74em;color:var(--faint);margin-left:auto">A framework is a ready-made toolkit for building the application tier. The twelve steps are the same in each one.</span>
       </div>
       <div class="flow">
         <div class="tbox" data-t="1" id="tb1"></div>
@@ -43,9 +43,9 @@
           <p style="margin:0;font-size:.86em;color:var(--dim);line-height:1.6" id="trText"></p>
           <div class="artlbl" id="trLbl"></div>
           <div class="viewtog">
-            <button id="vWire" aria-pressed="true">WIRE FORMAT</button>
-            <button id="vDom" aria-pressed="false">DOM TREE</button>
-            <button id="vRender" aria-pressed="false">RENDERED VIEW</button>
+            <button id="vWire" aria-pressed="true">Message text</button>
+            <button id="vDom" aria-pressed="false">Element tree (DOM)</button>
+            <button id="vRender" aria-pressed="false">What the user sees</button>
           </div>
           <div class="art" id="trArt"></div>
           <div class="art" id="trDom" style="display:none"></div>
@@ -68,11 +68,11 @@
             <button class="btn" id="trRst">Reset</button>
           </div>
           <div class="whynot">
-            <b>The question worth asking</b>
-            Why not let the browser talk to the database directly and skip the middle? Because the database password would then have to live in code running on the user's laptop. Anyone could read it, and then run any query they liked. The application tier exists to be the only thing holding the keys, and the only thing deciding which questions are allowed.
+            <b>Why the browser cannot talk to the database directly</b>
+            Suppose it could. The database password would then have to be stored in code running on the user's laptop. Anyone could read it and run any query they liked. In the restaurant, that would be a customer walking into the kitchen and helping themselves. The application tier is the only part that holds the database password, and it decides which requests are allowed.
           </div>
           <div class="rtt-note" style="margin-top:14px">
-            <b id="stackNote"></b>
+            <div id="stackNote"></div>
           </div>
         </div>
       </div>

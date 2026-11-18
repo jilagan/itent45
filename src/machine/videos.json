@@ -1,0 +1,5 @@
+[
+  {"panel":"next","sec":"one-word","youtube":"","title":"A real model's probabilities at temperature 0 and 1","about":"The same prompt run at temperature 0 and temperature 1 in a real model playground, with the probabilities shown, so students see output that varies."},
+  {"panel":"tokens","sec":null,"youtube":"","title":"Paste your own text into a real tokenizer","about":"A student's own name, a Tagalog sentence and a line of code pasted into a real tokenizer, with live token counts."},
+  {"panel":"loop","sec":null,"youtube":"","title":"A coding agent session in 90 seconds","about":"A real coding agent reading files, editing, running tests, failing, retrying, and stopping to ask permission."}
+]

@@ -13,8 +13,8 @@ const SNIP=[
          "        })",
          '    return JsonResponse({"courses": rows})'],
   bad:2, also:[4],
-  cat:"It has not run anything",
-  why:`Line 3 fetches the enrolments and stops there. Every <code>e.course</code> inside the loop is a fresh trip to the database, so fifty enrolments cost fifty-one queries.<br><br>The fix goes on line 3: <code>.select_related("course")</code>. The symptom shows in the loop. People look there and find nothing wrong, because nothing there <em>is</em> wrong.<br><br>Nothing in the code can tell you this. It only appears under a row count the model never saw.`},
+  cat:"Slow with real data (N+1 queries)",
+  why:`Line 3 asks for the student's enrollments but does not fetch the courses. Each time the loop reads <code>e.course</code>, Django sends another query (a request to the database) to fetch that course. With fifty enrollments that makes fifty-one queries: one for the list and fifty for the courses.<br><br>The fix goes on line 3: <code>.select_related("course")</code>, which tells Django to fetch each course in the same query. The slowdown shows up in the loop, but line 3 is where to fix it.<br><br>Reading the code does not reveal this. It only shows up with a number of rows the model never saw.`},
  {id:"upd", label:"Close a course", task:"Asked for: set a single course to zero remaining slots.",
   lines:["@require_POST",
          "def close_course(request):",
@@ -22,10 +22,10 @@ const SNIP=[
          "    Course.objects.update(slots=0)",
          '    return JsonResponse({"ok": True})'],
   bad:3, also:[],
-  cat:"No truth check",
-  why:`Line 4 has no filter, so it closes every course in the catalog. The tell is on line 3: <code>code</code> is read and then never used again.<br><br>It runs without complaint and returns <code>{"ok": true}</code>. There is no error to notice, no exception in the log, and no undo. The only sign anything happened is a number in a response nobody reads.`},
- {id:"race", label:"Enrol a student", task:"Asked for: enrol a student if a seat is free.",
-  lines:["def enrol(request, code):",
+  cat:"Changes more than intended (missing filter)",
+  why:`Line 4 has no filter, so it closes every course in the catalog. The clue is on line 3: <code>code</code> is read and then never used again.<br><br>The function runs without complaint and returns <code>{"ok": true}</code>. There is no error message, no exception in the log and no undo. The only sign that anything happened is a response nobody reads.`},
+ {id:"race", label:"Enroll a student", task:"Asked for: enroll a student if a seat is free.",
+  lines:["def enroll(request, code):",
          "    course = Course.objects.get(code=code)",
          "    if course.slots > 0:",
          "        Enrollment.objects.create(",
@@ -35,8 +35,8 @@ const SNIP=[
          '        return JsonResponse({"ok": True})',
          '    return JsonResponse({"error": "full"}, status=409)'],
   bad:2, also:[5],
-  cat:"It has not run anything",
-  why:`Line 3 reads the seat count, and line 6 writes it back. Between those two lines another request can read the same number.<br><br>On a quiet afternoon this is correct. On enlistment morning two students both see one free seat, both pass the check, and both get enrolled. You have met this already: it is the transactions panel in the Module 1 tool.<br><br>The code is not wrong so much as it is <b class="i">only correct when nobody else is using it</b>, which is not a property you can see by reading.`},
+  cat:"Fails when two requests overlap (race condition)",
+  why:`Line 3 reads the seat count, and line 6 writes it back. Between those two lines, another request can read the same number.<br><br>On a quiet afternoon this works. On enlistment morning, two students both see one free seat, both pass the check, and both are enrolled. This is the problem in the Module 1 site, "Transactions and two users changing the same data".<br><br>The code is <b class="i">only correct when nobody else is using it</b>, and you cannot see that by reading it.`},
  {id:"hall", label:"Fetch one course", task:"Asked for: return a course, or 404 if there is no such code.",
   lines:["def course_detail(request, code):",
          "    course = Course.objects.get_or_none(code=code)",
@@ -45,8 +45,8 @@ const SNIP=[
          '    return JsonResponse({"code": course.code,',
          '                         "title": course.title})'],
   bad:1, also:[],
-  cat:"It invents things that fit the pattern",
-  why:`Line 2 calls <code>get_or_none()</code>, which the Django ORM does not have. There is <code>get()</code>, there is <code>filter().first()</code>, there is <code>get_or_create()</code>, and this sits neatly among them.<br><br>It was produced because it has the shape of a method Django would plausibly provide, and everything around it handles the return value correctly.<br><br>This one at least fails loudly the first time you run it. The other three do not.`}
+  cat:"Calls a method that does not exist",
+  why:`Line 2 calls <code>get_or_none()</code>, which the Django ORM does not have. The ORM is the part of Django that lets code read and write database rows. It has <code>get()</code>, <code>filter().first()</code> and <code>get_or_create()</code>, and the invented method fits neatly among them.<br><br>The model produced it because it has the shape of a method Django could plausibly provide, and the code around it handles the result correctly.<br><br>This one fails with an error the first time you run it. The other three run without any error.`}
 ];
 const VB={sel:"n1", picks:{}, first:null};
 function vbRender(){
@@ -77,20 +77,20 @@ function vbRender(){
   const v=$("#vbVerdict");
   if(p===undefined){
     v.className="verdict";
-    v.innerHTML=`<b>Click the line that causes the problem</b>The code runs. The tests somebody wrote for it probably pass. One line still makes it unsafe to ship.`;
+    v.innerHTML=`<b>Click the line that causes the problem</b>The code runs, and any tests written for it probably pass. One line still makes it unsafe to ship.`;
     return;
   }
   const right=p===q.bad;
   v.className="verdict "+(right?"ok":"bad");
   v.innerHTML=(right
-    ? `<b>Line ${q.bad+1}. That is the one.</b>`
-    : `<b>Line ${p+1} is fine. It is line ${q.bad+1}.</b>`)
-    + `<span style="display:block;font-family:var(--mono);font-size:.72em;letter-spacing:.08em;text-transform:uppercase;color:var(--req);margin:2px 0 8px">${q.cat}</span>`
+    ? `<b>Line ${q.bad+1} is the problem.</b>`
+    : `<b>Line ${p+1} is fine. The problem is on line ${q.bad+1}.</b>`)
+    + `<span style="display:block;color:var(--req);margin:2px 0 8px">${q.cat}</span>`
     + q.why
     + (done===SNIP.length
       ? `<br><br><b class="i">${got} of ${SNIP.length}.</b> ${got===SNIP.length
-          ? "All four. Now notice how long that took you, with four short snippets, knowing in advance that each held exactly one defect. An agent will hand you three hundred lines and tell you the tests pass."
-          : "Every one of these reads like working Django, because it is working Django until the conditions change. The difficulty is that there is no visual tell, so review has to be a procedure and not an impression."}`
+          ? "You found all four. Notice how long that took with four short snippets, when you knew each held exactly one defect. An agent will hand you three hundred lines and tell you the tests pass."
+          : "Each snippet reads like correct Django code and runs without errors. Nothing on the screen marks the problem, so a review needs a fixed set of questions: what is in the tables, what runs twice, and what happens when two people click at once."}`
       : "");
 }
 $("#vbReset").onclick=()=>{VB.picks={};VB.first=null;vbRender()};

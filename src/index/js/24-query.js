@@ -2,9 +2,9 @@
 const Q={rows:50, mode:"naive"};
 const Q_MS=0.4, Q_BASE=24, Q_WORKERS=8;
 const QMODES=[
- {id:"naive", n:"The obvious way", s:"Loop the enrolments, read the title from each one."},
- {id:"join",  n:"Ask for it up front", s:"One join, one trip. Django spells it select_related."},
- {id:"cache", n:"Ask once, remember", s:"Titles change rarely, so hold them in memory."}
+ {id:"naive", n:"One query per row", s:"Loop over the enrollments and read the title from each one."},
+ {id:"join",  n:"One join", s:"One query fetches each enrollment together with its course. Django calls this select_related."},
+ {id:"cache", n:"Cache the titles", s:"Titles change rarely, so keep a copy in memory."}
 ];
 function qModel(){
   const n=Q.rows;
@@ -26,7 +26,7 @@ rows = Enrollment.objects.filter(student=me)      <span class="c"># 1 query</spa
 
 <span class="c"># templates/schedule.html</span>
 {% for e in rows %}
-  {{ e.course.title }}   <span class="c">&lt;- one query, every time round the loop</span>
+  {{ e.course.title }}   <span class="c">&lt;- one more query for every row</span>
 {% endfor %}`
    : Q.mode==="join"
    ? `<span class="c"># views.py</span>
@@ -35,9 +35,9 @@ rows = Enrollment.objects.filter(student=me) \\
 
 <span class="c"># templates/schedule.html</span>
 {% for e in rows %}
-  {{ e.course.title }}   <span class="c">&lt;- already in memory, costs nothing</span>
+  {{ e.course.title }}   <span class="c">&lt;- already loaded, no extra query</span>
 {% endfor %}`
-   : `<span class="c"># the titles change a few times a year</span>
+   : `<span class="c"># the titles change a few times a year, so keep a copy</span>
 titles = cache.get(<span class="s">"course_titles"</span>)
 <span class="kw">if</span> titles <span class="kw">is</span> <span class="kw">None</span>:
     titles = {c.id: c.title <span class="kw">for</span> c <span class="kw">in</span> Course.objects.all()}
@@ -46,9 +46,9 @@ titles = cache.get(<span class="s">"course_titles"</span>)
 rows = Enrollment.objects.filter(student=me)      <span class="c"># 1 query</span>`;
   $("#qCode").innerHTML=code;
   $("#qNote").textContent = Q.mode==="naive"
-    ? `${n} enrolments on the page, ${n+1} times the database was asked something`
-    : Q.mode==="join" ? "one trip, however many rows come back"
-    : "one trip for the enrolments, and the titles were already here";
+    ? `${n} enrollments on the page, so the database was queried ${n+1} times`
+    : Q.mode==="join" ? "one query, however many rows come back"
+    : "one query for the enrollments, and the titles were already in memory";
 
   const set=(id,v,hot,good)=>{const g=$(id);g.querySelector(".gv").firstChild.nodeValue=v;
     g.classList.toggle("hot",!!hot);g.classList.toggle("good",!!good)};
@@ -61,13 +61,13 @@ rows = Enrollment.objects.filter(student=me)      <span class="c"># 1 query</spa
   const v=$("#qVerdict");
   if(Q.mode==="naive"){
     v.className = n>20 ? "verdict bad" : "verdict warn";
-    v.innerHTML=`<b>${n+1} queries for one page</b>One to fetch the enrolments, then one more for every row, because the template asks for <code>e.course.title</code> and the course was never loaded. This is the <b class="i">N+1 query</b>, the most common performance bug in applications built this way.<br><br>At ${n} rows the box tops out at <b class="i">${Math.round(m.rps)} requests a second</b>. Switch to the join and watch that number.`;
+    v.innerHTML=`<b>${n+1} queries for one page</b>The view runs one query to fetch the enrollments. The template then runs one more query for each row, because it asks for <code>e.course.title</code> and the course was never loaded. This is the <b class="i">N+1 query problem</b>, and it is a common performance bug in applications built this way.<br><br>At ${n} rows the server tops out at <b class="i">${Math.round(m.rps)} requests a second</b>. Switch to "One join" and compare that number.`;
   } else if(Q.mode==="join"){
     v.className="verdict ok";
-    v.innerHTML=`<b>1 query, and the ceiling went from ${Math.round(naive.rps)} to ${Math.round(m.rps)} rps</b>Same page, same rows, same output. <code>select_related("course")</code> tells the database to bring the courses along in the same trip, so the template finds them already in memory. One line, <b class="i">${(m.rps/naive.rps).toFixed(1)}×</b> the capacity.<br><br>This is the line an agent will not add for you, because the version without it is correct.`;
+    v.innerHTML=`<b>1 query, and the ceiling rose from ${Math.round(naive.rps)} to ${Math.round(m.rps)} rps</b>The page, the rows and the output are the same. <code>select_related("course")</code> tells the database to return the courses together with the enrollments in one query, so the template finds them already loaded. One line of code gives <b class="i">${(m.rps/naive.rps).toFixed(1)}×</b> the capacity.<br><br>AI tools often leave this line out, because the version without it also produces a correct page.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>Also 1 query, and it survives the join getting expensive</b>Course titles change a few times a year, so holding them in memory for an hour costs almost nothing and removes them from the request path entirely. Worth it when the joined table is small and static. Not worth it when the data changes under you, because then you have two copies and one of them is wrong, which is panel 14 again wearing a different hat.`;
+    v.innerHTML=`<b>Also 1 query, with no join needed</b>Course titles change a few times a year, so a cache, which is a copy kept in memory, can hold them for an hour at almost no cost. The title lookups then leave the request entirely. This works well when the table is small and rarely changes. It works badly when the data changes often, because then you hold two copies of the same fact and one of them is out of date. "Normalization: storing each fact once" describes the same problem.`;
   }
 }
 $("#sQRows").oninput=e=>{Q.rows=+e.target.value;$("#vQRows").textContent=Q.rows;qRender()};

@@ -37,7 +37,7 @@ function nnDiagram(){
   }
   ["hours","attendance"].forEach((lb,i)=>{
     g+=`<circle cx="86" cy="${iy[i]}" r="9" fill="var(--panel2)" stroke="var(--res)" stroke-width="1.6"/>
-        <text x="70" y="${iy[i]+4}" text-anchor="end" font-family="monospace" font-size="10" fill="var(--dim)">${lb}</text>`;
+        <text x="70" y="${iy[i]+4}" text-anchor="end" font-size="10" fill="var(--dim)">${lb}</text>`;
   });
   for(let i=0;i<k;i++){
     const on=NN.pick===i;
@@ -46,18 +46,18 @@ function nnDiagram(){
         stroke="${on?"var(--req)":"var(--line3)"}" stroke-width="${on?2.2:1.6}" style="cursor:pointer"/>`;
   }
   g+=`<circle cx="${W-96}" cy="${H/2}" r="10" fill="var(--panel2)" stroke="var(--res)" stroke-width="1.8"/>
-      <text x="${W-80}" y="${H/2+4}" font-family="monospace" font-size="10" fill="var(--dim)">stays or drops</text>
-      <text x="86" y="14" text-anchor="middle" font-family="monospace" font-size="9" fill="var(--faint)">INPUT</text>
-      <text x="${W/2}" y="14" text-anchor="middle" font-family="monospace" font-size="9" fill="var(--req)">HIDDEN LAYER</text>
-      <text x="${W-96}" y="14" text-anchor="middle" font-family="monospace" font-size="9" fill="var(--faint)">OUTPUT</text>`;
+      <text x="${W-80}" y="${H/2+4}" font-size="10" fill="var(--dim)">stays or drops</text>
+      <text x="86" y="14" text-anchor="middle" font-size="9" fill="var(--faint)">Input</text>
+      <text x="${W/2}" y="14" text-anchor="middle" font-size="9" fill="var(--req)">Hidden layer</text>
+      <text x="${W-96}" y="14" text-anchor="middle" font-size="9" fill="var(--faint)">Output</text>`;
   $("#nnDiag").innerHTML=g+`</svg>`;
   $$("#nnDiag .hu").forEach(el=>{
     el.onclick=()=>{ NN.pick = NN.pick===+el.dataset.u ? null : +el.dataset.u; nnRender(); };
     el.onmouseenter=()=>{ NN.pick=+el.dataset.u; nnRender(); };
   });
   $("#nnDiagCap").innerHTML = NN.pick===null
-    ? `The diagram everyone has seen, and the plot below it are the same thing. <b style="color:var(--ink)">Point at any circle in the middle row</b> and watch which line in the plot belongs to it.`
-    : `That circle is one unit. The two arrows going into it carry a weight each, and those two numbers plus a bias are what set the angle and position of <b style="color:var(--req)">the highlighted line below</b>. Nothing else about it exists.`;
+    ? `The diagram above and the plot below show the same network. <b style="color:var(--ink)">Point at any circle in the middle row</b> to see which line on the plot belongs to it.`
+    : `That circle is one unit. The two arrows going into it each carry a weight. Those two weights and a bias set the angle and position of <b style="color:var(--req)">the highlighted line below</b>. A unit has nothing else.`;
 }
 function nnRender(){
   const k=NN.units, {ph,r}=nnFit(k);
@@ -86,8 +86,8 @@ function nnRender(){
   svg+=`</g>
     <line x1="54" y1="250" x2="470" y2="250" stroke="var(--line2)"/>
     <line x1="54" y1="26" x2="54" y2="250" stroke="var(--line2)"/>
-    <text x="262" y="276" fill="var(--faint)" font-family="monospace" font-size="10.5" text-anchor="middle">hours studied</text>
-    <text x="18" y="140" fill="var(--faint)" font-family="monospace" font-size="10.5" text-anchor="middle" transform="rotate(-90 18 140)">other commitments</text>`;
+    <text x="262" y="276" fill="var(--faint)" font-size="10.5" text-anchor="middle">hours studied</text>
+    <text x="18" y="140" fill="var(--faint)" font-size="10.5" text-anchor="middle" transform="rotate(-90 18 140)">other commitments</text>`;
   let ok=0;
   for(const [x,y,p] of NND){
     const pred=nnInside(x,y,k), right=pred===!!p; if(right) ok++;
@@ -111,16 +111,16 @@ function nnRender(){
   const v=$("#nnVerdict");
   if(!NN.act){
     v.className="verdict bad";
-    v.innerHTML=`<b>${pct}% with ${k} units, and the boundary is straight again</b>With the nonlinearity removed, the layer can only add its units together. Add any number of straight lines and what you get is one more straight line, so the second layer has nothing new to work with.<br><br>Slide the units up to 8 and watch: <b class="i">nothing happens</b>. Depth without a nonlinearity buys nothing. You have paid for eight units and built the same line as panel 02.<br><br>That small function between the layers is the entire reason any of this works. Put it back.`;
+    v.innerHTML=`<b>${pct}% with ${k} units, and the boundary is straight again</b>With the nonlinearity switched off, the layer can only add its units together. Adding any number of straight lines gives one more straight line, so the second layer has nothing new to work with.<br><br>Move the slider up to 8 and watch: <b class="i">nothing changes</b>. A deeper network without a nonlinearity gains nothing. Eight units build the same single straight line as before.<br><br>That small step between the layers is the reason any of this works. Turn it back on.`;
   } else if(k===1){
     v.className="verdict bad";
-    v.innerHTML=`<b>${pct}%, and no straight line does better</b>One unit is one line, and a line can only ever say <em>this side or that side</em>. The stayers are surrounded, so whichever way you angle it, some of them end up outside with the dropouts. The circled points are the ones it gets wrong.<br><br>Add a second unit.`;
+    v.innerHTML=`<b>${pct}%, and no straight line does better</b>One unit is one line, and a line can only say <em>this side or that side</em>. The students who stay are surrounded, so whichever way you angle the line, some of them end up on the same side as the dropouts. The circled points are the ones it gets wrong.<br><br>Add a second unit.`;
   } else if(pct<100){
     v.className="verdict warn";
-    v.innerHTML=`<b>${pct}% with ${k} lines</b>Each line is still perfectly straight. What changed is that a second layer now takes all ${k} answers and only says <em>stayer</em> when they agree. Their overlap is a shape none of them could draw alone.`;
+    v.innerHTML=`<b>${pct}% with ${k} lines</b>Each line is still straight. A second layer now takes all ${k} answers and says <em>stays</em> only when they all agree. The overlap of the lines is a shape that none of them could draw alone.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>100% with ${k} straight lines</b>Look at the boundary: it is a curve, and every piece of it is a line. A neural network has no deeper trick than this. A unit cuts the space once, a layer cuts it several times, and the next layer combines the cuts.<br><br>Depth is this repeated. Each layer works on what the last one found, so shapes get more elaborate without any single piece ever being more than a straight line. A language model does this with billions of these numbers instead of ${k*3}, and <b class="i">attention</b>, in panel 09, is one particular kind of layer.<br><br>Notice also that pushing the slider higher stops helping. Extra capacity you do not need is how you get the bent line from panel 02.`;
+    v.innerHTML=`<b>100% with ${k} straight lines</b>Look at the boundary. It is a curve, and every piece of it is a straight line. A unit cuts the space once, a layer cuts it several times, and the next layer combines the cuts. This combination of cuts is the basic idea of a neural network.<br><br>Deeper networks repeat this. Each layer works on what the previous layer found, so the shapes become more elaborate while every piece is still a straight cut. A language model does this with billions of numbers in place of ${k*3}. <b class="i">Attention</b>, covered in the panel "Attention and the transformer", is one particular kind of layer.<br><br>Pushing the slider higher stops helping. Extra capacity that you do not need is how you get the bent line in "Training data and test data".`;
   }
 }
 $("#sUnits").oninput=e=>{NN.units=+e.target.value;$("#vUnits").textContent=NN.units;nnRender()};

@@ -1,9 +1,8 @@
     <section class="panel" id="p-shape">
       <div class="head">
-        <div class="eyebrow">16 — Module 5 · rows or documents</div>
-        <h2>Relational or not is a question about your questions</h2>
-        <p>Supabase gives you Postgres. Firebase gives you documents. Both will store your capstone. The choice is usually made on which tutorial you found first, so here is the version that is actually about your data: the same enrolments in both shapes, and the same three questions asked of each.</p>
-        <div class="ask"><b>Ask the room</b>. Name a question your app asks on every single page. Now name one it asks once a semester. Those two want different shapes.</div>
+        <h2>Choosing a relational or a document database</h2>
+        <p>Think of two ways to keep student records. One is a set of spreadsheets with fixed columns, where the student sheet points to a course sheet. The other is a folder for each student, with everything about that student written on one page, including the course titles. Databases come in both styles. A <b style="color:var(--ink)">relational</b> database, such as Postgres, stores data in tables with fixed columns, like the spreadsheets. A <b style="color:var(--ink)">document</b> database, such as Firebase, stores each record as one self-describing document, like the folder. Both can store your capstone project. The right choice depends on which questions your app asks, so below the same enrollments are shown in both shapes and asked the same three questions.</p>
+        <div class="ask"><b>Think first.</b> Name a question your app asks on every page, and a question it asks once a semester. Which shape would you choose for each, and why?</div>
       </div>
 
       <div class="srv">
@@ -13,72 +12,72 @@
           <div class="art" id="shBody"></div>
         </div>
         <div class="card">
-          <div class="card-t">Ask it three things</div>
+          <div class="card-t">Ask three questions</div>
           <div class="toggles" id="shQ"></div>
           <div class="verdict" id="shVerdict" style="margin-top:13px"></div>
         </div>
       </div>
 
 
-      <div class="card-t" style="margin-top:26px">The two families, and what "schema" means in each</div>
-      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">The split people mean by <em>SQL and NoSQL</em> is really a split about <b style="color:var(--ink)">where the schema is enforced</b>. Both have one. Only one of them makes the database responsible for it.</p>
+      <div class="card-t" style="margin-top:26px">The four families, and what "schema" means in each</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A schema is the description of which fields each record has and what type each field is. The common split between SQL and NoSQL databases is a split in where the schema is enforced. Both families have a schema. In a relational database, the database enforces it. In the others, your code does.</p>
       <div class="famgrid">
         <div class="fam s">
-          <div class="ft">Structured &middot; the database enforces it</div>
+          <div class="ft">Structured: the database enforces the schema</div>
           <h5>Relational</h5>
-          <p>Tables with fixed columns and declared types. The schema is written down once and the database refuses anything that does not fit. Joins let you ask questions you did not plan for.</p>
+          <p>Tables with fixed columns and declared types. The schema is written down once, and the database rejects any data that does not fit it. Joins let you ask questions you did not plan for.</p>
           <span class="eg">Postgres &middot; MySQL &middot; SQL Server &middot; Supabase</span>
         </div>
         <div class="fam u">
-          <div class="ft">Unstructured &middot; your code enforces it</div>
+          <div class="ft">Unstructured: your code enforces the schema</div>
           <h5>Document</h5>
-          <p>Records are self-describing documents. Two documents in the same collection can have different fields, so a typo becomes a new field rather than an error. The schema still exists, it just lives in your application.</p>
+          <p>Each record is a self-describing document. Two documents in the same collection can have different fields, so a typo creates a new field and no error is raised. The schema still exists, and it lives in your application code.</p>
           <span class="eg">MongoDB &middot; Firebase &middot; DynamoDB</span>
         </div>
         <div class="fam u">
-          <div class="ft">Unstructured &middot; barely a schema at all</div>
+          <div class="ft">Unstructured: almost no schema</div>
           <h5>Key-value</h5>
-          <p>A key, a blob, and nothing else. Extremely fast and extremely dumb. Used as a cache in front of something else more often than as a system of record.</p>
+          <p>A key, a value and nothing else. It is very fast and has no structure for asking questions. It is used more often as a cache in front of another database than as the main store of the data.</p>
           <span class="eg">Redis &middot; Memcached</span>
         </div>
         <div class="fam u">
-          <div class="ft">Unstructured &middot; a different question</div>
+          <div class="ft">Unstructured: built for connections</div>
           <h5>Graph</h5>
-          <p>Stores the relationships as first-class things rather than as foreign keys. Worth knowing exists. Reach for it when the question is "how is this connected to that", several hops deep.</p>
+          <p>Stores relationships as records in their own right and does not use foreign keys. Use it when the main question is how one thing is connected to another across several steps, such as friends of friends.</p>
           <span class="eg">Neo4j &middot; Neptune</span>
         </div>
       </div>
       <div class="whynot" style="margin-top:16px">
-        <b>"Unstructured" does not mean you get to skip the modelling</b>
-        The entities, attributes and relationships from panels 09 and 10 are still there. A document store does not remove them, it moves the job of enforcing them from the database into your code, where nobody can see it and every client has to remember it. That is sometimes a good trade. It is never a way of avoiding the design.
+        <b>Document databases still need a data model</b>
+        The entities, attributes and relationships from "Entities, attributes and instances" and "Relationships: one-to-one, one-to-many, many-to-many" still apply. A document database does not remove them. It moves the job of enforcing them from the database to your code, where every client has to remember the rules and nobody can see them in one place. This is sometimes a good trade. You still have to design the data.
       </div>
-      <div class="card-t" style="margin-top:26px">What each shape is actually good at</div>
+      <div class="card-t" style="margin-top:26px">What each shape does well</div>
       <div class="bill">
         <div class="bl">
-          <h5>Rows are good at questions you did not plan for</h5>
-          <p>Any column can be filtered, joined or grouped after the fact. You do not have to know the questions when you design the schema, which matters because you do not.</p>
-          <span class="ref">&rarr; the cost is a join, priced in panel 15</span>
+          <h5>Rows suit questions you did not plan for</h5>
+          <p>Any column can be filtered, joined or grouped later. You do not need to know the questions when you design the schema, and early in a project you do not.</p>
+          <span class="ref">&rarr; the cost is a join, measured in "The N+1 query problem"</span>
         </div>
         <div class="bl">
-          <h5>Documents are good at one question, answered fast</h5>
-          <p>The whole page in one read, no join, no assembly. Brilliant when the access pattern is fixed and known. Painful the first time somebody asks a question sideways to it.</p>
-          <span class="ref">&rarr; you denormalized, so panel 14 applies</span>
+          <h5>Documents suit one known question</h5>
+          <p>The whole page comes back in one read, with no join and no assembly. This works well when the access pattern is fixed and known. It becomes painful the first time somebody asks a question the documents were not organized for.</p>
+          <span class="ref">&rarr; the copied titles bring back the problem in "Normalization: storing each fact once"</span>
         </div>
         <div class="bl">
-          <h5>Constraints live in one of them</h5>
-          <p>Two students cannot take the last seat if the database refuses, which is panel 20's whole problem. Enforcing that in application code across documents is a race waiting to happen.</p>
-          <span class="ref">&rarr; panel 20, the seat that must not be double-sold</span>
+          <h5>Rules about correctness</h5>
+          <p>If the database itself refuses to sell the last seat twice, two students cannot both get it. Enforcing that rule in application code across several documents allows two requests to pass the check at the same time.</p>
+          <span class="ref">&rarr; see "Case study: enlistment day"</span>
         </div>
         <div class="bl">
-          <h5>You will probably use both</h5>
-          <p>Postgres for the things that must be correct, something faster for the things that must be quick. That is not a compromise, it is the normal answer.</p>
-          <span class="ref">&rarr; and it is two systems to operate, per panel 24</span>
+          <h5>Many systems use both</h5>
+          <p>A common setup uses Postgres for data that must be correct and a faster store for data that must load quickly. This is a normal design.</p>
+          <span class="ref">&rarr; it also means running two systems, as in "Monolith or microservices"</span>
         </div>
       </div>
 
       <div class="whynot" style="margin-top:20px">
-        <b>For your capstone: start relational</b>
-        Documents are not worse. At your data volumes nothing you choose will be slow, and the relational shape is the one that forgives a schema you got wrong. You will get it wrong. Being able to ask a question you had not thought of, without rewriting how everything is stored, is worth more in a semester project than any performance difference you will be able to measure.
+        <b>Choosing for your capstone</b>
+        Start relational. Document databases are not worse. At your data volumes nothing you choose will be slow, and a relational design is easier to fix when you get the schema wrong. You will get it wrong at first. Being able to ask a question you had not thought of, without rewriting how everything is stored, is worth more in a semester project than any speed difference you could measure.
       </div>
     </section>
 

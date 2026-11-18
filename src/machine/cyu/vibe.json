@@ -1,0 +1,145 @@
+{
+ "panel": "vibe",
+ "items": [
+  {
+   "id": "vibe-1",
+   "sec": "four-snippets",
+   "type": "mc",
+   "stem": "A function passes all its tests with your 5 test students. In production, with 5,000 enrollments, the page takes 30 seconds to load. Which kind of defect is most likely?",
+   "options": [
+    {
+     "text": "A query that runs once for every row, which only becomes slow with real data.",
+     "correct": true,
+     "feedback": "This is the N+1 problem. Five rows cost six queries and nobody notices. Five thousand rows cost five thousand and one."
+    },
+    {
+     "text": "A typing mistake in a variable name.",
+     "correct": false,
+     "feedback": "A typing mistake would fail on the first run, including with 5 students."
+    },
+    {
+     "text": "A method that does not exist.",
+     "correct": false,
+     "feedback": "A missing method fails with an error the first time the code runs."
+    },
+    {
+     "text": "Two requests overlapping.",
+     "correct": false,
+     "feedback": "An overlap produces wrong data once in a while. It does not make every page load slow."
+    }
+   ]
+  },
+  {
+   "id": "vibe-2",
+   "sec": "four-snippets",
+   "type": "mc",
+   "stem": "Of the four snippets, the one that calls the invented method get_or_none() is the easiest to catch. Why?",
+   "options": [
+    {
+     "text": "It fails with an error the first time you run it. The other three run without any error.",
+     "correct": true,
+     "feedback": "A missing method stops the program at once. The other defects produce results that look normal."
+    },
+    {
+     "text": "Reviewers recognize fake methods at a glance.",
+     "correct": false,
+     "feedback": "The method looks real. It fits the style of the others, which is why a reader can miss it."
+    },
+    {
+     "text": "It is the only one that has a test.",
+     "correct": false,
+     "feedback": "Tests are not the difference. A test that never runs the line would not catch it either."
+    },
+    {
+     "text": "It is the only one that changes the database.",
+     "correct": false,
+     "feedback": "The close-a-course snippet changes the database too, and it runs without error."
+    }
+   ]
+  },
+  {
+   "id": "vibe-3",
+   "sec": "vibe-vs-agentic",
+   "type": "mc",
+   "stem": "A student describes a landing page to a model, pastes the result into a browser, and asks for changes until it looks right. The student never reads the code. Which term fits best?",
+   "options": [
+    {
+     "text": "Vibe coding.",
+     "correct": true,
+     "feedback": "The student judges the result by whether it seems to work. For a throwaway page, that is a reasonable approach."
+    },
+    {
+     "text": "Agentic coding.",
+     "correct": false,
+     "feedback": "Agentic coding means the AI has a shell, your repository and your tests, and acts on them in a loop. Here the student does the running and pasting."
+    },
+    {
+     "text": "Code review.",
+     "correct": false,
+     "feedback": "Review means reading the code with a checklist. The student does not read it."
+    },
+    {
+     "text": "Neither, because AI wrote the code.",
+     "correct": false,
+     "feedback": "Both terms describe code written with AI. They differ in how the work is done."
+    }
+   ]
+  },
+  {
+   "id": "vibe-4",
+   "sec": "vibe-vs-agentic",
+   "type": "mc",
+   "stem": "Why can agentic coding do more damage without being asked than a chat that only suggests code?",
+   "options": [
+    {
+     "text": "The agent can run commands and change files by itself, so a wrong decision takes effect at once.",
+     "correct": true,
+     "feedback": "A suggestion does nothing until you use it. An agent acts, and its actions can include deleting or overwriting files."
+    },
+    {
+     "text": "Agents are built on models that make more mistakes.",
+     "correct": false,
+     "feedback": "The model can be the same. The difference is what the model is allowed to do."
+    },
+    {
+     "text": "Agents write longer code, and long code has more bugs.",
+     "correct": false,
+     "feedback": "Length is not the main risk. The risk is that the agent acts without your reading each step."
+    },
+    {
+     "text": "Agents ignore your test suite.",
+     "correct": false,
+     "feedback": "Agents usually run the tests. The tests can still miss a defect, as the snippets show."
+    }
+   ]
+  },
+  {
+   "id": "vibe-5",
+   "sec": "vibe-vs-agentic",
+   "type": "multi",
+   "stem": "You are watching an agent work on a project. Which of these are worth writing down? Select all that apply.",
+   "options": [
+    {
+     "text": "A confident claim that turned out to be wrong.",
+     "correct": true,
+     "feedback": "This shows how a plausible answer can be wrong, and how you found out."
+    },
+    {
+     "text": "A moment when it changed course after an Observation, such as a failing test.",
+     "correct": true,
+     "feedback": "This shows what outside information corrected it, and how many steps it had built on the wrong answer."
+    },
+    {
+     "text": "A change it made that nobody asked for.",
+     "correct": true,
+     "feedback": "Unrequested changes add review work and can hide new problems."
+    },
+    {
+     "text": "How fast it typed.",
+     "correct": false,
+     "feedback": "Speed does not tell you whether the work can be trusted."
+    }
+   ]
+  }
+ ]
+}

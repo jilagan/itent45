@@ -1,97 +1,103 @@
     <section class="panel" id="p-math">
       <div class="head">
-        <div class="eyebrow">16 — If the notation has been bothering you</div>
-        <h2>Three pieces of mathematics, and you have already used all of them</h2>
-        <p>Nothing in this tool needed you to know any of this. Every panel showed the idea working before naming it. But the moment you open a lecture or a paper you will meet the symbols, and the symbols are the reason people decide the field is closed to them. Here is the short version: three operations, all arithmetic you already did at school, each one tied to a screen you have already seen.</p>
-        <div class="ask"><b>Ask the room</b>. How much of this looks like new mathematics, and how much looks like something you did in third year high school with a different name on it?</div>
+        <h2>The math behind it: vectors, slopes and probabilities</h2>
+        <p>Your grade in a course is a weighted sum. You multiply each score by its weight and add the results. That one operation is the main piece of math in language models. This panel covers three ideas that appear in every lecture and paper on the topic: the dot product, the slope and the probability distribution. Each is school arithmetic, and each connects to a screen you have already seen. The symbols in papers are shorthand for these steps.</p>
+        <div class="ask"><b>Think first.</b> Before you read on, write down what you think each of these means: a dot product, a slope, a probability distribution. Then compare your answers with the explanations below.</div>
       </div>
 
-      <div class="card-t" style="margin-top:8px">1 &middot; Linear algebra, which is mostly one operation</div>
-      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A <b style="color:var(--ink)">vector</b> is a list of numbers. That is the whole definition. Two numbers make a position on a page; three hundred make a position in a space you cannot draw, which is where words live in panel 07. The operation you do with them constantly is the <b style="color:var(--ink)">dot product</b>: multiply the pairs, add the results, get one number.</p>
-      <div class="srv">
-        <div>
-          <div class="scatter" id="mtDot"></div>
-          <div class="art" id="mtDotSum" style="margin-top:12px"></div>
-        </div>
-        <div class="card">
-          <div class="card-t">Swing the second vector</div>
-          <div class="sliders">
-            <div class="field"><label>Angle of <b>b</b> <span class="val" id="vMtAng">40&deg;</span></label>
-              <input type="range" id="sMtAng" min="0" max="180" value="40"></div>
+      <div class="sec" data-sec="linear-algebra" data-title="Vectors and the dot product">
+        <div class="card-t" style="margin-top:8px">1 &middot; Vectors and the dot product</div>
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Suppose a course grades exams at weight 0.6 and projects at weight 0.4, and you score 80 on exams and 90 on projects. Your grade is 80 &times; 0.6 + 90 &times; 0.4 = 84. You multiplied each pair of numbers and added the results to get one number. That is a <b style="color:var(--ink)">dot product</b>. A <b style="color:var(--ink)">vector</b> is a list of numbers, so your scores [80, 90] are a vector and the weights [0.6, 0.4] are another. Two numbers can mark a position on a page. Three hundred numbers mark a position in a space you cannot draw, which is where words are placed in "Vectors and similarity of meaning".</p>
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">In the picture, vector <b>a</b> is fixed and you swing vector <b>b</b>. The dot product is large when the two arrows point the same way. It is zero at a right angle and negative when they point apart.</p>
+        <div class="srv">
+          <div>
+            <div class="scatter" id="mtDot"></div>
+            <div class="art" id="mtDotSum" style="margin-top:12px"></div>
           </div>
-          <div class="meter" style="grid-template-columns:1fr;margin-top:12px">
-            <div class="g" id="mtDotVal"><div class="gl">a &middot; b</div><div class="gv">&mdash;</div></div>
-          </div>
-          <div class="rtt-note" style="margin-top:12px" id="mtDotNote"></div>
-          <div class="whynot" style="margin-top:13px">
-            <b>Where you have met it</b>
-            The attention weight in panel 09 is a dot product between what one word is asking for and what another offers. The similarity score in panel 07 is the same operation with the lengths divided out. A unit in panel 04 multiplies each input by a weight and adds them up, which is a dot product with a bias on the end.
-            <br><br>A <b style="color:var(--ink)">matrix</b> is a stack of vectors, and multiplying by one performs many of these at once. That is all the notation <code>Wx</code> means.
-          </div>
-        </div>
-      </div>
-
-      <div class="card-t" style="margin-top:26px">2 &middot; Calculus, of which you need the slope</div>
-      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A <b style="color:var(--ink)">derivative</b> answers one question: if I nudge this number up a little, which way does the answer move, and how fast? That is a slope. Drag along the curve and watch the number under it.</p>
-      <div class="srv">
-        <div>
-          <div class="scatter" id="mtSlope"></div>
-          <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
-            <div class="g" id="mtW"><div class="gl">The number you control</div><div class="gv">&mdash;</div></div>
-            <div class="g" id="mtL"><div class="gl">How wrong it is</div><div class="gv">&mdash;</div></div>
-            <div class="g" id="mtS"><div class="gl">Slope</div><div class="gv">&mdash;</div></div>
-          </div>
-          <div class="verdict" id="mtSlopeV" style="margin-top:13px"></div>
-        </div>
-        <div class="card">
-          <div class="card-t">Move along the curve</div>
-          <div class="sliders">
-            <div class="field"><label>Weight <span class="val" id="vMtW">0.0</span></label>
-              <input type="range" id="sMtW" min="-10" max="70" value="0"></div>
-          </div>
-          <div class="rtt-note" style="margin-top:12px">
-            The slope is negative on the left of the dip and positive on the right, and it passes through zero at the bottom. So the rule for getting downhill needs no cleverness: <b style="color:var(--ink)">move the opposite way from the slope</b>.
-            <br><br>A <b style="color:var(--ink)">gradient</b> is this same slope worked out for every number at once, instead of one at a time. With three numbers it is three slopes. With a billion it is a billion, and the arithmetic per number does not change.
-          </div>
-          <div class="whynot" style="margin-top:13px">
-            <b>Where you have met it</b>
-            Panel 03's Step button does exactly this. It works out the slope for each of the three numbers, moves each one against its slope, and repeats. The learning-rate slider is how far it steps.
+          <div class="card">
+            <div class="card-t">Swing the second vector</div>
+            <div class="sliders">
+              <div class="field"><label>Angle of <b>b</b> <span class="val" id="vMtAng">40&deg;</span></label>
+                <input type="range" id="sMtAng" min="0" max="180" value="40"></div>
+            </div>
+            <div class="meter" style="grid-template-columns:1fr;margin-top:12px">
+              <div class="g" id="mtDotVal"><div class="gl">a &middot; b</div><div class="gv">&mdash;</div></div>
+            </div>
+            <div class="rtt-note" style="margin-top:12px" id="mtDotNote"></div>
+            <div class="whynot" style="margin-top:13px">
+              <b>Where you have met it</b>
+              The attention weight in "Attention and the transformer" is a dot product between what one word is asking for and what another word offers. The similarity score in "Vectors and similarity of meaning" is the same operation with the lengths divided out, which is called cosine similarity. A unit in "Neural networks: combining several lines" multiplies each input by a weight and adds the results, which is a dot product with a fixed number called a bias added at the end.
+              <br><br>A <b style="color:var(--ink)">matrix</b> is a grid of numbers, which you can read as a stack of vectors. Multiplying by a matrix performs many dot products at once. This is the meaning of the notation <code>Wx</code>: <code>W</code> is the matrix of weights and <code>x</code> is the input vector.
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="card-t" style="margin-top:26px">3 &middot; Statistics, of which you need two ideas</div>
-      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A <b style="color:var(--ink)">distribution</b> is a set of outcomes with a number attached to each, and the numbers add to 1. Panel 01 was a distribution over next words. A <b style="color:var(--ink)">loss</b> is one number saying how wrong the whole distribution is, given what actually turned out to be true.</p>
-      <div class="srv">
-        <div>
-          <div class="probs" id="mtDist"></div>
-          <div class="meter" style="grid-template-columns:1fr 1fr;margin-top:13px">
-            <div class="g" id="mtSum"><div class="gl">Adds up to</div><div class="gv">&mdash;</div></div>
-            <div class="g" id="mtLoss"><div class="gl">Loss</div><div class="gv">&mdash;</div></div>
+      <div class="sec" data-sec="calculus" data-title="Slopes and derivatives">
+        <div class="card-t" style="margin-top:8px">2 &middot; Slopes and derivatives</div>
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A car's speedometer tells you how fast your position is changing right now. A <b style="color:var(--ink)">slope</b> is the same idea for any curve: how fast the answer changes when you nudge the input. A <b style="color:var(--ink)">derivative</b> is the formal name for the slope at one point. In this picture the number you control is a weight, which is a number the model can adjust. The curve shows how wrong the model is at each value of the weight. Drag along the curve and watch the slope.</p>
+        <div class="srv">
+          <div>
+            <div class="scatter" id="mtSlope"></div>
+            <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
+              <div class="g" id="mtW"><div class="gl">The weight</div><div class="gv">&mdash;</div></div>
+              <div class="g" id="mtL"><div class="gl">How wrong it is</div><div class="gv">&mdash;</div></div>
+              <div class="g" id="mtS"><div class="gl">Slope</div><div class="gv">&mdash;</div></div>
+            </div>
+            <div class="verdict" id="mtSlopeV" style="margin-top:13px"></div>
           </div>
-          <div class="verdict" id="mtDistV" style="margin-top:13px"></div>
-        </div>
-        <div class="card">
-          <div class="card-t">Shift the confidence</div>
-          <div class="sliders">
-            <div class="field"><label>How sure it is about <b>Paris</b> <span class="val" id="vMtP">40%</span></label>
-              <input type="range" id="sMtP" min="5" max="95" value="40"></div>
-          </div>
-          <div class="rtt-note" style="margin-top:12px">
-            The true answer here is <b style="color:var(--ink)">Paris</b>. Loss is small when the model put most of its weight there and large when it did not, and it rises steeply as confidence in the right answer approaches zero.
-            <br><br>The particular formula, <code>-log(p)</code>, is called cross-entropy. Its only job is to turn "how much weight did you put on the right answer" into a single number that training can push downhill.
-          </div>
-          <div class="whynot" style="margin-top:13px">
-            <b>Where you have met it</b>
-            This is the number falling in panel 03, and the reason temperature in panel 01 changes the answer without changing what the model believes. Temperature reshapes the distribution; the loss measures it.
+          <div class="card">
+            <div class="card-t">Move along the curve</div>
+            <div class="sliders">
+              <div class="field"><label>Weight <span class="val" id="vMtW">0.0</span></label>
+                <input type="range" id="sMtW" min="-10" max="70" value="0"></div>
+            </div>
+            <div class="rtt-note" style="margin-top:12px">
+              The slope is negative on the left of the dip, positive on the right, and zero at the bottom. To get downhill, move in the direction opposite to the slope.
+              <br><br>A <b style="color:var(--ink)">gradient</b> is this same slope worked out for every number at once. With three numbers it is three slopes. With a billion numbers it is a billion slopes, and the arithmetic for each one is the same.
+            </div>
+            <div class="whynot" style="margin-top:13px">
+              <b>Where you have met it</b>
+              The One step button in "Training: adjusting a model to reduce its errors" does exactly this. It works out the slope for each of the three numbers, moves each one against its slope, and repeats. The learning-rate slider sets how far each move goes.
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="whynot" style="margin-top:20px">
-        <b>What you can safely not learn yet</b>
-        Matrix decompositions, chain rule mechanics, probability theory beyond this, and every proof. None of it changes a decision you will make this semester, and all of it is available later if you find you want it.
-        <br><br>The three things above are enough to read a diagram in a lecture, follow a paper's method section as far as the pictures, and know which symbol is doing the work. If someone tells you the field needs more mathematics than this before you can start, they are describing a different job to the one you are training for.
+      <div class="sec" data-sec="statistics" data-title="Probability distributions and loss">
+        <div class="card-t" style="margin-top:8px">3 &middot; Probability distributions and loss</div>
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A weather forecast might say 60% rain, 30% cloudy and 10% clear. That is a <b style="color:var(--ink)">distribution</b>: a set of outcomes, each with a probability, adding up to 100%. The model's choice of next word in "How a language model writes: predicting the next word" is a distribution over words. A <b style="color:var(--ink)">loss</b> is one number that says how wrong the model was, given what turned out to be true.</p>
+        <div class="srv">
+          <div>
+            <div class="probs" id="mtDist"></div>
+            <div class="meter" style="grid-template-columns:1fr 1fr;margin-top:13px">
+              <div class="g" id="mtSum"><div class="gl">Adds up to</div><div class="gv">&mdash;</div></div>
+              <div class="g" id="mtLoss"><div class="gl">Loss</div><div class="gv">&mdash;</div></div>
+            </div>
+            <div class="verdict" id="mtDistV" style="margin-top:13px"></div>
+          </div>
+          <div class="card">
+            <div class="card-t">Shift the confidence</div>
+            <div class="sliders">
+              <div class="field"><label>How sure it is about <b>Paris</b> <span class="val" id="vMtP">40%</span></label>
+                <input type="range" id="sMtP" min="5" max="95" value="40"></div>
+            </div>
+            <div class="rtt-note" style="margin-top:12px">
+              The true answer here is <b style="color:var(--ink)">Paris</b>. The loss is small when the model put most of its probability on Paris and large when it put little there. It rises steeply as that probability approaches zero.
+              <br><br>The formula is <code>-log(p)</code>, where <code>p</code> is the probability given to the right answer and log is the logarithm function on a calculator. This loss is called cross-entropy. It turns "how much probability did the model put on the right answer" into one number that training can push down.
+            </div>
+            <div class="whynot" style="margin-top:13px">
+              <b>Where you have met it</b>
+              This is the number that falls in "Training: adjusting a model to reduce its errors". Temperature, in "How a language model writes: predicting the next word", changes the shape of the distribution the model samples from. The loss measures how much probability sits on the right answer.
+            </div>
+          </div>
+        </div>
+
+        <div class="whynot" style="margin-top:20px">
+          <b>What you can skip for now</b>
+          This panel leaves out matrix decompositions, the mechanics of the chain rule (how slopes combine through a chain of steps), probability theory beyond distributions, and proofs. None of them changes a decision you will make this semester, and you can learn them later if you want to.
+          <br><br>The three ideas above are enough to read a diagram in a lecture, follow the pictures in a paper's method section, and recognize which symbol is doing the work.
+        </div>
       </div>
     </section>
 

@@ -1,87 +1,87 @@
 /* ================= 09 BREAKOUTS ================= */
 const BK={
 1:{
- title:"Breakout 1, Read the wire",
- intro:"Groups of three. If the server is not running yet, panel 04 has the setup at the bottom, with the commands ready to copy. The rule for this one: no slides, no notes, and do not ask an AI. Find out by looking.",
- taskT:"Your task, 20 minutes, then report",
+ title:"Group exercise 1: inspect an HTTP exchange",
+ intro:"Work in groups of three. If the server is not running yet, \"What an HTTP request and response look like\" has the setup at the bottom, with commands ready to copy. For this exercise, use no slides or notes and do not ask an AI. Find the answers by looking at what the server does.",
+ taskT:"Task: 20 minutes, then report back",
  roles:[
-  ["Driver","Types. Does not decide what to type."],
-  ["Prober","Decides what to try next. Hands stay off the keyboard."],
-  ["Scribe","Writes down what surprised the group. Owns the report-back."]],
+  ["Driver","Types the commands the group agrees on."],
+  ["Prober","Decides what to try next and keeps off the keyboard."],
+  ["Scribe","Writes down what surprised the group and gives the report."]],
  task:[
-  "Start the server: <code>python3 start.py demo</code>, or <code>python start.py demo</code> on Windows. Leave that terminal visible. It prints every byte a client sends. The commands for the rest of these are at the bottom of panel 04, copyable, in both shells.",
-  "Hit it with <code>curl http://localhost:8080/courses</code>, then open the same URL in a browser. <b>Count the headers each one sends.</b> Why does the browser send so many more?",
-  "Make it return a 404. Read the <code>Content-Length</code> off the response, then count the body characters yourself. <b>Do the two numbers agree?</b>",
-  "POST something: <code>curl -X POST localhost:8080/enrollments -d '{\"code\":\"ITENT 45\"}'</code>. In the server log, find the blank line. <b>What is on each side of it?</b>",
-  "Open two terminals. Hit <code>/slow</code> in both at the same time. <b>Time the second one.</b> Now set <code>THREADED = True</code> near the bottom of the file, restart, and do it again. What changed, and what did it cost?",
-  "Type a request by hand: <code>nc localhost 8080</code>, then enter <code>GET /courses HTTP/1.1</code>, press Enter twice. Now try it again <b>without</b> the <code>Host:</code> header, and with a nonsense <code>User-Agent</code>. <b>Which single header can you not leave out, and which can you lie about freely?</b>"],
- report:"90 seconds per group, standing, no notes, no screen. Each group states one thing that surprised them and the evidence for it. If another group already said yours, you must give a different one, so keep a spare.",
+  "Open a terminal. A terminal is a window where you type commands as text and the computer prints the result. Start the server with <code>python3 start.py demo</code>, or <code>python start.py demo</code> on Windows. Leave that terminal visible, because the server prints every byte a client sends it. The commands for the remaining steps are at the bottom of \"What an HTTP request and response look like\", ready to copy for both kinds of shell.",
+  "Send a request with <code>curl http://localhost:8080/courses</code>. curl is a command-line program that sends a web request and prints the reply. Then open the same URL in a browser. <b>Count the headers each one sends.</b> Headers are the extra lines of information that travel with a request. Why does the browser send so many more?",
+  "Make the server return a 404 (page not found). Read the <code>Content-Length</code> header in the response, then count the characters in the body yourself. <b>Do the two numbers agree?</b>",
+  "Send a POST request, which submits data: <code>curl -X POST localhost:8080/enrollments -d '{\"code\":\"ITENT 45\"}'</code>. In the server log, find the blank line. <b>What is on each side of it?</b>",
+  "Open two terminals. Request <code>/slow</code> in both at the same time. <b>Time the second one.</b> Then set <code>THREADED = True</code> near the bottom of the file, which lets the server handle more than one request at once. Restart the server and repeat. What changed, and what did it cost?",
+  "Type a request by hand. Run <code>nc localhost 8080</code>, which opens a plain connection to the server. Then type <code>GET /courses HTTP/1.1</code> and press Enter twice. Try again <b>without</b> the <code>Host:</code> header, and again with a made-up <code>User-Agent</code>. <b>Which header can you not leave out, and which can you change freely?</b>"],
+ report:"Each group has 90 seconds to report, standing, with no notes and no screen. State one thing that surprised you and the evidence for it. If another group has already given yours, give a different one, so prepare a spare.",
  listen:[
   "<b>Good sign:</b> a group says the browser sends cookies, cache validators and Accept-Language that curl does not, and connects that to why the same URL can return different bytes to different clients.",
-  "<b>Good sign:</b> someone notices <code>Host</code> is the one header that cannot be dropped, and reasons out that one IP serves many sites.",
-  "<b>Good sign:</b> on the <code>/slow</code> test, a group describes the second request <em>waiting</em> rather than failing, and names the queue from panel 18 without being prompted.",
-  "<span class='bad'>Watch for:</span> a group reporting what they expected rather than what the terminal showed. Ask them to scroll back and point at the line.",
-  "<span class='bad'>Watch for:</span> threading described as free. Push once: what did you just spend to get that? (memory per thread, straight back to panel 04)"]},
+  "<b>Good sign:</b> someone notices <code>Host</code> is the one header that cannot be dropped, and works out that one IP address serves many sites.",
+  "<b>Good sign:</b> on the <code>/slow</code> test, a group describes the second request waiting for the first, and names the queue from \"Server capacity: workers, queues and requests per second\" without being prompted.",
+  "<span class='bad'>Watch for:</span> a group reporting what they expected to see without checking the terminal. Ask them to scroll back and point at the line.",
+  "<span class='bad'>Watch for:</span> a group describing threading as free. Ask once: what did you spend to get that? The answer is memory per thread, from \"How a server's memory is used\"."]},
 2:{
- title:"Breakout 2, Defend the architecture",
- intro:"Same groups, rotate roles. Each group gets one scenario. Use panel 19 to size it. You will be asked for numbers, not adjectives. Then another group tries to break your design.",
- taskT:"Your task, 25 minutes build, 10 minutes cross-examination",
+ title:"Group exercise 2: design for a load",
+ intro:"Use the same groups and rotate roles. Each group gets one scenario. Use the tool in \"Scaling out with a load balancer\" to size it. You will be asked for numbers. Another group then tries to find weaknesses in your design.",
+ taskT:"Task: 25 minutes to build, 10 minutes of questions",
  roles:[
-  ["Architect","Owns the design and says the numbers out loud during defense."],
-  ["Operator","Drives panel 19. Reads out the ceiling and the named bottleneck."],
-  ["Sceptic","Writes the two hardest questions you would ask another group, then asks them."]],
+  ["Architect","Owns the design and says the numbers out loud during the defense."],
+  ["Operator","Operates the \"Scaling out with a load balancer\" tool and reads out the ceiling and the named bottleneck."],
+  ["Skeptic","Writes the two hardest questions to ask another group, then asks them."]],
  task:[
-  "Take your scenario card. <b>Write the load number first</b>, before touching anything else. If the card does not give it to you directly, derive it and show the arithmetic.",
-  "Build a configuration in panel 19 that serves that load. Record: instances, handler time, cache, replicas, queue.",
-  "State your <b>system ceiling</b> and your <b>headroom multiple</b>. A design with 1.0× headroom is a design that fails on the first busy day.",
-  "Name the <b>next bottleneck</b>. The tier that gives way when load doubles. Every design has one. If you cannot name it, you have not finished.",
-  "Name <b>one move you deliberately did not make</b>, and why. Cost, complexity, and 'we do not need it yet' are all valid reasons if you can defend them.",
-  "Answer your card's curveball. <b>This is the part that is actually being graded.</b>"],
- report:"Each group presents for 2 minutes: load, configuration, ceiling, headroom, next bottleneck, and the move they refused. Then the group to their left gets 90 seconds to attack the design. Attack the design, never the group.",
+  "Take your scenario card. <b>Write the load number first</b>, before changing anything else. If the card does not give it directly, work it out and show the arithmetic.",
+  "Build a configuration in the \"Scaling out with a load balancer\" tool that serves that load. Record the number of instances (copies of the server), the handler time, the cache, the replicas (extra copies of the database) and the queue.",
+  "State your <b>system ceiling</b>, the most requests per second the design can serve, and your <b>headroom multiple</b>, which is how many times the ceiling exceeds your load. A design with 1.0× headroom fails on the first busy day.",
+  "Name the <b>next bottleneck</b>, the tier that gives way first when the load doubles. Every design has one. If you cannot name it, the design is not finished.",
+  "Name <b>one move you chose not to make</b>, and why. Cost, complexity and \"we do not need it yet\" are all valid reasons if you can defend them.",
+  "Answer the extra question your instructor gives you for your card. <b>This part is graded.</b>"],
+ report:"Each group presents for 2 minutes: load, configuration, ceiling, headroom, next bottleneck, and the move they chose not to make. Then the group to their left has 90 seconds to challenge the design. Question the design only.",
  listen:[
-  "<b>Good sign:</b> a group that adds instances, sees the bottleneck move to the database, and says so out loud before you point at it.",
-  "<b>Good sign:</b> refusing a move for cost or complexity reasons and defending it. That is engineering judgement.",
-  "<b>Good sign:</b> on the spiky scenarios, someone questions whether the average rate is even the right number to design against.",
-  "<span class='bad'>Watch for:</span> maxing every slider. Ask what it costs per month and who pays. The syllabus says they must defend the design, not just produce one.",
-  "<span class='bad'>Watch for:</span> a cache proposed for a write-heavy workload. Ask what fraction of their requests the cache actually serves.",
-  "<span class='bad'>Watch for:</span> a group that cannot say what breaks next. That is the tell that they tuned sliders until the number went green."]}
+  "<b>Good sign:</b> a group adds instances, sees the bottleneck move to the database, and says so before you point it out.",
+  "<b>Good sign:</b> refusing a move for cost or complexity reasons, and defending that choice. This is engineering judgment.",
+  "<b>Good sign:</b> on the spiky scenarios, someone asks whether the average request rate is the right number to design for.",
+  "<span class='bad'>Watch for:</span> a group setting every slider to its maximum. Ask what that costs per month and who pays. Groups must defend their design, and a maxed-out design cannot be defended on cost.",
+  "<span class='bad'>Watch for:</span> a cache proposed for a write-heavy workload. Ask what share of their requests the cache would serve.",
+  "<span class='bad'>Watch for:</span> a group that cannot say what breaks next. That suggests they adjusted sliders until the number turned green."]}
 };
 const SCEN=[
- {n:"Card A",t:"Enlistment morning (The enlistment system)",
+ {n:"Card A",t:"Enlistment morning",
   d:[["Load","4,000 students in one enlistment window, all clicking at 8:00:00"],
-     ["Shape","One short violent spike, then almost nothing"],
+     ["Shape","One short, sharp spike, then almost nothing"],
      ["Work","15 requests per session, 3 of them writes. Seat reservation must be correct"]],
-  c:"Curveball: your web tier can autoscale, but seat reservation cannot be cached and cannot be spread across read replicas, two students must never get the same last slot. So what do you actually do? Name a move that costs no hardware at all."},
+  c:"Curveball: your web tier can autoscale, but seat reservation cannot be cached and cannot be spread across read replicas, because two students must never get the same last slot. What do you do? Name a move that costs no hardware."},
  {n:"Card B",t:"Course catalog",
   d:[["Load","900 rps sustained through the day"],
      ["Shape","Steady. Read-only browsing"],
      ["Work","3 queries per request, 40 ms handler. Most students request the same 20 pages"]],
-  c:"Curveball: a third of your users are on mobile data abroad, at 120 ms one-way. Go back to panel 02. Does any amount of server capacity fix their experience? What actually would?"},
+  c:"Curveball: a third of your users are on mobile data abroad, at 120 ms one way. Go back to \"Why loading a page takes several round trips\". Does any amount of server capacity fix their experience? What would?"},
  {n:"Card C",t:"Grade upload",
   d:[["Load","Only 40 rps. Faculty, not students"],
      ["Shape","Bursty around deadline week"],
      ["Work","Each upload generates a PDF transcript. 2,000 ms handler, 2 queries"]],
-  c:"Curveball: work out the ceiling for one instance before you touch anything. You will find no combination of sliders gets you to 40 rps. The panel's queue toggle only models a 35% saving. So what would you actually change so the handler returns in 20 ms, and what does the faculty member see on screen instead?"},
+  c:"Curveball: work out the ceiling for one instance before you change anything. No combination of sliders reaches 40 rps. The tool's queue toggle models only a 35% saving. What would you change so the handler returns in 20 ms, and what does the faculty member see on screen meanwhile?"},
  {n:"Card D",t:"Campus sensor dashboard",
   d:[["Load","3,000 sensors, each posting every 10 seconds"],
      ["Shape","Perfectly constant, 24/7"],
      ["Work","Tiny payloads. 8 ms handler, 2 writes per request"]],
-  c:"Curveball: derive the request rate yourself. The card does not state it. Then note that the panel treats replicas as helping every query equally. These are writes. Does that assumption hold, and what does it mean for your design?"},
+  c:"Curveball: work out the request rate yourself, because the card does not state it. The tool treats replicas as helping every query equally, but these are writes. Does that assumption hold, and what does it mean for your design?"},
  {n:"Card E",t:"Alumni portal, tight budget",
   d:[["Load","Normally 30 rps"],
      ["Shape","Unpredictable. A news story can multiply it by 50× with no warning"],
      ["Work","3 queries per request, 70 ms handler. Read-heavy"]],
-  c:"Curveball: you cannot afford to run 50× capacity year-round. Design for the normal day and state exactly what you would do in the first 10 minutes of a spike, and what users would experience meanwhile."},
+  c:"Curveball: you cannot afford to run 50× capacity all year. Design for the normal day, and state exactly what you would do in the first 10 minutes of a spike and what users would experience meanwhile."},
  {n:"Card F",t:"The dashboard that got slow",
-  d:[["Load","120 rps. A Django page listing each student's 50 enrollments"],
+  d:[["Load","120 rps. A page built with Django (a Python web framework) lists each student's 50 enrollments"],
      ["Shape","Steady, all day. 40 ms handler"],
-     ["Work","The template reads e.course.title inside the loop, and nobody wrote select_related()"]],
-  c:"Curveball: work out queries per request before anything else. One for the list, then one more per row. Put that number into panel 19 and read the ceiling. Now set it to 2, which is what select_related() would give you, and read it again. Which is cheaper: the one-line ORM fix, or all the infrastructure you would otherwise have to buy?"},
+     ["Work","The page template reads e.course.title inside the loop, and nobody wrote select_related(), the Django option that fetches related rows in one query"]],
+  c:"Curveball: work out the number of queries per request first: one for the list, then one more per row. Put that number into the tool and read the ceiling. Then set it to 2, which is what select_related() gives, and read the ceiling again. Which is cheaper: the one-line fix, or all the extra infrastructure you would otherwise buy?"},
  {n:"Card G",t:"Flash sale checkout",
   d:[["Load","900 rps for 10 minutes when the sale opens"],
      ["Shape","Hard spike, then nothing. Shoppers refresh and re-click constantly"],
      ["Work","40 ms of your own code, plus an 800 ms call to the payment gateway"]],
-  c:"Curveball: put 840 ms into panel 19's handler slider and read the ceiling. That is what a third-party call inside your request costs you. Then answer two things. How do you get the gateway off the request path, and what stops a double-clicking shopper from being charged twice?"}
+  c:"Curveball: put 840 ms into the tool's handler slider and read the ceiling. This is the cost of a third-party call inside your request. Then answer two questions. How do you take the gateway off the request path, and what stops a shopper who double-clicks from being charged twice?"}
 ];
 let bk="1";
 function renderBk(){
@@ -94,11 +94,11 @@ function renderBk(){
   $("#bkReport").textContent=d.report;
   $("#bkListen").innerHTML=d.listen.map(l=>`<li>${l}</li>`).join("");
   $("#bkCards").innerHTML = bk==="2"
-    ? `<div class="card-t">Scenario cards. One per group</div><div class="cards">`+
+    ? `<div class="card-t">Scenario cards (one per group)</div><div class="cards">`+
       SCEN.map((s,i)=>`<button class="sc" data-i="${i}">
         <div class="sn">${s.n}</div><h4>${s.t}</h4>
         <dl>${s.d.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>
-        <div class="curve">${s.c}</div></button>`).join("")+`</div>`
+        <div class="curve instructor">${s.c}</div></button>`).join("")+`</div>`
     : "";
   $$("#bkCards .sc").forEach(el=>el.onclick=()=>{
     const was=el.classList.contains("pick");

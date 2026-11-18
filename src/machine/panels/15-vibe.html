@@ -1,65 +1,70 @@
     <section class="panel" id="p-vibe">
       <div class="head">
-        <div class="eyebrow">15 — Before you start</div>
-        <h2>Four snippets. Each one works. Each one has something wrong with it.</h2>
-        <p>You are about to watch an agent write code quickly and well. The code it produces will be idiomatic, it will read cleanly, and some of it will be wrong in ways that no amount of reading fluency will catch. Try these first, so you know what you are looking for.</p>
-        <div class="ask"><b>Ask the room</b>. Every one of these passes review by a tired human at 4pm. Which line would you have clicked?</div>
+        <h2>Finding mistakes in AI-written code</h2>
+        <p>Imagine proofreading a receipt. Every word is spelled correctly and the layout is clean, but the total at the bottom is wrong. Checking the spelling will not find the problem. Code written by an AI model can be like that receipt. It reads cleanly and still does the wrong thing. You are about to watch an agent write code quickly. The four short examples below show what to look for.</p>
+        <div class="ask"><b>Think first.</b> Look at the first snippet before you click anything. It runs and looks correct. Which line would you question first, and what would you want to know about it?</div>
       </div>
-      <div class="ctab" id="vbPick"></div>
-      <div class="srv">
-        <div>
-          <div class="card" style="padding:0;overflow:hidden">
-            <div class="card-t" style="padding:11px 14px;margin:0;border-bottom:1px solid var(--line)" id="vbTask"></div>
-            <div class="codeblk" id="vbCode"></div>
+
+      <div class="sec" data-sec="four-snippets" data-title="Four snippets that run and are wrong">
+        <p>Each snippet is a short Python function from a Django web application. Django is a toolkit for building web applications in Python. You do not need to read Python fluently. The line above each snippet says what the function was asked to do, and the explanation after each click says what is wrong.</p>
+        <div class="ctab" id="vbPick"></div>
+        <div class="srv">
+          <div>
+            <div class="card" style="padding:0;overflow:hidden">
+              <div class="card-t" style="padding:11px 14px;margin:0;border-bottom:1px solid var(--line)" id="vbTask"></div>
+              <div class="codeblk" id="vbCode"></div>
+            </div>
+            <div class="verdict" id="vbVerdict" style="margin-top:13px"></div>
           </div>
-          <div class="verdict" id="vbVerdict" style="margin-top:13px"></div>
-        </div>
-        <div class="card">
-          <div class="card-t">Score</div>
-          <div class="meter" style="grid-template-columns:1fr 1fr">
-            <div class="g" id="vbFound"><div class="gl">Found</div><div class="gv">0 of 4</div></div>
-            <div class="g" id="vbFirst"><div class="gl">First guess</div><div class="gv">—</div></div>
-          </div>
-          <div class="ctrls" style="margin-top:13px">
-            <button class="btn" id="vbReset">Start over</button>
-          </div>
-          <div class="rtt-note" style="margin-top:14px">
-            Click the line you think causes the problem. There is exactly one per snippet.
-            <br><br>Every defect here belongs to a category from panel 06 of the other tool, and every one of them has shipped in a real system.
-          </div>
-          <div class="whynot" style="margin-top:14px">
-            <b>Reading generated code is its own skill</b>
-            You are not checking whether it looks like Django. It always looks like Django. You are checking the things it could not have known: what is in your tables, what runs twice, what happens when two people click at once.
+          <div class="card">
+            <div class="card-t">Score</div>
+            <div class="meter" style="grid-template-columns:1fr 1fr">
+              <div class="g" id="vbFound"><div class="gl">Found</div><div class="gv">0 of 4</div></div>
+              <div class="g" id="vbFirst"><div class="gl">First guess</div><div class="gv">—</div></div>
+            </div>
+            <div class="ctrls" style="margin-top:13px">
+              <button class="btn" id="vbReset">Start over</button>
+            </div>
+            <div class="rtt-note" style="margin-top:14px">
+              Click the line you think causes the problem. There is exactly one per snippet.
+              <br><br>The first three problems appear in the Module 1 site, in "The N+1 query problem", "Reading and changing data with SQL" and "Transactions and two users changing the same data". The fourth is a method that does not exist. All four have been shipped in real systems.
+            </div>
+            <div class="whynot" style="margin-top:14px">
+              <b>What to check</b>
+              Generated code almost always looks like correct Django. Check the things the model could not have known: what is in your tables, what runs twice, and what happens when two people click at the same moment.
+            </div>
           </div>
         </div>
       </div>
 
-      <div class="card-t" style="margin-top:26px">Two words that get used interchangeably and should not be</div>
-      <div class="cmp">
-        <div class="card">
-          <div class="card-t" style="color:var(--req)">Vibe coding</div>
-          <p style="margin:0;font-size:.84em;color:var(--dim);line-height:1.6">Describe what you want, take what comes back, run it, describe the next thing. You are steering by whether it seems to work. The term is Andrej Karpathy's, and he meant it approvingly for throwaway work: projects where the cost of being wrong is that you delete the folder.</p>
+      <div class="sec" data-sec="vibe-vs-agentic" data-title="Vibe coding and agentic coding">
+        <div class="card-t" style="margin-top:8px">Vibe coding and agentic coding</div>
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">The two terms are often used as if they meant the same thing. They describe different ways of working.</p>
+        <div class="cmp">
+          <div class="card">
+            <div class="card-t" style="color:var(--req)">Vibe coding</div>
+            <p style="margin:0;font-size:.85em;color:var(--dim);line-height:1.6">You describe what you want, take what the model returns, run it, and describe the next change. You judge it by whether it seems to work. The term comes from Andrej Karpathy, who described it as a fine way to build throwaway projects, where being wrong costs you a deleted folder.</p>
+          </div>
+          <div class="card">
+            <div class="card-t" style="color:var(--res)">Agentic coding</div>
+            <p style="margin:0;font-size:.85em;color:var(--dim);line-height:1.6">An agent has a shell (a window for typing commands), your repository (the folder holding your project's code) and your test suite (a set of automated checks that report pass or fail). It works in the loop described in "AI agents: the think, act and observe loop". It can run things, read failures and revise. It can do more, and it can do more damage without being asked, because it acts as well as suggests.</p>
+          </div>
         </div>
-        <div class="card">
-          <div class="card-t" style="color:var(--res)">Agentic coding</div>
-          <p style="margin:0;font-size:.84em;color:var(--dim);line-height:1.6">The agent has a shell, your repo and your test suite, and works in the loop from panel 06. It can run things, read failures and revise. More capable, and more able to do damage without being asked, since now it acts rather than suggests.</p>
+        <div class="whynot" style="margin-top:16px">
+          <b>When a prototype ships</b>
+          Vibe coding is a reasonable way to find out whether an idea is worth building. It stops being reasonable when somebody depends on the result, and that moment usually arrives without an announcement. Few people decide to put unreviewed code into production. It gets there because the prototype worked, the demo went well, and nobody stopped to read it.
+          <br><br>In Module 3 you practice finding that point on purpose.
         </div>
-      </div>
-      <div class="whynot" style="margin-top:16px">
-        <b>The trouble starts when the prototype ships</b>
-        Vibe coding is a reasonable way to find out whether an idea is worth building. It stops being reasonable at the moment somebody depends on the result, and that moment usually arrives without an announcement. Very few people decide to put unreviewed code into production. It arrives there because the prototype worked, the demo went well, and no obvious moment came along to stop and read it.
-        <br><br>Module 3 is largely about finding that point on purpose.
-      </div>
 
-      <div class="card-t" style="margin-top:26px">Three things to watch for in the next session</div>
-      <div class="hostreq-wrap card" style="padding:12px 16px;overflow-x:auto">
-        <table class="hostreq"><thead><tr><th>Watch for</th><th>Write down</th></tr></thead>
-        <tbody>
-          <tr><td>One confident error</td><td>What it claimed, and how you found out it was wrong</td></tr>
-          <tr><td>A moment it changed course after an <b style="color:var(--res)">Observation</b></td><td>What contradicted it, and how many steps it had already built on the wrong answer</td></tr>
-          <tr><td>Anything it did that nobody asked for</td><td>Extra files, extra abstraction, a library that was not needed</td></tr>
-        </tbody></table>
+        <div class="card-t" style="margin-top:26px">What to write down in the next session</div>
+        <div class="hostreq-wrap card" style="padding:12px 16px;overflow-x:auto">
+          <table class="hostreq"><thead><tr><th>Watch for</th><th>Write down</th></tr></thead>
+          <tbody>
+            <tr><td>One confident error</td><td>What it claimed, and how you found out it was wrong</td></tr>
+            <tr><td>A moment it changed course after an <b style="color:var(--res)">Observation</b> (a result sent back by a tool)</td><td>What contradicted it, and how many steps it had already built on the wrong answer</td></tr>
+            <tr><td>Anything it did that nobody asked for</td><td>Extra files, extra layers of code, a library that was not needed</td></tr>
+          </tbody></table>
+        </div>
+        <p style="margin:12px 0 0;font-size:.85em;color:var(--dim);line-height:1.6">Bring those notes back. They will be more useful than anything on this site, because they come from your own work.</p>
       </div>
-      <p style="margin:12px 0 0;font-size:.84em;color:var(--dim);line-height:1.6">Bring those notes back. They are more useful than anything on these seven panels, because they will be yours.</p>
     </section>
-

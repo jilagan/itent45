@@ -1,0 +1,90 @@
+{
+ "panel": "train",
+ "items": [
+  {
+   "id": "train-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "A programmer starts with a random line, measures the loss, and changes the line's three numbers slightly in the direction that lowers the loss. She repeats this several hundred times. What decided where the final line would end up?",
+   "options": [
+    {
+     "text": "The repeated measuring and nudging, working from the data. Nobody wrote the final line down.",
+     "correct": true,
+     "feedback": "Training finds the line by following the slope of the loss, one small step at a time."
+    },
+    {
+     "text": "The programmer, who chose the final position in advance.",
+     "correct": false,
+     "feedback": "The programmer chose only the starting point and the method. The data and the loss decided where the steps went."
+    },
+    {
+     "text": "The loss formula, which contains the correct line.",
+     "correct": false,
+     "feedback": "The loss only scores how wrong a line is. It does not contain the answer."
+    },
+    {
+     "text": "Random chance, because the starting line was random.",
+     "correct": false,
+     "feedback": "The start was random, but each step moves in the direction that lowers the loss."
+    }
+   ]
+  },
+  {
+   "id": "train-2",
+   "sec": null,
+   "type": "predict",
+   "stem": "Before you try it: you set the learning rate to its largest value and press Run 200. What happens to the loss?",
+   "options": [
+    {
+     "text": "It rises or bounces and does not settle.",
+     "correct": true,
+     "feedback": "Each step is so large that it goes past the bottom and ends higher on the other side. The model gets worse while training runs."
+    },
+    {
+     "text": "It falls fastest and reaches the lowest value soonest.",
+     "correct": false,
+     "feedback": "A larger step is faster only up to a point. Beyond that, each step overshoots."
+    },
+    {
+     "text": "It stays exactly the same.",
+     "correct": false,
+     "feedback": "The line still moves on every step. It moves too far."
+    },
+    {
+     "text": "The page shows an error message.",
+     "correct": false,
+     "feedback": "Nothing raises an error when the learning rate is too large. You find out by watching the loss."
+    }
+   ],
+   "try": "Move the learning rate slider to its highest setting, press Run 200, and compare the loss curve with the second setting."
+  },
+  {
+   "id": "train-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "A team's training run has used a week of computing time and the loss has barely changed. The learning rate was set very small. What is the most likely explanation?",
+   "options": [
+    {
+     "text": "Each step moves the model only a little, so progress is very slow.",
+     "correct": true,
+     "feedback": "A very small learning rate heads in the right direction but needs a huge number of steps, and you pay for the computing time."
+    },
+    {
+     "text": "The model has found the best possible line.",
+     "correct": false,
+     "feedback": "A model that has finished stops because the slope flattened. A tiny learning rate can look similar, but the cause is the step size."
+    },
+    {
+     "text": "The learning rate is too large.",
+     "correct": false,
+     "feedback": "A learning rate that is too large makes the loss rise or bounce. It does not make it barely change."
+    },
+    {
+     "text": "The training data must be wrong.",
+     "correct": false,
+     "feedback": "Bad data can cause problems, but slow progress with a tiny learning rate is explained by the step size."
+    }
+   ]
+  }
+ ]
+}

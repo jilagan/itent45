@@ -1,34 +1,34 @@
     <section class="panel" id="p-cost">
       <div class="head">
-        <div class="eyebrow">22 — Module 4 · cloud economics</div>
-        <h2>From asset-heavy to asset-light</h2>
-        <p>The technical argument for cloud is elasticity. The argument that actually gets it approved is an accounting one. Owning servers is <b>capital expenditure</b>. A large sum spent up front, capitalized and depreciated over years, committed before you know what you need. Renting them is <b>operational expenditure</b>. A monthly bill for what you actually used, expensed as you go.</p>
-        <div class="ask"><b>Ask the room</b> the enlistment system needed seven servers for the twenty minutes of enlistment morning. What were those seven servers doing on the other 364 days?</div>
+        <h2>Cloud cost: capital expenditure and operating expenditure</h2>
+        <p>Suppose you need to get around Metro Manila every day. You can buy a jeepney. That costs a large sum at the start, and the jeepney loses value every year whether you drive it or not. Or you can book a Grab ride. Each trip costs more than driving your own vehicle, but you pay only for the trips you take.</p>
+        <p>Servers work the same way. Owning servers is <b>capital expenditure</b> (CapEx): a large sum spent up front, recorded as an asset, and depreciated (written off gradually) over several years, before you know how much capacity you will need. Renting servers from a cloud provider is <b>operational expenditure</b> (OpEx): a monthly bill for what you used, recorded as an expense when you incur it. The technical argument for the cloud is elasticity, which means capacity that grows and shrinks with demand. The argument that usually gets it approved is the accounting one.</p>
+        <div class="ask"><b>Think first</b> The enlistment system needed seven servers for the twenty minutes of enlistment morning. What were those seven servers doing during the rest of the year?</div>
       </div>
 
       <div class="scale2" style="margin-bottom:20px">
         <div class="sc2 vert">
-          <div class="sh">Asset-heavy · CapEx</div>
+          <div class="sh">Asset-heavy: CapEx</div>
           <h4>You own the infrastructure</h4>
-          <p>Servers, data centre, enterprise licences. A large sum committed up front and depreciated over several years.</p>
-          <div class="lim">Predictable but inflexible. You must guess your peak years ahead, and you are wrong in one of two expensive directions.</div>
+          <p>Servers, a data center and enterprise licenses. A large sum is committed up front and depreciated over several years.</p>
+          <div class="lim">The cost is predictable, but you cannot adjust it. You must guess your peak demand years ahead, and a wrong guess is expensive in either direction.</div>
         </div>
         <div class="sc2 horiz">
-          <div class="sh">Asset-light · OpEx</div>
+          <div class="sh">Asset-light: OpEx</div>
           <h4>You rent it by the hour</h4>
-          <p>Compute time, storage, SaaS subscriptions. Expensed monthly, attributable to the thing that caused it.</p>
-          <div class="lim">Lower entry cost and elastic, but the meter never stops. A forgotten test environment bills you every month until someone notices.</div>
+          <p>Computing time, storage and software subscriptions (SaaS). The cost is recorded as an expense each month, and you can trace it to the project that used it.</p>
+          <div class="lim">The starting cost is low and capacity can change, but the meter keeps running. A forgotten test environment is billed every month until someone notices.</div>
         </div>
       </div>
 
-      <div class="card-t">The guess you have to make, and the two ways to be wrong</div>
-      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A year of enlistment demand. The line is what you provisioned; the shape is what people wanted.</p>
+      <div class="card-t">Guessing capacity: two ways to be wrong</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">The chart shows a year of enlistment demand. The thin line is demand. The other line is your capacity. The area between the two lines is either capacity you paid for and did not use, or demand that was turned away.</p>
 
       <div class="srv">
         <div>
           <div class="curve"><svg id="curveSvg" viewBox="0 0 720 230" preserveAspectRatio="none"></svg></div>
           <div class="money">
-            <div class="g" id="cgSpend"><div class="gl">Yearly spend vs renting</div><div class="gv">—</div></div>
+            <div class="g" id="cgSpend"><div class="gl">Yearly spend compared with renting</div><div class="gv">—</div></div>
             <div class="g" id="cgWaste"><div class="gl">Paid for, unused</div><div class="gv">—</div></div>
             <div class="g" id="cgLost"><div class="gl">Demand turned away</div><div class="gv">—</div></div>
           </div>
@@ -37,8 +37,8 @@
         <div class="card">
           <div class="card-t">How do you buy capacity?</div>
           <div class="toggles">
-            <button class="tg" id="tgCapex" aria-pressed="true"><span class="dot"></span><span>Buy servers up front<small>Fixed capacity all year. You choose the line.</small></span></button>
-            <button class="tg" id="tgOpex" aria-pressed="false"><span class="dot"></span><span>Rent, and scale with demand<small>Capacity follows the curve, with a lag.</small></span></button>
+            <button class="tg" id="tgCapex" aria-pressed="true"><span class="dot"></span><span>Buy servers up front<small>Fixed capacity all year. You set the level.</small></span></button>
+            <button class="tg" id="tgOpex" aria-pressed="false"><span class="dot"></span><span>Rent, and scale with demand<small>Capacity follows demand, with a delay.</small></span></button>
           </div>
           <div class="sliders" style="margin-top:16px">
             <div class="field">
@@ -47,28 +47,31 @@
             </div>
           </div>
           <div class="rtt-note" style="margin-top:15px">
-            Drag the capacity line. There is no setting that avoids both mistakes. The graph exists to show that. Elasticity earns its premium here.
-            <br><br><b style="color:var(--faint)">Units are illustrative.</b>
+            Drag the capacity slider. A low setting turns demand away, and a high setting pays for capacity that sits idle. Renting costs more per unit, but you pay only for what you use.
+            <br><br><b style="color:var(--faint)">The units are illustrative.</b>
           </div>
         </div>
       </div>
 
-      <div class="card-t" style="margin-top:26px">Total cost of ownership: the parts of the bill nobody quotes you</div>
-      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">The purchase price is the part everyone compares. It is rarely the part that decides.</p>
+      <div class="card-t" style="margin-top:26px">Total cost of ownership</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Total cost of ownership (TCO) is the full cost of a system over its whole life. The purchase price is one item in it, and it is often the one that gets compared.</p>
       <div class="tco">
-        <div class="tc"><h5>Acquisition</h5><p>Purchase price, taxes, shipping, installation. The only number that appears in most comparisons.</p></div>
-        <div class="tc"><h5>Operating</h5><p>Power, cooling, bandwidth, licences, consumables. Runs every hour whether anyone uses the system or not.</p></div>
-        <div class="tc"><h5>Maintenance &amp; support</h5><p>Servicing, repairs, vendor support contracts, the patching someone has to do on a Saturday.</p></div>
-        <div class="tc hidden"><h5>Training</h5><p>Getting staff able to operate it. Reappears every time a person leaves.</p></div>
-        <div class="tc hidden"><h5>Downtime</h5><p>What it costs while it is unavailable, planned or not. On enlistment morning this is the largest number on this page.</p></div>
-        <div class="tc hidden"><h5>Disposal</h5><p>Decommissioning, data destruction, recycling. Real, and never in the original business case.</p></div>
+        <div class="tc"><h5>Acquisition</h5><p>Purchase price, taxes, shipping and installation. This is the number most comparisons use.</p></div>
+        <div class="tc"><h5>Operating</h5><p>Power, cooling, bandwidth, licenses and consumables. These costs run every hour, whether or not anyone uses the system.</p></div>
+        <div class="tc"><h5>Maintenance &amp; support</h5><p>Servicing, repairs, vendor support contracts, and the software updates (patches) that someone must install, often on a weekend.</p></div>
+        <div class="tc hidden"><h5>Training</h5><p>Teaching staff to operate it. The cost returns each time someone leaves and a replacement is hired.</p></div>
+        <div class="tc hidden"><h5>Downtime</h5><p>The cost of the system being unavailable, planned or not. For enlistment morning this is the largest item.</p></div>
+        <div class="tc hidden"><h5>Disposal</h5><p>Retiring the system, destroying data and recycling hardware. It is a real cost that is usually missing from the original business case.</p></div>
       </div>
 
       <div class="whynot" style="margin-top:20px">
-        <b>Discussion, take five minutes on this</b>
-        How might a startup benefit differently from OpEx than a large enterprise? Push them past "it is cheaper", because for a large enterprise at steady load it often is not. Useful angles: who can afford to be wrong about their guess, who already owns a data centre they have not finished depreciating, and who needs to survive long enough to have a capacity problem at all.
+        <b>Discussion question</b>
+        How might a startup benefit differently from OpEx than a large enterprise would?
+      </div>
+      <div class="instructor">
+        <b>Instructor notes</b>
+        Allow about five minutes. Push students past "it is cheaper", because for a large enterprise with steady load, renting is often more expensive. Useful angles: who can afford to be wrong about their capacity guess, who already owns a data center they have not finished depreciating, and who needs to survive long enough to have a capacity problem at all.
       </div>
     </section>
 
 
-    <!-- ================= 15 REGIONS & FAILOVER ================= -->

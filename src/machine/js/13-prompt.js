@@ -2,15 +2,15 @@
 const PRC=[
  {t:"Creates the row, no checks at all",           w:.26, bad:["concurrent"], ok:false,
   c:'Enrollment.objects.create(student=s, course=c)'},
- {t:"Reads slots, checks it, then creates",        w:.30, bad:["concurrent"], ok:false,
+ {t:"Reads the slot count, checks it, then creates",        w:.30, bad:["concurrent"], ok:false,
   c:'if course.slots > 0:\n    Enrollment.objects.create(...)\n    course.slots -= 1'},
- {t:"get_or_create, so duplicates are handled",    w:.13, bad:["concurrent"], ok:false,
+ {t:"get_or_create, which handles duplicates",    w:.13, bad:["concurrent"], ok:false,
   c:'Enrollment.objects.get_or_create(student=s, course=c)'},
  {t:"Raw SQL INSERT",                              w:.08, bad:["django"], ok:false,
   c:'cursor.execute("INSERT INTO enrollments ...")'},
  {t:"SQLAlchemy session.add",                      w:.06, bad:["django"], ok:false,
   c:'session.add(Enrollment(...)); session.commit()'},
- {t:"Invents a Course.capacity field",             w:.04, bad:["schema"], ok:false,
+ {t:"Uses a Course.capacity field that does not exist",             w:.04, bad:["schema"], ok:false,
   c:'if course.capacity > course.taken:   # no such fields'},
  {t:"SELECT \u2026 FOR UPDATE, then create",        w:.07, bad:[], ok:true,
   c:'with transaction.atomic():\n    c = Course.objects.select_for_update().get(pk=pk)\n    if c.slots < 1: raise CourseFull\n    c.slots -= 1; c.save()\n    Enrollment.objects.create(student=s, course=c)'},
@@ -20,7 +20,7 @@ const PRC=[
 const PRT=[
  {id:"django",     lb:"Use Django, not raw SQL",                     line:'Use the Django ORM.'},
  {id:"concurrent", lb:"Two students may click at the same moment",   line:'Two requests can arrive at the same instant. It must still sell one seat.'},
- {id:"schema",     lb:"Here is the model definition",                line:'Course has a slots integer. Enrollment has unique(student, course).'}
+ {id:"schema",     lb:"Include the table definitions",                line:'Course has a slots integer. Enrollment has unique(student, course).'}
 ];
 const PR={on:new Set()};
 function prRender(){
@@ -36,7 +36,7 @@ function prRender(){
   const top=rows[0], safe=rows.filter(r=>r.ok).reduce((a,r)=>a+r.p,0);
 
   $("#prPrompt").innerHTML=
-    `<span class="c">// the prompt as it stands</span>\nWrite a function that enrols a student in a course.`+
+    `<span class="c">// the prompt so far</span>\nWrite a function that enrolls a student in a course.`+
     PRT.filter(t=>PR.on.has(t.id)).map(t=>`\n<span class="s">${t.line}</span>`).join("");
 
   const mx=rows[0].p;
@@ -54,18 +54,18 @@ function prRender(){
   const v=$("#prVerdict");
   if(PR.on.size===0){
     v.className="verdict bad";
-    v.innerHTML=`<b>Eight plausible answers, and the likeliest one is broken</b>Every candidate is real code that somebody has shipped. The one it will most likely hand you reads the seat count, checks it, then writes, and two students clicking together both get through.<br><br>Only <b class="i">13%</b> of the spread is code that survives that. Nothing you asked for ruled the rest out, because you did not ask for anything.<br><br>Turn on the first constraint.`;
+    v.innerHTML=`<b>Eight possible answers, and the most likely one is broken</b>Each answer is real code that has been used in real systems. The most likely one reads the seat count, checks it, and then writes. When two students click together, both get through.<br><br>Only <b class="i">13%</b> of the answers survive that case. Nothing you asked for ruled out the rest, because you did not ask for anything.<br><br>Turn on the first constraint.`;
   } else if(!top.ok){
     v.className="verdict warn";
-    v.innerHTML=`<b>${rows.length} left, and the top one is still wrong</b>Naming the framework removed the answers written in the wrong one. It did nothing about correctness, because a racy Django answer is still a Django answer.<br><br>Constraints only remove what they describe. Add the one about two students.`;
+    v.innerHTML=`<b>${rows.length} answers left, and the most likely one is still wrong</b>Each constraint removes only the answers it describes. The answers that fail in some other way are still possible.<br><br>Turn on the constraints you have not used yet.`;
   } else if(safe<1){
     v.className="verdict ok";
-    v.innerHTML=`<b>Down to ${rows.length}, and the likeliest is now correct</b>One sentence about simultaneous requests eliminated every check-then-write answer at once, and they were 69% of the original spread.<br><br>${Math.round(safe*100)}% of what remains is correct. The last constraint clears up the rest.`;
+    v.innerHTML=`<b>${rows.length} answers left, and the most likely one is now correct</b>The sentence about simultaneous requests removed every check-then-write answer, and those were 69% of the original range.<br><br>${Math.round(safe*100)}% of what remains is correct. The last constraint removes the rest.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>Two answers left, and both of them work</b>You did not tell it to try harder or to be careful. You told it three facts it had no way of knowing: which framework, that requests overlap, and what the columns are called.<br><br>Each fact made a group of otherwise reasonable answers impossible. <b class="i">Prompting has nothing else in it</b>, and the skill is the one you use writing a decent ticket.<br><br>Compare the two survivors below. Both are correct; the second avoids holding a lock, which matters on enlistment morning.`;
+    v.innerHTML=`<b>Two answers left, and both work</b>You gave the model three facts it could not have known: which framework you use, that requests can overlap, and what the columns are called. Each fact ruled out a group of reasonable answers. Telling it to try harder or be careful would have ruled out nothing.<br><br>Compare the two answers below. Both are correct. The second does not hold a lock (a hold that makes other requests wait), which matters on enlistment morning.`;
   }
-  $("#prCode").innerHTML=`<span class="c">// most likely answer now</span>\n`+top.c.replace(/</g,"&lt;");
+  $("#prCode").innerHTML=`<span class="c">// the most likely answer now</span>\n`+top.c.replace(/</g,"&lt;");
 }
 prRender();
 

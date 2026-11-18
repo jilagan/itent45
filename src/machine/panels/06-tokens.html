@@ -1,9 +1,8 @@
     <section class="panel" id="p-tokens">
       <div class="head">
-        <div class="eyebrow">06 — What it actually reads</div>
-        <h2>It has never seen a letter in its life</h2>
-        <p>Text does not reach the model as text. It is cut into <b>tokens</b> first, and the model only ever sees the numbers those tokens map to. Everything below the cut is invisible: the letters, the spelling, the fact that two words rhyme.</p>
-        <div class="ask"><b>Ask the room</b>. How many r's in <em>strawberry</em>? Now look at how the word arrives.</div>
+        <h2>Tokens: how text is fed to a model</h2>
+        <p>In Scrabble you play with tiles, and a tile is the smallest piece you can place. A language model also works with tiles, but its tiles are chunks of text: a whole word, part of a word, or a punctuation mark. These chunks are called <b>tokens</b>. A program called a <b>tokenizer</b> cuts your text into tokens before the model sees anything, and each token is replaced by a number. The model works with those numbers. It does not see the individual letters inside a token. Unlike Scrabble tiles, the chunks are not single letters. They are pieces of text that turned up often in the material the tokenizer was built from.</p>
+        <div class="ask"><b>Think first.</b> Count the r's in <em>strawberry</em>. Now suppose the word reached you as three chunks, and you could not see inside any chunk. How well could you count? Make a guess, then check the widget below.</div>
       </div>
       <div class="ctab" id="tkPick"></div>
       <div class="srv">
@@ -24,13 +23,13 @@
         <div class="card">
           <div class="card-t">What this explains</div>
           <div class="rtt-note">
-            <b style="color:var(--ink)">Why it miscounts letters.</b> Asking it how many r's are in a word it received as three chunks is like asking you to count brushstrokes in printed text. The information was gone before it arrived.
-            <br><br><b style="color:var(--ink)">Why there is a size limit.</b> The window is measured in tokens, never in words or pages.
-            <br><br><b style="color:var(--ink)">Why the bill looks like that.</b> You are charged per token, so the same sentence costs different amounts in different languages.
+            <b style="color:var(--ink)">Why it miscounts letters.</b> The model receives <em>strawberry</em> as three chunks, and the letters inside each chunk are not separate pieces of input. It has to work out the spelling indirectly, which makes counting unreliable.
+            <br><br><b style="color:var(--ink)">Why there is a size limit.</b> The context window is the most text a model can handle at once. It is measured in tokens.
+            <br><br><b style="color:var(--ink)">Why the bill looks the way it does.</b> Providers charge per token, so the same sentence can cost different amounts in different languages.
           </div>
           <div class="whynot" style="margin-top:14px">
-            <b>Not every language costs the same</b>
-            English averages about four characters a token because most of the training text was English. Filipino and Tagalog fragment harder, so the same meaning takes more tokens, costs more to send, and fills the window faster. It fell out of what the tokenizer was fitted to, and the people paying for it were not in the room.
+            <b>Cost differs by language</b>
+            English averages about four characters per token because most of the text used to build the tokenizer was English. Filipino and Tagalog are split into more pieces, so the same meaning takes more tokens. It costs more to send and fills the context window sooner. The tokenizer was built mostly on English text, so Filipino costs more per message.
           </div>
         </div>
       </div>

@@ -1,0 +1,137 @@
+{
+ "panel": "mem",
+ "items": [
+  {
+   "id": "mem-1",
+   "sec": "memory-budget",
+   "type": "mc",
+   "stem": "A server has 4,000 MB of RAM. The operating system, nginx and the database already use 1,000 MB. You want to keep 15% of the RAM free, and each worker needs 200 MB. About how many workers can you run?",
+   "options": [
+    {
+     "text": "12",
+     "correct": true,
+     "feedback": "Keeping 15% free leaves 3,400 MB. Taking away the 1,000 MB already in use leaves 2,400 MB, and 2,400 divided by 200 is 12."
+    },
+    {
+     "text": "15",
+     "correct": false,
+     "feedback": "This divides 3,000 MB by 200 and forgets the 15% that should stay free. Without free memory the system has no disk cache and slows down."
+    },
+    {
+     "text": "17",
+     "correct": false,
+     "feedback": "This divides 3,400 MB by 200 and forgets that the operating system, nginx and the database already use 1,000 MB."
+    },
+    {
+     "text": "20",
+     "correct": false,
+     "feedback": "This divides all 4,000 MB by 200. Part of the RAM is already in use before the first worker starts."
+    }
+   ]
+  },
+  {
+   "id": "mem-2",
+   "sec": "memory-budget",
+   "type": "predict",
+   "stem": "Before you try it: the machine has 2 GB of RAM, the database is on the same machine, and each worker uses 90 MB plus 8 MB for the request it is handling. You raise the number of workers from 8 to 20. What will the memory bar show?",
+   "options": [
+    {
+     "text": "The bar shows more used memory but plenty still free.",
+     "correct": false,
+     "feedback": "Twenty workers need about 1,960 MB on top of roughly 780 MB that the operating system, nginx and database use. That is more than the 2,048 MB available."
+    },
+    {
+     "text": "The bar shows the machine is over capacity.",
+     "correct": true,
+     "feedback": "Twenty workers need about 1,960 MB and the other programs use about 780 MB. The total is more than 2,048 MB, so the operating system would stop a process."
+    },
+    {
+     "text": "The bar stays the same, because the workers share memory.",
+     "correct": false,
+     "feedback": "Each worker is a separate process with its own copy of the application, so memory use grows with every worker. Only the preload switch lets them share some of it."
+    }
+   ],
+   "try": "Drag the Workers slider to 20 and read the message under the memory bar."
+  },
+  {
+   "id": "mem-3",
+   "sec": "memory-budget",
+   "type": "mc",
+   "stem": "An application spends most of each request waiting for the database. You want it to handle more requests at once without a large increase in memory. What is a reasonable step?",
+   "options": [
+    {
+     "text": "Run several threads inside each worker.",
+     "correct": true,
+     "feedback": "Threads in one process share its memory, so they cost little extra. Waiting for the database does not need two threads to run Python code at the same moment."
+    },
+    {
+     "text": "Start many more workers.",
+     "correct": false,
+     "feedback": "This would work, but each new worker is a separate process with its own copy of the application. The memory cost is large."
+    },
+    {
+     "text": "Turn off the disk cache to free memory.",
+     "correct": false,
+     "feedback": "The disk cache is memory the system uses to avoid reading files from the slow disk. Removing it makes the machine slower and does not add capacity."
+    },
+    {
+     "text": "Nothing helps, because Python cannot handle two requests at once.",
+     "correct": false,
+     "feedback": "Processes can run in parallel, and threads can overlap their waiting. The limit applies only to running Python code in two threads at the same moment."
+    }
+   ]
+  },
+  {
+   "id": "mem-4",
+   "sec": "separate-database",
+   "type": "mc",
+   "stem": "The application machine already has plenty of free RAM and its workers are not short of memory. Which reason still supports moving Postgres to its own machine?",
+   "options": [
+    {
+     "text": "The database can be backed up and restarted without affecting the application.",
+     "correct": true,
+     "feedback": "Separate machines can be maintained separately, and a runaway query cannot use up the application's memory. These are operational reasons that do not depend on spare RAM."
+    },
+    {
+     "text": "Queries become faster because the network is quicker than the same machine.",
+     "correct": false,
+     "feedback": "A query that crosses a network takes longer, about 0.4 ms more in this model. It never gets faster than a query inside the machine."
+    },
+    {
+     "text": "The monthly cost goes down, because each machine is smaller.",
+     "correct": false,
+     "feedback": "Two machines cost about twice as much as one in this model."
+    },
+    {
+     "text": "More workers will fit on the application machine.",
+     "correct": false,
+     "feedback": "This only helps when memory was the limit. Here the application machine already has free RAM."
+    }
+   ]
+  },
+  {
+   "id": "mem-5",
+   "sec": "separate-database",
+   "type": "predict",
+   "stem": "Before you try it: you set Total RAM to 16 GB, so the application machine has plenty of memory. Will moving Postgres to its own machine lower the cost per request per second?",
+   "options": [
+    {
+     "text": "Yes, because the database gets a whole machine.",
+     "correct": false,
+     "feedback": "A faster database helps a little, but the cost doubles. With this much memory the workers were not short of it, so throughput grows only slightly."
+    },
+    {
+     "text": "No, the cost per request per second goes up.",
+     "correct": true,
+     "feedback": "The second machine doubles the monthly cost, and throughput rises by only about 15% in the model. The cost for each request per second therefore goes up."
+    },
+    {
+     "text": "It stays the same, because the total RAM is the same.",
+     "correct": false,
+     "feedback": "The total RAM doubles, because the database gets its own 16 GB machine, and the monthly cost doubles with it."
+    }
+   ],
+   "try": "Drag the Total RAM slider to 16 GB and read the bottom row of the comparison table."
+  }
+ ]
+}

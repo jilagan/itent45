@@ -1,77 +1,84 @@
     <section class="panel" id="p-next">
       <div class="head">
-        <div class="eyebrow">01 — What it is doing</div>
-        <h2>It is guessing the next word, and there is no second mechanism</h2>
-        <p>Every answer you will ever get from one of these models is produced the same way: look at everything so far, work out a probability for every word that could come next, pick one, then do it again. There is no plan, no draft, and no separate step where it checks whether the sentence is true.</p>
-        <div class="ask"><b>Ask the room</b>. Finish this: <em>the capital of France is</em>. Everyone answered. Did you look it up, or did the sentence just end that way?</div>
+        <h2>How a language model writes: predicting the next word</h2>
+        <p>When you type a message on your phone, the keyboard suggests the next word. It has not understood your message. It has learned which words usually follow the ones you typed. A language model is a program trained on huge amounts of text, and it works on the same idea at a much larger scale. Every answer it gives comes from one repeated step. It reads all the text so far, which is called the <b style="color:var(--ink)">context</b>. It works out a probability for every word that could come next, where a probability is a number from 0 to 1 that says how likely that word is. It picks one word, and then it repeats the step. There is no plan, no draft, and no separate step that checks whether the sentence is true.</p>
+        <div class="ask"><b>Think first.</b> Finish this sentence and write down your answer: "The capital of France is". Then ask yourself whether you looked a fact up, or whether the words led you to the ending.</div>
+        <div class="instructor">After students answer, point out that almost everyone said the same word instantly. The model does the same thing with numbers attached. The distinction between recalling a fact and continuing a pattern comes up again in the code example below.</div>
       </div>
-      <div class="ctab" id="nxPick"></div>
-      <div class="srv">
-        <div>
-          <div class="art" id="nxPrompt" style="margin-bottom:12px"></div>
-          <div class="probs" id="nxProbs"></div>
-          <div class="verdict" id="nxVerdict" style="margin-top:13px"></div>
+
+      <div class="sec" data-sec="one-word" data-title="Choosing one word">
+        <p>This section shows one step. The model gives a probability for every candidate word, and then one word is picked. The list of probabilities for all candidates is called a <b style="color:var(--ink)">probability distribution</b>. The first two prompts are sentences. The third is the start of a line of Python code that looks up a user in a database. The model has to choose between two database commands, <code>get</code> and <code>filter</code>.</p>
+        <div class="ctab" id="nxPick"></div>
+        <div class="srv">
+          <div>
+            <div class="art" id="nxPrompt" style="margin-bottom:12px"></div>
+            <div class="probs" id="nxProbs"></div>
+            <div class="verdict" id="nxVerdict" style="margin-top:13px"></div>
+          </div>
+          <div class="card">
+            <div class="card-t">Temperature setting</div>
+            <div class="sliders">
+              <div class="field">
+                <label>Temperature <span class="val" id="vTemp">0.7</span></label>
+                <input type="range" id="sTemp" min="0" max="150" value="70">
+              </div>
+            </div>
+            <div class="ctrls" style="margin-top:13px">
+              <button class="btn primary" id="nxSample">Pick one</button>
+              <button class="btn" id="nxTen">Do it ten times</button>
+              <button class="btn" id="nxReset">Reset</button>
+            </div>
+            <div class="rtt-note" style="margin-top:14px">
+              Temperature controls how far down the list the model is willing to reach. At <b>0</b> it takes the top word every time. At <b>1</b> it picks at random, in proportion to the percentages shown. Picking at random in proportion to the percentages is called <b>sampling</b>.
+              <br><br>Press "Do it ten times" at temperature 0, then again at 1.2, and compare the two tallies.
+            </div>
+            <div class="art" id="nxTally" style="margin-top:12px;min-height:40px"></div>
+          </div>
         </div>
-        <div class="card">
-          <div class="card-t">How adventurous should it be?</div>
-          <div class="sliders">
-            <div class="field">
-              <label>Temperature <span class="val" id="vTemp">0.7</span></label>
-              <input type="range" id="sTemp" min="0" max="150" value="70">
+
+        <div class="whynot" style="margin-top:20px">
+          <b>Temperature 0 gives the most likely word, which can still be wrong</b>
+          At temperature 0 the model takes the most likely word each time. If that top word is wrong, you get the same wrong answer every time you ask, worded the same way and equally confident. That is harder to spot than an answer that changes from run to run.
+        </div>
+      </div>
+
+      <div class="sec" data-sec="the-loop" data-title="Repeating the step to write an answer">
+        <p>A full answer is the same step repeated. The model takes the word it picked, adds it to the end of the prompt, and asks the same question again. A long answer of perhaps eight hundred words is built this way, one chosen word at a time. A model that works this way is called <b style="color:var(--ink)">generative</b>, because it produces new text.</p>
+        <div class="srv">
+          <div>
+            <div class="art" id="gnOut" style="min-height:96px"></div>
+            <div class="probs" id="gnProbs" style="margin-top:12px"></div>
+            <div class="ctrls" style="margin-top:12px">
+              <button class="btn primary" id="gnStep">Next word</button>
+              <button class="btn" id="gnRun">Finish it</button>
+              <button class="btn" id="gnReset">Start again</button>
+            </div>
+            <div class="verdict" id="gnVerdict" style="margin-top:13px"></div>
+          </div>
+          <div class="card">
+            <div class="card-t">What changes in the loop</div>
+            <div class="rtt-note">
+              After the first word, the model reads <b style="color:var(--ink)">its own output</b> as part of the prompt. By the time the next word is chosen, the words it wrote are treated the same way as the words you wrote.
+              <br><br>The model never goes back. Once a word is added, every later word is chosen with that word already in place. The model does not reconsider a sentence it has started.
+            </div>
+            <div class="whynot" style="margin-top:14px">
+              <b>Why one early error can run through a whole answer</b>
+              If the model picks a slightly wrong word early, every word after it is chosen to fit that word. The result reads smoothly to the end, because each word is chosen to be a likely continuation of the text before it.
             </div>
           </div>
-          <div class="ctrls" style="margin-top:13px">
-            <button class="btn primary" id="nxSample">Pick one</button>
-            <button class="btn" id="nxTen">Do it ten times</button>
-            <button class="btn" id="nxReset">Reset</button>
-          </div>
-          <div class="rtt-note" style="margin-top:14px">
-            Temperature is how far down the list it is willing to reach. At <b>0</b> it takes the top word every single time. At <b>1</b> it samples in proportion to the numbers you see.
-            <br><br>Run ten samples at 0, then ten at 1.2, and watch what changes.
-          </div>
-          <div class="art" id="nxTally" style="margin-top:12px;min-height:40px"></div>
         </div>
-      </div>
 
-      <div class="card-t" style="margin-top:26px">Now do that eight hundred times</div>
-      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">One word is a party trick. What makes it <b style="color:var(--ink)">generative</b> is the loop: take the word it picked, glue it onto the end, and ask the same question again. The answer you get back was built this way, one commitment at a time.</p>
-      <div class="srv">
-        <div>
-          <div class="art" id="gnOut" style="min-height:96px"></div>
-          <div class="probs" id="gnProbs" style="margin-top:12px"></div>
-          <div class="ctrls" style="margin-top:12px">
-            <button class="btn primary" id="gnStep">Next word</button>
-            <button class="btn" id="gnRun">Finish it</button>
-            <button class="btn" id="gnReset">Start again</button>
-          </div>
-          <div class="verdict" id="gnVerdict" style="margin-top:13px"></div>
+        <div class="whynot" style="margin-top:20px">
+          <b>Generative models and classifiers</b>
+          In the panel "Training data and test data", the boundary answered a closed question: which side is this student on? The answer was one choice from a set that existed before the model ran, and nothing new was made. A program that sorts inputs into fixed categories like this is called a <b style="color:var(--ink)">classifier</b>.
+          <br><br>The model in this panel answers an open question. The set of possible answers is every sequence of words there is. The word <em>generative</em> refers to this open set. A generative model's output can be fluent, new and wrong at the same time. A classifier can only be wrong in the ways its fixed set of answers allows.
         </div>
-        <div class="card">
-          <div class="card-t">What is different about the loop</div>
-          <div class="rtt-note">
-            After the first word, the model is reading <b style="color:var(--ink)">its own output</b>. Nothing in the context marks which part you wrote and which part it wrote. They are the same kind of text by the time the next word is chosen.
-            <br><br>It also never goes back. Once a word is on the end it is a fact the next word has to live with, and there is no step where the model reconsiders a sentence it has already started.
-          </div>
-          <div class="whynot" style="margin-top:14px">
-            <b>This is where a wrong answer becomes a confident paragraph</b>
-            Pick a slightly wrong word early and everything after it is chosen to be consistent with that word. The result reads smoothly all the way to the end, because smoothness is the thing being optimized at every step.
-          </div>
+
+        <div class="whynot" style="margin-top:20px">
+          <b>Image generators work differently</b>
+          Image generators mostly start from random dots, called noise, and remove the noise in steps until a picture is left. That process is different from predicting words, and it fails in different ways. What you learn here about words does not explain why a generated hand has six fingers.
+          <div class="instructor">Students tend to assume that one mechanism sits behind every AI tool. Say out loud that this panel applies to language models only.</div>
         </div>
-      </div>
-
-      <div class="whynot" style="margin-top:20px">
-        <b>Generative, as against the thing in panel 01</b>
-        The boundary in panel 01 answers a closed question: which side is this student on? One bit out, chosen from a set that existed before the model ran. Nothing new is made.
-        <br><br>This panel answers an open one, and the set of possible answers is every sequence of words there is. That distinction is what people mean by <em>generative</em>. The output can be fluent, novel and wrong at the same time. A classifier can only be wrong in the ways you allowed for.
-      </div>
-
-      <div class="whynot" style="margin-top:20px">
-        <b>Images do not work like this at all</b>
-        Students assume one mechanism sits behind everything, so say this out loud. Image models mostly start from noise and remove it in steps until a picture is left, which is a different process with different failure modes. Nothing you learn about tokens here transfers to why a generated hand has six fingers.
-      </div>
-      <div class="whynot" style="margin-top:20px">
-        <b>Temperature 0 is not correct mode</b>
-        It is most-likely mode. If the top of that list happens to be wrong, temperature 0 gives you the same wrong answer every time you ask, worded identically and just as confidently. That is harder to catch than an answer that wobbles, not easier.
       </div>
     </section>
 

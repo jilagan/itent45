@@ -1,7 +1,7 @@
-/* ================= 05 SCALE ================= */
+/* ================= SCALING OUT ================= */
 const SC={load:400,inst:1,h:50,rep:0,q:3,lb:false,cache:false,queue:false,sess:false};
 const DB_BASE=300, REPLICA_QPS=240, HIT=0.70;
-// one instance = one copy of the machine from panels 08 and 09, workers and all
+// one instance = one copy of the machine from the memory and server capacity panels, workers and all
 const workersPerInst = () => (typeof S!=="undefined" ? S.workers : 4);
 
 function scaleModel(){
@@ -48,30 +48,30 @@ function renderScale(){
   set("#sgShed",Math.round(m.shed),m.shed>0,m.shed===0);
 
   $("#sMath").innerHTML=
-    `App: ${m.active} machine${m.active>1?"s":""} × ${workersPerInst()} workers ÷ ${(m.h/1000).toFixed(3)}s = <b>${Math.round(m.appCap)} rps</b><br>`+
-    `DB: ${Math.round(m.dbCap)} qps ÷ ${m.perReq.toFixed(2)} queries per request = <b>${m.perReq>0?Math.round(m.dbReqCap)+" rps":"unlimited"}</b>`;
+    `Application: ${m.active} machine${m.active>1?"s":""} × ${workersPerInst()} workers ÷ ${(m.h/1000).toFixed(3)} s = <b>${Math.round(m.appCap)} rps</b><br>`+
+    `Database: ${Math.round(m.dbCap)} qps ÷ ${m.perReq.toFixed(2)} queries per request = <b>${m.perReq>0?Math.round(m.dbReqCap)+" rps":"unlimited"}</b>`;
 
   const v=$("#sVerdict");
   if(SC.sess && m.active>1){
     v.className="verdict bad";
-    v.innerHTML=`<b>Broken, not just slow</b>Sessions live in one instance's memory, but the load balancer sends each request to whichever box is free. A user logs in on instance 1 and the next click lands on instance 3, which has never heard of them. Capacity is irrelevant until state moves out of the process, into the cache, the database, or a signed cookie. This is what "stateless" buys you.`;
+    v.innerHTML=`<b>Users are logged out at random</b>Each machine keeps its sessions in its own memory, but the load balancer sends every request to whichever machine is free. A user logs in on machine 1 and the next click goes to machine 3, which has no record of that user. Adding capacity does not help until the session data moves out of the application machine, into the cache, the database or a signed cookie (a cookie the server can check has not been altered). An application that keeps no user data in the machine is called stateless, and scaling out depends on that.`;
     return;
   }
   if(SC.inst>1 && !SC.lb){
     v.className="verdict warn";
-    v.innerHTML=`<b>Instances idle</b>You are running ${SC.inst} instances but nothing is distributing traffic, so ${SC.inst-1} of them sit empty while one absorbs everything. Horizontal scaling starts with the thing in front, not the copies behind it.`;
+    v.innerHTML=`<b>Machines idle</b>You are running ${SC.inst} machines, but nothing distributes traffic to them. ${SC.inst-1} of them sit idle while one machine handles everything. Turn on the load balancer first.`;
     return;
   }
   if(m.shed>0){
     v.className="verdict bad";
     v.innerHTML= m.neck==="app"
-      ? `<b>Bottleneck: application tier</b>Turning away ${Math.round(m.shed)} rps. The workers cannot drain the queue fast enough. Moves that help: more instances, a faster handler, or the async queue to get slow work off the request path.`
-      : `<b>Bottleneck: database</b>Turning away ${Math.round(m.shed)} rps. Each request costs ${m.perReq.toFixed(2)} queries and the database tops out at ${Math.round(m.dbCap)} qps. More app instances will not help. They will only push harder on the same database. Moves that help: cache the reads, add replicas, or make each request ask for less.`;
+      ? `<b>Bottleneck: application machines</b>Turning away ${Math.round(m.shed)} rps. The workers cannot finish requests fast enough. Options that help: more machines, a faster handler, or the background job queue to move slow work out of the request.`
+      : `<b>Bottleneck: database</b>Turning away ${Math.round(m.shed)} rps. Each request needs ${m.perReq.toFixed(2)} queries and the database can handle at most ${Math.round(m.dbCap)} qps. More application machines would send even more queries to the same database, so they would not help. Options that help: a cache for reads, read replicas, or fewer queries per request.`;
     return;
   }
   const head=(m.ceiling/SC.load);
   v.className="verdict ok";
-  v.innerHTML=`<b>Keeping up · ${head.toFixed(1)}× headroom</b>Serving all ${SC.load} rps, ceiling is ${Math.round(m.ceiling)} rps, and the ${m.neck==="app"?"application tier":"database"} is the thing that will give way first when load grows. That is the next wall, and knowing it beforehand is the point.`;
+  v.innerHTML=`<b>Keeping up, ${head.toFixed(1)}× headroom</b>All ${SC.load} rps are served. Headroom is spare capacity: the system could handle ${head.toFixed(1)} times the current load. The maximum is ${Math.round(m.ceiling)} rps, and the ${m.neck==="app"?"application machines":"database"} will reach their limit first when the load grows. That is the next bottleneck.`;
 }
 const bindS=(sel,key,fmt,lbl)=>{
   $(sel).oninput=e=>{SC[key]=+e.target.value;$(lbl).textContent=fmt(SC[key]);renderScale()};
@@ -99,7 +99,7 @@ function lbRender(){
       <div class="iname">${i===LB.dead?"✕ "+n:"machine "+n}</div>
       <div class="ibarwrap"><div class="ibar" style="height:${h}px"></div></div>
       <div class="icount">${LB.count[i]}</div>
-      <div class="iflight">${LB.flight[i]} in flight</div>
+      <div class="iflight">${LB.flight[i]} in progress</div>
       ${SLOW[i]>1?'<div class="islow">4× slower</div>':""}
     </div>`;
   }).join("");
@@ -112,22 +112,22 @@ function lbRender(){
   set("#lbG3",LB.lost,LB.lost>0,LB.lost===0&&LB.total>0);
 
   const v=$("#lbVerdict"), fl=LB.flight;
-  if(!LB.total){ v.className="verdict"; v.innerHTML="<b>Idle</b>Press Send traffic and watch where requests land."; return; }
+  if(!LB.total){ v.className="verdict"; v.innerHTML="<b>Idle</b>Press Send traffic and watch which machine each request goes to."; return; }
   if(LB.algo==="sticky" && LB.lost>0){
     v.className="verdict bad";
-    v.innerHTML=`<b>${LB.lost} sessions lost</b>Sticky sessions pinned those clients to machine E, and E is gone. The load balancer reroutes them, but whatever was held in E's memory went with it. They are logged out. This is the same failure the in-memory sessions toggle shows below. Horizontal scaling asks you to keep state out of the process for that reason.`;
+    v.innerHTML=`<b>${LB.lost} session${LB.lost===1?"":"s"} lost</b>Sticky sessions tied those clients to machine E, and E went down. The load balancer sends them to another machine, but the session data held in E's memory is gone, so those users are logged out. The switch "Sessions stored in machine memory" further down shows the same failure. To avoid it, keep session data outside the application machines.`;
   } else if(LB.algo==="rr" && fl[4]>=Math.max(fl[0],fl[1],fl[2],fl[3])+2 && lbAlive(4)){
     v.className="verdict warn";
-    v.innerHTML=`<b>Even counts, uneven load</b>Round robin gave every machine the same number of requests, which is the problem: E is slower, so its queue is ${fl[4]} deep while the others sit near ${Math.round((fl[0]+fl[1]+fl[2])/3)}. Counting requests is not the same as sharing work. Try least connections.`;
+    v.innerHTML=`<b>Equal counts, unequal load</b>Round robin gave every machine the same number of requests. E is slower, so it has ${fl[4]} requests in progress while the others have about ${Math.round((fl[0]+fl[1]+fl[2])/3)}. Equal request counts do not mean equal work. Try least connections.`;
   } else if(LB.algo==="lc"){
     v.className="verdict ok";
-    v.innerHTML=`<b>Balanced by actual work</b>Least connections sends fewer requests to E because it can see E is still busy with the last ones. Uneven counts, even queues. Which is the thing that matters.`;
+    v.innerHTML=`<b>Balanced by current work</b>Least connections sends fewer requests to E because E is still busy with its earlier ones. The counts differ, but the number of requests in progress is about equal on every machine, and that number is what users wait behind.`;
   } else if(LB.dead>=0){
     v.className="verdict ok";
-    v.innerHTML=`<b>Machine E removed, nobody noticed</b>The health check stopped answering, so the load balancer took E out of the rotation and split its share among the rest. No user saw an error. This is horizontal scaling buying you availability, not just capacity.`;
+    v.innerHTML=`<b>Machine E removed, no user affected</b>E stopped answering the health check, so the load balancer took E out of the rotation and shared its requests among the other machines. No user saw an error. Scaling out improves availability, which means the site keeps working when a machine fails, as well as capacity.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>Spreading evenly</b>Each machine is taking roughly the same number of requests. Now take E down, or switch to sticky sessions and take it down.`;
+    v.innerHTML=`<b>Spreading evenly</b>Each machine is receiving about the same number of requests. Now take E down, or switch to sticky sessions and then take E down.`;
   }
 }
 function lbDispatch(){

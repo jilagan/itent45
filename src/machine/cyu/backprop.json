@@ -1,0 +1,90 @@
+{
+ "panel": "backprop",
+ "items": [
+  {
+   "id": "backprop-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "A customer sends a dish back because it is too salty. Which way of deciding who should change their work matches backpropagation?",
+   "options": [
+    {
+     "text": "Start at the complaint and work backward, asking at each step how much that person's work affected the result.",
+     "correct": true,
+     "feedback": "Backpropagation passes blame backward from the loss, layer by layer, using what each step handed to the next."
+    },
+    {
+     "text": "Ask each person to change their work at random and see whether the complaint goes away.",
+     "correct": false,
+     "feedback": "That is closer to nudging each weight and running the whole network again, which is the costly approach backpropagation avoids."
+    },
+    {
+     "text": "Blame only the last person who handled the dish.",
+     "correct": false,
+     "feedback": "That ignores the earlier steps, and the earlier weights are exactly the ones that need a slope."
+    },
+    {
+     "text": "Ask everyone to change their work by the same amount.",
+     "correct": false,
+     "feedback": "Each weight affects the result by a different amount, so each needs its own slope."
+    }
+   ]
+  },
+  {
+   "id": "backprop-2",
+   "sec": null,
+   "type": "predict",
+   "stem": "Before you try it: the network in the widget has six weights. How many of them connect directly to the output unit?",
+   "options": [
+    {
+     "text": "Two",
+     "correct": true,
+     "feedback": "One connects each hidden unit to the output. The other four connect the inputs to the hidden units."
+    },
+    {
+     "text": "Four",
+     "correct": false,
+     "feedback": "Four weights connect the two inputs to the two hidden units. The output unit has only two incoming weights."
+    },
+    {
+     "text": "Six",
+     "correct": false,
+     "feedback": "Only the last layer of weights connects to the output. The rest connect earlier layers."
+    },
+    {
+     "text": "One",
+     "correct": false,
+     "feedback": "There are two hidden units, and each has its own weight to the output."
+    }
+   ],
+   "try": "Press Step until the second Slopes line appears, and notice that the four earlier weights get their slopes from the blame passed back."
+  },
+  {
+   "id": "backprop-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "A team needs slopes for a network with 2 billion weights. Method A nudges each weight and runs the network again to see whether the loss improved. Method B uses backpropagation. Which statement is correct?",
+   "options": [
+    {
+     "text": "Method A needs about 2 billion full runs for one step. Method B needs about one forward pass and one backward pass.",
+     "correct": true,
+     "feedback": "Backpropagation reuses numbers already worked out, so it gets every slope for about the cost of one forward pass."
+    },
+    {
+     "text": "Both methods need about the same amount of computing.",
+     "correct": false,
+     "feedback": "They differ by a factor of billions for a network this size."
+    },
+    {
+     "text": "Method A is cheaper, because it avoids the backward pass.",
+     "correct": false,
+     "feedback": "Avoiding the backward pass means repeating the whole forward pass for every weight."
+    },
+    {
+     "text": "Method B needs 2 billion passes, but each one is cheaper.",
+     "correct": false,
+     "feedback": "Method B needs one backward pass in total."
+    }
+   ]
+  }
+ ]
+}

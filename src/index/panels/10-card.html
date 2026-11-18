@@ -1,9 +1,8 @@
     <section class="panel" id="p-card">
       <div class="head">
-        <div class="eyebrow">10 — Module 5 · relationships</div>
-        <h2>Cardinality decides what your tables look like</h2>
-        <p>Two entities, one relationship between them, and a question: how many of each side can pair with how many of the other? The answer is one of three, and each produces a different set of tables. Get it wrong on the diagram and you will discover it later, in production, when somebody needs a second one of something you allowed only one of.</p>
-        <div class="ask"><b>Ask the room</b>. Can a student take more than one course? Can a course have more than one student? Two yeses, and the tables you are about to draw are not the tables you expected.</div>
+        <h2>Relationships: one-to-one, one-to-many, many-to-many</h2>
+        <p>On a class list, one student can take several courses, and every course has several students on its list. The number of items that can sit on each side of a link between two entities is called <b style="color:var(--ink)">cardinality</b>. There are three kinds: one-to-one, one-to-many and many-to-many. Each kind produces a different set of tables, where a table is a grid of rows and columns that holds one entity, like one sheet of a spreadsheet. If you choose the wrong kind on the diagram, you find out later, when somebody needs a second value in a place that allows only one.</p>
+        <div class="ask"><b>Think first.</b> Answer yes or no to each question. Can one student take more than one course? Can one course have more than one student? Sketch the tables you would need, then open the tabs below and compare.</div>
       </div>
 
       <div class="ctab" id="cardTab"></div>
@@ -15,14 +14,14 @@
           <div class="verdict" id="cardVerdict" style="margin-top:13px"></div>
         </div>
         <div class="card">
-          <div class="card-t">What each one costs you</div>
+          <div class="card-t">What this type means for your tables</div>
           <div class="rtt-note" id="cardNote"></div>
         </div>
       </div>
 
       <div class="whynot" style="margin-top:20px">
-        <b>The junction table is where the interesting columns live</b>
-        Students meet many-to-many and treat the extra table as bookkeeping, a nuisance the database imposes. It is the opposite. That table is the only place a date, a status or a grade can sit, because those facts describe the pairing and belong to neither side. Panel 09 called <em>Enrolment</em> an entity for exactly this reason. The diagram was telling you a table was missing before you knew you needed one.
+        <b>Why many-to-many needs a third table</b>
+        The extra table in a many-to-many relationship can look like paperwork that the database demands. It has a real purpose. It is the only place where a date, a status or a grade can be stored, because those facts describe the pairing and belong to neither side. "Entities, attributes and instances" treats Enrollment as an entity for the same reason. A many-to-many link on a diagram is a sign that a table is missing.
       </div>
     </section>
 

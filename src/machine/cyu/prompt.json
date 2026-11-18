@@ -1,0 +1,146 @@
+{
+ "panel": "prompt",
+ "items": [
+  {
+   "id": "prompt-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "You ask a model for \"a function to enroll a student.\" Then you add the sentence \"Be careful and think hard.\" Why does this sentence change so little?",
+   "options": [
+    {
+     "text": "It adds no fact that rules out any of the likely answers, so the range of answers stays about the same.",
+     "correct": true,
+     "feedback": "A constraint helps when it removes answers. \"Be careful\" describes no answer, so every answer that was possible is still possible."
+    },
+    {
+     "text": "Models ignore any instruction that is not a fact about the code.",
+     "correct": false,
+     "feedback": "Models do follow instructions. The sentence changes little because it gives no information that separates good answers from bad ones."
+    },
+    {
+     "text": "The model needs a longer prompt before it takes any sentence seriously.",
+     "correct": false,
+     "feedback": "Length does not matter here. One sentence that names a fact, such as \"two requests can arrive at the same instant,\" can change the result a lot."
+    },
+    {
+     "text": "The model cannot be careful, so the sentence has no effect at all.",
+     "correct": false,
+     "feedback": "The sentence may nudge the output a little. The point is that it cannot remove a whole group of answers the way a specific fact can."
+    }
+   ]
+  },
+  {
+   "id": "prompt-2",
+   "sec": null,
+   "type": "predict",
+   "stem": "Before you try it: with every switch off, which kind of answer will the model most likely give for the enrollment function?",
+   "options": [
+    {
+     "text": "One that reads the seat count, checks it, and then creates the row.",
+     "correct": true,
+     "feedback": "This is the most common pattern in tutorials, so it gets the largest share of the range. It fails when two students click at the same moment."
+    },
+    {
+     "text": "One that locks the course row first, then creates the enrollment.",
+     "correct": false,
+     "feedback": "This answer is correct but rare in the range, around 7%. Most examples the model learned from do not use it."
+    },
+    {
+     "text": "One that creates the row with no checks at all.",
+     "correct": false,
+     "feedback": "This is a common answer, but the check-then-create pattern is more common."
+    },
+    {
+     "text": "It splits evenly across all eight kinds of answer.",
+     "correct": false,
+     "feedback": "The bars are not equal. The model favors the patterns it saw most often."
+    }
+   ],
+   "try": "Leave every switch off and read the Most likely answer box and the first bar in the widget above."
+  },
+  {
+   "id": "prompt-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "You switch on \"Use Django, not raw SQL.\" The most likely answer is still wrong. Why?",
+   "options": [
+    {
+     "text": "The constraint removes only the answers written in other tools. A check-then-create answer in Django is still possible.",
+     "correct": true,
+     "feedback": "Each constraint removes only what it describes. Naming the framework says nothing about two requests overlapping."
+    },
+    {
+     "text": "The model did not read the constraint.",
+     "correct": false,
+     "feedback": "The constraint worked. The answers that used raw SQL and SQLAlchemy are gone from the bars."
+    },
+    {
+     "text": "Django cannot handle two students clicking at once.",
+     "correct": false,
+     "feedback": "Django can. The unsafe pattern is in how the code is written, and safe Django answers still appear in the list."
+    },
+    {
+     "text": "A constraint only works when it is added last.",
+     "correct": false,
+     "feedback": "Order does not matter. The set of constraints you have turned on decides which answers remain."
+    }
+   ]
+  },
+  {
+   "id": "prompt-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "Your capstone has a checkout page. Two customers can buy the last item at the same time. Which sentence added to your prompt most improves the chance of correct code?",
+   "options": [
+    {
+     "text": "Two requests can arrive at the same instant. It must still sell only one item.",
+     "correct": true,
+     "feedback": "This states a fact the model could not have known. It rules out every check-then-write answer."
+    },
+    {
+     "text": "Make sure the code is correct.",
+     "correct": false,
+     "feedback": "This names no fact and rules out no answer."
+    },
+    {
+     "text": "Write the code as fast as you can.",
+     "correct": false,
+     "feedback": "Speed is not the problem. This adds no information about the situation."
+    },
+    {
+     "text": "Use short variable names.",
+     "correct": false,
+     "feedback": "Style rules can help in other ways, but they do not affect whether two requests collide."
+    }
+   ]
+  },
+  {
+   "id": "prompt-5",
+   "sec": null,
+   "type": "mc",
+   "stem": "Which of these belongs in a system prompt?",
+   "options": [
+    {
+     "text": "\"We use Django. Never write raw SQL without asking me first.\"",
+     "correct": true,
+     "feedback": "This rule is true for every task, so it is set once and applies everywhere. A system prompt holds rules like this."
+    },
+    {
+     "text": "The error message from the test you ran a minute ago.",
+     "correct": false,
+     "feedback": "This applies to one task. It belongs in the context for that task."
+    },
+    {
+     "text": "The columns of the table in the file you just opened.",
+     "correct": false,
+     "feedback": "This is context for the current task. It would be wrong for a task about a different table."
+    },
+    {
+     "text": "The example output you want for today's report.",
+     "correct": false,
+     "feedback": "This is task context. A system prompt carries rules that stay the same across tasks."
+    }
+   ]
+  }
+ ]
+}

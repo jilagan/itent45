@@ -19,10 +19,10 @@ const lx=h=>52+(h/30)*418, ly=a=>246-(a*208);
 const straightSide=(h,a)=>a>straightAt(h);
 const wigglySide=(h,a)=>a>wigAt(h);
 const LNSTAGE=[
- {t:"Seventeen students", s:`Every one of them finished the course, or did not. Two axes, because those are the two things a registrar actually has: hours studied and attendance.<br><br>Right now they are all the same to you. Nothing has been fitted and nothing has been hidden.`},
- {t:"Five put away, unlooked at", s:`Chosen at random and set aside, marked with a dashed ring. From here on, pretend you have never seen them. They are your <b style="color:var(--req)">test set</b>.<br><br>The other twelve are your <b style="color:var(--res)">training set</b>, and they are all the model is allowed to look at.`},
- {t:"A line fitted to the twelve", s:`Fitted using only the training set. The five hidden ones took no part in it.<br><br>You have two options in the panel below. Start with the straight line, then bend it, and watch what happens to the score on the twelve.`},
- {t:"Now look at the five", s:`The moment of truth, and the only number worth quoting. These five were never available while the line was being placed, so how the line treats them is the closest thing you have to how it will treat the next student who walks in.<br><br>Compare the two scores. Then switch between the straight line and the bent one and compare the gaps.`}
+ {t:"Seventeen students", s:`Each of these students either finished the course or did not. Each student has two measurements, hours studied and attendance, which are the two things a registrar would have on record.<br><br>All 17 are treated the same for now. Nothing has been fitted and nothing has been set aside.`},
+ {t:"Five set aside", s:`Five students are chosen at random and set aside, marked with a dashed ring. From here on, pretend you have never seen them. They are the <b style="color:var(--req)">test set</b>.<br><br>The other twelve are the <b style="color:var(--res)">training set</b>. The model is allowed to look only at these.`},
+ {t:"A line fitted to the twelve", s:`The line is fitted using only the training set. The five students set aside took no part.<br><br>Use the two buttons below to choose the kind of line. Start with the straight line, then switch to the bent line, and watch what happens to the score on the twelve.`},
+ {t:"Testing on the five", s:`Now the line is checked against the five students it never saw. Their score is the only one worth quoting. These five were not available while the line was being placed, so how the line treats them is the best estimate of how it will treat the next student who enrolls.<br><br>Compare the two scores. Then switch between the straight line and the bent line and compare the gaps.`}
 ];
 function lnRender(){
   const st=LN.stage;
@@ -51,13 +51,13 @@ function lnRender(){
         <path d="${path} L${lx(30)},${ly(0)} L${lx(0)},${ly(0)} Z" fill="var(--warn)" opacity=".07"/>
         <path d="${path}" fill="none" stroke="var(--req)" stroke-width="2.6" stroke-linejoin="round"/>
       </g>
-      <text x="${lx(1.5)}" y="52" fill="var(--res)" font-family="monospace" font-size="10" opacity=".75">predicted pass</text>
-      <text x="${lx(1.5)}" y="238" fill="var(--warn)" font-family="monospace" font-size="10" opacity=".75">predicted fail</text>`;
+      <text x="${lx(1.5)}" y="52" fill="var(--res)" font-size="10" opacity=".75">predicted pass</text>
+      <text x="${lx(1.5)}" y="238" fill="var(--warn)" font-size="10" opacity=".75">predicted fail</text>`;
   }
   svg+=`<line x1="52" y1="246" x2="470" y2="246" stroke="var(--line2)"/>
     <line x1="52" y1="34" x2="52" y2="246" stroke="var(--line2)"/>
-    <text x="261" y="272" fill="var(--faint)" font-family="monospace" font-size="10.5" text-anchor="middle">hours studied</text>
-    <text x="17" y="140" fill="var(--faint)" font-family="monospace" font-size="10.5" text-anchor="middle" transform="rotate(-90 17 140)">attendance</text>`;
+    <text x="261" y="272" fill="var(--faint)" font-size="10.5" text-anchor="middle">hours studied</text>
+    <text x="17" y="140" fill="var(--faint)" font-size="10.5" text-anchor="middle" transform="rotate(-90 17 140)">attendance</text>`;
 
   const mark=(sPt,held)=>{
     const [h,a,pass]=sPt, x=lx(h), y=ly(a);
@@ -69,7 +69,7 @@ function lnRender(){
     const ring = hiddenNow ? `<circle cx="${x}" cy="${y}" r="10.5" fill="none" stroke="${st>=3?"var(--req)":"var(--dim)"}"
         stroke-width="${st>=3?1.6:1}" stroke-dasharray="2.5 2.5" opacity="${dim}"/>` : "";
     const bad = wrong ? `<circle cx="${x}" cy="${y}" r="13" fill="none" stroke="var(--warn)" stroke-width="2"/>
-        <text x="${x+15}" y="${y-9}" fill="var(--warn)" font-family="monospace" font-size="9.5">wrong</text>` : "";
+        <text x="${x+15}" y="${y-9}" fill="var(--warn)" font-size="9.5">wrong</text>` : "";
     const g = pass
       ? `<circle cx="${x}" cy="${y}" r="6" fill="${held?"var(--bg)":"none"}" stroke="${col}" stroke-width="2.2" opacity="${dim}"/>`
       : `<path d="M${x-5},${y-5} L${x+5},${y+5} M${x+5},${y-5} L${x-5},${y+5}" stroke="${col}" stroke-width="2.4" opacity="${dim}"/>`;
@@ -86,23 +86,23 @@ function lnRender(){
     g.classList.toggle("hot",!!hot);g.classList.toggle("good",!!good)};
   set("#lnTrain", st>=2?trp+"%":"\u2014", false, st>=2&&trp===100);
   set("#lnTest",  st>=3?tep+"%":"\u2014", st>=3&&tep<60, st>=3&&tep>=80);
-  set("#lnGap",   st>=3?(trp-tep)+" pts":"\u2014", st>=3&&(trp-tep)>25, false);
+  set("#lnGap",   st>=3?(trp-tep)+" points":"\u2014", st>=3&&(trp-tep)>25, false);
 
   const v=$("#lnVerdict");
   if(st===0){ v.className="verdict";
-    v.innerHTML=`<b>All seventeen, and no model yet</b>Circles finished the course, crosses did not. Before fitting anything, take some of them away from yourself.`;
+    v.innerHTML=`<b>All 17 students, and no model yet</b>Circles are students who finished the course and crosses are students who did not. Before fitting anything, some of them will be set aside.`;
   } else if(st===1){ v.className="verdict";
-    v.innerHTML=`<b>Twelve to fit on, five to be honest with</b>The dashed ones are gone as far as the next step is concerned. Nothing about them will influence where the line goes, which is the only reason their score will mean anything later.<br><br>Five out of seventeen is roughly the usual proportion. The exact number matters less than the discipline of not peeking.`;
+    v.innerHTML=`<b>Twelve to fit on, five to test on</b>The dashed students are set aside for the next step. Nothing about them will influence where the line goes. That is the only reason their score will mean anything later.<br><br>Five of 17 is about 30 percent. A test set is commonly 20 to 30 percent of the data. The exact share matters less than not looking at the test set while fitting.`;
   } else if(st===2){ v.className="verdict "+(trp===100?"warn":"");
     v.innerHTML = LN.mode==="line"
-      ? `<b>${trp}% on the twelve, and two are wrong</b>One straight line, and no straight line will catch both of those. You could stop here, or you could bend the line until it catches everything.<br><br>Try the other option.`
-      : `<b>100%. Every one of the twelve.</b>The boundary now weaves between them. On the only evidence available at this stage, this is the better model by a clear margin.<br><br>Now go to step 4 and look at the five you hid.`;
+      ? `<b>${trp}% on the twelve, and two are wrong</b>No straight line can catch both of those students. You could stop here, or you could bend the line until it catches every student.<br><br>Try the other option.`
+      : `<b>100% on the twelve. Every student is right.</b>The boundary now weaves between the students. Judged only on these twelve, this looks like the better model by a clear margin.<br><br>Now go to step 4 and test it on the five students set aside.`;
   } else {
     const gap=trp-tep;
     v.className="verdict "+(gap>25?"bad":"ok");
     v.innerHTML = LN.mode==="line"
-      ? `<b>${trp}% training, ${tep}% test, a gap of ${gap}</b>It was never perfect on the twelve and did not need to be. The two scores are close, which is what you actually wanted: the line found the general shape, and that shape holds for people it has never met.`
-      : `<b>${trp}% training, ${tep}% test, a gap of ${gap}</b>The same model that looked flawless one step ago. Look at where the held-back five landed: two of them fell inside a bend that was carved around a single awkward student from the training set, and inherited that student's outcome.<br><br>It never learned that studying helps. It learned the twelve people, and that scored perfectly on the only test it had been given.<br><br>This is <b class="i">overfitting</b>, and note that you could not have detected it from the training score alone. The split is what made it visible.`;
+      ? `<b>${trp}% training, ${tep}% test, a gap of ${gap} points</b>The line was not perfect on the twelve, and it did not need to be. The two scores are close. That is the result you want: the line found the general shape, and the shape holds for students it has never met.`
+      : `<b>${trp}% training, ${tep}% test, a gap of ${gap} points</b>This is the same model that looked flawless one step ago. Three of the five test students are wrong. Two of those fall inside bends that were carved around single awkward students in the training set, and they get those students' outcomes.<br><br>The model did not learn that studying helps. It memorized the twelve students, and that scored perfectly on the only test it had been given.<br><br>This is <b class="i">overfitting</b>: a model that fits its training examples too closely and does worse on new ones. You could not have seen it from the training score alone. The split made it visible.`;
   }
 }
 $("#lnNext").onclick=()=>{ if(LN.stage<3){LN.stage++;lnRender();} };

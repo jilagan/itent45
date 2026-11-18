@@ -1,0 +1,89 @@
+{
+ "panel": "shape",
+ "items": [
+  {
+   "id": "shape-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "A document database stores each student's enrollments, with the course titles copied inside each student's document. Which question is hardest for it to answer?",
+   "options": [
+    {
+     "text": "Which students are enrolled in ITENT 45?",
+     "correct": true,
+     "feedback": "Correct. The data is organized by student, so the database must scan every student's document or maintain a second index by course."
+    },
+    {
+     "text": "What is this student's schedule?",
+     "correct": false,
+     "feedback": "This is the question the documents were organized for. One read returns the schedule."
+    },
+    {
+     "text": "What is the name of this student?",
+     "correct": false,
+     "feedback": "The name is stored in the same document. One read returns it."
+    },
+    {
+     "text": "How many courses does this student take?",
+     "correct": false,
+     "feedback": "The list in the student's document can be counted in one read."
+    }
+   ]
+  },
+  {
+   "id": "shape-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "A teammate misspells a field name when saving one student's document in a document database. What happens?",
+   "options": [
+    {
+     "text": "The database stores the misspelled field as a new field and raises no error, unless your own code checks for it.",
+     "correct": true,
+     "feedback": "Correct. Documents in the same collection can have different fields, so your application code must enforce the schema."
+    },
+    {
+     "text": "The database rejects the document.",
+     "correct": false,
+     "feedback": "Rejection is what a relational database does with data that does not fit its columns. A document database accepts it."
+    },
+    {
+     "text": "The database corrects the spelling automatically.",
+     "correct": false,
+     "feedback": "A database does not guess what a field name should be."
+    },
+    {
+     "text": "The database deletes the older version of the document.",
+     "correct": false,
+     "feedback": "Saving a document replaces or updates it. A new field name does not trigger deletion."
+    }
+   ]
+  },
+  {
+   "id": "shape-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "Your capstone team is not sure which questions the app will need to answer. Which choice is the safer start?",
+   "options": [
+    {
+     "text": "A relational database, because new questions can be answered with filters and joins without redesigning the storage.",
+     "correct": true,
+     "feedback": "Correct. Rows suit questions you did not plan for, and a relational schema is easier to fix when it was wrong."
+    },
+    {
+     "text": "A document database, because it is always faster.",
+     "correct": false,
+     "feedback": "A document database is faster for one known question. At capstone data volumes you will not notice a difference."
+    },
+    {
+     "text": "A key-value store, because it is the simplest.",
+     "correct": false,
+     "feedback": "A key-value store has no structure for asking new questions, so it is the hardest to change later."
+    },
+    {
+     "text": "A graph database, because everything is connected.",
+     "correct": false,
+     "feedback": "A graph database suits questions about multi-step connections. Most capstones need ordinary filtering and joins."
+    }
+   ]
+  }
+ ]
+}

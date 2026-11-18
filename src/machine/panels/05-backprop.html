@@ -1,9 +1,8 @@
     <section class="panel" id="p-backprop">
       <div class="head">
-        <div class="eyebrow">05 — Assigning blame</div>
-        <h2>How do you get a slope for a weight that never touches the output?</h2>
-        <p>Panel 03 nudged three numbers downhill, and each one touched the answer directly, so working out its slope was one step of arithmetic. The last panel introduced hidden units, and that trick stops working. A weight in the middle affects the answer only through everything in front of it. So how does training know which way to move it, and by how much?</p>
-        <div class="ask"><b>Ask the room</b>. A dish comes back to the kitchen wrong. Six people touched it. How much of that is the sauce station's fault? You cannot answer without knowing what each step passed to the next.</div>
+        <h2>Backpropagation</h2>
+        <p>Suppose a dish is sent back to the kitchen because it is too salty. Several people handled it before it reached the customer. To decide who should change what they do, you start from the complaint and work backward through each person, asking how much that person's work affected the result. A neural network needs the same kind of trace. A weight is a number that sets how strongly one input counts, and a slope tells you how much the loss would change if that weight were nudged up a little. In the panel "Training: adjusting a model to reduce its errors", each of the three numbers touched the answer directly, so finding its slope took one step of arithmetic. With hidden units that shortcut stops working, because a weight in the middle affects the answer only through the units after it. The method that solves this is called <b style="color:var(--ink)">backpropagation</b>.</p>
+        <div class="ask"><b>Think first.</b> Suppose the sauce station uses a little less salt. How much would the customer's complaint change? What would you need to know about the steps after the sauce station to answer?</div>
       </div>
       <div class="srv">
         <div>
@@ -20,23 +19,23 @@
           <div class="card-t">What is happening</div>
           <div class="rtt-note" id="bpNote"></div>
           <div class="whynot" style="margin-top:14px">
-            <b>The name is the description</b>
-            Going forward, each layer hands its answer to the next. Going backward, each layer hands its share of the blame to the one behind it. That is <b style="color:var(--ink)">backpropagation</b>: propagating the error backward.
-            <br><br>People call the underlying rule the chain rule. You can use the idea without it: to know how much a weight mattered, multiply how much its output mattered by how much it affected that output.
+            <b>What the name means</b>
+            In the forward pass, each layer hands its answer to the next layer. In the backward pass, each layer hands its share of the blame to the layer behind it. Backpropagation means propagating, or passing along, the error backward.
+            <br><br>The rule underneath is called the chain rule. You can use the idea without the formula: to know how much a weight mattered, multiply how much its output mattered by how much the weight affected that output.
           </div>
         </div>
       </div>
 
       <div class="whynot" style="margin-top:20px">
-        <b>Why it is cheap, and why that decided everything</b>
-        Look at the numbers as they appear. Every one is built from a number already worked out to its right. Nothing is computed twice, and nothing is computed from scratch.
-        <br><br>The obvious alternative is to nudge each weight a little, run the whole network again, and see whether the loss improved. That works, and for a network with a billion weights it means a billion full runs to make one step. Backpropagation gets every slope in <b style="color:var(--ink)">one backward pass</b>, costing about the same as one forward pass.
-        <br><br>The idea was published in 1986 and the arithmetic has not changed since. What changed was the hardware, and then the amount of text.
+        <b>Why backpropagation is cheap</b>
+        Look at the numbers as they appear. Each one is built from a number that was already worked out one step earlier. Nothing is computed twice, and nothing is computed from scratch.
+        <br><br>The alternative is to nudge each weight a little, run the whole network again, and see whether the loss improved. That works, and for a network with a billion weights it means a billion full runs to make one step. Backpropagation gets every slope in <b style="color:var(--ink)">one backward pass</b>, which costs about the same as one forward pass.
+        <br><br>The idea was published in 1986 and the arithmetic has not changed since. Hardware improved later, and then the amount of text available to train on grew.
       </div>
 
       <div class="whynot" style="margin-top:16px">
         <b>What you can skip</b>
-        The derivation, the notation, and the proof that it is correct. You will not implement this. Every framework does it for you, and the reason it is worth two minutes is narrower: when training produces nothing, one of the usual causes is that the blame stopped flowing backward somewhere, and people talk about that in these words.
+        You can skip the derivation, the notation and the proof that the method is correct. You will not implement this, because every machine learning library does it for you. It is still worth a few minutes. One common cause of a training run that produces nothing is that the blame stopped flowing backward somewhere, and people describe that problem in these words.
       </div>
     </section>
 

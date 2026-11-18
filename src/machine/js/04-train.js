@@ -32,8 +32,8 @@ function trRender(){
   svg+=`</g>
     <line x1="54" y1="246" x2="470" y2="246" stroke="var(--line2)"/>
     <line x1="54" y1="28" x2="54" y2="246" stroke="var(--line2)"/>
-    <text x="262" y="272" fill="var(--faint)" font-family="monospace" font-size="10.5" text-anchor="middle">hours studied</text>
-    <text x="18" y="138" fill="var(--faint)" font-family="monospace" font-size="10.5" text-anchor="middle" transform="rotate(-90 18 138)">attendance</text>`;
+    <text x="262" y="272" fill="var(--faint)" font-size="10.5" text-anchor="middle">hours studied</text>
+    <text x="18" y="138" fill="var(--faint)" font-size="10.5" text-anchor="middle" transform="rotate(-90 18 138)">attendance</text>`;
   let ok=0;
   for(const [x1,x2,y] of TRD){
     const pred=sig(TR.w1*x1+TR.w2*x2+TR.b)>0.5, right=pred===!!y; if(right) ok++;
@@ -57,36 +57,36 @@ function trRender(){
     const mx=Math.max(...h), mn=Math.min(...h), rng=(mx-mn)||1;
     const pts=h.map((v,i)=>`${(i/(h.length-1)*220).toFixed(1)},${(46-(v-mn)/rng*40).toFixed(1)}`).join(" ");
     const up=h[h.length-1]>h[0];
-    $("#trCurve").innerHTML=`<span class="c">// loss, ${h.length} steps</span>\n`+
+    $("#trCurve").innerHTML=`<span class="c">Loss over ${h.length} steps</span>\n`+
       `<svg viewBox="0 0 224 52" style="width:100%;height:auto;display:block;margin-top:4px">
          <polyline points="${pts}" fill="none" stroke="${up?"var(--warn)":"var(--res)"}" stroke-width="1.6"/>
        </svg>`;
-  } else $("#trCurve").innerHTML=`<span class="c">// press One step</span>`;
+  } else $("#trCurve").innerHTML=`<span class="c">Press One step to start.</span>`;
 
   $("#vLr").textContent=LRS[TR.lr][0];
   $("#trNote").innerHTML={
-    0:`Each step barely moves the line. It is going the right way, and it will take thousands of steps to arrive. This is what wasted compute looks like.`,
-    1:`Steady progress. The loss falls every step and the line settles where it should.`,
-    2:`Watch the loss curve. It falls, overshoots, comes back past the bottom, and starts bouncing. The line jitters instead of settling.`,
-    3:`The steps are so large it lands further up the hill than it started. The loss climbs, and no amount of waiting fixes it.`
+    0:`Each step moves the line only a little. It is going the right way, and it will need thousands of steps to arrive. This is wasted computing.`,
+    1:`Steady progress. The loss falls on every step and the line settles where it should.`,
+    2:`Watch the loss curve. It falls, goes past the bottom, comes back, and starts bouncing. The line jitters and does not settle.`,
+    3:`The steps are so large that each one ends higher up the hill than where it started. The loss climbs, and waiting does not fix it.`
   }[TR.lr];
 
   const v=$("#trVerdict");
   if(TR.step===0){
     v.className="verdict";
-    v.innerHTML=`<b>A line placed at random</b>Loss ${L.toFixed(3)}. It gets ${ok} of ${TRD.length} right, which is roughly what guessing gets you. Press <em>One step</em> a few times and watch both the line and the number.`;
+    v.innerHTML=`<b>A line placed at random</b>Loss ${L.toFixed(3)}. It gets ${ok} of ${TRD.length} right, which is about what guessing gets you. Press <em>One step</em> a few times and watch both the line and the loss.`;
     return;
   }
   const rising = h.length>6 && h[h.length-1] > h[Math.max(0,h.length-6)];
   if(TR.lr===3 || (rising && TR.lr===2)){
     v.className="verdict bad";
-    v.innerHTML=`<b>The loss is going up</b>The step size is larger than the slope it is walking down, so every step lands past the bottom and further up the other side. Training is running, the machine is busy, and the model is getting worse.<br><br>Nothing raises an error when this happens. You find out by watching this number. Anyone who trains a model watches this number.`;
+    v.innerHTML=`<b>The loss is going up</b>The steps are too large, so each one goes past the bottom and ends higher up the other side. Training is running, the computer is busy, and the model is getting worse.<br><br>Nothing raises an error when this happens. You find out by watching the loss, and anyone who trains a model watches it.`;
   } else if(L<0.45){
     v.className="verdict ok";
-    v.innerHTML=`<b>Loss ${L.toFixed(3)} after ${TR.step} steps, ${ok} of ${TRD.length} correct</b>The line stopped moving because the slope under it flattened out. Nothing declared success. It ran out of downhill.<br><br>Those two students it still gets wrong are the same two from panel 02, and no straight line will ever catch them. To do better you need the next panel.`;
+    v.innerHTML=`<b>Loss ${L.toFixed(3)} after ${TR.step} step${TR.step===1?"":"s"}, ${ok} of ${TRD.length} correct</b>The line stopped moving because the slope under it flattened out. The loss cannot go lower with a straight line.<br><br>The two students it still gets wrong are the same two as in "Training data and test data", and no straight line can catch them. To do better, see "Neural networks: combining several lines".`;
   } else {
     v.className="verdict warn";
-    v.innerHTML=`<b>Loss ${L.toFixed(3)}, ${ok} of ${TRD.length} correct after ${TR.step} steps</b>Still going downhill. Keep stepping, or press <em>Run 200</em>.`;
+    v.innerHTML=`<b>Loss ${L.toFixed(3)}, ${ok} of ${TRD.length} correct after ${TR.step} step${TR.step===1?"":"s"}</b>The loss is still falling. Keep pressing <em>One step</em>, or press <em>Run 200</em>.`;
   }
 }
 $("#trStepBtn").onclick=()=>{trStep();trRender()};

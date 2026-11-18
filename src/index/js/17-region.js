@@ -95,17 +95,17 @@ const REGIONS=[
 ];
 const LIGHT=200000;                                   // km/s in fibre
 const POSTURES=[
- {id:"one", n:"One machine, one datacentre",
-  d:"The default. Everything in a single availability zone.",
+ {id:"one", n:"One machine, one data center",
+  d:"The default. Everything runs in a single availability zone.",
   survives:{srv:false,az:false,reg:false}, rpo:"everything since your last backup", rto:"hours", cost:"1×"},
- {id:"az1", n:"Several machines, one datacentre",
-  d:"Panel 19's load balancer. Survives a machine, not the building.",
+ {id:"az1", n:"Several machines, one data center",
+  d:"A load balancer shares traffic between the machines. This survives a machine failure but not a data center failure.",
   survives:{srv:true,az:false,reg:false}, rpo:"everything since your last backup", rto:"hours", cost:"1.3×"},
- {id:"maz", n:"Multi-AZ · two datacentres, one region",
-  d:"Replication is synchronous, because the buildings are milliseconds apart.",
+ {id:"maz", n:"Multi-AZ: two data centers, one region",
+  d:"Each write is copied to both data centers before it is confirmed (synchronous replication). This works because the buildings are milliseconds apart.",
   survives:{srv:true,az:true,reg:false}, rpo:"nothing", rto:"under a minute", cost:"2×"},
- {id:"mreg", n:"Multi-region · standby in Tokyo",
-  d:"Replication is asynchronous, because Tokyo is 3,000 km away.",
+ {id:"mreg", n:"Multi-region: standby in Tokyo",
+  d:"Writes are copied to Tokyo after they are confirmed (asynchronous replication), because Tokyo is 3,000 km away.",
   survives:{srv:true,az:true,reg:true}, rpo:"up to 30 seconds of writes", rto:"10 to 30 minutes", cost:"2.3×"}
 ];
 const REG={idx:1, posture:"maz", dead:{srv:false,az:false,reg:false}};
@@ -132,7 +132,7 @@ function renderRegion(){
   REGIONS.forEach((q,i)=>{
     if(i===REG.idx || i===0 || (isMulti && q===dr)) return;
     svg+=`<circle cx="${projX(q.ll[0])}" cy="${projY(q.ll[1])}" r="3.5" fill="var(--line3)"/>
-          <text x="${projX(q.ll[0])}" y="${projY(q.ll[1])-8}" fill="var(--faint)" font-family="monospace" font-size="10" text-anchor="middle">${q.s}</text>`;
+          <text x="${projX(q.ll[0])}" y="${projY(q.ll[1])-8}" fill="var(--faint)" font-size="10" text-anchor="middle">${q.s}</text>`;
   });
 
   // replication arc to the standby, when there is one
@@ -141,7 +141,7 @@ function renderRegion(){
     const dcol=regDead?"var(--res)":"var(--faint)";
     svg+=`<circle cx="${projX(dr.ll[0])}" cy="${projY(dr.ll[1])}" r="7" fill="none" stroke="${dcol}" stroke-width="2"/>
           <circle cx="${projX(dr.ll[0])}" cy="${projY(dr.ll[1])}" r="3" fill="${dcol}"/>
-          <text x="${projX(dr.ll[0])}" y="${projY(dr.ll[1])-13}" fill="${dcol}" font-family="monospace" font-size="10.5" text-anchor="middle">${regDead?"NRT · now primary":"NRT · standby"}</text>`;
+          <text x="${projX(dr.ll[0])}" y="${projY(dr.ll[1])-13}" fill="${dcol}" font-size="10.5" text-anchor="middle">${regDead?"NRT: now primary":"NRT: standby"}</text>`;
   }
 
   // the arc that matters: users to primary
@@ -153,7 +153,7 @@ function renderRegion(){
   const px=projX(r.ll[0]), py=projY(r.ll[1]);
   svg+=`<circle cx="${px}" cy="${py}" r="11" fill="${acol}" opacity=".18"/>
         <circle cx="${px}" cy="${py}" r="5.5" fill="${acol}"/>
-        <text x="${px}" y="${py-15}" fill="${acol}" font-family="monospace" font-size="11.5" font-weight="600" text-anchor="middle">${r.s}${regDead?" ✕":""}</text>`;
+        <text x="${px}" y="${py-15}" fill="${acol}" font-size="11.5" font-weight="600" text-anchor="middle">${r.s}${regDead?" ✕":""}</text>`;
   // availability zones as small satellites
   for(let i=0;i<azCount;i++){
     const dead = regDead || (REG.dead.az && i===0);
@@ -166,43 +166,43 @@ function renderRegion(){
   const ux=projX(MANILA[0]), uy=projY(MANILA[1]);
   svg+=`<circle cx="${ux}" cy="${uy}" r="13" fill="var(--res)" opacity=".14"/>
         <circle cx="${ux}" cy="${uy}" r="5" fill="var(--res)"/>`;
-  if(REG.idx!==0) svg+=`<text x="${ux}" y="${uy+22}" fill="var(--res)" font-family="monospace" font-size="10.5" text-anchor="middle">MNL · your users</text>`;
+  if(REG.idx!==0) svg+=`<text x="${ux}" y="${uy+22}" fill="var(--res)" font-size="10.5" text-anchor="middle">MNL: your users</text>`;
 
   // the number, on the arc
   // fixed readout, so short hops do not stack labels on top of each other
   svg+=`<rect x="14" y="14" width="196" height="62" rx="6" fill="var(--bg)" stroke="${acol}" stroke-width="1" opacity=".95"/>
-        <text x="26" y="33" fill="var(--faint)" font-family="monospace" font-size="9.5" letter-spacing="1.4">MANILA \u2192 ${r.s}</text>
-        <text x="26" y="53" fill="${acol}" font-family="monospace" font-size="19" font-weight="600">${Math.round(L.real)} ms</text>
-        <text x="104" y="53" fill="var(--dim)" font-family="monospace" font-size="11">round trip</text>
-        <text x="26" y="69" fill="var(--faint)" font-family="monospace" font-size="10">${r.km.toLocaleString()} km \u00b7 floor ${L.phys.toFixed(0)} ms</text>`;
+        <text x="26" y="33" fill="var(--faint)" font-size="9.5">Manila \u2192 ${r.s}</text>
+        <text x="26" y="53" fill="${acol}" font-size="19" font-weight="600">${Math.round(L.real)} ms</text>
+        <text x="104" y="53" fill="var(--dim)" font-size="11">round trip</text>
+        <text x="26" y="69" fill="var(--faint)" font-size="10">${r.km.toLocaleString()} km, physics floor ${L.phys.toFixed(0)} ms</text>`;
 
   // clickable hit areas, last so nothing is drawn over them
   REGIONS.forEach((q,i)=>{
     if(i===0) return;                       // Metro Manila is where the users are
     svg+=`<circle class="pick" data-r="${i}" cx="${projX(q.ll[0])}" cy="${projY(q.ll[1])}"
-            r="15" fill="transparent"><title>${q.n} — ${q.km.toLocaleString()} km</title></circle>`;
+            r="15" fill="transparent"><title>${q.n}: ${q.km.toLocaleString()} km</title></circle>`;
   });
   $("#worldMap").innerHTML=svg;
 
-  // latency readouts, and what it does to panel 03's five round trips
+  // latency readouts, and what it does to five round trips
   const ttfb=L.real*5+40;
   $("#latStats").innerHTML=[
     ["var(--line2)","Distance, one way", r.km.toLocaleString()+" km"],
     ["var(--res)","Physics floor, round trip", L.phys.toFixed(0)+" ms"],
     ["var(--req)","Realistic round trip", L.real.toFixed(0)+" ms"],
-    ["var(--req)","Five round trips + 40 ms handler", Math.round(ttfb)+" ms"]
+    ["var(--req)","Time to first byte: 5 round trips + 40 ms handler", Math.round(ttfb)+" ms"]
   ].map(([c,n,v])=>`<div class="lg"><i style="background:${c}"></i>${n}<b>${v}</b></div>`).join("");
 
   const v=$("#latVerdict");
   if(r.km<100){
     v.className="verdict ok";
-    v.innerHTML=`<b>Next door, ${L.real.toFixed(0)} ms</b>Latency is effectively free. Almost nobody gets this, and a region inside Metro Manila is not something most providers sell you.`;
+    v.innerHTML=`<b>Next door, ${L.real.toFixed(0)} ms</b>Latency is close to zero. Most providers do not offer a region inside Metro Manila.`;
   } else if(ttfb<400){
     v.className="verdict ok";
-    v.innerHTML=`<b>${Math.round(ttfb)} ms to first byte</b>Comfortable. Your handler is 40 ms of that and the rest is distance you cannot code away. For users in Metro Manila this is about as good as it gets from a real cloud region.`;
+    v.innerHTML=`<b>${Math.round(ttfb)} ms to first byte</b>This is comfortable. Your handler (the code that processes the request) accounts for 40 ms, and the rest is distance, which code cannot reduce. For users in Metro Manila this is about as good as a real cloud region gets.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>${Math.round(ttfb)} ms before anything appears</b>${r.n} is ${r.km.toLocaleString()} km away, so every round trip costs ${L.real.toFixed(0)} ms and a page needs five of them. Your code is still 40 ms of that. This is panel 03's Berlin problem, chosen on purpose by picking the wrong region. The only fix is moving closer, or serving reads from a copy that already is.`;
+    v.innerHTML=`<b>${Math.round(ttfb)} ms before anything appears</b>${r.n} is ${r.km.toLocaleString()} km away, so every round trip costs ${L.real.toFixed(0)} ms and a page needs five of them. Your code is only 40 ms of that. This is the Berlin example from "Why loading a page takes several round trips", caused here by choosing a distant region. The fix is to move the servers closer, or to serve reads from a copy that is already close.`;
   }
 
   // posture cards
@@ -219,12 +219,12 @@ function renderRegion(){
   const anyDead=REG.dead.srv||REG.dead.az||REG.dead.reg;
   let up=true, why="";
   if(REG.dead.reg){ up=P.survives.reg; why="the whole region"; }
-  else if(REG.dead.az){ up=P.survives.az; why="a datacentre"; }
+  else if(REG.dead.az){ up=P.survives.az; why="a data center"; }
   else if(REG.dead.srv){ up=P.survives.srv; why="one machine"; }
 
   $("#foStats").innerHTML=[
     ["var(--res)","Survives a machine", P.survives.srv?"yes":"no"],
-    ["var(--res)","Survives a datacentre", P.survives.az?"yes":"no"],
+    ["var(--res)","Survives a data center", P.survives.az?"yes":"no"],
     ["var(--res)","Survives a region", P.survives.reg?"yes":"no"],
     ["var(--req)","Runs at", P.cost+" the cost"]
   ].map(([c,n,val])=>`<div class="lg"><i style="background:${val==="no"?"var(--warn)":c}"></i>${n}<b style="${val==="no"?"color:var(--warn)":""}">${val}</b></div>`).join("");
@@ -232,16 +232,17 @@ function renderRegion(){
   const fv=$("#foVerdict");
   if(!anyDead){
     fv.className="verdict";
-    fv.innerHTML=`<b>Everything healthy</b>Press one of the buttons and see what this posture protects you from.`;
+    fv.innerHTML=`<b>Everything is running</b>Press one of the buttons to see what this option protects against.`;
   } else if(up && REG.dead.reg){
     fv.className="verdict warn";
-    fv.innerHTML=`<b>Failed over to Tokyo, and it was not free</b>You survived losing ${why}, but the standby was replicating asynchronously across 3,000 km, so you lost <b class="i">${P.rpo}</b> and were dark for <b class="i">${P.rto}</b>. Every user is now talking to Tokyo, which is further away than Singapore, so the whole site is slower until you fail back.`;
+    fv.innerHTML=`<b>Failed over to Tokyo, with a cost</b>You survived losing ${why}. The standby in Tokyo was updated asynchronously across 3,000 km, so you lost ${P.rpo} and the site was unavailable for ${P.rto}. All users now connect to Tokyo, which is farther away than Singapore, so the whole site is slower until you switch back.`;
   } else if(up){
     fv.className="verdict ok";
-    fv.innerHTML=`<b>Still up</b>You lost ${why} and nobody noticed. Replication here is synchronous. The buildings are close enough that a write can land in both before you answer. So you lost <b class="i">${P.rpo}</b>.`;
+    fv.innerHTML=`<b>Still running</b>You lost ${why} and users noticed nothing, because another machine or data center kept serving requests. With two data centers in one region, the buildings are close enough that each write is saved in both before the user gets a reply.`;
   } else {
     fv.className="verdict bad";
-    fv.innerHTML=`<b>Down</b>You lost ${why}, and this posture does not survive that. You are restoring from backup: dark for <b class="i">${P.rto}</b>, and losing <b class="i">${P.rpo}</b>. Those two numbers have names. <b class="i">RTO</b> is how long until you are back. <b class="i">RPO</b> is how much data you accept losing. Pick them before the outage, because afterwards they are chosen for you.`;
+    const dRto=P.id==="maz"?"hours":P.rto, dRpo=P.id==="maz"?"everything since your last backup":P.rpo;   // multi-AZ is only down when the whole region fails, so it restores from backup
+    fv.innerHTML=`<b>Down</b>You lost ${why}, and this option does not survive that. You restore from backup. The site is unavailable for ${dRto}, and you lose ${dRpo}. These two numbers have names. The recovery time objective (RTO) is how long until you are back. The recovery point objective (RPO) is how much data you accept losing. Choose both before an outage, because afterward they are chosen for you.`;
   }
 }
 $("#sRegion").oninput=e=>{REG.idx=+e.target.value;renderRegion()};

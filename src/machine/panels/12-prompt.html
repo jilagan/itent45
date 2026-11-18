@@ -1,45 +1,45 @@
     <section class="panel" id="p-prompt">
       <div class="head">
-        <div class="eyebrow">12 — Saying what you actually want</div>
-        <h2>A better prompt removes the answers you did not want</h2>
-        <p>Students arrive believing in magic words. There are none. Panel 01 showed the model choosing from a spread of plausible continuations, and a vague request leaves that spread wide. Every constraint you add rules some of it out, and what is left is more likely to be the thing you meant.</p>
-        <div class="ask"><b>Ask the room</b>. Ask for "a function to enrol a student". How many different working answers could that describe? Then look at which one it is most likely to hand you.</div>
+        <h2>Writing better prompts</h2>
+        <p>If you tell a tricycle driver "somewhere near the market," you could be dropped at any of a dozen places. If you say "the Loyola Heights gate on Katipunan," only one place fits. A prompt works the same way. A prompt is the text you give a language model, and a constraint is a fact or limit you add to it. Each constraint rules out some of the answers the model might give. Unlike the driver, the model does not ask what you meant. It picks one answer from the range that is left. See "How a language model writes: predicting the next word" for how that choice works.</p>
+        <div class="ask"><b>Think first.</b> Suppose you ask a model for "a function to enroll a student in a course." How many different working answers could that describe? Which one do you expect the model to give you most often, and why?</div>
+        <div class="instructor">Let students commit to a guess before they open the widget. Most guess the careful-looking answer that checks the seat count first. Ask them what happens when two students click at the same moment.</div>
       </div>
+      <p>In this example you ask a model for code in Django, a toolkit for building web applications in Python. The code should enroll a student in a course. The bars show how likely each kind of answer is. Turn on the constraints one at a time and watch the three numbers change.</p>
       <div class="srv">
         <div>
           <div class="art" id="prPrompt" style="margin-bottom:12px"></div>
           <div class="card">
-            <div class="card-t">What it might hand back</div>
-            <p style="margin:0 0 10px;font-size:.78em;color:var(--faint);line-height:1.5">Each of these is working code somebody has shipped. Blue ones survive contact with two students clicking at once.</p>
+            <div class="card-t">What it might give back</div>
+            <p style="margin:0 0 10px;font-size:.85em;color:var(--faint);line-height:1.5">Each bar is code that has been used in real systems. The blue bars still work when two students click at the same moment.</p>
             <div class="probs" id="prBars"></div>
           </div>
           <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
-            <div class="g" id="prCount"><div class="gl">Still possible</div><div class="gv">&mdash;</div></div>
-            <div class="g" id="prTop"><div class="gl">Most likely one</div><div class="gv">&mdash;</div></div>
-            <div class="g" id="prSafe"><div class="gl">Chance it is correct</div><div class="gv">&mdash;</div></div>
+            <div class="g" id="prCount"><div class="gl">Answers still possible</div><div class="gv">&mdash;</div></div>
+            <div class="g" id="prTop"><div class="gl">Most likely answer</div><div class="gv">&mdash;</div></div>
+            <div class="g" id="prSafe"><div class="gl">Chance the answer is correct</div><div class="gv">&mdash;</div></div>
           </div>
           <div class="verdict" id="prVerdict" style="margin-top:13px"></div>
-          <div class="art" id="prCode" style="margin-top:12px"></div>
+          <p style="margin:12px 0 0;font-size:.85em;color:var(--dim);line-height:1.6">The box below shows the Django code for the most likely answer.</p>
+          <div class="art" id="prCode" style="margin-top:8px"></div>
         </div>
         <div class="card">
           <div class="card-t">Add to the prompt</div>
           <div class="toggles" id="prToggles"></div>
           <div class="rtt-note" style="margin-top:14px">
-            None of these are instructions about tone or effort. Each one is a fact the model had no way of knowing, and each one makes a group of otherwise reasonable answers impossible.
-            <br><br>Notice what happens to the numbers below before you read the code.
+            Each switch adds one fact the model could not have known. Each fact rules out a group of answers that were otherwise reasonable. The ORM (object-relational mapper) is the part of Django that lets code read and write database rows as Python objects, without typing SQL, the database's own language. Watch the three numbers change, then read the code.
           </div>
           <div class="whynot" style="margin-top:14px">
-            <b>Standing rules against this request</b>
-            A <b style="color:var(--ink)">system prompt</b> holds the constraints that are true every time: the framework you use, your house style, what must never be done without asking. Set once, applied to everything.
-            <br><br>The rest is context for this task: the schema, the file, the example. Both narrow the same spread. They differ in how long they last.
+            <b>System prompts and context</b>
+            A <b style="color:var(--ink)">system prompt</b> is text placed ahead of every conversation. It holds the rules that are true every time: the framework you use, your house style, what the model must never do without asking. It is set once and applies to everything.
+            <br><br>Context is what applies to one task: the table definitions, the file, an example. Both narrow the range of answers. A system prompt lasts for every conversation and context lasts for one task.
           </div>
         </div>
       </div>
       <div class="whynot" style="margin-top:20px">
-        <b>The uncomfortable part</b>
-        With nothing specified, the single most likely answer is the one that reads the seat count, checks it, and then creates the row. It is careful-looking, it is what most tutorials show, and it is wrong the moment two people click at once. You have already seen that failure twice: in the transactions panel of the Module 1 tool, and in the review drill at the end of this one.
-        <br><br>The model picks it because it is the most common shape in everything ever written about enrolling a student, and nothing you said ruled it out.
+        <b>Why the most likely answer is wrong</b>
+        With nothing specified, the most likely answer reads the seat count, checks it, and then creates the row. It looks careful and most tutorials show it. It fails when two students click at the same moment, because both can read the same count before either one writes. This failure is called a race condition. You can see it in the Module 1 site, "Transactions and two users changing the same data", and in "Finding mistakes in AI-written code".
+        <br><br>The model gives this answer because it is the most common pattern in the text it learned from, and nothing in your prompt ruled it out.
       </div>
     </section>
 
-<!-- 06 THE LOOP -->

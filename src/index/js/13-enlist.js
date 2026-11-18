@@ -1,4 +1,4 @@
-/* ================= 08 The enlistment system CASE ================= */
+/* ================= ENLISTMENT CASE ================= */
 const AI={stu:4000,win:10,stag:false,split:false,era:"onprem"};
 const REQ_PER_SESSION=15, WRITES_PER_SESSION=3, DB_CEIL=400;
 const WEB_ONPREM=700, WEB_CLOUD=4000;
@@ -26,7 +26,7 @@ function renderEnlist(){
   $("#aWeb").textContent=m.web.toLocaleString()+" rps";
   $("#aWebBar").style.width=pct(m.web)+"%";
   $("#aWebBar").className = m.webBreaks ? "over" : "web";
-  $("#aWebNote").textContent = AI.era==="cloud" ? "— autoscaled" : "— 7 fixed servers";
+  $("#aWebNote").textContent = AI.era==="cloud" ? "(autoscaled)" : "(7 fixed servers)";
 
   $("#aDbLoad").textContent=Math.round(m.dbLoad).toLocaleString()+" ops/s";
   $("#aDbLoadBar").style.width=pct(m.dbLoad)+"%";
@@ -36,16 +36,16 @@ function renderEnlist(){
   const v=$("#aVerdict");
   if(m.webBreaks && m.dbBreaks){
     v.className="verdict bad";
-    v.innerHTML=`<b>Both tiers under water</b>${Math.round(m.peak).toLocaleString()} rps arriving against a ${m.web.toLocaleString()} rps web ceiling and a ${DB_CEIL} ops/s database. This is the enlistment morning you remember. One of these you can fix by spending money. The other you cannot.`;
+    v.innerHTML=`<b>Both tiers overloaded</b>${Math.round(m.peak).toLocaleString()} rps are arriving, against a web tier maximum of ${m.web.toLocaleString()} rps and a database maximum of ${DB_CEIL} ops/s. This is the enlistment morning many students remember. Adding servers fixes the web tier. The database needs the staggering or separating switches.`;
   } else if(m.dbBreaks){
     v.className="verdict bad";
-    v.innerHTML=`<b>Web tier fine. Database drowning.</b>The web tier absorbs all ${Math.round(m.peak).toLocaleString()} rps without complaint, and ${Math.round(m.dbLoad).toLocaleString()} ops/s still land on one primary that tops out at ${DB_CEIL}. ${AI.era==="cloud"?"This is exactly why moving to the cloud did not fix enlistment day, autoscaling solved a tier that was not the constraint.":"Adding web servers here would change nothing at all."} Seat reservation cannot be cached and cannot be spread across replicas, because two students must never get the same last slot.`;
+    v.innerHTML=`<b>Web tier coping, database overloaded</b>The web tier handles all ${Math.round(m.peak).toLocaleString()} rps, and ${Math.round(m.dbLoad).toLocaleString()} ops/s still reach one primary database whose maximum is ${DB_CEIL}. ${AI.era==="cloud"?"This is why moving to the cloud did not fix enlistment day: autoscaling fixed the web tier, and the web tier was not the limit.":"Adding web servers here would change nothing."} Seat reservations cannot be cached and cannot be spread across replicas, because two students must never get the same last slot.`;
   } else if(m.webBreaks){
     v.className="verdict warn";
-    v.innerHTML=`<b>Web tier is the wall</b>${Math.round(m.peak).toLocaleString()} rps against ${m.web.toLocaleString()}. This is the constraint the seven-server era hit first, and the one the cloud migration solved. Switch to the cloud era and watch what becomes the new limit.`;
+    v.innerHTML=`<b>Web tier is the limit</b>${Math.round(m.peak).toLocaleString()} rps against a maximum of ${m.web.toLocaleString()}. The seven-server setup reached this limit first, and moving to the cloud removed it. Switch to the cloud case to see what limits the system next.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>Holding · everything fits</b>Peak of ${Math.round(m.peak).toLocaleString()} rps sits under a ${m.web.toLocaleString()} rps web ceiling, and only ${Math.round(m.dbLoad).toLocaleString()} ops/s reach the primary. ${AI.stag&&AI.split?"Both moves together did it: staggering flattened the spike, and splitting reads off the primary left it doing only the work that needs a lock.":AI.stag?"Staggering flattened the arrival spike, which cost nothing in hardware.":"Splitting reads off the primary left it doing only the contended writes."}`;
+    v.innerHTML=`<b>Holding, everything fits</b>The peak of ${Math.round(m.peak).toLocaleString()} rps is under the web tier maximum of ${m.web.toLocaleString()} rps, and only ${Math.round(m.dbLoad).toLocaleString()} ops/s reach the primary. ${AI.stag&&AI.split?"Both changes were needed: staggering flattened the peak, and moving reads off the primary left it with only the reservations.":AI.stag?"Staggering flattened the peak and needed no extra hardware.":AI.split?"Moving reads off the primary left it with only the reservations.":"The load is low enough that no changes are needed."}`;
   }
 }
 const bindA=(sel,key,fmt,lbl)=>{

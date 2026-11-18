@@ -1,0 +1,146 @@
+{
+ "panel": "basics",
+ "items": [
+  {
+   "id": "basics-1",
+   "sec": "server-is-a-job",
+   "type": "mc",
+   "stem": "A student's laptop is on wifi and showing a web page from another website. No course software is running on it. Is the laptop acting as a server at this moment?",
+   "options": [
+    {
+     "text": "No. It is acting as a client, because no program on it is waiting for requests.",
+     "correct": true,
+     "feedback": "A computer is a server only while a program on it is waiting for connections. Here the laptop is sending requests and receiving pages, which makes it a client."
+    },
+    {
+     "text": "Yes. Any computer connected to a network is a server.",
+     "correct": false,
+     "feedback": "Being on a network is not enough. A server is a program that waits for requests, and nothing is waiting on this laptop."
+    },
+    {
+     "text": "Yes. It has a processor and memory, which is all a server needs.",
+     "correct": false,
+     "feedback": "Every computer has a processor and memory. What makes a computer a server is the program running on it."
+    },
+    {
+     "text": "No. Only machines in a data center can be servers.",
+     "correct": false,
+     "feedback": "Any computer can be a server, including a laptop or a Raspberry Pi, as long as a program is waiting for connections."
+    }
+   ]
+  },
+  {
+   "id": "basics-2",
+   "sec": "address-and-reach",
+   "type": "mc",
+   "stem": "In the address `https://enlist.university.edu:443/api/courses?sem=1`, which part tells the client which program on the machine to talk to?",
+   "options": [
+    {
+     "text": "`:443`, the port",
+     "correct": true,
+     "feedback": "A port number identifies one program among the many that may be listening on the same machine."
+    },
+    {
+     "text": "`enlist.university.edu`, the host",
+     "correct": false,
+     "feedback": "The host says which machine to contact. It does not say which program on that machine."
+    },
+    {
+     "text": "`/api/courses`, the path",
+     "correct": false,
+     "feedback": "The path names a resource inside the program that is already chosen."
+    },
+    {
+     "text": "`https`, the scheme",
+     "correct": false,
+     "feedback": "The scheme says which rules to use for the conversation, such as encrypted HTTP. It does not pick the program."
+    }
+   ]
+  },
+  {
+   "id": "basics-3",
+   "sec": "address-and-reach",
+   "type": "predict",
+   "stem": "Before you try it: your laptop runs the course tool on port 8080. A classmate on the same wifi types `localhost:8080` in their browser. What do they see?",
+   "options": [
+    {
+     "text": "Nothing from your laptop. Localhost points to their own computer.",
+     "correct": true,
+     "feedback": "Localhost always means the computer you type it on. They need your local network address, such as `192.168.1.7:8080`."
+    },
+    {
+     "text": "Your course tool, because you are on the same wifi.",
+     "correct": false,
+     "feedback": "Sharing wifi helps only if they use your network address. Localhost never leaves their own machine."
+    },
+    {
+     "text": "Your course tool, but only if you turn off your router.",
+     "correct": false,
+     "feedback": "Switching off the router does not change what localhost means."
+    },
+    {
+     "text": "An error from the university's public server.",
+     "correct": false,
+     "feedback": "Localhost does not point to any public server. It points to the computer that is typing it."
+    }
+   ],
+   "try": "Choose \"A classmate on the same wifi\" in the \"Who can reach what\" widget above and compare."
+  },
+  {
+   "id": "basics-4",
+   "sec": "several-addresses",
+   "type": "mc",
+   "stem": "Your laptop's wifi address is `192.168.1.7`. A friend in another city types that number to reach your laptop. Why does it fail?",
+   "options": [
+    {
+     "text": "It is a private address that millions of homes use, so it means nothing on the wider internet.",
+     "correct": true,
+     "feedback": "Private ranges such as `192.168.x.x` are reused inside many networks. No router on the internet can tell which one you mean."
+    },
+    {
+     "text": "The address has not been registered with DNS.",
+     "correct": false,
+     "feedback": "DNS turns names into numbers. A number you type directly does not need DNS, and a private number would still be unreachable."
+    },
+    {
+     "text": "Your laptop only has a public address, and your friend typed the wrong one.",
+     "correct": false,
+     "feedback": "Your laptop has no public address of its own. The public address belongs to your router and is shared by everyone in the building."
+    },
+    {
+     "text": "The friend needs your wifi password first.",
+     "correct": false,
+     "feedback": "A password controls who joins your wifi. It does not make a private address reachable from outside."
+    }
+   ]
+  },
+  {
+   "id": "basics-5",
+   "sec": "host-the-capstone",
+   "type": "multi",
+   "stem": "Select all that apply. Which of these stop a home laptop from serving a public website reliably?",
+   "options": [
+    {
+     "text": "Its address is private and sits behind a router shared with the building.",
+     "correct": true,
+     "feedback": "The internet cannot route to a private address, so outside visitors cannot reach the laptop."
+    },
+    {
+     "text": "Its address can change at any time.",
+     "correct": true,
+     "feedback": "Home connections are often given a new address, so a site that depends on one fixed address stops working."
+    },
+    {
+     "text": "Home plans are slow to upload, and serving a site is all upload.",
+     "correct": true,
+     "feedback": "Every page sent to a visitor is upload traffic, and home plans give much less upload speed than download speed."
+    },
+    {
+     "text": "A laptop cannot run a program that listens for connections.",
+     "correct": false,
+     "feedback": "A laptop can run such a program, so it meets the definition of a server."
+    }
+   ]
+  }
+ ]
+}

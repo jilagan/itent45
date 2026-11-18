@@ -1,60 +1,64 @@
     <section class="panel" id="p-learn">
       <div class="head">
-        <div class="eyebrow">02 — How anything learns at all</div>
-        <h2>A model is a line somebody found. Whether it learned anything is a separate question.</h2>
-        <p>Before language models, the simplest useful thing you could do was this: collect examples of something that already happened, then find the boundary that separates the outcomes. The boundary is never written down anywhere. It gets nudged until it stops being wrong so often, and where it lands is the model.</p>
-        <p style="margin-top:11px">The difficulty is that a model which has seen every answer can simply remember them, and remembering looks exactly like learning from the inside. So before you fit anything, you hide some of your data from yourself.</p>
-        <div class="ask"><b>Ask the room</b>. If I let you see the exam before you sat it, your score would be excellent. What would that score tell anyone about whether you understood the subject?</div>
+        <h2>Training data and test data</h2>
+        <p>Suppose you were given the exam paper a week early and memorized every answer. A model faces a similar problem, because it is built from examples and then has to be judged on how well it works. The simplest useful model is a boundary. You collect examples of something that already happened, such as which students finished a course, and find a line that separates one outcome from the other. Nobody writes the line down. It starts in a poor position and is adjusted until it makes fewer mistakes. Adjusting a model to match examples is called <b style="color:var(--ink)">fitting</b> it, and the final line is the model.</p>
+        <div class="ask"><b>Think first.</b> You see the exam questions a week early and score 100 percent. What does that score tell anyone about whether you understood the subject? How would you design a fairer test?</div>
+        <div class="instructor">Let students propose a fairer test before they open the widget. Most will suggest new questions or a separate exam. Name that idea as a held-out test set and connect it to the five dashed students in the widget.</div>
       </div>
 
-      <div class="ctab" id="lnStage"></div>
+      <div class="sec" data-sec="hold-out" data-title="Setting data aside and testing">
+        <p>The widget below follows 17 students through four steps. You will fit a line to some of them and then test it on the rest.</p>
+        <div class="ctab" id="lnStage"></div>
 
-      <div class="srv">
-        <div>
-          <div class="scatter" id="lnPlot"></div>
-          <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
-            <div class="g" id="lnTrain"><div class="gl">On the twelve it fitted</div><div class="gv">&mdash;</div></div>
-            <div class="g" id="lnTest"><div class="gl">On the five held back</div><div class="gv">&mdash;</div></div>
-            <div class="g" id="lnGap"><div class="gl">Gap</div><div class="gv">&mdash;</div></div>
+        <div class="srv">
+          <div>
+            <div class="scatter" id="lnPlot"></div>
+            <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
+              <div class="g" id="lnTrain"><div class="gl">Training set, the twelve</div><div class="gv">&mdash;</div></div>
+              <div class="g" id="lnTest"><div class="gl">Test set, the five</div><div class="gv">&mdash;</div></div>
+              <div class="g" id="lnGap"><div class="gl">Gap</div><div class="gv">&mdash;</div></div>
+            </div>
+            <div class="verdict" id="lnVerdict" style="margin-top:13px"></div>
           </div>
-          <div class="verdict" id="lnVerdict" style="margin-top:13px"></div>
+          <div class="card">
+            <div class="card-t" id="lnSideT">What is happening</div>
+            <div class="rtt-note" id="lnSide"></div>
+            <div class="ctrls" style="margin-top:14px">
+              <button class="btn primary" id="lnNext">Next</button>
+              <button class="btn" id="lnBack">Back</button>
+            </div>
+            <div class="toggles" id="lnPickWrap" style="margin-top:14px;display:none">
+              <button class="tg" id="lnPickA" aria-pressed="true"><span class="dot"></span>One straight line</button>
+              <button class="tg" id="lnPickB" aria-pressed="false"><span class="dot"></span>A line bent to fit</button>
+            </div>
+          </div>
         </div>
-        <div class="card">
-          <div class="card-t" id="lnSideT">What is happening</div>
-          <div class="rtt-note" id="lnSide"></div>
-          <div class="ctrls" style="margin-top:14px">
-            <button class="btn primary" id="lnNext">Next</button>
-            <button class="btn" id="lnBack">Back</button>
-          </div>
-          <div class="toggles" id="lnPickWrap" style="margin-top:14px;display:none">
-            <button class="tg" id="lnPickA" aria-pressed="true"><span class="dot"></span>One straight line</button>
-            <button class="tg" id="lnPickB" aria-pressed="false"><span class="dot"></span>A line bent to fit</button>
-          </div>
+
+        <div class="whynot" style="margin-top:20px">
+          <b>What this kind of model is called</b>
+          A straight boundary fitted to labeled examples is called <b style="color:var(--ink)">logistic regression</b>. The name confuses many people, because <em>regression</em> usually means predicting a number, and this model predicts a category.
+          <br><br><b style="color:var(--res)">Linear regression</b> draws a line <em>through</em> the points to predict a value. Given the hours a student studied, what mark will the student get? The answer is a number, and the line runs among the data points.
+          <br><br><b style="color:var(--req)">Logistic regression</b>, which is what you have here, draws a line <em>between</em> the points to predict a group, such as pass or fail. On screen both are a line. The first answers "how much?" and the second answers "which group?". The later panels use the second kind.
         </div>
       </div>
 
-      <div class="whynot" style="margin-top:20px">
-        <b>What this is called</b>
-        A straight boundary fitted to labelled examples is <b style="color:var(--ink)">logistic regression</b>, and the name misleads almost everyone. <em>Regression</em> normally means predicting a number, and this predicts a category.
-        <br><br><b style="color:var(--res)">Linear regression</b> draws a line <em>through</em> the points to predict a value: given hours studied, what mark? The answer is a number, and the line passes among the data.
-        <br><br><b style="color:var(--req)">Logistic regression</b>, which is what you have here, draws a line <em>between</em> the points to predict a group: pass or fail. Same shape on screen, different question, and it is worth telling them apart early because everything after this is the second kind.
-      </div>
-
-      <div class="card-t" style="margin-top:26px">The two words you will hear constantly</div>
-      <div class="cmp">
-        <div class="card">
-          <div class="card-t" style="color:var(--res)">Training set</div>
-          <p style="margin:0;font-size:.84em;color:var(--dim);line-height:1.6">The part the model is allowed to see while it is being fitted. Every adjustment is made to reduce mistakes on these, so a good score here is expected and means very little on its own.</p>
+      <div class="sec" data-sec="train-vs-test" data-title="Training set and test set">
+        <p>A model that has seen every answer can remember them, and from the inside remembering looks the same as learning. Two terms describe how to guard against that.</p>
+        <div class="cmp">
+          <div class="card">
+            <div class="card-t" style="color:var(--res)">Training set</div>
+            <p style="margin:0;font-size:.84em;color:var(--dim);line-height:1.6">The part of the data that the model is allowed to see while it is being fitted. Every adjustment is made to reduce mistakes on these examples, so a good score here is expected and means little on its own.</p>
+          </div>
+          <div class="card">
+            <div class="card-t" style="color:var(--req)">Test set</div>
+            <p style="margin:0;font-size:.84em;color:var(--dim);line-height:1.6">The part you set aside before you started and never looked at. It stands in for the people the model has not met yet. Its score is the only one worth quoting.</p>
+          </div>
         </div>
-        <div class="card">
-          <div class="card-t" style="color:var(--req)">Test set</div>
-          <p style="margin:0;font-size:.84em;color:var(--dim);line-height:1.6">The part you hid before you started, and did not look at once. It stands in for everyone the model has not met yet. Its score is the only one worth quoting.</p>
+        <div class="whynot" style="margin-top:16px">
+          <b>Split the data before fitting, and only once</b>
+          If you look at the test set, adjust something and try again, you have quietly trained on it. It is no longer a test, and you have no honest score left. This mistake is called <b style="color:var(--ink)">leakage</b>, because information from the test set leaks into the model. People make it often without noticing, and results that looked strong during development then fall apart in front of real users.
+          <br><br>The gap between the two scores tells you what happened. A small gap means the model found the general shape of the data. A large gap means the model memorized its examples, which is called <b style="color:var(--ink)">overfitting</b>. The bent line in the widget above shows this directly.
         </div>
-      </div>
-      <div class="whynot" style="margin-top:16px">
-        <b>The split has to happen before the fitting, and only once</b>
-        If you look at the test set, adjust something, and try again, you have quietly trained on it. It is no longer a test, and you have no honest number left. People do this constantly without noticing. Results that looked strong in development then fall apart in front of real users.
-        <br><br>The gap between the two scores is the diagnostic. A small gap means it found the shape of the thing. A large one means it memorized the examples, which the next screens will show you directly.
       </div>
     </section>
 

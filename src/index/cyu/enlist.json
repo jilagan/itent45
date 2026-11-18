@@ -1,0 +1,98 @@
+{
+ "panel": "enlist",
+ "items": [
+  {
+   "id": "enlist-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "On enlistment morning the web servers handle every request, but seat reservations are slow. The university doubles the number of web servers. What happens to the speed of reservations?",
+   "options": [
+    {
+     "text": "Very little changes, because the single primary database is the limit.",
+     "correct": true,
+     "feedback": "Every reservation is a change to the database, and one primary has to handle them in order. More web servers only send it more requests."
+    },
+    {
+     "text": "Reservations become twice as fast.",
+     "correct": false,
+     "feedback": "The web servers were already coping, and reservations wait for the database."
+    },
+    {
+     "text": "Reservations become slower, because the servers fight each other.",
+     "correct": false,
+     "feedback": "More web servers do not slow the system down. They do not change the database limit."
+    }
+   ]
+  },
+  {
+   "id": "enlist-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "Which change reduces the peak load on the database without buying any hardware?",
+   "options": [
+    {
+     "text": "Give each year level its own enlistment time slot.",
+     "correct": true,
+     "feedback": "Spreading the arrivals over time lowers the peak rate, and the system needs no extra machines."
+    },
+    {
+     "text": "Add 20 more web servers.",
+     "correct": false,
+     "feedback": "This adds capacity to the web tier, which was not the limit."
+    },
+    {
+     "text": "Move the web servers to the cloud with autoscaling.",
+     "correct": false,
+     "feedback": "Autoscaling also fixes the web tier only. The database primary stays the same."
+    }
+   ]
+  },
+  {
+   "id": "enlist-3",
+   "sec": null,
+   "type": "predict",
+   "stem": "Before you try it: 4,000 students enlist in a 10-minute window, with no staggering and no separation of browsing from reserving. In the on-premise case with 7 web servers, which tier is overloaded?",
+   "options": [
+    {
+     "text": "The web tier only.",
+     "correct": false,
+     "feedback": "The peak is about 600 requests per second, which is under the web tier maximum of 700."
+    },
+    {
+     "text": "The database only.",
+     "correct": true,
+     "feedback": "The web tier copes with 600 requests per second, but all 600 operations per second reach a primary database that handles 400."
+    },
+    {
+     "text": "Both tiers.",
+     "correct": false,
+     "feedback": "The peak is under the web tier maximum of 700 requests per second. Only the database is over its maximum."
+    }
+   ],
+   "try": "Leave both switches off, read the verdict, then select the Now: cloud case."
+  },
+  {
+   "id": "enlist-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "A student suggests sending seat reservations to read-only replicas of the database to spread the load. Why does this not work?",
+   "options": [
+    {
+     "text": "A reservation changes data, and two students must never get the same last seat, so one primary has to decide.",
+     "correct": true,
+     "feedback": "Replicas only answer reads. If two copies each accepted a reservation, both students could get the same seat."
+    },
+    {
+     "text": "Replicas are too slow for reservations.",
+     "correct": false,
+     "feedback": "Speed is not the issue. Replicas cannot accept changes."
+    },
+    {
+     "text": "Reservations can be cached, so replicas are not needed.",
+     "correct": false,
+     "feedback": "A cached answer can be out of date. A reservation needs the current seat count."
+    }
+   ]
+  }
+ ]
+}

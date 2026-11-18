@@ -1,0 +1,90 @@
+{
+ "panel": "ctx",
+ "items": [
+  {
+   "id": "ctx-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "You paste a large file into a long chat, and the assistant stops following the first instruction you gave. What is the most likely explanation?",
+   "options": [
+    {
+     "text": "The file pushed the oldest turns, including your instruction, out of the context window.",
+     "correct": true,
+     "feedback": "The model only sees what fits in the window. Text that drops out is invisible to it, with no warning."
+    },
+    {
+     "text": "The assistant got lazy after working for a long time.",
+     "correct": false,
+     "feedback": "A model does not tire. It cannot follow an instruction it can no longer see."
+    },
+    {
+     "text": "The model can see the instruction but has decided to ignore it.",
+     "correct": false,
+     "feedback": "If the instruction were in the window, the model would normally follow it. The likelier cause is that it has dropped out."
+    },
+    {
+     "text": "The file has a different language from the instruction.",
+     "correct": false,
+     "feedback": "Language is not the cause. The total amount of text is."
+    }
+   ]
+  },
+  {
+   "id": "ctx-2",
+   "sec": null,
+   "type": "predict",
+   "stem": "Before you try it: the window is 64k tokens, the system prompt uses 8k, and you paste files worth 24k. Each turn of conversation uses 4k. How many turns fit before the oldest turns start dropping out?",
+   "options": [
+    {
+     "text": "8 turns.",
+     "correct": true,
+     "feedback": "64k minus 8k minus 24k leaves 32k, and 32k divided by 4k is 8 turns."
+    },
+    {
+     "text": "16 turns.",
+     "correct": false,
+     "feedback": "That ignores the system prompt and the files, which use 32k of the window before any turns."
+    },
+    {
+     "text": "6 turns.",
+     "correct": false,
+     "feedback": "That is the number of 4k units in the files. The files use space, and the turns share what is left."
+    },
+    {
+     "text": "10 turns.",
+     "correct": false,
+     "feedback": "That would need 40k of space, but only 32k is left after the system prompt and files."
+    }
+   ],
+   "try": "Set Files you pasted to 24k tokens, then raise Conversation so far to 8 turns and then 9. Watch the Dropped box."
+  },
+  {
+   "id": "ctx-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "You close a chat and open a new one. The product has no saved notes or memory feature. What does the model know about your earlier chat?",
+   "options": [
+    {
+     "text": "Nothing. It only sees the text in the current window.",
+     "correct": true,
+     "feedback": "The model has no memory outside the window. Anything it should know has to be in the window."
+    },
+    {
+     "text": "A short summary that it wrote itself.",
+     "correct": false,
+     "feedback": "The model writes no summary unless the product does so and puts it in the window."
+    },
+    {
+     "text": "The last few turns of the old chat.",
+     "correct": false,
+     "feedback": "Those turns are not in the new window, so the model cannot see them."
+    },
+    {
+     "text": "Everything, stored inside the model.",
+     "correct": false,
+     "feedback": "A chat does not change the model. It only fills the window."
+    }
+   ]
+  }
+ ]
+}

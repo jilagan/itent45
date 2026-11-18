@@ -1,14 +1,13 @@
     <section class="panel" id="p-sql">
       <div class="head">
-        <div class="eyebrow">12 — Module 5 · talking to it directly</div>
-        <h2>Four statements, and one of them can ruin your afternoon</h2>
-        <p>Panel 05 fired requests at a table through an API. This is the same table with the API taken away. Everything your Django code eventually does to the database is one of four statements, and the ORM exists so that you rarely type them. You should still be able to read them, because when something is slow or wrong, what you will be shown is SQL.</p>
-        <div class="ask"><b>Ask the room</b>. Which of these four is the one you can run twice and change nothing? Now: which one has no undo?</div>
+        <h2>Reading and changing data with SQL</h2>
+        <p>In Excel you can filter rows, add a row, change a cell and delete a row. A database does the same four things, and each has a command in a language called <b style="color:var(--ink)">SQL</b>. A table is like one sheet. <code>SELECT</code> reads rows, <code>INSERT</code> adds a row, <code>UPDATE</code> changes rows and <code>DELETE</code> removes rows. Your Django code, the Python web framework used in this course, eventually turns into one of these four commands. A tool called an ORM (object-relational mapper) writes them for you, so you rarely type them. You should still be able to read them, because when something is slow or wrong, the logs show SQL. The table below is the same one used in "HTTP methods, URLs and status codes (REST)", this time with no API in front of it.</p>
+        <div class="ask"><b>Think first.</b> Make a guess for each question. Which of the four commands never changes the table? Which commands leave the table in the same state when you run them a second time?</div>
       </div>
 
       <div class="srv">
         <div class="card">
-          <div class="card-t">courses <span style="float:right;font-family:var(--mono);font-size:.7em;color:var(--res)" id="sqlCount">3 rows</span></div>
+          <div class="card-t">courses <span style="float:right;font-size:.7em;color:var(--res)" id="sqlCount">3 rows</span></div>
           <table class="db"><thead><tr>
             <th>code</th><th>title</th><th>units</th><th>slots</th>
           </tr></thead><tbody id="sqlBody"></tbody></table>
@@ -26,23 +25,23 @@
         </div>
       </div>
 
-      <div class="card-t" style="margin-top:26px">The same four operations, in both languages</div>
+      <div class="card-t" style="margin-top:26px">SQL commands and the matching HTTP methods</div>
       <div class="card" style="padding:12px 16px;overflow-x:auto">
         <table class="hostreq"><thead><tr>
-          <th>What you want</th><th>SQL</th><th>HTTP, from panel 05</th><th>Repeat it?</th>
+          <th>What you want</th><th>SQL</th><th>HTTP method</th><th>If you run it twice</th>
         </tr></thead><tbody>
           <tr><td>Read some rows</td><td><code>SELECT</code></td><td><code>GET</code></td><td class="y">changes nothing, ever</td></tr>
-          <tr><td>Add a row</td><td><code>INSERT</code></td><td><code>POST</code></td><td class="n">adds another one</td></tr>
+          <tr><td>Add a row</td><td><code>INSERT</code></td><td><code>POST</code></td><td class="n">adds another row</td></tr>
           <tr><td>Change a row</td><td><code>UPDATE</code></td><td><code>PUT</code> / <code>PATCH</code></td><td class="y">same end state</td></tr>
           <tr><td>Remove a row</td><td><code>DELETE</code></td><td><code>DELETE</code></td><td class="y">already gone, still gone</td></tr>
         </tbody></table>
       </div>
-      <p style="margin:11px 0 0;font-size:.8em;color:var(--faint);line-height:1.6">The correspondence is not a coincidence. REST was designed against this shape. The verbs line up because of it, and a resource-shaped API is easy to build over a relational database and awkward over anything else.</p>
+      <p style="margin:11px 0 0;font-size:.8em;color:var(--faint);line-height:1.6">The commands and the HTTP methods match because REST was designed around the same four operations. An API that exposes resources is easy to build on top of a relational database.</p>
 
       <div class="whynot" style="margin-top:20px">
-        <b>The WHERE clause is not optional, it only looks optional</b>
-        <code>UPDATE courses SET slots = 0</code> is valid SQL. It runs, it succeeds, and it sets every course in the school to zero slots. The database will not ask whether you meant it, because you told it what you wanted and it has no way to know you were thinking about one row.
-        <br><br>This is why people write <code>SELECT</code> first with the same <code>WHERE</code>, look at what comes back, and only then change the verb. Do that on anything you cannot restore, and do it on production even when you are certain.
+        <b>Always use WHERE with UPDATE and DELETE</b>
+        A <code>WHERE</code> clause is the part of a command that says which rows to affect. <code>UPDATE courses SET slots = 0</code> is valid SQL. It runs without error and sets every course in the school to zero slots. The database does not ask whether you meant it, because it cannot know you were thinking about one row.
+        <br><br>Before you change data, write a <code>SELECT</code> with the same <code>WHERE</code>, look at the rows it returns, and then change the command to <code>UPDATE</code> or <code>DELETE</code>. Do this for any data you cannot restore, and do it on production, the live system that real users depend on, even when you are sure.
       </div>
     </section>
 

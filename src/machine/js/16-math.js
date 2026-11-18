@@ -28,10 +28,10 @@ function mtDotRender(){
   set("#mtDotVal", dot.toFixed(2), dot<-0.01, dot>8);
   $("#vMtAng").textContent=MT.ang+"\u00b0";
   $("#mtDotNote").innerHTML = MT.ang<12
-    ? `Pointing the same way, and the number is at its largest. <b style="color:var(--ink)">Big positive means strongly aligned.</b>`
-    : MT.ang<85 ? `Partly aligned. Only the part of <b>b</b> lying along <b>a</b> counts, which is the shaded stub on the axis.`
-    : MT.ang<95 ? `At a right angle the number is <b style="color:var(--ink)">zero</b>. Nothing of <b>b</b> lies along <b>a</b>, so they share nothing.`
-    : `Past a right angle it goes negative, which means pointing away. A negative dot product is a useful signal, not an error.`;
+    ? `The arrows point the same way, so the number is at its largest. <b style="color:var(--ink)">A large positive number means the vectors are closely aligned.</b>`
+    : MT.ang<85 ? `The arrows are partly aligned. Only the part of <b>b</b> that lies along <b>a</b> counts, which is the shaded stretch on the horizontal axis.`
+    : MT.ang<95 ? `At a right angle the number is <b style="color:var(--ink)">zero</b>. No part of <b>b</b> lies along <b>a</b>, so the two vectors share nothing.`
+    : `Past a right angle the number is negative, which means the arrows point apart. A negative dot product is a useful signal, not an error.`;
 }
 /* --- 2. slope --- */
 function mtSlopeRender(){
@@ -48,9 +48,9 @@ function mtSlopeRender(){
     <line x1="${X(w-t)}" y1="${Y(Lf(w)-s*t)}" x2="${X(w+t)}" y2="${Y(Lf(w)+s*t)}"
       stroke="var(--req)" stroke-width="2.2" stroke-dasharray="${Math.abs(s)<0.2?"none":"5 4"}"/>
     <circle cx="${px}" cy="${py}" r="6" fill="var(--req)"/></g>
-    <text x="${X(3)}" y="${Y(1)-13}" font-family="monospace" font-size="10" fill="var(--res)" text-anchor="middle">bottom</text>
-    <text x="${ox}" y="18" font-family="monospace" font-size="10" fill="var(--faint)">how wrong it is</text>
-    <text x="462" y="${oy+15}" font-family="monospace" font-size="10" fill="var(--faint)" text-anchor="end">the number you control &rarr;</text>`;
+    <text x="${X(3)}" y="${Y(1)-13}" font-size="11" fill="var(--res)" text-anchor="middle">Lowest point</text>
+    <text x="${ox}" y="18" font-size="11" fill="var(--faint)">How wrong the model is</text>
+    <text x="462" y="${oy+15}" font-size="11" fill="var(--faint)" text-anchor="end">The weight &rarr;</text>`;
   $("#mtSlope").innerHTML=g+`</svg>`;
   const set=(id,v,hot,good)=>{const g2=$(id);g2.querySelector(".gv").firstChild.nodeValue=v;
     g2.classList.toggle("hot",!!hot);g2.classList.toggle("good",!!good)};
@@ -60,9 +60,9 @@ function mtSlopeRender(){
   $("#vMtW").textContent=w.toFixed(1);
   const v=$("#mtSlopeV");
   if(Math.abs(s)<0.25){ v.className="verdict ok";
-    v.innerHTML=`<b>Slope zero, and the tangent is flat</b>Nothing tells you to move in either direction, so training stops here. Not because anything declared success. It ran out of downhill.`;
+    v.innerHTML=`<b>The slope is zero and the straight line is flat</b>The slope gives no direction to move, so training stops here. This is the lowest point of the curve.`;
   } else { v.className="verdict";
-    v.innerHTML=`<b>Slope ${(s>=0?"+":"")+s.toFixed(1)}, so step ${s>0?"left":"right"}</b>The dashed line is the slope at that point. It ${s>0?"rises":"falls"} as you go right, so going ${s>0?"left":"right"} lowers the number. That is the entire decision, made once per number, a few hundred times a second.`;
+    v.innerHTML=`<b>The slope is ${(s>=0?"+":"")+s.toFixed(1)}, so move ${s>0?"left":"right"}</b>The straight line through the dot shows the slope at this point. The curve ${s>0?"rises":"falls"} as you go right, so moving ${s>0?"left":"right"} lowers the number. Training makes this decision once for each weight at every step.`;
   }
 }
 /* --- 3. distribution and loss --- */
@@ -83,11 +83,11 @@ function mtDistRender(){
   $("#vMtP").textContent=MT.p+"%";
   const v=$("#mtDistV");
   if(p>=.8){ v.className="verdict ok";
-    v.innerHTML=`<b>Loss ${loss.toFixed(2)}, which is close to the floor</b>Most of the weight is on the answer that turned out to be right. Training is trying to get every example into this state, and the floor is zero, reached only at complete certainty.`;
+    v.innerHTML=`<b>Loss ${loss.toFixed(2)}, close to the minimum</b>Most of the probability is on the answer that turned out to be right. Training pushes every example toward this state. The minimum loss is zero, which needs 100% on the right answer.`;
   } else if(p<=.15){ v.className="verdict bad";
-    v.innerHTML=`<b>Loss ${loss.toFixed(2)}, and climbing fast</b>Almost no weight on the right answer. Notice how much faster the loss rises than the bar shrinks: halving your confidence does not double the penalty, it adds a fixed amount each time. That steepness is what makes confident mistakes expensive to the model during training.`;
+    v.innerHTML=`<b>Loss ${loss.toFixed(2)}, and rising fast</b>Almost no probability is on the right answer. Each time the probability halves, the loss goes up by the same amount, about 0.69. A confident wrong answer therefore costs the model a lot during training.`;
   } else { v.className="verdict warn";
-    v.innerHTML=`<b>Loss ${loss.toFixed(2)}</b>Slide it up and down and watch the number. The bars always add to 100%, so confidence given to Paris is taken from the others.`;
+    v.innerHTML=`<b>Loss ${loss.toFixed(2)}</b>Move the slider and watch the loss. The bars always add up to 100%, so any probability given to Paris comes from the other words.`;
   }
 }
 $("#sMtAng").oninput=e=>{MT.ang=+e.target.value;mtDotRender()};

@@ -1,12 +1,11 @@
     <section class="panel" id="p-query">
       <div class="head">
-        <div class="eyebrow">15 — Module 5 · what a query costs</div>
-        <h2>The loop that costs one query per row</h2>
-        <p>Panel 14 split the title into its own table, so reading a schedule now needs a join. This is the panel where that gets a number. It is also where the phrase every other panel keeps pointing at finally happens in front of you.</p>
-        <div class="ask"><b>Ask the room</b>. Your page shows fifty enrolments with their course titles. How many times did the database get asked something? Most people guess one. Some guess two.</div>
+        <h2>The N+1 query problem</h2>
+        <p>Picture asking a clerk for 50 files. You can ask for them one at a time, and the clerk walks to the cabinet 50 times. Or you can ask for all 50 at once, and the clerk makes one trip with a cart. A web page that lists 50 enrollments with their course titles can behave either way. A <b style="color:var(--ink)">query</b> is one request to the database. In "Normalization: storing each fact once" the course title moved into its own table, so the page must fetch the title from that table for every row. The slow pattern is called the <b style="color:var(--ink)">N+1 query problem</b>: one query to fetch N rows, then N more queries, one for each row. This panel measures what it costs.</p>
+        <div class="ask"><b>Think first.</b> A page shows fifty enrollments with their course titles. The template reads the course title from each enrollment, and the courses were not loaded in advance. How many times is the database queried? Write down your number before you use the slider.</div>
       </div>
 
-      <div class="card-t">The template that costs you everything</div>
+      <div class="card-t">The code that builds the page</div>
       <div class="srv">
         <div>
           <div class="art" id="qCode"></div>
@@ -17,13 +16,14 @@
           <div class="toggles" id="qMode"></div>
           <div class="sliders" style="margin-top:14px">
             <div class="field">
-              <label>Enrolments on the page <span class="val" id="vQRows">50</span></label>
+              <label>Enrollments on the page <span class="val" id="vQRows">50</span></label>
               <input type="range" id="sQRows" min="1" max="200" value="50">
             </div>
           </div>
           <div class="rtt-note" style="margin-top:14px">
-            Modelled at 0.4 ms for a query the database can answer from an index, and 24 ms of handler time that is not database work at all.
-            <br><br>Nothing in the first version is a mistake. It reads well, it passes review, and an agent writes exactly this when you ask for a schedule page.
+            The code on the left is Django. The view (views.py) fetches rows from the database. The template (schedule.html) is the page layout, and it loops over the rows.
+            <br><br>The model assumes each query takes 0.4 ms (milliseconds), because the database can answer it from an index, which is a lookup structure like the index of a book. It also assumes 24 ms of handler time that is not database work. Handler time is the total time the server spends on one request. A worker is a server process that handles one request at a time, and the ceiling is the most requests per second (rps) that 8 workers can finish.
+            <br><br>The first version looks correct, and AI tools often produce it when asked for a schedule page. It is still slow.
           </div>
         </div>
       </div>
@@ -37,8 +37,8 @@
       <div class="verdict" id="qVerdict"></div>
 
       <div class="whynot" style="margin-top:20px">
-        <b>Why nobody catches this in testing</b>
-        With three rows in your development database the loop costs four queries and a millisecond and a half. It is invisible. The number of queries scales with the number of rows, and your test data never has enough rows, so the bug lives in the difference between your laptop and production, which is the one place your tests do not run.
+        <b>Why testing does not catch this</b>
+        With three rows in your development database, the loop makes four queries and takes about 1.6 milliseconds, which you cannot notice. The number of queries grows with the number of rows, and test data rarely has enough rows. The problem appears only in production, the live system, where the data is large and your tests do not run.
       </div>
     </section>
 

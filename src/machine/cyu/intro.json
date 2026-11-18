@@ -1,0 +1,146 @@
+{
+ "panel": "intro",
+ "items": [
+  {
+   "id": "intro-1",
+   "sec": "rings",
+   "type": "mc",
+   "stem": "A bank's fraud team writes 40 fixed rules, such as \"flag any transfer over 500,000 pesos to a new account\". A program applies the rules to every transaction. How should you describe this program?",
+   "options": [
+    {
+     "text": "Artificial intelligence, with no machine learning",
+     "correct": true,
+     "feedback": "The program does something that normally needs human judgment, so it counts as AI. People wrote every rule, so it did not learn anything from examples."
+    },
+    {
+     "text": "Machine learning, because it detects fraud",
+     "correct": false,
+     "feedback": "Detecting fraud does not make a program machine learning. Machine learning means the program worked out its own rule from examples, and here people wrote the rules."
+    },
+    {
+     "text": "Deep learning, because it checks many transactions",
+     "correct": false,
+     "feedback": "Deep learning means stacked layers that work out their own features from raw input. Handling many transactions says nothing about how the program was built."
+    },
+    {
+     "text": "Generative AI, because it produces a flag",
+     "correct": false,
+     "feedback": "A flag is a yes or no answer. Generative AI produces new content such as text, images or code."
+    }
+   ]
+  },
+  {
+   "id": "intro-2",
+   "sec": "rings",
+   "type": "predict",
+   "stem": "Before you try it: the widget lists eight systems. How many of them are artificial intelligence without being machine learning?",
+   "options": [
+    {
+     "text": "None",
+     "correct": false,
+     "feedback": "The chess engine and the route finder both follow rules that people wrote, so they are AI without machine learning."
+    },
+    {
+     "text": "Two",
+     "correct": true,
+     "feedback": "The chess engine and the route finder follow hand-written rules and learn nothing. The other six learned from examples."
+    },
+    {
+     "text": "Four",
+     "correct": false,
+     "feedback": "Four would include the spam filter and the credit scoring model. Both learned their rules from examples, so they are machine learning."
+    },
+    {
+     "text": "All eight",
+     "correct": false,
+     "feedback": "Six of the eight learned from examples, so they fall inside the machine learning circle."
+    }
+   ],
+   "try": "Select each system in the widget and read which circles it falls inside. Count the ones that stop at the outer circle."
+  },
+  {
+   "id": "intro-3",
+   "sec": "plain-terms",
+   "type": "mc",
+   "stem": "A bank has two loan-screening systems. System A applies rules written by the bank's staff. System B was trained on past loan records. Both wrongly reject a valid applicant. Which statement about fixing the problem is most likely true?",
+   "options": [
+    {
+     "text": "For System A, a person can read the rules and find the one that rejected the applicant. For System B, the cause depends on the examples it was trained on, so the fix usually means changing the data or retraining.",
+     "correct": true,
+     "feedback": "Hand-written rules can be read and changed one at a time. A trained model has no single rule to point at, because its behavior comes from patterns in its training examples."
+    },
+    {
+     "text": "Both can be fixed the same way, by finding the single line of code that caused the rejection.",
+     "correct": false,
+     "feedback": "A trained model has no such line. What it does depends on the examples it was shown."
+    },
+    {
+     "text": "System A will make different mistakes each time it sees the same applicant.",
+     "correct": false,
+     "feedback": "Hand-written rules give the same answer for the same input, so System A is wrong in the same way every time."
+    },
+    {
+     "text": "System B cannot be wrong, because it learned from real data.",
+     "correct": false,
+     "feedback": "Learning from real data does not guarantee correct answers. A model can be wrong when an applicant looks different from the examples it saw."
+    }
+   ]
+  },
+  {
+   "id": "intro-4",
+   "sec": "plain-terms",
+   "type": "mc",
+   "stem": "A team builds a spam filter. Version 1 uses three measurements chosen by an analyst: the number of links, whether the sender is a known contact, and how often the word \"free\" appears. Version 2 is given the raw text of the emails and works out for itself what to measure. Which version is deep learning?",
+   "options": [
+    {
+     "text": "Version 2",
+     "correct": true,
+     "feedback": "Deep learning removes the step where a person chooses the features. Version 2 finds its own features from raw input."
+    },
+    {
+     "text": "Version 1",
+     "correct": false,
+     "feedback": "Version 1 is machine learning, but a person chose the features. Deep learning removes that step."
+    },
+    {
+     "text": "Both versions",
+     "correct": false,
+     "feedback": "Both versions learn from labeled emails, so both are machine learning. Only the one that works out its own features counts as deep learning."
+    },
+    {
+     "text": "Neither, because a spam filter gives only a yes or no",
+     "correct": false,
+     "feedback": "The kind of answer separates generative AI from the other terms. A yes or no output can still come from a deep learning model."
+    }
+   ]
+  },
+  {
+   "id": "intro-5",
+   "sec": "plain-terms",
+   "type": "mc",
+   "stem": "A tool takes a one-line product description and returns a new 100-word advertisement. What makes this generative AI?",
+   "options": [
+    {
+     "text": "It produces new text that did not exist before.",
+     "correct": true,
+     "feedback": "Generative AI produces new content. A spam filter only chooses between two labels."
+    },
+    {
+     "text": "It was trained on many examples.",
+     "correct": false,
+     "feedback": "Every machine learning system is trained on examples, so this does not separate generative AI from a spam filter."
+    },
+    {
+     "text": "It follows rules written by hand.",
+     "correct": false,
+     "feedback": "Hand-written rules describe AI without machine learning, such as a chess engine. A system that writes new text was trained on examples."
+    },
+    {
+     "text": "It needs an internet connection.",
+     "correct": false,
+     "feedback": "Where a system runs does not decide which kind of system it is."
+    }
+   ]
+  }
+ ]
+}

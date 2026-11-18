@@ -1,9 +1,8 @@
     <section class="panel" id="p-rnn">
       <div class="head">
-        <div class="eyebrow">09 — What came before</div>
-        <h2>One word at a time, and one note to itself, rewritten after every word</h2>
-        <p>Here is how this was done until 2017, and it is worth two minutes because the next panel only makes sense as an answer to it. The model reads left to right. After each word it updates a single small note summarizing everything so far, then throws away the word and moves on. The note is a fixed size, so everything new that goes in pushes something old out.</p>
-        <div class="ask"><b>Ask the room</b>. Read the whole sentence, then ask the model what <em>it</em> referred to. The catch is that the sentence is no longer available to it.</div>
+        <h2>Recurrent networks: the approach before transformers</h2>
+        <p>Imagine sitting through a long lecture with a single sticky note. After each sentence you rewrite the note to summarize everything so far, and then you forget the sentence. At the end you can answer questions only from the note. Until about 2017, language models read text this way. They are called <b>recurrent neural networks</b>. The model reads left to right. After each word it updates one small note, called the <b>hidden state</b>, that summarizes everything read so far, and then it moves on without the word. The note is a fixed size, so each new word pushes something older out. The next panel, "Attention and the transformer", answers the problems shown here.</p>
+        <div class="ask"><b>Think first.</b> In the sentence <em>The animal didn't cross the street because it was too tired</em>, what does <em>it</em> refer to? Now imagine you had to answer using only a short summary that you rewrote after each word. Which words would you expect that summary to keep most clearly?</div>
       </div>
       <div class="srv">
         <div>
@@ -12,12 +11,12 @@
           <p style="margin:10px 0 0;font-size:.8em;color:var(--faint)" id="rnCaption"></p>
           <div class="card" style="margin-top:12px">
             <div class="card-t">What is left on the note</div>
-            <p style="margin:0 0 10px;font-size:.78em;color:var(--faint);line-height:1.5">Every word that went in, and how much of it survived. This is not a list of answers.</p>
+            <p style="margin:0 0 10px;font-size:.78em;color:var(--faint);line-height:1.5">Each word that was read, with the share of it that is still on the note.</p>
             <div class="probs" id="rnBars"></div>
           </div>
           <div class="card" id="rnAnsBox" style="margin-top:13px;display:none">
-            <div class="card-t">Only two words could be the answer</div>
-            <p style="margin:0 0 10px;font-size:.78em;color:var(--faint);line-height:1.5"><code>it</code> stands for a thing, so the candidates are the two nouns. Nothing else in the sentence can be what <code>it</code> meant.</p>
+            <div class="card-t">Two candidates for <em>it</em></div>
+            <p style="margin:0 0 10px;font-size:.78em;color:var(--faint);line-height:1.5"><code>it</code> stands for a thing, so the candidates are the two nouns, <code>animal</code> and <code>street</code>. No other word in the sentence can be what <code>it</code> refers to.</p>
             <div class="probs" id="rnCand"></div>
             <div class="art" id="rnAnswer" style="margin-top:11px"></div>
           </div>
@@ -31,20 +30,20 @@
         <div class="card">
           <div class="card-t">The note is one fixed size</div>
           <div class="rtt-note">
-            Whatever the sentence length, the note stays the same size. A short sentence fits comfortably. A paragraph does not, and nothing warns you which parts got squeezed out.
-            <br><br>This is what people mean by a <b style="color:var(--ink)">recurrent</b> network: the same small step applied over and over, each time taking the previous note and the next word, and producing a new note.
+            The note stays the same size however long the sentence is. A short sentence fits comfortably. A paragraph does not, and nothing tells you which parts were squeezed out.
+            <br><br>A network that works this way is called <b style="color:var(--ink)">recurrent</b>. The same small step is applied over and over. Each time, it takes the previous note and the next word and produces a new note.
           </div>
           <div class="whynot" style="margin-top:14px">
-            <b>Two problems, and the second is worse</b>
-            <b style="color:var(--ink)">Distance.</b> Early words fade, so anything depending on a long-range connection gets lost.
-            <br><br><b style="color:var(--ink)">Order.</b> Word fifty cannot be read until word forty-nine has been. Training could not be spread across many machines, which put a ceiling on how much text anyone could train on.
+            <b>Two problems</b>
+            <b style="color:var(--ink)">Distance.</b> Early words fade, so anything that depends on a connection across a long gap is lost.
+            <br><br><b style="color:var(--ink)">Order.</b> Word fifty cannot be read until word forty-nine has been read. Training could not be spread across many machines, which limited how much text anyone could train on.
           </div>
         </div>
       </div>
       <div class="whynot" style="margin-top:20px">
-        <b>Both problems have the same fix</b>
-        Stop summarizing. Keep every word, and let each one look directly at all the others, weighing them by how well they fit rather than by how recently they arrived. Every word is then one hop from every other, and all the comparisons can happen at once instead of in sequence.
-        <br><br>That is the next panel, and the reason this one exists.
+        <b>One fix for both problems</b>
+        Stop summarizing. Keep every word, and let each word look directly at all the others, weighing them by how well they fit. Every word is then one step from every other word, and all the comparisons can happen at once.
+        <br><br>The next panel, "Attention and the transformer", describes this approach.
       </div>
     </section>
 

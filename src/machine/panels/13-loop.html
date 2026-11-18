@@ -1,12 +1,12 @@
     <section class="panel" id="p-loop">
       <div class="head">
-        <div class="eyebrow">13 — What you are about to watch</div>
-        <h2>Give it tools and it can be wrong and find out</h2>
-        <p>On its own, a model reasons in a closed room. Give it a shell, a file system and a test runner and something changes: it can take an action and get an answer back from the world. That is the difference between a chat and an agent, and it is one line type.</p>
-        <div class="ask"><b>Ask the room</b>. Which of these three lines could not have been written by the model?</div>
+        <h2>AI agents: the think, act and observe loop</h2>
+        <p>Suppose you send an intern to the registrar's office to fix a student's record. The intern decides what to do, does it, looks at what happened, and decides what to do next. A chat model only produces text and cannot run anything or check results. An agent is a model connected to tools, so it can act and see the outcome. Typical tools are a shell (a window where you type commands), a file system (the folders and files on a computer) and a test runner (a program that checks whether code still works). An agent repeats three steps: think, act, observe.</p>
+        <div class="ask"><b>Think first.</b> Each step in the trace below has three kinds of line: Thought, Action and Observation. Which kind could the model not have written by itself, and why?</div>
       </div>
       <div class="srv">
         <div>
+          <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">The trace shows an agent asked to fix a bug: some students are enrolled in the same course twice. Press Step to add one line at a time.</p>
           <div class="trace" id="lpTrace"></div>
           <div class="ctrls" style="margin-top:13px">
             <button class="btn primary" id="lpStep">Step</button>
@@ -23,21 +23,22 @@
             <div class="g" id="lpCost" style="margin-top:8px"><div class="gl">Spent so far</div><div class="gv">—</div></div>
           </div>
           <div class="rtt-note" style="margin-top:14px">
-            <b style="color:var(--ink)">Thought</b> and <b style="color:var(--ink)">Action</b> come from the model. <b style="color:var(--res)">Observation</b> does not. It comes from a test runner, a file system, an API, and nothing else in the loop can contradict the model.
-            <br><br>This pattern has a name: <b>ReAct</b>, for reason and act.
+            <b style="color:var(--ink)">Thought</b> and <b style="color:var(--ink)">Action</b> lines come from the model. <b style="color:var(--res)">Observation</b> lines come from outside the model: a test runner, a file system, or an API (a way for one program to request something from another). They are the only lines that can contradict the model.
+            <br><br>"Context in use" is how much of the model's context window the conversation has filled. The context window is the amount of text the model can see at once. See "The context window".
+            <br><br>This pattern is called ReAct, short for reason and act.
           </div>
           <div class="whynot" style="margin-top:14px">
-            <b>Watch for the moment it keeps going</b>
-            The task is finished at step 15. Look at what it does next, then ask whether you would have caught that in review.
+            <b>What to watch for</b>
+            The task is finished at step 15. Watch what the agent does next, and ask whether you would have caught it in review.
           </div>
         </div>
       </div>
       <div class="whynot" style="margin-top:20px">
-        <b>Four ways a loop drifts, and every one has a cause you have already seen</b>
-        <b style="color:var(--ink)">It does not know when to stop.</b> Stopping is a judgement. It stops when it predicts a stopping token, which is sometimes too early and sometimes never.
-        <br><br><b style="color:var(--ink)">The window fills.</b> Every thought, action and observation gets appended. Twenty steps in, your original instruction may not be in front of it any more. Panel 05, arriving with a bill.
-        <br><br><b style="color:var(--ink)">Errors compound.</b> A wrong observation at step three gets treated as fact for every step after it. Confidence does not decay on its own.
-        <br><br><b style="color:var(--ink)">It gets dearer as it goes.</b> You pay per step, the context grows each time, and attention cost rises with the square of the context. The twentieth step costs more than the first for the same work.
+        <b>Four ways an agent loop goes wrong</b>
+        <b style="color:var(--ink)">It does not know when to stop.</b> The model stops when it predicts a special end-of-output token, the same way it predicts any other token. That can happen too early, or not at all.
+        <br><br><b style="color:var(--ink)">The context window fills.</b> Every thought, action and observation is added to it. After twenty steps your original instruction may no longer be in what the model can see. See "The context window".
+        <br><br><b style="color:var(--ink)">Errors compound.</b> A wrong observation at step three is treated as fact in every step after it. The model's confidence does not fade on its own.
+        <br><br><b style="color:var(--ink)">Cost grows with each step.</b> You pay per step, the context grows each time, and attention cost rises with the square of the context length. The twentieth step costs more than the first for the same work.
       </div>
     </section>
 

@@ -1,63 +1,71 @@
     <section class="panel" id="p-rea">
       <div class="head">
-        <div class="eyebrow">11 — Module 5 · a pattern that repeats</div>
-        <h2>Most business systems are the same six boxes wearing different words</h2>
-        <p>Once you have drawn a few models you start noticing that they rhyme. Something of value changes hands. An event records it. People are on both sides. And the event almost never travels alone, because value moving one way is usually paid for by value moving the other. That observation has a name, <b style="color:var(--ink)">REA</b>. Because of it you rarely design a schema from nothing.</p>
-        <div class="ask"><b>Ask the room</b>. Pick any transaction you did this week. What was given, what came back, and who was on each side? If you can answer that, you have just drawn the model.</div>
+        <h2>The REA pattern: resources, events and agents</h2>
+        <p>Think of a sale at a sari-sari store. The owner hands over a bottle of soda and takes 20 pesos, or writes the amount in the utang notebook to be paid later. The goods going out and the payment coming back are two separate records. Most business systems follow this same pattern, called <b style="color:var(--ink)">REA</b>, for resources, events and agents. A resource is something of value, such as the soda or the cash. An event records that a resource changed hands, such as the sale. An agent is a person or organization taking part, such as the owner or the customer. The sale and the payment form a pair called duality: value moving one way is usually paid for by value moving the other way. Because the pattern repeats, you rarely design a schema, the layout of a system's tables, from nothing.</p>
+        <div class="ask"><b>Think first.</b> Pick a transaction you made this week, such as buying lunch or paying for a ride. Write down what was given, what came back, and who was on each side.</div>
       </div>
 
-      <div class="ctab" id="reaTab"></div>
-      <div class="art" id="reaDia" style="padding:12px"></div>
-      <div class="verdict" id="reaVerdict" style="margin-top:13px"></div>
-
-
-
-      <div class="card-t" style="margin-top:26px">Duality is not a tidy one-to-one</div>
-      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">It is tempting to read the dashed line as <em>every enrolment has its payment</em>, and to build a column for it. That works until the first student pays in instalments, or settles four subjects with one transfer. The pairing is many-to-many, which means panel 10's rule applies to it: the duality needs a table of its own, and that table has to carry <b style="color:var(--ink)">how much of this payment applies to that enrolment</b>.</p>
-      <div class="card" style="padding:12px 16px;overflow-x:auto">
-        <table class="hostreq"><thead><tr>
-          <th>allocations</th><th>enrolment</th><th>payment</th><th>amount</th>
-        </tr></thead><tbody>
-          <tr><td>one payment, split across four subjects</td><td>ITENT 45</td><td>OR-8841</td><td class="y">&#8369;7,500</td></tr>
-          <tr><td></td><td>CSCI 21</td><td>OR-8841</td><td class="y">&#8369;7,500</td></tr>
-          <tr><td>one subject, paid in two instalments</td><td>ITMGT 25</td><td>OR-8841</td><td class="y">&#8369;3,000</td></tr>
-          <tr><td></td><td>ITMGT 25</td><td>OR-9102</td><td class="y">&#8369;4,500</td></tr>
-        </tbody></table>
+      <div class="sec" data-sec="six-boxes" data-title="One pattern in four settings">
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Each tab shows one business case drawn with the same six boxes: on each side, a resource, an event and the agents.</p>
+        <div class="ctab" id="reaTab"></div>
+        <div class="art" id="reaDia" style="padding:12px"></div>
+        <div class="verdict" id="reaVerdict" style="margin-top:13px"></div>
       </div>
-      <p style="margin:11px 0 0;font-size:.8em;color:var(--faint);line-height:1.6">Four rows, three enrolments, two payments. Neither side divides evenly into the other, and the amount column belongs to neither. This is the screen every accounting system has, and it is invariably the ugliest one in the product.</p>
 
-      <div class="whynot" style="margin-top:18px">
-        <b>Some events have no partner at all, and that is not a gap</b>
-        A scholarship waiver, a spoiled batch, a donated seat, a book written off after a flood. A resource decreases and nothing comes back, legitimately. If your reconciliation treats every unpaired event as an exception it will cry wolf forever, and people will stop reading it.
-        <br><br>So decide once, deliberately, which events are expected to pair and which are not, and record that in the model rather than in someone's head. <em>This pair is missing</em> and <em>this one never had a pair</em> are different facts, and only one of them is a problem.
-      </div>
-      <div class="card-t" style="margin-top:26px">Where to put the boxes</div>
-      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Nothing forces you to lay a diagram out one way rather than another, so most people do not, and the result is a plate of spaghetti nobody can read a second time. There is a convention that costs nothing: point every crow's foot up and to the left. Because the crow's foot always sits on the <em>many</em> side, and the many side is almost always the thing that happens, the diagram sorts itself.</p>
-      <div class="ctab" id="erdTab"></div>
-      <div class="art" id="erdDia" style="padding:10px"></div>
-      <div class="verdict" id="erdVerdict" style="margin-top:13px"></div>
-      <div class="srv" style="margin-top:22px">
-        <div class="card">
-          <div class="card-t">The three letters</div>
-          <div class="rtt-note">
-            <b style="color:var(--res)">Resource</b> &mdash; the thing of value. A seat, a book, an item of stock, cash. It is what the event moves.
-            <br><br><b style="color:var(--req)">Event</b> &mdash; the thing that happened, at a moment, which changed who holds the resource. Events are the rows you will have most of.
-            <br><br><b style="color:var(--dim)">Agent</b> &mdash; who was on each side. Conventionally one is inside your organization and one is outside it, and you almost always need both.
-          </div>
+      <div class="sec" data-sec="duality" data-title="Duality is many-to-many">
+        <div class="card-t">Payments and enrollments</div>
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">The dashed line in the diagram joins two events that pair up, such as an enrollment and its payment. It is tempting to read the line as meaning that every enrollment has exactly one payment, and to store that in a column. That fails when a student pays in installments, or pays for several subjects with one transfer. The pairing is many-to-many, so it needs a table of its own, as described in "Relationships: one-to-one, one-to-many, many-to-many". That table must record <b style="color:var(--ink)">how much of this payment applies to that enrollment</b>.</p>
+        <div class="card" style="padding:12px 16px;overflow-x:auto">
+          <table class="hostreq"><thead><tr>
+            <th>allocations</th><th>enrollment</th><th>payment</th><th>amount</th>
+          </tr></thead><tbody>
+            <tr><td>one payment covers three enrollments</td><td>ITENT 45</td><td>OR-8841</td><td class="y">&#8369;7,500</td></tr>
+            <tr><td></td><td>CSCI 21</td><td>OR-8841</td><td class="y">&#8369;7,500</td></tr>
+            <tr><td>one enrollment is paid in two installments</td><td>ITMGT 25</td><td>OR-8841</td><td class="y">&#8369;3,000</td></tr>
+            <tr><td></td><td>ITMGT 25</td><td>OR-9102</td><td class="y">&#8369;4,500</td></tr>
+          </tbody></table>
         </div>
-        <div class="card">
-          <div class="card-t">Why two events, not one</div>
-          <div class="rtt-note">
-            The pairing is called <b style="color:var(--req)">duality</b>, and students skip it. A seat is given and money is taken. A book goes out and comes back. Modelling only the half you were asked about is how systems end up unable to answer where the money went.
-            <br><br>Duality is also where your hardest questions live: unpaid enrolments, overdue books, delivered-but-unbilled orders. Every one of those is a gap between two events that should have paired and did not.
-          </div>
+        <p style="margin:11px 0 0;font-size:.8em;color:var(--faint);line-height:1.6">The table has four rows, three enrollments and two payments. Neither side divides evenly into the other, so the amount column cannot sit in the enrollment table or in the payment table. Accounting systems have a screen like this one, and it is usually among the most complicated in the product.</p>
+
+        <div class="whynot" style="margin-top:18px">
+          <b>Events without a matching event</b>
+          Some events legitimately have no partner: a scholarship waiver, a spoiled batch, a donated seat, a book written off after a flood. A resource decreases and nothing comes back. Reconciliation is the check that matches each event with its partner. If it reports every unpaired event as an exception, it produces false alarms, and people stop reading it.
+          <br><br>Decide once which events are expected to pair, and record that decision in the model so that it is written down. Only a missing pair that should exist needs investigating.
         </div>
       </div>
 
-      <div class="whynot" style="margin-top:20px">
-        <b>Universal data models: somebody has already drawn yours</b>
-        Because the shape repeats, the industry stopped redrawing it. Universal data models are published templates for common domains, and every framework you will use ships opinionated versions of them, whether or not it says so. Django's auth tables, a Supabase starter schema, an e-commerce boilerplate: those are all somebody else's answer to a model you were about to draw badly.
-        <br><br>Use them, and read them. The value is that a template shows you which entities somebody discovered the hard way, and the one you would not have thought of is usually the event in the middle.
+      <div class="sec" data-sec="layout" data-title="Diagram layout (optional)">
+        <div class="card-t">Where to put the boxes</div>
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A diagram of tables can be laid out in many ways, and most people place the boxes wherever there is room. The result is hard to read a second time. One convention costs nothing: draw every crow's foot pointing up and to the left. A crow's foot is the three-pronged symbol on the <em>many</em> side of a relationship. The many side is almost always the entity that records what happens, so the tables that grow fastest end up in the top left.</p>
+        <div class="ctab" id="erdTab"></div>
+        <div class="art" id="erdDia" style="padding:10px"></div>
+        <div class="verdict" id="erdVerdict" style="margin-top:13px"></div>
+      </div>
+
+      <div class="sec" data-sec="parts-and-templates" data-title="The three parts and ready-made models">
+        <div class="srv">
+          <div class="card">
+            <div class="card-t">The three parts of REA</div>
+            <div class="rtt-note">
+              <b style="color:var(--res)">Resource</b>: the thing of value, such as a seat, a book, an item of stock or cash. The event moves it.
+              <br><br><b style="color:var(--req)">Event</b>: a record of something that happened at a moment and changed who holds the resource. Events are usually the tables with the most rows.
+              <br><br><b style="color:var(--dim)">Agent</b>: a person or organization on one side of an event. Usually one is inside your organization and one is outside it, and you need to record both.
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-t">Why there are two events</div>
+            <div class="rtt-note">
+              The pairing is called <b style="color:var(--req)">duality</b>. A seat is given and money is taken. A book goes out and comes back. If you model only the half you were asked about, the system cannot answer where the money went.
+              <br><br>Duality also produces the hardest business questions: unpaid enrollments, overdue books, orders delivered but not billed. Each one is a gap between two events that should have paired and did not.
+            </div>
+          </div>
+        </div>
+
+        <div class="whynot" style="margin-top:20px">
+          <b>Universal data models</b>
+          Because the same shape repeats, the industry publishes ready-made templates for common domains. These are called universal data models. The frameworks you will use include their own versions, such as Django's user and login tables, a Supabase starter schema or a ready-made set of tables for an online store. Each is somebody else's solution to a model you were about to draw yourself.
+          <br><br>Use them, and read them. A template shows which entities other people found necessary, and the one you would not have thought of is usually the event in the middle.
+        </div>
       </div>
     </section>
 

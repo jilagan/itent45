@@ -4,9 +4,6 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>What the Machine Is Doing, an introduction to AI for ITENT 45</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
 /*@@STYLE@@*/
 </style>
@@ -16,11 +13,12 @@
 <div class="rig">
   <aside class="rail">
     <div class="brand">
-      <div class="kicker">ITENT 45 &middot; MODULE 2</div>
+      <div class="kicker">ITENT 45 &middot; Module 2</div>
       <h1>What the Machine Is Doing</h1>
+      <button class="navtoggle" type="button" aria-expanded="false" aria-controls="nav">Contents</button>
       <div class="sub">Before you let it write your code</div>
     </div>
-    <nav class="nav" role="tablist">
+    <nav class="nav" role="tablist" id="nav">
       <button role="tab" data-p="intro" aria-selected="true"><span class="num">00</span><span class="lbl">What the words mean</span></button>
       <button role="tab" data-p="next" aria-selected="false"><span class="num">01</span><span class="lbl">Predicting the next word</span></button>
       <button role="tab" data-p="learn" aria-selected="false"><span class="num">02</span><span class="lbl">Learning a boundary</span></button>
@@ -40,7 +38,7 @@
       <button role="tab" data-p="math" aria-selected="false"><span class="num">16</span><span class="lbl">Just enough math</span></button>
     </nav>
     <a class="repolink" href="https://jilagan.github.io/itent45/" target="_blank" rel="noopener">
-      <span class="gh">&#9679;</span> Module 1 tool
+      Module 1
     </a>
     <div class="rail-foot">
       <span>Size</span>

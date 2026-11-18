@@ -44,11 +44,11 @@ function renderCost(){
     <path d="${lostArea}" fill="rgba(255,95,95,.22)"/>
     <path d="${dPath}" fill="none" stroke="var(--dim)" stroke-width="1.6"/>
     <path d="${cPath}" fill="none" stroke="${COST.capex?"var(--req)":"var(--res)"}" stroke-width="2" stroke-dasharray="${COST.capex?"":"5 3"}"/>
-    <text x="8" y="14" fill="var(--faint)" font-family="monospace" font-size="9">demand</text>
-    <text x="${W-8}" y="14" fill="${COST.capex?"var(--req)":"var(--res)"}" font-family="monospace" font-size="9" text-anchor="end">${COST.capex?"capacity you bought":"capacity you rented"}</text>
-    <text x="8" y="${H-4}" fill="var(--faint)" font-family="monospace" font-size="9">Aug</text>
-    <text x="${W/2}" y="${H-4}" fill="var(--faint)" font-family="monospace" font-size="9" text-anchor="middle">enlistment</text>
-    <text x="${W-8}" y="${H-4}" fill="var(--faint)" font-family="monospace" font-size="9" text-anchor="end">Jul</text>`;
+    <text x="8" y="14" fill="var(--faint)" font-size="9">demand</text>
+    <text x="${W-8}" y="14" fill="${COST.capex?"var(--req)":"var(--res)"}" font-size="9" text-anchor="end">${COST.capex?"capacity you bought":"capacity you rented"}</text>
+    <text x="8" y="${H-4}" fill="var(--faint)" font-size="9">Aug</text>
+    <text x="${W/2}" y="${H-4}" fill="var(--faint)" font-size="9" text-anchor="middle">enlistment</text>
+    <text x="${W-8}" y="${H-4}" fill="var(--faint)" font-size="9" text-anchor="end">Jul</text>`;
 
   const set=(id,v,hot,good)=>{const g=$(id);g.querySelector(".gv").firstChild.nodeValue=v;
     g.classList.toggle("hot",!!hot);g.classList.toggle("good",!!good)};
@@ -62,16 +62,16 @@ function renderCost(){
   const v=$("#costVerdict");
   if(!COST.capex){
     v.className="verdict ok";
-    v.innerHTML=`<b>Capacity follows the shape</b>You pay for roughly what you used, waste stays low, and the enlistment spike is served without owning hardware for it in October. The catch is on the meter: this is billed every hour forever, and nobody ever depreciates it away.`;
+    v.innerHTML=`<b>Capacity follows demand</b>You pay for roughly what you used, little capacity sits idle, and the enlistment spike is served without you owning hardware for it. The cost is the meter, which runs every hour indefinitely. There is no asset to depreciate.`;
   } else if(lostPct>=.005 && m.waste/m.capSum>.5){
     v.className="verdict bad";
-    v.innerHTML=`<b>Wrong in both directions at once</b>${pct(m.waste)} of what you bought sat idle across the year, <em>and</em> you still turned people away on enlistment morning. The line is fine. This is the shape of the problem. A flat line cannot fit a spiky curve.`;
+    v.innerHTML=`<b>Wrong in both directions at once</b>${pct(m.waste)} of the capacity you bought sat idle across the year, and you still turned people away on enlistment morning. A flat capacity line cannot match spiky demand.`;
   } else if(lostPct>=.005){
     v.className="verdict bad";
-    v.innerHTML=`<b>Under-provisioned</b>You turned away demand at the peak. Every one of those is a student refreshing the enlistment system at 8:00. Buy for the peak instead and look at what the line costs you the rest of the year.`;
+    v.innerHTML=`<b>Too little capacity</b>You turned away demand at the peak. Each request turned away is a student refreshing the enlistment system at 8:00. Raise the capacity to the peak and look at what it costs you for the rest of the year.`;
   } else {
     v.className="verdict warn";
-    v.innerHTML=`<b>Sized for the peak, and paying for it all year</b>Nobody is turned away, ${pct(m.waste)} of the capacity is idle, and the year costs ${mult.toFixed(1)}× what renting the same shape would. Those servers exist for twenty minutes in August and twenty in January. This is the on-premise era, drawn.`;
+    v.innerHTML=`<b>Sized for the peak, paid for all year</b>Nobody is turned away, but ${pct(m.waste)} of the capacity is idle, and the year costs ${mult.toFixed(1)}× what renting the same shape would cost. The servers are busy for about twenty minutes at each enlistment period and idle the rest of the time. This chart shows what buying for the peak looks like.`;
   }
 }
 $("#sCap").oninput=e=>{COST.cap=+e.target.value;$("#vCap").textContent=COST.cap+" units";renderCost()};

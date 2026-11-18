@@ -1,0 +1,98 @@
+{
+ "panel": "clients",
+ "items": [
+  {
+   "id": "clients-1",
+   "sec": "one-backend",
+   "type": "mc",
+   "stem": "A university already has a web API that returns course data as JSON. It now wants an Android app that shows the same courses. What does the Android app need from the backend?",
+   "options": [
+    {
+     "text": "Nothing new. The app can call the same URLs and display the JSON in its own way",
+     "correct": true,
+     "feedback": "The API does not know which client is calling. Any client that can send HTTP requests and read JSON can use it."
+    },
+    {
+     "text": "A separate backend for Android, because Android apps cannot read JSON",
+     "correct": false,
+     "feedback": "Android apps read JSON without difficulty. A second backend would also mean two copies of the data and the business rules."
+    },
+    {
+     "text": "The web page's HTML, shown inside the app",
+     "correct": false,
+     "feedback": "HTML contains layout decisions for a browser. A native app is built to draw its own screens from the data."
+    }
+   ]
+  },
+  {
+   "id": "clients-2",
+   "sec": "server-rendered",
+   "type": "mc",
+   "stem": "A system returns finished HTML tables from its server. The university wants an iOS app that shows the same course list. What is the main difficulty?",
+   "options": [
+    {
+     "text": "The data is mixed with layout, so the app must scrape the HTML or the team must build an API first",
+     "correct": true,
+     "feedback": "There is no separate data layer to call. Scraping breaks whenever the page layout changes, so building an API means pulling the logic out of the page-generating code."
+    },
+    {
+     "text": "iOS cannot connect to a server that returns HTML",
+     "correct": false,
+     "feedback": "Any app can connect to the server. The problem is that the response is built for a browser and not for another program."
+    },
+    {
+     "text": "The server does not hold enough data for an app",
+     "correct": false,
+     "feedback": "The data is the same. It is the form of the response that makes the app hard to build."
+    }
+   ]
+  },
+  {
+   "id": "clients-3",
+   "sec": "version-drift",
+   "type": "mc",
+   "stem": "Your team adds a new optional field to an API response and removes nothing. What happens to people who still run an old version of the app?",
+   "options": [
+    {
+     "text": "Nothing breaks. The old app ignores the field it does not know",
+     "correct": true,
+     "feedback": "This is an additive change. Old clients read the fields they expect and skip the rest."
+    },
+    {
+     "text": "The old app crashes until the user updates",
+     "correct": false,
+     "feedback": "A crash would happen if a field the app expects had been renamed or removed. Adding a field removes nothing that the app needs."
+    },
+    {
+     "text": "The old app shows the new field automatically",
+     "correct": false,
+     "feedback": "An app can only show fields its code knows about. The new field appears after the user updates."
+    }
+   ]
+  },
+  {
+   "id": "clients-4",
+   "sec": "version-drift",
+   "type": "predict",
+   "stem": "You rename the field `slots` to `seats` and ship the change. Before you try it: seven days later, who is most likely to see errors?",
+   "options": [
+    {
+     "text": "Mobile users who have not updated their app",
+     "correct": true,
+     "feedback": "Web users get new code on their next reload, but mobile users must update through the store, and many wait weeks. Old app copies still ask for `slots`."
+    },
+    {
+     "text": "Web users, because browsers cache old pages",
+     "correct": false,
+     "feedback": "Web code updates on the next reload, so web users are the first group to recover."
+    },
+    {
+     "text": "Nobody, because the server was updated",
+     "correct": false,
+     "feedback": "The server now sends `seats`, but old app copies still look for `slots` and fail."
+    }
+   ],
+   "try": "Select Breaking, move the slider to 7 days, and read the percentage on each platform's bar."
+  }
+ ]
+}

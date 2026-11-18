@@ -1,56 +1,56 @@
     <section class="panel" id="p-enlist">
       <div class="head">
-        <div class="eyebrow">20 — Case study · you have all lived this</div>
-        <h2>Enlistment day, and why the cloud did not fix it</h2>
-        <p>A student information system of that era typically ran on a handful of Java application servers with a single relational database behind them. Most such systems have since moved off-premise, so the seven-server limit is gone; capacity at the web tier is now something you can buy in minutes. The database hiccups did not go away. Panel 19 already told you why this would happen.</p>
-        <div class="ask"><b>Ask the room</b> Hands up who has watched the enlistment system crawl on enlistment morning. Now: if the university can add web servers with a slider, why is it still slow?</div>
+        <h2>Case study: enlistment day</h2>
+        <p>Picture the registrar's office on enlistment day. Thousands of students crowd around the schedule board, and each one only needs a few seconds to read it. Only one window can reserve seats, and it has to give the last seat in a section to exactly one student. A student enlistment system has the same two parts. The web tier is the group of servers that receive requests and build the pages. The database tier is the database that stores the seat counts. The one database that accepts changes is called the primary. Student systems like this have often run on a handful of application servers, usually Java programs, with a single relational database behind them. Many have since moved to cloud hosting, where capacity at the web tier can be bought in minutes. The slowdowns on enlistment morning have not gone away. "Scaling out with a load balancer" explained why: once the web tier is fixed, the database is the next bottleneck.</p>
+        <div class="ask"><b>Think first</b> A university can add web servers with a few clicks, yet its enlistment system is still slow at 8:00 AM. Which part of the system do you think is the limit, and why can more web servers not help it?</div>
+        <div class="instructor">Ask for a show of hands: who has seen the enlistment system slow down on enlistment morning? Listen for students who blame the web servers, and steer them toward seat reservation.</div>
       </div>
 
       <div class="era">
         <button class="ec on" id="ecOn">
-          <div class="eh">Then · on-premise</div>
+          <div class="eh">Before: on-premise</div>
           <h4>7 web servers, 1 relational database</h4>
-          <div class="esub">Fixed hardware. Adding capacity meant buying and racking a machine, so the web tier had a hard ceiling nobody could move on enlistment morning.</div>
+          <div class="esub">On-premise means the servers are owned and run by the university. The hardware was fixed. Adding capacity meant buying and installing a machine, so the web tier had a hard limit that nobody could raise on enlistment morning.</div>
         </button>
         <button class="ec" id="ecCloud">
-          <div class="eh">Now · cloud</div>
+          <div class="eh">Now: cloud</div>
           <h4>Autoscaling web tier, 1 primary database</h4>
-          <div class="esub">The web tier grows on demand. The database is still one primary that accepts writes, because seat reservation has to be correct, not merely fast.</div>
+          <div class="esub">The web tier grows automatically when the load rises, which is called autoscaling. The database is still one primary, because seat reservations must be exactly right, so one copy has to decide who gets each seat.</div>
         </button>
       </div>
 
       <div class="srv">
         <div>
           <div class="card">
-            <div class="card-t">Where the load lands</div>
+            <div class="card-t">Where the load goes</div>
 
             <div class="capbar">
               <div class="cl"><span>Peak arrival rate</span><b id="aPeak">— rps</b></div>
               <div class="cbar"><i class="db" id="aPeakBar" style="width:0%"></i></div>
             </div>
             <div class="capbar">
-              <div class="cl"><span>Web tier ceiling <span id="aWebNote"></span></span><b id="aWeb">— rps</b></div>
+              <div class="cl"><span>Web tier maximum <span id="aWebNote"></span></span><b id="aWeb">— rps</b></div>
               <div class="cbar"><i class="web" id="aWebBar" style="width:0%"></i></div>
             </div>
             <div class="capbar">
-              <div class="cl"><span>Load reaching the database primary</span><b id="aDbLoad">— ops/s</b></div>
+              <div class="cl"><span>Load reaching the primary database</span><b id="aDbLoad">— ops/s</b></div>
               <div class="cbar"><i class="db" id="aDbLoadBar" style="width:0%"></i></div>
             </div>
             <div class="capbar">
-              <div class="cl"><span>Database primary ceiling <span style="color:var(--faint)">— same in both eras</span></span><b id="aDb">400 ops/s</b></div>
+              <div class="cl"><span>Primary database maximum <span style="color:var(--faint)">(the same in both cases)</span></span><b id="aDb">400 ops/s</b></div>
               <div class="cbar"><i class="db" id="aDbBar" style="width:100%"></i></div>
             </div>
 
             <div class="split">
               <div class="wl read">
                 <div class="wh">Browsing the catalog</div>
-                <p>Reading class schedules, checking slots, searching subjects. Everyone wants the same few pages.</p>
-                <span class="tag">read-heavy</span><span class="tag">cacheable</span><span class="tag">replicates fine</span>
+                <p>Reading class schedules, checking open slots and searching subjects. Everyone wants the same few pages.</p>
+                <span class="tag">mostly reads</span><span class="tag">can be cached</span><span class="tag">replicas can serve it</span>
               </div>
               <div class="wl write">
                 <div class="wh">Reserving a seat</div>
-                <p>Taking one of 40 slots in a popular section. Must be correct, two students cannot get the same last seat.</p>
-                <span class="tag">write</span><span class="tag">not cacheable</span><span class="tag">serialises on the row</span>
+                <p>Taking one of 40 slots in a popular section. The result must be correct, because two students cannot get the same last seat.</p>
+                <span class="tag">a write</span><span class="tag">cannot be cached</span><span class="tag">one at a time per seat</span>
               </div>
             </div>
           </div>
@@ -58,7 +58,7 @@
         </div>
 
         <div class="card">
-          <div class="card-t">The morning, as you experienced it</div>
+          <div class="card-t">Enlistment morning</div>
           <div class="sliders">
             <div class="field">
               <label>Students in the window <span class="val" id="vStu">4,000</span></label>
@@ -70,12 +70,12 @@
             </div>
           </div>
           <div class="toggles">
-            <button class="tg" id="tgStag" aria-pressed="false"><span class="dot"></span><span>Stagger by year level<small>Separate slots instead of one 8:00 AM stampede</small></span></button>
-            <button class="tg" id="tgSplit" aria-pressed="false"><span class="dot"></span><span>Split browsing from reserving<small>Send catalog reads to replicas and cache. Only writes hit the primary.</small></span></button>
+            <button class="tg" id="tgStag" aria-pressed="false"><span class="dot"></span><span>Stagger by year level<small>Give each year level its own time slot, so that not everyone starts at 8:00 AM</small></span></button>
+            <button class="tg" id="tgSplit" aria-pressed="false"><span class="dot"></span><span>Separate browsing from reserving<small>Send catalog reads to read-only copies of the database (replicas) and a cache. Only reservations reach the primary.</small></span></button>
           </div>
           <div class="rtt-note" style="margin-top:15px">
-            Modelled at 15 requests per enlistment session, 3 of them writes. An unstaggered start bursts at about 6× the average rate, because everyone clicks at 8:00:00.
-            <br><br><b style="color:var(--faint)">The shape is typical of student systems of that era. Every number here is a teaching model, not a measurement of the live system.</b>
+            The model assumes 15 requests per enlistment session, 3 of them reservations. Rates are in requests per second (rps) for the web tier and database operations per second (ops/s) for the database. Without staggering, the start bursts at about 6× the average rate, because everyone clicks at 8:00:00.
+            <br><br><b style="color:var(--faint)">The shape is typical of student enlistment systems. Every number here is a teaching model, not a measurement of a real system.</b>
           </div>
         </div>
       </div>

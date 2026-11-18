@@ -2,53 +2,53 @@
 const SCN={
   get:{
     req:[
-      ["GET /courses?sem=1 HTTP/1.1","start","Request line","Three things separated by spaces: the <em>method</em> (GET, read something, change nothing), the <em>path</em> including the query string, and the protocol version. Everything after this line is metadata."],
-      ["Host: api.example.com","k","Host header","Mandatory in HTTP/1.1. One IP address may serve hundreds of sites, so the server needs to be told which one you meant. This is what makes shared hosting possible."],
-      ["User-Agent: Mozilla/5.0","k","User-Agent","Free-text description of the client. Servers use it for analytics and for serving different assets. It is trivially forgeable, never trust it for anything that matters."],
-      ["Accept: application/json","k","Accept","Content negotiation. The client states what formats it can handle; the server picks one. The same URL can return JSON to your app and HTML to a browser."],
-      ["Accept-Encoding: gzip, br","k","Accept-Encoding","The client is saying it can decompress. If the server honours it, the body goes over the wire 60–80% smaller. Costs CPU on both ends to save bandwidth."],
-      ["Connection: keep-alive","k","Connection","Do not close the TCP socket after this response, more requests are coming. This is what avoids paying the handshake cost again on the next call."],
-      ["","blank","The blank line","A single empty line marks the end of the headers. Everything after it is the body. Without this delimiter the server would not know where headers stop."]
+      ["GET /courses?sem=1 HTTP/1.1","start","Request line","The first line has three parts separated by spaces: the <em>method</em> (GET means read something and change nothing), the <em>path</em> with its query string (the part after the ?, here <code>sem=1</code>), and the protocol version. Every line after this one adds detail about the request."],
+      ["Host: api.example.com","k","Host header","Required in HTTP/1.1. One IP address can serve hundreds of websites, so the request has to say which one you want. This is what makes shared hosting possible."],
+      ["User-Agent: Mozilla/5.0","k","User-Agent","A free-text description of the client program. Servers use it for statistics and to decide which files to send. Anyone can fake it, so never trust it for anything that matters."],
+      ["Accept: application/json","k","Accept","The client says which formats it can read, and the server picks one. The same URL can return JSON (a text format for data) to an app and HTML (the page format) to a browser."],
+      ["Accept-Encoding: gzip, br","k","Accept-Encoding","The client says it can decompress, meaning unpack, the reply. If the server agrees, the body is sent 60 to 80 percent smaller. Compressing takes processing time on both ends and saves transfer time."],
+      ["Connection: keep-alive","k","Connection","Do not close the connection after this response, because more requests are coming. This avoids paying the setup cost again on the next request."],
+      ["","blank","The blank line","A single empty line marks the end of the headers. Everything after it is the body. Without it, the server could not tell where the headers stop."]
     ],
     res:[
-      ["HTTP/1.1 200 OK","start","Status line","Protocol version, a three-digit status code, and a human-readable reason. 2xx worked, 3xx go elsewhere, 4xx you made a mistake, 5xx the server made a mistake."],
-      ["Content-Type: application/json; charset=utf-8","k","Content-Type","How to interpret the bytes in the body. Get this wrong and the browser renders your JSON as plain text, or tries to execute it. The charset matters for anything non-ASCII."],
-      ["Content-Length: 51","k","Content-Length","Exactly how many bytes of body follow. This is how the client knows the response is complete without waiting for the socket to close."],
-      ["Cache-Control: max-age=60","k","Cache-Control","Permission to reuse this answer for 60 seconds without asking again. The cheapest request is the one never sent."],
-      ["","blank","The blank line","Same delimiter as the request. Headers end, body begins."],
-      ['{"sem":1,"courses":[{"code":"ITENT 45","units":3}]}',"body","Response body","The payload. Exactly the number of bytes promised by Content-Length, in the format promised by Content-Type. Nothing here is special. It is just the remaining bytes on the socket."]
+      ["HTTP/1.1 200 OK","start","Status line","The first line holds the protocol version, a three-digit status code and a short reason in words. Codes starting with 2 mean success, 3 means go somewhere else, 4 means the request was wrong, and 5 means the server failed."],
+      ["Content-Type: application/json; charset=utf-8","k","Content-Type","How to interpret the bytes in the body. If this is wrong, the browser may show your JSON as plain text or try to run it. The charset (character set) matters for any text beyond basic English letters."],
+      ["Content-Length: 51","k","Content-Length","How many bytes of body follow. This tells the client the response is complete without waiting for the connection to close."],
+      ["Cache-Control: max-age=60","k","Cache-Control","Permission to reuse this answer for 60 seconds without asking again. A reused answer saves a whole round trip."],
+      ["","blank","The blank line","The same marker as in the request. The headers end and the body begins."],
+      ['{"sem":1,"courses":[{"code":"ITENT 45","units":3}]}',"body","Response body","The data itself. It has exactly the number of bytes promised by Content-Length, in the format promised by Content-Type. Nothing special marks it. It is the remaining bytes."]
     ]},
   post:{
     req:[
-      ["POST /enrollments HTTP/1.1","start","Request line","POST means create or submit. This request has side effects. Repeating it may create a second enrollment. Buttons get disabled after the first click for that reason."],
-      ["Host: api.example.com","k","Host header","Same role as before: which site on this IP."],
-      ["Content-Type: application/json","k","Content-Type on a request","Describes the format of what <em>you</em> are sending up. The server needs this to know how to parse the body."],
-      ["Content-Length: 41","k","Content-Length","Tells the server how many body bytes to read from the socket. Read fewer and you hang; read more and you eat the next request."],
-      ["Authorization: Bearer eyJhbGciOi...","k","Authorization","Proof of who you are. Everything after 'Bearer' is an opaque token the server issued at login. Anyone holding it can act as you. Which is why this must only travel over TLS."],
-      ["","blank","The blank line","Headers end here."],
-      ['{"studentId":"20-1234","code":"ITENT 45"}',"body","Request body","The data being submitted. Unlike a query string, this is not in the URL, so it does not land in server logs or browser history."]
+      ["POST /enrollments HTTP/1.1","start","Request line","POST means create or submit. The request has side effects, so repeating it may create a second enrollment. This is why buttons are disabled after the first click."],
+      ["Host: api.example.com","k","Host header","Same role as before: which website on this IP address."],
+      ["Content-Type: application/json","k","Content-Type on a request","Describes the format of the data you are sending. The server needs this to read the body correctly."],
+      ["Content-Length: 41","k","Content-Length","Tells the server how many bytes of body to read. If it reads fewer, it waits forever. If it reads more, it consumes part of the next request."],
+      ["Authorization: Bearer eyJhbGciOi...","k","Authorization","Proof of who you are. The text after Bearer is a token, a long random string that the server issued at login. Anyone who holds it can act as you, so it must only travel over TLS (encrypted connections)."],
+      ["","blank","The blank line","The headers end here."],
+      ['{"studentId":"20-1234","code":"ITENT 45"}',"body","Request body","The data being submitted. Unlike a query string, it is not part of the URL, so it does not appear in server logs or browser history."]
     ],
     res:[
-      ["HTTP/1.1 201 Created","start","201 Created","Not just 'it worked'. A new resource now exists. The client should not resend this request; doing so would create a duplicate."],
-      ["Location: /enrollments/8891","k","Location","Where the newly created thing lives. The client can follow this to fetch it. This is the server handing back the ID it just assigned."],
-      ["Content-Type: application/json","k","Content-Type","Format of the confirmation body below."],
-      ["Content-Length: 49","k","Content-Length","Byte count of the body."],
-      ["","blank","The blank line","Headers end here."],
-      ['{"id":8891,"code":"ITENT 45","status":"enrolled"}',"body","Response body","Confirmation, including the server-assigned id. Returning the created object saves the client a second round trip to go fetch it."]
+      ["HTTP/1.1 201 Created","start","201 Created","A new resource now exists on the server. The client should not send this request again, because doing so would create a duplicate."],
+      ["Location: /enrollments/8891","k","Location","Where the new resource lives. The client can follow this address to fetch it. The server is returning the ID it assigned."],
+      ["Content-Type: application/json","k","Content-Type","The format of the confirmation in the body below."],
+      ["Content-Length: 49","k","Content-Length","The number of bytes in the body."],
+      ["","blank","The blank line","The headers end here."],
+      ['{"id":8891,"code":"ITENT 45","status":"enrolled"}',"body","Response body","A confirmation that includes the ID the server assigned. Returning the created object saves the client a second round trip to fetch it."]
     ]},
   miss:{
     req:[
-      ["GET /courses/ITENT99 HTTP/1.1","start","Request line","A perfectly well-formed request. Nothing about it is wrong. The syntax is valid, the connection worked. It just names something that does not exist."],
-      ["Host: api.example.com","k","Host header","Which site on this IP."],
-      ["Accept: application/json","k","Accept","Client wants JSON back, including for errors. A well-built API honours this and does not suddenly return an HTML error page."],
-      ["","blank","The blank line","Headers end here."]
+      ["GET /courses/ITENT99 HTTP/1.1","start","Request line","A correctly formed request. The syntax is valid and the connection worked. The request asks for something that does not exist."],
+      ["Host: api.example.com","k","Host header","Which website on this IP address."],
+      ["Accept: application/json","k","Accept","The client wants JSON back, including for errors. A well-built server honors this and does not return an HTML error page."],
+      ["","blank","The blank line","The headers end here."]
     ],
     res:[
-      ["HTTP/1.1 404 Not Found","start","404 Not Found","4xx means the client is at fault. The request was understood and the server is working fine. The named resource simply is not there. Compare with 500, which means your code crashed."],
-      ["Content-Type: application/json","k","Content-Type","The error is still JSON, because the client asked for JSON. Returning an HTML error page here would break the client's parser."],
-      ["Content-Length: 50","k","Content-Length","Errors have bodies and byte counts like any other response."],
-      ["","blank","The blank line","Headers end here."],
-      ['{"error":"not_found","detail":"No course ITENT99"}',"body","Error body","A machine-readable code plus a human-readable detail. The client branches on the code; the developer reads the detail."]
+      ["HTTP/1.1 404 Not Found","start","404 Not Found","A 4xx code means the request was wrong. The server understood the request and is working normally. The named resource is not there. A 500 code means the server's own code crashed."],
+      ["Content-Type: application/json","k","Content-Type","The error is still JSON, because the client asked for JSON. An HTML error page here would break the client's JSON parser, the code that reads JSON."],
+      ["Content-Length: 50","k","Content-Length","Error responses have a body and a byte count like any other response."],
+      ["","blank","The blank line","The headers end here."],
+      ['{"error":"not_found","detail":"No course ITENT99"}',"body","Error body","A machine-readable code and a human-readable detail. The client program acts on the code. The developer reads the detail."]
     ]}
 };
 let scn="get";
@@ -70,9 +70,9 @@ function renderBytes(){
     $$(".raw .seg").forEach(x=>x.classList.remove("on"));
     el.classList.add("on");
     const row=SCN[scn][el.dataset.s][+el.dataset.i];
-    $("#explain").innerHTML=`<div class="et">${esc(row[2]).toUpperCase()}</div><p>${row[3]}</p>`;
+    $("#explain").innerHTML=`<div class="et">${esc(row[2])}</div><p>${row[3]}</p>`;
   });
-  $("#explain").innerHTML=`<div class="et">SELECT A LINE</div><p class="hint">Click any highlighted part of the request or response above.</p>`;
+  $("#explain").innerHTML=`<div class="et">Select a line</div><p class="hint">Click any highlighted part of the request or response above.</p>`;
 }
 $$("[data-scn]").forEach(b=>b.onclick=()=>{
   $$("[data-scn]").forEach(x=>x.setAttribute("aria-pressed",x===b));

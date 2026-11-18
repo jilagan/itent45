@@ -1,19 +1,18 @@
 /* ================= 03 TOKENS ================= */
-/* Hand-checked splits for the demo sentences. Arbitrary text falls back to a
-   rough BPE-shaped splitter, and the panel says so rather than pretending. */
+/* Hand-checked splits for the demo sentences. */
 const TKS=[
  {id:"straw", label:"strawberry", raw:"How many r's are in strawberry?",
   toks:["How"," many"," r","'s"," are"," in"," str","aw","berry","?"],
-  v:`<b>The word arrived in three pieces</b><code>str</code>, <code>aw</code>, <code>berry</code>. The model is not being careless when it miscounts; it never received the letters. Two of the three r's are buried inside chunks it treats as single symbols.<br><br>Ask it to <em>spell the word out first</em> and accuracy jumps, because now the letters exist as separate tokens it can count.`},
- {id:"en", label:"English", raw:"Please enrol me in the data structures class this term.",
-  toks:["Please"," en","rol"," me"," in"," the"," data"," structures"," class"," this"," term","."],
-  v:`<b>About four characters a token</b>Common English words are usually one token each. That ratio comes from what the tokenizer was fitted to, and most of that was English.`},
- {id:"tl", label:"Tagalog", raw:"Pakisuyo, i-enrol mo ako sa klase ng data structures ngayong semestre.",
-  toks:["Pak","is","uy","o",","," i","-","en","rol"," mo"," ako"," sa"," kl","ase"," ng"," data"," structures"," ngay","ong"," sem","est","re","."],
-  v:`<b>Same sentence, nearly twice the tokens</b>Words that were common in the training text became single tokens. Words that were not get shattered into fragments. <code>Pakisuyo</code> takes four tokens; <code>Please</code> takes one.<br><br>The consequence is not academic: the same app costs more per message in Filipino, fills its context window faster, and hits the size limit sooner. That was never a decision anyone made. It fell out of the training mix.`},
+  v:`<b>The word arrived as three tokens</b><code>str</code>, <code>aw</code> and <code>berry</code>. The model never received the letters one by one, so counting them is hard for it. All three r's are inside chunks: one in <code>str</code> and two in <code>berry</code>.<br><br>If you ask it to <em>spell the word out first</em>, accuracy usually improves, because each letter then becomes a separate token that it can count.`},
+ {id:"en", label:"English", raw:"Please enroll me in the data structures class this term.",
+  toks:["Please"," en","roll"," me"," in"," the"," data"," structures"," class"," this"," term","."],
+  v:`<b>About four characters per token</b>Common English words are usually one token each. The ratio is high because the tokenizer was built mostly from English text.`},
+ {id:"tl", label:"Tagalog", raw:"Pakisuyo, i-enroll mo ako sa klase ng data structures ngayong semestre.",
+  toks:["Pak","is","uy","o",","," i","-","en","roll"," mo"," ako"," sa"," kl","ase"," ng"," data"," structures"," ngay","ong"," sem","est","re","."],
+  v:`<b>The same request takes nearly twice as many tokens</b>Words that were common in the text the tokenizer was built from are single tokens. Rarer words are split into fragments. <code>Pakisuyo</code> takes four tokens, and <code>Please</code> takes one.<br><br>As a result, the same app costs more per message in Filipino and fills its context window sooner. Nobody decided this. It follows from the text the tokenizer was built on.`},
  {id:"code", label:"Code", raw:"if slots > 0:\n    slots -= 1",
   toks:["if"," slots"," >"," 0",":","\n","   "," slots"," -","="," 1"],
-  v:`<b>Code fragments hardest of all</b>Punctuation, operators and indentation each cost a token. That is part of why pasting a large file eats the window so quickly, and why the same logic costs more to send as code than as prose.`}
+  v:`<b>Code has the fewest characters per token</b>Punctuation, operators and indentation can each take a token. This is one reason pasting a large file uses up the context window quickly, and why the same logic costs more to send as code than as prose.`}
 ];
 let tkSel="straw";
 function roughSplit(s){

@@ -70,3 +70,6 @@ System fonts only. White page, one blue, orange only for request/change/warning.
 Build to /tmp/<your-name>, run tools/check.py on it for your panels, and fix any console error. Open at least two of your panels with Playwright (executable_path='/usr/bin/google-chrome', args=['--no-sandbox']), screenshot, and look at them with the Read tool. Then grep your files for the banned patterns in rule 3.
 
 Final report: under 20 lines. Files changed, anything you could not do, facts you doubted, and any change to ids/classes.
+
+## Videos
+Videos go on the Ateneo BUILD YouTube channel and are embedded through src/<page>/videos.json. The BUILD logo must be prominent in every video: on the opening card, as a persistent corner mark through the video, and on the end card. Videos are scripted from the final panel copy, so they are made after the rewrite is merged.

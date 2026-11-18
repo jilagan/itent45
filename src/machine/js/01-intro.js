@@ -7,22 +7,23 @@ const RINGS=[
 ];
 const SYSTEMS=[
  {id:"chess", n:"A chess engine", sub:"searches millions of positions ahead", ring:"ai",
-  v:`<b>Artificial intelligence, and nothing further in</b>Deep Blue beat Kasparov in 1997 by searching further and faster than a person can, using an evaluation function that grandmasters helped write. It learned nothing during the match and nothing between matches.<br><br>This is the case people forget. <b class="i">Intelligent behavior without any learning at all</b>, and it held the world championship.`},
+  v:`<b>Artificial intelligence without machine learning</b>Deep Blue beat the world champion, Garry Kasparov, in 1997. It searched through far more chess positions than a person can, and it scored each position with a formula that grandmasters helped write. The program did not learn from its games. Its developers adjusted it by hand between games.<br><br>This is the case people forget: <b class="i">intelligent behavior without any learning</b>.`},
  {id:"route", n:"Route finding in a map app", sub:"shortest path across a road network", ring:"ai",
-  v:`<b>Artificial intelligence, and nothing further in</b>The core is an algorithm from 1956 that finds the cheapest path through a graph. Somebody wrote the rule down completely, and it is correct every time for reasons you could check by hand.<br><br>Live traffic prediction sitting on top of it is machine learning. The route finding underneath it is not.`},
- {id:"spam", n:"A spam filter", sub:"trained on a million labelled emails", ring:"ml",
-  v:`<b>Machine learning, but not deep learning</b>The rule was never written down. Somebody supplied a large pile of emails already marked spam or not, and the program worked out the boundary itself. That is panel 02.<br><br>A person still chose what to measure: how many links, whether the sender is known, which words appear. That choosing is the job deep learning takes over.`},
+  v:`<b>Artificial intelligence without machine learning</b>The core is an algorithm (a fixed set of steps) from the 1950s that finds the cheapest path through a road network. Someone wrote the rule down completely, and it gives the correct answer every time, which you could check by hand.<br><br>The live traffic prediction added on top of it is machine learning. The route finding underneath is not.`},
+ {id:"spam", n:"A spam filter", sub:"trained on a million labeled emails", ring:"ml",
+  v:`<b>Machine learning without deep learning</b>The rule was never written down. People supplied a large pile of emails already marked spam or not spam, and the program worked out the dividing line itself. The panel "Training data and test data" shows how that works.<br><br>A person still chose what to measure: how many links, whether the sender is known, which words appear. Each of those measurements is a feature. Choosing features is the job that deep learning takes over.`},
  {id:"credit", n:"A credit scoring model", sub:"predicts who will miss a payment", ring:"ml",
-  v:`<b>Machine learning, but not deep learning</b>Fitted to past borrowers and what happened to them. Often deliberately kept simple, because a lender may have to explain a refusal to a regulator, and simple models can be explained.<br><br>That constraint is worth noticing: sometimes the more powerful method is ruled out for reasons that have nothing to do with accuracy.`},
+  v:`<b>Machine learning without deep learning</b>The model is fitted to past borrowers and what happened to them. It is often kept simple on purpose, because a lender may have to explain a refusal to a regulator, and simple models can be explained.<br><br>Sometimes a more powerful method is ruled out for reasons that have nothing to do with accuracy.`},
  {id:"face", n:"Face grouping in your photos", sub:"sorts ten years of pictures by person", ring:"dl",
-  v:`<b>Deep learning</b>The definition of a face appears nowhere, and neither does a list of features. Stacked layers worked out on their own that edges matter, then that certain arrangements of edges matter, and so on until faces fell out. That is panel 05.<br><br>It also runs on your phone, offline, in the time it takes to open the app.`},
+  v:`<b>Deep learning</b>Nobody wrote down what a face looks like or which features matter. Stacked layers worked out on their own that edges matter, then that certain arrangements of edges matter, and so on until the layers could tell faces apart. The panel "Neural networks: combining several lines" shows stacked layers.<br><br>This can also run on a phone, with no internet connection.`},
  {id:"speech", n:"Speech to text", sub:"dictation on your phone", ring:"dl",
-  v:`<b>Deep learning</b>For decades this was hand-built: phonemes, pronunciation dictionaries, rules for how sounds run together. Deep learning replaced nearly all of that by learning directly from audio paired with transcripts.<br><br>The accuracy jump was large enough that the older approach is effectively gone.`},
+  v:`<b>Deep learning</b>For decades this was built by hand, using the basic sounds of a language, pronunciation dictionaries, and rules for how sounds run together. Deep learning replaced nearly all of that by learning directly from audio paired with written transcripts.<br><br>Accuracy improved so much that the older approach is now rarely used.`},
  {id:"llm", n:"A model drafting an email", sub:"you describe it, a paragraph comes back", ring:"gen",
-  v:`<b>Generative AI, the innermost circle</b>It is deep learning, so everything in the two rings outside it still applies. What is added is the output: an artifact rather than a verdict.<br><br>A spam filter answers with one bit. This answers with something previously unwritten, which has to be read and judged. Everything from panel 02 onwards is about this circle.`},
+  v:`<b>Generative AI, the innermost circle</b>It is deep learning, so everything in the two circles outside it still applies. The addition is the output, which is new content and not a yes or no answer.<br><br>A spam filter answers with one of two labels. This writes something that did not exist before, and a person has to read it and judge it. The rest of this module is about this circle.`},
  {id:"code", n:"A coding assistant", sub:"writes the function you asked for", ring:"gen",
-  v:`<b>Generative AI, the innermost circle</b>The same machinery as the email, pointed at code. That is what puts it in this course, and the last three panels are about what happens when one of these takes actions instead of only making suggestions.`}
+  v:`<b>Generative AI, the innermost circle</b>It uses the same machinery as the email example, applied to code. The later panels on agents, tool calls and AI-written code cover what happens when a tool like this takes actions as well as making suggestions.`}
 ];
+const RINGTAG={ai:"AI",ml:"ML",dl:"Deep",gen:"Gen AI"};
 let inSel=null;
 function inRender(){
   const sel=SYSTEMS.find(x=>x.id===inSel);
@@ -36,7 +37,7 @@ function inRender(){
        fill-opacity="${isTarget?.16:on?.07:.04}"
        stroke="${isTarget?"var(--req)":on?"var(--res)":"var(--line2)"}"
        stroke-width="${isTarget?2.4:1.2}"/>`;
-    svg+=`<text x="210" y="${158-r.r+15}" text-anchor="middle" font-family="monospace"
+    svg+=`<text x="210" y="${i===3?162:158-r.r+19}" text-anchor="middle"
        font-size="${i===0?11:10}" fill="${isTarget?"var(--req)":on?"var(--res)":"var(--faint)"}"
        font-weight="${isTarget?"700":"400"}">${r.label}</text>`;
   });
@@ -45,14 +46,14 @@ function inRender(){
 
   $("#inList").innerHTML=SYSTEMS.map(x=>`
     <button class="rq${x.id===inSel?" on":""}" data-i="${x.id}">
-      <span class="vb ${x.ring==="gen"?"POST":x.ring==="dl"?"PUT":x.ring==="ml"?"PATCH":"GET"}">${x.ring.toUpperCase()}</span>
+      <span class="vb ${x.ring==="gen"?"POST":x.ring==="dl"?"PUT":x.ring==="ml"?"PATCH":"GET"}">${RINGTAG[x.ring]}</span>
       <span class="pt">${x.n}<small>${x.sub}</small></span>
     </button>`).join("");
   $$("#inList .rq").forEach(el=>el.onclick=()=>{inSel=el.dataset.i;inRender()});
 
   const v=$("#inVerdict");
   if(!sel){ v.className="verdict";
-    v.innerHTML=`<b>Four rings, each inside the last</b>Everything in an inner circle is also everything outside it. A coding assistant is generative, and deep, and machine learning, and artificial intelligence, all at once.<br><br>Click any system on the right and see how far in it goes.`;
+    v.innerHTML=`<b>Four circles, each inside the last</b>A system in an inner circle also belongs to every circle around it. A coding assistant is generative AI, deep learning, machine learning and artificial intelligence all at once.<br><br>Select a system on the right to see which circles it falls inside.`;
   } else { v.className="verdict ok"; v.innerHTML=sel.v; }
 }
 inRender();

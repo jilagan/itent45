@@ -1,22 +1,23 @@
     <section class="panel" id="p-journey">
       <div class="head">
-        <div class="eyebrow">03 — Round trip</div>
-        <h2>Most of the wait is not your code running</h2>
-        <p>Before a single line of your handler executes, the browser has to find the server, open a connection, and agree on encryption. Each of those costs at least one round trip. Drag the distance slider and watch what dominates.</p>
-        <div class="ask"><b>Ask the room</b>. Your handler takes the same 40&nbsp;ms whether the user is in Katipunan or in Berlin. So why does the page feel so much slower in Berlin?</div>
+        <h2>Why loading a page takes several round trips</h2>
+        <p>Before you can order from a restaurant, you may call to ask whether it is open, wait for the answer, then call again to reserve a table. Each call has to go out and come back before the next one can start. A browser does the same before the server runs any of your code. It finds the server's address, opens a connection and agrees on encryption. Each of these steps costs at least one round trip, which is a message out and the reply back. The time a round trip takes is called latency. Drag the distance slider to see which steps take the most time.</p>
+        <p>The steps in the chart are: DNS lookup (finding the server's numeric address from its name), the TCP handshake (opening a connection), the TLS handshake (agreeing on encryption keys), the request, the server handler (the function in your code that handles this request, which may query the database), and the first byte of the reply.</p>
+        <div class="ask"><b>Think first</b> Your code takes the same 40&nbsp;ms to run whether the user is in Katipunan or in Berlin. Why does the page still load more slowly in Berlin? Write down your reason, then test it with the slider.</div>
+        <div class="instructor">Expected answer: every setup step needs at least one round trip, and each round trip takes longer over a greater distance. Server speed does not change that.</div>
       </div>
 
       <div class="wire">
         <div class="wire-lbl" id="wireLbl">Idle</div>
-        <div class="node" id="nBrowser"><div class="box"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--dim)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="13" rx="2"/><path d="M8 21h8M12 16v5"/></svg></div>BROWSER</div>
-        <div class="node" id="nServer"><div class="box"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--dim)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="7" rx="1.5"/><rect x="3" y="14" width="18" height="7" rx="1.5"/><path d="M7 6.5h.01M7 17.5h.01"/></svg></div>SERVER</div>
+        <div class="node" id="nBrowser"><div class="box"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--dim)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="3" width="20" height="13" rx="2"/><path d="M8 21h8M12 16v5"/></svg></div>Browser</div>
+        <div class="node" id="nServer"><div class="box"><svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="var(--dim)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="7" rx="1.5"/><rect x="3" y="14" width="18" height="7" rx="1.5"/><path d="M7 6.5h.01M7 17.5h.01"/></svg></div>Server</div>
         <div class="track"></div>
         <div class="pulse" id="pulse"></div>
       </div>
 
       <div class="jrn">
         <div class="card">
-          <div class="card-t">Timing waterfall</div>
+          <div class="card-t">Time spent in each step</div>
           <div class="fall" id="fall"></div>
           <div class="total">
             <span class="lbl">Time to first byte</span>

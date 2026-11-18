@@ -1,9 +1,8 @@
     <section class="panel" id="p-txn">
       <div class="head">
-        <div class="eyebrow">13 — Module 5 · transactions</div>
-        <h2>One seat, two students, and both of them get it</h2>
-        <p>Everything so far assumed you were the only person talking to the database. On enlistment morning you are one of nine thousand. Two sessions read the same row at the same moment, both decide there is room, and both write. Neither did anything wrong. Step through it, then try the fixes, and notice which one does not work.</p>
-        <div class="ask"><b>Ask the room</b>. If both students saw one seat free, which of them made the mistake? Neither of them did. The database has to be the one that decides.</div>
+        <h2>Transactions and two users changing the same data</h2>
+        <p>Picture the last seat in a class and two cashiers selling it at the same moment. Each cashier looks at the seat map, sees one free seat and sells it. Both customers are told the seat is theirs, and neither cashier made a mistake. A database has the same problem when two users change the same row. Everything so far assumed you were the only user. On enlistment morning you are one of nine thousand. Each user's connection to the database is called a <b style="color:var(--ink)">session</b>. Two sessions read the same row at the same moment, both decide there is room, and both write. A <b style="color:var(--ink)">transaction</b> is a group of statements that the database treats as one unit. Step through the four attempts below and watch which ones still sell the seat twice.</p>
+        <div class="ask"><b>Think first.</b> Two students both look at the seat count and both see one free seat. Both enroll. Which of them made the mistake? What would the database have to do to stop the second enrollment?</div>
       </div>
 
       <div class="ctab" id="txnTab"></div>
@@ -24,22 +23,22 @@
         </div>
       </div>
 
-      <div class="card-t" style="margin-top:26px">The four letters, and which one you just broke</div>
+      <div class="card-t" style="margin-top:26px">ACID: the four guarantees of a transaction</div>
       <div class="acid">
         <div class="ac"><div class="k">A</div><h5>Atomicity</h5>
-          <p>All of it happens or none of it does. If the INSERT succeeds and the UPDATE fails, the database undoes the INSERT. This is the one BEGIN and COMMIT actually give you.</p></div>
+          <p>All of a transaction's statements happen, or none of them do. If the INSERT works and the UPDATE fails, the database undoes the INSERT. BEGIN and COMMIT give you this guarantee.</p></div>
         <div class="ac"><div class="k">C</div><h5>Consistency</h5>
-          <p>Rules you declared stay true. A <code>CHECK (slots &gt;= 0)</code> or a unique key will refuse a write that breaks them, no matter which session sent it or how well timed it was.</p></div>
+          <p>Rules you declared stay true. A rule such as <code>CHECK (slots &gt;= 0)</code>, or a unique key, makes the database refuse any write that breaks it, whichever session sent the write and whatever the timing.</p></div>
         <div class="ac"><div class="k">I</div><h5>Isolation</h5>
-          <p>How much two sessions running at once can see of each other. This is the one that was broken above, and the one people assume they get for free. They do not.</p></div>
+          <p>How much two sessions running at the same time can see of each other's work. This is the guarantee that failed in the first attempt above. Many people assume the default settings protect them fully, and they do not.</p></div>
         <div class="ac"><div class="k">D</div><h5>Durability</h5>
-          <p>Once COMMIT returns, it survives the power going out. Written to disk, not sitting in memory hoping. The cheapest of the four to believe in and the most expensive to provide.</p></div>
+          <p>After COMMIT returns, the change survives a power failure, because it has been written to disk. Of the four guarantees, this is the easiest to trust and the most expensive for the database to provide.</p></div>
       </div>
 
       <div class="whynot" style="margin-top:20px">
-        <b>A transaction is not a lock, and this is the mistake to expect</b>
-        Wrapping the same four statements in <code>BEGIN</code> and <code>COMMIT</code> feels like it should fix this, and it does not. Atomicity says your own statements land together. It says nothing about whether somebody else read the row while you were thinking. At the isolation level almost every database ships with by default, both sessions still see one free seat.
-        <br><br>What fixes it is telling the database what you actually need: lock the row while you decide, or write the decision as a single statement it can serialize for you. Panel 19's enlistment morning is nine thousand people doing this at once, and panel 08's idempotency key is the same problem arriving over HTTP.
+        <b>A transaction does not lock the row</b>
+        Wrapping the same statements in <code>BEGIN</code> and <code>COMMIT</code> looks like a fix, and it does not fix this. Atomicity means your own statements are applied together. It does not control whether another session read the row while you were deciding. At the default isolation level of common databases such as Postgres, both sessions still see one free seat.
+        <br><br>The fix is to tell the database what you need: lock the row while you decide, or write the decision as a single statement that the database can order for you. Enlistment morning in "Case study: enlistment day" has nine thousand students doing this at once. The idempotency key in "Online payments and payment gateways" solves a similar problem for repeated requests that arrive over HTTP.
       </div>
     </section>
 

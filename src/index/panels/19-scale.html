@@ -1,54 +1,55 @@
     <section class="panel" id="p-scale">
       <div class="head">
-        <div class="eyebrow">19 — Many machines · overlaps Module 6</div>
-        <h2>More machines, and the thing in front that makes them useful</h2>
-        <p>Panel 18 ended with one saturated box, and there are only two ways past that: buy a bigger box, or run several. The second needs a load balancer, and it asks something of your code in return. Once you have it, fixing a bottleneck stops being one decision and becomes a sequence of them, because every fix hands you a new constraint.</p>
-        <div class="ask"><b>Ask the room</b> If two machines each serve 80 requests a second, how does a browser know which one to talk to? It does not, and it must not. Something in front has to decide.</div>
+        <h2>Scaling out with a load balancer</h2>
+        <p>When the line at a fast-food branch grows longer than its counters can handle, the owner can rebuild the branch with more counters or open more branches. With several branches, a guard at the entrance has to point each customer to a counter that is open and not too busy. A server system faces the same choice. In "Server capacity" one machine reached its maximum. The first option is a bigger machine, which is called scaling up or vertical scaling. The second is several identical machines, which is called scaling out or horizontal scaling. Scaling out needs a load balancer, a program that receives every request and passes each one to one of the machines. It also asks something of your code in return. Once you have several machines, removing one bottleneck shows you the next one.</p>
+        <div class="ask"><b>Think first</b> Your site runs on two machines, and each can serve 80 requests per second. Users type only one web address. What has to happen between a user's browser and the two machines so that every request reaches one of them?</div>
+        <div class="instructor">Students should arrive at one address that answers for all the machines, which is the load balancer. The browser never learns how many machines there are. Ask what happens if that single address itself fails.</div>
       </div>
 
-
+      <div class="sec" data-sec="balancer" data-title="Bigger machine or more machines">
+      <p>There are two ways to get more capacity, and they have different costs.</p>
       <div class="scale2">
         <div class="sc2 vert">
-          <div class="sh">Option 1 · scale vertically</div>
+          <div class="sh">Option 1: scale up (vertical)</div>
           <h4>Buy a bigger machine</h4>
-          <p>More RAM, more cores, same single box. This is what panel 17 was about, and it needs no code changes at all. Always the first thing to try.</p>
-          <div class="lim">Runs out. There is a biggest machine you can rent, and the price climbs faster than the capacity does. One box is also one thing that can fail.</div>
+          <p>Add more RAM and more processor cores to the single machine. "How a server's memory is used" covers the memory side. This needs no code changes, so it is the first thing to try.</p>
+          <div class="lim">There is a limit. The largest machine you can rent has a fixed size, and the price rises faster than the capacity. One machine is also a single point of failure: if it breaks, the whole site is down.</div>
         </div>
         <div class="sc2 horiz">
-          <div class="sh">Option 2 · scale horizontally</div>
-          <h4>Run the same machine several times</h4>
-          <p>Identical copies of the box from panel 18, with something in front deciding who gets each request. No ceiling in principle, and a dead machine stops being fatal.</p>
-          <div class="lim">Costs you a precondition: every copy must be able to answer any request, because you no longer control which one gets it.</div>
+          <div class="sh">Option 2: scale out (horizontal)</div>
+          <h4>Run several copies of the machine</h4>
+          <p>These are identical copies of the machine from "Server capacity", with a load balancer in front deciding which copy gets each request. There is no fixed upper limit, and one machine failing no longer takes the site down.</p>
+          <div class="lim">Your application has to meet one condition. Every copy must be able to answer any request, because you no longer control which copy receives it.</div>
         </div>
       </div>
 
-      <div class="card-t">What the thing in front actually does</div>
-      <p style="margin:0 0 14px;font-size:.85em;color:var(--dim);line-height:1.6">A load balancer is a reverse proxy: one address the world talks to, which accepts each connection and opens a second one to whichever backend it picks. Clients never learn the backends exist. It also polls each one on a health endpoint every few seconds, and stops sending work to anything that fails to answer.</p>
+      <div class="card-t">What a load balancer does</div>
+      <p style="margin:0 0 14px;font-size:.85em;color:var(--dim);line-height:1.6">A load balancer is a reverse proxy. It has one public address, accepts each connection from a client and opens a second connection to one of the backends, which are the machines behind it. Clients never see the backends. Every few seconds it also sends each backend a health check, which is a small request to see whether the backend answers. It stops sending work to any backend that does not answer.</p>
 
       <div class="srv" style="margin-bottom:22px">
         <div class="lbwrap">
           <div class="lbbox">
-            <div class="ln">LOAD BALANCER</div>
-            <div class="ld">accepts every request, forwards each to one machine</div>
+            <div class="ln">Load balancer</div>
+            <div class="ld">accepts every request and forwards each one to one machine</div>
           </div>
           <div class="fanlines"><svg viewBox="0 0 500 22" preserveAspectRatio="none">
             <path d="M250 0 L50 22 M250 0 L150 22 M250 0 L250 22 M250 0 L350 22 M250 0 L450 22"
                   stroke="var(--line2)" stroke-width="1" fill="none"/></svg></div>
           <div class="insts" id="lbInsts"></div>
           <div class="lbstats">
-            <div class="g" id="lbG1"><div class="gl">Dispatched</div><div class="gv">0</div></div>
-            <div class="g" id="lbG2"><div class="gl">Count spread</div><div class="gv">—</div></div>
+            <div class="g" id="lbG1"><div class="gl">Requests sent</div><div class="gv">0</div></div>
+            <div class="g" id="lbG2"><div class="gl">Difference in counts</div><div class="gv">—</div></div>
             <div class="g" id="lbG3"><div class="gl">Sessions lost</div><div class="gv">0</div></div>
           </div>
           <div class="verdict" id="lbVerdict" style="margin-top:13px"></div>
         </div>
 
         <div class="card">
-          <div class="card-t">How it picks</div>
+          <div class="card-t">How the load balancer chooses a machine</div>
           <div class="toggles">
-            <button class="tg" data-algo="rr" aria-pressed="true"><span class="dot"></span><span>Round robin<small>Next one in the rotation. Simple, and ignores how busy anyone is.</small></span></button>
-            <button class="tg" data-algo="lc" aria-pressed="false"><span class="dot"></span><span>Least connections<small>Whoever is handling the fewest right now. Adapts to slow machines.</small></span></button>
-            <button class="tg danger" data-algo="sticky" aria-pressed="false"><span class="dot"></span><span>Sticky sessions<small>Same client, same machine, every time. Needed if state lives in memory.</small></span></button>
+            <button class="tg" data-algo="rr" aria-pressed="true"><span class="dot"></span><span>Round robin<small>Sends each request to the next machine in turn. It does not check how busy each machine is.</small></span></button>
+            <button class="tg" data-algo="lc" aria-pressed="false"><span class="dot"></span><span>Least connections<small>Sends each request to the machine handling the fewest requests right now. It copes with slow machines.</small></span></button>
+            <button class="tg danger" data-algo="sticky" aria-pressed="false"><span class="dot"></span><span>Sticky sessions<small>Sends the same client to the same machine every time. A session is the record that keeps a user logged in. Sticky sessions are needed if a machine keeps that record in its own memory.</small></span></button>
           </div>
           <div class="ctrls" style="margin-top:16px">
             <button class="btn primary" id="lbRun">▶ Send traffic</button>
@@ -56,14 +57,16 @@
             <button class="btn" id="lbReset">Reset</button>
           </div>
           <div class="rtt-note" style="margin-top:15px">
-            Machine <b>E is 4× slower</b> than the others. An older box, or a noisy neighbour. Round robin cannot tell. Watch its in-flight count against the rest, then switch to least connections.
-            <br><br>Then take E down and watch the health check reroute around it. Do it once on round robin, once on sticky sessions.
+            Machine <b>E is 4× slower</b> than the others, for example because it is an older machine. Round robin cannot tell. Watch how many requests are in progress on E compared with the others, then switch to least connections.
+            <br><br>Then take E down and watch the health check route requests around it. Try this once with round robin and once with sticky sessions.
           </div>
         </div>
       </div>
+      </div>
 
-      <div class="card-t" style="margin-top:6px">And once you have several: fixing one bottleneck just moves it</div>
-      <p style="margin:0 0 14px;font-size:.85em;color:var(--dim);line-height:1.6">Serving 400 requests a second. Each fix below works, and each one hands you a new constraint. Start with everything off, fix the bottleneck the panel names, then look at what it names next.</p>
+      <div class="sec" data-sec="bottlenecks" data-title="Finding the next bottleneck">
+      <div class="card-t" style="margin-top:6px">Finding the next bottleneck</div>
+      <p style="margin:0 0 14px;font-size:.85em;color:var(--dim);line-height:1.6">The system below receives 400 requests per second (rps). A bottleneck is the part of the system with the lowest capacity, and it sets the limit for the whole system. Each fix below removes one bottleneck and shows you the next one. The application machines are copies of the machine in "Server capacity". A cache is a fast store that keeps recent answers, so the database is asked less often. A read replica is a copy of the database that answers read-only queries. A queue of background jobs lets a request finish before slow work, such as sending an email, is done. The database is measured in queries per second (qps). Start with everything off, fix the bottleneck the panel reports, then see which one it reports next.</p>
       <div class="topo" id="topo">
         <div class="tier">
           <div class="tier-l">Clients</div>
@@ -72,13 +75,13 @@
         <div class="arrow">→</div>
         <div class="tier">
           <div class="tier-l">Load balancer</div>
-          <div class="nodebox off" id="tLB"><span class="big">LB</span>round-robin</div>
+          <div class="nodebox off" id="tLB"><span class="big">LB</span>round robin</div>
         </div>
         <div class="arrow">→</div>
         <div class="tier">
-          <div class="tier-l">App instances</div>
+          <div class="tier-l">Application machines</div>
           <div class="stackn" id="tApp"></div>
-          <div class="nodebox" id="tAppCap" style="margin-top:4px"><span class="big" id="tAppN">80</span>rps ceiling</div>
+          <div class="nodebox" id="tAppCap" style="margin-top:4px"><span class="big" id="tAppN">80</span>rps maximum</div>
         </div>
         <div class="arrow">→</div>
         <div class="tier">
@@ -88,7 +91,7 @@
         <div class="arrow">→</div>
         <div class="tier">
           <div class="tier-l">Database</div>
-          <div class="nodebox" id="tDB"><span class="big" id="tDBN">300</span>qps ceiling</div>
+          <div class="nodebox" id="tDB"><span class="big" id="tDBN">300</span>qps maximum</div>
           <div class="nodebox off" id="tRep" style="margin-top:4px"><span class="big" id="tRepN">0</span>read replicas</div>
         </div>
       </div>
@@ -96,9 +99,9 @@
       <div class="srv" style="margin-top:20px">
         <div>
           <div class="gauges">
-            <div class="g" id="sgServe"><div class="gl">Actually served</div><div class="gv">0<span class="gu">rps</span></div></div>
-            <div class="g" id="sgCeil"><div class="gl">System ceiling</div><div class="gv">0<span class="gu">rps</span></div></div>
-            <div class="g" id="sgDb"><div class="gl">DB load</div><div class="gv">0<span class="gu">qps</span></div></div>
+            <div class="g" id="sgServe"><div class="gl">Served</div><div class="gv">0<span class="gu">rps</span></div></div>
+            <div class="g" id="sgCeil"><div class="gl">System maximum</div><div class="gv">0<span class="gu">rps</span></div></div>
+            <div class="g" id="sgDb"><div class="gl">Database load</div><div class="gv">0<span class="gu">qps</span></div></div>
             <div class="g" id="sgShed"><div class="gl">Turned away</div><div class="gv">0<span class="gu">rps</span></div></div>
           </div>
           <div class="verdict" id="sVerdict"></div>
@@ -106,14 +109,14 @@
         </div>
 
         <div class="card">
-          <div class="card-t">Moves available</div>
+          <div class="card-t">Controls</div>
           <div class="sliders">
             <div class="field">
               <label>Incoming load <span class="val" id="vLoad">400 rps</span></label>
               <input type="range" id="sLoad" min="20" max="2000" step="20" value="400">
             </div>
             <div class="field">
-              <label>Machines (each a copy of panel 18\u2019s box) <span class="val" id="vInst">1</span></label>
+              <label>Application machines <span class="val" id="vInst">1</span></label>
               <input type="range" id="sInst" min="1" max="12" value="1">
             </div>
             <div class="field">
@@ -130,12 +133,13 @@
             </div>
           </div>
           <div class="toggles">
-            <button class="tg" id="tgLB" aria-pressed="false"><span class="dot"></span><span>Load balancer<small>Required before more than one instance can receive traffic</small></span></button>
-            <button class="tg" id="tgCache" aria-pressed="false"><span class="dot"></span><span>Cache layer<small>Serves 70% of reads without touching the database</small></span></button>
-            <button class="tg" id="tgQueue" aria-pressed="false"><span class="dot"></span><span>Async job queue<small>Moves slow work off the request path, handler gets 35% faster</small></span></button>
-            <button class="tg danger" id="tgSess" aria-pressed="false"><span class="dot"></span><span>Sessions in instance memory<small>Convenient on one box. Turn it on with several and see.</small></span></button>
+            <button class="tg" id="tgLB" aria-pressed="false"><span class="dot"></span><span>Load balancer<small>Needed before more than one machine can receive traffic</small></span></button>
+            <button class="tg" id="tgCache" aria-pressed="false"><span class="dot"></span><span>Cache layer<small>Answers 70% of reads without asking the database (a 70% hit rate)</small></span></button>
+            <button class="tg" id="tgQueue" aria-pressed="false"><span class="dot"></span><span>Background job queue<small>Moves slow work out of the request, so the handler is 35% faster</small></span></button>
+            <button class="tg danger" id="tgSess" aria-pressed="false"><span class="dot"></span><span>Sessions stored in machine memory<small>Convenient on one machine. Turn it on with several machines and see what happens.</small></span></button>
           </div>
         </div>
+      </div>
       </div>
     </section>
 

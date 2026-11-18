@@ -9,14 +9,14 @@ Content-Length: 118
 ]}`;
 
 const CLIENTS=[
- {id:"web", n:"Web browser", s:"React on a laptop",
+ {id:"web", n:"Web browser", s:"Runs in a browser on a laptop",
   req:`<span class="kw">GET</span> /api/courses HTTP/1.1
 Host: enlist.university.edu
 Accept: application/json
 <span class="kw">Cookie</span>: sessionid=8f2a91c4...
 User-Agent: Mozilla/5.0 (Macintosh...)`,
   code:`<span class="kw">const</span> r = <span class="kw">await</span> fetch(<span class="s">"/api/courses"</span>, {
-  credentials: <span class="s">"include"</span>   <span class="c">// cookie rides along</span>
+  credentials: <span class="s">"include"</span>   <span class="c">// sends the cookie with the request</span>
 });
 <span class="kw">const</span> { courses } = <span class="kw">await</span> r.json();`,
   render:`&lt;ul&gt;
@@ -24,10 +24,10 @@ User-Agent: Mozilla/5.0 (Macintosh...)`,
     &lt;li key={c.code}&gt;{c.code} &amp;middot; {c.units}u&lt;/li&gt;
   )}
 &lt;/ul&gt;`,
-  note:"The browser attaches the session cookie by itself, because the server set it at login and the browser has been storing it ever since. You never wrote code to send it. That convenience is also why cookies need CSRF protection. The browser will attach them even on a request some other site triggered.",
-  cons:["Stable network","Large screen","You control every deploy","Cookie auth, automatic"]},
+  note:"The browser attaches the session cookie by itself. The server set the cookie at login and the browser has stored it since then, so you never wrote code to send it. The same convenience is why cookies need protection against CSRF (cross-site request forgery): the browser also attaches them to a request that another website triggers.",
+  cons:["Stable network","Large screen","You control every deploy","Cookie login, automatic"]},
 
- {id:"ios", n:"iOS app", s:"Swift, native",
+ {id:"ios", n:"iOS app", s:"Native app written in Swift",
   req:`<span class="kw">GET</span> /api/courses HTTP/1.1
 Host: enlist.university.edu
 Accept: application/json
@@ -45,10 +45,10 @@ req.setValue(<span class="s">"Bearer \\(token)"</span>,
         Text(<span class="s">"\\(c.units)u"</span>)
     }
 }`,
-  note:"There is no cookie jar here, so the app stores a token in the Keychain and attaches it deliberately on every request. Note the User-Agent carries your app's version number. That string is how you will later work out how many people are still running old code against your API.",
+  note:"A native app is built for one phone system. This app has no cookie storage, so it keeps a token (a long code that proves who the user is) in the Keychain, the phone's secure storage, and attaches the token to every request on purpose. The User-Agent line carries the app's version number. You will use it later to find out how many people still run old versions against your API.",
   cons:["Mobile data, high latency","Small screen","App Store review to ship","Bearer token, manual","Payload size costs battery"]},
 
- {id:"android", n:"Android app", s:"Kotlin, native",
+ {id:"android", n:"Android app", s:"Native app written in Kotlin",
   req:`<span class="kw">GET</span> /api/courses HTTP/1.1
 Host: enlist.university.edu
 Accept: application/json
@@ -68,7 +68,7 @@ User-Agent: EnlistMobile/2.0 (Android 14)`,
         }
     }
 }`,
-  note:"Structurally identical to iOS, in a different language, against the same endpoint. Android update adoption is typically slower and more spread out than iOS, across far more device and OS combinations. Which matters a great deal once you start changing the API.",
+  note:"This is the same as iOS, written in a different language and calling the same URL. Android users typically update more slowly and over a wider range of devices and system versions than iOS users. This matters once you start changing the API.",
   cons:["Mobile data, high latency","Many device sizes","Store review to ship","Bearer token, manual","Slowest update adoption"]}
 ];
 let clSel=0;
@@ -99,7 +99,7 @@ Content-Type: <span class="d">text/html; charset=UTF-8</span>
  <span class="d">&lt;tr&gt;&lt;td&gt;</span>CSCI 21<span class="d">&lt;/td&gt;&lt;td align=</span><span class="s">"center"</span><span class="d">&gt;</span>3<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="d">&lt;/table&gt;</span>
 
-<span class="c">// the data is in there. so is the layout,</span>
+<span class="c">// The data is in there, mixed with the layout,</span>
 <span class="c">// the column order and the table width.</span>`;
 
 $("#enlistJson").innerHTML = `<span class="kw">HTTP/1.1 200 OK</span>
@@ -110,9 +110,8 @@ Content-Type: <span class="d">application/json</span>
   {<span class="s">"code"</span>: <span class="s">"CSCI 21"</span>,  <span class="s">"units"</span>: 3}
 ]}
 
-<span class="c">// no opinion about how it looks.</span>
-<span class="c">// the browser, the iPhone and the</span>
-<span class="c">// Android app each decide that.</span>`;
+<span class="c">// This says nothing about how it looks.</span>
+<span class="c">// Each client decides that for itself.</span>`;
 
 const DRIFT={days:7, breaking:false};
 const PLATFORMS=[
@@ -143,16 +142,16 @@ function renderDrift(){
   const v=$("#driftVerdict");
   if(!DRIFT.breaking){
     v.className="verdict ok";
-    v.innerHTML=`<b>Nothing is broken, on any curve</b>You added a field and removed nothing. Old clients decode the response, ignore the key they have never heard of, and carry on. This is why the rule on a public API is <em>additive changes only</em>. You can add for free, and you can almost never take away.`;
+    v.innerHTML=`<b>Nothing breaks on any platform</b>You added a field and removed nothing. Old clients read the response, ignore the field they do not know, and carry on. This is why the rule for a public API is <em>additive changes only</em>: adding is free, and removing is almost never safe.`;
   } else if(d===0){
     v.className="verdict warn";
-    v.innerHTML=`<b>You shipped it a moment ago</b>Everyone is still on the old build, which is what you would expect on day zero. Nothing has gone wrong yet. Drag the slider and watch who catches up, and who does not.`;
+    v.innerHTML=`<b>You shipped the change a moment ago</b>Everyone is still on the old version, as expected on day zero. Nothing has failed yet. Drag the slider to see who updates and who does not.`;
   } else if(worstOld<0.05){
     v.className="verdict warn";
-    v.innerHTML=`<b>Day ${d}. The tail is thin, but it is still there</b>Around ${(mobileOld*100).toFixed(0)}% of mobile users remain on the old build and are still failing. Web went clean within a day. If you must break something, this is roughly how long you wait before switching the old path off, and you keep serving both until then.`;
+    v.innerHTML=`<b>Day ${d}: a small group is still affected</b>About ${(mobileOld*100).toFixed(0)}% of mobile users are still on the old version and still failing. Web users were clean within a day. If you must break something, wait about this long before switching the old path off, and keep serving both until then.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>Day ${d}, ${(mobileOld*100).toFixed(0)}% of mobile users are broken right now</b>You renamed or removed a field, and every app copy expecting the old shape fails on it. You cannot patch them; they have to update, and many will not for weeks. Web users were fine within hours. This bug is easy to miss in testing for that reason. Versioning the endpoint (<code>/api/v2/courses</code>) or leaving the old field in place alongside the new one both avoid this entirely.`;
+    v.innerHTML=`<b>Day ${d}: ${(mobileOld*100).toFixed(0)}% of mobile users are broken right now</b>You renamed or removed a field, and every app copy that expects the old shape fails. You cannot fix those copies. The users have to update, and many will not for weeks. Web users were fine within hours, so this bug is easy to miss in testing. Versioning the endpoint (publishing the new version at a new URL such as <code>/api/v2/courses</code>) or keeping the old field next to the new one avoids the problem.`;
   }
 }
 $("#sDays").oninput=e=>{DRIFT.days=+e.target.value;$("#vDays").textContent=DRIFT.days+" days";renderDrift()};

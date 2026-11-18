@@ -1,70 +1,75 @@
     <section class="panel" id="p-layers">
       <div class="head">
-        <div class="eyebrow">02 — Encapsulation</div>
-        <h2>Your message travels inside a stack of envelopes</h2>
-        <p>A protocol is just an agreement about the shape of a message. Each layer takes what it was handed, wraps it in its own header, and passes it down. The receiving machine unwraps in reverse. Nobody talks across layers. Each layer only talks to its counterpart on the far end.</p>
-        <div class="ask"><b>Ask the room</b> Click through the layers. Notice that the thing you wrote (<code>GET /courses</code>) never changes. Everything else is packaging. So: how many bytes of packaging does it cost to send 24 bytes of message?</div>
+        <h2>How network messages are layered (protocol layers)</h2>
+        <p>Think of sending a parcel by LBC. You put your item in a box, the branch adds a waybill with the destination, and a hub may stick on a new label. Nobody opens the box until it reaches the receiver. A network message travels the same way, in layers. Each layer follows a protocol, which is an agreement about how a message is shaped. A layer wraps what it receives from the layer above in its own header (a block of labels at the front) and passes the result down. The receiving machine unwraps the layers in reverse order, and each layer reads only the header that its counterpart on the other machine wrote.</p>
+        <div class="ask"><b>Think first</b> The message in this topic is the 24-byte request <code>GET /courses</code>. Before you click anything, guess how many bytes of headers the layers add around it. Then click through the layers to check your guess.</div>
+        <div class="instructor">The total is 121 bytes: 38 (HTTP) + 29 (TLS) + 20 (TCP) + 20 (IP) + 14 (Ethernet) around the 24-byte message, 145 bytes in all. Students find it by adding the header bars.</div>
       </div>
-      <div class="layer-wrap">
-        <div class="nest" id="nest"></div>
-        <div class="card">
-          <div class="card-t">Layer detail</div>
-          <dl class="detail" id="lyrDetail"></dl>
-        </div>
-      </div>
-      <div class="card-t" style="margin-top:26px">What happens when it does not fit in one envelope</div>
-      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A network link will not carry a message of any size. Ethernet tops out at about 1,500 bytes per frame, so anything larger is chopped into pieces and <b style="color:var(--ink)">every piece gets its own full set of envelopes</b>. Drag the response size and watch one reply become many.</p>
 
-      <div class="srv">
-        <div>
-          <div class="journey" id="jrn">
-            <div class="zone send">
-              <div class="zl">your browser</div>
-              <div class="holder" id="jLeft"></div>
-              <div class="zc" id="jLeftCap">about to ask</div>
-            </div>
-            <div class="wire" id="jWire"><div class="wline"></div><div class="think" id="jThink"></div></div>
-            <div class="zone recv">
-              <div class="zl">the server</div>
-              <div class="holder" id="jRight"></div>
-              <div class="zc" id="jRightCap">idle</div>
-            </div>
-          </div>
-          <div class="phase" id="jPhase"></div>
-          <div class="waveline" id="waveLine"></div>
-          <div class="meter" style="grid-template-columns:repeat(4,1fr);margin-top:13px">
-            <div class="g" id="sgPkts"><div class="gl">Packets</div><div class="gv">1</div></div>
-            <div class="g" id="sgOver"><div class="gl">Header overhead</div><div class="gv">—</div></div>
-            <div class="g" id="sgRtt"><div class="gl">Round trips</div><div class="gv">1</div></div>
-            <div class="g" id="sgTime"><div class="gl">Just in waiting</div><div class="gv">—</div></div>
-          </div>
-          <div class="verdict" id="segVerdict"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-t">How big is the reply?</div>
-          <div class="sliders">
-            <div class="field">
-              <label>Response size <span class="val" id="vResp">45 KB</span></label>
-              <input type="range" id="sResp" min="1" max="300" value="45">
-            </div>
-            <div class="field">
-              <label>Round trip to the server <span class="val" id="vRtt2">38 ms</span></label>
-              <input type="range" id="sRtt2" min="2" max="220" value="38">
-            </div>
-          </div>
-          <div class="ctrls" style="margin-top:14px">
-            <button class="btn primary" id="segSend">Send it</button>
-            <button class="btn" id="segReset">Reset</button>
-          </div>
-          <div class="rtt-note" style="margin-top:14px">
-            Each packet carries 1,460 bytes of your data and 54 bytes of Ethernet, IP and TCP headers.
-            <br><br>Press <b>Send it</b> and watch them leave. They do not all go at once: TCP starts by sending about ten and waiting to see if they arrive, then doubles. That waiting is why a large reply costs round trips, not just bandwidth.
+      <div class="sec" data-sec="layers-of-a-message" data-title="The layers of a message">
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Click each layer to see what its header adds. The 24-byte request you wrote stays inside, unchanged.</p>
+        <div class="layer-wrap">
+          <div class="nest" id="nest"></div>
+          <div class="card">
+            <div class="card-t">Layer detail</div>
+            <dl class="detail" id="lyrDetail"></dl>
           </div>
         </div>
       </div>
 
+      <div class="sec" data-sec="large-messages" data-title="Large replies and packets">
+        <div class="card-t">What happens when a message does not fit in one packet</div>
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A network link cannot carry a message of any size. Ethernet carries about 1,500 bytes per frame, so a larger message is cut into pieces called packets, and <b style="color:var(--ink)">every packet gets its own full set of headers</b>. Drag the response size to see one reply become many packets.</p>
 
+        <div class="srv">
+          <div>
+            <div class="journey" id="jrn">
+              <div class="zone send">
+                <div class="zl">Your browser</div>
+                <div class="holder" id="jLeft"></div>
+                <div class="zc" id="jLeftCap">About to ask</div>
+              </div>
+              <div class="wire" id="jWire"><div class="wline"></div><div class="think" id="jThink"></div></div>
+              <div class="zone recv">
+                <div class="zl">The server</div>
+                <div class="holder" id="jRight"></div>
+                <div class="zc" id="jRightCap">Idle</div>
+              </div>
+            </div>
+            <div class="phase" id="jPhase"></div>
+            <div class="waveline" id="waveLine"></div>
+            <div class="meter" style="grid-template-columns:repeat(4,1fr);margin-top:13px">
+              <div class="g" id="sgPkts"><div class="gl">Packets</div><div class="gv">1</div></div>
+              <div class="g" id="sgOver"><div class="gl">Header overhead</div><div class="gv">—</div></div>
+              <div class="g" id="sgRtt"><div class="gl">Round trips</div><div class="gv">1</div></div>
+              <div class="g" id="sgTime"><div class="gl">Waiting time</div><div class="gv">—</div></div>
+            </div>
+            <div class="verdict" id="segVerdict"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-t">Reply size and distance</div>
+            <div class="sliders">
+              <div class="field">
+                <label>Response size <span class="val" id="vResp">45 KB</span></label>
+                <input type="range" id="sResp" min="1" max="300" value="45">
+              </div>
+              <div class="field">
+                <label>Round trip to the server <span class="val" id="vRtt2">38 ms</span></label>
+                <input type="range" id="sRtt2" min="2" max="220" value="38">
+              </div>
+            </div>
+            <div class="ctrls" style="margin-top:14px">
+              <button class="btn primary" id="segSend">Send it</button>
+              <button class="btn" id="segReset">Reset</button>
+            </div>
+            <div class="rtt-note" style="margin-top:14px">
+              Each packet carries up to 1,460 bytes of your data and 54 bytes of Ethernet, IP and TCP headers. Header overhead is the share of all bytes that are headers. A round trip is a message out and the reply back.
+              <br><br>Press <b>Send it</b> to watch the packets leave. They do not all leave at once. TCP sends about ten, waits to hear that they arrived, then sends twice as many. A large reply therefore costs several round trips of waiting, in addition to the time the bytes take to move.
+            </div>
+          </div>
+        </div>
+      </div>
     </section>
 
     <!-- ================= 02 JOURNEY ================= -->

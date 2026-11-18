@@ -1,24 +1,24 @@
 /* ================= RELATIONSHIPS & CARDINALITY ================= */
 const CARDS=[
- {id:"o2o", n:"One to one", sym:"1 &mdash; 1",
+ {id:"o2o", n:"One to one", sym:"1 to 1",
   q:"One student has one locker, and one locker belongs to one student.",
   tables:[{n:"students",c:["<b>id</b> pk","name","<i>locker_id</i> fk unique"]},
           {n:"lockers",c:["<b>id</b> pk","location"]}],
-  note:"The foreign key can sit on either side, and a <code>unique</code> on it is what actually enforces the <em>one</em>. Without that constraint you have built one-to-many and written 1:1 on the diagram.<br><br>Ask whether you need two tables at all. If a locker has no life of its own, it is a column.",
-  v:`<b>Two tables, one of them optional</b>A unique foreign key on either side. The rarest of the three, and often a sign that two entities should have been one.`},
- {id:"o2m", n:"One to many", sym:"1 &mdash; &#8734;",
+  note:"A foreign key (fk) is a column that holds the primary key (pk), the identifying id, of a row in another table. In a one-to-one relationship the foreign key can sit on either side. A <code>unique</code> rule on it makes each id appear only once, and that rule enforces the <em>one</em>. Without it you have built a one-to-many relationship and labeled it 1:1.<br><br>Also ask whether you need two tables. If the locker has no data of its own, make it a column in students.",
+  v:`<b>Two tables with a unique foreign key</b>Put the key on either side and add the unique rule. This is the rarest of the three types, and it often means that the two entities could be one.`},
+ {id:"o2m", n:"One to many", sym:"1 to many",
   q:"One course has many sections, and each section belongs to one course.",
   tables:[{n:"courses",c:["<b>id</b> pk","code","title"]},
           {n:"sections",c:["<b>id</b> pk","letter","<i>course_id</i> fk"]}],
-  note:"The foreign key goes on the <em>many</em> side, always. Putting it on the one side would mean a column holding a list, which relational tables do not do.<br><br>This is the shape you will draw most often, and the one that needs no extra table.",
-  v:`<b>The key goes on the many side</b>Sections point at their course. Nothing points back, because a course would need room for an unknown number of section ids, and a column cannot hold a list.`},
- {id:"m2m", n:"Many to many", sym:"&#8734; &mdash; &#8734;",
+  note:"A foreign key (fk) is a column that holds the primary key (pk), the identifying id, of a row in another table. In a one-to-many relationship it always goes on the <em>many</em> side, so each section stores the id of its course. If it went on the one side, a course would need a column that holds a list of section ids, and a table column cannot hold a list.<br><br>This is the relationship you will draw most often, and it needs no extra table.",
+  v:`<b>The foreign key goes on the many side</b>Each section holds the id of its course. The courses table holds nothing about its sections, because a column cannot hold a list of ids.`},
+ {id:"m2m", n:"Many to many", sym:"many to many",
   q:"A student takes many courses, and a course has many students.",
   tables:[{n:"students",c:["<b>id</b> pk","name"]},
           {n:"courses",c:["<b>id</b> pk","code","title"]},
           {n:"enrollments",c:["<b>id</b> pk","<i>student_id</i> fk","<i>course_id</i> fk","enrolled_on","status","grade"],new:true}],
-  note:"Neither side can hold the key, so a third table appears whether you planned it or not. It carries one row per pairing.<br><br>Notice the last three columns. A date, a status and a grade have nowhere else to live: they describe the pairing, not the student and not the course. That is why panel 09 called Enrolment an entity.",
-  v:`<b>A third table appeared, and it carries the interesting columns</b>Neither side can store the other's key, so the pairing needs a table of its own. <b class="i">enrollments</b> is where enrolled_on, status and grade live, because those facts belong to the pairing rather than to either side.`}
+  note:"Neither table can hold the foreign key, because each row would have to point at many rows in the other table. A third table is needed, with one row for each pairing of a student and a course.<br><br>Look at the last three columns. A date, a status and a grade describe the pairing, so they cannot be stored in the student or the course. This is why Enrollment counts as an entity in \"Entities, attributes and instances\".",
+  v:`<b>A third table appears</b>Neither side can store the other's key, so each pairing gets its own row in a new table. <b class="i">enrollments</b> holds enrolled_on, status and grade, because those facts describe the pairing and neither side owns them.`}
 ];
 let cardSel="o2m";
 function renderCard(){
@@ -29,7 +29,7 @@ function renderCard(){
 
   $("#cardDia").innerHTML=
     `<div style="font-family:var(--mono);font-size:.86em;color:var(--res)">`+
-    `${c.tables[0].n.toUpperCase()} &nbsp;<span style="color:var(--req)">${c.sym}</span>&nbsp; ${c.tables[1].n.toUpperCase()}</div>`+
+    `${c.tables[0].n} &nbsp;<span style="color:var(--req)">${c.sym}</span>&nbsp; ${c.tables[1].n}</div>`+
     `<div style="margin-top:9px;font-size:.8em;color:var(--dim)">${c.q}</div>`;
 
   $("#cardTables").innerHTML=c.tables.map(t=>

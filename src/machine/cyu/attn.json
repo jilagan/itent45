@@ -1,0 +1,118 @@
+{
+ "panel": "attn",
+ "items": [
+  {
+   "id": "attn-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "In \"The animal didn't cross the street because it was too tired\", how does attention decide that \"it\" refers to \"animal\"?",
+   "options": [
+    {
+     "text": "The word \"it\" scores every other word on how well it matches what \"it\" is asking for, and animal scores highest.",
+     "correct": true,
+     "feedback": "The score is a similarity between positions. Tired asks for something that can be tired, and animal matches."
+    },
+    {
+     "text": "A grammar rule says a pronoun refers to the subject of the sentence.",
+     "correct": false,
+     "feedback": "No grammar rule is used. The result changes when the last word changes."
+    },
+    {
+     "text": "It picks the nearest noun.",
+     "correct": false,
+     "feedback": "Street is nearer to \"it\" than animal is, and the model still picks animal."
+    },
+    {
+     "text": "It picks the noun that was read first.",
+     "correct": false,
+     "feedback": "Order of reading is not used. Every word is available at once."
+    }
+   ]
+  },
+  {
+   "id": "attn-2",
+   "sec": null,
+   "type": "predict",
+   "stem": "Before you try it: you change the last word from \"tired\" to \"wide\". What happens to what \"it\" looks at?",
+   "options": [
+    {
+     "text": "It shifts toward \"street\".",
+     "correct": true,
+     "feedback": "\"It\" builds its question from the words around it. Wide asks for something with width, and street matches."
+    },
+    {
+     "text": "It stays on \"animal\", because the nouns have not changed.",
+     "correct": false,
+     "feedback": "The question that \"it\" asks depends on the last word, so the weights change."
+    },
+    {
+     "text": "It spreads evenly across all words.",
+     "correct": false,
+     "feedback": "The weights stay concentrated on the best match."
+    },
+    {
+     "text": "It looks only at the last word.",
+     "correct": false,
+     "feedback": "The last word gets some weight, but the strongest weight goes to street."
+    }
+   ],
+   "try": "Switch between the two sentences in the widget and compare the bars for \"it\"."
+  },
+  {
+   "id": "attn-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "A prompt grows from 4,000 tokens to 8,000 tokens. Roughly how does the attention work change?",
+   "options": [
+    {
+     "text": "It grows about four times.",
+     "correct": true,
+     "feedback": "Every token is compared with every other token, so the work grows with the square of the length."
+    },
+    {
+     "text": "It doubles.",
+     "correct": false,
+     "feedback": "Doubling would be true if each token were compared with a fixed number of others. Here every token is compared with all the others."
+    },
+    {
+     "text": "It stays the same.",
+     "correct": false,
+     "feedback": "More tokens means more comparisons."
+    },
+    {
+     "text": "It grows eight times.",
+     "correct": false,
+     "feedback": "The growth is quadratic: doubling the length multiplies the work by four."
+    }
+   ]
+  },
+  {
+   "id": "attn-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "Why did attention remove the problem of the single note in recurrent networks?",
+   "options": [
+    {
+     "text": "Every word stays available, so any word can look directly at any other word, however far apart they are.",
+     "correct": true,
+     "feedback": "Nothing is summarized away. Word 1 and word 5,000 are one step apart."
+    },
+    {
+     "text": "The note was made much larger.",
+     "correct": false,
+     "feedback": "There is no note. The words themselves are kept."
+    },
+    {
+     "text": "The model skips most words and reads only the important ones.",
+     "correct": false,
+     "feedback": "All words are kept and compared."
+    },
+    {
+     "text": "Words are now read in a random order.",
+     "correct": false,
+     "feedback": "The order is still part of the input. The change is that reading order no longer limits what a word can look at."
+    }
+   ]
+  }
+ ]
+}

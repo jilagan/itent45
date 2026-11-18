@@ -1,0 +1,90 @@
+{
+ "panel": "sql",
+ "items": [
+  {
+   "id": "sql-1",
+   "sec": null,
+   "type": "predict",
+   "stem": "Before you try it: the courses table has three rows. You run `UPDATE courses SET slots = 0;` with no WHERE clause. How many rows change?",
+   "options": [
+    {
+     "text": "All three rows.",
+     "correct": true,
+     "feedback": "Correct. With no WHERE clause the command applies to every row, and the database does not ask for confirmation."
+    },
+    {
+     "text": "None. The database refuses a command with no WHERE clause.",
+     "correct": false,
+     "feedback": "The database runs it. It has no way to know you meant to change only one row."
+    },
+    {
+     "text": "One row, the first one in the table.",
+     "correct": false,
+     "feedback": "The database does not pick a row. Without a filter it changes all of them."
+    },
+    {
+     "text": "Two rows, because the third already has 0 slots.",
+     "correct": false,
+     "feedback": "The command sets slots to 0 whatever the current value is, and every row is counted as changed."
+    }
+   ],
+   "try": "Select the UPDATE with no WHERE clause in the widget above, press Run, and compare the table with the result of the filtered UPDATE."
+  },
+  {
+   "id": "sql-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "By accident, you run `DELETE FROM courses WHERE code = 'ITMGT 25';` twice. What does the table look like after the second run?",
+   "options": [
+    {
+     "text": "The same as after the first run. The row is gone, and the second run removes nothing.",
+     "correct": true,
+     "feedback": "Correct. DELETE with a WHERE clause is idempotent, so repeating it leaves the same end state."
+    },
+    {
+     "text": "The second run deletes a different course.",
+     "correct": false,
+     "feedback": "The WHERE clause matches only ITMGT 25. When that row is gone, nothing matches and nothing is deleted."
+    },
+    {
+     "text": "The table is empty, because each run removes a row.",
+     "correct": false,
+     "feedback": "Each run removes only the rows that match the WHERE clause. After the first run none match."
+    },
+    {
+     "text": "The database restores the row, because the second run undoes the first.",
+     "correct": false,
+     "feedback": "Databases do not undo a command because it was repeated. A deleted row stays deleted."
+    }
+   ]
+  },
+  {
+   "id": "sql-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "A mobile app sends a POST request that creates a new course. The request is sent twice because the connection dropped. Which SQL command is likely running, and what is the result?",
+   "options": [
+    {
+     "text": "INSERT, and the table gets two rows for the same course.",
+     "correct": true,
+     "feedback": "Correct. POST matches INSERT, which is not idempotent, so each repeat adds another row."
+    },
+    {
+     "text": "UPDATE, and the table ends in the same state as after one request.",
+     "correct": false,
+     "feedback": "UPDATE matches PUT and PATCH. A POST that creates something adds a row."
+    },
+    {
+     "text": "SELECT, and the table does not change.",
+     "correct": false,
+     "feedback": "SELECT only reads data, which matches GET. A POST that creates a course changes the table."
+    },
+    {
+     "text": "DELETE, and the second request removes the first row.",
+     "correct": false,
+     "feedback": "DELETE removes rows and matches the DELETE method. It does not create anything."
+    }
+   ]
+  }
+ ]
+}

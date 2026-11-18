@@ -2,7 +2,7 @@
 /* each step: [who, text, seatsAfter, flag]  who: a | b | db */
 const TXN=[
  {id:"none", n:"No transaction", ok:false,
-  note:"Four plain statements from each session, interleaved the way the operating system happens to schedule them. Nothing here is wrong on its own. The bug only exists in the gap between reading and writing.",
+  note:"Each session sends four ordinary statements, and the order they run in depends on timing. This is one possible order. Here slots is the number of free seats. No single statement is wrong. The problem is the gap between reading the seat count and writing it.",
   steps:[
    ["a","SELECT slots FROM courses  &rarr; 1",1],
    ["b","SELECT slots FROM courses  &rarr; 1",1],
@@ -12,9 +12,9 @@ const TXN=[
    ["b","UPDATE courses SET slots = 0",0],
    ["a","INSERT INTO enrollments &hellip;",0],
    ["b","INSERT INTO enrollments &hellip;",0]],
-  v:`<b>Two enrolments, one seat</b>Both sessions read <code>1</code> before either wrote, so both passed the check. The second UPDATE wrote a value it calculated from a number that was already stale. Nobody made a mistake and the seat is still oversold.<br><br>This is a <b class="i">lost update</b>, the most common concurrency bug in student projects.`},
+  v:`<b>Two enrollments, one seat</b>Both sessions read <code>1</code> before either one wrote, so both passed the check. The second UPDATE wrote a value based on a number that was already out of date. Neither session made a mistake, and the seat is still sold twice.<br><br>This is called a <b class="i">lost update</b>, and it is a common bug in student projects when two users change the same data at once.`},
  {id:"begin", n:"BEGIN … COMMIT", ok:false,
-  note:"The same statements, wrapped in a transaction each. This is what most people reach for, and it is worth watching carefully, because the outcome does not change.",
+  note:"The same statements, with each session wrapped in a transaction. A transaction starts with BEGIN and ends with COMMIT, which saves its changes. Many people try this first. Watch the result, which is the same as before.",
   steps:[
    ["a","BEGIN",1],
    ["b","BEGIN",1],
@@ -26,9 +26,9 @@ const TXN=[
    ["b","UPDATE courses SET slots = 0",0],
    ["b","INSERT INTO enrollments &hellip;",0],
    ["b","COMMIT",0]],
-  v:`<b>Still two enrolments. The transaction did not help.</b>Atomicity means <em>your</em> statements land together or not at all, and both sessions got that. It says nothing about whether the other session read the row while you were deciding.<br><br>At <code>READ COMMITTED</code>, which is the default in Postgres and most others, session B's SELECT was allowed to see the pre-commit value. <b class="i">A transaction is a unit of work, not a lock.</b>`},
+  v:`<b>Still two enrollments</b>The transaction did not help. Atomicity means that <em>each</em> session's statements succeed together or not at all, and both sessions got that. It does not control whether the other session read the row while you were deciding.<br><br>The isolation level is the setting that controls how much sessions see of each other. At <code>READ COMMITTED</code>, the default in Postgres, session B's SELECT could still see the old value. <b class="i">A transaction groups statements into one unit of work. It does not lock the row.</b>`},
  {id:"lock", n:"SELECT … FOR UPDATE", ok:true,
-  note:"Session A asks the database to hold the row while it decides. Anyone else reading that row with the same intent waits until A finishes. Watch what B reads when it finally gets in.",
+  note:"Session A asks the database to hold the row while it decides. If session B asks for the same row in the same way, it waits until A finishes. Watch what B reads when it gets in.",
   steps:[
    ["a","BEGIN",1],
    ["a","SELECT slots FOR UPDATE  &rarr; 1",1],
@@ -40,9 +40,9 @@ const TXN=[
    ["b","&hellip; unblocked, reads  &rarr; 0",0],
    ["b","slots is 0, refuse",0,"fail"],
    ["b","ROLLBACK",0]],
-  v:`<b>One enrolment, and B was told no</b>The lock made B wait rather than read something about to be wrong. When it finally read, it read the truth. Look at what it cost: B sat there doing nothing while A finished, and on enlistment morning that queue is nine thousand deep.<br><br>Correct, and the reason panel 19's database ceiling does not move when you add web servers.`},
+  v:`<b>One enrollment, and B was refused</b>The lock made B wait. When B finally read the row, it saw the current value, which was 0. The lock has a cost: B waited while A finished, and on enlistment morning that waiting line would be nine thousand users long.<br><br>The result is correct. It is also why adding web servers does not raise the database limit in "Case study: enlistment day".`},
  {id:"atomic", n:"One statement", ok:true,
-  note:"No lock, no read-then-write. The decision and the change become a single statement, and the database is free to serialize it however it likes. Check how many rows it says it changed.",
+  note:"There is no lock and no read followed by a write. The decision and the change are one statement, so the database can order the two requests itself. Look at how many rows each statement reports changing.",
   steps:[
    ["a","UPDATE courses SET slots = slots - 1<br>&nbsp;WHERE code = 'ITENT 45' AND slots > 0",0],
    ["a","&rarr; UPDATE 1, so the seat is mine",0],
@@ -50,7 +50,7 @@ const TXN=[
    ["b","&rarr; UPDATE 0, nothing matched",0,"fail"],
    ["a","INSERT INTO enrollments &hellip;",0],
    ["b","no seat, no insert",0,"fail"]],
-  v:`<b>One enrolment, and nobody waited</b>The check moved into the <code>WHERE</code>, so there is no gap between reading and deciding. The database applied both statements in some order it chose, and the second one simply matched no rows.<br><br><b class="i">The row count is the answer.</b> <code>UPDATE 1</code> means you got it; <code>UPDATE 0</code> means somebody else did. Cheaper than a lock and harder to get wrong, whenever the decision can be written as a condition.`}
+  v:`<b>One enrollment, and nobody waited</b>The check is now inside the <code>WHERE</code> clause, so there is no gap between reading and deciding. The database ran the two statements one after the other, and the second one matched no rows.<br><br><b class="i">The row count tells you the result.</b> <code>UPDATE 1</code> means you got the seat. <code>UPDATE 0</code> means somebody else did. This is cheaper than a lock and harder to get wrong, whenever the decision can be written as a condition.`}
 ];
 let txnSel="none", txnAt=0, txnTimer=null;
 function renderTxn(){
@@ -61,7 +61,7 @@ function renderTxn(){
     clearTimeout(txnTimer); txnSel=el.dataset.t; txnAt=0; renderTxn();
   });
 
-  let h=`<div class="th a">Juan &middot; session A</div><div class="th b">Maria &middot; session B</div><div class="th">seats</div>`;
+  let h=`<div class="th a">Juan &middot; session A</div><div class="th b">Maria &middot; session B</div><div class="th">Seats left</div>`;
   t.steps.forEach((st,i)=>{
     const [who,txt,seats,flag]=st;
     const on=i<txnAt, act=i===txnAt-1;

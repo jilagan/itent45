@@ -1,0 +1,98 @@
+{
+ "panel": "pay",
+ "items": [
+  {
+   "id": "pay-1",
+   "sec": "checkout-flow",
+   "type": "mc",
+   "stem": "A shop's developer reads every request that reaches the shop's own server during a card payment. Will the card number appear in them?",
+   "options": [
+    {
+     "text": "No. The browser sends the card to the gateway, and the shop's server receives only a token",
+     "correct": true,
+     "feedback": "Because the card number never enters the shop's systems, they stay out of PCI DSS scope."
+    },
+    {
+     "text": "Yes, because the card goes from the browser to the shop's server and then to the gateway",
+     "correct": false,
+     "feedback": "If that were the design, the shop's server would fall under PCI DSS. Gateways exist so the card skips the shop's server."
+    },
+    {
+     "text": "Yes, but only when the payment fails",
+     "correct": false,
+     "feedback": "The card number does not reach the shop's server at all, whether the payment succeeds or fails."
+    }
+   ]
+  },
+  {
+   "id": "pay-2",
+   "sec": "checkout-flow",
+   "type": "mc",
+   "stem": "Your server asks the gateway to charge a customer's GCash wallet, and the gateway replies with the status `pending`. What should the shop do?",
+   "options": [
+    {
+     "text": "Tell the shopper the order is awaiting payment, and mark it paid only when the webhook arrives",
+     "correct": true,
+     "feedback": "Wallet payments can take minutes or hours. The webhook is the gateway's final confirmation."
+    },
+    {
+     "text": "Mark the order paid, because the gateway accepted the request",
+     "correct": false,
+     "feedback": "Accepting the request means the payment started. Money has not moved yet, and the payment may still fail."
+    },
+    {
+     "text": "Show an error, because pending means the payment failed",
+     "correct": false,
+     "feedback": "Pending means the result is not known yet. It does not mean failure."
+    }
+   ]
+  },
+  {
+   "id": "pay-3",
+   "sec": "double-charge",
+   "type": "predict",
+   "stem": "A shopper presses Pay three times on a stalled checkout. The shop sends no idempotency key. Before you try it: how many charges does the shopper pay?",
+   "options": [
+    {
+     "text": "Three, because each POST creates a separate charge",
+     "correct": true,
+     "feedback": "POST is not idempotent, and each request was valid. Nothing tells the gateway the three requests belong together."
+    },
+    {
+     "text": "One, because the server notices the duplicates",
+     "correct": false,
+     "feedback": "The server sees three valid requests with no sign that they are repeats. It cannot tell them apart from three real purchases."
+    },
+    {
+     "text": "One, because the gateway rejects repeated amounts",
+     "correct": false,
+     "feedback": "A customer can legitimately pay the same amount twice, so gateways cannot reject on amount alone. They need a key."
+    }
+   ],
+   "try": "Leave the idempotency key off, press Pay three times, and read the total. Then turn the key on and try again."
+  },
+  {
+   "id": "pay-4",
+   "sec": "double-charge",
+   "type": "mc",
+   "stem": "The gateway takes 800 ms to answer. Your server waits for it inside each request, and you have 4 workers. About how many requests per second can the server finish?",
+   "options": [
+    {
+     "text": "About 4.8, because each request keeps a worker busy for about 0.84 seconds",
+     "correct": true,
+     "feedback": "Four workers divided by 0.84 seconds is about 4.8 requests per second. Moving the gateway call to a background queue raises this to about 100."
+    },
+    {
+     "text": "About 100, because your own code takes only 40 ms",
+     "correct": false,
+     "feedback": "That is the figure only if the gateway call happens outside the request. While a worker waits for the gateway, it cannot serve anyone else."
+    },
+    {
+     "text": "There is no limit, because waiting does not use the server",
+     "correct": false,
+     "feedback": "A waiting worker is still occupied. With 4 workers, 4 slow requests use all of them."
+    }
+   ]
+  }
+ ]
+}

@@ -1,4 +1,4 @@
-/* ================= 09 SERVER SIM ================= */
+/* ================= SERVER SIMULATION ================= */
 const cv=$("#simCanvas"), cx=cv.getContext("2d");
 let W=0,H=0;
 function sizeCanvas(){
@@ -67,8 +67,8 @@ function drawSim(){
   cx.beginPath(); cx.moveTo(padL,midY); cx.lineTo(qX-10,midY); cx.stroke();
   cx.beginPath(); cx.moveTo(wX+70,midY); cx.lineTo(oX+30,midY); cx.stroke();
 
-  const lab=(t,x,y)=>{cx.fillStyle=CSSV("--faint");cx.font="600 9px 'IBM Plex Mono',monospace";cx.textAlign="center";cx.fillText(t,x,y)};
-  lab("ARRIVING",padL+30,20); lab("QUEUE",qX+18,20); lab("WORKERS",wX+34,20); lab("DONE",oX+14,20);
+  const lab=(t,x,y)=>{cx.fillStyle=CSSV("--faint");cx.font="600 12px system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";cx.textAlign="center";cx.fillText(t,x,y)};
+  lab("Arriving",padL+30,20); lab("Queue",qX+18,20); lab("Workers",wX+34,20); lab("Done",oX+14,20);
 
   // in-flight arrivals
   flying.forEach(f=>{
@@ -91,8 +91,8 @@ function drawSim(){
     cx.globalAlpha=1;
   });
   cx.fillStyle= queue.length>=QMAX?"var(--warn)":"var(--dim)";
-  cx.font="600 12px 'IBM Plex Mono',monospace"; cx.textAlign="center";
-  cx.fillText(queue.length + (queue.length>=QMAX?" FULL":""), qX+qw/2, H-16);
+  cx.font="600 12px system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"; cx.textAlign="center";
+  cx.fillText(queue.length + (queue.length>=QMAX?" (full)":""), qX+qw/2, H-16);
 
   // workers
   const bw=68, bh=Math.min(24,(H-64)/Math.max(workers.length,1)-3);
@@ -107,7 +107,7 @@ function drawSim(){
     }
   });
   if(workers.length*(bh+3)>H-64){
-    cx.fillStyle=CSSV("--faint"); cx.font="9px 'IBM Plex Mono',monospace"; cx.textAlign="left";
+    cx.fillStyle=CSSV("--faint"); cx.font="12px system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"; cx.textAlign="left";
     cx.fillText(workers.length+" workers", wX, H-10);
   }
 
@@ -147,22 +147,22 @@ function updateGauges(){
   if(ml && typeof memModel==="function"){
     const mm=memModel(), gb=(MEM.ram/1024).toFixed(1).replace(/\.0$/,"");
     ml.innerHTML = S.workers>mm.maxW
-      ? `<span style="color:var(--warn)">Panel 17 said only ${mm.maxW} fit in ${gb} GB, these ${S.workers} would not all start.</span>`
-      : `Panel 17 said ${mm.maxW} fit in ${gb} GB of RAM.`;
+      ? `<span style="color:var(--warn)">"How a server's memory is used" showed that only ${mm.maxW} workers fit in ${gb} GB, so these ${S.workers} would not all start.</span>`
+      : `"How a server's memory is used" showed that ${mm.maxW} workers fit in ${gb} GB of RAM.`;
   }
 
   const v=$("#verdict"); const rho=S.lam/cap;
   v.className="verdict"+(!running?"":rho<.7?" ok":rho<1?" warn":" bad");
-  if(!running){ v.innerHTML="<b>Idle</b>Press Start to send traffic at the server."; return; }
+  if(!running){ v.innerHTML="<b>Idle</b>Press Start to send requests to the server."; return; }
   if(mem>S.ram*.9){
     v.className="verdict bad";
-    v.innerHTML=`<b>Out of memory</b>${inFlight} requests in flight × ${S.memReq} MB is past the ${S.ram} MB limit. The kernel starts killing the process. More workers will not help. Each one costs RAM. Cut memory per request, or get a bigger box.`;
+    v.innerHTML=`<b>Out of memory</b>${inFlight} requests being handled or waiting × ${S.memReq} MB is over the ${S.ram} MB limit. The operating system starts stopping processes. More workers would not help, because each one needs RAM too. Reduce the memory per request or use a machine with more RAM.`;
   } else if(rho>=1){
-    v.innerHTML=`<b>Saturated · ρ = ${rho.toFixed(2)}</b>Arrivals (${S.lam} rps) exceed the ceiling (${Math.round(cap)} rps). The queue grows without bound and latency rises forever while throughput stays pinned at the ceiling. Adding workers or making the handler faster are the only two fixes.`;
+    v.innerHTML=`<b>Saturated, utilization ${rho.toFixed(2)}</b>Requests arrive at ${S.lam} per second, which is above the maximum of ${Math.round(cap)} per second. The queue grows without limit and latency keeps rising, while throughput stays at the maximum. The two fixes are more workers or a faster handler.`;
   } else if(rho>.7){
-    v.innerHTML=`<b>Near the knee · ρ = ${rho.toFixed(2)}</b>Still keeping up, but queueing delay is now the main cost. Past about 70% utilization, latency rises much faster than load. This is why you do not size a box for 100%.`;
+    v.innerHTML=`<b>Approaching the limit, utilization ${rho.toFixed(2)}</b>The workers are still keeping up, but time spent waiting in the queue is now the main part of latency. Above about 70% utilization, latency rises much faster than the load does. For this reason a machine is not sized to run at 100%.`;
   } else {
-    v.innerHTML=`<b>Healthy · ρ = ${rho.toFixed(2)}</b>Workers drain the queue faster than requests arrive, so waiting time stays near zero and p95 is close to the handler time itself.`;
+    v.innerHTML=`<b>Healthy, utilization ${rho.toFixed(2)}</b>The workers finish requests faster than they arrive, so waiting time stays near zero and p95 latency is close to the handler time.`;
   }
 }
 function loop(ts){
@@ -182,7 +182,7 @@ const bind=(sel,key,fmt,el)=>{
 bind("#sLam","lam",v=>v+" rps","#vLam");
 bind("#sSvc","svc",v=>v+" ms","#vSvc");
 bind("#sW","workers",v=>v,"#vW");
-// instances in panel 19 are copies of this box, so its numbers move with this slider
+// the machines in the scaling panel are copies of this one, so its numbers move with this slider
 $("#sW").addEventListener("input",()=>{ if(typeof renderScale==="function") renderScale(); });
 bind("#sMem","memReq",v=>v+" MB","#vMem");
 bind("#sRam","ram",v=>v+" MB","#vRam");
@@ -196,18 +196,18 @@ $("#simReset").onclick=()=>{
 };
 
 $("#srvCode").innerHTML=
-`<span class="c"># The whole thing, with no framework. Run it, then: curl -v localhost:8080/courses</span>
+`<span class="c"># A complete web server with no framework. Run it, then in a second terminal: curl -v localhost:8080/courses</span>
 <span class="kw">import</span> socket
 
 srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, <span class="s">1</span>)
-srv.bind((<span class="s">"127.0.0.1"</span>, <span class="s">8080</span>))   <span class="c"># claim the port</span>
-srv.listen(<span class="s">64</span>)                     <span class="c"># 64 = the queue from the simulation above</span>
+srv.bind((<span class="s">"127.0.0.1"</span>, <span class="s">8080</span>))   <span class="c"># reserve port 8080 for this program</span>
+srv.listen(<span class="s">64</span>)                     <span class="c"># allow up to 64 waiting connections, like the queue above</span>
 
 <span class="kw">while</span> <span class="s">True</span>:
-    conn, addr = srv.accept()      <span class="c"># blocks until a client connects</span>
-    raw = conn.recv(<span class="s">65536</span>).decode()  <span class="c"># the exact bytes from panel 03</span>
-    <span class="kw">print</span>(raw)                    <span class="c"># <-- put this on the projector</span>
+    conn, addr = srv.accept()      <span class="c"># wait here until a client connects</span>
+    raw = conn.recv(<span class="s">65536</span>).decode()  <span class="c"># the raw request text, as in "What an HTTP request and response look like"</span>
+    <span class="kw">print</span>(raw)                    <span class="c"># show the raw request on screen</span>
 
     line = raw.split(<span class="s">"\\r\\n"</span>)[<span class="s">0</span>]
     method, path, _ = line.split(<span class="s">" "</span>)
@@ -219,7 +219,7 @@ srv.listen(<span class="s">64</span>)                     <span class="c"># 64 =
         <span class="s">f"Content-Length: {len(body)}\\r\\n"</span>
         <span class="s">"\\r\\n"</span>
     ).encode() + body.encode())
-    conn.close()                   <span class="c"># no keep-alive: pay the handshake every time</span>`;
+    conn.close()                   <span class="c"># close the connection after each response</span>`;
 
 sizeCanvas(); resetSim(); simReady=true; syncMemLink();
 

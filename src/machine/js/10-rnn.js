@@ -20,10 +20,10 @@ function rnRender(){
     $("#rnSent").innerHTML=
       `<div style="opacity:.22;text-decoration:line-through">${W.join(" ")} .</div>
        <div style="margin-top:12px;font-family:var(--sans);font-size:.82em;color:var(--warn)">
-         The words have been thrown away. They were read once and discarded, one at a time.</div>
+         The sentence is gone. Each word was read once and then discarded.</div>
        <div style="margin-top:14px;padding-top:13px;border-top:1px solid var(--line);
                    font-family:var(--sans);font-size:.95em;color:var(--ink)">
-         <b style="color:var(--req)">The question:</b> in that sentence, what did <code>it</code> refer to?</div>`;
+         <b style="color:var(--req)">Question:</b> in that sentence, what did <code>it</code> refer to?</div>`;
   } else {
     $("#rnSent").innerHTML=W.map((w,k)=>{
       const read=k<at, now=k===at-1;
@@ -33,7 +33,7 @@ function rnRender(){
   $("#rnCaption").innerHTML = asking ? "" : at===0
     ? "Nothing read yet. The note is blank."
     : at===N ? "Whole sentence read. Now press the button once more."
-             : `Read ${at} of ${N} words. The word just read is the loudest thing on the note.`;
+             : `Read ${at} of ${N} words. The word read most recently is the strongest item on the note.`;
 
   const share={};
   for(let k=0;k<at;k++) share[W[k]+"_"+k]=Math.pow(RNDECAY, at-1-k);
@@ -68,28 +68,28 @@ function rnRender(){
         <span class="pc">${v.toFixed(0)}%</span></div>`).join("");
     const picked=cand[0][0], right=picked===q.ref;
     $("#rnAnswer").innerHTML=
-      `<span class="c">// it has to choose, and all it can do is take the louder one</span>\n`+
+      `<span class="c">The model has to choose. It only knows how strong each word is on the note, so it takes the stronger one.</span>\n`+
       `it  &rarr;  <span class="kw">${picked}</span>\n`+
-      `<span class="c">// the sentence actually meant ${q.ref}</span>\n`+
+      `<span class="c">The sentence meant ${q.ref}.</span>\n`+
       `<span style="color:${right?"var(--res)":"var(--warn)"};font-weight:600">${right?"correct" : "wrong"}</span>`;
   }
-  $("#rnStep").textContent = asking ? "Asked" : at<N ? "Read the next word" : "Now ask it the question";
+  $("#rnStep").textContent = asking ? "Asked" : at<N ? "Read the next word" : "Ask the question";
   $("#rnStep").disabled = asking;
   $("#rnStep").style.opacity = asking ? .45 : 1;
 
   const v=$("#rnVerdict");
   if(at===0 && !asking){ v.className="verdict";
-    v.innerHTML=`<b>An empty note</b>The model reads one word at a time. After each word it rewrites a single fixed-size note and <b class="i">throws the word away</b>. Read the sentence, then ask it a question about what it read.`; return; }
+    v.innerHTML=`<b>The note is empty</b>The model reads one word at a time. After each word it rewrites a single fixed-size note and throws the word away. Read the sentence, then ask a question about what was read.`; return; }
   if(!asking && at<N){ v.className="verdict";
-    v.innerHTML=`<b>${at} of ${N} words</b>Each new word goes onto the note at full strength and pushes everything already there down. Nothing is being decided yet; it is only reading.`; return; }
+    v.innerHTML=`<b>${at} of ${N} words read</b>Each new word goes onto the note at full strength, and everything already on the note becomes weaker. The model is only reading at this stage and has not decided anything.`; return; }
   if(!asking){ v.className="verdict warn";
-    v.innerHTML=`<b>Read to the end, and the note is all that survived</b>The sentence is about to become unavailable. Press the button once more and see what the model has to work with.`; return; }
+    v.innerHTML=`<b>The whole sentence has been read</b>The note is all that remains. Press the button once more to see what the model has to work with.`; return; }
   const picked = surv("street")>surv("animal") ? "street" : "animal";
   const right = picked===q.ref;
   v.className="verdict "+(right?"warn":"bad");
   v.innerHTML = right
-    ? `<b>It answered <code>street</code>, and this time street was right</b>Do not be reassured. It did not pick street because <em>wide</em> fits a road. It picked street because street was read four words later than animal and so survived at ${surv("street").toFixed(0)}% against ${surv("animal").toFixed(0)}%.<br><br>The same note, on the same two candidates, would answer <code>street</code> whatever the last word said. Switch to the other sentence and watch it give the identical answer to a different question.`
-    : `<b>It answered <code>street</code>. The sentence meant <code>animal</code>.</b>Two nouns could be what <code>it</code> stood for. Choosing between them needs both of them still legible on the note, and one of them is not: <code>street</code> is at ${surv("street").toFixed(0)}%, <code>animal</code> at ${surv("animal").toFixed(0)}%.<br><br>So it takes the louder one. Not the one that fits <em>tired</em>, because fitting requires holding both candidates side by side and it can no longer see one of them. <b class="i">Street was never chosen. It was the only one still audible.</b><br><br>And it cannot re-read the sentence to check, because the sentence is gone. Now switch to the other version: the answer does not change, which is the clearest sign that nothing about meaning was involved.`
+    ? `<b>It answered <code>street</code>, and street is correct this time</b>This is luck. The model picked street because street was read four words after animal, so more of it was still on the note: ${surv("street").toFixed(0)}% against ${surv("animal").toFixed(0)}%. The meaning of <em>wide</em> played no part.<br><br>The note would give the answer <code>street</code> whatever the last word said. Switch to the other sentence and the answer stays the same, although the question has changed.`
+    : `<b>It answered <code>street</code>, but the sentence meant <code>animal</code></b>Either of two nouns could be what <code>it</code> stands for. To choose between them, the model needs both nouns to be clear on the note, and one of them is not: <code>street</code> is at ${surv("street").toFixed(0)}% and <code>animal</code> is at ${surv("animal").toFixed(0)}%.<br><br>So it takes the stronger one. Choosing the noun that fits <em>tired</em> needs both candidates in view, and <code>animal</code> has faded. The model chose street because street is the noun still strong on the note.<br><br>The model cannot read the sentence again to check, because the sentence is gone. Switch to the other version. The answer stays street, which shows that meaning played no part.`
 }
 $("#rnStep").onclick=()=>{ const q=RNS.find(x=>x.id===RN.sel); if(RN.at<=q.w.length){RN.at++;rnRender();} };
 $("#rnAll").onclick=()=>{ RN.at=RNS.find(x=>x.id===RN.sel).w.length+1; rnRender(); };

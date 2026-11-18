@@ -1,10 +1,10 @@
 /* ================= 02 JOURNEY ================= */
 const PHASES=[
-  {k:"dns",   n:"DNS lookup",        rtt:1, fixed:4,   dir:"both", lbl:"Where is api.example.com?"},
-  {k:"tcp",   n:"TCP handshake",     rtt:1, fixed:1,   dir:"both", lbl:"SYN → SYN-ACK → ACK"},
-  {k:"tls",   n:"TLS handshake",     rtt:2, fixed:6,   dir:"both", lbl:"Agree on keys"},
+  {k:"dns",   n:"DNS lookup",        rtt:1, fixed:4,   dir:"both", lbl:"Look up the address of api.example.com"},
+  {k:"tcp",   n:"TCP handshake",     rtt:1, fixed:1,   dir:"both", lbl:"Open a connection (SYN, SYN-ACK, ACK)"},
+  {k:"tls",   n:"TLS handshake",     rtt:2, fixed:6,   dir:"both", lbl:"Agree on encryption keys"},
   {k:"send",  n:"Request sent",      rtt:.5,fixed:1,   dir:"req",  lbl:"GET /courses"},
-  {k:"think", n:"Server handler",    rtt:0, fixed:40,  dir:"none", lbl:"Your code runs · DB query"},
+  {k:"think", n:"Server handler",    rtt:0, fixed:40,  dir:"none", lbl:"Your code runs and queries the database"},
   {k:"first", n:"First byte back",   rtt:.5,fixed:1,   dir:"res",  lbl:"200 OK"}
 ];
 let rttMs=5, jIdx=-1, jTimer=null;
@@ -21,9 +21,9 @@ function renderFall(){
   }).join("");
   $("#ttfb").textContent=Math.round(tot)+" ms";
   const netPart = tot - 40;
-  $("#totNote").innerHTML=`Your handler is <b style="color:var(--ink)">40 ms</b> of that.<br>${Math.round(netPart)} ms is network and setup.`;
+  $("#totNote").innerHTML=`Your code accounts for <b style="color:var(--ink)">40 ms</b> of that.<br>The other ${Math.round(netPart)} ms is network time and connection setup.`;
   const rt = PHASES.reduce((a,p)=>a+p.rtt,0);
-  $("#rttNote").innerHTML=`At ${rttMs} ms one-way, a round trip is <b>${rttMs*2} ms</b>. This request needs <b>${rt} round trips</b> before your code even starts, about <b>${Math.round(rt*rttMs*2)} ms</b> of pure waiting.`;
+  $("#rttNote").innerHTML=`At ${rttMs} ms one-way, a round trip is <b>${rttMs*2} ms</b>. This request spends <b>${rt} round trips</b> waiting on the network, about <b>${Math.round(rt*rttMs*2)} ms</b>, in addition to the time your code runs.`;
 }
 $("#rtt").oninput=e=>{
   rttMs=+e.target.value;
@@ -43,7 +43,7 @@ function wirePulse(dir,ms){
 }
 function stepJ(){
   jIdx++;
-  if(jIdx>=PHASES.length){ jIdx=-1; $("#wireLbl").textContent="Done, page starts rendering"; renderFall(); return false; }
+  if(jIdx>=PHASES.length){ jIdx=-1; $("#wireLbl").textContent="Done. The browser starts drawing the page."; renderFall(); return false; }
   const p=PHASES[jIdx];
   $("#wireLbl").textContent=p.lbl;
   wirePulse(p.dir, phaseMs(p)*4);
@@ -90,8 +90,8 @@ function setBarWidth(zone, pct, label){
 function fragStatic(){
   bar("#jLeft","req",100,"GET /courses");
   bar("#jRight","",0);
-  $("#jLeftCap").textContent="one request, whole";
-  $("#jRightCap").textContent="idle";
+  $("#jLeftCap").textContent="Request in one piece";
+  $("#jRightCap").textContent="Idle";
   $("#jThink").classList.remove("on");
   wireEl().querySelectorAll(".flyer").forEach(f=>f.remove());
   $("#jPhase").textContent="";
@@ -128,20 +128,20 @@ function fragMeters(){
   set("#sgOver", m.pct.toFixed(1)+"%", m.pct>15, m.pct<5);
   set("#sgRtt", m.rtts, m.rtts>3, m.rtts===1);
   set("#sgTime", (m.rtts*FRAG.rtt)+" ms", m.rtts*FRAG.rtt>200, false);
-  $("#waveLine").innerHTML=m.waves.map((w,i)=>`<span>rtt ${i+1}: ${w}</span>`).join("");
+  $("#waveLine").innerHTML=m.waves.map((w,i)=>`<span>Round trip ${i+1}: ${w}</span>`).join("");
   fragVerdict(m);
 }
 function fragVerdict(m){
   const v=$("#segVerdict");
   if(m.n===1){
     v.className="verdict ok";
-    v.innerHTML=`<b>One packet each way, and ${m.pct.toFixed(0)}% of the reply is envelopes</b>Small enough to fit in a single frame, so nothing needs cutting in either direction. Go smaller and the ratio gets worse, not better: the 144-byte JSON from panel 07 arrives with ${PKT_HDR} bytes of headers on it, so 27% of that transfer is envelope.`;
+    v.innerHTML=`<b>One packet each way, and ${m.pct.toFixed(0)}% of the reply is headers</b>The reply fits in a single frame, so nothing needs cutting in either direction. The smaller the message, the larger the share taken by headers. The 144-byte JSON in "Building the page: on the server or in the browser" arrives with ${PKT_HDR} bytes of headers, so 27% of that transfer is headers.`;
   } else if(m.rtts<=2){
     v.className="verdict ok";
-    v.innerHTML=`<b>One packet out, ${m.n} back</b>Note the asymmetry: the question fitted in a single frame and the answer did not. Neither end ever handled the pieces. Your code passed one message down, the network carried ${m.n} of them, and the browser handed one message back up.`;
+    v.innerHTML=`<b>One packet out, ${m.n} back</b>The request fit in a single frame. The reply needed ${m.n}. Your code gave the network one message, the network carried it as ${m.n} packets, and the browser received one message.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>One packet out, ${m.n} back, over ${m.rtts} round trips</b>The reply is more than TCP will send without hearing back, so it sends about ten, waits a full round trip, doubles, waits again. At ${FRAG.rtt} ms that is <b class="i">${m.rtts*FRAG.rtt} ms spent waiting</b>, on top of the time the bytes take to move. This is why the 280 KB bundle in panel 07 is not one round trip, and why shrinking a payload helps even when bandwidth was never the problem.`;
+    v.innerHTML=`<b>One packet out, ${m.n} back, over ${m.rtts} round trips</b>The reply is larger than TCP will send before hearing back. It sends about ten packets, waits a full round trip for confirmation, sends twice as many, and waits again. At ${FRAG.rtt} ms per round trip that is <b class="i">${m.rtts*FRAG.rtt} ms spent waiting</b>, on top of the time the bytes take to move. The 280 KB JavaScript bundle (the file of code the browser downloads) in "Building the page: on the server or in the browser" needs several round trips for the same reason. Shrinking a reply helps even when bandwidth is not the limit.`;
   }
 }
 function fragPlay(){
@@ -152,34 +152,34 @@ function fragPlay(){
   $("#segSend").textContent="Running\u2026";
 
   /* ---- 1. request: whole on the left, one packet on the wire, whole on the right ---- */
-  at(()=>{ $("#jPhase").textContent=`${REQ_BYTES} bytes fits in one frame, so it crosses uncut`; }, 200);
+  at(()=>{ $("#jPhase").textContent=`The ${REQ_BYTES}-byte request fits in one frame, so it crosses in one piece.`; }, 200);
   at(()=>{
     stream("out", 1, 1, 0, 24, true,
       (done,state)=>{
-        if(state==="left"){ setBarWidth("#jLeft",0); $("#jLeftCap").textContent="handed to the network"; }
-        else { bar("#jRight","req",100,"GET /courses"); $("#jRightCap").textContent="one request, whole"; }
+        if(state==="left"){ setBarWidth("#jLeft",0); $("#jLeftCap").textContent="Handed to the network"; }
+        else { bar("#jRight","req",100,"GET /courses"); $("#jRightCap").textContent="Request in one piece"; }
       },
-      ()=>{ $("#jPhase").textContent="the server got one message, not a packet"; });
+      ()=>{ $("#jPhase").textContent="The server receives the request as one message."; });
   }, 500);
 
   /* ---- 2. the handler runs, wire empty ---- */
   at(()=>{
-    $("#jThink").classList.add("on"); $("#jThink").textContent="handler running, 40 ms";
-    $("#jPhase").textContent="your code runs. Nothing is on the wire.";
-    $("#jLeftCap").textContent="waiting";
+    $("#jThink").classList.add("on"); $("#jThink").textContent="Your code running, 40 ms";
+    $("#jPhase").textContent="Your code runs. Nothing is on the wire.";
+    $("#jLeftCap").textContent="Waiting";
   }, 1250);
   at(()=>{
     $("#jThink").classList.remove("on");
     bar("#jRight","",100,`${FRAG.kb} KB`);
-    $("#jRightCap").textContent="one reply, whole";
-    $("#jPhase").textContent="the reply is built, all in one piece";
+    $("#jRightCap").textContent="Reply in one piece";
+    $("#jPhase").textContent="The server builds the reply in one piece.";
   }, 2050);
 
   /* ---- 3. response: shrinks on the right, pieces on the wire, grows on the left ---- */
   at(()=>{
-    $("#jPhase").textContent=`too big for one frame, so the network cuts it every ${MSS.toLocaleString()} bytes`;
+    $("#jPhase").textContent=`The reply is too big for one frame, so the network cuts it every ${MSS.toLocaleString()} bytes.`;
     bar("#jLeft","",0);
-    $("#jLeftCap").textContent="nothing yet";
+    $("#jLeftCap").textContent="Nothing yet";
   }, 2650);
 
   let sent=0, wi=0, arrived=0;
@@ -187,7 +187,7 @@ function fragPlay(){
     if(state==="left"){
       sent++;
       setBarWidth("#jRight", Math.max(0,100-sent/m.n*100), sent>=m.n?"":`${FRAG.kb} KB`);
-      $("#jRightCap").textContent = sent>=m.n ? "handed to the network" : `${m.n-sent} of ${m.n} still here`;
+      $("#jRightCap").textContent = sent>=m.n ? "Handed to the network" : `${m.n-sent} of ${m.n} still here`;
     } else {
       arrived++;
       const pct=arrived/m.n*100, lbl=arrived>=m.n?`${FRAG.kb} KB`:"";
@@ -195,11 +195,11 @@ function fragPlay(){
       // the first arrival replaces the empty placeholder with a real bar that can grow
       if(!cur || cur.classList.contains("empty")) bar("#jLeft","",pct,lbl);
       else setBarWidth("#jLeft", pct, lbl);
-      $("#jLeftCap").textContent = arrived>=m.n ? "one reply, whole" : `${arrived} of ${m.n} arrived`;
+      $("#jLeftCap").textContent = arrived>=m.n ? "Reply in one piece" : `${arrived} of ${m.n} arrived`;
       if(arrived>=m.n){
-        $("#jRightCap").textContent="idle";
+        $("#jRightCap").textContent="Idle";
         bar("#jRight","",0);
-        $("#jPhase").innerHTML=`<b class="i" style="color:var(--res)">whole again.</b> Neither end ever saw a packet. Your code sent one reply, <code>fetch()</code> received one reply, and the cutting existed only on the wire.`;
+        $("#jPhase").innerHTML=`<b class="i" style="color:var(--res)">The reply is whole again.</b> Neither your server code nor your browser code ever handles packets. Your code sends one reply, <code>fetch()</code> (the browser's function for requesting data) receives one reply, and the cutting happens only on the wire.`;
         $("#segSend").textContent="Send it";
       }
     }
@@ -207,7 +207,7 @@ function fragPlay(){
   const wave=()=>{
     if(wi>=m.waves.length) return;
     const count=m.waves[wi];
-    $("#jPhase").textContent=`round trip ${wi+1}: ${count} packet${count===1?"":"s"} crossing`;
+    $("#jPhase").textContent=`Round trip ${wi+1}: ${count} packet${count===1?"":"s"} crossing.`;
     stream("back", count, m.n, sent, pw, false, onEach, null);
     wi++;
     if(wi<m.waves.length) at(wave, Math.max(620, Math.min(1100, FRAG.rtt*9)));

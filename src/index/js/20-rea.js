@@ -2,7 +2,7 @@
 /* ---- crow's feet up and left, and what that sorts ---- */
 const ERD_E={
  payment   :{n:"Payment",    vol:"high",  rows:"~40k a term"},
- enrollment:{n:"Enrolment",  vol:"high",  rows:"~30k a term"},
+ enrollment:{n:"Enrollment",  vol:"high",  rows:"~30k a term"},
  section   :{n:"Section",    vol:"mid",   rows:"~600 a term"},
  student   :{n:"Student",    vol:"low",   rows:"~9,000, slowly"},
  course    :{n:"Course",     vol:"low",   rows:"~1,200, rarely"},
@@ -42,8 +42,8 @@ function renderErd(){
   const c=id=>[P[id][0]+ERD_W/2, P[id][1]+ERD_H/2];
   let svg=`<svg viewBox="0 0 800 380" xmlns="http://www.w3.org/2000/svg">`;
   if(erdMode==="tidy")
-    svg+=`<text x="210" y="18" fill="var(--faint)" font-family="monospace" font-size="11">volatile &#8598;</text>
-          <text x="330" y="372" fill="var(--faint)" font-family="monospace" font-size="11">&#8600; static</text>
+    svg+=`<text x="210" y="18" fill="var(--faint)" font-family="var(--sans)" font-size="12">changes often &#8598;</text>
+          <text x="330" y="372" fill="var(--faint)" font-family="var(--sans)" font-size="12">&#8600; changes rarely</text>
           <line x1="18" y1="30" x2="782" y2="352" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 6"/>`;
   ERD_R.forEach(([ch,pa])=>{
     const [cx1,cy1]=c(ch), [cx2,cy2]=c(pa);
@@ -64,47 +64,47 @@ function renderErd(){
   });
   $("#erdDia").innerHTML=svg+`</svg>`;
 
-  $("#erdTab").innerHTML=[["messy","As it usually gets drawn"],["tidy","Crow's feet up and left"]]
+  $("#erdTab").innerHTML=[["messy","Boxes placed anywhere"],["tidy","Crow's feet up and left"]]
     .map(([k,l])=>`<button data-e="${k}" aria-pressed="${k===erdMode}">${l}</button>`).join("");
   $$("#erdTab button").forEach(el=>el.onclick=()=>{erdMode=el.dataset.e;renderErd()});
 
   const v=$("#erdVerdict");
   if(erdMode==="messy"){
     v.className="verdict warn";
-    v.innerHTML=`<b>Same five relationships, no information in the positions</b>Every box is correct and the diagram is still hard to read. Crow's feet point in five directions, lines cross for no reason, and nothing about where a box sits tells you anything about it. Switch modes.`;
+    v.innerHTML=`<b>Same diagram, harder to read</b>Every box is correct. The crow's feet point in five directions and the lines cross, and where a box sits tells you nothing about it. Switch to "Crow's feet up and left" to compare.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>The diagram sorted itself by volatility</b>Nothing was said about which entities are busy. The only rule applied was <em>point the crow's feet up and left</em>, and because the crow's foot lives on the many side, and the many side is the thing that happens, the events walked to the north-west and the things they refer to walked to the south-east.<br><br>Read the diagonal: <b class="i">Payment and Enrolment</b> at the top left, tens of thousands of rows a term. <b class="i">Student, Course and Room</b> at the bottom right, changing slowly if at all. Section sits in the middle because it is both. Every foreign key now points down and to the right, which is also the direction of <em>depends on</em>.`;
+    v.innerHTML=`<b>The busy tables moved to the top left</b>The only rule applied was to point the crow's feet up and to the left. The crow's foot sits on the many side, and the many side is the entity that records events, so those entities moved to the top left and the entities they refer to moved to the bottom right.<br><br>Read the diagonal. <b class="i">Payment and Enrollment</b> are at the top left, with tens of thousands of rows a term. <b class="i">Student, Course and Room</b> are at the bottom right and change slowly. Section is in the middle because it is on the many side of Course and Room and on the one side of Enrollment. Every foreign key, which is a column that holds the id of a row in another table, now points down and to the right. That is also the direction of "depends on".`;
   }
 }
 renderErd();
 
 
 const REA=[
- {id:"enrol", n:"Enrolment",
-  give:{res:"Class seat", resS:"one of 40 in a section", evt:"Enrolment", evtS:"a row per student per course",
+ {id:"enrol", n:"Enrollment",
+  give:{res:"Class seat", resS:"one of 40 in a section", evt:"Enrollment", evtS:"a row per student per course",
         agtIn:"Registrar", agtOut:"Student"},
   take:{res:"Tuition", resS:"cash, or a promise of it", evt:"Payment", evtS:"a row per amount received",
         agtIn:"Cashier", agtOut:"Student"},
-  gap:"A student holding a seat with no matching payment. Every school has a report for this, and it exists because the two events are separate."},
+  gap:"A student holds a seat with no matching payment. Every school has a report for this, and the report exists because the two events are recorded separately."},
  {id:"shop", n:"Online store",
   give:{res:"Stock item", resS:"what is on the shelf", evt:"Sale", evtS:"a row per line of an order",
         agtIn:"Merchant", agtOut:"Customer"},
   take:{res:"Cash", resS:"what the gateway settles", evt:"Payment", evtS:"a row per charge",
         agtIn:"Merchant", agtOut:"Customer"},
-  gap:"Goods shipped with no settled payment. This is panel 08's whole problem, seen from the data side rather than the wire."},
+  gap:"Goods were shipped and no payment has settled. \"Online payments and payment gateways\" covers the same problem as it appears on the network. Here it appears as a missing row in the data."},
  {id:"lib", n:"Library loan",
   give:{res:"Book copy", resS:"a physical thing, one at a time", evt:"Loan", evtS:"a row per borrowing",
         agtIn:"Librarian", agtOut:"Borrower"},
   take:{res:"Book copy", resS:"the same one, coming back", evt:"Return", evtS:"a row per return",
         agtIn:"Librarian", agtOut:"Borrower"},
-  gap:"A loan with no return. That is not a bug report, it is an overdue notice, and it falls out of the model for free."},
+  gap:"A loan with no matching return. This is the overdue notice, and the model produces it directly."},
  {id:"clinic", n:"Clinic visit",
   give:{res:"Consultation slot", resS:"a doctor's time", evt:"Appointment", evtS:"a row per booking",
         agtIn:"Doctor", agtOut:"Patient"},
   take:{res:"Fee", resS:"cash or an insurance claim", evt:"Billing", evtS:"a row per charge raised",
         agtIn:"Clinic", agtOut:"Patient or insurer"},
-  gap:"A consultation given and never billed. Same shape, different words, same missing row."}
+  gap:"A consultation that was given and never billed, which is a missing Billing row."}
 ];
 let reaSel="enrol";
 const RB_W=210, RB_H=54;
@@ -113,17 +113,17 @@ function reaBox(x,y,kind,label,val,sub){
   const bg =kind==="evt"?"rgba(194,65,12,.08)":"var(--panel2)";
   return `<g transform="translate(${x},${y})">
     <rect width="${RB_W}" height="${RB_H}" rx="7" fill="${bg}" stroke="${col}" stroke-width="1.7"/>
-    <text x="11" y="17" fill="${col}" font-family="monospace" font-size="9.5" letter-spacing="1.6">${label}</text>
+    <text x="11" y="17" fill="${col}" font-family="var(--sans)" font-size="11" font-weight="600">${label}</text>
     <text x="11" y="34" fill="var(--ink)" font-family="var(--sans)" font-size="14" font-weight="600">${val}</text>
-    <text x="11" y="47" fill="var(--faint)" font-family="monospace" font-size="9.5">${sub}</text>
+    <text x="11" y="47" fill="var(--faint)" font-family="var(--sans)" font-size="11">${sub}</text>
   </g>`;
 }
 function reaSide(d, dir, ox){
   const yR=8, yE=118, yA=228;
   const cE=[ox+RB_W/2, yE+RB_H/2];
-  let g=reaBox(ox,yR,"res","RESOURCE",d.res,d.resS)
-      + reaBox(ox,yE,"evt","EVENT &middot; "+dir.toUpperCase(),d.evt,d.evtS)
-      + reaBox(ox,yA,"agt","AGENTS",d.agtOut+" + "+d.agtIn,"outside, and inside");
+  let g=reaBox(ox,yR,"res","Resource",d.res,d.resS)
+      + reaBox(ox,yE,"evt","Event ("+dir+")",d.evt,d.evtS)
+      + reaBox(ox,yA,"agt","Agents",d.agtOut+" + "+d.agtIn,"one outside, one inside");
   // resource -> event, and agent -> event. The event is the many side of both.
   [[yR, 1],[yA, -1]].forEach(([yB,dirn])=>{
     const cB=[ox+RB_W/2, yB+RB_H/2];
@@ -133,7 +133,7 @@ function reaSide(d, dir, ox){
       +`<circle cx="${x2}" cy="${y2}" r="3" fill="var(--res)"/>`
       +crow(x1,y1,x2,y2);
     g+=`<text x="${ox+RB_W/2+8}" y="${(y1+y2)/2+3}" fill="var(--faint)"
-          font-family="monospace" font-size="9.5">${dirn>0?"changes":"acts in"}</text>`;
+          font-family="var(--sans)" font-size="11">${dirn>0?"changes":"acts in"}</text>`;
   });
   return g;
 }
@@ -150,15 +150,15 @@ function renderRea(){
     <line x1="${L+RB_W}" y1="${yE+RB_H/2}" x2="${R}" y2="${yE+RB_H/2}"
           stroke="var(--req)" stroke-width="1.6" stroke-dasharray="5 4"/>
     <text x="${(L+RB_W+R)/2}" y="${yE+RB_H/2-10}" fill="var(--req)" text-anchor="middle"
-          font-family="monospace" font-size="10" letter-spacing="1.6">DUALITY</text>
+          font-family="var(--sans)" font-size="12" font-weight="600">Duality</text>
     <text x="${(L+RB_W+R)/2}" y="${yE+RB_H/2+20}" fill="var(--faint)" text-anchor="middle"
-          font-family="monospace" font-size="9.5">one pays for the other</text>
+          font-family="var(--sans)" font-size="11">one pays for the other</text>
   </svg>`;
   $("#reaDia").innerHTML=svg;
 
   const v=$("#reaVerdict");
   v.className="verdict ok";
-  v.innerHTML=`<b>Six boxes, and only the words changed</b>Switch between the four and watch which parts move. The labels do. The shape does not: something of value, an event that moved it, two parties, and a second event pairing the first.<br><br>Note where the crow's feet sit. One resource is touched by many events, and one agent takes part in many events, so the <b class="i">event carries both foreign keys</b> &mdash; which is panel 10's rule arriving from a different direction.<br><br><b class="i">The question this model answers for free:</b> ${r.gap}`;
+  v.innerHTML=`<b>The same structure in every case</b>Switch between the four cases. The labels change and the structure stays the same: a resource, an event that moved it, two agents, and a second event that pairs with the first.<br><br>Look at where the crow's feet sit. One resource appears in many events, and one agent takes part in many events, so <b class="i">the event table holds both foreign keys</b>. This follows the rule from "Relationships: one-to-one, one-to-many, many-to-many" that the foreign key goes on the many side.<br><br><b class="i">A question this model answers directly:</b> ${r.gap}`;
 }
 renderRea();
 

@@ -1,74 +1,83 @@
     <section class="panel" id="p-deep">
       <div class="head">
-        <div class="eyebrow">04 — Why anyone stacks layers</div>
-        <h2>Some questions have no straight-line answer, so you use several lines</h2>
-        <p>The last panel found one line and it worked, because passing really does get more likely with hours and attendance. Not every question is shaped like that. Here is one that is not: who drops the course. Students drop when they are barely engaged, and they drop when they are carrying far too much. The ones in the middle stay.</p>
-        <div class="ask"><b>Ask the room</b>. Try to draw one straight line that puts every stayer on one side. You cannot. So what do you do instead?</div>
+        <h2>Neural networks: combining several lines</h2>
+        <p>Suppose a scholarship committee has several members. Each member applies one simple cut-off, such as at least 10 hours of study a week or at least 70 percent attendance. One cut-off is crude. The committee accepts a student only when every member agrees, and together the cut-offs can describe a shape that no single cut-off can. A <b style="color:var(--ink)">neural network</b> works in a similar way. Each simple cut is called a <b style="color:var(--ink)">unit</b>, and later units combine the answers of earlier ones. In a real network, the cuts are slanted lines found by training. In this panel the combining rule is fixed: the output says "stays" only when every unit agrees.</p>
+        <p style="margin-top:11px">The previous panel found one line, and it worked because passing really does become more likely with more hours and better attendance. Not every question has that shape. This panel uses a question that does not: who drops the course. Students drop when they are barely engaged, and they also drop when they are carrying far too much. The students in the middle stay.</p>
+        <div class="ask"><b>Think first.</b> Picture a plot with hours studied across the bottom and other commitments up the side. The students who stay are in the middle, and the students who drop surround them. Could one straight line put every student who stays on one side and every student who drops on the other? If you could use several straight lines and a rule for combining them, how would you place them?</div>
       </div>
-      <div class="srv">
-        <div>
-          <div class="scatter" id="nnDiag" style="margin-bottom:12px"></div>
-          <p style="margin:0 0 12px;font-size:.79em;color:var(--faint);line-height:1.55" id="nnDiagCap"></p>
-          <div class="scatter" id="nnPlot"></div>
-          <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
-            <div class="g" id="nnAcc"><div class="gl">Correct</div><div class="gv">—</div></div>
-            <div class="g" id="nnUnits"><div class="gl">Lines used</div><div class="gv">—</div></div>
-            <div class="g" id="nnParams"><div class="gl">Numbers to learn</div><div class="gv">—</div></div>
+
+      <div class="sec" data-sec="stacked-units" data-title="Why one line fails, and stacking units">
+        <p>Use the slider to add units, and watch how a set of straight lines can mark out a curved region.</p>
+        <div class="srv">
+          <div>
+            <div class="scatter" id="nnDiag" style="margin-bottom:12px"></div>
+            <p style="margin:0 0 12px;font-size:.85em;color:var(--faint);line-height:1.55" id="nnDiagCap"></p>
+            <div class="scatter" id="nnPlot"></div>
+            <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
+              <div class="g" id="nnAcc"><div class="gl">Correct</div><div class="gv">—</div></div>
+              <div class="g" id="nnUnits"><div class="gl">Lines used</div><div class="gv">—</div></div>
+              <div class="g" id="nnParams"><div class="gl">Numbers to learn</div><div class="gv">—</div></div>
+            </div>
+            <div class="verdict" id="nnVerdict" style="margin-top:13px"></div>
           </div>
-          <div class="verdict" id="nnVerdict" style="margin-top:13px"></div>
-        </div>
-        <div class="card">
-          <div class="card-t">Add units to the layer</div>
-          <div class="sliders">
-            <div class="field">
-              <label>Units <span class="val" id="vUnits">1</span></label>
-              <input type="range" id="sUnits" min="1" max="8" value="1">
+          <div class="card">
+            <div class="card-t">Add units to the layer</div>
+            <div class="sliders">
+              <div class="field">
+                <label>Units <span class="val" id="vUnits">1</span></label>
+                <input type="range" id="sUnits" min="1" max="8" value="1">
+              </div>
+            </div>
+            <div class="toggles" style="margin-top:12px">
+              <button class="tg" id="tgLines" aria-pressed="true"><span class="dot"></span>Show what each unit is doing</button>
+              <button class="tg" id="tgAct" aria-pressed="true"><span class="dot"></span>Keep the nonlinearity</button>
+            </div>
+            <div class="rtt-note" style="margin-top:14px">
+              Each unit is one straight line, like the line in the previous panel. On its own, a unit can only split the plot into two sides.
+              <br><br>The next layer takes the units' answers and combines them. Move the slider up and watch a curved shape appear from pieces that are all straight.
+              <br><br>The nonlinearity is the step inside each unit that turns its number into a clear answer to the question "which side of my line is this student on?". The second button switches it off so you can see what it does.
+            </div>
+            <div class="whynot" style="margin-top:14px">
+              <b>How the layers combine</b>
+              A unit is one line. A layer is a set of units. A deeper network has more layers, and each layer works on the answers of the layer before it. Nobody draws the shape on the plot by hand. Training moves each line until the combined shape makes fewer mistakes.
             </div>
           </div>
-          <div class="toggles" style="margin-top:12px">
-            <button class="tg" id="tgLines" aria-pressed="true"><span class="dot"></span>Show what each unit is doing</button>
-            <button class="tg" id="tgAct" aria-pressed="true"><span class="dot"></span>Keep the nonlinearity</button>
-          </div>
-          <div class="rtt-note" style="margin-top:14px">
-            Each unit is one straight line, exactly like the one in the last panel. On its own it can only cut the space in two.
-            <br><br>The next layer takes their answers and combines them. Slide it up and watch a curve appear out of pieces that are all perfectly straight.
-          </div>
-          <div class="whynot" style="margin-top:14px">
-            <b>This is the whole of it</b>
-            A unit is a line. A layer is a set of lines. Depth is layers feeding layers, so later ones combine what earlier ones found. Nobody hand-draws the shape at the bottom of this screen. Training moves each line until the combination stops being wrong so often.
-          </div>
         </div>
       </div>
 
-      <div class="whynot" style="margin-top:20px">
-        <b>Two pictures of the same object</b>
-        Most people meet neural networks as the circles-and-arrows diagram and never see what it does, so the diagram becomes a logo rather than an explanation. It is the <b style="color:var(--ink)">wiring</b>: which number gets multiplied by which weight and passed to where.
-        <br><br>The plot underneath is the <b style="color:var(--ink)">effect</b>: what that wiring does to the space of possible students. One circle in the middle row is one line on the plot. Four circles, four lines. The weights on the two arrows entering a circle set that line's angle; its bias sets how far out it sits. Three numbers, exactly as in panel 03.
-        <br><br>Neither picture is more correct. The diagram tells you what is connected, and the plot tells you what the connections bought you, and people who only ever see the first one end up believing the second is somehow deeper than it is.
-      </div>
-
-      <div class="whynot" style="margin-top:20px">
-        <b>This is no longer regression of any kind</b>
-        One line fitted to data is logistic regression, which is what the last two panels were. The moment you use several lines and combine their answers, you have <b style="color:var(--ink)">a neural network with one hidden layer</b>.
-        <br><br>The vocabulary maps onto what is on screen. Each line is a <b style="color:var(--res)">unit</b>, sometimes called a neuron. The set of them is a <b style="color:var(--res)">layer</b>. The step that takes their answers and produces one verdict is the <b style="color:var(--res)">output unit</b>, and here it says <em>pass</em> only when every line agrees.
-        <br><br>Hidden means only that you never see what those units decided. You gave the network two numbers and read one answer out; whatever the units settled on in between is not shown to you and was not chosen by anyone.
-      </div>
-
-      <div class="card-t" style="margin-top:26px">What you gave up to get that shape</div>
-      <div class="cmp">
-        <div class="card">
-          <div class="card-t" style="color:var(--res)">Before deep learning</div>
-          <p style="margin:0;font-size:.84em;color:var(--dim);line-height:1.6">You picked the features yourself. To spot a dropout you would decide what to measure: hours, attendance, whether they had missed two submissions in a row. Getting those right was the job, and it took someone who knew the domain. When the model failed you could point at which feature was wrong.</p>
+      <div class="sec" data-sec="what-it-means" data-title="Terms and trade-offs">
+        <p>The diagram and the plot show the same network in two ways. This section names the parts and describes what the approach costs.</p>
+        <div class="whynot" style="margin-top:20px">
+          <b>The diagram and the plot</b>
+          Most people meet neural networks as a diagram of circles and arrows, and many never see what the network does. The diagram shows the <b style="color:var(--ink)">wiring</b>: which number is multiplied by which weight and passed on to where. A weight is a number that sets how strongly one input counts.
+          <br><br>The plot shows the <b style="color:var(--ink)">effect</b>: what that wiring does to the space of possible students. One circle in the middle row is one line on the plot. Four circles make four lines. The weights on the two arrows entering a circle set that line's angle, and its bias sets how far from the center it sits. That is three numbers for each unit, as in "Training: adjusting a model to reduce its errors".
+          <br><br>Both pictures are correct. The diagram shows what is connected, and the plot shows what those connections produce. Seeing only the diagram can make a network look more mysterious than it is.
         </div>
-        <div class="card">
-          <div class="card-t" style="color:var(--req)">After</div>
-          <p style="margin:0;font-size:.84em;color:var(--dim);line-height:1.6">You hand it raw input and enough units, and the early layers work out their own features. In an image model the first layers end up finding edges, later ones shapes, later still faces. The word "edge" appears nowhere in the design. It was the most useful thing for that layer to notice.</p>
+
+        <div class="whynot" style="margin-top:20px">
+          <b>Where the terms come from</b>
+          One line fitted to data is logistic regression, which is what the last two panels covered. Once you use several lines and combine their answers, you have <b style="color:var(--ink)">a neural network with one hidden layer</b>.
+          <br><br>The vocabulary maps onto what is on screen. Each line is a <b style="color:var(--res)">unit</b>, sometimes called a neuron. The set of units is a <b style="color:var(--res)">layer</b>. The step that takes their answers and produces one verdict is the <b style="color:var(--res)">output unit</b>, and here it says <em>stays</em> only when every line agrees.
+          <br><br>The layer is called hidden because you never see what its units decided. You gave the network two numbers and read one answer. Whatever the units settled on in between is not shown to you, and nobody chose it by hand.
         </div>
-      </div>
-      <div class="whynot" style="margin-top:16px">
-        <b>The bill arrives later</b>
-        You no longer know what the features are. The eight numbers on this screen are legible; a real model has billions, and no one of them means anything on its own. So a model can be excellent and unexplainable at the same time, and when it goes wrong there is often nothing to point at.
-        <br><br>Keep that in mind for panel 07, on where meaning comes from. The same property that lets a model find features nobody named also lets it absorb patterns nobody intended.
+
+        <div class="card-t" style="margin-top:26px">Features before and after deep learning</div>
+        <p>A <b style="color:var(--ink)">feature</b> is a measurement that the model uses as input.</p>
+        <div class="cmp">
+          <div class="card">
+            <div class="card-t" style="color:var(--res)">Before deep learning</div>
+            <p style="margin:0;font-size:.84em;color:var(--dim);line-height:1.6">A person picked the features. To spot a likely dropout, an analyst would decide what to measure: hours studied, attendance, or whether the student had missed two submissions in a row. Getting those right was the main job, and it needed someone who knew the subject area. When the model failed, you could point at the feature that was wrong.</p>
+          </div>
+          <div class="card">
+            <div class="card-t" style="color:var(--req)">After deep learning</div>
+            <p style="margin:0;font-size:.84em;color:var(--dim);line-height:1.6">You give the network raw input and enough units, and its early layers work out their own features. In an image model, the first layers end up finding edges, later layers find shapes, and later still layers find faces. Nobody told the network to look for edges. Edges turned out to be the most useful thing for those layers to detect.</p>
+          </div>
+        </div>
+        <div class="whynot" style="margin-top:16px">
+          <b>The cost: nobody can say what each unit means</b>
+          You no longer know what the features are. The few numbers on this screen can still be read. A real model has billions of numbers, and no single one of them means anything on its own. So a model can be excellent and impossible to explain at the same time, and when it goes wrong there is often nothing to point at.
+          <br><br>Keep this in mind for the panel "Word embeddings: how words get positions", which covers where meaning comes from. The same property that lets a model find features nobody named also lets it pick up patterns nobody intended.
+        </div>
       </div>
     </section>
 

@@ -29,15 +29,15 @@ function nmRender(){
 
   $("#flatVerdict").className="verdict "+(NM.renamed&&NM.partial?"bad":NM.renamed?"warn":"");
   $("#flatVerdict").innerHTML = !NM.renamed
-    ? `<b>The title is stored ${NM.n} times</b>Every enrolment carries its own copy. Nothing is wrong yet.`
+    ? `<b>The title is stored ${NM.n} times</b>Every enrollment row carries its own copy. Nothing has gone wrong yet.`
     : NM.partial
-      ? `<b>Two rows disagree with the other ${NM.n-2}</b>There is now no answer to "what is this course called". Both values are in the database, both look valid, and no constraint was broken.`
-      : `<b>${NM.n} rows rewritten to change one fact</b>It worked, this time. It has to work every time, forever, in every code path that touches a title.`;
+      ? `<b>Two rows disagree with the other ${NM.n-2}</b>The database no longer has one answer to "what is this course called?". Both titles are stored, both look valid, and no rule was broken.`
+      : `<b>${NM.n} rows rewritten to change one fact</b>It worked this time. It has to work every time, in every part of the code that changes a title.`;
 
   $("#normVerdict").className="verdict "+(NM.renamed?"ok":"");
   $("#normVerdict").innerHTML = NM.renamed
-    ? `<b>One row rewritten</b>The enrolments never held the title, so they had nothing to update. There is no version of this where two rows disagree, because there are not two rows.`
-    : `<b>The title is stored once</b>Enrolments point at it by id. Reading a schedule now needs a join, which panel 15 puts a number on.`;
+    ? `<b>One row rewritten</b>The enrollments never stored the title, so they needed no change. Two rows cannot disagree, because only one row holds the title.`
+    : `<b>The title is stored once</b>Each enrollment holds the course id and nothing else about the course. Reading a schedule now needs a join, which combines the two tables when you read. "The N+1 query problem" measures what that costs.`;
 
   const set=(id,v,hot,good)=>{const g=$(id);g.querySelector(".gv").firstChild.nodeValue=v;
     g.classList.toggle("hot",!!hot);g.classList.toggle("good",!!good)};
@@ -48,10 +48,10 @@ function nmRender(){
   if(!NM.renamed){ v.className="verdict"; v.innerHTML=`<b>Nothing has changed yet</b>Press one of the buttons.`; }
   else if(NM.partial){
     v.className="verdict bad";
-    v.innerHTML=`<b>${NM.n-2} rows updated, 2 missed, and the database is fine with that</b>This is the failure the split shape makes impossible. Not a crash, not an error, just two answers to the same question living side by side until somebody notices. In the split version there was one row to change, so there was nothing to miss.`;
+    v.innerHTML=`<b>${NM.n-2} rows updated and 2 missed</b>The database accepts this without an error. Two titles now answer the same question, and nobody is told until someone notices. The split version has one row to change, so there is nothing to miss.`;
   } else {
     v.className="verdict warn";
-    v.innerHTML=`<b>${NM.wroteFlat} writes against 1</b>Both got to the same place. The flat table needed ${NM.wroteFlat} chances to go wrong and took none of them today. Raise the slider to 400 students and ask how you would feel about that number in a migration script at 2am.`;
+    v.innerHTML=`<b>${NM.wroteFlat} writes against 1</b>Both versions end in the same state. The flat table needed ${NM.wroteFlat} writes that could each go wrong, and none did this time. Raise the slider to 400 and think about running a script that makes 400 separate changes to a live database.`;
   }
 }
 $("#sEnr").oninput=e=>{NM.n=+e.target.value;$("#vEnr").textContent=NM.n;

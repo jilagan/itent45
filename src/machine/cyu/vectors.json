@@ -1,0 +1,147 @@
+{
+ "panel": "vectors",
+ "items": [
+  {
+   "id": "vectors-1",
+   "sec": "words",
+   "type": "mc",
+   "stem": "On the map, king minus man plus woman ends up closest to queen. What does this suggest about the word positions?",
+   "options": [
+    {
+     "text": "The step from man to king is similar to the step from woman to queen, so a relationship shows up as a consistent direction.",
+     "correct": true,
+     "feedback": "Nobody names the relationship. It appears because words used in similar ways get similar positions."
+    },
+    {
+     "text": "The model stores a definition of queen as a female king.",
+     "correct": false,
+     "feedback": "The model stores positions, not definitions. The match comes from distances."
+    },
+    {
+     "text": "The model looks up a list of royal titles.",
+     "correct": false,
+     "feedback": "There is no list. Positions are learned from text, and in this demo they were placed by hand."
+    },
+    {
+     "text": "Queen was the only word left after removing the others.",
+     "correct": false,
+     "feedback": "Many words remain on the map. The result circle is nearest to queen."
+    }
+   ]
+  },
+  {
+   "id": "vectors-2",
+   "sec": "words",
+   "type": "predict",
+   "stem": "Before you try it: the option \"Do not answer with the input words\" is on for king minus man plus woman. What happens to the answer if you turn it off?",
+   "options": [
+    {
+     "text": "The nearest word becomes king, one of the three input words.",
+     "correct": true,
+     "feedback": "The result point keeps most of the king position, so king is nearest. The well-known demonstration only works when the input words are excluded."
+    },
+    {
+     "text": "The answer stays queen.",
+     "correct": false,
+     "feedback": "Queen is the nearest word only after king, man and woman are removed from the candidates."
+    },
+    {
+     "text": "The answer becomes man.",
+     "correct": false,
+     "feedback": "The result is built from king, so king is nearer to it than man is."
+    },
+    {
+     "text": "No word is returned.",
+     "correct": false,
+     "feedback": "The search always returns the nearest word. Without the exclusion it is king."
+    }
+   ],
+   "try": "Turn the option off with king minus man plus woman selected and read the ranking."
+  },
+  {
+   "id": "vectors-3",
+   "sec": "words",
+   "type": "mc",
+   "stem": "A vendor says its hiring tool is \"only 3 percent biased\" based on a word-analogy test. What is a reasonable response?",
+   "options": [
+    {
+     "text": "Ask how the number was measured, because analogy tests can produce part of their result and the text the model was built from shapes its positions.",
+     "correct": true,
+     "feedback": "Embeddings reflect their corpus. The analogy method itself also adds to the result, so a single tidy number needs an explanation."
+    },
+    {
+     "text": "Accept the number, because it comes from a mathematical test.",
+     "correct": false,
+     "feedback": "A calculation can still measure the wrong thing. The method needs checking too."
+    },
+    {
+     "text": "Add an instruction to the prompt telling the model to ignore gender.",
+     "correct": false,
+     "feedback": "A prompt cannot remove the pattern, because it is built into the positions the model uses."
+    },
+    {
+     "text": "Conclude that the model has no bias, because it has no opinions.",
+     "correct": false,
+     "feedback": "Bias here comes from patterns in the text the model was built from, and it does not need opinions."
+    }
+   ]
+  },
+  {
+   "id": "vectors-4",
+   "sec": "sentences",
+   "type": "predict",
+   "stem": "Before you try it: the sentences \"How do I sign up for a class?\" and \"How do I drop a class?\" share five words. What will the similarity score be?",
+   "options": [
+    {
+     "text": "Low, because the sentences mean opposite things and the score measures meaning.",
+     "correct": true,
+     "feedback": "The two arrows point in very different directions, so the cosine is low even though many words match."
+    },
+    {
+     "text": "High, because they share five words.",
+     "correct": false,
+     "feedback": "Counting shared words is what a keyword search does. The score here compares meaning."
+    },
+    {
+     "text": "Exactly 1, because the sentences are almost the same length.",
+     "correct": false,
+     "feedback": "Length does not matter. The score compares direction only."
+    },
+    {
+     "text": "Exactly 0, because the sentences are different.",
+     "correct": false,
+     "feedback": "The score drops toward 0 only when the arrows are at right angles. These are about 72 degrees apart."
+    }
+   ],
+   "try": "Pick sentences A and C in the widget and read both numbers."
+  },
+  {
+   "id": "vectors-5",
+   "sec": "sentences",
+   "type": "mc",
+   "stem": "A student asks how to avoid being charged twice for an enrollment. The best help page is titled \"Idempotency keys\". Why might a search by meaning still find it?",
+   "options": [
+    {
+     "text": "The question and the page have similar positions, even though they share no words.",
+     "correct": true,
+     "feedback": "This is retrieval: finding the text whose position is nearest to the question."
+    },
+    {
+     "text": "The search matches any page that contains the word charged.",
+     "correct": false,
+     "feedback": "That is keyword search. It would miss a page that does not contain the word."
+    },
+    {
+     "text": "The search reads every page in full each time to find the answer.",
+     "correct": false,
+     "feedback": "Retrieval compares positions, which is much cheaper than reading every page."
+    },
+    {
+     "text": "The page title is rewritten automatically to match the question.",
+     "correct": false,
+     "feedback": "Nothing is rewritten. The two texts are compared by position."
+    }
+   ]
+  }
+ ]
+}

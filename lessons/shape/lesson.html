@@ -4,18 +4,19 @@
         <p>A <dfn title="Stores data in tables with fixed columns, such as Postgres">relational</dfn> database keeps data in tables, and a <dfn title="Stores each record as one self-contained document, such as Firebase">document</dfn> database keeps each record as one document. The right choice depends on which questions your app asks.</p>
       </div>
 
-      <div class="sec" data-sec="filing" data-title="Start with a way to file records">
-        <p>Think of two ways to keep student records. One is a set of spreadsheets with fixed columns, where the student sheet points to a course sheet. The other is a folder for each student, with everything about that student written on one page, including the course titles.</p>
-        <div class="scene" role="group" aria-label="Linked sheets are a relational database, a folder for each student is a document database" data-art="student-folders" data-art-desc="A registrar's shelf holds one thick folder per student, and beside it two thin sheets lie on a table, one for students and one for courses.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Linked sheets</b><span>Relational</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>A folder for each student</b><span>Document</span></figcaption></figure>
+      <div class="sec" data-sec="student-records" data-title="Start with student records">
+        <p>Your schedule and your instructor's class list for MGT 45 both come from the online enlistment system. One page is organized by student and the other by course. The database behind both holds the same student records.</p>
+        <div class="scene" role="group" aria-label="The parts involved: the schedule page, the class list page and the student records" data-art="schedule-and-class-list" data-art-desc="A student and an instructor sit at separate desks, and each looks at a laptop that shows a plain list of rows made of short bars.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>Your schedule</b><span>Organized by student</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg></div><figcaption><b>Class list</b><span>Organized by course</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-database"/></svg></div><figcaption><b>Student records</b><span>One database</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> Name a question your app asks on every page, and a question it asks once a semester. Which shape would you choose for each, and why?</div>
-        <div class="instructor">Students tend to name only the questions that suit the shape they already know. Ask for a question that would be hard in each shape. The next step has three such questions.</div>
+        <div class="ask"><b>Think first.</b> Every page reads the same records. Which page would you speed up first, the schedule or the class list, and what would you store differently? Write down one idea.</div>
+        <div class="instructor">Students tend to name only the questions that suit the layout they already know. Ask for a question that would be hard in each layout. The next step has three such questions.</div>
       </div>
 
       <div class="sec" data-sec="questions" data-title="Ask three questions">
-        <p>The same enrollments are shown in two shapes. Pick a shape, then pick a question and read what it costs.</p>
+        <p>The same enlistments are shown in two shapes. Pick a shape, then pick a question and read what it costs.</p>
         <div class="srv">
           <div class="card">
             <div class="card-t">The same data, two shapes</div>
@@ -91,7 +92,7 @@
             </div>
             <div class="bl">
               <h5>Rules about correctness</h5>
-              <p>If the database itself refuses to sell the last seat twice, two students cannot both get it. Enforcing that rule in application code across several documents allows two requests to pass the check at the same time.</p>
+              <p>If the database itself refuses to give the last slot of a section twice, two students cannot both get it. Enforcing that rule in application code across several documents allows two requests to pass the check at the same time.</p>
               <span class="ref">&rarr; the problem itself is shown in <a data-lesson="txn">Transactions</a></span>
             </div>
             <div class="bl">

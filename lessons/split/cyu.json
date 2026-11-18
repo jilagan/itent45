@@ -61,7 +61,7 @@
    "id": "split-3",
    "sec": null,
    "type": "mc",
-   "stem": "After a split, showing one enrollment page needs 4 calls to other services. Each service is up 99.9% of the time. About how often will that page fail because a service is down?",
+   "stem": "After a split, showing one order screen needs 4 calls to other services. Each service is up 99.9% of the time. About how often will that screen fail because a service is down?",
    "options": [
     {
      "text": "About 0.4% of requests.",

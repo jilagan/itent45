@@ -5,27 +5,27 @@
    "id": "rea-1",
    "sec": null,
    "type": "mc",
-   "stem": "A sari-sari store hands over a bottle of soda and receives 20 pesos. Looking at the part where the goods go out, which choice names the resource, the event and the agents?",
+   "stem": "A student pays the tuition for three enlisted courses. Looking at the part where the money moves, which choice names the resource, the event and the agents?",
    "options": [
     {
-     "text": "Resource: the soda. Event: the sale. Agents: the owner and the customer.",
+     "text": "Resource: the amount paid. Event: the payment. Agents: the student and the university.",
      "correct": true,
-     "feedback": "The resource is the thing of value, the event records that it changed hands, and the agents are the people on each side."
+     "feedback": "The resource is the thing of value, the event records that it changed hands, and the agents are the people or organizations on each side."
     },
     {
-     "text": "Resource: the owner. Event: the soda. Agents: the 20 pesos.",
+     "text": "Resource: the student. Event: the amount paid. Agents: the payment.",
      "correct": false,
-     "feedback": "These roles are mixed up. People are agents, and the thing of value is the resource."
+     "feedback": "These roles are mixed up. The student is an agent, and the thing of value is the resource."
     },
     {
-     "text": "Resource: the sale. Event: the soda. Agents: the customer.",
+     "text": "Resource: the payment. Event: the amount paid. Agents: the student.",
      "correct": false,
-     "feedback": "The sale is the event, because it records something that happened. The soda is what changed hands."
+     "feedback": "The payment is the event, because it records something that happened. The amount is what changed hands."
     },
     {
-     "text": "Resource: the 20 pesos. Event: the soda. Agents: the owner only.",
+     "text": "Resource: a slot in a course. Event: the payment. Agents: the university only.",
      "correct": false,
-     "feedback": "The 20 pesos are the resource in the payment half of the pair. In the goods half the resource is the soda, and both people are agents."
+     "feedback": "The slot is the resource in the enlistment half of the pair. In the payment half the resource is the money, and the student is an agent too."
     }
    ]
   },
@@ -33,12 +33,12 @@
    "id": "rea-2",
    "sec": "duality",
    "type": "mc",
-   "stem": "Maria pays ₱18,000 in one transfer for three subjects. Juan pays the ₱7,500 for one subject in two installments. Why does the model need a separate allocations table that links payments and enrollments?",
+   "stem": "Maria pays ₱18,000 in one transfer for three subjects. Juan pays the ₱7,500 for one subject in two installments. Why does the model need a separate allocations table that links payments and enlistments?",
    "options": [
     {
-     "text": "One payment can cover many enrollments, and one enrollment can have many payments.",
+     "text": "One payment can cover many enlistments, and one enlistment can have many payments.",
      "correct": true,
-     "feedback": "A pairing that is many-to-many needs its own table, and the amount applied to each enrollment can be stored only there."
+     "feedback": "A pairing that is many-to-many needs its own table, and the amount applied to each enlistment can be stored only there."
     },
     {
      "text": "Banking rules require payments to be kept in a table of their own.",
@@ -51,7 +51,7 @@
      "feedback": "Speed is not the reason. Without the allocations table you could not store installments or shared transfers at all."
     },
     {
-     "text": "Each enrollment should always have exactly one payment, so the table is optional.",
+     "text": "Each enlistment should always have exactly one payment, so the table is optional.",
      "correct": false,
      "feedback": "That holds only until the first student pays in installments or one transfer covers several subjects."
     }
@@ -61,17 +61,17 @@
    "id": "rea-4",
    "sec": null,
    "type": "mc",
-   "stem": "A school records each enrollment and each payment as separate events. Which question needs both kinds of event to answer?",
+   "stem": "A school records each enlistment and each payment as separate events. Which question needs both kinds of event to answer?",
    "options": [
     {
-     "text": "Which students hold a seat and have not paid?",
+     "text": "Which students hold a slot and have not paid?",
      "correct": true,
-     "feedback": "This question looks for a gap between two events that should pair up, an enrollment with no matching payment."
+     "feedback": "This question looks for a gap between two events that should pair up, an enlistment with no matching payment."
     },
     {
-     "text": "How many seats does MGT 45 have in total?",
+     "text": "How many slots does MGT 45 have in total?",
      "correct": false,
-     "feedback": "This needs only the resource, the seats. No event is involved."
+     "feedback": "This needs only the resource, the slots. No event is involved."
     },
     {
      "text": "Which room is MGT 45 held in this term?",

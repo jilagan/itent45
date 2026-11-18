@@ -1,17 +1,17 @@
     <section class="panel" id="p-rules">
       <div class="head">
         <h2>Decision rules and tables</h2>
-        <p>Rules that look clear can clash or leave a case open. A table of every case, plus tests at the edges, finds the gaps before customers do.</p>
+        <p>Rules that look clear can clash or leave a case open. A table of every case, plus tests at the edges, finds the gaps before the rules go live.</p>
       </div>
 
-      <div class="sec" data-sec="store-sign" data-title="Start with a store sign">
-        <p>The campus store posts a sign: students get 10 percent off, and orders over 1,000 pesos get 5 percent off. A student arrives with a 1,200 peso order. The cashier wonders whether to give 10, 5 or 15 percent. A table that lists every case gives one clear answer for each.</p>
-        <div class="scene" role="group" aria-label="The cashier applies the rules, the sign holds the rules, the student's order is the input" data-art="campus-store-discount-sign" data-art-desc="A cashier at a campus store counter taps a blank sign board while a student holds out a stack of books.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Cashier</b><span>Applies the rules</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Sign</b><span>Rules</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>Student with an order</b><span>Input</span></figcaption></figure>
+      <div class="sec" data-sec="checkout-page" data-title="Start with a checkout page">
+        <p>A campus store's checkout page lists two discounts: students get 10 percent off, and orders over 1,000 pesos get 5 percent off. A student orders 1,200 pesos of books. Should the total show 10, 5 or 15 percent off? The rules do not say. A table that lists every case gives one answer for each.</p>
+        <div class="scene" role="group" aria-label="The checkout page, the discount rules and the student's order" data-art="checkout-page-discount-rules" data-art-desc="A student at a desk looks at a laptop that shows a plain checkout page with two highlighted bars.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg></div><figcaption><b>Checkout page</b><span>Shows the total</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Discount rules</b><span>Two rules</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>Student with an order</b><span>1,200 pesos</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> Which discount should the 1,200 peso student get? What would you add to the sign so that every cashier gives the same answer?</div>
+        <div class="ask"><b>Think first.</b> Which discount should the 1,200 peso student get? What would you add to the rules so that the page always shows the same total?</div>
         <div class="instructor">Expect answers of 10, 5 and 15. Ask each group to say which rule they used to choose, then move to the table.</div>
       </div>
 
@@ -73,7 +73,7 @@
       </div>
 
       <div class="sec" data-sec="edges" data-title="Testing the edges">
-        <p>Most rule mistakes sit at an edge. A <dfn title="A value at the exact edge of a rule">boundary value</dfn> for "over 1,000" is 1,000. Test one value below, one at and one above: 999, 1,000 and 1,001 pesos. Write the edge in words, such as "1,000 pesos or more," so every cashier reads it the same way.</p>
+        <p>Most rule mistakes sit at an edge. A <dfn title="A value at the exact edge of a rule">boundary value</dfn> for "over 1,000" is 1,000. Test one value below, one at and one above: 999, 1,000 and 1,001 pesos. Write the edge in words, such as "1,000 pesos or more," so everyone reads it the same way.</p>
         <p class="outcome">You can now list every case of a rule in a table, find where rules clash, and test the edges.</p>
         <details class="more">
           <summary>More detail</summary>

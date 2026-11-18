@@ -17,7 +17,7 @@ const SCN={
     ]},
   post:{
     req:[
-      ["POST /enrollments HTTP/1.1","start","Request line","POST means create or submit, so repeating it may create a second enrollment. Buttons are often disabled after the first click for this reason."],
+      ["POST /enlistments HTTP/1.1","start","Request line","POST means create or submit, so repeating it may create a second enlistment. Buttons are often disabled after the first click for this reason."],
       ["Host: api.example.com","k","Host header","Which website on this IP address, as before."],
       ["Content-Type: application/json","k","Content-Type on a request","The format of the data you are sending. The server needs it to read the body."],
       ["Content-Length: 39","k","Content-Length","How many bytes of body the server should read. With the wrong number, it waits forever or reads into the next request."],
@@ -26,10 +26,10 @@ const SCN={
     ],
     res:[
       ["HTTP/1.1 201 Created","start","201 Created","A new resource now exists on the server. The client should not send this request again, because that would create a duplicate."],
-      ["Location: /enrollments/8891","k","Location","Where the new resource lives. The server returns the ID it assigned, and the client can follow this address to fetch it."],
+      ["Location: /enlistments/8891","k","Location","Where the new resource lives. The server returns the ID it assigned, and the client can follow this address to fetch it."],
       ["Content-Type: application/json","k","Content-Type","The format of the confirmation in the body below."],
       ["","blank","The blank line","The headers end here."],
-      ['{"id":8891,"code":"MGT 45","status":"enrolled"}',"body","Response body","A confirmation that includes the new ID. This saves the client a second round trip to fetch it."]
+      ['{"id":8891,"code":"MGT 45","status":"enlisted"}',"body","Response body","A confirmation that includes the new ID. This saves the client a second round trip to fetch it."]
     ]},
   miss:{
     req:[
@@ -78,10 +78,10 @@ renderBytes();
 /* ---- run-it-yourself, with commands you can copy ---- */
 const SHELLS=[
  {id:"unix", n:"macOS / Linux", py:"python3", curl:"curl",
-  post:`curl -X POST localhost:8080/enrollments \\\n  -H 'Content-Type: application/json' \\\n  -d '{"code":"MGT 45"}'`,
+  post:`curl -X POST localhost:8080/enlistments \\\n  -H 'Content-Type: application/json' \\\n  -d '{"code":"MGT 45"}'`,
   note:"The single quotes keep the terminal from changing the JSON."},
  {id:"win", n:"Windows PowerShell", py:"python", curl:"curl.exe",
-  post:`curl.exe -X POST localhost:8080/enrollments ^\n  -H "Content-Type: application/json" ^\n  --data-raw "{\\"code\\":\\"MGT 45\\"}"`,
+  post:`curl.exe -X POST localhost:8080/enlistments ^\n  -H "Content-Type: application/json" ^\n  --data-raw "{\\"code\\":\\"MGT 45\\"}"`,
   note:"On Windows, type <code>curl.exe</code>, because plain <code>curl</code> in PowerShell is a different command. Each double quote inside the JSON needs a backslash."}
 ];
 let shellSel="unix";

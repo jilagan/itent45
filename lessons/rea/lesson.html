@@ -4,15 +4,15 @@
         <p>Most business systems record transactions with one pattern, called <dfn title="Resources, events and agents: a standard shape for recording transactions">REA</dfn>. Because it repeats, you rarely design a <dfn title="The layout of a system's tables">schema</dfn> from nothing.</p>
       </div>
 
-      <div class="sec" data-sec="sari-sari-sale" data-title="Start with a sari-sari store">
-        <p>At a sari-sari store, the owner hands over a bottle of soda and takes 20 pesos, or writes the amount in the utang notebook to be paid later. The goods going out and the payment coming back are two separate records.</p>
-        <div class="scene" role="group" aria-label="The soda is the resource, the sale is the event, the owner and customer are the agents" data-art="sari-sari-sale" data-art-desc="A sari-sari store owner hands a bottle of soda to a customer across the counter, with an open notebook lying beside the till.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-package"/></svg></div><figcaption><b>The soda</b><span><dfn title="Something of value, such as stock, cash or a seat">Resource</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></div><figcaption><b>The sale</b><span><dfn title="A record that a resource changed hands at a moment in time">Event</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Owner and customer</b><span><dfn title="A person or organization taking part in an event">Agents</dfn></span></figcaption></figure>
+      <div class="sec" data-sec="tuition-payment" data-title="Start with paying tuition">
+        <p>After you enlist, the payment page of the university's online enlistment system lists your enlisted courses and the amount due for each. You pay, and the page shows a payment reference number. The slots you hold and the money you paid are two separate records.</p>
+        <div class="scene" role="group" aria-label="The amount paid is the resource, the payment is the event, the student and the university are the agents" data-art="tuition-payment-phone" data-art-desc="A student stands in a hallway holding a phone that shows a short list of plain bars and one wide button, and taps the screen with a thumb.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-money"/></svg></div><figcaption><b>The amount paid</b><span><dfn title="Something of value, such as stock, cash or a slot">Resource</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></div><figcaption><b>The payment</b><span><dfn title="A record that a resource changed hands at a moment in time">Event</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>The student and the university</b><span><dfn title="A person or organization taking part in an event">Agents</dfn></span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> Think of a purchase you made this week: what was given, what came back, and who was on each side?</div>
-        <div class="instructor">Take two or three examples from students and name the resource, event and agents of each aloud. Lunch at the canteen and a Grab ride both work.</div>
+        <div class="ask"><b>Think first.</b> In that payment, what was given, what was received, and who took part on each side?</div>
+        <div class="instructor">Take two or three examples from students, such as a ticket purchase on a concert ticket site or an enlistment in a class, and name the resource, event and agents of each aloud.</div>
       </div>
 
       <div class="sec" data-sec="six-boxes" data-title="One pattern in four settings">
@@ -23,42 +23,42 @@
         <details class="more">
           <summary>More detail</summary>
           <h4>The three parts of REA</h4>
-          <p><b>Resource:</b> the thing of value, such as a seat, a book, an item of stock or cash. The event moves it.</p>
+          <p><b>Resource:</b> the thing of value, such as a slot, a book, an item of stock or cash. The event moves it.</p>
           <p><b>Event:</b> a record of something that happened at a moment and changed who holds the resource. Events are usually the tables with the most rows.</p>
           <p><b>Agent:</b> a person or organization on one side of an event. Usually one is inside your organization and one is outside it, and you need to record both.</p>
           <h4>Where the foreign keys sit</h4>
           <p>One resource appears in many events, and one agent takes part in many events. So the event table holds both foreign keys, following the rule from <a data-lesson="card">Relationships</a> that the foreign key goes on the many side.</p>
           <h4>Why there are two events</h4>
-          <p>A seat is given and money is taken. A book goes out and comes back. If you model only the half you were asked about, the system cannot answer where the money went.</p>
-          <p>The hardest business questions are gaps between two events that should have paired: unpaid enrollments, overdue books, orders delivered but not billed. <a data-lesson="pay">Payments and gateways</a> shows the same problem on the network side.</p>
+          <p>A slot is given and money is taken. A book goes out and comes back. If you model only the half you were asked about, the system cannot answer where the money went.</p>
+          <p>The hardest business questions are gaps between two events that should have paired: unpaid enlistments, overdue books, orders delivered but not billed. <a data-lesson="pay">Payments and gateways</a> shows the same problem on the network side.</p>
         </details>
       </div>
 
-      <div class="sec" data-sec="duality" data-title="Payments and enrollments">
-        <p>The dashed line joins two events that pair up, such as an enrollment and its payment. One payment can cover several enrollments, and one enrollment can be paid in installments. So the pairing is many-to-many and needs a table of its own. That table records how much of each payment applies to each enrollment.</p>
+      <div class="sec" data-sec="duality" data-title="Payments and enlistments">
+        <p>The dashed line joins two events that pair up, such as an enlistment and its payment. One payment can cover several enlistments, and one enlistment can be paid in installments. So the pairing is many-to-many and needs a table of its own. That table records how much of each payment applies to each enlistment.</p>
         <p>Read the allocations table row by row.</p>
         <div class="card" style="padding:12px 16px;overflow-x:auto">
           <table class="hostreq"><thead><tr>
-            <th>allocations</th><th>enrollment</th><th>payment</th><th>amount</th>
+            <th>allocations</th><th>enlistment</th><th>payment</th><th>amount</th>
           </tr></thead><tbody>
-            <tr><td>one payment, three enrollments</td><td>MGT 45</td><td>OR-8841</td><td class="y">&#8369;7,500</td></tr>
+            <tr><td>one payment, three enlistments</td><td>MGT 45</td><td>OR-8841</td><td class="y">&#8369;7,500</td></tr>
             <tr><td></td><td>CSCI 21</td><td>OR-8841</td><td class="y">&#8369;7,500</td></tr>
-            <tr><td>one enrollment, two payments</td><td>ITMGT 25</td><td>OR-8841</td><td class="y">&#8369;3,000</td></tr>
+            <tr><td>one enlistment, two payments</td><td>ITMGT 25</td><td>OR-8841</td><td class="y">&#8369;3,000</td></tr>
             <tr><td></td><td>ITMGT 25</td><td>OR-9102</td><td class="y">&#8369;4,500</td></tr>
           </tbody></table>
         </div>
         <details class="more">
           <summary>More detail</summary>
-          <p>The table has four rows, three enrollments and two payments. Neither side divides evenly into the other, so the amount column cannot sit in the enrollment table or in the payment table. <a data-lesson="card">Relationships</a> explains why a many-to-many link needs a table of its own.</p>
+          <p>The table has four rows, three enlistments and two payments. Neither side divides evenly into the other, so the amount column cannot sit in the enlistment table or in the payment table. <a data-lesson="card">Relationships</a> explains why a many-to-many link needs a table of its own.</p>
           <h4>Events without a matching event</h4>
-          <p>Some events legitimately have no partner: a scholarship waiver, a spoiled batch, a donated seat, a book written off after a flood. A resource decreases and nothing comes back. Reconciliation is the check that matches each event with its partner. If it reports every unpaired event as an exception, it produces false alarms, and people stop reading it.</p>
+          <p>Some events legitimately have no partner: a scholarship waiver, a damaged shipment, a library book written off after a flood. A resource decreases and nothing comes back. Reconciliation is the check that matches each event with its partner. If it reports every unpaired event as an exception, it produces false alarms, and people stop reading it.</p>
           <p>Decide once which events are expected to pair, and record that decision in the model. Only a missing pair that should exist needs investigating.</p>
         </details>
       </div>
 
       <div class="sec" data-sec="templates" data-title="Ready-made models">
         <p>Because the same shape repeats, the industry publishes ready-made templates for common domains, called <dfn title="Published templates of the tables a common kind of business needs">universal data models</dfn>. Django's user and login tables are one example. A template shows which entities other people found necessary. The one you would not have thought of is usually the event in the middle.</p>
-        <p class="outcome">You can now describe a sale, a payment or an enrollment with the REA pattern.</p>
+        <p class="outcome">You can now describe a sale, a payment or an enlistment with the REA pattern.</p>
         <details class="more">
           <summary>More detail</summary>
           <p>Other examples are a Supabase starter schema and a ready-made set of tables for an online store. Each is somebody else's solution to a model you were about to draw yourself. Use them, and read them.</p>
@@ -66,6 +66,7 @@
           <p>A diagram of tables can be laid out in many ways, and most people place the boxes wherever there is room. One convention costs nothing: draw every crow's foot pointing up and to the left. A crow's foot is the three-pronged symbol on the many side of a relationship. The many side is almost always the entity that records what happens, so the tables that grow fastest end up in the top left, and every foreign key points down and to the right.</p>
           <div class="ctab" id="erdTab"></div>
           <div class="art" id="erdDia" style="padding:0"></div>
+          <p class="scrollhint">On a narrow screen, scroll this diagram sideways to see all of it.</p>
           <div class="verdict" id="erdVerdict" style="margin-top:13px"></div>
         </details>
       </div>

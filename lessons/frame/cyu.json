@@ -10,7 +10,7 @@
     {
      "text": "A budget limit written as a number, such as 5,000 pesos.",
      "correct": true,
-     "feedback": "\"Cheap\" gave no number, so each person picked a different ceiling. With a total of 5,000 pesos, a 4,200-peso banner would have raised a flag at once."
+     "feedback": "\"Cheap\" gave no number, so each person picked a different ceiling. With a total of 5,000 pesos, the team would have seen at once that a 4,200-peso banner uses most of it."
     },
     {
      "text": "A longer list of volunteers to share out the work.",

@@ -1,9 +1,9 @@
 /* Lesson split. Widget code for the markup in lesson.html. */
 /* ================= 12 MONOLITH VS SERVICES ================= */
 const PARTS=[
- {n:"Browse the catalog", ms:40,   ram:90,  share:.72},
- {n:"Reserve a seat",     ms:80,   ram:120, share:.25},
- {n:"Generate a transcript PDF", ms:3000, ram:400, share:.01},
+ {n:"Browse restaurants", ms:40,   ram:90,  share:.72},
+ {n:"Order checkout",      ms:80,   ram:120, share:.25},
+ {n:"Generate a receipt PDF", ms:3000, ram:400, share:.01},
  {n:"Send notifications", ms:150,  ram:80,  share:.02}
 ];
 const SPLIT={load:400};

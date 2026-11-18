@@ -2,7 +2,7 @@
  "id": "clients",
  "title": "One API for the web, iOS and Android",
  "label": "One API, many clients",
- "desc": "How one API serves a website, an iPhone app and Android.",
+ "desc": "How one API serves a website, an iOS app and Android.",
  "outcomes": [
   "Say why one API can serve web, iOS and Android",
   "Contrast a server that returns HTML with one that returns JSON",

@@ -5,7 +5,7 @@
    "id": "vectors-1",
    "sec": null,
    "type": "mc",
-   "stem": "On the map, king minus man plus woman ends up closest to queen. What does this suggest about the word positions?",
+   "stem": "On the plot, king minus man plus woman ends up closest to queen. What does this suggest about the word positions?",
    "options": [
     {
      "text": "Man to king is the same step as woman to queen, so a relationship shows up as a direction.",
@@ -23,9 +23,9 @@
      "feedback": "There is no list. Positions are learned from text, and in this demo they were placed by hand."
     },
     {
-     "text": "Queen was the only word left on the map after all the others were removed.",
+     "text": "Queen was the only word left on the plot after all the others were removed.",
      "correct": false,
-     "feedback": "Many words remain on the map. The result circle is nearest to queen."
+     "feedback": "Many words remain on the plot. The result circle is nearest to queen."
     }
    ]
   },
@@ -89,7 +89,7 @@
    "id": "vectors-4",
    "sec": null,
    "type": "mc",
-   "stem": "A student asks how to avoid being charged twice for an enrollment. The best help page is titled \"Idempotency keys\". Why might a search by meaning still find it?",
+   "stem": "A student asks how to avoid being charged twice for an enlistment. The best help page is titled \"Idempotency keys\". Why might a search by meaning still find it?",
    "options": [
     {
      "text": "The question and the page sit at similar positions, though they share no words.",

@@ -1,7 +1,7 @@
 /* Lesson cost. Widget code for the markup in lesson.html. */
 /* ================= 14 CLOUD ECONOMICS ================= */
 const COST={capex:true, cap:120};
-// a year of demand: quiet baseline with two enrolment spikes and a graduation bump
+// a year of demand: quiet baseline with two enlistment spikes and a graduation bump
 function demandAt(t){
   const base=28+10*Math.sin(t*Math.PI*2);
   const spike=(c,w,h)=>h*Math.exp(-Math.pow((t-c)/w,2));
@@ -63,7 +63,7 @@ function renderCost(){
   const v=$("#costVerdict");
   if(!COST.capex){
     v.className="verdict ok";
-    v.innerHTML=`<b>Capacity follows demand</b>You pay for roughly what you used, and the enlistment spike is served without owning hardware for it. The cost is a meter that runs every hour.`;
+    v.innerHTML=`<b>Capacity follows demand</b>You pay for roughly what you used, and the enlistment spike is served without owning hardware for it. The cost is a charge for every hour the capacity runs.`;
   } else if(lostPct>=.005 && m.waste/m.capSum>.5){
     v.className="verdict bad";
     v.innerHTML=`<b>Wrong in both directions at once</b>${pct(m.waste)} of the capacity you bought sat idle across the year, and you still turned people away on enlistment morning.`;

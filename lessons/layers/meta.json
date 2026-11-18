@@ -2,9 +2,9 @@
  "id": "layers",
  "title": "How network messages are layered (protocol layers)",
  "label": "Protocol layers",
- "desc": "How a message is wrapped in layers to cross the internet.",
+ "desc": "How five layers add headers to a message on its way.",
  "outcomes": [
-  "Explain encapsulation: each layer wraps the message and talks only to its twin",
+  "Explain encapsulation: each layer adds a header and talks only to the matching layer at the other end",
   "Estimate how much packaging a small message carries",
   "Explain why a big reply becomes many packets and arrives whole"
  ],

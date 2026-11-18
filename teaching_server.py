@@ -11,7 +11,7 @@ Then, in a second terminal, work down this list on the projector:
 
     1.  curl http://localhost:8080/courses
     2.  curl -v http://localhost:8080/courses          # see request AND response headers
-    3.  curl -X POST http://localhost:8080/enrollments -d '{"code":"ITENT 45"}'
+    3.  curl -X POST http://localhost:8080/enlistments -d '{"code":"ITENT 45"}'
     4.  curl http://localhost:8080/slow                # 2s handler - watch it block
     5.  curl http://localhost:8080/nope                # 404
     6.  Open http://localhost:8080/ in a browser       # look at how many headers it sends
@@ -43,13 +43,13 @@ def route(method, path, body):
         ]}
         return 200, "OK", {}, json.dumps(payload)
 
-    if path.startswith("/enrollments") and method == "POST":
+    if path.startswith("/enlistments") and method == "POST":
         try:
             sent = json.loads(body) if body else {}
         except json.JSONDecodeError:
             return 400, "Bad Request", {}, json.dumps({"error": "invalid_json"})
-        out = {"id": 8891, "code": sent.get("code", "?"), "status": "enrolled"}
-        return 201, "Created", {"Location": "/enrollments/8891"}, json.dumps(out)
+        out = {"id": 8891, "code": sent.get("code", "?"), "status": "enlisted"}
+        return 201, "Created", {"Location": "/enlistments/8891"}, json.dumps(out)
 
     if path.startswith("/slow"):
         # Blocks this worker for 2s. With one thread, a second request just waits.

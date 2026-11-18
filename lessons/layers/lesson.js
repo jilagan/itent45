@@ -8,7 +8,7 @@ const LAYERS=[
    note:"This is the only layer you normally write code for."},
   {n:"L6/5",name:"TLS",unit:"record",hdr:29,pay:62,
    adds:"A record header and a tag that lets the receiver detect tampering. Everything inside is now encrypted.",
-   solves:"Anyone who can see the wire, such as the café router, cannot read or change the message.",
+   solves:"Anyone who can see the wire, such as the owner of a public wifi network, cannot read or change the message.",
    peer:"The TLS software on the server, which holds the matching session key.",
    note:"Setting up these keys (the handshake) costs one or two extra round trips, so HTTPS can feel slower on the first load. A round trip is a message out and the reply back."},
   {n:"L4",name:"TCP",unit:"segment",hdr:20,pay:91,

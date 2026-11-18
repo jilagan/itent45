@@ -5,7 +5,7 @@
    "id": "enlist-1",
    "sec": null,
    "type": "mc",
-   "stem": "On enlistment morning the web servers handle every request, but seat reservations are slow. The university doubles the number of web servers. What happens to the speed of reservations?",
+   "stem": "On enlistment morning the web servers handle every request, but slot reservations are slow. The university doubles the number of web servers. What happens to the speed of reservations?",
    "options": [
     {
      "text": "Very little changes, because the single primary database is the limit.",
@@ -75,12 +75,12 @@
    "id": "enlist-4",
    "sec": null,
    "type": "mc",
-   "stem": "A student suggests sending seat reservations to read-only replicas of the database to spread the load. Why does this fail?",
+   "stem": "A student suggests sending slot reservations to read-only replicas of the database to spread the load. Why does this fail?",
    "options": [
     {
-     "text": "A reservation changes data, so one primary must decide who gets the last seat.",
+     "text": "A reservation changes data, so one primary must decide who gets the last slot.",
      "correct": true,
-     "feedback": "Replicas only answer reads. If two copies each accepted a reservation, both students could get the same seat."
+     "feedback": "Replicas only answer reads. If two copies each accepted a reservation, both students could get the same slot."
     },
     {
      "text": "Replicas are too slow to handle reservation requests during the peak.",
@@ -90,7 +90,7 @@
     {
      "text": "Reservations can be cached at the web tier, so replicas are not needed.",
      "correct": false,
-     "feedback": "A cached answer can be out of date. A reservation needs the current seat count."
+     "feedback": "A cached answer can be out of date. A reservation needs the current slot count."
     }
    ]
   }

@@ -1,5 +1,5 @@
 /* Lesson debug. Widget code for the markup in lesson.html. */
-/* The shop program, step by step. The same steps run in the tracer and in the test runner. */
+/* The store's program, step by step. The same steps run in the tracer and in the test runner. */
 const DB_TEXT=[
  "Set price to 120",
  "Set quantity to 3",

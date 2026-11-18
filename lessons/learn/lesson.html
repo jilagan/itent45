@@ -4,15 +4,15 @@
         <p>A <dfn title="A rule a program works out from examples so it can make predictions">model</dfn> is built from examples and then judged on examples it has not seen. This lesson fits a line to some students and tests it on others.</p>
       </div>
 
-      <div class="sec" data-sec="exam" data-title="Start with an exam seen early">
-        <p>Suppose you are given the exam paper a week early and memorize every answer. A model faces the same problem. It is built from examples, and it still has to be judged on how well it works.</p>
-        <div class="scene" role="group" aria-label="The exam you saw early is the training set, the exam on the day is the test set" data-art="exam-paper-early" data-art-desc="A student at a desk reads a printed exam paper with the answers already filled in, a week before the exam, with a wall calendar behind.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Questions you saw early</b><span>Training set</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>You, memorizing the answers</b><span>The fitted model</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>New questions on the day</b><span>Test set</span></figcaption></figure>
+      <div class="sec" data-sec="recommendations" data-title="Start with a recommendation row">
+        <p>You open a streaming app and a row of recommended titles appears. You watch one, close the app and come back later. The row has changed. A model built from the viewing records of many people chose those titles. The team that built it has to say how well it works.</p>
+        <div class="scene" role="group" aria-label="Records used to build the model, the model, and a viewer it has not seen" data-art="streaming-recommendation-row" data-art-desc="A student lies on a sofa with a laptop on their knees, and the screen shows a row of plain blank rectangles under a wide banner.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-table"/></svg></div><figcaption><b>Records used to build it</b><span>Training set</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cpu"/></svg></div><figcaption><b>The recommendation model</b><span>The fitted model</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>A viewer it has not seen</b><span>Test set</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> You see the exam a week early and score 100 percent. What does that score tell anyone about your understanding? How would you test it fairly?</div>
-        <div class="instructor">Let students propose a fairer test before they open the widget. Most will suggest new questions or a separate exam. Name that idea as a held-out test set and connect it to the five dashed students in the widget.</div>
+        <div class="ask"><b>Think first.</b> The builders must report how accurate the picks are. Should they score the model on the viewing records it was built from, or on other records? Why?</div>
+        <div class="instructor">Let students propose a fair test before they open the next step. Most will suggest records the model has not seen. Name that idea as a held-out test set and connect it to the five dashed students in the widget.</div>
       </div>
 
       <div class="sec" data-sec="fit-and-test" data-title="Fit a line and test it">

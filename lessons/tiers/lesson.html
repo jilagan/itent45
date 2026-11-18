@@ -4,14 +4,14 @@
         <p>A web application is split into three parts, called <dfn title="One part of an application, with its own job and its own place to run">tiers</dfn>. Each tier has one job and runs in a different place.</p>
       </div>
 
-      <div class="sec" data-sec="restaurant" data-title="Start with a restaurant">
-        <p>In a restaurant, the customer never walks into the kitchen. The customer tells a waiter what they want. The waiter fetches it from the kitchen and brings it back.</p>
-        <div class="scene" role="group" aria-label="Customer is the browser, waiter is the application server, kitchen is the database" data-art="restaurant-three-tiers" data-art-desc="A customer at a restaurant table gives an order to a waiter, who turns toward a kitchen hatch where a cook is working, so the customer never enters the kitchen.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Customer</b><span>Browser</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bell-simple"/></svg></div><figcaption><b>Waiter</b><span><dfn title="The program on your server that applies the rules and talks to the database">Application server</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cooking-pot"/></svg></div><figcaption><b>Kitchen</b><span><dfn title="A separate program that stores data in tables and answers questions about it">Database</dfn></span></figcaption></figure>
+      <div class="sec" data-sec="order-confirmation" data-title="Start with an order confirmation">
+        <p>After you tap Place order in a food delivery app, the screen changes to Order confirmed and lists an order number, your two items and the total. The order number did not exist a moment ago. Several programs on different computers worked together to produce this screen.</p>
+        <div class="scene" role="group" aria-label="Your phone shows the screen, the application server runs the rules, the database stores the orders" data-art="order-confirmed-on-phone" data-art-desc="A student at a plain table holds a phone whose screen shows a short list of blank bars and a large check mark.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg></div><figcaption><b>Your phone</b><span>Browser or app</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>The app's server</b><span><dfn title="The program on your server that applies the rules and talks to the database">Application server</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-database"/></svg></div><figcaption><b>Where orders are saved</b><span><dfn title="A separate program that stores data in tables and answers questions about it">Database</dfn></span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> Take the list of courses you are enrolled in. Which part produced it: the browser, the application server or the database? Write down your guess.</div>
+        <div class="ask"><b>Think first.</b> Which part produced the list of items on that screen: the app on your phone, the app's server or the database? Write down your guess.</div>
         <div class="instructor">Most students cannot say which tier produced a given part of a page. The trace in "Follow one request" fills that gap. Ask a few students for their answers before anyone presses Play.</div>
       </div>
 
@@ -19,21 +19,21 @@
         <p>Every web application has these three tiers. Read the cards from left to right: the user's device, your server, then the database.</p>
         <div class="tcards">
           <div class="tcard">
-            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-user"/></svg>
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-browser"/></svg>
             <div class="tn">Tier 1</div>
             <h4>The browser</h4>
             <div class="trole">Presentation tier</div>
-            <p>Shows the page. Runs on the user's device, which you do not control.</p>
+            <p>Shows the page or app screen. Runs on the user's device, which you do not control.</p>
           </div>
           <div class="tcard">
-            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-bell-simple"/></svg>
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg>
             <div class="tn">Tier 2</div>
             <h4>The application server</h4>
             <div class="trole">Application tier</div>
             <p>Applies the rules and holds the database password. Runs on your server.</p>
           </div>
           <div class="tcard">
-            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-cooking-pot"/></svg>
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-database"/></svg>
             <div class="tn">Tier 3</div>
             <h4>The database</h4>
             <div class="trole">Data tier</div>
@@ -57,7 +57,7 @@
       </div>
 
       <div class="sec" data-sec="trace" data-title="Follow one request">
-        <p>Press Play and watch one click travel through the three tiers and back.</p>
+        <p>Press Play and watch one tap on View order travel through the three tiers and back.</p>
         <div class="ctrls">
           <button class="btn primary" id="trPlay">Play</button>
           <button class="btn" id="trPrev">Previous</button>
@@ -110,7 +110,7 @@
           <div class="brow" id="trBrow" style="display:none">
             <div class="brow-bar">
               <div class="brow-dots"><i></i><i></i><i></i></div>
-              <div class="brow-url">https://enlist.university.edu/my-courses</div>
+              <div class="brow-url">https://app.example.com/orders/5521</div>
               <div class="brow-spin" id="browSpin"></div>
             </div>
             <iframe id="browFrame" sandbox="allow-same-origin" title="Rendered page"></iframe>
@@ -120,7 +120,7 @@
       </div>
 
       <div class="sec" data-sec="why" data-title="Why the browser cannot reach the database">
-        <p>Suppose the browser could talk to the database directly. The password would then sit in code on the user's laptop, where anyone can read it and run any query. In the restaurant, a customer would be in the kitchen. So only the application tier holds the password, and it decides which requests the database may answer.</p>
+        <p>Suppose the browser could talk to the database directly. The database password would then sit in code on the user's device, where anyone can read it and run any query, including one that lists every user's orders. So only the application tier holds the password, and it decides which requests the database may answer.</p>
         <p class="outcome">You can now say which tier should hold the database password and why.</p>
         <details class="more">
           <summary>More detail</summary>

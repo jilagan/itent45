@@ -64,7 +64,7 @@
    "stem": "A student takes many courses, and a course has many students. A grade is recorded for each student in each course. Where should the grade be stored?",
    "options": [
     {
-     "text": "In the enrollments table, in the row for that student and that course.",
+     "text": "In the enlistments table, in the row for that student and that course.",
      "correct": true,
      "feedback": "The grade describes the pairing, so it lives in the table that has one row for each pairing."
     },

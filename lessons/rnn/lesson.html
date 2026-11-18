@@ -1,29 +1,29 @@
     <section class="panel" id="p-rnn">
       <div class="head">
         <h2>Recurrent networks: the approach before transformers</h2>
-        <p>A <dfn title="A model that reads text one word at a time and keeps a short running summary">recurrent network</dfn> reads one word at a time and keeps one small note about everything read so far. Until about 2017, language models worked this way.</p>
+        <p>A <dfn title="A model that reads text one word at a time and keeps a running summary">recurrent network</dfn> reads text one word at a time and keeps a fixed-size summary of everything read so far. Until about 2017, language models worked this way.</p>
       </div>
 
-      <div class="sec" data-sec="lecture" data-title="Start with a lecture">
-        <p>Imagine sitting through a long lecture with a single sticky note. After each sentence you rewrite the note to summarize everything so far, and then you forget the sentence. At the end you can answer questions only from the note. The model's note is called its <dfn title="The fixed-size summary a recurrent network rewrites after each word">hidden state</dfn>.</p>
-        <div class="scene" role="group" aria-label="The student is the network, the sticky note is the hidden state, the sentence is the next word" data-art="lecture-sticky-note" data-art-desc="A student in a lecture hall holds one small sticky note and rewrites it after each sentence while the lecturer keeps talking.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>Student</b><span>Recurrent network</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Sticky note</b><span>Hidden state</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Each sentence heard</b><span>Next word</span></figcaption></figure>
+      <div class="sec" data-sec="pronoun" data-title="Start with a pronoun in a chatbot">
+        <p>You paste a long message into an AI chatbot and ask what "it" in the last sentence refers to. The chatbot names a noun from near the start of the message. To do that, it had to connect one word to another many words earlier.</p>
+        <div class="scene" role="group" aria-label="The parts of the exchange: your long message, the language model, and its answer" data-art="chatbot-long-pasted-text" data-art-desc="A student sits at a desk with a laptop. The screen shows a long block of plain gray lines above a short blue reply bar.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-text-align-left"/></svg></div><figcaption><b>Your long message</b><span>Many words in order</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cpu"/></svg></div><figcaption><b>The language model</b><span>Reads the message</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Its answer</b><span>A noun from the message</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> In <em>The animal didn't cross the street because it was too tired</em>, what does <em>it</em> refer to? Which words would a short summary keep most clearly?</div>
-        <div class="instructor">Ask which words a rewritten note would keep best. Most students say the most recent ones, which the widget confirms.</div>
+        <div class="ask"><b>Think first.</b> In <em>The animal didn't cross the street because it was too tired</em>, what does <em>it</em> refer to? What must the program still have when it reaches <em>it</em>?</div>
+        <div class="instructor">Ask which words a program would still have if it kept only a short summary. Most students say the most recent ones, which the widget confirms.</div>
       </div>
 
       <div class="sec" data-sec="read" data-title="Read one word at a time">
-        <p>Press Read the next word and watch the note. Each new word goes on at full strength and everything older fades. When the sentence is finished, press the button once more to ask what <em>it</em> refers to.</p>
+        <p>After each word, the network rewrites its <dfn title="The fixed-size summary a recurrent network rewrites after each word">hidden state</dfn> and discards the word. Press Read the next word and watch the hidden state. Each new word goes in at full strength and everything older fades. When the sentence is finished, press the button once more to ask what <em>it</em> refers to.</p>
         <div>
           <div class="ctab" id="rnPick" style="margin-bottom:12px"></div>
           <div class="sent" id="rnSent"></div>
           <p style="margin:10px 0 0;color:var(--faint)" id="rnCaption"></p>
           <div class="card" style="margin-top:12px">
-            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg>
-            <div class="card-t">What is left on the note</div>
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-cpu"/></svg>
+            <div class="card-t">What is left in the hidden state</div>
             <div class="probs" id="rnBars"></div>
           </div>
           <div class="card" id="rnAnsBox" style="margin-top:13px;display:none">
@@ -40,12 +40,12 @@
         </div>
         <details class="more">
           <summary>More detail</summary>
-          <h4>The note is one fixed size</h4>
-          <p>The note stays the same size however long the sentence is. A short sentence fits comfortably. A paragraph does not, and nothing tells you which parts were squeezed out.</p>
+          <h4>The hidden state has one fixed size</h4>
+          <p>The hidden state stays the same size however long the sentence is. A short sentence fits comfortably. A paragraph does not, and nothing tells you which parts were lost.</p>
           <h4>Why the network is called recurrent</h4>
-          <p>The same small step is applied over and over. Each time, it takes the previous note and the next word and produces a new note.</p>
+          <p>The same small step is applied over and over. Each time, it takes the previous hidden state and the next word and produces a new hidden state.</p>
           <h4>Why the answer is street</h4>
-          <p>The two candidates for <code>it</code> are the nouns <code>animal</code> and <code>street</code>, because <code>it</code> stands for a thing. The note holds street more strongly in both sentences, so the model answers street whichever last word it read.</p>
+          <p>The two candidates for <code>it</code> are the nouns <code>animal</code> and <code>street</code>, because <code>it</code> stands for a thing. The hidden state holds street more strongly in both sentences, so the model answers street whichever last word it read.</p>
         </details>
       </div>
 

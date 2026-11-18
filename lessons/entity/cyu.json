@@ -5,7 +5,7 @@
    "id": "entity-1",
    "sec": null,
    "type": "mc",
-   "stem": "A registrar's sheet has one row per student, with the columns ID number, name and program. How does a data model describe this sheet?",
+   "stem": "The enlistment system keeps one table of students, with one row per student and the columns ID number, name and program. How does a data model describe this table?",
    "options": [
     {
      "text": "Student is the entity, the columns are attributes, and each row is an instance.",
@@ -61,10 +61,10 @@
    "id": "entity-3",
    "sec": "pairing",
    "type": "mc",
-   "stem": "A student enrolls in MGT 45 on 12 August and later receives a grade. Where should the enrollment date and the grade be stored?",
+   "stem": "A student enlists in MGT 45 on 12 August and later receives a grade. Where should the enlistment date and the grade be stored?",
    "options": [
     {
-     "text": "In an Enrollment entity that links the student and the course.",
+     "text": "In an Enlistment entity that links the student and the course.",
      "correct": true,
      "feedback": "The date and the grade describe the pairing of one student with one course, so the pairing is an entity."
     },
@@ -81,7 +81,7 @@
     {
      "text": "In both Student and Course so either one can be looked up.",
      "correct": false,
-     "feedback": "Storing the same fact in two places lets the copies disagree. A separate Enrollment entity stores it once."
+     "feedback": "Storing the same fact in two places lets the copies disagree. A separate Enlistment entity stores it once."
     }
    ]
   }

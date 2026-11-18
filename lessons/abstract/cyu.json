@@ -5,7 +5,7 @@
    "id": "abstract-1",
    "sec": null,
    "type": "mc",
-   "stem": "A founder builds a route app. Her first model lists stop names and the order of stops. A user asks how long a trip takes at 5 PM. What should she conclude?",
+   "stem": "A founder builds a trip-planning app. Her first model lists station names and the order of stations. A user asks how long a trip takes at 5 PM. What should she conclude?",
    "options": [
     {
      "text": "The model is wrong and should be thrown out.",
@@ -13,14 +13,14 @@
      "feedback": "It answers route questions correctly. It is incomplete for timing."
     },
     {
-     "text": "The model lacks distance and traffic, so it cannot answer.",
+     "text": "The model lacks distance and delays, so it cannot answer.",
      "correct": true,
      "feedback": "A model answers only the questions its details cover. Timing needs two more details."
     },
     {
-     "text": "The answer is in the stop names if users read closely.",
+     "text": "The answer is in the station names if users read closely.",
      "correct": false,
-     "feedback": "Stop names say nothing about time."
+     "feedback": "Station names say nothing about time."
     },
     {
      "text": "The model has too many details and needs trimming.",
@@ -33,12 +33,12 @@
    "id": "abstract-2",
    "sec": null,
    "type": "mc",
-   "stem": "A map team adds the color of every jeepney to the model. What is the effect on the question \"Which jeepney do I ride?\"",
+   "stem": "A map team adds the color of every train to the model. What is the effect on the question \"Which train do I take?\"",
    "options": [
     {
      "text": "The model answers the question more accurately.",
      "correct": false,
-     "feedback": "The answer depends on stop names and the order of stops. Color adds neither."
+     "feedback": "The answer depends on station names and the order of stations. Color adds neither."
     },
     {
      "text": "The model grows and the question is answered no better.",
@@ -56,12 +56,12 @@
    "id": "abstract-3",
    "sec": null,
    "type": "mc",
-   "stem": "An app developer checks that the app sends the order to the server when a customer taps Order. Which level is she working at?",
+   "stem": "An app developer checks that the app sends the order to the server when a user taps Order. Which level is she working at?",
    "options": [
     {
-     "text": "Level 1, where the customer taps Order.",
+     "text": "Level 1, where the user taps Order.",
      "correct": false,
-     "feedback": "The tap is what the customer sees. The developer checks what the app does with it."
+     "feedback": "The tap is what the user sees. The developer checks what the app does with it."
     },
     {
      "text": "Level 3, where the server saves the order.",

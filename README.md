@@ -43,13 +43,13 @@ There are 53 lessons in seven areas. Each one is a page of its own, `lessons/<id
 
 Each lesson is three to five steps shown one at a time, followed by a "Check your understanding" step that the platform adds. The head holds the title and one lede of at most 35 words.
 
-- Step 1 is the everyday picture: an analogy of at most 60 words, a small picture or icon row that maps it to the technical terms, and a "Think first" question of at most 30 words.
+- Step 1 is a real moment: what a user sees and does in software the students already use (at most 60 words, no comparison), a picture or icon row of the real parts, and a "Think first" question of at most 30 words about what happens behind the screen.
 - Each later step has at most 70 words of prose, one widget and one instruction for using it. New terms are marked `<dfn title="...">` and show their definition on hover or focus.
 - Anything deeper sits in a closed `<details class="more">` called "More detail".
 - The check step lists the lesson's three or four questions, then a collapsed "Key terms" list built from the `dfn` terms of the lesson.
 - Group exercises (`break`) is the one lesson that is not divided into steps.
 
-Icons are inline SVG from `shared/icons/*.svg`, written as `<use href="#i-name"/>`. Each role keeps one icon across lessons. `docs/CONVERSION-RECIPE.md` has the table.
+Icons are inline SVG from `shared/icons/*.svg`, written as `<use href="#i-name"/>`. Icons are literal, and each part keeps one icon across lessons. `docs/CONVERSION-RECIPE.md` has the table.
 
 ### Web applications
 

@@ -6,7 +6,7 @@
  "outcomes": [
   "Describe how each word looks at all the other words",
   "Say that cost grows with the square of the prompt length",
-  "Say why attention fixed the single-note problem"
+  "Say why attention fixed the single hidden state problem"
  ],
  "tags": [
   "attention",

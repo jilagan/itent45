@@ -5,21 +5,21 @@
    "id": "rules-1",
    "sec": null,
    "type": "mc",
-   "stem": "A sign gives students 10 percent off and orders over 1,000 pesos 5 percent off. A student buys 1,200 pesos of books. Two cashiers charge 1,080 and 1,020 pesos. What caused the gap?",
+   "stem": "A store's rules give students 10 percent off and orders over 1,000 pesos 5 percent off. A student buys 1,200 pesos of books. Two staff members charge 1,080 and 1,020 pesos. What caused the gap?",
    "options": [
     {
-     "text": "One of the cashiers cannot do basic arithmetic.",
+     "text": "One of the staff members cannot do basic arithmetic.",
      "feedback": "Each amount follows from a rule: 10 percent off gives 1,080 and 15 percent off gives 1,020. The arithmetic is fine.",
      "correct": false
     },
     {
-     "text": "The sign never said what happens when both rules apply.",
+     "text": "The rules never said what happens when both apply.",
      "correct": true,
-     "feedback": "The table has a row for a student with a large order, and the sign left it blank, so each cashier chose an answer."
+     "feedback": "The table has a row for a student with a large order, and the rules left it blank, so each person chose an answer."
     },
     {
      "text": "Students should never get the large-order discount.",
-     "feedback": "The sign did not say so, so each cashier made a guess.",
+     "feedback": "The rules did not say so, so each person made a guess.",
      "correct": false
     }
    ]
@@ -28,16 +28,16 @@
    "id": "rules-2",
    "sec": null,
    "type": "mc",
-   "stem": "A rule says \"orders over 1,000 pesos get 5 percent off.\" A customer pays exactly 1,000 pesos and gets no discount. The customer is upset. What is the best fix?",
+   "stem": "A rule says \"orders over 1,000 pesos get 5 percent off.\" A shopper's order is exactly 1,000 pesos and gets no discount. The shopper is upset. What is the best fix?",
    "options": [
     {
      "text": "Write the edge in the rule: \"1,000 pesos or more.\"",
      "correct": true,
-     "feedback": "Stating the edge in words, and testing it, removes the argument at the counter."
+     "feedback": "Stating the edge in words, and testing it, removes the argument about the total."
     },
     {
-     "text": "Tell the customer that the sign was clear.",
-     "feedback": "The sign said \"over,\" and the customer expected \"at least.\" The store has to choose one on purpose.",
+     "text": "Tell the shopper that the rule was clear.",
+     "feedback": "The rule said \"over,\" and the shopper expected \"at least.\" The store has to choose one on purpose.",
      "correct": false
     },
     {

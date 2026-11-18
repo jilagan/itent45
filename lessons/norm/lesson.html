@@ -4,18 +4,19 @@
         <p><dfn title="Storing each fact once and pointing to it from everywhere else">Normalization</dfn> means storing each fact in one place only. Every other place that needs the fact points to it.</p>
       </div>
 
-      <div class="sec" data-sec="class-list" data-title="Start with a class list">
-        <p>Suppose you keep a class list in Excel and type the course title on every student's row. When the title changes, you must fix every row, and one missed row leaves two titles for the same course. A better layout is a second sheet that lists each course once, with each student row pointing to it.</p>
-        <div class="scene" role="group" aria-label="One long sheet is a flat table, two linked sheets are two tables" data-art="class-list" data-art-desc="A teacher at a desk points a finger at one row of a printed class list laid out as a table, with a student standing beside the desk.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>One long sheet</b><span>One <dfn title="A grid of rows and columns, like one sheet">table</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Two linked sheets</b><span>Two tables</span></figcaption></figure>
+      <div class="sec" data-sec="course-title" data-title="Start with a course title">
+        <p>Your class schedule in the university's online enlistment system lists each course with its title, such as Operations Management for MGT 45. When a department renames the course, every student's schedule shows the new title. Behind the page, the database holds one row for each enlistment.</p>
+        <div class="scene" role="group" aria-label="The parts involved: the schedule page, the enlistments table and the courses table" data-art="class-schedule-on-laptop" data-art-desc="A student sits at a desk with a laptop that shows a plain list of rows made of short and long bars, and a phone lies next to the laptop.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg></div><figcaption><b>Schedule page</b><span>What you see</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-table"/></svg></div><figcaption><b>Enlistments</b><span>A <dfn title="A grid of rows and columns that holds one kind of record">table</dfn> with one row per enlistment</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-table"/></svg></div><figcaption><b>Courses</b><span>A table with one row per course</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> Suppose each student row holds only a course number, and titles sit on a course sheet. What must you do to print one student's schedule with titles?</div>
-        <div class="instructor">The answer is to look up each course number on the course sheet, which the database calls a join. Collect a few answers before anyone opens the next step. Some students will say it is more work, which is true and is covered in the last step.</div>
+        <div class="ask"><b>Think first.</b> The database holds one row per enlistment. Where could it keep the course title? Write down two places and what a rename would change in each.</div>
+        <div class="instructor">One answer is to copy the title into every enlistment row. The other is to keep it once on the course and have each enlistment point to the course, which the database reads with a join. Collect a few answers before anyone opens the next step. Some students will say the second is more work, which is true and is covered in the last step.</div>
       </div>
 
       <div class="sec" data-sec="rename" data-title="Change one fact">
-        <p>The same enrollments are stored in two layouts. The course gets a new title. Press Rename MGT 45 and compare the rows each layout writes. Then press the second button to see what a missed row looks like.</p>
+        <p>The same enlistments are stored in two layouts. The course gets a new title. Press Rename MGT 45 and compare the rows each layout writes. Then press the second button to see what a missed row looks like.</p>
         <div class="card" style="margin-bottom:20px">
           <div class="ctrls">
             <button class="btn primary" id="nmRename">Rename MGT 45</button>
@@ -30,14 +31,12 @@
         </div>
         <div class="srv srv2">
           <div class="card">
-            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg>
-            <div class="card-t">One flat table &nbsp;<span style="color:var(--faint)">enrollments</span></div>
+            <div class="card-t">One flat table &nbsp;<span style="color:var(--faint)">enlistments</span></div>
             <div style="overflow-x:auto"><table class="db" id="flatTbl"></table></div>
             <div class="verdict" id="flatVerdict" style="margin-top:12px"></div>
           </div>
           <div class="card">
-            <span style="display:flex;gap:6px"><svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg><svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></span>
-            <div class="card-t">Split in two &nbsp;<span style="color:var(--faint)">courses + enrollments</span></div>
+            <div class="card-t">Split in two &nbsp;<span style="color:var(--faint)">courses + enlistments</span></div>
             <div style="overflow-x:auto"><table class="db" id="normTbl"></table></div>
             <div style="overflow-x:auto;margin-top:9px"><table class="db" id="normTbl2"></table></div>
             <div class="verdict" id="normVerdict" style="margin-top:12px"></div>
@@ -45,11 +44,11 @@
         </div>
         <details class="more">
           <summary>More detail</summary>
-          <h4>Change how many students are enrolled</h4>
-          <p>The flat table repeats the title once for each enrollment, and the split version stores it once. Raise the slider to 400 and think about running a script that makes 400 separate changes to a live database.</p>
+          <h4>Change how many students are enlisted</h4>
+          <p>The flat table repeats the title once for each enlistment, and the split version stores it once. Raise the slider to 400 and think about running a script that makes 400 separate changes to a live database.</p>
           <div class="sliders">
             <div class="field">
-              <label>Students enrolled in it <span class="val" id="vEnr">40</span></label>
+              <label>Students enlisted in it <span class="val" id="vEnr">40</span></label>
               <input type="range" id="sEnr" min="2" max="400" value="40">
             </div>
           </div>

@@ -8,9 +8,9 @@
    "stem": "In \"The animal didn't cross the street because it was too tired\", how does attention decide that \"it\" refers to \"animal\"?",
    "options": [
     {
-     "text": "It scores every word on how well it matches what \"it\" asks for, and animal scores highest.",
+     "text": "It scores every word on how well it matches what \"it\" needs, and animal scores highest.",
      "correct": true,
-     "feedback": "The score is a similarity between positions. Tired asks for something that can be tired, and animal matches."
+     "feedback": "The score is a similarity between positions. The word tired needs something that can be tired, and animal matches."
     },
     {
      "text": "A grammar rule says a pronoun refers to the subject of the sentence.",
@@ -38,12 +38,12 @@
     {
      "text": "It shifts toward \"street\", because wide describes a street.",
      "correct": true,
-     "feedback": "\"It\" builds its question from the words around it. Wide asks for something with width, and street matches."
+     "feedback": "\"It\" builds its query from the words around it. Wide needs something with width, and street matches."
     },
     {
      "text": "It stays on \"animal\", because the nouns in the sentence have not changed.",
      "correct": false,
-     "feedback": "The question that \"it\" asks depends on the last word, so the weights change."
+     "feedback": "The query for \"it\" depends on the last word, so the weights change."
     },
     {
      "text": "It spreads evenly across all the words in the sentence.",
@@ -89,7 +89,7 @@
    "id": "attn-4",
    "sec": null,
    "type": "mc",
-   "stem": "Why did attention remove the problem of the single note in recurrent networks?",
+   "stem": "Why did attention remove the problem of the single hidden state in recurrent networks?",
    "options": [
     {
      "text": "Every word stays available, so any word can look at any other directly.",
@@ -97,9 +97,9 @@
      "feedback": "Nothing is summarized away. Word 1 and word 5,000 are one step apart."
     },
     {
-     "text": "The note was made much larger, so it holds the whole sentence.",
+     "text": "The hidden state was made much larger, so it holds the whole sentence.",
      "correct": false,
-     "feedback": "A transformer has no note. The words themselves are kept."
+     "feedback": "A transformer has no single hidden state. The words themselves are kept."
     },
     {
      "text": "The model skips most words and reads only the important ones.",

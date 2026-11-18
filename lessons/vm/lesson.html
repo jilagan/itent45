@@ -1,17 +1,17 @@
     <section class="panel" id="p-vm">
       <div class="head">
         <h2>Virtualization and what the cloud means</h2>
-        <p>A cloud server is a <dfn title="A software-made slice of a physical machine that behaves like a whole computer">virtual machine</dfn>. Dividing one physical machine into slices is called virtualization.</p>
+        <p>A cloud server is a <dfn title="A software-made share of a physical machine that runs as a complete computer">virtual machine</dfn>. Running many of them on one physical machine is called virtualization.</p>
       </div>
 
-      <div class="sec" data-sec="condo" data-title="Start with a condo building">
-        <p>A condominium building is one structure that holds many separate units. Each owner has a door, a kitchen and a bathroom, and never sees how the building is divided. A rented server works the same way. The 2 GB server you rent is a slice of a much larger machine, made by software in seconds.</p>
-        <div class="scene" role="group" aria-label="The condo building is the physical server, the units are virtual machines, the owner is the cloud customer" data-art="condo-building" data-art-desc="A tall condominium building where each unit has its own door and balcony, all sharing one structure, with a resident waving from one balcony.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-building-apartment"/></svg></div><figcaption><b>Condo building</b><span>Physical server</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-building-apartment"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-building-apartment"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-building-apartment"/></svg></div><figcaption><b>Condo units</b><span>Virtual machines</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Unit owner</b><span>Cloud customer</span></figcaption></figure>
+      <div class="sec" data-sec="new-server" data-title="Start with a new cloud server">
+        <p>A student team needs a server for its project app tonight. It opens a cloud provider's console, chooses a 2 GB server and presses Create. About a minute later the console shows a running server. The team logs in and installs its app.</p>
+        <div class="scene" role="group" aria-label="The team's laptop sends the Create request, the host machine in a data center holds many servers, and the 2 GB server is one of them" data-art="create-server-on-laptop" data-art-desc="Two students sit at a table with one open laptop. The screen shows a plain form with one button and a row of small blocks beside it, and one student points at the screen.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-laptop"/></svg></div><figcaption><b>The team's laptop</b><span>Sends the Create request</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>A large machine in a data center</b><span>Host</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cpu"/></svg></div><figcaption><b>The 2 GB server</b><span>Virtual machine</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> Nobody delivers a computer when you rent a 2 GB server from a cloud provider, so what were you given?</div>
+        <div class="ask"><b>Think first.</b> A data center cannot install and wire a new computer in one minute. What did the team receive?</div>
         <div class="instructor">Students usually answer "a computer in a data center". Steer them to "a share of a computer, made by software". The next step shows how many shares fit on one machine.</div>
       </div>
 
@@ -19,7 +19,7 @@
         <p>A provider runs many <dfn title="One virtual machine running on a host">guests</dfn> on one large <dfn title="The physical machine that runs the guests">host</dfn>. Move the sliders to set how many guests share the host and how much memory each gets. Then push the total past the host's memory and read the result.</p>
         <div class="srv">
           <div class="card">
-            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-building-apartment"/></svg>
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg>
             <div class="card-t">One physical machine divided into guests</div>
             <div class="legend2" id="hostSplit"></div>
             <div class="verdict" id="vmVerdict"></div>
@@ -56,7 +56,7 @@
               <div class="sh">Virtualized: one machine, many guests</div>
               <div class="guests" id="guestRow"></div>
               <div class="lyrbox">
-                <div class="hyp"><dfn title="The software that divides one physical machine into virtual machines">Hypervisor</dfn>: divides the machine into slices</div>
+                <div class="hyp"><dfn title="The software that divides one physical machine into virtual machines">Hypervisor</dfn>: divides the machine between the guests</div>
                 <div>Host operating system</div>
                 <div class="hw">Hardware: <span id="hostSpec">256 GB RAM, 64 cores</span></div>
               </div>
@@ -159,7 +159,7 @@
           <summary>More detail</summary>
           <h4>Where you have met these before</h4>
           <p>On-demand self-service: in <a data-lesson="enlist">Case study: enlistment</a>, each of the seven servers needed a quotation, a purchase order and a delivery. A cloud server needs a credit card and about a minute.</p>
-          <p>Broad network access: in <a data-lesson="clients">One API, many clients</a>, the same HTTP endpoint served a browser, an iPhone and an Android app.</p>
+          <p>Broad network access: in <a data-lesson="clients">One API, many clients</a>, the same HTTP endpoint served a browser, an iOS app and an Android app.</p>
           <p>Resource pooling: the host in "Share one machine" is shared by many customers.</p>
           <p>Rapid elasticity: the autoscaling web tier in <a data-lesson="enlist">Case study: enlistment</a> depends on it. That case showed that the web tier was not the limit and the database was.</p>
           <p>Measured service: it produces the cost chart in <a data-lesson="cost">CapEx and OpEx</a>.</p>
@@ -168,7 +168,7 @@
       </div>
 
       <div class="sec" data-sec="models" data-title="Who runs what">
-        <p>Cooking at home, ordering catering and eating out hand more of the work to someone else each time. Cloud service models do the same for the layers in this table. Read across a row to see who runs that layer. You pay the provider for the layers it runs. The three models are <dfn title="Infrastructure as a service: you rent a virtual machine and run everything above it">IaaS</dfn>, <dfn title="Platform as a service: the provider runs everything under your code">PaaS</dfn> and <dfn title="Software as a service: a finished application that the provider runs entirely">SaaS</dfn>.</p>
+        <p>Cloud service models differ in how many layers the provider runs for you. Read across a row to see who runs that layer. You pay the provider for the layers it runs. The three models are <dfn title="Infrastructure as a service: you rent a virtual machine and run everything above it">IaaS</dfn>, <dfn title="Platform as a service: the provider runs everything under your code">PaaS</dfn> and <dfn title="Software as a service: a finished application that the provider runs entirely">SaaS</dfn>.</p>
         <div class="card">
           <table class="resp"><thead><tr>
             <th>Layer</th><th>On-premise</th><th>IaaS</th><th>PaaS</th><th>SaaS</th>
@@ -184,7 +184,7 @@
           <h4>Examples</h4>
           <p>An Amazon EC2 instance or a DigitalOcean Droplet is IaaS. You receive a virtual machine and still install the operating system updates yourself.</p>
           <p>Railway and Supabase are PaaS. You push your code to them and they run everything under it.</p>
-          <p>Your student portal, Canvas and Gmail are SaaS for the people who use them. Your <span data-var="project">project</span> is a PaaS customer, and it is a SaaS provider to its own users.</p>
+          <p>The learning management system and a web email service are SaaS for the people who use them. Your <span data-var="project">project</span> is a PaaS customer, and it is a SaaS provider to its own users.</p>
         </details>
       </div>
     </section>

@@ -28,7 +28,7 @@
    "id": "debug-2",
    "sec": null,
    "type": "mc",
-   "stem": "A fix makes 3 teas at 120 pesos total 324, as expected, and the developer ships it. Later a customer buys 2 teas at 150 pesos, pays exactly 300 and gets no discount. Which test would have caught this?",
+   "stem": "A fix makes 3 teas at 120 pesos total 324, as expected, and the developer ships it. Later a shopper orders 2 teas at 150 pesos, pays exactly 300 and gets no discount. Which test would have caught this?",
    "options": [
     {
      "text": "An order of 50 teas at 120 pesos.",

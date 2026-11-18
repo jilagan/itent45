@@ -5,7 +5,7 @@
  "desc": "A standard way to record sales, payments and who took part.",
  "outcomes": [
   "Find resource, event and agents in a transaction of your own",
-  "Explain why payment and enrollment are many-to-many",
+  "Explain why payment and enlistment are many-to-many",
   "Say why a standard pattern shortens schema design"
  ],
  "tags": [

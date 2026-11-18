@@ -4,7 +4,7 @@
  "label": "Virtual machines and the cloud",
  "desc": "How one physical machine is split into many virtual ones.",
  "outcomes": [
-  "Explain a VM as a slice of a host",
+  "Explain a VM as a share of a host",
   "Name the five NIST characteristics and tie three to things you did",
   "Place IaaS, PaaS and SaaS by who runs what"
  ],
@@ -18,7 +18,7 @@
  "area": "capacity-cloud",
  "needs": [],
  "video": {
-  "sec": "provisioning",
+  "sec": "provision",
   "youtube": "",
   "title": "Launch a cloud server, then open the bill",
   "about": "A real cloud console: choosing an instance type and region, the pricing page, how long the server takes to boot, and the first line of the bill."

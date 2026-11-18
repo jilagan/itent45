@@ -2,33 +2,32 @@
 /* ================= 05 VERBS & REST ================= */
 /* ---- live table: what each verb does to real rows ---- */
 const SEED=[
- {id:"MGT45",   code:"MGT 45",   title:"Operations Management",    units:3, slots:4},
- {id:"CSCI21",  code:"CSCI 21",  title:"Data Structures",          units:3, slots:0},
- {id:"ITMGT25", code:"ITMGT 25", title:"Programming Fundamentals", units:3, slots:12}
+ {id:"8888", item:"Chicken rice", qty:2, tip:20},
+ {id:"8889", item:"Beef noodles", qty:1, tip:0},
+ {id:"8890", item:"Veggie wrap",  qty:3, tip:50}
 ];
 const REQS=[
- {id:"getall", v:"GET",    d:"list every course"},
- {id:"getone", v:"GET",    item:true, d:"fetch the selected course"},
- {id:"post",   v:"POST",   d:"create a course from the body"},
+ {id:"getall", v:"GET",    d:"list every order"},
+ {id:"getone", v:"GET",    item:true, d:"fetch the selected order"},
+ {id:"post",   v:"POST",   d:"create an order from the body"},
  {id:"put",    v:"PUT",    item:true, body:true, d:"replace it with the body you write"},
  {id:"patch",  v:"PATCH",  item:true, body:true, d:"change only what the body contains"},
  {id:"del",    v:"DELETE", item:true, d:"remove it"}
 ];
-const DB={rows:JSON.parse(JSON.stringify(SEED)), sel:"post", row:"MGT45", log:[], mark:null, sent:0, lastId:null, seq:0};
-const key=r=>r.id;                       // identity, not the display code
-const slug=c=>c.trim().replace(/\s+/g,"").toUpperCase();
+const DB={rows:JSON.parse(JSON.stringify(SEED)), sel:"post", row:"8888", log:[], mark:null, sent:0, lastId:null, nextId:8891};
+const key=r=>r.id;                       // identity: the server assigns it
 // the row a single-item request will act on
 const selRow=()=>DB.rows.find(r=>key(r)===DB.row) || null;
-const reqPath=q=>q.item ? `/courses/${DB.row}` : "/courses";
+const reqPath=q=>q.item ? `/orders/${DB.row}` : "/orders";
 
 /* the body the PUT / PATCH builder currently describes */
 function reqBody(){
   const on=k=>{const e=$("#bfOn"+k); return e?e.checked:true;};
   const val=(k,d)=>{const e=$("#bf"+k); return e?(e.type==="number"?+e.value:e.value):d;};
   const b={};
-  if(on("Title")) b.title=val("Title","");
-  if(on("Units")) b.units=val("Units",3);
-  if(on("Slots")) b.slots=val("Slots",3);
+  if(on("Item")) b.item=val("Item","");
+  if(on("Qty")) b.qty=val("Qty",3);
+  if(on("Tip")) b.tip=val("Tip",30);
   return b;
 }
 function renderBodyForm(){
@@ -38,10 +37,10 @@ function renderBodyForm(){
   f.style.display = on ? "" : "none";
   if(!on) return;
   const b=reqBody(), keys=Object.keys(b);
-  const missing=["title","units","slots"].filter(k=>!(k in b));
+  const missing=["item","qty","tip"].filter(k=>!(k in b));
   const lines=keys.map(k=>` <span class="s">"${k}"</span>: ${typeof b[k]==="number"?b[k]:`<span class="s">"${b[k]}"</span>`}`);
   $("#bfBody").innerHTML =
-    `<span class="kw">${q.v}</span> /courses/${DB.row}\n`+
+    `<span class="kw">${q.v}</span> /orders/${DB.row}\n`+
     `Content-Type: <span class="d">application/json</span>\n\n`+
     (keys.length ? `{\n${lines.join(",\n")}\n}` : `{}`)+
     (missing.length
@@ -51,17 +50,16 @@ function renderBodyForm(){
           : `\n<span class="c">// PATCH ignores them, so those keep their values</span>`)
       : `\n\n<span class="c">// every field is here, so both verbs do the same thing</span>`);
 }
-["#bfTitle","#bfUnits","#bfSlots","#bfOnTitle","#bfOnUnits","#bfOnSlots"].forEach(sel=>{
+["#bfItem","#bfQty","#bfTip","#bfOnItem","#bfOnQty","#bfOnTip"].forEach(sel=>{
   const el=$(sel); if(el) el.addEventListener("input", ()=>{renderBodyForm();});
 });
 
 /* what the POST form is currently describing */
 function postBody(){
   return {
-    code : ($("#pfCode")  ? $("#pfCode").value  : "").trim(),
-    title: ($("#pfTitle") ? $("#pfTitle").value : "").trim(),
-    units: +(($("#pfUnits")||{}).value || 3),
-    slots: +(($("#pfSlots")||{}).value || 12)
+    item : ($("#pfItem")  ? $("#pfItem").value  : "").trim(),
+    qty  : +(($("#pfQty")||{}).value || 1),
+    tip  : +(($("#pfTip")||{}).value || 0)
   };
 }
 function renderPostForm(){
@@ -71,16 +69,15 @@ function renderPostForm(){
   if(!on) return;
   const b=postBody();
   $("#pfBody").innerHTML =
-    `<span class="kw">POST</span> /courses\n`+
+    `<span class="kw">POST</span> /orders\n`+
     `Content-Type: <span class="d">application/json</span>\n\n`+
-    `{<span class="s">"code"</span>: <span class="s">"${b.code||"…"}"</span>,\n`+
-    ` <span class="s">"title"</span>: <span class="s">"${b.title||"…"}"</span>,\n`+
-    ` <span class="s">"units"</span>: ${b.units},\n`+
-    ` <span class="s">"slots"</span>: ${b.slots}}\n\n`+
-    `<span class="c">// You send the code. The server builds the id from it</span>\n`+
-    `<span class="c">// and stores both:  id = "${b.code?slug(b.code):"…"}"</span>`;
+    `{<span class="s">"item"</span>: <span class="s">"${b.item||"…"}"</span>,\n`+
+    ` <span class="s">"qty"</span>: ${b.qty},\n`+
+    ` <span class="s">"tip"</span>: ${b.tip}}\n\n`+
+    `<span class="c">// You do not send an id. The server assigns</span>\n`+
+    `<span class="c">// the next one:  id = "${DB.nextId}"</span>`;
 }
-["#pfCode","#pfTitle","#pfUnits","#pfSlots"].forEach(sel=>{
+["#pfItem","#pfQty","#pfTip"].forEach(sel=>{
   const el=$(sel); if(el) el.addEventListener("input", renderPostForm);
 });
 
@@ -91,11 +88,10 @@ function dbRender(){
     const cls = (m.added===key(r) ? "added " : "") + (key(r)===DB.row ? "picked" : "");
     const cell=(f,v)=>{
       const c = (m.changed===key(r) && m.fields && m.fields.includes(f)) ? (v===null?"hlnull":"hl") : "";
-      // the code is what people read; the id underneath it is what the URL uses
-      const extra = f==="code" ? `<small class="rid">${r.id}</small>` : "";
-      return `<td class="${f==="code"?"k ":""}${c}">${v===null?"null":v}${extra}</td>`;
+      // the id is what the URL uses
+      return `<td class="${f==="id"?"k ":""}${c}">${v===null?"null":v}</td>`;
     };
-    return `<tr class="${cls}" data-row="${key(r)}">${cell("code",r.code)}${cell("title",r.title)}${cell("units",r.units)}${cell("slots",r.slots)}</tr>`;
+    return `<tr class="${cls}" data-row="${key(r)}">${cell("id",r.id)}${cell("item",r.item)}${cell("qty",r.qty)}${cell("tip",r.tip)}</tr>`;
   }).join("") + (m.gone?`<tr class="gone"><td class="k">${m.gone}</td><td>deleted</td><td>—</td><td>—</td></tr>`:"")
     : `<tr><td colspan="4" class="dbempty">No rows.</td></tr>`;
 
@@ -105,10 +101,10 @@ function dbRender(){
   });
 
   const gone=!selRow();
-  const disp=selRow()?selRow().code:DB.row;
+  const disp=selRow()?selRow().id:DB.row;
   $("#reqNote").innerHTML = gone
-    ? `<b style="color:var(--warn)">${DB.row} is not in the table.</b> Single-item requests return 404 until you click a row that exists.`
-    : `Click a row to point the single-item requests at it. The selected row is <b style="color:var(--req)">${disp}</b>.`;
+    ? `<b style="color:var(--warn)">Order ${DB.row} is not in the table.</b> Single-item requests return 404 until you click a row that exists.`
+    : `Click a row to point the single-item requests at it. The selected order is <b style="color:var(--req)">${disp}</b>.`;
   $("#reqList").innerHTML=REQS.map(q=>`
     <button class="rq${q.id===DB.sel?" on":""}" data-r="${q.id}">
       <span class="vb ${q.v}">${q.v}</span>
@@ -137,24 +133,21 @@ function send(){
   }
   else if(q.id==="post"){
     const body=postBody();
-    if(!body.code){
-      status="422 Unprocessable"; fx="code is required"; kind="err";
+    if(!body.item){
+      status="422 Unprocessable"; fx="item is required"; kind="err";
     } else {
-      // a duplicate code is allowed on purpose: the server has no reason to
-      // refuse, and that is exactly what makes POST worth being careful with
-      let id=slug(body.code), n=1;
-      while(DB.rows.some(r=>r.id===id)) id=slug(body.code)+"-"+(++n);
-      const row={id, code:body.code.trim(), title:body.title||"Untitled",
-                 units:body.units, slots:body.slots};
+      // no rule refuses a duplicate, and that is exactly what makes POST
+      // worth being careful with
+      const id=String(DB.nextId++);
+      const row={id, item:body.item, qty:body.qty, tip:body.tip};
       DB.rows.push(row); status="201 Created"; kind="new";
       fx=`row ${DB.rows.length} created`; DB.mark={added:id};
-      DB.dupe = n>1;
     }
   }
   else if(q.id==="put"){
     if(!target){ status="404 Not Found"; fx="row not found"; kind="err"; }
     else {
-      const b=reqBody(), all=["title","units","slots"];
+      const b=reqBody(), all=["item","qty","tip"];
       // replace: anything the body left out is not preserved, it is emptied
       all.forEach(k=>{ target[k] = (k in b) ? b[k] : null; });
       const wiped=all.filter(k=>!(k in b));
@@ -176,7 +169,7 @@ function send(){
   }
   else if(q.id==="del"){
     if(target){ DB.rows=DB.rows.filter(r=>key(r)!==DB.row); status="204 No Content";
-                fx="row removed"; DB.mark={gone:target.code}; DB.goneRow=DB.row; }
+                fx="row removed"; DB.mark={gone:target.id}; DB.goneRow=DB.row; }
     else { status="404 Not Found"; fx="row already deleted"; kind="err"; }
   }
   DB.log.push({status, line:`${q.v} ${reqPath(q)}`, fx, k:kind});
@@ -191,21 +184,21 @@ function dbVerdict(q){
     v.innerHTML=`<b>Sent ${n}×, still ${DB.rows.length} rows</b>GET only reads, so repeating it changes nothing. A verb with this property is called <b class="i">safe</b>.`;
   } else if(q.id==="post"){
     const b=postBody();
-    if(!b.code){
+    if(!b.item){
       v.className="verdict bad";
-      v.innerHTML=`<b>422, and nothing was created</b>The body had no <code>code</code>, so the server refused it. Type a code and send again.`;
+      v.innerHTML=`<b>422, and nothing was created</b>The body had no <code>item</code>, so the server refused it. Type an item and send again.`;
     } else if(twice){
       v.className="verdict bad";
-      v.innerHTML=`<b>${n} clicks, ${n} rows called ${b.code}</b>The server created a course each time, and nothing stopped the duplicates. This is what <b class="i">not idempotent</b> means.`;
+      v.innerHTML=`<b>${n} clicks, ${n} new orders for ${b.item}</b>The server created an order each time, and nothing stopped the duplicates. This is what <b class="i">not idempotent</b> means.`;
     } else {
       v.className="verdict warn";
-      v.innerHTML=`<b>201 Created, and ${b.code} is in the table</b>Press <em>Send the same one again</em> without changing anything, and count the rows.`;
+      v.innerHTML=`<b>201 Created, and the order for ${b.item} is in the table</b>Press <em>Send again</em> without changing anything, and count the rows.`;
     }
   } else if(q.v==="PUT"||q.v==="PATCH"){
-    const missing=["title","units","slots"].filter(k=>!(k in reqBody()));
+    const missing=["item","qty","tip"].filter(k=>!(k in reqBody()));
     if(q.v==="PUT" && missing.length){
       v.className="verdict bad";
-      v.innerHTML=`<b>${missing.join(" and ")} ${missing.length>1?"are":"is"} now null</b>PUT replaces the whole item, so the ${missing.length>1?"fields":"field"} your body left out ${missing.length>1?"are":"is"} now empty. Select <b class="i">PATCH</b>, keep the same body and send it.`;
+      v.innerHTML=`<b>${missing.join(" and ")} ${missing.length>1?"are":"is"} now null</b>PUT replaces the whole order, so the ${missing.length>1?"fields":"field"} your body left out ${missing.length>1?"are":"is"} now empty. Select <b class="i">PATCH</b>, keep the same body and send it.`;
     } else if(q.v==="PATCH" && missing.length){
       v.className="verdict ok";
       v.innerHTML=`<b>Only ${Object.keys(reqBody()).join(", ")} changed</b>PATCH left <code>${missing.join("</code> and <code>")}</code> untouched, and the same body sent with PUT emptied ${missing.length>1?"them":"it"}. Send it again and the table stays the same, so PATCH is <b class="i">idempotent</b> here.`;
@@ -218,15 +211,15 @@ function dbVerdict(q){
   } else {
     v.className = twice ? "verdict ok" : "verdict warn";
     v.innerHTML = twice
-      ? `<b>The second send returned 404</b>The reply changed and the end state is the same: the course is gone. So DELETE is <b class="i">idempotent</b>.`
-      : `<b>204 No Content, row removed</b>Press <em>Send the same one again</em> and read the reply.`;
+      ? `<b>The second send returned 404</b>The reply changed and the end state is the same: the order is gone. So DELETE is <b class="i">idempotent</b>.`
+      : `<b>204 No Content, row removed</b>Press <em>Send again</em> and read the reply.`;
   }
 }
 $("#reqSend").onclick=()=>{ DB.lastId=null; send(); };
 $("#reqAgain").onclick=send;
 $("#reqReset").onclick=()=>{
-  DB.rows=JSON.parse(JSON.stringify(SEED)); DB.log=[]; DB.mark=null; DB.row="MGT45"; DB.goneRow=null;
-  DB.sent=0; DB.lastId=null; DB.seq=0; $("#reqAgain").disabled=true;
+  DB.rows=JSON.parse(JSON.stringify(SEED)); DB.log=[]; DB.mark=null; DB.row="8888"; DB.goneRow=null;
+  DB.sent=0; DB.lastId=null; DB.nextId=8891; $("#reqAgain").disabled=true;
   $("#dbVerdict").className="verdict"; $("#dbVerdict").innerHTML="<b>Reset</b>Three rows, as they started.";
   dbRender();
 };
@@ -236,23 +229,23 @@ $("#dbVerdict").innerHTML="<b>Ready</b>Pick a request and press Send.";
 
 const VERBS=[
  {v:"GET",d:"Fetch something. Change nothing.",safe:true,idem:true,body:false,
-  ex:`GET /courses/MGT45`,
+  ex:`GET /orders/8888`,
   twice:"The answer is the same both times, because nothing changed.",
   note:"Search engines send GET to every link they find, so a GET must never delete anything."},
  {v:"POST",d:"Create something new, or submit work.",safe:false,idem:false,body:true,
-  ex:`POST /enrollments`,
-  twice:"Two enrollments are created. This is the double-enrollment bug after a page refresh.",
+  ex:`POST /orders`,
+  twice:"Two orders are created. This is the double-order bug after a page refresh.",
   note:"POST is the only common verb that is neither safe nor idempotent. Anything that must not happen twice needs protection that you build."},
  {v:"PUT",d:"Replace an item completely.",safe:false,idem:true,body:true,
-  ex:`PUT /courses/MGT45`,
-  twice:"The result is the same. The second request replaces the item with the same values.",
-  note:"PUT means the whole item, so any field you leave out is cleared."},
+  ex:`PUT /orders/8888`,
+  twice:"The result is the same. The second request replaces the order with the same values.",
+  note:"PUT means the whole order, so any field you leave out is cleared."},
  {v:"PATCH",d:"Change part of an item.",safe:false,idem:true,body:true,
-  ex:`PATCH /courses/MGT45`,
-  twice:"The result is the same for a plain value like units: 6. A patch that says 'add 3 units' would not be idempotent.",
+  ex:`PATCH /orders/8888`,
+  twice:"The result is the same for a plain value like qty: 2. A patch that says 'add 1 to qty' would not be idempotent.",
   note:"The usual verb for edit forms. Send only what changed."},
  {v:"DELETE",d:"Remove an item.",safe:false,idem:true,body:false,
-  ex:`DELETE /enrollments/8891`,
+  ex:`DELETE /orders/8888`,
   twice:"The first call removes the item and returns 204. The second returns 404, and the end state is the same.",
   note:"Most real systems keep the row and mark it inactive, so the history survives."}
 ];
@@ -278,15 +271,15 @@ function renderVerbs(){
 renderVerbs();
 
 const MTX=[
- ["GET",  ["List them all","200 + a list",0,"Returns every course, usually one page at a time."],
-          ["Fetch that one","200, or 404",0,"The standard way to read one item. If the code does not exist, the server returns 404."]],
+ ["GET",  ["List them all","200 + a list",0,"Returns every order, usually one page at a time."],
+          ["Fetch that one","200, or 404",0,"The standard way to read one item. If the id does not exist, the server returns 404."]],
  ["POST", ["Create a new one","201 + Location",0,"The server assigns the id and returns the new item's URL in the Location header. Sending this twice creates two."],
-          ["Rarely meaningful","405",1,"The item already exists, so there is nothing to create. Some APIs use this form for actions such as /courses/MGT45/archive."]],
- ["PUT",  ["Replace the whole set","405 in practice",1,"This would mean discard every course and use these instead. Almost no API allows it."],
+          ["Rarely meaningful","405",1,"The item already exists, so there is nothing to create. Some APIs use this form for actions such as /orders/8888/repeat."]],
+ ["PUT",  ["Replace the whole set","405 in practice",1,"This would mean discard every order and use these instead. Almost no API allows it."],
           ["Replace that one","200 or 204",0,"Overwrites every field, and any field you leave out is cleared. People make this mistake first."]],
  ["PATCH",["Not meaningful","405",1,"There is no single item to update part of."],
           ["Change some fields","200",0,"The everyday edit. Send only what changed."]],
- ["DELETE",["Delete everything","405",1,"This would delete every course, and someone would eventually call it by accident."],
+ ["DELETE",["Delete everything","405",1,"This would delete every order, and someone would eventually call it by accident."],
           ["Delete that one","204, then 404",0,"Removes it and returns no body. Calling it again returns 404, and the end state is the same."]]
 ];
 $("#mtxBody").innerHTML=MTX.map(([v,coll,item],r)=>`
@@ -298,7 +291,7 @@ $$("#mtxBody .mc").forEach(el=>el.onclick=()=>{
   $$("#mtxBody .mc").forEach(x=>x.classList.remove("pick"));
   el.classList.add("pick");
   const row=MTX[+el.dataset.r], cell=[row[1],row[2]][+el.dataset.c];
-  const url=+el.dataset.c===0?"/courses":"/courses/MGT45";
+  const url=+el.dataset.c===0?"/orders":"/orders/8888";
   $("#mtxOut").innerHTML=`<div class="et">${row[0]} ${url}</div><p>${cell[3]}</p>`;
 });
 
@@ -314,14 +307,14 @@ const CODES=[
  [401,"Unauthorized",4,"The name is misleading, because it means unauthenticated. The server does not know who you are, so send your login details and try again.",1],
  [403,"Forbidden",4,"The server knows who you are and still says no. Better credentials will not help.",1],
  [404,"Not Found",4,"The URL names nothing, and the server is working. Check your path and your ids first.",1],
- [405,"Method Not Allowed",4,"The URL is right and the verb is wrong, such as <code>DELETE /courses</code> on a server that allows DELETE only on one course.",0],
- [409,"Conflict",4,"The request is valid and clashes with the current state. If two students click for the last seat, one gets 201 and the other gets 409.",0],
- [422,"Unprocessable Content",4,"The syntax is fine and the content breaks a rule, such as a date in the past or a unit load over the maximum.",0],
+ [405,"Method Not Allowed",4,"The URL is right and the verb is wrong, such as <code>DELETE /orders</code> on a server that allows DELETE only on one order.",0],
+ [409,"Conflict",4,"The request is valid and clashes with the current state. If two users order the last unit of an item in stock, one gets 201 and the other gets 409.",0],
+ [422,"Unprocessable Content",4,"The syntax is fine and the content breaks a rule, such as a delivery time in the past or a quantity over the maximum.",0],
  [429,"Too Many Requests",4,"The client sent too many requests, so the server is limiting it. A <code>Retry-After</code> header says how long to wait.",0],
  [500,"Internal Server Error",5,"The server code failed with an error, which is always a bug. Read the server's error report (the traceback) and ignore the page itself.",1],
  [502,"Bad Gateway",5,"A server in front of your application (a gateway) got no valid reply from it, usually because the worker process died.",0],
  [503,"Service Unavailable",5,"The server is running and refusing work because it is overloaded or in maintenance. A 503 is better than a very slow 200.",0],
- [504,"Gateway Timeout",5,"Your application did not reply in time, so the gateway stopped waiting. On enlistment morning this is the code people see.",0]
+ [504,"Gateway Timeout",5,"Your application did not reply in time, so the gateway stopped waiting. A busy period makes it more likely.",0]
 ];
 const chip=([c,n,f],i)=>`<button class="cd c${f}" data-i="${i}"><b>${c}</b>${n}</button>`;
 $("#codeChips").innerHTML=CODES.map((x,i)=>x[4]?chip(x,i):"").join("");
@@ -378,7 +371,7 @@ function renderGran(){
     v.innerHTML=`<b>HTTP/2 reduced the waiting and nothing else</b>All ${m.chatty.reqs} requests now share one connection, so the wait drops to a single round trip. The server still runs <b class="i">${m.chatty.handlers} handlers</b> where one would do, a pattern called the N+1 problem.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>${m.chatty.rounds} round trips and ${kb(m.chatty.up)} of headers to fetch ${kb(m.n*G_ITEM)} of data</b>A browser opens only six connections to one host, so ${m.chatty.reqs} requests wait in batches of six. The last course title appears after <b class="i">${m.chatty.wait} ms</b>, against ${m.bulk.wait} ms for one request.`;
+    v.innerHTML=`<b>${m.chatty.rounds} round trips and ${kb(m.chatty.up)} of headers to fetch ${kb(m.n*G_ITEM)} of data</b>A browser opens only six connections to one host, so ${m.chatty.reqs} requests wait in batches of six. The last order appears after <b class="i">${m.chatty.wait} ms</b>, against ${m.bulk.wait} ms for one request.`;
   }
 }
 $("#sGran").oninput=e=>{GRAN.n=+e.target.value;$("#vGran").textContent=GRAN.n;renderGran()};
@@ -417,7 +410,7 @@ function renderLazy(){
   const v=$("#lazyVerdict");
   if(pct<=25){
     v.className="verdict ok";
-    v.innerHTML=`<b>They read ${pct}% of it, and you sent all of it</b>Loading everything moved ${(m.bulk.bytes/1024).toFixed(0)} KB so the student could look at ${(m.v*L_ITEM/1024).toFixed(1)} KB, and the first screen took ${Math.round(m.bulk.ttfc)} ms. Loading one page at a time takes ${Math.round(m.lazy.ttfc)} ms.`;
+    v.innerHTML=`<b>They read ${pct}% of it, and you sent all of it</b>Loading everything moved ${(m.bulk.bytes/1024).toFixed(0)} KB so the user could look at ${(m.v*L_ITEM/1024).toFixed(1)} KB, and the first screen took ${Math.round(m.bulk.ttfc)} ms. Loading one page at a time takes ${Math.round(m.lazy.ttfc)} ms.`;
   } else if(pct<80){
     v.className="verdict warn";
     v.innerHTML=`<b>${pct}% read: loading as they scroll still transfers less</b>Paging sends ${(m.lazy.bytes/1024).toFixed(1)} KB against ${(m.bulk.bytes/1024).toFixed(0)} KB, at the cost of ${m.lazy.rt} round trips where loading everything takes one. Where the balance tips depends on your users.`;

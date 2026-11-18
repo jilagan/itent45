@@ -4,7 +4,7 @@
  "label": "Backpropagation",
  "desc": "How a network works out which parts caused an error.",
  "outcomes": [
-  "Say backpropagation assigns blame backward through the chain",
+  "Say backpropagation passes the error backward through the layers",
   "Predict which weights move most",
   "Say why a middle weight needs information from downstream"
  ],

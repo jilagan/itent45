@@ -4,19 +4,19 @@
         <p>The <dfn title="The amount of text a model can see when it writes a reply">context window</dfn> is everything a model can see when it writes a reply. Text that does not fit is invisible to it.</p>
       </div>
 
-      <div class="sec" data-sec="whiteboard" data-title="Start with a whiteboard">
-        <p>A classroom whiteboard has room for a fixed number of lines. When it is full, someone erases the oldest line to make space for a new one. A model's context window works the same way, except the oldest text usually goes first and nothing warns you. The window is counted in <dfn title="A piece of text, about three quarters of a word on average">tokens</dfn>.</p>
-        <div class="scene" role="group" aria-label="The whiteboard is the context window, the lines are tokens, the erased line is dropped text" data-art="classroom-whiteboard" data-art-desc="A teacher reaches up with an eraser to wipe the top row of a whiteboard that is full of evenly spaced rows of plain gray bars, leaving one empty row at the bottom.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg></div><figcaption><b>Whiteboard</b><span>Context window</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Lines written on it</b><span>Tokens</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Oldest line erased</b><span>Text that drops out</span></figcaption></figure>
+      <div class="sec" data-sec="long-chat" data-title="Start with a long chat">
+        <p>At the start of a chat you tell an AI chatbot, "Answer in short bullet points." An hour and many messages later, after you pasted in a long reading, its replies come back as long paragraphs. You never withdrew the instruction.</p>
+        <div class="scene" role="group" aria-label="The parts of the chat: your first instruction, the many later messages, and the latest reply" data-art="chatbot-long-conversation" data-art-desc="A student sits at a desk with a laptop. The screen shows a tall column of alternating gray and blue message bars that runs past the top edge of the screen.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Your first instruction</b><span>Sent at the start</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chats"/></svg></div><figcaption><b>Many later messages</b><span>Yours and the chatbot's</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-robot"/></svg></div><figcaption><b>The latest reply</b><span>Written from the text it receives</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> You have worked with an AI coding assistant for an hour, and it now ignores an instruction you gave at the start. What could explain this?</div>
-        <div class="instructor">Students often say the assistant got tired or chose to ignore the instruction. Steer them toward what the model can still see.</div>
+        <div class="ask"><b>Think first.</b> The chatbot followed the instruction at first and stopped later. What could have changed between the first reply and the latest one?</div>
+        <div class="instructor">Students often say the chatbot got tired or chose to ignore the instruction. Steer them toward what the model can still see.</div>
       </div>
 
       <div class="sec" data-sec="fill" data-title="Fill the window">
-        <p>The <dfn title="The standing instructions an app gives the model before you type">system prompt</dfn>, your pasted files, the conversation and the reply all share one window. Raise Files you pasted past half the window, then raise Conversation so far, and watch what drops out.</p>
+        <p>The <dfn title="The standing instructions an app gives the model before you type">system prompt</dfn>, your pasted files, the conversation and the reply all share one window, measured in <dfn title="A piece of text, about three quarters of a word on average">tokens</dfn>. When it is full, the oldest text usually goes first and nothing warns you. Raise Files you pasted past half the window, then raise Conversation so far.</p>
         <div>
           <div class="ctxbar" id="ctxBar"></div>
           <div class="ctxlegend">
@@ -44,8 +44,8 @@
             <div class="field"><label>Window size <span class="val" id="vWin">64k tokens</span></label>
               <input type="range" id="sWin" min="8" max="64" value="16"></div>
           </div>
-          <h4>Same budget idea as server memory</h4>
-          <p>This works like the memory budget in <a data-lesson="mem">Server memory</a>. There, the operating system and other programs use part of the server's memory before your code starts. Here, the system prompt and whatever you paste use part of the window.</p>
+          <h4>What counts toward the window</h4>
+          <p>The system prompt, every pasted file, every message you send and every reply all count toward the same total.</p>
         </details>
       </div>
 

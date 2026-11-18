@@ -203,7 +203,7 @@ $("#srvCode").innerHTML=
 srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, <span class="s">1</span>)
 srv.bind((<span class="s">"127.0.0.1"</span>, <span class="s">8080</span>))   <span class="c"># reserve port 8080 for this program</span>
-srv.listen(<span class="s">64</span>)                     <span class="c"># allow up to 64 waiting connections, like the line of customers</span>
+srv.listen(<span class="s">64</span>)                     <span class="c"># allow up to 64 connections to wait their turn</span>
 
 <span class="kw">while</span> <span class="s">True</span>:
     conn, addr = srv.accept()      <span class="c"># wait here until a client connects</span>

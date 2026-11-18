@@ -36,9 +36,9 @@
    "stem": "Your app runs on three machines behind a load balancer, all in one data center. The data center loses power. What happens?",
    "options": [
     {
-     "text": "The site goes down, because all three machines were in the same building.",
+     "text": "The site goes down, because all three machines were in the same data center.",
      "correct": true,
-     "feedback": "A load balancer sends traffic away from a failed machine. When the whole building fails, there is no healthy machine to send traffic to."
+     "feedback": "A load balancer sends traffic away from a failed machine. When the whole data center fails, there is no healthy machine to send traffic to."
     },
     {
      "text": "The load balancer moves traffic to the two remaining machines.",
@@ -48,7 +48,7 @@
     {
      "text": "The site stays up, because a load balancer protects against every kind of failure.",
      "correct": false,
-     "feedback": "A load balancer protects against a machine failing. It cannot move work to a building that is also down."
+     "feedback": "A load balancer protects against a machine failing. It cannot move work to a data center that is also down."
     },
     {
      "text": "The site slows down but keeps serving users from the backup copy.",
@@ -76,7 +76,7 @@
     {
      "text": "The site returns in under a minute with no data lost, as in the multi-AZ option.",
      "correct": false,
-     "feedback": "These figures belong to the multi-AZ option, where the two buildings are milliseconds apart."
+     "feedback": "These figures belong to the multi-AZ option, where the two data centers are milliseconds apart."
     },
     {
      "text": "The site is down until the primary region is repaired, however long that takes.",

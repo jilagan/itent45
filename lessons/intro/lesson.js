@@ -20,7 +20,7 @@ const SYSTEMS=[
  {id:"speech", n:"Speech to text", sub:"dictation on your phone", ring:"dl",
   v:`<b>Deep learning</b>For decades this was built by hand from pronunciation dictionaries and sound rules. Deep learning replaced most of that by learning from audio paired with written transcripts.`},
  {id:"llm", n:"A model drafting an email", sub:"you describe it, a paragraph comes back", ring:"gen",
-  v:`<b>Generative AI, the innermost circle</b>It is deep learning whose output is new content. A person has to read the draft and judge it.`},
+  v:`<b>Generative AI, the innermost circle</b>It is deep learning whose output is new content. The program worked out its own rules from examples of text, and a person has to read the draft and judge it.`},
  {id:"code", n:"A coding assistant", sub:"writes the function you asked for", ring:"gen",
   v:`<b>Generative AI, the innermost circle</b>It uses the same machinery as the email example, applied to code. A person has to review what it writes.`}
 ];

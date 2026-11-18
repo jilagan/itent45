@@ -8,14 +8,14 @@
    "stem": "Which description matches how a recurrent network reads a sentence?",
    "options": [
     {
-     "text": "It reads one word at a time and rewrites a fixed-size note each time.",
+     "text": "It reads one word at a time and updates a fixed-size hidden state each time.",
      "correct": true,
-     "feedback": "The note is the hidden state. Each step takes the previous note and the next word and produces a new note."
+     "feedback": "Each step takes the previous hidden state and the next word and produces a new hidden state."
     },
     {
      "text": "It keeps every word and compares each word with all the others.",
      "correct": false,
-     "feedback": "That describes attention, a later design. A recurrent network keeps only the note."
+     "feedback": "That describes attention, a later design. A recurrent network keeps only the hidden state."
     },
     {
      "text": "It reads the whole sentence at once and picks out the keywords from it.",
@@ -25,7 +25,7 @@
     {
      "text": "It looks up each word in a table of meanings and joins the results.",
      "correct": false,
-     "feedback": "There is no table of meanings. The note is a list of numbers that the model updates."
+     "feedback": "There is no table of meanings. The hidden state is a list of numbers that the model updates."
     }
    ]
   },
@@ -33,7 +33,7 @@
    "id": "rnn-2",
    "sec": null,
    "type": "mc",
-   "stem": "A recurrent model has read \"The animal didn't cross the street because it was too tired\" and is asked what \"it\" refers to. Which noun is stronger on the note?",
+   "stem": "A recurrent model has read \"The animal didn't cross the street because it was too tired\" and is asked what \"it\" refers to. Which noun is stronger in the hidden state?",
    "options": [
     {
      "text": "Street, because it was read more recently.",
@@ -43,17 +43,17 @@
     {
      "text": "Animal, because it is the subject of the sentence.",
      "correct": false,
-     "feedback": "The note tracks no grammar. It holds weaker traces of earlier words."
+     "feedback": "The hidden state tracks no grammar. It holds weaker traces of earlier words."
     },
     {
      "text": "Both equally, because the sentence is short.",
      "correct": false,
-     "feedback": "The note fades earlier words at every step, even in a short sentence."
+     "feedback": "The hidden state fades earlier words at every step, even in a short sentence."
     },
     {
-     "text": "Neither, because nouns are dropped from the note.",
+     "text": "Neither, because nouns are dropped from the hidden state.",
      "correct": false,
-     "feedback": "All words are written onto the note, and the older ones are weaker."
+     "feedback": "All words are written into the hidden state, and the older ones are weaker."
     }
    ]
   },
@@ -66,7 +66,7 @@
     {
      "text": "The answer follows how recently each noun was read, and the last word has no effect.",
      "correct": true,
-     "feedback": "The note holds street more strongly in both sentences, so the answer is the same. Meaning played no part."
+     "feedback": "The hidden state holds street more strongly in both sentences, so the answer is the same. Meaning played no part."
     },
     {
      "text": "The model understood that streets can be wide, so it chose correctly.",
@@ -76,12 +76,12 @@
     {
      "text": "The model ran out of memory and fell back on the last noun it read.",
      "correct": false,
-     "feedback": "The note is always the same size, so it never runs out."
+     "feedback": "The hidden state is always the same size, so it never runs out."
     },
     {
      "text": "The model guesses at random between the two nouns each time.",
      "correct": false,
-     "feedback": "The strengths on the note fix the choice, so it is the same every time."
+     "feedback": "The strengths in the hidden state fix the choice, so it is the same every time."
     }
    ]
   },
@@ -92,19 +92,19 @@
    "stem": "An older recurrent model reads a 50-page contract. Which problems should you expect?",
    "options": [
     {
-     "text": "Early details are weak on the note, and training is slow because words are read in order.",
+     "text": "Early details fade in the hidden state, and training is slow because words are read in order.",
      "correct": true,
      "feedback": "These are the two problems of distance and order."
     },
     {
-     "text": "It refuses to read more than 50 words, because the note has no room for more.",
+     "text": "It refuses to read more than 50 words, because the hidden state has no room for more.",
      "correct": false,
      "feedback": "There is no word limit. The weakness is that old content fades."
     },
     {
      "text": "It remembers the first page best, because it was the first thing it read.",
      "correct": false,
-     "feedback": "The note keeps the newest words strongest and older words weaker."
+     "feedback": "The hidden state keeps the newest words strongest and older words weaker."
     },
     {
      "text": "It reads all pages at once, which makes it very expensive to run.",

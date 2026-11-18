@@ -1,17 +1,18 @@
     <section class="panel" id="p-sql">
       <div class="head">
         <h2>Reading and changing data with SQL</h2>
-        <p>A database table works like one Excel sheet, and you can do four things to it. Each one has a command in a language called <dfn title="Structured Query Language, the standard language for asking a database questions">SQL</dfn>.</p>
+        <p>You can do four things to the rows of a database table: read them, add one, change one and delete one. Each has a command in a language called <dfn title="Structured Query Language, the standard language for asking a database questions">SQL</dfn>.</p>
       </div>
 
-      <div class="sec" data-sec="excel" data-title="Start with an Excel sheet">
-        <p>In Excel you can filter rows, add a row, change a cell and delete a row. A database table does the same four things, and a command in SQL does each one.</p>
-        <div class="scene" role="group" aria-label="The Excel sheet is a table, a row is one record, the four actions are SQL commands" data-art="class-list" data-art-desc="A teacher at a desk points a finger at one row of a printed class list laid out as a table, with a student standing beside the desk.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Excel sheet</b><span>Table</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>One row</b><span>One record</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Filter, add, change, delete</b><span><code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></span></figcaption></figure>
+      <div class="sec" data-sec="enlistment-search" data-title="Start with searching and enlisting">
+        <p>In the enlistment system you type a course code into the search box. The list shows matching courses with their open slots. You press Enlist and the course joins your schedule. You change your section, then drop a course and it leaves your schedule. The database behind the screen runs one SQL command for each.</p>
+        <div class="scene" role="group" aria-label="Searching, enlisting, changing a section and dropping a course are four SQL commands" data-art="enlistment-search-laptop" data-art-desc="A student at a laptop types into a plain search box above a short list of bars, with one hand on the trackpad.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-magnifying-glass"/></svg></div><figcaption><b>Search for a course</b><span><code>SELECT</code></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-plus-circle"/></svg></div><figcaption><b>Enlist in a course</b><span><code>INSERT</code></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Change your section</b><span><code>UPDATE</code></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-trash"/></svg></div><figcaption><b>Drop a course</b><span><code>DELETE</code></span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> Which of the four commands never changes the table, and which leave it in the same state when you run them twice?</div>
+        <div class="ask"><b>Think first.</b> Which of these four commands never changes the table, and which leave it in the same state when run twice?</div>
         <div class="instructor">Collect guesses before anyone opens the next step. Most students pick SELECT for the first question and are unsure about UPDATE and DELETE for the second.</div>
       </div>
 

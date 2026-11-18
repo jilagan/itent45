@@ -4,14 +4,14 @@
         <p>A relationship links two entities, such as students and courses. Its <dfn title="How many items can sit on each side of a link between two entities">cardinality</dfn> decides which tables you need.</p>
       </div>
 
-      <div class="sec" data-sec="class-list" data-title="Start with a class list">
-        <p>On a class list, each student has one ID card, a course has several sections, and many students take many courses. Counting how many sit on each side of a link gives its type: one-to-one, one-to-many or many-to-many.</p>
-        <div class="scene" role="group" aria-label="A student and an ID card is one-to-one, a course and its sections is one-to-many, students and courses is many-to-many" data-art="id-cards-and-class-lists" data-art-desc="A student holds up one ID card at a registrar's desk, with three class lists pinned on the wall behind.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-ticket"/></svg></div><figcaption><b>Student and ID card</b><span>One-to-one</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Course and its sections</b><span>One-to-many</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Students and courses</b><span>Many-to-many</span></figcaption></figure>
+      <div class="sec" data-sec="enlistment-schedule" data-title="Start with your enlistment schedule">
+        <p>Each student has one login for the online enlistment system. Searching for a course lists its sections, each with a schedule and open slots. Enlisting in one section adds it to your schedule, and many other students do the same.</p>
+        <div class="scene" role="group" aria-label="A student and a login account is one-to-one, a course and its sections is one-to-many, students and courses is many-to-many" data-art="schedule-and-sections-laptop" data-art-desc="A student sits at a laptop whose screen shows a stack of plain bars and a weekly grid of blocks, with a phone on the desk.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-key"/></svg></div><figcaption><b>Student and login account</b><span>One-to-one</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-calendar-blank"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-calendar-blank"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-calendar-blank"/></svg></div><figcaption><b>Course and its sections</b><span>One-to-many</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-checks"/></svg></div><figcaption><b>Students and courses</b><span>Many-to-many</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> If each student has one ID card and each course has many students, how would you store those two facts in tables?</div>
+        <div class="ask"><b>Think first.</b> Each student has one account, each course has several sections, and many students take many courses. How would you sketch tables for these three facts?</div>
         <div class="instructor">Ask students to sketch the tables on paper before they open the next step. Most put a list of student ids in the course row, which a table column cannot hold.</div>
       </div>
 
@@ -33,7 +33,7 @@
         <p class="outcome">You can now choose the tables and keys for any relationship.</p>
         <details class="more">
           <summary>More detail</summary>
-          <p><a data-lesson="entity">Entities and attributes</a> treats Enrollment as an entity for the same reason. A many-to-many link on a diagram is a sign that a table is missing.</p>
+          <p><a data-lesson="entity">Entities and attributes</a> treats Enlistment as an entity for the same reason. A many-to-many link on a diagram is a sign that a table is missing.</p>
           <p>If you choose the wrong type on the diagram, you find out later, when somebody needs a second value in a place that allows only one.</p>
         </details>
       </div>

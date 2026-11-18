@@ -1,11 +1,11 @@
 /* Lesson pay. Widget code for the markup in lesson.html. */
 /* ================= 07 CHECKOUT ================= */
 const PARTIES=[
- {id:"pBrowser", n:"Party 1", h:"The browser", r:"the shopper's device",
-  p:"Runs your code, on a device you do not control.", card:"sees the card", cls:"see-yes"},
+ {id:"pBrowser", n:"Party 1", h:"The browser", r:"the user's phone or laptop",
+  p:"Runs your code on a device you do not control.", card:"sees the card", cls:"see-yes"},
  {id:"pApi", n:"Party 2", h:"Your API", r:"your server process",
   p:"Holds your order data and your secret key.", card:"never sees the card", cls:"see-no"},
- {id:"pGw", n:"Party 3", h:"Payment gateway", r:"PayMongo, Stripe, Xendit",
+ {id:"pGw", n:"Party 3", h:"Payment gateway", r:"a payment company you sign up with",
   p:"The gateway is set up to handle card data safely.", card:"sees the card", cls:"see-yes"},
  {id:"pBank", n:"Party 4", h:"Bank / network", r:"outside your system",
   p:"Where money moves. Minutes to days.", card:"sees the card", cls:"see-yes"}
@@ -19,14 +19,14 @@ PARTIES.forEach(p=>{
 });
 
 const PAYFLOW=[
- {k:"browser", hop:"Browser → your API", dir:"out", h:"The shopper loads their cart",
+ {k:"browser", hop:"Browser → your API", dir:"out", h:"The app loads the order summary",
   x:"This is an ordinary request. Nothing about payment has happened yet.",
   l:"Nothing new in this step",
-  a:`<span class="kw">GET</span> /api/cart HTTP/1.1
+  a:`<span class="kw">GET</span> /api/checkout HTTP/1.1
 Cookie: sessionid=8f2a...
 
 <span class="kw">200 OK</span>
-{<span class="s">"items"</span>: [{<span class="s">"sku"</span>:<span class="s">"SHOE-42"</span>, <span class="s">"price"</span>: 129900}], <span class="s">"total"</span>: 129900}`},
+{<span class="s">"id"</span>: 8891, <span class="s">"items"</span>: [{<span class="s">"name"</span>:<span class="s">"Chicken rice"</span>, <span class="s">"qty"</span>: 2}, {<span class="s">"name"</span>:<span class="s">"Beef noodles"</span>, <span class="s">"qty"</span>: 1}], <span class="s">"total"</span>: 58000}`},
 
  {k:"gateway", hop:"Browser → gateway (your server is not involved)", dir:"out", h:"The card goes straight to the gateway",
   x:"The card number never travels to your server. The browser sends it directly to the gateway, using a publishable key that is safe to include in your page's JavaScript.",
@@ -44,13 +44,13 @@ Authorization: Bearer <span class="s">pk_live_...</span>   <span class="c">// pu
 {<span class="s">"id"</span>: <span class="s">"tok_1a2b3c"</span>, <span class="s">"last4"</span>: <span class="s">"4242"</span>, <span class="s">"brand"</span>: <span class="s">"visa"</span>}`},
 
  {k:"server", hop:"Browser → your API", dir:"out", h:"The order request reaches your server",
-  x:"Your server receives the token and the cart, never the card. The request carries an idempotency key, a unique code that the browser resends on every retry.",
+  x:"Your server receives the token and the checkout number, never the card. The request carries an idempotency key, a unique code that the browser resends on every retry.",
   l:"The request your server code handles",
   a:`<span class="kw">POST</span> /api/orders HTTP/1.1
 <span class="kw">Idempotency-Key</span>: 7c3f9e1a-4b8d-42f6-9c11-a2d5e8b7f014
 Content-Type: application/json
 
-{<span class="s">"token"</span>: <span class="s">"tok_1a2b3c"</span>, <span class="s">"cart_id"</span>: 5512}`},
+{<span class="s">"token"</span>: <span class="s">"tok_1a2b3c"</span>, <span class="s">"checkout_id"</span>: 8891}`},
 
  {k:"gateway", hop:"Your API → gateway", dir:"out", h:"Your server becomes the client",
   x:"Your server now builds a request, sets headers and waits for a reply, as the browser does. The secret key never leaves your server.",
@@ -59,17 +59,17 @@ Content-Type: application/json
 Authorization: Bearer <span class="s">sk_live_...</span>   <span class="c">// secret key, server only</span>
 <span class="kw">Idempotency-Key</span>: 7c3f9e1a-4b8d-42f6-9c11-a2d5e8b7f014
 
-{<span class="s">"amount"</span>: 129900, <span class="s">"currency"</span>: <span class="s">"PHP"</span>, <span class="s">"source"</span>: <span class="s">"tok_1a2b3c"</span>}`},
+{<span class="s">"amount"</span>: 58000, <span class="s">"currency"</span>: <span class="s">"PHP"</span>, <span class="s">"source"</span>: <span class="s">"tok_1a2b3c"</span>}`},
 
  {k:"gateway", hop:"Gateway → your API", dir:"in", h:"Pending, not paid",
-  x:"Cards are authorized in about a second, and GCash, Maya and over-the-counter payments can take minutes or hours. Treating this reply as final is a common bug in student projects.",
+  x:"Cards are authorized in about a second, and e-wallet and other payment methods can take minutes or hours. Treating this reply as final is a common bug in student projects.",
   l:"Read the status field.",
   a:`<span class="kw">200 OK</span>
-{<span class="s">"id"</span>: <span class="s">"ch_9f8e7d"</span>, <span class="s">"status"</span>: <span class="s">"pending"</span>, <span class="s">"amount"</span>: 129900}`},
+{<span class="s">"id"</span>: <span class="s">"ch_9f8e7d"</span>, <span class="s">"status"</span>: <span class="s">"pending"</span>, <span class="s">"amount"</span>: 58000}`},
 
- {k:"browser", hop:"Your API → browser", dir:"in", h:"You answer the shopper",
+ {k:"browser", hop:"Your API → browser", dir:"in", h:"You answer the app",
   x:"You created an order, so you reply 201 with the order's URL in a Location header. The status says awaiting payment, which is accurate.",
-  l:"Back to the shopper",
+  l:"Back to the app",
   a:`<span class="kw">201 Created</span>
 Location: /api/orders/8891
 
@@ -102,7 +102,7 @@ let pyI=0, pyTimer=null;
 /* which box the payload is at after each step, and which pipe carried it */
 const PAY_AT = ["pApi","pGw","pBrowser","pApi","pGw","pApi","pBrowser","pBank","pApi","pApi"];
 const PAY_SEG = [
- {lane:"A",dir:"fwd", p:"GET /api/cart"},
+ {lane:"A",dir:"fwd", p:"GET /api/checkout"},
  {lane:"X",dir:"fwd", p:"card number"},          // bypass, browser -> gateway
  {lane:"X",dir:"back",p:"tok_1a2b3c"},           // bypass, gateway -> browser
  {lane:"A",dir:"fwd", p:"token + idempotency key"},
@@ -147,7 +147,7 @@ function placePayBall(i){
   ball.style.display="";
   const onBypass = seg && seg.lane==="X";
   const back = !!(seg && seg.dir==="back");
-  const bic = back ? "bowl-food" : "receipt";
+  const bic = "envelope-simple";
   if(ball.dataset.ic!==bic){ ball.dataset.ic=bic; ball.innerHTML=ICO(bic); }
   ball.style.left=(target.left-fb.left+target.width/2)+"px";
   // on a bypass the marker rides the line; inside a box it sits on the top border, clear of the text
@@ -202,13 +202,13 @@ $("#pyPlay").onclick=e=>{
 renderPay();
 
 /* ---- the same charge request, three ways ---- */
-const CHG_DATA=36;
+const CHG_DATA=35;
 const WHYF=[
- {id:"json", n:"JSON", bytes:90,
-  body:`{<span class="s">"amount"</span>:129900,<span class="s">"currency"</span>:<span class="s">"PHP"</span>,<span class="s">"source"</span>:<span class="s">"tok_1a2b3c"</span>,<span class="s">"description"</span>:<span class="s">"MGT 45 enrollment"</span>}`,
+ {id:"json", n:"JSON", bytes:89,
+  body:`{<span class="s">"amount"</span>:58000,<span class="s">"currency"</span>:<span class="s">"PHP"</span>,<span class="s">"source"</span>:<span class="s">"tok_1a2b3c"</span>,<span class="s">"description"</span>:<span class="s">"Dinner order 8891"</span>}`,
   cls:"ok",
-  v:`<b>90 bytes, and it already matches the data structures that programs use</b>Python code reads <code>data["amount"]</code> and Node code reads <code>data.amount</code>, with no conversion first. About 121 bytes of headers (HTTP, TLS, TCP, IP and Ethernet) already surround a short message like this, so making it six times larger would be a real cost.`},
- {id:"soap", n:"SOAP / XML", bytes:556,
+  v:`<b>89 bytes, and it already matches the data structures that programs use</b>Python code reads <code>data["amount"]</code> and Node code reads <code>data.amount</code>, with no conversion first. About 121 bytes of headers (HTTP, TLS, TCP, IP and Ethernet) already surround a short message like this, so making it six times larger would be a real cost.`},
+ {id:"soap", n:"SOAP / XML", bytes:555,
   body:`<span class="d">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="d">&lt;soap:Envelope xmlns:soap=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span>
 <span class="d">               xmlns:pay=</span><span class="s">"https://gateway.example.com/schema/payments/v2"</span><span class="d">&gt;</span>
@@ -217,23 +217,23 @@ const WHYF=[
   <span class="d">&lt;/soap:Header&gt;</span>
   <span class="d">&lt;soap:Body&gt;</span>
     <span class="d">&lt;pay:CreateChargeRequest&gt;</span>
-      <span class="d">&lt;pay:Amount currency=</span><span class="s">"PHP"</span><span class="d">&gt;</span>129900<span class="d">&lt;/pay:Amount&gt;</span>
+      <span class="d">&lt;pay:Amount currency=</span><span class="s">"PHP"</span><span class="d">&gt;</span>58000<span class="d">&lt;/pay:Amount&gt;</span>
       <span class="d">&lt;pay:Source&gt;</span>tok_1a2b3c<span class="d">&lt;/pay:Source&gt;</span>
-      <span class="d">&lt;pay:Description&gt;</span>MGT 45 enrollment<span class="d">&lt;/pay:Description&gt;</span>
+      <span class="d">&lt;pay:Description&gt;</span>Dinner order 8891<span class="d">&lt;/pay:Description&gt;</span>
     <span class="d">&lt;/pay:CreateChargeRequest&gt;</span>
   <span class="d">&lt;/soap:Body&gt;</span>
 <span class="d">&lt;/soap:Envelope&gt;</span>`,
   cls:"warn",
-  v:`<b>556 bytes, six times the size of JSON</b>Only 6% of it is the four values you meant to send, and the rest is namespaces, an envelope and a header block. In return, a schema can reject a negative amount or an invalid currency before your code runs, which is a fair trade between two banks.`},
- {id:"html", n:"HTML", bytes:248,
+  v:`<b>555 bytes, six times the size of JSON</b>Only 6% of it is the four values you meant to send, and the rest is namespaces, an envelope and a header block. In return, a schema can reject a negative amount or an invalid currency before your code runs, which is a fair trade between two banks.`},
+ {id:"html", n:"HTML", bytes:247,
   body:`<span class="d">&lt;form method=</span><span class="s">"post"</span><span class="d"> action=</span><span class="s">"/charges"</span><span class="d">&gt;</span>
-  <span class="d">&lt;input type=</span><span class="s">"hidden"</span><span class="d"> name=</span><span class="s">"amount"</span><span class="d"> value=</span><span class="s">"129900"</span><span class="d">&gt;</span>
+  <span class="d">&lt;input type=</span><span class="s">"hidden"</span><span class="d"> name=</span><span class="s">"amount"</span><span class="d"> value=</span><span class="s">"58000"</span><span class="d">&gt;</span>
   <span class="d">&lt;input type=</span><span class="s">"hidden"</span><span class="d"> name=</span><span class="s">"currency"</span><span class="d"> value=</span><span class="s">"PHP"</span><span class="d">&gt;</span>
   <span class="d">&lt;input type=</span><span class="s">"hidden"</span><span class="d"> name=</span><span class="s">"source"</span><span class="d"> value=</span><span class="s">"tok_1a2b3c"</span><span class="d">&gt;</span>
   <span class="d">&lt;button type=</span><span class="s">"submit"</span><span class="d">&gt;</span>Charge<span class="d">&lt;/button&gt;</span>
 <span class="d">&lt;/form&gt;</span>`,
   cls:"bad",
-  v:`<b>248 bytes, and the wrong kind of message</b>HTML describes a form that a person could click, so the gateway would have to guess which fields matter. A gateway that sends you a webhook has no interface to display, so it can send only data.`}
+  v:`<b>247 bytes, and the wrong kind of message</b>HTML describes a form that a person could click, so the gateway would have to guess which fields matter. A gateway that sends you a webhook has no interface to display, so it can send only data.`}
 ];
 let whySel="json";
 function renderWhy(){
@@ -258,7 +258,7 @@ function renderWhy(){
 renderWhy();
 
 /* ---- double-charge demo ---- */
-const PRICE=1299;
+const PRICE=580;
 let attempts=[], idemOn=false, idemKey="7c3f9e1a", firstCharge=null, chgSeq=0;
 function renderCharges(){
   $("#chgList").innerHTML = attempts.length ? attempts.map((a,i)=>`
@@ -283,9 +283,9 @@ function renderCharges(){
   if(!attempts.length){
     n.innerHTML= idemOn
       ? "The key is generated once, when the checkout page loads, and reused on every click."
-      : "Press Pay a few times, as an impatient shopper on a slow connection would.";
+      : "Press Pay a few times, as an impatient user on a slow connection would.";
   } else if(charged>PRICE){
-    n.innerHTML=`<b style="color:var(--warn)">${attempts.length} clicks, ${attempts.filter(a=>!a.reused).length} separate charges.</b> The shopper paid ₱${charged.toLocaleString()} for a ₱${PRICE.toLocaleString()} pair of shoes, and every click was a valid POST.`;
+    n.innerHTML=`<b style="color:var(--warn)">${attempts.length} clicks, ${attempts.filter(a=>!a.reused).length} separate charges.</b> The user paid ₱${charged.toLocaleString()} for a ₱${PRICE.toLocaleString()} dinner order, and every click was a valid POST.`;
   } else if(idemOn && attempts.length>1){
     n.innerHTML=`<b style="color:var(--res)">${attempts.length} clicks, one charge.</b> The gateway recognized the repeated key and returned the original charge. Real payment APIs use this method to prevent double charges.`;
   } else {

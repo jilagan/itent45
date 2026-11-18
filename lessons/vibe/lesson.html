@@ -4,15 +4,15 @@
         <p>AI-written code can look correct and still be wrong. Four short snippets show where to look.</p>
       </div>
 
-      <div class="sec" data-sec="receipt" data-title="Start with a receipt">
-        <p>Imagine proofreading a receipt. Every word is spelled correctly and the layout is clean, but the total at the bottom is wrong. Checking the spelling will not find the problem. Code written by an AI model can be like that receipt: it reads cleanly and still does the wrong thing.</p>
-        <div class="scene" role="group" aria-label="The neat receipt is the AI-written code, the wrong total is the hidden defect, the proofreader is you" data-art="wrong-total-receipt" data-art-desc="A person with a pen studies a neatly printed receipt whose total at the bottom looks wrong.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></div><figcaption><b>Neat receipt</b><span>AI-written code</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Wrong total</b><span>Hidden defect</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Proofreader</b><span>You, the reviewer</span></figcaption></figure>
+      <div class="sec" data-sec="code-that-runs" data-title="Start with code that runs">
+        <p>An AI chatbot returns a short function that shows a student's courses, with tidy lines and sensible names. You paste it into your project and the page works on the first run. One line in it is faulty, and nothing on the screen points to it.</p>
+        <div class="scene" role="group" aria-label="The code the AI wrote, one faulty line in it, and you as the reviewer" data-art="ai-code-pasted-laptop" data-art-desc="A student at a laptop looks at a code editor window showing a short column of plain lines, with a small orange mark beside one of them.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-code"/></svg></div><figcaption><b>The code the AI wrote</b><span>Looks correct</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bug"/></svg></div><figcaption><b>One faulty line</b><span>Hidden defect</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>You</b><span>Reviewer</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> A receipt is spelled correctly and neatly laid out, but its total might be wrong. What would you check, and what would you need to know?</div>
-        <div class="instructor">Students usually say they would add up the items. Point out that this needs the prices, which is the information a reviewer of generated code needs about the tables and the traffic.</div>
+        <div class="ask"><b>Think first.</b> The code ran and looks right. What would you check before relying on it, and what would you need to know about the system to check it?</div>
+        <div class="instructor">Students usually say they would run it again or read it more slowly. Point out that the checks need facts the code does not show: how many rows the tables hold and what else runs at the same moment.</div>
       </div>
 
       <div class="sec" data-sec="find" data-title="Find the faulty line">

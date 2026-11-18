@@ -51,17 +51,17 @@
    "id": "growth-3",
    "sec": null,
    "type": "mc",
-   "stem": "A startup's report takes 1 second for 1,000 customers. It compares every customer with every other customer. The company expects 100,000 customers next year. What is the sensible reaction?",
+   "stem": "A startup's report takes 1 second for 1,000 users. It compares every user with every other user. The company expects 100,000 users next year. What is the sensible reaction?",
    "options": [
     {
-     "text": "Relax. A hundred times more customers means about 100 seconds.",
+     "text": "Relax. A hundred times more users means about 100 seconds.",
      "correct": false,
-     "feedback": "That estimate fits a job that looks at each customer once. This job compares pairs."
+     "feedback": "That estimate fits a job that looks at each user once. This job compares pairs."
     },
     {
      "text": "Change the method. The time grows 10,000 times, to about 3 hours.",
      "correct": true,
-     "feedback": "A hundred times more customers makes about 100 times 100, or 10,000 times, more comparisons. 10,000 seconds is about 2.8 hours."
+     "feedback": "A hundred times more users makes about 100 times 100, or 10,000 times, more comparisons. 10,000 seconds is about 2.8 hours."
     },
     {
      "text": "Buy a server twice as fast and keep the same method.",

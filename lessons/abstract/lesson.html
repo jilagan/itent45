@@ -4,19 +4,19 @@
     <p>An <dfn title="Keeping the details a question needs and hiding the rest">abstraction</dfn> keeps the details that matter for a question and hides the rest. A model built this way is easier to use than the real thing.</p>
   </div>
 
-  <div class="sec" data-sec="route-map" data-title="Start with a route map">
-    <p>A jeepney route map shows stops and lines. It leaves out building shapes, traffic lights and the color of each jeepney. A commuter needs the order of stops and where lines cross. A picture that keeps only what a decision needs is an abstraction.</p>
-    <div class="scene" role="group" aria-label="The street is the real system, the line map is the model, the commuter's question decides what the map keeps" data-art="jeepney-route-map" data-art-desc="A commuter at a roadside stop holds up a card of plain dots joined by lines while a jeepney drives past.">
-      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bus"/></svg></div><figcaption><b>Streets and jeepneys</b><span>The real system</span></figcaption></figure>
-      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-map-trifold"/></svg></div><figcaption><b>Line map of stops</b><span>Model</span></figcaption></figure>
-      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Commuter's question</b><span>What the model must answer</span></figcaption></figure>
+  <div class="sec" data-sec="station-map" data-title="Start with a station map">
+    <p>You open a navigation app to plan a trip by train. The map shows stations as dots joined by lines. It leaves out building shapes, street layouts and the color of each train. You need the order of stations and where lines cross. A view that keeps only what a decision needs is an abstraction.</p>
+    <div class="scene" role="group" aria-label="The navigation app, the station map and the real trains and streets" data-art="transit-map-on-phone" data-art-desc="A student on a campus bench holds a phone that shows plain dots joined by lines.">
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg></div><figcaption><b>The navigation app</b><span>What you use</span></figcaption></figure>
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-map-trifold"/></svg></div><figcaption><b>The station map</b><span>Dots and lines</span></figcaption></figure>
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-train"/></svg></div><figcaption><b>Real trains and streets</b><span>Details left out</span></figcaption></figure>
     </div>
-    <div class="ask"><b>Think first.</b> You are building an app that tells commuters which jeepney to ride. Name two details of a route to keep and two to leave out.</div>
-    <div class="instructor">Typical keeps are stop names, the order of stops and the fare. Typical drops are the jeepney color and the buildings. Ask what the app would need if commuters also asked how long a ride takes.</div>
+    <div class="ask"><b>Think first.</b> You are building a navigation app that tells riders which train to take. Name two details of a trip to keep and two to leave out.</div>
+    <div class="instructor">Typical keeps are station names, the order of stations and the ticket price. Typical drops are the train color and the buildings. Ask what the app would need if riders also asked how long a trip takes.</div>
   </div>
 
   <div class="sec" data-sec="keep" data-title="Choose what to keep">
-    <p>A <dfn title="A simplified copy that answers one question">model</dfn> is a simplified copy of something real. This one describes a jeepney trip from Katipunan to Cubao and starts with every detail switched on. Pick a question, then switch off each detail it does not need.</p>
+    <p>A <dfn title="A simplified copy that answers one question">model</dfn> is a simplified copy of something real. This one describes a train trip from North Station to Central Station and starts with every detail switched on. Pick a question, then switch off each detail it does not need.</p>
     <div class="card wg" id="abKeep">
       <div class="abt">Question</div>
       <div class="abq" id="abQs" role="group" aria-label="Question"></div>
@@ -32,9 +32,9 @@
     <details class="more">
       <summary>More detail</summary>
       <h4>A model fits one question</h4>
-      <p>Every model leaves something out, and it fails when the question changes. A route map has no distances, so it cannot say which route is faster.</p>
+      <p>Every model leaves something out, and it fails when the question changes. A station map has no distances, so it cannot say which route is faster.</p>
       <h4>Data representation</h4>
-      <p>The same facts can be stored as a list, a table or a map. The choice decides which questions are easy to answer. A fare table answers cost questions at a glance and says nothing about the order of stops.</p>
+      <p>The same facts can be stored as a list, a table or a map. The choice decides which questions are easy to answer. A price table answers cost questions at a glance and says nothing about the order of stations.</p>
     </details>
   </div>
 

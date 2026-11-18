@@ -6,7 +6,7 @@
  "outcomes": [
   "Say that \"server\" means a machine and a program, and any computer can be one",
   "Read a URL as scheme, host, port, path",
-  "Say who can reach a laptop service (same machine, same wifi, outside) and why public hosting needs a rented box"
+  "Say who can reach a laptop service (same machine, same wifi, outside) and why public hosting needs a rented server"
  ],
  "tags": [
   "server",

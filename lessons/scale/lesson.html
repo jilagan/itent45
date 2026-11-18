@@ -4,12 +4,12 @@
         <p>When one machine cannot handle all the requests, you can use a bigger machine or several machines. Several machines need a <dfn title="A program that receives every request and passes each one to one of the machines">load balancer</dfn>.</p>
       </div>
 
-      <div class="sec" data-sec="branch" data-title="Start with a fast-food branch">
-        <p>When the line at a fast-food branch gets too long, the owner can rebuild it with more counters or open more branches. With several branches, a guard at the entrance sends each customer to a counter that is open and not too busy.</p>
-        <div class="scene" role="group" aria-label="Customers are requests, the guard is the load balancer, the counters are servers" data-art="branch-guard-counters" data-art-desc="A guard at the entrance of a fast-food branch points one customer toward the open counter of two, where a cashier is waiting.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg></div><figcaption><b>Customers</b><span>Requests</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-traffic-signal"/></svg></div><figcaption><b>Guard</b><span>Load balancer</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Counters</b><span>Servers</span></figcaption></figure>
+      <div class="sec" data-sec="one-address" data-title="Start with one web address">
+        <p>On enlistment day you type the address of the online enlistment system and the page loads. A classmate types the same address on another laptop, and so do thousands of other students. A site with that many visitors usually runs on several machines behind that one address.</p>
+        <div class="scene" role="group" aria-label="Browsers send requests to one address, a load balancer receives them, application machines answer them" data-art="one-address-two-laptops" data-art-desc="Two students sit side by side at a desk, each with a laptop, and both screens show the same plain page with an empty address bar shape across the top.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-laptop"/></svg></div><figcaption><b>Students' browsers</b><span>Send requests</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-arrows-split"/></svg></div><figcaption><b>One address</b><span>Load balancer</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>Application machines</b><span>Servers</span></figcaption></figure>
         </div>
         <div class="ask"><b>Think first.</b> Your site runs on two machines, and users type one web address. What must happen so that every request reaches one of the two machines?</div>
         <div class="instructor">Students should arrive at one address that answers for all the machines, which is the load balancer. The browser never learns how many machines there are. Ask what happens if that single address itself fails.</div>

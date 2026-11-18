@@ -5,7 +5,7 @@
    "id": "vibe-1",
    "sec": "find",
    "type": "mc",
-   "stem": "A function passes all its tests with your 5 test students. In production, with 5,000 enrollments, the page takes 30 seconds to load. Which kind of defect is most likely?",
+   "stem": "A function passes all its tests with your 5 test students. In production, with 5,000 enlistments, the page takes 30 seconds to load. Which kind of defect is most likely?",
    "options": [
     {
      "text": "A query that runs once per row, slow only with real data.",

@@ -31,14 +31,14 @@ function nnDiagram(){
   // edges in, edges out
   for(let i=0;i<k;i++){
     const on = NN.pick===i;
-    iy.forEach(y=>{ g+=`<line x1="86" y1="${y}" x2="${W/2}" y2="${hy[i]}"
+    iy.forEach(y=>{ g+=`<line x1="104" y1="${y}" x2="${W/2}" y2="${hy[i]}"
       stroke="${on?"var(--req)":"var(--line2)"}" stroke-width="${on?1.8:0.9}" opacity="${on?1:.5}"/>`; });
     g+=`<line x1="${W/2}" y1="${hy[i]}" x2="${W-110}" y2="${H/2}"
       stroke="${on?"var(--req)":"var(--line2)"}" stroke-width="${on?1.8:0.9}" opacity="${on?1:.5}"/>`;
   }
-  ["hours","attendance"].forEach((lb,i)=>{
-    g+=`<circle cx="86" cy="${iy[i]}" r="9" fill="var(--panel2)" stroke="var(--res)" stroke-width="1.6"/>
-        <text x="70" y="${iy[i]+4}" text-anchor="end" font-size="12.5" fill="var(--dim)">${lb}</text>`;
+  ["hours","commitments"].forEach((lb,i)=>{
+    g+=`<circle cx="104" cy="${iy[i]}" r="9" fill="var(--panel2)" stroke="var(--res)" stroke-width="1.6"/>
+        <text x="88" y="${iy[i]+4}" text-anchor="end" font-size="12.5" fill="var(--dim)">${lb}</text>`;
   });
   for(let i=0;i<k;i++){
     const on=NN.pick===i;
@@ -48,7 +48,7 @@ function nnDiagram(){
   }
   g+=`<circle cx="${W-110}" cy="${H/2}" r="10" fill="var(--panel2)" stroke="var(--res)" stroke-width="1.8"/>
       <text x="${W-94}" y="${H/2+4}" font-size="12.5" fill="var(--dim)">stays or drops</text>
-      <text x="86" y="14" text-anchor="middle" font-size="12.5" fill="var(--faint)">Input</text>
+      <text x="104" y="14" text-anchor="middle" font-size="12.5" fill="var(--faint)">Input</text>
       <text x="${W/2}" y="14" text-anchor="middle" font-size="12.5" fill="var(--req)">Hidden layer</text>
       <text x="${W-110}" y="14" text-anchor="middle" font-size="12.5" fill="var(--faint)">Output</text>`;
   $("#nnDiag").innerHTML=g+`</svg>`;
@@ -115,7 +115,7 @@ function nnRender(){
     v.innerHTML=`<b>${pct}% with ${k} units, and the boundary is straight again</b>With the nonlinearity off, a layer can only add its units together, and adding straight lines gives one more straight line. Move the slider from 2 to 8 and nothing changes.`;
   } else if(k===1){
     v.className="verdict bad";
-    v.innerHTML=`<b>${pct}%, and no straight line does better</b>One unit is one line, and the students who stay are surrounded, so some always land on the dropouts' side. Add a second unit.`;
+    v.innerHTML=`<b>${pct}%, and no straight line does better</b>One unit is one line, and the students who stay are surrounded, so some always end up on the dropouts' side. Add a second unit.`;
   } else if(pct<100){
     v.className="verdict warn";
     v.innerHTML=`<b>${pct}% with ${k} lines</b>A second layer takes all ${k} answers and says <em>stays</em> only when they all agree. The overlap is a shape none of the lines could draw alone.`;

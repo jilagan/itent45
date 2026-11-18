@@ -43,7 +43,7 @@
     {
      "text": "Stop, because the tests passed.",
      "correct": false,
-     "feedback": "Nothing forces it to stop. Stopping is a prediction like any other output."
+     "feedback": "Nothing forces it to stop. Stopping is one more prediction in the output."
     },
     {
      "text": "Ask you for permission before making more changes.",

@@ -1,14 +1,14 @@
 /* Lesson patterns. Widget code for the markup in lesson.html.
-   Three widgets: a receipt pair counter, a repeat shrinker and a bar chart with one outlier.
+   Three widgets: an order pair counter, a repeat shrinker and a bar chart with one outlier.
    All answers are computed from the data below. */
 
-/* ---------- 1. receipts ---------- */
-const PT_ITEMS=["Noodles","Sardines","Coffee","Bread","Egg","Soft drink","Rice"];
-const PT_RECEIPTS=[
-  ["Noodles","Sardines"],["Noodles","Sardines","Coffee"],["Bread","Egg"],["Noodles","Sardines","Rice"],
-  ["Coffee","Bread"],["Noodles","Sardines","Soft drink"],["Rice","Egg"],["Noodles","Sardines"],
-  ["Coffee","Bread","Egg"],["Soft drink","Rice"],["Noodles","Sardines","Coffee"],["Bread","Coffee"]];
-const ptCount=sel=>PT_RECEIPTS.filter(r=>sel.every(x=>r.includes(x))).length;
+/* ---------- 1. orders ---------- */
+const PT_ITEMS=["Notebook","Pens","Charger","Phone case","Screen protector","Flash drive","Backpack"];
+const PT_ORDERS=[
+  ["Notebook","Pens"],["Notebook","Pens","Charger"],["Phone case","Screen protector"],["Notebook","Pens","Backpack"],
+  ["Charger","Phone case"],["Notebook","Pens","Flash drive"],["Backpack","Screen protector"],["Notebook","Pens"],
+  ["Charger","Phone case","Screen protector"],["Flash drive","Backpack"],["Notebook","Pens","Charger"],["Phone case","Charger"]];
+const ptCount=sel=>PT_ORDERS.filter(r=>sel.every(x=>r.includes(x))).length;
 const ptName=sel=>{ const s=[...sel].sort((a,b)=>PT_ITEMS.indexOf(a)-PT_ITEMS.indexOf(b));
   return {pair:s, text:s[0]+" and "+s[1].toLowerCase()}; };
 const PT_COUNTS=[]; PT_ITEMS.forEach((a,i)=>PT_ITEMS.forEach((b,j)=>{ if(i<j) PT_COUNTS.push(ptCount([a,b])); }));
@@ -21,13 +21,13 @@ function ptRcDraw(){
   PT_ITEMS.forEach((it,i)=>$("#ptItems").children[i].setAttribute("aria-pressed",String(sel.includes(it))));
   $("#ptLine").textContent = sel.length===0 ? "Press two items."
     : sel.length===1 ? "Press one more item."
-    : ptName(sel).text+": "+n+" of "+PT_RECEIPTS.length+" receipts";
-  $("#ptRec").innerHTML=PT_RECEIPTS.map(r=>{
+    : ptName(sel).text+": "+n+" of "+PT_ORDERS.length+" orders";
+  $("#ptRec").innerHTML=PT_ORDERS.map(r=>{
     const hit=sel.length>0 && sel.every(x=>r.includes(x));
     return `<div class="ptr${hit?" hit":""}">`+r.map(x=>sel.includes(x)?`<b>${x}</b>`:x).join("<br>")+`</div>`;
   }).join("");
   $("#ptTried").textContent=ptRc.tried.size;
-  $("#ptBest").textContent=ptRc.best+" of "+PT_RECEIPTS.length;
+  $("#ptBest").textContent=ptRc.best+" of "+PT_ORDERS.length;
   $("#ptCheck").disabled = sel.length!==2;
 }
 function ptRcPress(item){
@@ -46,10 +46,10 @@ function ptRcCheck(){
   const n=ptCount(sel), nm=ptName(sel).text, v=$("#ptVerdict");
   if(n===PT_BEST){
     v.className="verdict ok";
-    v.innerHTML=`<b>Most common pair</b>${nm} appear together in ${n} of ${PT_RECEIPTS.length} receipts. The next highest pair appears in ${PT_NEXT}, and you tried ${ptRc.tried.size} pair${ptRc.tried.size===1?"":"s"}.`;
+    v.innerHTML=`<b>Most common pair</b>${nm} appear together in ${n} of ${PT_ORDERS.length} orders. The next highest pair appears in ${PT_NEXT}, and you tried ${ptRc.tried.size} pair${ptRc.tried.size===1?"":"s"}.`;
   } else {
     v.className="verdict warn";
-    v.innerHTML=`<b>Not the highest count</b>${nm} appear together in ${n} of ${PT_RECEIPTS.length} receipts. Another pair appears more often.`;
+    v.innerHTML=`<b>Not the highest count</b>${nm} appear together in ${n} of ${PT_ORDERS.length} orders. Another pair appears more often.`;
   }
 }
 function ptRcReset(){
@@ -161,7 +161,7 @@ function ptBarPress(w,d){
   if(w===PT_OUT.w && d===PT_OUT.d){
     ptBarBtn(w,d).classList.remove("pick"); ptBarBtn(w,d).classList.add("right");
     vz.className="verdict ok";
-    vz.innerHTML=`<b>Outlier found</b>${day} of week ${w+1} sold ${v} cups, while the other ${day}s sold ${others.join(" and ")}. The owner should find out why before changing her stock.`;
+    vz.innerHTML=`<b>Outlier found</b>${day} of week ${w+1} sold ${v} cups, while the other ${day}s sold ${others.join(" and ")}. The team should find out why before changing its order.`;
   } else if(d===PT_OUT.d){
     vz.className="verdict warn";
     vz.innerHTML=`<b>Look again</b>${day}s sold ${col.join(", ").replace(/, (\d+)$/," and $1")} cups. Two of the three are close, so look at the one that stands apart.`;

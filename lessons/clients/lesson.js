@@ -2,70 +2,70 @@
 /* ================= 06 CLIENTS ================= */
 const SHARED_RES = `<span class="kw">HTTP/1.1 200 OK</span>
 Content-Type: application/json
-Content-Length: 109
+Content-Length: 119
 
-{<span class="s">"courses"</span>: [
-  {<span class="s">"code"</span>: <span class="s">"MGT 45"</span>,  <span class="s">"units"</span>: 3, <span class="s">"slots"</span>: 4},
-  {<span class="s">"code"</span>: <span class="s">"CSCI 21"</span>, <span class="s">"units"</span>: 3, <span class="s">"slots"</span>: 0}
+{<span class="s">"items"</span>: [
+  {<span class="s">"name"</span>: <span class="s">"Chicken rice"</span>, <span class="s">"price"</span>: 180, <span class="s">"left"</span>: 4},
+  {<span class="s">"name"</span>: <span class="s">"Beef noodles"</span>, <span class="s">"price"</span>: 220, <span class="s">"left"</span>: 0}
 ]}`;
 
 const CLIENTS=[
- {id:"web", plain:"A GET request for the course list, with a session cookie that proves who the user is.", ic:"browser", n:"Web browser", s:"Runs in a browser on a laptop",
-  req:`<span class="kw">GET</span> /api/courses HTTP/1.1
-Host: enlist.university.edu
+ {id:"web", plain:"A GET request for the menu, with a session cookie that proves who the user is.", ic:"browser", n:"Web browser", s:"Runs in a browser on a laptop",
+  req:`<span class="kw">GET</span> /api/menu HTTP/1.1
+Host: app.example.com
 Accept: application/json
 <span class="kw">Cookie</span>: sessionid=8f2a91c4...
 User-Agent: Mozilla/5.0 (Macintosh...)`,
-  code:`<span class="kw">const</span> r = <span class="kw">await</span> fetch(<span class="s">"/api/courses"</span>, {
+  code:`<span class="kw">const</span> r = <span class="kw">await</span> fetch(<span class="s">"/api/menu"</span>, {
   credentials: <span class="s">"include"</span>   <span class="c">// sends the cookie</span>
 });
-<span class="kw">const</span> { courses } = <span class="kw">await</span> r.json();`,
+<span class="kw">const</span> { items } = <span class="kw">await</span> r.json();`,
   render:`&lt;ul&gt;
-  {courses.map(c =&gt;
-    &lt;li key={c.code}&gt;{c.code} &amp;middot; {c.units}u&lt;/li&gt;
+  {items.map(i =&gt;
+    &lt;li key={i.name}&gt;{i.name} &amp;middot; ₱{i.price}&lt;/li&gt;
   )}
 &lt;/ul&gt;`,
   note:"The browser attaches the session cookie by itself, because the server set it at login. Cookies need protection against CSRF (cross-site request forgery), since the browser also attaches them to a request that another website triggers.",
   cons:["Stable network","Large screen","You control every deploy","Cookie login, automatic"]},
 
- {id:"ios", plain:"A GET request for the course list, with a token that proves who the user is.", ic:"device-mobile", n:"iOS app", s:"Native app written in Swift",
-  req:`<span class="kw">GET</span> /api/courses HTTP/1.1
-Host: enlist.university.edu
+ {id:"ios", plain:"A GET request for the menu, with a token that proves who the user is.", ic:"device-mobile", n:"iOS app", s:"Native app written in Swift",
+  req:`<span class="kw">GET</span> /api/menu HTTP/1.1
+Host: app.example.com
 Accept: application/json
 <span class="kw">Authorization</span>: Bearer eyJhbGciOiJIUzI1...
-User-Agent: EnlistMobile/2.1 (iOS 17.4)`,
+User-Agent: DeliveryApp/2.1 (iOS 17.4)`,
   code:`<span class="kw">var</span> req = URLRequest(url: url)
 req.setValue(<span class="s">"Bearer \\(token)"</span>,
    forHTTPHeaderField: <span class="s">"Authorization"</span>)
 <span class="kw">let</span> (data, _) = <span class="kw">try await</span> URLSession.shared.data(<span class="kw">for</span>: req)
-<span class="kw">let</span> result = <span class="kw">try</span> JSONDecoder().decode(CourseList.self, from: data)`,
-  render:`List(result.courses, id: \\.code) { c <span class="kw">in</span>
+<span class="kw">let</span> result = <span class="kw">try</span> JSONDecoder().decode(MenuList.self, from: data)`,
+  render:`List(result.items, id: \\.name) { item <span class="kw">in</span>
     HStack {
-        Text(c.code)
+        Text(item.name)
         Spacer()
-        Text(<span class="s">"\\(c.units)u"</span>)
+        Text(<span class="s">"₱\\(item.price)"</span>)
     }
 }`,
   note:"A native app is built for one phone system. It keeps a token (a code that proves who the user is) in the Keychain, the phone's secure storage, and attaches it to every request. The User-Agent line carries the app version, which shows how many people still run old versions.",
   cons:["Mobile data, high latency","Small screen","App Store review to ship","Bearer token, manual","Payload size costs battery"]},
 
- {id:"android", plain:"A GET request for the course list, with a token that proves who the user is.", ic:"device-mobile", n:"Android app", s:"Native app written in Kotlin",
-  req:`<span class="kw">GET</span> /api/courses HTTP/1.1
-Host: enlist.university.edu
+ {id:"android", plain:"A GET request for the menu, with a token that proves who the user is.", ic:"device-mobile", n:"Android app", s:"Native app written in Kotlin",
+  req:`<span class="kw">GET</span> /api/menu HTTP/1.1
+Host: app.example.com
 Accept: application/json
 <span class="kw">Authorization</span>: Bearer eyJhbGciOiJIUzI1...
-User-Agent: EnlistMobile/2.0 (Android 14)`,
+User-Agent: DeliveryApp/2.0 (Android 14)`,
   code:`<span class="kw">val</span> req = Request.Builder()
-    .url(<span class="s">"$BASE/api/courses"</span>)
+    .url(<span class="s">"$BASE/api/menu"</span>)
     .header(<span class="s">"Authorization"</span>, <span class="s">"Bearer $token"</span>)
     .build()
 <span class="kw">val</span> body = client.newCall(req).execute().body?.string()
-<span class="kw">val</span> result = Json.decodeFromString&lt;CourseList&gt;(body!!)`,
+<span class="kw">val</span> result = Json.decodeFromString&lt;MenuList&gt;(body!!)`,
   render:`LazyColumn {
-    items(result.courses) { c -&gt;
+    items(result.items) { item -&gt;
         Row {
-            Text(c.code)
-            Text(<span class="s">"\${c.units}u"</span>)
+            Text(item.name)
+            Text(<span class="s">"₱\${item.price}"</span>)
         }
     }
 }`,
@@ -90,22 +90,22 @@ function renderClients(){
 renderClients();
 
 /* the server-rendered counterexample: markup where the data should be */
-$("#enlistHtml").innerHTML = `<span class="kw">HTTP/1.1 200 OK</span>
+$("#pageHtml").innerHTML = `<span class="kw">HTTP/1.1 200 OK</span>
 Content-Type: <span class="d">text/html</span>
 
-<span class="d">&lt;table width=</span><span class="s">"680"</span><span class="d"> class=</span><span class="s">"gridTable"</span><span class="d">&gt;</span>
- <span class="d">&lt;tr&gt;&lt;td&gt;</span>MGT 45<span class="d">&lt;/td&gt;&lt;td align=</span><span class="s">"center"</span><span class="d">&gt;</span>3<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
- <span class="d">&lt;tr&gt;&lt;td&gt;</span>CSCI 21<span class="d">&lt;/td&gt;&lt;td align=</span><span class="s">"center"</span><span class="d">&gt;</span>3<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="d">&lt;table width=</span><span class="s">"680"</span><span class="d"> class=</span><span class="s">"menuTable"</span><span class="d">&gt;</span>
+ <span class="d">&lt;tr&gt;&lt;td&gt;</span>Chicken rice<span class="d">&lt;/td&gt;&lt;td align=</span><span class="s">"center"</span><span class="d">&gt;</span>180<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
+ <span class="d">&lt;tr&gt;&lt;td&gt;</span>Beef noodles<span class="d">&lt;/td&gt;&lt;td align=</span><span class="s">"center"</span><span class="d">&gt;</span>220<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="d">&lt;/table&gt;</span>
 
 <span class="c">// The data sits inside the layout.</span>`;
 
-$("#enlistJson").innerHTML = `<span class="kw">HTTP/1.1 200 OK</span>
+$("#pageJson").innerHTML = `<span class="kw">HTTP/1.1 200 OK</span>
 Content-Type: <span class="d">application/json</span>
 
-{<span class="s">"enrollments"</span>: [
-  {<span class="s">"code"</span>: <span class="s">"MGT 45"</span>,  <span class="s">"units"</span>: 3},
-  {<span class="s">"code"</span>: <span class="s">"CSCI 21"</span>, <span class="s">"units"</span>: 3}
+{<span class="s">"items"</span>: [
+  {<span class="s">"name"</span>: <span class="s">"Chicken rice"</span>, <span class="s">"price"</span>: 180},
+  {<span class="s">"name"</span>: <span class="s">"Beef noodles"</span>, <span class="s">"price"</span>: 220}
 ]}
 
 <span class="c">// Only the data. Each client decides the look.</span>`;

@@ -4,7 +4,7 @@
  "label": "Transactions",
  "desc": "What goes wrong when two users change the same data.",
  "outcomes": [
-  "Explain how two sessions both book the last seat",
+  "Explain how two sessions both take the last slot in a section",
   "Say which fix works (a lock or one statement) and why checking first fails",
   "Say what atomicity, consistency, isolation and durability each guarantee"
  ],

@@ -4,13 +4,13 @@
         <p>Owning servers is <dfn title="Money spent up front on assets you own, written off over several years">capital expenditure</dfn> (CapEx). Renting them is <dfn title="Money spent on what you use, recorded as an expense when you incur it">operational expenditure</dfn> (OpEx).</p>
       </div>
 
-      <div class="sec" data-sec="grab" data-title="Start with a jeepney and a Grab">
-        <p>To get around Metro Manila every day, you can buy a jeepney or book a Grab. The jeepney costs a large sum at the start and loses value every year, whether you drive it or not. Each Grab trip costs more than driving your own vehicle, but you pay only for the trips you take.</p>
-        <div class="scene" role="group" aria-label="Buying a jeepney is CapEx, booking a Grab is OpEx" data-art="own-or-hail-ride" data-art-desc="A person on a city street stands between a jeepney they own and keep parked and a taxi they wave down only when needed.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bus"/></svg></div><figcaption><b>Buying a jeepney</b><span>CapEx</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-taxi"/></svg></div><figcaption><b>Booking a Grab</b><span>OpEx</span></figcaption></figure>
+      <div class="sec" data-sec="two-prices" data-title="Start with two prices for a server">
+        <p>A hardware seller's site lists a physical server for ₱180,000, and a cloud console lists a 2 GB server at ₱3 per hour. A student team building a project app presses Create on the hourly server. Its bill grows only while the server runs.</p>
+        <div class="scene" role="group" aria-label="A physical server is paid once, up front. A cloud server is paid by the hour." data-art="server-price-two-ways" data-art-desc="A student sits at a laptop whose screen shows two plain panels side by side, one with a single large block and one with a clock shape beside a small block, while a second student looks on.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>Buy a physical server</b><span>Paid once, up front</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-clock"/></svg></div><figcaption><b>Rent a cloud server</b><span>Paid by the hour</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> Seven servers were needed for about twenty minutes on enlistment morning, so what share of the year were they busy?</div>
+        <div class="ask"><b>Think first.</b> The university's enlistment system needs seven servers for about twenty minutes on enlistment morning. If it owned them, what share of the year would they be busy?</div>
         <div class="instructor">Twenty minutes is about 0.004% of a year, so the servers were idle almost all the time. Ask for guesses before moving on. The capacity chart in the third step shows the same shape.</div>
       </div>
 
@@ -18,13 +18,13 @@
         <p>Read the two cards. Finance usually approves cloud spending because of how each choice is recorded in the accounts.</p>
         <div class="scale2">
           <div class="sc2 vert">
-            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-bus"/></svg>
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg>
             <div class="sh">CapEx</div>
             <h4>You own the servers</h4>
             <p>A large sum is spent up front and written off over several years.</p>
           </div>
           <div class="sc2 horiz">
-            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-taxi"/></svg>
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-clock"/></svg>
             <div class="sh">OpEx</div>
             <h4>You rent by the hour</h4>
             <p>The cost is a monthly expense, traced to the project that used it.</p>
@@ -35,7 +35,7 @@
           <h4>What CapEx buys</h4>
           <p>Servers, a data center and enterprise licenses. The cost is predictable, but you cannot adjust it. You must guess your peak demand years ahead, and a wrong guess is expensive in either direction.</p>
           <h4>What OpEx buys</h4>
-          <p>Computing time, storage and software subscriptions (SaaS). The starting cost is low and capacity can change, but the meter keeps running. A forgotten test environment is billed every month until someone notices.</p>
+          <p>Computing time, storage and software subscriptions (SaaS). The starting cost is low and capacity can change, but charges continue every hour. A forgotten test environment is billed every month until someone notices.</p>
         </details>
       </div>
 
@@ -54,8 +54,8 @@
           <div class="card">
             <div class="card-t">How do you buy capacity?</div>
             <div class="toggles">
-              <button class="tg" id="tgCapex" aria-pressed="true"><span class="dot"></span><span><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-bus"/></svg> Buy servers up front<small>Fixed capacity all year. You set the level.</small></span></button>
-              <button class="tg" id="tgOpex" aria-pressed="false"><span class="dot"></span><span><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-taxi"/></svg> Rent, and scale with demand<small>Capacity follows demand, with a delay.</small></span></button>
+              <button class="tg" id="tgCapex" aria-pressed="true"><span class="dot"></span><span><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg> Buy servers up front<small>Fixed capacity all year. You set the level.</small></span></button>
+              <button class="tg" id="tgOpex" aria-pressed="false"><span class="dot"></span><span><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-clock"/></svg> Rent, and scale with demand<small>Capacity follows demand, with a delay.</small></span></button>
             </div>
             <div class="sliders" style="margin-top:16px">
               <div class="field">
@@ -74,11 +74,11 @@
       </div>
 
       <div class="sec" data-sec="tco" data-title="Total cost of ownership">
-        <p><dfn title="The full cost of a system over its whole life, beyond the purchase price">Total cost of ownership</dfn> (TCO) includes much more than the purchase price. The price is the item most comparisons use. Here are three of the six items.</p>
+        <p><dfn title="The full cost of a system over its whole life, beyond the purchase price">Total cost of ownership</dfn> (TCO) is the full cost of a system, beyond its purchase price. Three of its six items follow.</p>
         <div class="tco">
           <div class="tc"><h5>Acquisition</h5><p>Purchase price, taxes, shipping and installation.</p></div>
-          <div class="tc"><h5>Operating</h5><p>Power, cooling, bandwidth and licenses. These costs run every hour, whether or not anyone uses the system.</p></div>
-          <div class="tc hidden"><h5>Downtime</h5><p>The cost of the system being unavailable, planned or not. For enlistment morning this is the largest item.</p></div>
+          <div class="tc"><h5>Operating</h5><p>Power, cooling, bandwidth and licenses, charged every hour whether or not the system is used.</p></div>
+          <div class="tc hidden"><h5>Downtime</h5><p>The cost of the system being unavailable, largest on enlistment morning.</p></div>
         </div>
         <p class="outcome">You can now compare buying and renting with more than the purchase price.</p>
         <details class="more">

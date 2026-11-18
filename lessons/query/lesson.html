@@ -1,18 +1,18 @@
     <section class="panel" id="p-query">
       <div class="head">
         <h2>The N+1 query problem</h2>
-        <p>A page that lists 50 enrollments can ask the database 51 questions or 1 question. The number of <dfn title="One request to the database">queries</dfn> decides how fast the page is.</p>
+        <p>A page that lists 50 enlistments can ask the database 51 questions or 1 question. The number of <dfn title="One request to the database">queries</dfn> decides how fast the page is.</p>
       </div>
 
-      <div class="sec" data-sec="clerk" data-title="Start with a file clerk">
-        <p>Picture asking a clerk for 50 files. You can ask for them one at a time, and the clerk walks to the cabinet 50 times. Or you can ask for all 50 at once, and the clerk makes one trip with a cart. A web page that lists 50 enrollments with course titles can behave either way.</p>
-        <div class="scene" role="group" aria-label="You are the application server, the clerk and cabinet are the database, the files are rows" data-art="file-clerk-cart" data-art-desc="A student asks at a counter while one clerk carries a single folder from a filing cabinet and a second clerk pushes a cart stacked with many folders.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bell-simple"/></svg></div><figcaption><b>You, at the window</b><span>Application server</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cooking-pot"/></svg></div><figcaption><b>Clerk and cabinet</b><span>Database</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-table"/></svg></div><figcaption><b>The files</b><span>Rows</span></figcaption></figure>
+      <div class="sec" data-sec="my-courses" data-title="Start with the My courses page">
+        <p>The My courses page of the university's online enlistment system lists each course you enlisted in, with its title and schedule. Before it appears, the <dfn title="The program that builds the page and talks to the database">application server</dfn> has asked the database for your enlistments and for the details of each course.</p>
+        <div class="scene" role="group" aria-label="The parts involved: your browser, the application server and the database" data-art="my-courses-page-laptop" data-art-desc="A student sits at a desk and looks at a laptop screen that shows a plain list of five rows made of short bars, with a phone lying beside the laptop.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg></div><figcaption><b>Your browser</b><span>Asks for the page</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>Application server</b><span>Builds the page</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-database"/></svg></div><figcaption><b>Database</b><span>Holds the rows</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> A page lists fifty enrollments. For each row, the page looks up the course title separately. How many times is the database queried? Write down your number.</div>
-        <div class="instructor">The usual answer is 50. The correct answer is 51, because the page first runs one query to fetch the enrollments. Collect numbers before anyone moves the slider.</div>
+        <div class="ask"><b>Think first.</b> Suppose a page lists 50 enlistments and the server looks up each course title with a separate query. How many queries reach the database? Write down your number.</div>
+        <div class="instructor">The usual answer is 50. The correct answer is 51, because the page first runs one query to fetch the enlistments. Collect numbers before anyone moves the slider.</div>
       </div>
 
       <div class="sec" data-sec="count" data-title="Count the queries">
@@ -21,7 +21,7 @@
           <div>
             <div class="phase" id="qNote"></div>
             <div class="meter" style="grid-template-columns:repeat(2,1fr);margin-top:12px">
-              <div class="g" id="qQueries"><svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-cooking-pot"/></svg><div class="gl">Queries for one page</div><div class="gv">—</div></div>
+              <div class="g" id="qQueries"><svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-database"/></svg><div class="gl">Queries for one page</div><div class="gv">—</div></div>
               <div class="g" id="qCeil"><svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg><div class="gl">Most pages per second</div><div class="gv">—</div></div>
             </div>
             <div class="verdict" id="qVerdict" style="margin-top:13px"></div>
@@ -31,7 +31,7 @@
             <div class="toggles" id="qMode"></div>
             <div class="sliders" style="margin-top:14px">
               <div class="field">
-                <label>Enrollments on the page <span class="val" id="vQRows">50</span></label>
+                <label>Enlistments on the page <span class="val" id="vQRows">50</span></label>
                 <input type="range" id="sQRows" min="1" max="200" value="50">
               </div>
             </div>
@@ -44,7 +44,7 @@
           <div class="art" id="qCode"></div>
           <p>The first version looks correct, and AI tools often produce it when asked for a schedule page. It is still slow.</p>
           <h4>How the times are worked out</h4>
-          <p>The model assumes each query takes 0.4 ms (milliseconds), because the database can answer it from an index, which is a lookup structure like the index of a book. It also assumes 24 ms of handler time that is not database work. Handler time is the total time the server spends on one request. A worker is a server process that handles one request at a time. The most pages per second is the number that 8 workers can finish.</p>
+          <p>The model assumes each query takes 0.4 ms (milliseconds), because the database can answer it from an index, a lookup structure that the database keeps for finding rows quickly. It also assumes 24 ms of handler time that is not database work. Handler time is the total time the server spends on one request. A worker is a server process that handles one request at a time. The most pages per second is the number that 8 workers can finish.</p>
           <div class="meter" style="grid-template-columns:repeat(2,1fr);margin-top:12px">
             <div class="g" id="qDb"><div class="gl">Time in the database</div><div class="gv">—</div></div>
             <div class="g" id="qHandler"><div class="gl">Handler time</div><div class="gv">—</div></div>

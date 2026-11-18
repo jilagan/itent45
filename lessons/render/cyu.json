@@ -5,12 +5,12 @@
    "id": "render-1",
    "sec": "formats",
    "type": "predict",
-   "stem": "The same two courses are written as JSON, XML and HTML. Which format is the largest, and why?",
+   "stem": "The same two menu items are written as JSON, XML and HTML. Which format is the largest, and why?",
    "options": [
     {
      "text": "HTML, because it also carries layout such as table widths",
      "correct": true,
-     "feedback": "HTML describes how to draw the table, so only 14% of its bytes are the data. JSON is the smallest."
+     "feedback": "HTML describes how to draw the table, so only 10% of its bytes are the data. JSON is the smallest."
     },
     {
      "text": "XML, because every single value is wrapped in tags",

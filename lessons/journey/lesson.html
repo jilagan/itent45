@@ -4,12 +4,12 @@
         <p>A <dfn title="A message out and the reply back">round trip</dfn> is a message out and the reply back. A page load needs several of them before the server runs any of your code.</p>
       </div>
 
-      <div class="sec" data-sec="calls" data-title="Start with a phone call">
-        <p>Before you order from a restaurant, you may call to ask whether it is open, wait for the answer, then call again to reserve a table. Each call has to go out and come back before the next one can start. A browser makes calls like these first.</p>
-        <div class="scene" role="group" aria-label="The caller is the browser, each phone call is a round trip, the restaurant is the server" data-art="restaurant-phone-calls" data-art-desc="A hungry customer sits at home holding a phone to their ear, waiting for a restaurant to answer, with a plain wall clock beside them.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Caller</b><span>Browser</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg></div><figcaption><b>One phone call</b><span>One round trip</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-fork-knife"/></svg></div><figcaption><b>Restaurant</b><span>Server</span></figcaption></figure>
+      <div class="sec" data-sec="slow-first-page" data-title="Start with a page that is slow to open">
+        <p>You type the web address of a food delivery app into your browser and press Enter. The screen stays blank for a moment, then the page appears. The same page opens faster for some users than for others, even when the server's code takes the same time for everyone.</p>
+        <div class="scene" role="group" aria-label="Your browser exchanges several messages with the app's server before the page appears" data-art="blank-page-loading" data-art-desc="A student at a plain desk looks at an open laptop whose browser window is blank except for one small round spinner shape.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg></div><figcaption><b>Your browser</b><span>Client</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-arrows-left-right"/></svg></div><figcaption><b>Message out, reply back</b><span>One round trip</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>The app's server</b><span>Server</span></figcaption></figure>
         </div>
         <div class="ask"><b>Think first.</b> Your code takes 40 ms whether the user is in Katipunan or in Berlin. Why does the page still load more slowly in Berlin?</div>
         <div class="instructor">Expected answer: every setup step needs at least one round trip, and each round trip takes longer over a greater distance. Server speed does not change that. Ask students to commit to a reason before they move the slider in the next steps.</div>

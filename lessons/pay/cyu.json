@@ -5,22 +5,22 @@
    "id": "pay-1",
    "sec": null,
    "type": "mc",
-   "stem": "A shop's developer reads every request that reaches the shop's own server during a card payment. Will the card number appear in them?",
+   "stem": "A food delivery app's developer reads every request that reaches the app's own server during a card payment. Will the card number appear in them?",
    "options": [
     {
-     "text": "No. The browser sends the card to the gateway, and the shop's server gets only a token",
+     "text": "No. The browser sends the card to the gateway, and the app's server gets only a token",
      "correct": true,
-     "feedback": "Because the card number never enters the shop's systems, they stay out of PCI DSS scope."
+     "feedback": "Because the card number never enters the app's systems, they stay out of PCI DSS scope."
     },
     {
-     "text": "Yes, because the card goes from the browser to the shop's server and then to the gateway",
+     "text": "Yes, because the card goes from the browser to the app's server and then to the gateway",
      "correct": false,
-     "feedback": "If that were the design, the shop's server would fall under PCI DSS. Gateways exist so the card skips the shop's server."
+     "feedback": "If that were the design, the app's server would fall under PCI DSS. Gateways exist so the card skips the app's server."
     },
     {
-     "text": "Yes, but only when the payment fails and the shop has to retry the charge",
+     "text": "Yes, but only when the payment fails and the app has to retry the charge",
      "correct": false,
-     "feedback": "The card number does not reach the shop's server at all, whether the payment succeeds or fails."
+     "feedback": "The card number does not reach the app's server at all, whether the payment succeeds or fails."
     }
    ]
   },
@@ -28,7 +28,7 @@
    "id": "pay-2",
    "sec": null,
    "type": "mc",
-   "stem": "Your server asks the gateway to charge a customer's GCash wallet, and the gateway replies with the status `pending`. What should the shop do?",
+   "stem": "Your server asks the gateway to charge a user's e-wallet, and the gateway replies with the status `pending`. What should the app do?",
    "options": [
     {
      "text": "Show the order as awaiting payment, and mark it paid when the webhook arrives",
@@ -41,7 +41,7 @@
      "feedback": "Accepting the request means the payment started. Money has not moved yet, and the payment may still fail."
     },
     {
-     "text": "Show an error to the shopper, because pending means the payment failed",
+     "text": "Show an error to the user, because pending means the payment failed",
      "correct": false,
      "feedback": "Pending means the result is not known yet. It does not mean failure."
     }
@@ -51,7 +51,7 @@
    "id": "pay-3",
    "sec": "double-charge",
    "type": "predict",
-   "stem": "A shopper presses Pay three times on a stalled checkout. The shop sends no idempotency key. How many charges does the shopper pay?",
+   "stem": "A user presses Pay three times on a stalled checkout. The app sends no idempotency key. How many charges does the user pay?",
    "options": [
     {
      "text": "Three, because each POST creates a separate charge",
@@ -66,7 +66,7 @@
     {
      "text": "One, because the gateway rejects repeated amounts",
      "correct": false,
-     "feedback": "A customer can legitimately pay the same amount twice, so gateways cannot reject on amount alone. They need a key."
+     "feedback": "A user can legitimately pay the same amount twice, so gateways cannot reject on amount alone. They need a key."
     }
    ],
    "try": "In the step \"A double charge\", leave the key off, press Pay three times and read the total. Then turn the key on and try again."

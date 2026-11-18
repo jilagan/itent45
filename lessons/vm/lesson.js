@@ -22,7 +22,7 @@ function renderVm(){
   const v=$("#vmVerdict");
   if(m.over){
     v.className="verdict bad";
-    v.innerHTML=`<b>Oversold by ${Math.abs(m.free)} GB</b>The guests have been promised ${m.sold} GB and the host has ${m.avail} GB available. When many guests are busy at once, every guest slows down, which is called the noisy-neighbor problem.`;
+    v.innerHTML=`<b>Oversold by ${Math.abs(m.free)} GB</b>The guests have been promised ${m.sold} GB and the host has ${m.avail} GB available. When many guests are busy at once, every guest slows down, because they compete for the same memory.`;
   } else if(m.ratio>0.85){
     v.className="verdict warn";
     v.innerHTML=`<b>${Math.round(m.ratio*100)}% committed</b>${m.free} GB is spare on a ${HOST_RAM} GB machine. That is efficient for the provider and leaves little room if one guest suddenly needs more memory.`;
@@ -33,7 +33,7 @@ function renderVm(){
 }
 const NIST=[
  ["On-demand self-service","You create capacity yourself, through an API (a way for programs to send commands to the provider) or a web console, with no purchase order. A cloud server needs a credit card and about a minute, so a wrong decision is cheap to fix."],
- ["Broad network access","Capabilities are reachable over the network by standard methods, from phones, laptops and other devices. The same HTTP endpoint can serve a browser, an iPhone and an Android app."],
+ ["Broad network access","Capabilities are reachable over the network by standard methods, from phones, laptops and other devices. The same HTTP endpoint can serve a browser, an iOS app and an Android app."],
  ["Resource pooling","Physical resources are pooled and assigned to many customers as needed, and you generally cannot tell where yours run. Pooling keeps cloud prices low and sometimes slows your server for reasons you cannot see."],
  ["Rapid elasticity","Capacity can be added and released quickly, and to the customer it looks unlimited. A new machine still takes time to boot."],
  ["Measured service","Usage is metered and billed by the unit, such as CPU-hours, gigabytes or requests. Metering makes cloud costs an ongoing expense, and a resource you forgot about keeps charging you."]
@@ -53,7 +53,7 @@ const RESP=[
  ["Operating system",     1,1,0,0],
  ["Virtual machine",      1,0,0,0],
  ["Physical servers",     1,0,0,0],
- ["Network and building", 1,0,0,0]
+ ["Network and data center",1,0,0,0]
 ];
 $("#respBody").innerHTML=RESP.map(r=>{
   const [n,...cols]=r;
@@ -72,7 +72,7 @@ let elasticityShown=false;   // set by the autoscaler below, which is declared l
 const PROV={mode:"cloud", servers:[], hours:0, bill:0, seq:0, firstUp:null, timer:null, peak:0};
 const MODES={
   cloud:{ readyH:0.02, hourly:3, upfront:0,
-    note:"Provisioning takes about a minute and costs nothing to start. You are billed <b>₱3 per running hour</b> for each server, and the meter stops when you delete one." },
+    note:"Provisioning takes about a minute and costs nothing to start. You are billed <b>₱3 per running hour</b> for each server, and charges stop when you delete one." },
   onprem:{ readyH:1008, hourly:0, upfront:180000,
     note:"Six weeks pass for quotation, purchase order, delivery and setup, and <b>₱180,000 is charged once</b> whether or not the machine is busy. Deleting a server returns no money, because you own the hardware." }
 };
@@ -136,7 +136,7 @@ function renderProv(){
     v.innerHTML=`<b>You have shown four of the five cloud characteristics</b>You created servers in about a minute without asking anyone, scaled up and back down, and paid by the hour.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>${up} running, ₱${Math.round(PROV.bill).toLocaleString()} so far</b>The meter runs only while the servers exist. Provision three and delete two to see capacity grow and shrink.`;
+    v.innerHTML=`<b>${up} running, ₱${Math.round(PROV.bill).toLocaleString()} so far</b>Charges accrue only while the servers exist. Provision three and delete two to see capacity grow and shrink.`;
   }
 }
 function provTick(){

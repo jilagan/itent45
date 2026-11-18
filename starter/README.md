@@ -20,20 +20,20 @@ PUT    /api/courses/{code}          replace every field
 PATCH  /api/courses/{code}          change only what you sent
 DELETE /api/courses/{code}          remove                  204
 
-GET    /api/enrollments?student=    list, one query not N+1
-POST   /api/enrollments             enrol                   201, or 409
-DELETE /api/enrollments/{id}        drop                    204, then 404
+GET    /api/enlistments?student=    list, one query not N+1
+POST   /api/enlistments             enlist                   201, or 409
+DELETE /api/enlistments/{id}        drop                    204, then 404
 ```
 
 ## Things in here worth reading rather than running
 
-**Idempotency-Key on POST /enrollments.** Send the same enrolment twice with
+**Idempotency-Key on POST /enlistments.** Send the same enlistment twice with
 the same key and the second one returns `200` with the *first* result instead
-of enrolling again. Without a key you get `201` then `409`. That is panel 07,
+of enlisting again. Without a key you get `201` then `409`. That is panel 07,
 and the header is the entire fix.
 
 ```bash
-curl -X POST localhost:8000/api/enrollments \
+curl -X POST localhost:8000/api/enlistments \
      -H 'Content-Type: application/json' \
      -H 'Idempotency-Key: abc-123' \
      -d '{"student":"20-1234","code":"ITENT 45"}'
@@ -51,7 +51,7 @@ arrive at once and both pass the check before either writes. That is the
 enlistment seat race from panel 11, and it is why the constraint belongs in
 the database.
 
-**`select_related("course")`.** One query for the enrolment list instead of one
+**`select_related("course")`.** One query for the enlistment list instead of one
 per row. Take it out and watch panel 10's N+1 number happen to you.
 
 **Malformed input does not kill the process.** `node_api.js` returns `400` on a

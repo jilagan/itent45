@@ -24,7 +24,7 @@ const ATT=[
   words:["The","animal","didn't","cross","the","street","because","it","was","too","wide","."],
   w:{it:{animal:.11,street:.58,cross:.08,wide:.16,The:.02,didn_t:.02,because:.02,was:.01},
      wide:{street:.47,it:.26,animal:.07,was:.11,too:.06,cross:.03}},
-  v:`<b>One word changed and <code>it</code> now points at <code>street</code></b>The weight is 0.58 for street and 0.11 for animal. Each word builds its question from the words around it, so a new last word gives a new question.`}
+  v:`<b>One word changed and <code>it</code> now points at <code>street</code></b>The weight is 0.58 for street and 0.11 for animal. Each word builds its query from the words around it, so a new last word gives a new query.`}
 ];
 const AS={sel:"tired", word:"it", n:1000};
 function attRender(){
@@ -57,9 +57,9 @@ function attRender(){
   if(ask){
     const top=Object.entries(src).sort((x,y)=>y[1]-x[1]).slice(0,3);
     $("#atWhy").innerHTML =
-      `<div style="font-size:max(14px,.8em);font-weight:600;color:var(--req);margin-bottom:7px">What ${AS.word.replace(/_/g,"'")} is asking for</div>`+
+      `<div style="font-size:max(14px,.8em);font-weight:600;color:var(--req);margin-bottom:7px">What ${AS.word.replace(/_/g,"'")} needs (its query)</div>`+
       `<div style="font-size:.95em;color:var(--ink);margin-bottom:11px">&ldquo;${ask}&rdquo;</div>`+
-      `<div style="font-size:max(14px,.8em);font-weight:600;color:var(--res);margin-bottom:7px">What the others offer</div>`+
+      `<div style="font-size:max(14px,.8em);font-weight:600;color:var(--res);margin-bottom:7px">What the others contain (their keys)</div>`+
       top.map(([w,v])=>{
         const off=(a.offers||{})[w] || "no strong meaning of its own";
         const strong=v>.3;
@@ -69,7 +69,7 @@ function attRender(){
           <span style="font-size:.9em;color:var(--dim)">${off}</span>
           <span style="font-family:var(--mono);font-size:.9em;text-align:right;color:${strong?"var(--res)":"var(--faint)"}">${v.toFixed(2)}</span></div>`;
       }).join("");
-  } else $("#atWhy").innerHTML=`<span style="font-size:.9em;color:var(--faint)">Click <b>it</b> or the last word to see what it is asking for.</span>`;
+  } else $("#atWhy").innerHTML=`<span style="font-size:.9em;color:var(--faint)">Click <b>it</b> or the last word to see its query.</span>`;
   $("#atVerdict").className="verdict ok"; $("#atVerdict").innerHTML=a.v;
   attCost();
 }

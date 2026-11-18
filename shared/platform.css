@@ -42,7 +42,7 @@ html[data-theme="dark"] .sectab[aria-current="step"]{color:#0b1220}
 /* ---------- back and next ---------- */
 .secpager{
   display:flex;justify-content:space-between;align-items:stretch;gap:16px;
-  margin-top:48px;padding-top:24px;border-top:1px solid var(--line,#d8dce3);max-width:none;
+  margin-top:36px;padding-top:16px;border-top:1px solid var(--line,#d8dce3);max-width:none;
 }
 .secpager.lessononly{margin-top:40px}
 .secgap{flex:1}
@@ -120,7 +120,7 @@ dfn:focus-visible{outline:2px solid var(--res,#0b4a8f);outline-offset:2px;border
 .keyterms dd{margin:0;color:var(--ink2,#2b3037)}
 
 /* ---------- Check your understanding ---------- */
-.cyu{margin:36px 0 0;padding:0;border:0;border-top:1px solid var(--line,#d8dce3);border-radius:0;background:none}
+.cyu{margin:24px 0 0;padding:0;border:0;border-top:1px solid var(--line,#d8dce3);border-radius:0;background:none}
 .cyu.cyu-final{margin-top:0;border-top:0}
 .panel .cyu-title{margin:16px 0 4px;font-size:1.05em;font-weight:700;color:var(--ink,#1a1d23)}
 .cyu-item{padding:16px 0;border-top:1px solid var(--line,#d8dce3)}

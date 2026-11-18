@@ -5,7 +5,7 @@
 .card.wg{padding:18px}
 .wg .btn,.wg .ctab button{min-height:44px}
 .wg .btn:disabled{opacity:.45;cursor:default}
-.wg .btn:disabled:hover{border-color:var(--line2);color:var(--ink)}
+@media (hover:hover){.wg .btn:disabled:hover{border-color:var(--line2);color:var(--ink)}}
 .wg .ctab{margin-bottom:12px}
 .wg .ctrls{margin:14px 0 0}
 .wg .card-t{margin:14px 0 8px}
@@ -36,7 +36,7 @@
 .wg .wopt,.wg .wchip{font:inherit;text-align:left;cursor:pointer;color:var(--ink);background:var(--panel);border:1px solid var(--line2);border-radius:4px;line-height:1.4}
 .wg .wopt{display:flex;align-items:center;justify-content:space-between;gap:10px;width:100%;min-width:0;min-height:48px;padding:10px 14px}
 .wg .wchip{min-height:44px;padding:8px 12px;font-size:max(14px,.9em)}
-.wg .wopt:hover,.wg .wchip:hover{border-color:var(--res)}
+@media (hover:hover){.wg .wopt:hover,.wg .wchip:hover{border-color:var(--res)}}
 .wg .wopt[aria-pressed="true"],.wg .wchip[aria-pressed="true"],.wg .wopt.sel,.wg .wchip.sel{border-color:var(--req);box-shadow:inset 0 0 0 1px var(--req);background:color-mix(in srgb,var(--req) 10%,var(--panel))}
 .wg .wopt.right,.wg .wchip.right{border-color:var(--res);color:var(--res);font-weight:600;background:color-mix(in srgb,var(--res) 8%,var(--panel))}
 .wg .wopt.tried{color:var(--dim);border-style:dashed}

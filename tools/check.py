@@ -104,6 +104,51 @@ def facts(pg, where, base_url, embed=False):
         if not resolves(base_url, h): bad(where, "link", f"lesson link {h} does not resolve")
     if embed and f["over"]: bad(where, "overflow", "page scrolls sideways at 700 px")
 
+MENU_JS = """()=>{
+  const out=[]; const H=document.documentElement;
+  const tg=document.querySelector('.navtoggle'), pn=document.querySelector('#navpanel');
+  if(!tg||!pn) return ['no Contents button or #navpanel'];
+  if(!H.classList.contains('nav-open')) out.push('menu did not open');
+  if(tg.textContent.trim()!=='Close') out.push('button reads '+tg.textContent.trim()+' while open');
+  if(tg.getAttribute('aria-expanded')!=='true') out.push('aria-expanded is not true while open');
+  const cs=getComputedStyle(pn), r=pn.getBoundingClientRect();
+  if(cs.position!=='fixed') out.push('panel is '+cs.position+', not fixed');
+  if(Math.abs(r.left)>1||Math.abs(r.top)>1||Math.abs(r.width-innerWidth)>1||Math.abs(r.bottom-innerHeight)>2) out.push('panel does not fill the viewport: '+[r.left,r.top,r.width,r.bottom].map(Math.round));
+  if(cs.overflowY!=='auto'&&cs.overflowY!=='scroll') out.push('panel does not scroll by itself');
+  if(!/^rgb\\(/.test(cs.backgroundColor)) out.push('panel background is not opaque: '+cs.backgroundColor);
+  if(getComputedStyle(H).overflow!=='hidden') out.push('page behind is not locked');
+  const open=[...pn.querySelectorAll('details.navset')].filter(d=>d.open), cur=pn.querySelector('.navitem[aria-current=page]');
+  if(cur){ if(open.length!==1||!open[0].contains(cur)) out.push('open groups: '+open.length+' (want only the current one)');
+    const cr=cur.getBoundingClientRect(); if(cr.bottom<0||cr.top>innerHeight) out.push('current lesson is not in view');
+    if(!pn.contains(document.activeElement)) out.push('focus did not move into the menu'); }
+  const headCur=pn.querySelectorAll('.navset.cur>summary'); if(cur&&headCur.length!==1) out.push('current group marks: '+headCur.length);
+  // nothing from the lesson shows outside the menu: sample the whole screen
+  const rail=document.querySelector('#rail');
+  for(let y=4;y<innerHeight;y+=40) for(let x=4;x<innerWidth;x+=40){ const e=document.elementFromPoint(x,y); if(e&&!rail.contains(e)){ out.push('page content at '+x+','+y+': '+e.tagName+'.'+e.className); y=1e9; break; } }
+  return out; }"""
+
+def menu_check(b, i, c, bad, resolves=None):
+    """phone: open the contents menu by touch and check that it is a clean full-screen panel"""
+    ctx = b.new_context(viewport={"width": 390, "height": 800}, device_scale_factor=2, is_mobile=True, has_touch=True)
+    pg = ctx.new_page(); where = f"{i} ?c={c} phone menu"
+    try:
+        pg.goto(f"file://{D}/lessons/{i}.html?c={c}"); ready(pg)
+        pg.evaluate("window.scrollTo(0,200)"); y0 = pg.evaluate("scrollY")
+        pg.tap(".navtoggle"); pg.wait_for_timeout(250)
+        for m in pg.evaluate(MENU_JS): bad(where, "menu", m)
+        pg.mouse.move(195, 400); pg.mouse.wheel(0, 300); pg.wait_for_timeout(150)
+        if abs(pg.evaluate("scrollY") - y0) > 1: bad(where, "menu", "the page scrolled behind the open menu")
+        pg.keyboard.press("Escape"); pg.wait_for_timeout(150)
+        st = pg.evaluate("({open:document.documentElement.classList.contains('nav-open'),t:document.querySelector('.navtoggle').textContent.trim(),x:document.querySelector('.navtoggle').getAttribute('aria-expanded'),f:document.activeElement===document.querySelector('.navtoggle')})")
+        if st["open"] or st["t"] != "Contents" or st["x"] != "false": bad(where, "menu", f"Escape did not close it cleanly {st}")
+        if not st["f"]: bad(where, "menu", "focus did not return to the Contents button")
+        if pg.evaluate("document.documentElement.scrollWidth>innerWidth+1"): bad(where, "overflow", "scrolls sideways at 390")
+        hh = pg.evaluate("document.querySelector('#rail').getBoundingClientRect().height")
+        if hh > 60: bad(where, "menu", f"closed header is {hh:.0f}px tall, not one row")
+    except Exception as e:
+        bad(where, "menu", f"{type(e).__name__}: {str(e)[:120]}")
+    ctx.close()
+
 def run():
     n_steps = n_embed = 0
     with sync_playwright() as p:
@@ -162,6 +207,7 @@ def run():
                     if nx and (not resolves(url, nx) or "c=" + c not in nx): bad(cur[0], "link", f"Next lesson {nx}")
                 for e in errs: bad(*e)
                 pg.close(); errs.clear()
+                menu_check(b, i, c, bad)
             # 3. Canvas view
             if EMBED:
                 pg = b.new_page(viewport={"width": 700, "height": 900}); watch(pg, cur, errs)

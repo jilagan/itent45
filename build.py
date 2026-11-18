@@ -70,6 +70,15 @@ def load_courses():
         try: C[f.stem] = json.loads(rd(f))
         except ValueError as e: err(f"courses/{f.name}: {e}"); continue
         if C[f.stem].get("id") != f.stem: err(f"courses/{f.name}: id must be {f.stem!r}")
+        # a group's lesson list may hold {"heading": "..."} entries: small sub-headings between lessons.
+        # "lessons" stays a plain list of ids for everything downstream; "items" keeps the headings in order.
+        for h in C[f.stem].get("homes", []):
+            for g in h.get("groups", []):
+                if any(isinstance(x, dict) for x in g["lessons"]):
+                    g["items"] = g["lessons"]
+                    bad = [x for x in g["items"] if isinstance(x, dict) and not (set(x) == {"heading"} and isinstance(x["heading"], str) and x["heading"].strip())]
+                    if bad: err(f"courses/{f.name}: {g['label']}: a heading entry must look like {{\"heading\": \"text\"}}")
+                    g["lessons"] = [x for x in g["items"] if isinstance(x, str)]
     return C
 
 # ------------------------------------------------------------------ validate
@@ -170,7 +179,7 @@ def lesson_page(m, lib, L, ctx):
 <html lang="en" data-theme="light">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(m['title'])}</title>
 <meta name="description" content="{esc(m['desc'])}">
 <script>{HEAD_JS}</script>
@@ -209,8 +218,15 @@ def home_page(cid, c, h, L, all_ids):
     q = f"?c={cid}"
     groups = []
     for g in h["groups"]:
-        lis = "".join(f'<li data-p="{i}"><a data-lesson="{i}" href="lessons/{i}.html{q}">{esc(L[i]["label"])}</a><span class="d">{esc(L[i]["desc"])}</span></li>' for i in g["lessons"])
-        groups.append(f'<section class="home-group"><h3>{esc(g["label"])}</h3><ul>{lis}</ul></section>')
+        def li(i): return f'<li data-p="{i}"><a data-lesson="{i}" href="lessons/{i}.html{q}">{esc(L[i]["label"])}</a><span class="d">{esc(L[i]["desc"])}</span></li>'
+        parts = []; run = []
+        for x in g.get("items", g["lessons"]):
+            if isinstance(x, dict):
+                if run: parts.append(f'<ul>{"".join(run)}</ul>'); run = []
+                parts.append(f'<h4 class="home-sub">{esc(x["heading"])}</h4>')
+            else: run.append(li(x))
+        if run: parts.append(f'<ul>{"".join(run)}</ul>')
+        groups.append(f'<section class="home-group"><h3>{esc(g["label"])}</h3>{"".join(parts)}</section>')
     redirect = ('(function(){var h=location.hash.slice(1);if(!h)return;var p=h.split("/"),ids=%s;if(ids.indexOf(p[0])<0)return;'
                 'var s=new URLSearchParams(location.search);if(s.get("embed")!=="1"&&!s.has("c"))s.set("c",%s);'
                 'var q=s.toString();location.replace("lessons/"+p[0]+".html"+(q?"?"+q:"")+(p[1]?"#"+p[1]:""));})();') % (json.dumps(all_ids), json.dumps(cid))
@@ -219,7 +235,7 @@ def home_page(cid, c, h, L, all_ids):
 <html lang="en" data-theme="light" class="is-home has-course">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(h['title'])} · {esc(c['code'])}</title>
 <meta name="description" content="{esc(h['intro'])}">
 <script>{redirect}</script>
@@ -266,13 +282,14 @@ def library_page(lib, L, C):
 <html lang="en" data-theme="light" class="libpage">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>{esc(lib['title'])} · all lessons</title>
 <script>{HEAD_JS}</script>
 <style>
 {css_basic()}</style>
 </head>
 <body style="height:auto;overflow:auto">
+<header class="sitebar"><div class="sitebar-in"><b aria-current="page">Lesson library</b><a href="embed.html">Embed codes</a></div></header>
 <div class="libwrap">
 <h1>{esc(lib['title'])}</h1>
 <p class="lede">{esc(lib['intro'])}</p>
@@ -321,27 +338,40 @@ def embed_page(lib, L, C):
         rows.append("</tbody></table>")
     opts = '<option value="">No course (the lesson alone)</option>' + "".join(f'<option value="{esc(cid)}">{esc(c["title"])} ({esc(c["code"])})</option>' for cid, c in C.items())
     return f"""<!DOCTYPE html>
-<html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<html lang="en" data-theme="light" class="libpage"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Embed codes · Lesson library</title>
+<script>{HEAD_JS}</script>
 <style>
-body{{font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:#1a1d23;margin:0;padding:24px;max-width:1200px}}
-h1{{font-size:1.5em;margin:0 0 8px}} h2{{font-size:1.2em;margin:32px 0 8px}}
-table{{border-collapse:collapse;width:100%}} th,td{{text-align:left;vertical-align:top;padding:8px 10px;border-top:1px solid #d8dce3;font-size:15px}}
-th{{border-top:0;border-bottom:1px solid #c4cad4}} tr.sec td:first-child{{padding-left:28px}} tr.panel td:first-child{{font-weight:600}}
-td:nth-child(2){{width:28%;word-break:break-all}} td:nth-child(3){{width:44%}}
-textarea{{width:100%;font:13px/1.4 ui-monospace,Menlo,Consolas,monospace;padding:6px;border:1px solid #c4cad4;border-radius:4px;resize:vertical}}
-button{{font:inherit;font-size:15px;min-height:36px;padding:4px 14px;margin-top:4px;border:1px solid #1f5fbf;background:#fff;color:#1f5fbf;border-radius:6px;cursor:pointer}}
-input,select{{font:inherit;width:100%;max-width:520px;padding:6px 8px;border:1px solid #c4cad4;border-radius:4px}}
-a{{color:#1f5fbf}} small{{color:#5b6270}} code{{font:14px ui-monospace,Menlo,Consolas,monospace}}
-</style></head><body>
+{css_basic()}
+.embedwrap{{max-width:1200px;margin:0 auto;padding:24px clamp(16px,4vw,40px) 80px;font-size:16px;line-height:1.55}}
+.embedwrap h1{{font-size:1.6em;line-height:1.2;margin:8px 0 14px}} .embedwrap h2{{font-size:1.2em;margin:36px 0 8px}}
+.embedwrap p{{max-width:70ch}}
+.embedwrap table{{border-collapse:collapse;width:100%}} .embedwrap th,.embedwrap td{{text-align:left;vertical-align:top;padding:10px 10px;border-top:1px solid var(--line);font-size:15px}}
+.embedwrap th{{border-top:0;border-bottom:1px solid var(--line2)}} .embedwrap tr.sec td:first-child{{padding-left:28px}} .embedwrap tr.panel td:first-child{{font-weight:600}}
+.embedwrap td:nth-child(2){{width:28%;word-break:break-all}} .embedwrap td:nth-child(3){{width:44%}}
+.embedwrap textarea{{display:block;box-sizing:border-box;width:100%;font:13px/1.4 var(--mono);padding:6px;border:1px solid var(--line2);border-radius:6px;background:var(--panel);color:var(--ink);resize:vertical}}
+.embedwrap button{{font:inherit;font-size:15px;min-height:44px;padding:4px 16px;margin-top:6px;border:1px solid var(--res);background:var(--bg);color:var(--res);border-radius:6px;cursor:pointer}}
+.embedwrap input,.embedwrap select{{font:inherit;box-sizing:border-box;width:100%;max-width:520px;min-height:44px;padding:6px 10px;border:1px solid var(--line2);border-radius:6px;background:var(--panel);color:var(--ink)}}
+.embedwrap small{{color:var(--dim)}} .embedwrap code{{font-family:var(--mono);font-size:14px}}
+@media(max-width:820px){{
+  .embedwrap thead{{display:none}}
+  .embedwrap table,.embedwrap tbody,.embedwrap tr,.embedwrap td{{display:block;width:auto!important}}
+  .embedwrap tr{{border-top:1px solid var(--line);padding:10px 0}}
+  .embedwrap td{{border:0;padding:3px 0}}
+  .embedwrap tr.sec td:first-child{{padding-left:16px}}
+}}
+</style></head><body style="height:auto;overflow:auto">
+<header class="sitebar"><div class="sitebar-in"><a href="library.html">Lesson library</a><b aria-current="page">Embed codes</b></div></header>
+<div class="embedwrap">
 <h1>Embed codes for the lesson library</h1>
 <p><label for="base"><b>Base URL of the published site</b></label><br><input id="base" type="url" value="{SITE}" spellcheck="false"></p>
 <p><label for="course"><b>Course</b></label><br><select id="course">{opts}</select><br><small>With a course chosen, the page that opens from "Open full lesson" shows that course's lesson list. The embedded view itself looks the same.</small></p>
 <p>The snippets and links below use these settings and change as you edit them. The links work after the site is published.</p>
 <p>For the instructor. Paste a snippet into the HTML view of a Canvas page. Add a plain link to the full lesson under each frame in case the frame is blocked.</p>
-<p>Options on any URL: <code>&amp;cyu=0</code> hides the questions, <code>&amp;video=0</code> hides the video, <code>&amp;theme=dark</code> uses the dark theme. <code>&amp;instructor=1</code> shows instructor notes. The lesson library is at <a href="library.html">library.html</a>.</p>
+<p>Options on any URL: <code>&amp;cyu=0</code> hides the questions, <code>&amp;video=0</code> hides the video, <code>&amp;theme=dark</code> uses the dark theme. <code>&amp;instructor=1</code> shows instructor notes.</p>
 <p>Heights for lessons without steps come from the layout audit at 700 px wide. Check them against the live lesson.</p>
 {''.join(rows)}
+</div>
 <script>
 const baseEl=document.getElementById("base"), courseEl=document.getElementById("course");
 function url(b,p){{const c=courseEl.value;if(!c)return b+p;const [pa,hash]=p.split("#");return b+pa+"&c="+c+(hash!==undefined?"#"+hash:"");}}

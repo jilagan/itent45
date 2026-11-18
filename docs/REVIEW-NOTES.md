@@ -142,7 +142,6 @@ For the instructor. Built from the final state of the `overhaul` branch.
 
 ## 4. Needs the instructor's judgement
 
-- [index.html#basics](index.html#basics) and most panels: introductions run 100 to 170 words because they hold the analogy and the definitions. Should they be cut to about 90, with the rest moved into the first section?
 - [index.html#vm](index.html#vm): the condo analogy covers pooling but not "furnished" versus "serviced" (IaaS, PaaS, SaaS). Keep it as is?
 - [index.html#txn](index.html#txn): the text names Postgres only. Do you also teach MySQL's default?
 - [machine.html#intro](machine.html#intro): is a fixed rule for flagging transfers acceptable as an example of "not machine learning"?
@@ -152,7 +151,6 @@ For the instructor. Built from the final state of the `overhaul` branch.
 - [index.html#server](index.html#server): the simulator's default memory is now 4096 MB, not 512 MB, so the first run is not memory-limited. Lower the slider to show the memory limit.
 - [index.html#split](index.html#split): the "Think first" memory figure is now 120 MB for the three small parts, not 90 MB, to match the widget.
 - Widget behaviour changes: the trace code in Three tiers is under "Show the code"; REST body fields are under "Edit the body"; the Send, Run, Play and Step controls sit above what they drive; the clients and tools widgets show plain-language lines first and the request text only in More detail; the region map is shorter and the transaction timeline starts with Play. Do the demos you plan still work in that order?
-- Pictures: no scene picture has been generated. Run `python3 tools/make_art.py --dry-run`, choose an anchor, then generate. Until then step 1 shows only the icon row.
 - [index.html#region](index.html#region): distances are straight-line figures rounded for the exercise. Acceptable?
 
 ## 5. Embedding in Canvas

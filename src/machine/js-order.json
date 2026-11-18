@@ -1,0 +1,20 @@
+[
+ "00-shell.js",
+ "01-intro.js",
+ "02-next.js",
+ "03-learn.js",
+ "04-train.js",
+ "05-deep.js",
+ "06-backprop.js",
+ "07-tokens.js",
+ "08-embed.js",
+ "09-vectors.js",
+ "10-rnn.js",
+ "11-attn.js",
+ "12-ctx.js",
+ "13-prompt.js",
+ "14-loop.js",
+ "15-tools.js",
+ "16-math.js",
+ "17-vibe.js"
+]

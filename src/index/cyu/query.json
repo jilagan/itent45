@@ -3,14 +3,14 @@
  "items": [
   {
    "id": "query-1",
-   "sec": null,
-   "type": "predict",
-   "stem": "Before you try it: a page lists 50 enrollments, and the template reads `e.course.title` for each one. The courses were not loaded in advance. How many queries does the database receive?",
+   "sec": "count",
+   "type": "mc",
+   "stem": "A page lists 50 enrollments and looks up each course title separately. The courses were not loaded in advance. How many queries does the database receive?",
    "options": [
     {
      "text": "51: one for the enrollments and one for each row.",
      "correct": true,
-     "feedback": "This is the N+1 pattern: one query to fetch N rows, then N more queries."
+     "feedback": "One query fetches the enrollments and one more fetches each row's title. This is the N+1 pattern: one query for the list, then N more."
     },
     {
      "text": "1, because the page is a single request to the server.",
@@ -27,8 +27,7 @@
      "correct": false,
      "feedback": "The 50 title queries are right, but the view also ran one query to fetch the enrollments first."
     }
-   ],
-   "try": "Choose \"One query per row\" in the widget above, set the slider to 50 and read Queries per request."
+   ]
   },
   {
    "id": "query-2",
@@ -65,7 +64,7 @@
    "stem": "Which change fixes the N+1 problem on the schedule page?",
    "options": [
     {
-     "text": "Fetch each enrollment with its course in one query (join or `select_related`).",
+     "text": "Fetch each enrollment with its course in one query (a join).",
      "correct": true,
      "feedback": "One query returns everything the template needs, so the loop makes no extra queries."
     },

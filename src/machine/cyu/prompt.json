@@ -8,7 +8,7 @@
    "stem": "You ask a model for \"a function to enroll a student.\" Then you add the sentence \"Be careful and think hard.\" Why does this sentence change so little?",
    "options": [
     {
-     "text": "It adds no fact that rules out likely answers, so the range of answers stays the same.",
+     "text": "It adds no fact that rules out answers, so the range stays the same.",
      "correct": true,
      "feedback": "A constraint helps when it removes answers. \"Be careful\" describes no answer, so every answer that was possible is still possible."
     },
@@ -32,8 +32,8 @@
   {
    "id": "prompt-2",
    "sec": null,
-   "type": "predict",
-   "stem": "Before you try it: with every switch off, which kind of answer will the model most likely give for the enrollment function?",
+   "type": "mc",
+   "stem": "With every fact switched off, which kind of answer will the model most likely give for the enrollment function?",
    "options": [
     {
      "text": "One that reads the seat count, checks it, and then creates the row.",
@@ -55,17 +55,16 @@
      "correct": false,
      "feedback": "The bars are not equal. The model favors the patterns it saw most often."
     }
-   ],
-   "try": "Leave every switch off and read the Most likely answer box and the first bar in the widget above."
+   ]
   },
   {
    "id": "prompt-3",
-   "sec": null,
+   "sec": "narrow",
    "type": "mc",
    "stem": "You switch on \"Use Django, not raw SQL.\" The most likely answer is still wrong. Why?",
    "options": [
     {
-     "text": "It only removes answers written in other tools, so check-then-create code in Django remains.",
+     "text": "It removes only other tools' answers, so check-then-create Django code remains.",
      "correct": true,
      "feedback": "Each constraint removes only what it describes. Naming the framework says nothing about two requests overlapping."
     },
@@ -98,47 +97,19 @@
      "feedback": "This states a fact the model could not have known. It rules out every check-then-write answer."
     },
     {
-     "text": "Make sure the code is correct and handles every case.",
+     "text": "Make sure the code is fully correct and handles every possible case.",
      "correct": false,
      "feedback": "This names no fact and rules out no answer."
     },
     {
-     "text": "Write the code as fast as you can and keep it simple.",
+     "text": "Write the code as fast as you can and keep it as simple as possible.",
      "correct": false,
      "feedback": "Speed is not the problem. This adds no information about the situation."
     },
     {
-     "text": "Use short variable names and add a comment for each step.",
+     "text": "Use short variable names and add a short comment for each step.",
      "correct": false,
      "feedback": "Style rules can help in other ways, but they do not affect whether two requests collide."
-    }
-   ]
-  },
-  {
-   "id": "prompt-5",
-   "sec": null,
-   "type": "mc",
-   "stem": "Which of these belongs in a system prompt?",
-   "options": [
-    {
-     "text": "\"We use Django. Never write raw SQL without asking me first.\"",
-     "correct": true,
-     "feedback": "This rule is true for every task, so it is set once and applies everywhere. A system prompt holds rules like this."
-    },
-    {
-     "text": "The error message from the test you ran a minute ago.",
-     "correct": false,
-     "feedback": "This applies to one task. It belongs in the context for that task."
-    },
-    {
-     "text": "The columns of the table in the file you just opened.",
-     "correct": false,
-     "feedback": "This is context for the current task. It would be wrong for a task about a different table."
-    },
-    {
-     "text": "The example output you want for today's report.",
-     "correct": false,
-     "feedback": "This is task context. A system prompt carries rules that stay the same across tasks."
     }
    ]
   }

@@ -1,30 +1,40 @@
     <section class="panel" id="p-entity">
       <div class="head">
         <h2>Entities, attributes and instances</h2>
-        <p>Think of a class list in a spreadsheet. The sheet is about students, each column holds one fact such as the ID number, and each row is one student.</p>
-        <p>A data model is a plan of what data a system keeps and how the pieces connect. It starts the same way, as a pile of nouns from a conversation with whoever wants the system. Each noun is one of three kinds. An <b style="color:var(--ink)">entity</b> is a kind of thing the organization keeps data about, such as Student. An <b style="color:var(--ink)">attribute</b> is a fact that describes an entity, such as an ID number. An <b style="color:var(--ink)">instance</b> is one particular example, such as Juan dela Cruz.</p>
-        <p>In the spreadsheet picture, the entity is the sheet, an attribute is a column and an instance is a row. Sort the ten terms below.</p>
-        <div class="ask"><b>Think first.</b> A class meets in SOM 407. Is Room an attribute of the class or an entity of its own? Write down your choice and one reason for it.</div>
+        <p>A <dfn title="A plan of what data a system keeps and how the pieces connect">data model</dfn> starts as a pile of nouns. Each noun is one of three kinds.</p>
       </div>
 
-      <div class="srv">
-        <div>
-          <div class="terms" id="entList"></div>
+      <div class="sec" data-sec="class-list" data-title="Start with a class list">
+        <p>Think of a class list in a spreadsheet. The sheet is about students. Each column holds one fact, such as the ID number, and each row is one student. A data model gives these three parts their own names.</p>
+        <div class="scene" role="group" aria-label="The sheet is the entity, a column is an attribute, a row is an instance" data-art="class-list" data-art-desc="A class list printed as a table: student names and ID numbers in rows, one student per row, and a teacher's finger pointing at one row.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>The sheet</b><span><dfn title="A kind of thing the organization keeps data about, such as Student">Entity</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-table"/></svg></div><figcaption><b>A column</b><span><dfn title="One fact that describes an entity, such as an ID number">Attribute</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>A row</b><span><dfn title="One particular example of an entity, such as Juan dela Cruz">Instance</dfn></span></figcaption></figure>
         </div>
-        <div class="card">
-          <div class="card-t">How to tell them apart</div>
-          <div class="rtt-note">
-            <b style="color:var(--res)">Entity</b>: a person, place, object, event or concept the organization keeps data about. It has many examples, and each one can be told apart from the others.
-            <br><br><b style="color:var(--res)">Attribute</b>: a property of an entity. It describes nothing on its own and only makes sense when it is attached to an entity.
-            <br><br><b style="color:var(--res)">Instance</b>: one example of an entity, stored as a row of data. You store instances, and you do not draw a box for each one.
-          </div>
-          <div class="verdict" id="entVerdict" style="margin-top:13px"></div>
-        </div>
+        <div class="ask"><b>Think first.</b> A class meets in SOM 407. Is Room an attribute of the class or an entity of its own? Write down your choice and one reason.</div>
+        <div class="instructor">Collect a few answers before moving on. The question comes back in the final step, and the deciding test is in "More detail" of the next step: does the room have facts of its own, and is it shared by many classes?</div>
       </div>
 
-      <div class="whynot" style="margin-top:20px">
-        <b>Events can be entities</b>
-        Student and Course are easy to spot. Enrollment is easy to miss, because it feels like something that happened and does not feel like a thing. It still has a date, a status and a grade, and none of those belong to the student or to the course. When two entities need facts that describe the pairing between them, the pairing is an entity. What this does to your tables is covered later in "Relationships".
+      <div class="sec" data-sec="sort" data-title="Sort the terms">
+        <p>Choose entity, attribute or instance for each term. An explanation appears after each answer.</p>
+        <div class="terms" id="entList"></div>
+        <div class="verdict" id="entVerdict" style="margin-top:13px"></div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>How to tell them apart</h4>
+          <p><b>Entity:</b> a person, place, object, event or concept the organization keeps data about. It has many examples, and each one can be told apart from the others.</p>
+          <p><b>Attribute:</b> a property of an entity. It describes nothing on its own and only makes sense when it is attached to an entity.</p>
+          <p><b>Instance:</b> one example of an entity, stored as a row of data. You store instances, and you do not draw a box for each one.</p>
+          <h4>Room: attribute or entity?</h4>
+          <p>If a room is only a name such as SOM 407, it is an attribute of the class. If the school also records its capacity or whether it has a projector, or lists everything scheduled in one room, Room is an entity of its own.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="pairing" data-title="When a pairing is an entity">
+        <p>Student and Course are easy to spot. Enrollment is easy to miss, because it feels like something that happened. It has a date, a status and a grade, and none of those belong to the student or the course alone. So the pairing is an entity.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>This rule decides what your tables look like. When two entities need facts that describe the pairing between them, the pairing gets a table of its own. "Relationships" shows how that table is built.</p>
+        </details>
       </div>
     </section>
-

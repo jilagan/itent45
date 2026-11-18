@@ -20,15 +20,15 @@
     {
      "text": "2,000",
      "correct": false,
-     "feedback": "This multiplies 8 by 250. A longer handler time lowers the rate, so the workers should be divided by the time in seconds."
+     "feedback": "This multiplies 8 by 250. A longer handler time lowers the rate, so the workers are divided by the time in seconds."
     }
    ]
   },
   {
    "id": "server-2",
-   "sec": null,
+   "sec": "limit",
    "type": "predict",
-   "stem": "Before you try it: the machine has 4 workers and each request takes 50 ms, so its maximum is 80 requests per second. You raise the arrival rate to 120 per second. What happens?",
+   "stem": "The machine has 4 workers and each request takes 50 ms, so its maximum is 80 requests per second. The arrival rate rises to 120 per second. What happens?",
    "options": [
     {
      "text": "Throughput rises to 120 per second and latency stays the same.",
@@ -36,7 +36,7 @@
      "feedback": "The workers cannot finish more than 80 requests per second, so throughput cannot reach 120."
     },
     {
-     "text": "Throughput stays near 80 per second. The queue fills up and latency rises.",
+     "text": "Throughput stays near 80 per second, the queue fills and latency rises.",
      "correct": true,
      "feedback": "Requests arrive faster than the workers can finish them, so the extra requests wait. Once the queue is full, new requests are rejected."
     },
@@ -46,7 +46,7 @@
      "feedback": "The workers keep finishing requests at their maximum rate. The users who suffer are the ones stuck waiting in the queue."
     }
    ],
-   "try": "Set the arrival rate to 120 and Total RAM to 4096 MB, then press Start. Watch Queue depth, p95 latency and Rejected."
+   "try": "Set the arrival rate to 120 and press Start. Watch Queue depth and p95 latency."
   },
   {
    "id": "server-3",
@@ -90,7 +90,7 @@
     {
      "text": "The remaining 5% of capacity is wasted money that finance will question.",
      "correct": false,
-     "feedback": "Some spare capacity is what keeps waiting time low. Running at 100% would make the queue grow without limit."
+     "feedback": "Some spare capacity keeps waiting time low. Running at 100% would make the queue grow without limit."
     }
    ]
   }

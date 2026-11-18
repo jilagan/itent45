@@ -3,7 +3,7 @@
  "items": [
   {
    "id": "shape-1",
-   "sec": null,
+   "sec": "questions",
    "type": "mc",
    "stem": "A document database stores each student's enrollments, with the course titles copied inside each student's document. Which question is hardest for it to answer?",
    "options": [
@@ -15,7 +15,7 @@
     {
      "text": "What is this student's schedule?",
      "correct": false,
-     "feedback": "This is the question the documents were organized for. One read returns the schedule."
+     "feedback": "The documents were organized for this question. One read returns the schedule."
     },
     {
      "text": "What is the name of this student?",

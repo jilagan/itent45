@@ -7,21 +7,21 @@ const RINGS=[
 ];
 const SYSTEMS=[
  {id:"chess", n:"A chess engine", sub:"searches millions of positions ahead", ring:"ai",
-  v:`<b>Artificial intelligence without machine learning</b>Deep Blue beat the world champion, Garry Kasparov, in 1997. It searched through far more chess positions than a person can, and it scored each position with a formula that grandmasters helped write. The program did not learn from its games. Its developers adjusted it by hand between games.<br><br>This is the case people forget: <b class="i">intelligent behavior without any learning</b>.`},
+  v:`<b>Artificial intelligence without machine learning</b>Deep Blue beat the world champion, Garry Kasparov, in 1997 by searching far more positions than a person can. Its developers adjusted it by hand between games, and it learned nothing from them.`},
  {id:"route", n:"Route finding in a map app", sub:"shortest path across a road network", ring:"ai",
-  v:`<b>Artificial intelligence without machine learning</b>The core is an algorithm (a fixed set of steps) from the 1950s that finds the cheapest path through a road network. Someone wrote the rule down completely, and it gives the correct answer every time, which you could check by hand.<br><br>The live traffic prediction added on top of it is machine learning. The route finding underneath is not.`},
+  v:`<b>Artificial intelligence without machine learning</b>The core is a fixed set of steps from the 1950s that finds the cheapest path through a road network. The live traffic prediction on top is machine learning, and the route finding underneath is not.`},
  {id:"spam", n:"A spam filter", sub:"trained on a million labeled emails", ring:"ml",
-  v:`<b>Machine learning without deep learning</b>The rule was never written down. People supplied a large pile of emails already marked spam or not spam, and the program worked out the dividing line itself. How that works is covered later in "Training and test data".<br><br>A person still chose what to measure: how many links, whether the sender is known, which words appear. Each of those measurements is a feature. Choosing features is the job that deep learning takes over.`},
+  v:`<b>Machine learning without deep learning</b>People supplied emails already marked spam or not spam, and the program worked out the dividing line itself. A person still chose what to measure, such as how many links an email has, and each measurement is called a feature.`},
  {id:"credit", n:"A credit scoring model", sub:"predicts who will miss a payment", ring:"ml",
-  v:`<b>Machine learning without deep learning</b>The model is fitted to past borrowers and what happened to them. It is often kept simple on purpose, because a lender may have to explain a refusal to a regulator, and simple models can be explained.<br><br>Sometimes a more powerful method is ruled out for reasons that have nothing to do with accuracy.`},
+  v:`<b>Machine learning without deep learning</b>The model is fitted to past borrowers and what happened to them. It is often kept simple because a lender may have to explain a refusal to a regulator.`},
  {id:"face", n:"Face grouping in your photos", sub:"sorts ten years of pictures by person", ring:"dl",
-  v:`<b>Deep learning</b>Nobody wrote down what a face looks like or which features matter. Stacked layers worked out on their own that edges matter, then that certain arrangements of edges matter, and so on until the layers could tell faces apart. Stacked layers are covered later in "Neural networks".<br><br>This can also run on a phone, with no internet connection.`},
+  v:`<b>Deep learning</b>Nobody wrote down what a face looks like. Stacked layers worked out for themselves which patterns matter, from edges up to whole faces.`},
  {id:"speech", n:"Speech to text", sub:"dictation on your phone", ring:"dl",
-  v:`<b>Deep learning</b>For decades this was built by hand, using the basic sounds of a language, pronunciation dictionaries, and rules for how sounds run together. Deep learning replaced nearly all of that by learning directly from audio paired with written transcripts.<br><br>Accuracy improved so much that the older approach is now rarely used.`},
+  v:`<b>Deep learning</b>For decades this was built by hand from pronunciation dictionaries and sound rules. Deep learning replaced most of that by learning from audio paired with written transcripts.`},
  {id:"llm", n:"A model drafting an email", sub:"you describe it, a paragraph comes back", ring:"gen",
-  v:`<b>Generative AI, the innermost circle</b>It is deep learning, so everything in the two circles outside it still applies. The addition is the output, which is new content and not a yes or no answer.<br><br>A spam filter answers with one of two labels. This writes something that did not exist before, and a person has to read it and judge it. The rest of this module is about this circle.`},
+  v:`<b>Generative AI, the innermost circle</b>It is deep learning whose output is new content. A person has to read the draft and judge it.`},
  {id:"code", n:"A coding assistant", sub:"writes the function you asked for", ring:"gen",
-  v:`<b>Generative AI, the innermost circle</b>It uses the same machinery as the email example, applied to code. The later panels on agents, tool calls and AI-written code cover what happens when a tool like this takes actions as well as making suggestions.`}
+  v:`<b>Generative AI, the innermost circle</b>It uses the same machinery as the email example, applied to code. A person has to review what it writes.`}
 ];
 const RINGTAG={ai:"AI",ml:"ML",dl:"Deep",gen:"Gen AI"};
 let inSel=null;
@@ -53,7 +53,7 @@ function inRender(){
 
   const v=$("#inVerdict");
   if(!sel){ v.className="verdict";
-    v.innerHTML=`<b>Four circles, each inside the last</b>A system in an inner circle also belongs to every circle around it. A coding assistant is generative AI, deep learning, machine learning and artificial intelligence all at once.<br><br>Select a system on the right to see which circles it falls inside.`;
+    v.innerHTML=`<b>Four circles, each inside the last</b>A system in an inner circle also belongs to every circle around it. Select a system in the list to see where it falls.`;
   } else { v.className="verdict ok"; v.innerHTML=sel.v; }
 }
 inRender();

@@ -3,7 +3,7 @@
  "items": [
   {
    "id": "math-1",
-   "sec": "linear-algebra",
+   "sec": null,
    "type": "mc",
    "stem": "A course grade is 0.5 × exam + 0.3 × project + 0.2 × quiz. Which operation from this panel is that?",
    "options": [
@@ -31,9 +31,9 @@
   },
   {
    "id": "math-2",
-   "sec": "linear-algebra",
-   "type": "predict",
-   "stem": "Before you try it: vector a points right. Vector b points straight up, at a right angle to a. What is a · b?",
+   "sec": null,
+   "type": "mc",
+   "stem": "Vector a points right. Vector b points straight up, at a right angle to a. What is a · b?",
    "options": [
     {
      "text": "Zero.",
@@ -55,12 +55,11 @@
      "correct": false,
      "feedback": "Length changes the size of the dot product when the arrows are partly aligned. At a right angle the answer is zero for any length."
     }
-   ],
-   "try": "Set the angle slider to 90 degrees in the widget above and read the a · b box."
+   ]
   },
   {
    "id": "math-3",
-   "sec": "calculus",
+   "sec": "slope",
    "type": "mc",
    "stem": "On the loss curve, the slope at your current weight is +3. To make the model less wrong, which way should you move the weight?",
    "options": [
@@ -88,7 +87,7 @@
   },
   {
    "id": "math-4",
-   "sec": "statistics",
+   "sec": null,
    "type": "mc",
    "stem": "A model reports next-word probabilities of 0.5, 0.3 and 0.4 for three words and nothing for any others. What is wrong?",
    "options": [
@@ -113,35 +112,6 @@
      "feedback": "A model gives a probability for every word it can choose."
     }
    ]
-  },
-  {
-   "id": "math-5",
-   "sec": "statistics",
-   "type": "predict",
-   "stem": "Before you try it: the true answer is Paris. Training raises the probability the model gives Paris from 10% to 60%. What happens to the loss?",
-   "options": [
-    {
-     "text": "It falls, because more probability is on the right answer.",
-     "correct": true,
-     "feedback": "Loss is small when the model puts most of its probability on the right answer."
-    },
-    {
-     "text": "It rises, because the model is more confident.",
-     "correct": false,
-     "feedback": "Confidence in a wrong answer raises the loss. Confidence in the right answer lowers it."
-    },
-    {
-     "text": "It stays the same, because the bars still add up to 100%.",
-     "correct": false,
-     "feedback": "The total stays at 100%, but the loss depends on how much of it sits on the right answer."
-    },
-    {
-     "text": "It becomes zero, because the model is now more right.",
-     "correct": false,
-     "feedback": "The loss is zero only with 100% on the right answer."
-    }
-   ],
-   "try": "Move the Paris slider from 10% to 60% in the widget above and watch the Loss box."
   }
  ]
 }

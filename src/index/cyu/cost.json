@@ -32,8 +32,8 @@
   {
    "id": "cost-2",
    "sec": null,
-   "type": "predict",
-   "stem": "Before you try it: you buy capacity above the highest peak of the year (320 units, the slider maximum). What will the chart and the three figures show?",
+   "type": "mc",
+   "stem": "You buy capacity above the highest peak of the year, at 320 units. What do the idle-capacity and turned-away figures show?",
    "options": [
     {
      "text": "Almost nobody is turned away, but most of the capacity you paid for sits unused.",
@@ -55,12 +55,11 @@
      "correct": false,
      "feedback": "Buying for the peak costs several times more than renting the same shape of demand."
     }
-   ],
-   "try": "Choose Buy servers up front, set Capacity you bought to 320 units, and read Paid for, unused and Demand turned away."
+   ]
   },
   {
    "id": "cost-3",
-   "sec": null,
+   "sec": "capacity",
    "type": "mc",
    "stem": "At 120 units the chart shows both idle capacity and demand turned away in the same year. Why can no single fixed capacity avoid both?",
    "options": [

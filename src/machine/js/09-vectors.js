@@ -9,11 +9,11 @@ const WV={
 };
 const SUMS=[
  {id:"queen", a:"king", b:"man", c:"woman",
-  v:`<b>The step from man to king is the same as the step from woman to queen</b>In a real model, nothing encodes royalty. The pattern comes from counting which words appear near which other words across a very large amount of text.`},
+  v:`<b>Man to king is the same step as woman to queen</b>A relationship between words shows up as a direction on the map. Nobody told the model what royalty is, and the pattern comes from which words appear near which across a very large amount of text.`},
  {id:"tokyo", a:"Paris", b:"France", c:"Japan",
-  v:`<b>The same step connects France to Paris and Japan to Tokyo</b>The movement from France to Paris and the movement from Japan to Tokyo are the same step through the space. That step corresponds to <em>capital of</em>, and nobody named it. Italy and Rome on the map follow the same step.`},
+  v:`<b>France to Paris is the same step as Japan to Tokyo</b>That step stands for <em>capital of</em>, and nobody named it. Italy and Rome on the map follow the same step.`},
  {id:"bias", a:"programmer", b:"man", c:"woman", lbl:"programmer &minus; man + woman (disputed)",
-  v:`<b>This example is disputed</b>A 2016 paper by Bolukbasi and colleagues reported this analogy using word2vec trained on Google News. It became a standard illustration of bias in embeddings. The positions here were set by hand to reproduce it.<br><br>Later work complicated this. Nissim and colleagues showed in 2020 that the analogy method itself produces part of the result. The search must exclude the input words, so it has to return something other than <code>programmer</code>, and a gendered-looking answer is partly a product of that rule. Turn the option off to see this.<br><br>What holds up is smaller. An embedding is built from a corpus, and patterns in that corpus become geometry. Measuring how much, and how fairly, is harder than the demonstration suggests.`}
+  v:`<b>This example is disputed</b>A 2016 paper reported this analogy in a real model, and these positions were set by hand to reproduce it. Later work showed that the method of searching for the answer produces part of the result.`}
 ];
 const VS={sel:"queen", exclude:true};
 function vecRender(){
@@ -82,10 +82,7 @@ function vecRender(){
   const v=$("#vcVerdict");
   if(!VS.exclude && inputs.includes(best)){
     v.className="verdict warn";
-    v.innerHTML=`<b>The nearest word is ${best}, which is one of the three input words</b>See the ranking above. <code>${q.a}</code> is closer to the result than any other word, because taking away ${q.b} and adding ${q.c} moves the point only part of the way. Most of <code>${q.a}</code> is still there.<br><br>The well-known demonstration has a rule that is rarely mentioned: the answer may not be one of the three words you started with. Turn the option back on to see those three crossed out.`;
-  } else if(VS.exclude && topOverall!==best){
-    v.className="verdict ok";
-    v.innerHTML=`<b>${best}, once ${topOverall} is ruled out</b><code>${topOverall}</code> is nearer, but it is crossed out above because it was one of the input words. Of the remaining words, <code>${best}</code> is closest.<br><br>${q.v.replace(/^<b>.*?<\/b>/,"")}`;
+    v.innerHTML=`<b>The nearest word is ${best}, one of the three input words</b>Taking away ${q.b} and adding ${q.c} moves the point only part of the way, so most of ${q.a} is still there. The well-known demonstration rules out the input words.`;
   } else { v.className="verdict ok"; v.innerHTML=q.v; }
 }
 $("#tgExcl").onclick=()=>{VS.exclude=!VS.exclude;vecRender()};
@@ -156,13 +153,13 @@ function simRender(){
   const names=`<code>${p1.id.toUpperCase()}</code> and <code>${p2.id.toUpperCase()}</code>`;
   if(cos>.85 && shared.length<=1){
     v.className="verdict ok";
-    v.innerHTML=`<b>${cos.toFixed(2)} with ${shared.length} shared word${shared.length===1?"":"s"}</b>${names} ask the same thing in different words. They have almost no words in common, and their arrows are only ${(hi-lo)}&deg; apart.<br><br>A keyword search would match these two poorly or not at all.`;
+    v.innerHTML=`<b>${cos.toFixed(2)} with ${shared.length} shared word${shared.length===1?"":"s"}</b>${names} ask the same thing in different words, so a keyword search would miss the match. Their arrows are only ${(hi-lo)}&deg; apart.`;
   } else if(cos<.45 && shared.length>=4){
     v.className="verdict bad";
-    v.innerHTML=`<b>${cos.toFixed(2)} with ${shared.length} words in common</b>${names} share <em>${shared.slice(0,5).join(", ")}</em> and mean opposite things. One is about joining a class and the other is about leaving one.<br><br>A search that counts matching words would rank these as a close pair. The angle is ${(hi-lo)}&deg;, which is close to a right angle. Counting shared words does not measure meaning.`;
+    v.innerHTML=`<b>${cos.toFixed(2)} with ${shared.length} words in common</b>${names} share <em>${shared.slice(0,5).join(", ")}</em> and mean opposite things, so counting shared words would rank them as a close pair. Their arrows are ${(hi-lo)}&deg; apart.`;
   } else {
     v.className="verdict warn";
-    v.innerHTML=`<b>${cos.toFixed(2)} with ${shared.length} shared word${shared.length===1?"":"s"}</b>${names} are ${(hi-lo)}&deg; apart. Compare A with B, then A with C, and compare the scores with how many words each pair shares.`;
+    v.innerHTML=`<b>${cos.toFixed(2)} with ${shared.length} shared word${shared.length===1?"":"s"}</b>${names} are ${(hi-lo)}&deg; apart. Try A with B, then A with C, and compare the scores with the shared words.`;
   }
 }
 simRender();

@@ -110,7 +110,7 @@ function emRender(){
   } else if(sep<5){ v.className="verdict warn";
     v.innerHTML=`<b>${EM.seen} sentences in, groups ${sep.toFixed(1)}× apart</b>Words are starting to move toward the words they appear with. Keep going.`;
   } else { v.className="verdict ok";
-    v.innerHTML=`<b>Three clusters have formed</b>Words from different groups are now <strong>${sep.toFixed(1)}×</strong> further apart, on average, than words in the same group. The royalty words are together, the place words are together and the hospital words are together. Nobody named these clusters.<br><br>The training rule had two parts: words in the same sentence move closer, and all words push apart a little. There were no other steps. Nobody supplied a definition of <em>king</em> or declared a category.<br><br>The next panel uses positions like these.`;
+    v.innerHTML=`<b>Three clusters have formed</b>Words from different groups are now <strong>${sep.toFixed(1)}×</strong> further apart than words in the same group. Nobody named the groups.`;
   }
 }
 $("#emStep").onclick=()=>{ emOne(EMC[EM.seen % EMC.length]); emRender(); };

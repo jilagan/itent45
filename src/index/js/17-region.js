@@ -96,16 +96,12 @@ const REGIONS=[
 const LIGHT=200000;                                   // km/s in fibre
 const POSTURES=[
  {id:"one", n:"One machine, one data center",
-  d:"The default. Everything runs in a single availability zone.",
-  survives:{srv:false,az:false,reg:false}, rpo:"everything since your last backup", rto:"hours", cost:"1×"},
- {id:"az1", n:"Several machines, one data center",
-  d:"A load balancer shares traffic between the machines. This survives a machine failure but not a data center failure.",
-  survives:{srv:true,az:false,reg:false}, rpo:"everything since your last backup", rto:"hours", cost:"1.3×"},
- {id:"maz", n:"Multi-AZ: two data centers, one region",
-  d:"Each write is copied to both data centers before it is confirmed (synchronous replication). This works because the buildings are milliseconds apart.",
+  survives:{srv:false,az:false,reg:false}, rpo:"data since the last backup", rto:"hours", cost:"1×"},
+ {id:"az1", n:"Several machines behind a load balancer",
+  survives:{srv:true,az:false,reg:false}, rpo:"data since the last backup", rto:"hours", cost:"1.3×"},
+ {id:"maz", n:"Multi-AZ: two data centers",
   survives:{srv:true,az:true,reg:false}, rpo:"nothing", rto:"under a minute", cost:"2×"},
  {id:"mreg", n:"Multi-region: standby in Tokyo",
-  d:"Writes are copied to Tokyo after they are confirmed (asynchronous replication), because Tokyo is thousands of kilometers from Singapore.",
   survives:{srv:true,az:true,reg:true}, rpo:"up to 30 seconds of writes", rto:"10 to 30 minutes", cost:"2.3×"}
 ];
 const REG={idx:1, posture:"maz", dead:{srv:false,az:false,reg:false}};
@@ -191,16 +187,16 @@ function renderRegion(){
     v.innerHTML=`<b>Next door, ${L.real.toFixed(0)} ms</b>Latency is close to zero. Most providers do not offer a region inside Metro Manila.`;
   } else if(ttfb<400){
     v.className="verdict ok";
-    v.innerHTML=`<b>${Math.round(ttfb)} ms to first byte</b>This is comfortable. Your handler (the code that processes the request) accounts for 40 ms, and the rest is distance, which code cannot reduce. For users in Metro Manila this is about as good as a real cloud region gets.`;
+    v.innerHTML=`<b>${Math.round(ttfb)} ms to first byte</b>Your code accounts for 40 ms and distance accounts for the rest, which no code can reduce. For users in Metro Manila this is about as good as a real cloud region gets.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>${Math.round(ttfb)} ms before anything appears</b>${r.n} is ${r.km.toLocaleString()} km away, so every round trip costs ${L.real.toFixed(0)} ms and a page needs five of them. Your code is only 40 ms of that. This is the Berlin example from "Round trips and latency", caused here by choosing a distant region. The fix is to move the servers closer, or to serve reads from a copy that is already close.`;
+    v.innerHTML=`<b>${Math.round(ttfb)} ms before anything appears</b>${r.n} is ${r.km.toLocaleString()} km away, so every round trip costs ${L.real.toFixed(0)} ms and a page needs five of them. Move the servers closer, or serve reads from a copy that is already close.`;
   }
 
   // posture cards
   $("#postureList").innerHTML=POSTURES.map(p=>`
     <button class="po${p.id===REG.posture?" on":""}" data-p="${p.id}">
-      <h5>${p.n}</h5><p>${p.d}</p>
+      <h5>${p.n}</h5>
       <div class="tags"><span>cost ${p.cost}</span><span>lose ${p.rpo}</span><span>back in ${p.rto}</span></div>
     </button>`).join("");
   $$("#postureList .po").forEach(el=>el.onclick=()=>{
@@ -227,14 +223,14 @@ function renderRegion(){
     fv.innerHTML=`<b>Everything is running</b>Press one of the buttons to see what this option protects against.`;
   } else if(up && REG.dead.reg){
     fv.className="verdict warn";
-    fv.innerHTML=`<b>Failed over to Tokyo, with a cost</b>You survived losing ${why}. The standby in Tokyo was updated asynchronously over a distance of thousands of kilometers, so you lost ${P.rpo} and the site was unavailable for ${P.rto}. All users now connect to Tokyo, which is farther away than Singapore, so the whole site is slower until you switch back.`;
+    fv.innerHTML=`<b>Failed over to Tokyo, with a cost</b>You survived losing ${why}, but you lost ${P.rpo} and the site was down for ${P.rto}. Users now connect to Tokyo, which is farther away, so every page is slower.`;
   } else if(up){
     fv.className="verdict ok";
-    fv.innerHTML=`<b>Still running</b>You lost ${why} and users noticed nothing, because another machine or data center kept serving requests. With two data centers in one region, the buildings are close enough that each write is saved in both before the user gets a reply.`;
+    fv.innerHTML=`<b>Still running</b>You lost ${why} and users noticed nothing, because another machine or data center kept serving requests.`;
   } else {
     fv.className="verdict bad";
-    const dRto=P.id==="maz"?"hours":P.rto, dRpo=P.id==="maz"?"everything since your last backup":P.rpo;   // multi-AZ is only down when the whole region fails, so it restores from backup
-    fv.innerHTML=`<b>Down</b>You lost ${why}, and this option does not survive that. You restore from backup. The site is unavailable for ${dRto}, and you lose ${dRpo}. These two numbers have names. The recovery time objective (RTO) is how long until you are back. The recovery point objective (RPO) is how much data you accept losing. Choose both before an outage, because afterward they are chosen for you.`;
+    const dRto=P.id==="maz"?"hours":P.rto, dRpo=P.id==="maz"?"data since the last backup":P.rpo;   // multi-AZ is only down when the whole region fails, so it restores from backup
+    fv.innerHTML=`<b>Down</b>You lost ${why}, and this option does not survive that, so you restore from backup. The site is down for ${dRto} and you lose ${dRpo}.`;
   }
 }
 $("#sRegion").oninput=e=>{REG.idx=+e.target.value;renderRegion()};

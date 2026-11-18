@@ -5,22 +5,22 @@
    "id": "region-1",
    "sec": "distance",
    "type": "mc",
-   "stem": "Your users are in Metro Manila and your servers are in Virginia, 13,700 km away. Light in fiber travels about 200,000 km per second. What is the shortest possible round-trip time on a perfect network?",
+   "stem": "Your users are in Metro Manila and your servers are in Sydney, 6,250 km away. Light in fiber travels about 200,000 km per second. What is the shortest possible round-trip time on a perfect network?",
    "options": [
     {
-     "text": "About 137 ms.",
+     "text": "About 63 ms.",
      "correct": true,
-     "feedback": "The round trip covers 2 × 13,700 km = 27,400 km. Dividing by 200,000 km per second gives 0.137 seconds."
+     "feedback": "The round trip covers 2 × 6,250 km = 12,500 km. Dividing by 200,000 km per second gives about 0.0625 seconds."
     },
     {
-     "text": "About 69 ms.",
+     "text": "About 31 ms.",
      "correct": false,
      "feedback": "This is the one-way time. A response needs the request to travel there and the reply to travel back."
     },
     {
-     "text": "About 1,370 ms.",
+     "text": "About 625 ms.",
      "correct": false,
-     "feedback": "This is ten times too large. 27,400 km divided by 200,000 km per second is 0.137 seconds."
+     "feedback": "This is ten times too large. 12,500 km divided by 200,000 km per second is about 0.0625 seconds."
     },
     {
      "text": "About 0 ms, because the server is fast.",
@@ -30,37 +30,8 @@
    ]
   },
   {
-   "id": "region-2",
-   "sec": "distance",
-   "type": "predict",
-   "stem": "Before you try it: a page needs five round trips and your handler takes 40 ms. With servers in Singapore the time to first byte is about 230 ms. What will it be with servers in Virginia?",
-   "options": [
-    {
-     "text": "About 1,080 ms.",
-     "correct": true,
-     "feedback": "Each round trip grows from about 38 ms to about 208 ms. Five round trips plus 40 ms for the handler gives about 1,078 ms."
-    },
-    {
-     "text": "About 270 ms.",
-     "correct": false,
-     "feedback": "This treats distance as a small extra cost. Every one of the five round trips gets longer."
-    },
-    {
-     "text": "About 230 ms, because the handler time is the same.",
-     "correct": false,
-     "feedback": "The handler is the same, but distance applies to every round trip."
-    },
-    {
-     "text": "About 140 ms, because the minimum round trip is only 137 ms.",
-     "correct": false,
-     "feedback": "The minimum applies to one round trip on a perfect network. A real network takes about 1.5 times that, and a page needs five round trips."
-    }
-   ],
-   "try": "Move the Region slider from Singapore to Virginia (US East) and read the time to first byte."
-  },
-  {
    "id": "region-3",
-   "sec": "failover",
+   "sec": null,
    "type": "mc",
    "stem": "Your app runs on three machines behind a load balancer, all in one data center. The data center loses power. What happens?",
    "options": [
@@ -88,7 +59,7 @@
   },
   {
    "id": "region-4",
-   "sec": "failover",
+   "sec": null,
    "type": "mc",
    "stem": "Your app uses the multi-region option with a standby in Tokyo, and the primary region fails. Which statement is correct?",
    "options": [
@@ -116,7 +87,7 @@
   },
   {
    "id": "region-5",
-   "sec": "failover",
+   "sec": null,
    "type": "mc",
    "stem": "Every user of your capstone is in Metro Manila, and your budget is small. Which setup does this panel recommend?",
    "options": [

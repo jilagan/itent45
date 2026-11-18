@@ -1,6 +1,6 @@
 /* ================= 19 ROWS OR DOCUMENTS ================= */
 const SH={shape:"rows", q:"schedule"};
-const SH_SHAPES=[{id:"rows",n:"Rows"},{id:"docs",n:"Documents"}];
+const SH_SHAPES=[{id:"rows",n:"Rows",i:"list-bullets"},{id:"docs",n:"Documents",i:"student"}];
 const SH_QS=[
  {id:"schedule", n:"One student's schedule", s:"Asked on every page load."},
  {id:"roster",   n:"Who is in ITENT 45?",    s:"Asked by the instructor, weekly."},
@@ -8,19 +8,19 @@ const SH_QS=[
 ];
 const SH_ANS={
  rows:{
-  schedule:{k:"warn", t:"Two tables, one join", d:"<code>SELECT … FROM enrollments JOIN courses</code>. A join combines rows from two tables. With <code>select_related</code> it takes one query. Without it, a page of 50 rows takes 51 queries, as in \"The N+1 query problem\"."},
-  roster:{k:"ok", t:"The same data, read from the other side", d:"<code>WHERE course_id = 'ITENT45'</code>. The schema was not designed for this question, and it costs nothing extra, because any column can be used as a filter."},
-  rename:{k:"ok", t:"One row", d:"<code>UPDATE courses SET title = … WHERE id = 'ITENT45'</code>. Every enrollment shows the new title immediately, because none of them stores a copy."}
+  schedule:{k:"warn", t:"Two tables, one join", d:"The database combines the enrollment rows with the course rows. Written well, this takes one query."},
+  roster:{k:"ok", t:"The same data, read from the other side", d:"Filter the enrollments by course, which costs nothing extra. Any column can be a filter, even if nobody planned for this question."},
+  rename:{k:"ok", t:"One row", d:"Change the title in the courses table. Every enrollment shows the new title, because none of them stores a copy."}
  },
  docs:{
-  schedule:{k:"ok", t:"One read, no join", d:"The student document already contains the enrollments and their titles. One lookup by key returns the whole page. Documents are designed for this case, and it is faster here than in the relational version."},
-  roster:{k:"bad", t:"Every student document is scanned", d:"Nothing is indexed by course unless you build a second structure for it. Without one, the database must scan every student document. With one, you must keep it up to date yourself."},
-  rename:{k:"bad", t:"Every document that contains the title", d:"The title was copied into each student's document, so a rename must find and rewrite all of them. This is the missed-rows problem from \"Normalization\", with no single table to check your work against."}
+  schedule:{k:"ok", t:"One read, no join", d:"The student's document already holds the enrollments and their titles. One lookup returns the whole page, which is faster than the relational version."},
+  roster:{k:"bad", t:"Every student document is scanned", d:"Documents are organized by student, so nothing points from a course to its students. The database scans every document unless you build and maintain a second structure."},
+  rename:{k:"bad", t:"Every copy must be found and rewritten", d:"The title was copied into each student's document. A rename must find and rewrite every copy, with no single table to check your work."}
  }
 };
 function shRender(){
   $("#shPick").innerHTML=SH_SHAPES.map(x=>
-    `<button data-s="${x.id}" aria-pressed="${x.id===SH.shape}">${x.n}</button>`).join("");
+    `<button data-s="${x.id}" aria-pressed="${x.id===SH.shape}">${ICO(x.i)} ${x.n}</button>`).join("");
   $$("#shPick button").forEach(el=>el.onclick=()=>{SH.shape=el.dataset.s;shRender()});
   $("#shQ").innerHTML=SH_QS.map(x=>`
     <button class="tg" data-q="${x.id}" aria-pressed="${x.id===SH.q}">

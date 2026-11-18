@@ -175,6 +175,26 @@ function buildTerms(list){
   return box;
 }
 
+/* ---------- scene pictures ---------- */
+/* A step-1 .scene with data-art="slug" gets its picture when build.py found src/shared/art/<slug>.webp
+   (the slugs that exist are listed in COURSE.art, so a missing file never causes a request).
+   The picture goes above the icon row; has-art turns the icon row into a compact legend. */
+function setupArt(){
+  const have = new Set(Array.isArray(C.art) ? C.art : []);
+  if(!have.size) return;
+  qa(".scene[data-art]").forEach(sc=>{
+    const slug = sc.dataset.art;
+    if(!have.has(slug) || q(":scope > img.scene-art",sc)) return;
+    const img = el("img","scene-art");
+    img.src = "art/"+slug+".webp";
+    img.alt = sc.dataset.artDesc || "";
+    img.loading = "lazy"; img.decoding = "async";
+    img.width = 1200; img.height = 800;
+    sc.insertBefore(img, sc.firstChild);
+    sc.classList.add("has-art");
+  });
+}
+
 /* ---------- steps ---------- */
 function collectSections(){
   panelList.forEach(P=>{
@@ -600,6 +620,7 @@ setupNavToggle();
 setupRail();
 setupHome();
 setupDfn();
+setupArt();
 collectSections();
 setupCyu();
 buildSteps();

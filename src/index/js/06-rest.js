@@ -106,9 +106,8 @@ function dbRender(){
   const gone=!selRow();
   const disp=selRow()?selRow().code:DB.row;
   $("#reqNote").innerHTML = gone
-    ? `<b style="color:var(--warn)">${DB.row} is not in the table.</b> Single-item requests return 404 until you pick a row that exists. Click a row.`
-    : `Click a row to point the single-item requests at it. The selected row is <b style="color:var(--req)">${disp}</b>.
-       <br><br>Each row has two identifying fields. <code>${disp}</code> is the course code that people read. <code>${DB.row}</code>, shown underneath it, is the id that the URL uses. The id is the code with spaces removed, because a space cannot appear in a URL unless it is written as <code>%20</code>. Both are stored when the course is created, and the id never changes after that.`;
+    ? `<b style="color:var(--warn)">${DB.row} is not in the table.</b> Single-item requests return 404 until you click a row that exists.`
+    : `Click a row to point the single-item requests at it. The selected row is <b style="color:var(--req)">${disp}</b>.`;
   $("#reqList").innerHTML=REQS.map(q=>`
     <button class="rq${q.id===DB.sel?" on":""}" data-r="${q.id}">
       <span class="vb ${q.v}">${q.v}</span>
@@ -188,38 +187,38 @@ function dbVerdict(q){
   const twice = n>1;
   if(q.v==="GET"){
     v.className="verdict ok";
-    v.innerHTML=`<b>Sent ${n}×, still ${DB.rows.length} rows</b>GET only reads. You can send it a hundred times and the data does not change. A verb with this property is called <b class="i">safe</b>. Browsers and search crawlers send GET freely because they rely on it being safe, so a GET should never change data.`;
+    v.innerHTML=`<b>Sent ${n}×, still ${DB.rows.length} rows</b>GET only reads, so repeating it changes nothing. A verb with this property is called <b class="i">safe</b>.`;
   } else if(q.id==="post"){
     const b=postBody();
     if(!b.code){
       v.className="verdict bad";
-      v.innerHTML=`<b>422, and nothing was created</b>The body had no <code>code</code>, so the server refused it. A status code that starts with <b class="i">4</b> means the request was the problem. The table did not change. Type a code and try again.`;
+      v.innerHTML=`<b>422, and nothing was created</b>The body had no <code>code</code>, so the server refused it. Type a code and send again.`;
     } else if(twice){
       v.className="verdict bad";
-      v.innerHTML=`<b>${n} clicks, ${n} rows called ${b.code}</b>You sent the same body ${n} times and the server created a course each time. Every request was valid, and nothing stopped the duplicates. This is what <b class="i">not idempotent</b> means. The same property causes the double enrollment after a form refresh and the double charge covered later in "Payments and gateways".<br><br>The second course got the id <code>${slug(b.code)}-2</code>, because the id built from your code was already taken.`;
+      v.innerHTML=`<b>${n} clicks, ${n} rows called ${b.code}</b>The server created a course each time, and nothing stopped the duplicates. This is what <b class="i">not idempotent</b> means.`;
     } else {
       v.className="verdict warn";
-      v.innerHTML=`<b>201 Created, and ${b.code} is in the table</b>The server created a new course and returned its URL. Press <em>Send the same one again</em> without changing anything, and count the rows.`;
+      v.innerHTML=`<b>201 Created, and ${b.code} is in the table</b>Press <em>Send the same one again</em> without changing anything, and count the rows.`;
     }
   } else if(q.v==="PUT"||q.v==="PATCH"){
     const missing=["title","units","slots"].filter(k=>!(k in reqBody()));
     if(q.v==="PUT" && missing.length){
       v.className="verdict bad";
-      v.innerHTML=`<b>${missing.join(" and ")} ${missing.length>1?"are":"is"} now null</b>PUT replaces the whole item. Your body left out <code>${missing.join("</code>, <code>")}</code>, so ${missing.length>1?"those values are":"that value is"} now empty. The server did what the request said.<br><br>Send it again and nothing more changes. PUT changes data, so it is not safe, but it is <b class="i">idempotent</b>: repeating it gives the same result.<br><br>Now select <b class="i">PATCH</b>, keep the same body, and send it.`;
+      v.innerHTML=`<b>${missing.join(" and ")} ${missing.length>1?"are":"is"} now null</b>PUT replaces the whole item, so the ${missing.length>1?"fields":"field"} your body left out ${missing.length>1?"are":"is"} now empty. Select <b class="i">PATCH</b>, keep the same body and send it.`;
     } else if(q.v==="PATCH" && missing.length){
       v.className="verdict ok";
-      v.innerHTML=`<b>Only ${Object.keys(reqBody()).join(", ")} changed</b>This is the same body you sent with PUT. <code>${missing.join("</code> and <code>")}</code> were left out of the body, so PATCH left them untouched. One body sent with two verbs gives two different results.<br><br>Send it again and the table does not change, so PATCH is <b class="i">idempotent</b> here too.`;
+      v.innerHTML=`<b>Only ${Object.keys(reqBody()).join(", ")} changed</b>PATCH left <code>${missing.join("</code> and <code>")}</code> untouched, and the same body sent with PUT emptied ${missing.length>1?"them":"it"}. Send it again and the table stays the same, so PATCH is <b class="i">idempotent</b> here.`;
     } else {
       v.className = twice ? "verdict ok" : "verdict warn";
       v.innerHTML = twice
-        ? `<b>Sent ${n}×, the table looks the same</b>Each request wrote the same values over the same values. The end state after ten sends is the end state after one, so the request is <b class="i">idempotent</b>. It changes data, so it is not safe.`
-        : `<b>Every field was in the body, so PUT and PATCH give the same result</b>With a complete body, PUT and PATCH do the same thing. Untick a field and send again to see where they differ.`;
+        ? `<b>Sent ${n}×, the table looks the same</b>Each request wrote the same values over the same values, so the request is <b class="i">idempotent</b>. It changes data, so it is not safe.`
+        : `<b>Every field was in the body, so PUT and PATCH give the same result</b>Untick a field and send again to see where they differ.`;
     }
   } else {
     v.className = twice ? "verdict ok" : "verdict warn";
     v.innerHTML = twice
-      ? `<b>The second send returned 404</b>The status code changed, but the end state is the same: the course is gone and stays gone. Idempotent means the end state is the same after one request or many, even if the status code differs. DELETE is <b class="i">idempotent</b>.`
-      : `<b>204 No Content, row removed</b>The server removed the row and sent nothing back. Press <em>Send the same one again</em>.`;
+      ? `<b>The second send returned 404</b>The reply changed and the end state is the same: the course is gone. So DELETE is <b class="i">idempotent</b>.`
+      : `<b>204 No Content, row removed</b>Press <em>Send the same one again</em> and read the reply.`;
   }
 }
 $("#reqSend").onclick=()=>{ DB.lastId=null; send(); };
@@ -236,30 +235,25 @@ $("#dbVerdict").innerHTML="<b>Ready</b>Pick a request and press Send.";
 
 const VERBS=[
  {v:"GET",d:"Fetch something. Change nothing.",safe:true,idem:true,body:false,
-  ex:`GET /courses/ITENT45 HTTP/1.1`,
-  twice:"The answer is identical both times, because nothing changed.",
-  dj:{django:`request.method == "GET"  →  your list or detail view`,express:`router.get(path, handler)  →  your list or detail route`,laravel:`Route::get(...)  →  index() or show()`},
-  note:"Because GET changes nothing, browsers and search crawlers (programs that follow links) send it whenever they like. If a delete sits behind a GET, a crawler will eventually trigger it."},
+  ex:`GET /courses/ITENT45`,
+  twice:"The answer is the same both times, because nothing changed.",
+  note:"Search engines send GET to every link they find, so a GET must never delete anything."},
  {v:"POST",d:"Create something new, or submit work.",safe:false,idem:false,body:true,
-  ex:`POST /enrollments HTTP/1.1\nContent-Type: application/json\n\n{"student":"20-1234","code":"ITENT 45"}`,
-  twice:"Two enrollments are created. This is the refresh-the-form bug, and browsers warn you before resubmitting a form for this reason.",
-  dj:{django:`request.method == "POST"  →  form.save() / Model.objects.create()`,express:`router.post(...)  →  prisma.model.create({ data })`,laravel:`Route::post(...)  →  Model::create($validated)`},
-  note:"POST is the only common verb that is neither safe nor idempotent. Anything that must not happen twice needs protection that you build, such as a unique constraint (a database rule that rejects duplicates) or an idempotency key (a unique code the client sends with each request)."},
+  ex:`POST /enrollments`,
+  twice:"Two enrollments are created. This is the double-enrollment bug after a page refresh.",
+  note:"POST is the only common verb that is neither safe nor idempotent. Anything that must not happen twice needs protection that you build."},
  {v:"PUT",d:"Replace an item completely.",safe:false,idem:true,body:true,
-  ex:`PUT /courses/ITENT45 HTTP/1.1\nContent-Type: application/json\n\n{"title":"App Dev and Emerging Tech","units":3}`,
-  twice:"Same result. The first request replaced the item with these values, and the second replaces it with the same values.",
-  dj:{django:`request.method == "PUT"  →  overwrite every field on the instance`,express:`router.put(...)  →  prisma.model.update({ where, data })`,laravel:`Route::put(...)  →  $model->update($all)`},
-  note:"PUT means the whole item. Any field you leave out is cleared. To change one field, use PATCH."},
+  ex:`PUT /courses/ITENT45`,
+  twice:"The result is the same. The second request replaces the item with the same values.",
+  note:"PUT means the whole item, so any field you leave out is cleared."},
  {v:"PATCH",d:"Change part of an item.",safe:false,idem:true,body:true,
-  ex:`PATCH /courses/ITENT45 HTTP/1.1\nContent-Type: application/json\n\n{"units":6}`,
-  twice:"Same result for a plain value like this. A patch that says 'add 3 units' would not be idempotent.",
-  dj:{django:`request.method == "PATCH"  →  update only the keys you were sent`,express:`router.patch(...)  →  update only the keys you were sent`,laravel:`Route::patch(...)  →  $model->fill($partial)->save()`},
-  note:"The usual verb for edit forms. Send only what changed and leave everything else alone."},
+  ex:`PATCH /courses/ITENT45`,
+  twice:"The result is the same for a plain value like units: 6. A patch that says 'add 3 units' would not be idempotent.",
+  note:"The usual verb for edit forms. Send only what changed."},
  {v:"DELETE",d:"Remove an item.",safe:false,idem:true,body:false,
-  ex:`DELETE /enrollments/8891 HTTP/1.1`,
-  twice:"The first call removes the item and returns 204. The second returns 404. The end state is the same, which is what idempotent means. Only the status code differs.",
-  dj:{django:`request.method == "DELETE"  →  instance.delete()`,express:`router.delete(...)  →  prisma.model.delete({ where })`,laravel:`Route::delete(...)  →  $model->delete()`},
-  note:"Most real systems keep the row and mark it inactive, so the history survives. The client still sends DELETE."}
+  ex:`DELETE /enrollments/8891`,
+  twice:"The first call removes the item and returns 204. The second returns 404, and the end state is the same.",
+  note:"Most real systems keep the row and mark it inactive, so the history survives."}
 ];
 let vSel=0;
 function renderVerbs(){
@@ -276,7 +270,6 @@ function renderVerbs(){
     <div class="art" style="margin-top:0">${v.ex.replace(/^([A-Z]+)/,'<span class="kw">$1</span>')}</div>
     <dl class="detail" style="margin-top:14px">
       <dt>Send it twice</dt><dd>${v.twice}</dd>
-      <dt>In ${ {django:"Django",express:"Express",laravel:"Laravel"}[STACK] }</dt><dd><code>${v.dj[STACK]}</code></dd>
       <dt>Watch for</dt><dd>${v.note}</dd>
     </dl>`;
   $$("#verbList .vb").forEach(el=>el.onclick=()=>{vSel=+el.dataset.i;renderVerbs()});
@@ -284,15 +277,15 @@ function renderVerbs(){
 renderVerbs();
 
 const MTX=[
- ["GET",  ["List them all","200 + a list",0,"Returns every course, usually one page at a time. The most common endpoint in any API."],
-          ["Fetch that one","200, or 404",0,"The standard way to read one item. If the code does not exist, the server returns 404, not an empty 200."]],
+ ["GET",  ["List them all","200 + a list",0,"Returns every course, usually one page at a time."],
+          ["Fetch that one","200, or 404",0,"The standard way to read one item. If the code does not exist, the server returns 404."]],
  ["POST", ["Create a new one","201 + Location",0,"The server assigns the id and returns the new item's URL in the Location header. Sending this twice creates two."],
           ["Rarely meaningful","405",1,"The item already exists, so there is nothing to create. Some APIs use this form for actions such as /courses/ITENT45/archive."]],
- ["PUT",  ["Replace the whole set","405 in practice",1,"This would mean 'discard every course and use these instead'. Almost no API allows it."],
-          ["Replace that one","200 or 204",0,"Overwrites every field. Any field you leave out is cleared. People make this mistake first."]],
+ ["PUT",  ["Replace the whole set","405 in practice",1,"This would mean discard every course and use these instead. Almost no API allows it."],
+          ["Replace that one","200 or 204",0,"Overwrites every field, and any field you leave out is cleared. People make this mistake first."]],
  ["PATCH",["Not meaningful","405",1,"There is no single item to update part of."],
           ["Change some fields","200",0,"The everyday edit. Send only what changed."]],
- ["DELETE",["Delete everything","405",1,"Exactly as dangerous as it sounds. If an API allowed this, someone would eventually call it by accident."],
+ ["DELETE",["Delete everything","405",1,"This would delete every course, and someone would eventually call it by accident."],
           ["Delete that one","204, then 404",0,"Removes it and returns no body. Calling it again returns 404, and the end state is the same."]]
 ];
 $("#mtxBody").innerHTML=MTX.map(([v,coll,item],r)=>`
@@ -310,29 +303,30 @@ $$("#mtxBody .mc").forEach(el=>el.onclick=()=>{
 
 /* ---- status codes ---- */
 const CODES=[
- [200,"OK",2,"The answer is in the body. A successful GET returns this, and so do PUT and PATCH when they send back the updated item."],
- [201,"Created",2,"A new item now exists, and the <code>Location</code> header (a labeled line in the reply) gives its URL. Do not resend this request, because that would create a second item."],
- [204,"No Content",2,"It worked and there is nothing to send back. This is the usual answer to a successful DELETE. The body must be empty."],
- [301,"Moved Permanently",3,"This URL has moved permanently. Browsers and search engines save this answer for a long time, so it is hard to undo. Use 302 (a temporary move) unless you are certain."],
- [303,"See Other",3,"Redirect after a POST. The server accepts the POST and then sends the browser to a GET page, so reloading that page is safe. This prevents the refresh-resubmits-the-form bug. The double charge covered later in \"Payments and gateways\" comes from the same problem and has a different fix."],
- [304,"Not Modified",3,"You already have the current version, so use the copy your browser saved earlier. The reply has no body. This saves bandwidth on large pages such as the course catalog covered later in \"Load balancers and scaling\"."],
- [400,"Bad Request",4,"The request is malformed, for example broken JSON or a missing required field. The server could not read what you sent."],
- [401,"Unauthorized",4,"The name is misleading: it means <b>unauthenticated</b>. The server does not know who you are. Send your login details and try again."],
- [403,"Forbidden",4,"The server knows who you are and the answer is still no. Better credentials will not help."],
- [404,"Not Found",4,"The URL names nothing. The server is working. Check your path and your ids first."],
- [405,"Method Not Allowed",4,"Right URL, wrong verb. The cells marked 405 in the table above are examples, such as <code>DELETE /courses</code>, where only <code>DELETE /courses/{code}</code> makes sense."],
- [409,"Conflict",4,"The request is valid but conflicts with the current state. Two students click for the same last seat: one gets 201 and the other gets 409. This is the enlistment problem covered later in \"Case study: enlistment\", reported as a status code."],
- [422,"Unprocessable Content",4,"The syntax is fine but the content is wrong, such as a date in the past or a unit load over the maximum. Validation errors (a value that breaks a rule) belong here."],
- [429,"Too Many Requests",4,"The client sent too many requests (rate limiting). The reply includes a <code>Retry-After</code> header that says how long to wait. The server is protecting the capacity covered later in \"Server capacity\"."],
- [500,"Internal Server Error",5,"The server code failed with an error. This is always a bug. Read the server's error report (the traceback) and ignore the page itself."],
- [502,"Bad Gateway",5,"A gateway server (nginx, a program that sits in front of your application) got an invalid reply or no reply from your application, usually because the worker process died. The out-of-memory kill covered later in \"Server memory\" looks like this from outside."],
- [503,"Service Unavailable",5,"The server is running but refusing work because it is overloaded or in maintenance. A 503 is better than a very slow 200."],
- [504,"Gateway Timeout",5,"Your application did not reply in time, so nginx stopped waiting. This is the queue covered later in \"Server capacity\" overflowing, as the user sees it. On enlistment morning this is the code you get."]
+ [200,"OK",2,"The request worked and the answer is in the body. GET, PUT and PATCH return it when they succeed.",1],
+ [201,"Created",2,"A new item now exists, and the <code>Location</code> header (a labeled line in the reply) gives its URL. Do not resend the request, because that would create a second item.",1],
+ [204,"No Content",2,"It worked and there is nothing to send back. It is the usual reply to a successful DELETE.",0],
+ [301,"Moved Permanently",3,"This URL has moved for good. Browsers and search engines remember the answer for a long time, so use 302 (a temporary move) unless you are sure.",1],
+ [303,"See Other",3,"After a POST, the server sends the browser to a page that GET can safely reload. This stops a refresh from resubmitting the form.",0],
+ [304,"Not Modified",3,"You already have the current version, so use the copy your browser saved. The reply has no body, which saves bandwidth.",0],
+ [400,"Bad Request",4,"The request is malformed, such as broken JSON or a missing required field. The server could not read what you sent.",1],
+ [401,"Unauthorized",4,"The name is misleading, because it means unauthenticated. The server does not know who you are, so send your login details and try again.",1],
+ [403,"Forbidden",4,"The server knows who you are and still says no. Better credentials will not help.",1],
+ [404,"Not Found",4,"The URL names nothing, and the server is working. Check your path and your ids first.",1],
+ [405,"Method Not Allowed",4,"The URL is right and the verb is wrong, such as <code>DELETE /courses</code> on a server that allows DELETE only on one course.",0],
+ [409,"Conflict",4,"The request is valid and clashes with the current state. If two students click for the last seat, one gets 201 and the other gets 409.",0],
+ [422,"Unprocessable Content",4,"The syntax is fine and the content breaks a rule, such as a date in the past or a unit load over the maximum.",0],
+ [429,"Too Many Requests",4,"The client sent too many requests, so the server is limiting it. A <code>Retry-After</code> header says how long to wait.",0],
+ [500,"Internal Server Error",5,"The server code failed with an error, which is always a bug. Read the server's error report (the traceback) and ignore the page itself.",1],
+ [502,"Bad Gateway",5,"A server in front of your application (a gateway) got no valid reply from it, usually because the worker process died.",0],
+ [503,"Service Unavailable",5,"The server is running and refusing work because it is overloaded or in maintenance. A 503 is better than a very slow 200.",0],
+ [504,"Gateway Timeout",5,"Your application did not reply in time, so the gateway stopped waiting. On enlistment morning this is the code people see.",0]
 ];
-$("#codeChips").innerHTML=CODES.map(([c,n,f],i)=>
-  `<button class="cd c${f}" data-i="${i}"><b>${c}</b>${n}</button>`).join("");
-$$("#codeChips .cd").forEach(el=>el.onclick=()=>{
-  $$("#codeChips .cd").forEach(x=>x.classList.remove("on"));
+const chip=([c,n,f],i)=>`<button class="cd c${f}" data-i="${i}"><b>${c}</b>${n}</button>`;
+$("#codeChips").innerHTML=CODES.map((x,i)=>x[4]?chip(x,i):"").join("");
+if($("#codeChipsMore")) $("#codeChipsMore").innerHTML=CODES.map((x,i)=>x[4]?"":chip(x,i)).join("");
+$$("#codeChips .cd, #codeChipsMore .cd").forEach(el=>el.onclick=()=>{
+  $$("#codeChips .cd, #codeChipsMore .cd").forEach(x=>x.classList.remove("on"));
   el.classList.add("on");
   const [c,n,f,d]=CODES[+el.dataset.i];
   const who={2:"success",3:"redirect",4:"client error",5:"server error"}[f];
@@ -375,16 +369,15 @@ function renderGran(){
   }).join("");
 
   const v=$("#granVerdict");
-  const ratio=(m.chatty.up/m.bulk.up).toFixed(0);
   if(m.n<=3){
     v.className="verdict warn";
-    v.innerHTML=`<b>At ${m.n} item${m.n===1?"":"s"} it makes almost no difference</b>Both versions fit in one round trip and the difference in data is small. This is how the many-request version gets written: it works fine in testing with three rows, and nobody checks it again.`;
+    v.innerHTML=`<b>At ${m.n} item${m.n===1?"":"s"} it makes almost no difference</b>Both versions fit in one round trip and the difference in data is small. The many-request version passes testing with three rows, and nobody checks it again.`;
   } else if(m.h2){
     v.className="verdict warn";
-    v.innerHTML=`<b>HTTP/2 reduced the waiting and nothing else</b>All ${m.chatty.reqs} requests now share one connection at once, so the wait drops to a single round trip. The server still runs <b class="i">${m.chatty.handlers} handlers</b> where one would do, still does ${m.n} database lookups, and still sends ${kb(m.chatty.down)} where ${kb(m.bulk.down)} would do. HTTP/2 hides the symptom, but the cause remains. This pattern is called the N+1 problem (one request for the list plus one for each of the N items), and it is measured later in "The N+1 query problem".`;
+    v.innerHTML=`<b>HTTP/2 reduced the waiting and nothing else</b>All ${m.chatty.reqs} requests now share one connection, so the wait drops to a single round trip. The server still runs <b class="i">${m.chatty.handlers} handlers</b> where one would do, a pattern called the N+1 problem.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>${m.chatty.rounds} round trips and ${kb(m.chatty.up)} of headers to fetch ${kb(m.n*G_ITEM)} of data</b>A browser opens only six connections to one host, so ${m.chatty.reqs} requests wait in batches of six. The last course title appears after <b class="i">${m.chatty.wait} ms</b>, compared with ${m.bulk.wait} ms for the same information in one request. Most of the data sent was the same cookie and user-agent text, repeated ${m.n} times.`;
+    v.innerHTML=`<b>${m.chatty.rounds} round trips and ${kb(m.chatty.up)} of headers to fetch ${kb(m.n*G_ITEM)} of data</b>A browser opens only six connections to one host, so ${m.chatty.reqs} requests wait in batches of six. The last course title appears after <b class="i">${m.chatty.wait} ms</b>, against ${m.bulk.wait} ms for one request.`;
   }
 }
 $("#sGran").oninput=e=>{GRAN.n=+e.target.value;$("#vGran").textContent=GRAN.n;renderGran()};
@@ -423,13 +416,13 @@ function renderLazy(){
   const v=$("#lazyVerdict");
   if(pct<=25){
     v.className="verdict ok";
-    v.innerHTML=`<b>They read ${pct}% of it, and you sent all of it</b>Loading everything up front moved ${( m.bulk.bytes/1024).toFixed(0)} KB so the student could look at ${(m.v*L_ITEM/1024).toFixed(1)} KB of it. The student waited ${Math.round(m.bulk.ttfc)} ms for the first screen. Loading one page at a time would take ${Math.round(m.lazy.ttfc)} ms. Most catalogs, feeds and search results look like this. Infinite scroll (loading more items as you scroll down) exists for this reason.`;
+    v.innerHTML=`<b>They read ${pct}% of it, and you sent all of it</b>Loading everything moved ${(m.bulk.bytes/1024).toFixed(0)} KB so the student could look at ${(m.v*L_ITEM/1024).toFixed(1)} KB, and the first screen took ${Math.round(m.bulk.ttfc)} ms. Loading one page at a time takes ${Math.round(m.lazy.ttfc)} ms.`;
   } else if(pct<80){
     v.className="verdict warn";
-    v.innerHTML=`<b>${pct}% read: loading as they scroll still transfers less</b>${(m.lazy.bytes/1024).toFixed(1)} KB against ${(m.bulk.bytes/1024).toFixed(0)} KB, at the cost of ${m.lazy.rt} round trips, where loading everything takes one. The first screen still arrives about three times sooner. Past this point the extra round trips start to cost more than the wasted data. Where that happens depends on your users.`;
+    v.innerHTML=`<b>${pct}% read: loading as they scroll still transfers less</b>Paging sends ${(m.lazy.bytes/1024).toFixed(1)} KB against ${(m.bulk.bytes/1024).toFixed(0)} KB, at the cost of ${m.lazy.rt} round trips where loading everything takes one. Where the balance tips depends on your users.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>They read nearly all of it, and paging cost you ${m.lazy.rt} round trips</b>The data transferred is now about the same either way, so the only difference left is <b class="i">${m.lazy.rt} round trips against one</b>, and each one is a wait. For a reader like this, fetching everything up front is better. The first screen still appears in ${Math.round(m.lazy.ttfc)} ms, while loading everything takes ${Math.round(m.bulk.ttfc)} ms, because the reader can start on page one while page two is still arriving.`;
+    v.innerHTML=`<b>They read nearly all of it, and paging cost you ${m.lazy.rt} round trips</b>The data moved is now about the same, so the only difference left is <b class="i">${m.lazy.rt} round trips against one</b>. Fetching everything up front suits a reader like this.`;
   }
 }
 $("#sLazy").oninput=e=>{LAZY.viewed=+e.target.value;$("#vLazy").textContent=LAZY.viewed;renderLazy()};

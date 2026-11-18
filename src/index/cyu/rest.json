@@ -3,12 +3,12 @@
  "items": [
   {
    "id": "rest-1",
-   "sec": "request-lab",
+   "sec": "try-requests",
    "type": "predict",
-   "stem": "A shopper presses Submit twice on a form that sends `POST /enrollments`. Before you try it: what will the table hold after two identical POST requests?",
+   "stem": "A shopper presses Submit twice on a form that sends `POST /enrollments`. What will the table hold after two identical POST requests?",
    "options": [
     {
-     "text": "Two new rows, one for each request",
+     "text": "Two new rows, because every POST creates a new item",
      "correct": true,
      "feedback": "POST is not idempotent. The server treats each POST as a new request and creates a new item every time, even when the body is identical."
     },
@@ -23,31 +23,31 @@
      "feedback": "Servers reject duplicates only if you build that rule (for example a unique constraint or an idempotency key). Nothing in POST itself prevents them."
     }
    ],
-   "try": "Select POST in the table above, type a course code, press Send, and then press Send the same one again. Count the rows."
+   "try": "In the step \"Send a request\", press Send with POST selected, then Send the same one again, and count the rows."
   },
   {
    "id": "rest-2",
-   "sec": "verb-promises",
+   "sec": null,
    "type": "mc",
    "stem": "An edit form sends `PATCH /courses/ITENT45` with the body `{\"units\": 6}`. Because of network problems the same request reaches the server three times. What is the course's `units` value afterward?",
    "options": [
     {
-     "text": "6, and the other fields are unchanged",
+     "text": "6, because every request writes the same value and leaves other fields alone",
      "correct": true,
      "feedback": "PATCH sets the fields in the body to the given values. Repeating it writes the same value again, so PATCH here is idempotent."
     },
     {
-     "text": "18, because each request added 6",
+     "text": "18, because each of the three requests added 6 units to the course",
      "correct": false,
      "feedback": "PATCH with a plain value replaces the field. Only a request written as an increment, such as 'add 6 units', would add up, and that kind of request would not be idempotent."
     },
     {
-     "text": "6, but the second and third requests create two extra courses",
+     "text": "6, but the second and third requests also create two extra courses",
      "correct": false,
      "feedback": "Creating new items is what POST does. PATCH changes an existing item and does not create anything."
     },
     {
-     "text": "The title and slots are cleared, because the body left them out",
+     "text": "The title and slots are cleared, because the body left them out of the request",
      "correct": false,
      "feedback": "That describes PUT. PATCH leaves fields that are not in the body untouched."
     }
@@ -55,14 +55,14 @@
   },
   {
    "id": "rest-3",
-   "sec": "status-codes",
+   "sec": null,
    "type": "multi",
    "stem": "Select all that apply. Which of these statements about status codes are correct?",
    "options": [
     {
      "text": "401 means the server does not know who you are.",
      "correct": true,
-     "feedback": "401 is named Unauthorized, but it means unauthenticated. Sending login details and trying again can fix it."
+     "feedback": "401 is named Unauthorized and means unauthenticated. Sending login details and trying again can fix it."
     },
     {
      "text": "403 means the server knows who you are and still refuses.",
@@ -78,53 +78,6 @@
      "text": "404 means the server code raised an error while handling the request.",
      "correct": false,
      "feedback": "That describes 500. A 404 means the URL names nothing, so check the path and the id."
-    }
-   ]
-  },
-  {
-   "id": "rest-4",
-   "sec": "naming-and-one-vs-fifty",
-   "type": "predict",
-   "stem": "A page needs 50 course titles and fetches them with 51 separate requests. Before you try it: if the browser uses HTTP/2, which number is still 51 times higher than for a single request?",
-   "options": [
-    {
-     "text": "The number of server handler runs",
-     "correct": true,
-     "feedback": "HTTP/2 sends the requests together over one connection, so the waiting drops. The server still runs its handler code, and does a database lookup, once per request."
-    },
-    {
-     "text": "The time spent waiting",
-     "correct": false,
-     "feedback": "HTTP/2 removes most of the waiting because it sends all the requests at once. The cost that remains is on the server."
-    },
-    {
-     "text": "Nothing. HTTP/2 makes 51 requests as cheap as one",
-     "correct": false,
-     "feedback": "HTTP/2 reduces the waiting. It does not reduce the work the server does for each request."
-    }
-   ],
-   "try": "Set the first slider to 50, turn on HTTP/2, and compare the Server handler runs row with the Time spent waiting row."
-  },
-  {
-   "id": "rest-5",
-   "sec": "lazy-loading",
-   "type": "mc",
-   "stem": "A catalog has 500 courses, and most students look at the first 10 before they leave. Which endpoint design suits this best?",
-   "options": [
-    {
-     "text": "`GET /courses?limit=20&offset=0`, then more pages as the student scrolls",
-     "correct": true,
-     "feedback": "Most of the 500 items are never seen, so loading one page at a time sends little data and shows the first screen quickly."
-    },
-    {
-     "text": "`GET /courses` returning all 500 courses in one response",
-     "correct": false,
-     "feedback": "This needs only one request, but it sends about 60 KB that most students never look at and makes the first screen wait for it."
-    },
-    {
-     "text": "`GET /courses/1`, `GET /courses/2` and so on, one request per course",
-     "correct": false,
-     "feedback": "This pays a round trip for every course and makes the server run its handler 500 times. A page of 20 items needs one request."
     }
    ]
   }

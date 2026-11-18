@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Assemble index.html and machine.html from src/. No dependencies.
    python3 build.py   python3 build.py --out /tmp/preview   (write somewhere else)"""
-import json,pathlib,sys,re,html,math
+import json,pathlib,sys,re,html,math,shutil
 root=pathlib.Path(__file__).resolve().parent
 out_dir=pathlib.Path(sys.argv[sys.argv.index("--out")+1]) if "--out" in sys.argv else root
 out_dir.mkdir(parents=True,exist_ok=True)
@@ -83,6 +83,21 @@ document.querySelectorAll(".cp").forEach(b=>b.onclick=()=>{{const t=b.previousEl
 </body></html>"""
     (out_dir/"embed.html").write_text(page,encoding="utf-8")
     print(f"built embed.html  {len(page):,} bytes")
+def copy_art(out_dir):
+    """Copy src/shared/art/*.webp to <out>/art/ and return the sorted list of slugs that exist.
+       platform.js only inserts a picture for slugs in this list (window.COURSE.art), so there are no 404 requests."""
+    src=root/"src"/"shared"/"art"
+    files=sorted(src.glob("*.webp")) if src.is_dir() else []
+    dst=out_dir/"art"
+    if dst.is_dir():
+        for old in dst.glob("*.webp"):
+            if old.name not in {f.name for f in files}: old.unlink()
+    if files:
+        dst.mkdir(parents=True,exist_ok=True)
+        for f in files: shutil.copyfile(f,dst/f.name)
+    print(f"art: {len(files)} picture(s)")
+    return [f.stem for f in files]
+ART=copy_art(out_dir)
 for page in ("index","machine"):
     d=root/"src"/page
     rd=lambda p:(d/p).read_text(encoding="utf-8")
@@ -94,7 +109,7 @@ for page in ("index","machine"):
         j=json.loads(f.read_text(encoding="utf-8")); cyu[j["panel"]]=j["items"]
     vids=json.loads(opt(d/"videos.json") or "[]")
     ga=json.loads(opt(sh/"analytics.json") or "{}")
-    data="window.COURSE="+json.dumps({"page":page,"cyu":cyu,"videos":vids,"analytics":ga},ensure_ascii=False).replace("</","<\\/")+";\n"
+    data="window.COURSE="+json.dumps({"page":page,"cyu":cyu,"videos":vids,"analytics":ga,"art":ART},ensure_ascii=False).replace("</","<\\/")+";\n"
     css=rd("style.css")+opt(sh/"theme.css")+opt(sh/"platform.css")
     js=data+"".join(rd("js/"+f) for f in json.loads(rd("js-order.json")))+opt(sh/"platform.js")+opt(sh/"analytics.js")
     sprite="".join('<symbol id="i-%s" viewBox="0 0 256 256">%s</symbol>'%(f.stem,re.search(r"<svg[^>]*>(.*)</svg>",f.read_text(encoding="utf-8"),re.S).group(1)) for f in sorted((sh/"icons").glob("*.svg")))

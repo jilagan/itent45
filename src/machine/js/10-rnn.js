@@ -68,7 +68,7 @@ function rnRender(){
         <span class="pc">${v.toFixed(0)}%</span></div>`).join("");
     const picked=cand[0][0], right=picked===q.ref;
     $("#rnAnswer").innerHTML=
-      `<span class="c">The model has to choose. It only knows how strong each word is on the note, so it takes the stronger one.</span>\n`+
+      `<span class="c">The model can only compare how strong each word is on the note, so it takes the stronger one.</span>\n`+
       `it  &rarr;  <span class="kw">${picked}</span>\n`+
       `<span class="c">The sentence meant ${q.ref}.</span>\n`+
       `<span style="color:${right?"var(--res)":"var(--warn)"};font-weight:600">${right?"correct" : "wrong"}</span>`;
@@ -79,17 +79,17 @@ function rnRender(){
 
   const v=$("#rnVerdict");
   if(at===0 && !asking){ v.className="verdict";
-    v.innerHTML=`<b>The note is empty</b>The model reads one word at a time. After each word it rewrites a single fixed-size note and throws the word away. Read the sentence, then ask a question about what was read.`; return; }
+    v.innerHTML=`<b>The note is empty</b>The model reads one word at a time and rewrites one fixed-size note after each word.`; return; }
   if(!asking && at<N){ v.className="verdict";
-    v.innerHTML=`<b>${at} of ${N} words read</b>Each new word goes onto the note at full strength, and everything already on the note becomes weaker. The model is only reading at this stage and has not decided anything.`; return; }
+    v.innerHTML=`<b>${at} of ${N} words read</b>Each new word goes on the note at full strength, and every word already there gets weaker.`; return; }
   if(!asking){ v.className="verdict warn";
-    v.innerHTML=`<b>The whole sentence has been read</b>The note is all that remains. Press the button once more to see what the model has to work with.`; return; }
+    v.innerHTML=`<b>The whole sentence has been read</b>Only the note remains. Press the button once more to ask the question.`; return; }
   const picked = surv("street")>surv("animal") ? "street" : "animal";
   const right = picked===q.ref;
   v.className="verdict "+(right?"warn":"bad");
   v.innerHTML = right
-    ? `<b>It answered <code>street</code>, and street is correct this time</b>This is luck. The model picked street because street was read four words after animal, so more of it was still on the note: ${surv("street").toFixed(0)}% against ${surv("animal").toFixed(0)}%. The meaning of <em>wide</em> played no part.<br><br>The note would give the answer <code>street</code> whatever the last word said. Switch to the other sentence and the answer stays the same, although the question has changed.`
-    : `<b>It answered <code>street</code>, but the sentence meant <code>animal</code></b>Either of two nouns could be what <code>it</code> stands for. To choose between them, the model needs both nouns to be clear on the note, and one of them is not: <code>street</code> is at ${surv("street").toFixed(0)}% and <code>animal</code> is at ${surv("animal").toFixed(0)}%.<br><br>So it takes the stronger one. Choosing the noun that fits <em>tired</em> needs both candidates in view, and <code>animal</code> has faded. The model chose street because street is the noun still strong on the note.<br><br>The model cannot read the sentence again to check, because the sentence is gone. Switch to the other version. The answer stays street, which shows that meaning played no part.`
+    ? `<b>It answered <code>street</code>, and street is correct this time</b>That is luck: street was read last, so ${surv("street").toFixed(0)}% of it is left on the note against ${surv("animal").toFixed(0)}% for animal. Switch to the other sentence and the answer stays street, which is then wrong.`
+    : `<b>It answered <code>street</code>, but the sentence meant <code>animal</code></b>Animal was read earlier, so ${surv("animal").toFixed(0)}% of it is left on the note against ${surv("street").toFixed(0)}% for street. The model cannot reread the sentence, so it takes the stronger word, and switching to the other sentence leaves the answer unchanged.`
 }
 $("#rnStep").onclick=()=>{ const q=RNS.find(x=>x.id===RN.sel); if(RN.at<=q.w.length){RN.at++;rnRender();} };
 $("#rnAll").onclick=()=>{ RN.at=RNS.find(x=>x.id===RN.sel).w.length+1; rnRender(); };

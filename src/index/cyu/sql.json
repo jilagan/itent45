@@ -3,9 +3,9 @@
  "items": [
   {
    "id": "sql-1",
-   "sec": null,
+   "sec": "where",
    "type": "predict",
-   "stem": "Before you try it: the courses table has three rows. You run `UPDATE courses SET slots = 0;` with no WHERE clause. How many rows does it apply to?",
+   "stem": "The courses table has three rows. You run `UPDATE courses SET slots = 0;` with no WHERE clause. How many rows does it apply to?",
    "options": [
     {
      "text": "All three rows.",
@@ -28,7 +28,7 @@
      "feedback": "The command sets slots to 0 whatever the current value is, so it applies to every row."
     }
    ],
-   "try": "Select the UPDATE with no WHERE clause in the widget above, press Run, and compare the table with the result of the filtered UPDATE."
+   "try": "Open the step \"Run a statement\", select the UPDATE with no WHERE clause, press Run and compare the table with the result of the filtered UPDATE."
   },
   {
    "id": "sql-2",

@@ -19,7 +19,7 @@ PARTIES.forEach(p=>{
 
 const PAYFLOW=[
  {k:"browser", hop:"Browser → your API", dir:"out", h:"The shopper loads their cart",
-  x:"This is an ordinary request, like the ones in \"HTTP messages\". Nothing about payment yet.",
+  x:"This is an ordinary request. Nothing about payment has happened yet.",
   l:"Nothing new in this step",
   a:`<span class="kw">GET</span> /api/cart HTTP/1.1
 Cookie: sessionid=8f2a...
@@ -28,7 +28,7 @@ Cookie: sessionid=8f2a...
 {<span class="s">"items"</span>: [{<span class="s">"sku"</span>:<span class="s">"SHOE-42"</span>, <span class="s">"price"</span>: 129900}], <span class="s">"total"</span>: 129900}`},
 
  {k:"gateway", hop:"Browser → gateway (your server is not involved)", dir:"out", h:"The card goes straight to the gateway",
-  x:"Many people get this step wrong. The card number never travels to your server. The browser sends it directly to the gateway, using a publishable key, which is a key that is safe to include in your page's JavaScript.",
+  x:"The card number never travels to your server. The browser sends it directly to the gateway, using a publishable key that is safe to include in your page's JavaScript.",
   l:"Check the host name. It is not yours.",
   a:`<span class="kw">POST</span> https://api.gateway.com/v1/tokens
 Authorization: Bearer <span class="s">pk_live_...</span>   <span class="c">// publishable key, safe to make public</span>
@@ -37,13 +37,13 @@ Authorization: Bearer <span class="s">pk_live_...</span>   <span class="c">// pu
  <span class="s">"exp"</span>: <span class="s">"09/28"</span>, <span class="s">"cvc"</span>: <span class="s">"123"</span>}`},
 
  {k:"browser", hop:"Gateway → browser", dir:"in", h:"A token comes back",
-  x:"The token is an opaque code that stands in for the card. On its own it is close to useless to a thief, because it can be used once and only your secret key can charge it.",
+  x:"The token is a code that stands in for the card. A thief gets little from it, because it works once and only your secret key can charge it.",
   l:"What your server will receive",
   a:`<span class="kw">201 Created</span>
 {<span class="s">"id"</span>: <span class="s">"tok_1a2b3c"</span>, <span class="s">"last4"</span>: <span class="s">"4242"</span>, <span class="s">"brand"</span>: <span class="s">"visa"</span>}`},
 
  {k:"server", hop:"Browser → your API", dir:"out", h:"The order request reaches your server",
-  x:"Now your server joins in. It receives the token and the cart, never the card. The request includes an idempotency key: the browser generated one UUID (a random unique code) for this checkout and resends the same one on every retry.",
+  x:"Your server receives the token and the cart, never the card. The request carries an idempotency key, a unique code that the browser resends on every retry.",
   l:"The request your server code handles",
   a:`<span class="kw">POST</span> /api/orders HTTP/1.1
 <span class="kw">Idempotency-Key</span>: 7c3f9e1a-4b8d-42f6-9c11-a2d5e8b7f014
@@ -52,7 +52,7 @@ Content-Type: application/json
 {<span class="s">"token"</span>: <span class="s">"tok_1a2b3c"</span>, <span class="s">"cart_id"</span>: 5512}`},
 
  {k:"gateway", hop:"Your API → gateway", dir:"out", h:"Your server becomes the client",
-  x:"Your API now does what the browser did in \"HTTP messages\": it builds a request, sets headers and waits for a response. The protocol and verbs are the same. The secret key never leaves your server.",
+  x:"Your server now builds a request, sets headers and waits for a reply, as the browser does. The secret key never leaves your server.",
   l:"Sent from your server code",
   a:`<span class="kw">POST</span> https://api.gateway.com/v1/charges
 Authorization: Bearer <span class="s">sk_live_...</span>   <span class="c">// secret key, server only</span>
@@ -61,13 +61,13 @@ Authorization: Bearer <span class="s">sk_live_...</span>   <span class="c">// se
 {<span class="s">"amount"</span>: 129900, <span class="s">"currency"</span>: <span class="s">"PHP"</span>, <span class="s">"source"</span>: <span class="s">"tok_1a2b3c"</span>}`},
 
  {k:"gateway", hop:"Gateway → your API", dir:"in", h:"Pending, not paid",
-  x:"Cards are authorized in about a second. GCash, Maya and over-the-counter payments can take minutes or hours. Treating this response as final is one of the most common bugs in student e-commerce projects.",
+  x:"Cards are authorized in about a second, and GCash, Maya and over-the-counter payments can take minutes or hours. Treating this reply as final is a common bug in student projects.",
   l:"Read the status field.",
   a:`<span class="kw">200 OK</span>
 {<span class="s">"id"</span>: <span class="s">"ch_9f8e7d"</span>, <span class="s">"status"</span>: <span class="s">"pending"</span>, <span class="s">"amount"</span>: 129900}`},
 
  {k:"browser", hop:"Your API → browser", dir:"in", h:"You answer the shopper",
-  x:"You created an order, so you return 201 with a Location header, as described in \"HTTP verbs and status codes\". The status says awaiting payment, which is accurate.",
+  x:"You created an order, so you reply 201 with the order's URL in a Location header. The status says awaiting payment, which is accurate.",
   l:"Back to the shopper",
   a:`<span class="kw">201 Created</span>
 Location: /api/orders/8891
@@ -75,11 +75,11 @@ Location: /api/orders/8891
 {<span class="s">"id"</span>: 8891, <span class="s">"status"</span>: <span class="s">"awaiting_payment"</span>}`},
 
  {k:"bank", hop:"Gateway → bank (outside your system)", dir:"out", h:"Settlement happens out of your sight",
-  x:"The gateway now moves real money through the banking system. Step 6 said pending because cards are authorized in about a second, while e-wallets and over-the-counter payments can take minutes or hours, and none of it is under your control.",
+  x:"The gateway moves real money through the banking system. Cards settle in seconds and everything else can take minutes to days, so your server does not wait.",
   l:"You cannot see this part",
   a:`<span class="c">gateway → acquiring bank → card network → issuing bank</span>\n<span class="c">Seconds for cards. Minutes to days for everything else.</span>\n\n<span class="c">Your server is not waiting for this. It already replied.</span>`},
  {k:"server", hop:"Gateway → your API (roles reversed)", dir:"out", h:"The gateway calls your server",
-  x:"Minutes later, settlement completes and the gateway sends a request to an endpoint you published. This is called a webhook. Your API is the server in this exchange and the gateway is the client. Anyone on the internet can also send requests to this URL, so the signature matters.",
+  x:"When settlement completes, the gateway sends a request to an endpoint you published, called a webhook. Anyone on the internet can send requests to that URL, so the signature header matters.",
   l:"The webhook, and the header that protects it",
   a:`<span class="kw">POST</span> /webhooks/payments HTTP/1.1
 <span class="kw">Gateway-Signature</span>: t=1723,v1=5f2c8a91b...
@@ -87,7 +87,7 @@ Location: /api/orders/8891
 {<span class="s">"type"</span>: <span class="s">"charge.succeeded"</span>, <span class="s">"data"</span>: {<span class="s">"id"</span>: <span class="s">"ch_9f8e7d"</span>}}`},
 
  {k:"server", hop:"Inside your API", dir:"out", h:"Verify, then mark the order paid",
-  x:"Recompute the signature with your webhook secret and compare it with the one in the header. Only then update the order. If you skip this check, anyone can mark their own order paid by sending a forged request.",
+  x:"Recompute the signature with your webhook secret and compare it with the header. Skip this check and anyone can mark their own order paid with a forged request.",
   l:"The check that must be there",
   a:`expected = hmac_sha256(webhook_secret, raw_body)
 <span class="kw">if</span> not compare_digest(expected, header_sig):
@@ -144,13 +144,13 @@ function placePayBall(i){
     return;
   }
   ball.style.display="";
+  const onBypass = seg && seg.lane==="X";
+  const back = !!(seg && seg.dir==="back");
+  const bic = back ? "bowl-food" : "receipt";
+  if(ball.dataset.ic!==bic){ ball.dataset.ic=bic; ball.innerHTML=ICO(bic); }
   ball.style.left=(target.left-fb.left+target.width/2)+"px";
-  if(seg && seg.lane==="X"){          // riding the bypass
-    ball.style.top=(parseFloat($("#bypass").style.top)||0)+"px";
-  } else {
-    const back = seg && seg.dir==="back";
-    ball.style.top=($(back?"#prailAb":"#prailAf").getBoundingClientRect().top-fb.top+1)+"px";
-  }
+  // on a bypass the marker rides the line; inside a box it sits on the top border, clear of the text
+  ball.style.top = onBypass ? (parseFloat($("#bypass").style.top)||0)+"px" : (target.top-fb.top)+"px";
   ball.classList.toggle("res", !!(seg && seg.dir==="back"));
 }
 function renderPay(){
@@ -206,7 +206,7 @@ const WHYF=[
  {id:"json", n:"JSON", bytes:92,
   body:`{<span class="s">"amount"</span>:129900,<span class="s">"currency"</span>:<span class="s">"PHP"</span>,<span class="s">"source"</span>:<span class="s">"tok_1a2b3c"</span>,<span class="s">"description"</span>:<span class="s">"ITENT 45 enrollment"</span>}`,
   cls:"ok",
-  v:`<b>92 bytes, and it already matches the data structures that programs use</b>Python code reads <code>data["amount"]</code> and Node code reads <code>data.amount</code>, and neither side has to convert it first. The section "The layers of a message" in "Protocol layers" showed about 121 bytes of headers (HTTP, TLS, TCP, IP and Ethernet) around a short message, so the headers already outweigh this 92-byte message. Making the message six times larger would be a real cost.`},
+  v:`<b>92 bytes, and it already matches the data structures that programs use</b>Python code reads <code>data["amount"]</code> and Node code reads <code>data.amount</code>, with no conversion first. About 121 bytes of headers (HTTP, TLS, TCP, IP and Ethernet) already surround a short message like this, so making it six times larger would be a real cost.`},
  {id:"soap", n:"SOAP / XML", bytes:558,
   body:`<span class="d">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="d">&lt;soap:Envelope xmlns:soap=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span>
@@ -223,7 +223,7 @@ const WHYF=[
   <span class="d">&lt;/soap:Body&gt;</span>
 <span class="d">&lt;/soap:Envelope&gt;</span>`,
   cls:"warn",
-  v:`<b>558 bytes, six times the size of JSON</b>Only 7% of it is the four values you meant to send. The rest is namespaces, an envelope and a header block. In return you get a contract that a machine can enforce: a schema can reject a negative amount or an invalid currency before your code runs, and the document can be signed as a document. Between two banks that is a fair trade. For a mobile app fetching a course list it is six times the data for no benefit.`},
+  v:`<b>558 bytes, six times the size of JSON</b>Only 7% of it is the four values you meant to send, and the rest is namespaces, an envelope and a header block. In return, a schema can reject a negative amount or an invalid currency before your code runs, which is a fair trade between two banks.`},
  {id:"html", n:"HTML", bytes:248,
   body:`<span class="d">&lt;form method=</span><span class="s">"post"</span><span class="d"> action=</span><span class="s">"/charges"</span><span class="d">&gt;</span>
   <span class="d">&lt;input type=</span><span class="s">"hidden"</span><span class="d"> name=</span><span class="s">"amount"</span><span class="d"> value=</span><span class="s">"129900"</span><span class="d">&gt;</span>
@@ -232,7 +232,7 @@ const WHYF=[
   <span class="d">&lt;button type=</span><span class="s">"submit"</span><span class="d">&gt;</span>Charge<span class="d">&lt;/button&gt;</span>
 <span class="d">&lt;/form&gt;</span>`,
   cls:"bad",
-  v:`<b>248 bytes, and the wrong kind of message</b>HTML does not state facts. It describes a form that a person could click, so the gateway would have to read the markup and guess which fields matter. Now consider step 9, where the gateway sends <em>you</em> a webhook. The gateway has never seen your interface, so it has nothing to display. The only thing it can send is data. The server-rendered example in "One API, many clients" is the same mistake, made by a system that worked for twenty years because it only ever had one client.`}
+  v:`<b>248 bytes, and the wrong kind of message</b>HTML describes a form that a person could click, so the gateway would have to guess which fields matter. A gateway that sends you a webhook has no interface to display, so it can send only data.`}
 ];
 let whySel="json";
 function renderWhy(){
@@ -281,12 +281,12 @@ function renderCharges(){
   const n=$("#idemNote");
   if(!attempts.length){
     n.innerHTML= idemOn
-      ? "The key is generated once, when the checkout page loads, and not on each click."
+      ? "The key is generated once, when the checkout page loads, and reused on every click."
       : "Press Pay a few times, as an impatient shopper on a slow connection would.";
   } else if(charged>PRICE){
-    n.innerHTML=`<b style="color:var(--warn)">${attempts.length} clicks, ${attempts.filter(a=>!a.reused).length} separate charges.</b> The shopper paid ₱${charged.toLocaleString()} for a ₱${PRICE.toLocaleString()} pair of shoes. Every click was a valid POST, and the server did what it was told each time. Reading your own code will not reveal a bug here.`;
+    n.innerHTML=`<b style="color:var(--warn)">${attempts.length} clicks, ${attempts.filter(a=>!a.reused).length} separate charges.</b> The shopper paid ₱${charged.toLocaleString()} for a ₱${PRICE.toLocaleString()} pair of shoes, and every click was a valid POST.`;
   } else if(idemOn && attempts.length>1){
-    n.innerHTML=`<b style="color:var(--res)">${attempts.length} clicks, one charge.</b> The gateway recognized the repeated key and returned the original charge without creating a new one. Real payment APIs use this method to prevent double charges.`;
+    n.innerHTML=`<b style="color:var(--res)">${attempts.length} clicks, one charge.</b> The gateway recognized the repeated key and returned the original charge. Real payment APIs use this method to prevent double charges.`;
   } else {
     n.innerHTML="One click, one charge. Press it again a few times and watch what happens.";
   }

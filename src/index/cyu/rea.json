@@ -3,7 +3,7 @@
  "items": [
   {
    "id": "rea-1",
-   "sec": "six-boxes",
+   "sec": null,
    "type": "mc",
    "stem": "A sari-sari store hands over a bottle of soda and receives 20 pesos. Looking at the part where the goods go out, which choice names the resource, the event and the agents?",
    "options": [
@@ -58,36 +58,8 @@
    ]
   },
   {
-   "id": "rea-3",
-   "sec": "layout",
-   "type": "mc",
-   "stem": "In a diagram where every crow's foot points up and to the left, which tables end up in the top left?",
-   "options": [
-    {
-     "text": "The tables on the many side of relationships, such as Payment and Enrollment.",
-     "correct": true,
-     "feedback": "The crow's foot marks the many side, which is usually the entity that records events, so those tables move to the top left."
-    },
-    {
-     "text": "The most important tables to the business, such as Student and Course.",
-     "correct": false,
-     "feedback": "Importance does not decide the position. Student and Course are on the one side of their relationships, so they end up at the bottom right."
-    },
-    {
-     "text": "The tables whose names come first in alphabetical order, such as Course.",
-     "correct": false,
-     "feedback": "Names play no part. The position comes from which side of each relationship a table is on."
-    },
-    {
-     "text": "The tables with the fewest columns, because they are simplest to draw.",
-     "correct": false,
-     "feedback": "Column count does not decide it. The position comes from the many side of the relationships."
-    }
-   ]
-  },
-  {
    "id": "rea-4",
-   "sec": "parts-and-templates",
+   "sec": null,
    "type": "mc",
    "stem": "A school records each enrollment and each payment as separate events. Which question needs both kinds of event to answer?",
    "options": [

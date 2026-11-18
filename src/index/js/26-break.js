@@ -4,6 +4,13 @@ const BK={
  title:"Group exercise 1: inspect an HTTP exchange",
  intro:"Work in groups of three. If the server is not running yet, \"HTTP messages\" has the setup at the bottom, with commands ready to copy. For this exercise, use no slides or notes and do not ask an AI. Find the answers by looking at what the server does.",
  taskT:"Task: 20 minutes, then report back",
+ short:[
+  "Start the demo server. Keep its terminal visible.",
+  "Compare the headers curl and a browser send for <code>/courses</code>.",
+  "Make a 404. Does <code>Content-Length</code> match the body?",
+  "Send a POST. What is on each side of the blank line?",
+  "Request <code>/slow</code> twice at once. What changes with threading?",
+  "Type a request by hand. Which header can you not drop?"],
  roles:[
   ["Driver","Types the commands the group agrees on."],
   ["Prober","Decides what to try next and keeps off the keyboard."],
@@ -26,6 +33,13 @@ const BK={
  title:"Group exercise 2: design for a load",
  intro:"Use the same groups and rotate roles. Each group gets one scenario. Use the tool in \"Load balancers and scaling\" to size it. You will be asked for numbers. Another group then tries to find weaknesses in your design.",
  taskT:"Task: 25 minutes to build, 10 minutes of questions",
+ short:[
+  "Write the load number first, with the arithmetic.",
+  "Build a configuration that serves it in the scaling tool.",
+  "State your ceiling and your headroom multiple.",
+  "Name the next bottleneck.",
+  "Name one move you chose not to make, and why.",
+  "Answer your instructor's extra question. This part is graded."],
  roles:[
   ["Architect","Owns the design and says the numbers out loud during the defense."],
   ["Operator","Operates the \"Load balancers and scaling\" tool and reads out the ceiling and the named bottleneck."],
@@ -83,53 +97,50 @@ const SCEN=[
      ["Work","40 ms of your own code, plus an 800 ms call to the payment gateway"]],
   c:"Curveball: put 840 ms into the tool's handler slider and read the ceiling. This is the cost of a third-party call inside your request. Then answer two questions. How do you take the gateway off the request path, and what stops a shopper who double-clicks from being charged twice?"}
 ];
-let bk="1";
-function renderBk(){
-  const d=BK[bk];
-  $("#bkIntro").textContent=d.intro;
-  $("#bkTaskT").textContent=d.taskT;
-  $("#bkTask").innerHTML=d.task.map(t=>`<li>${t}</li>`).join("");
-  $("#bkRoles").innerHTML=d.roles.map(([n,p])=>`<div class="role"><div class="rn">${n}</div><p>${p}</p></div>`).join("");
-  $("#bkReport").textContent=d.report;
-  $("#bkListen").innerHTML=d.listen.map(l=>`<li>${l}</li>`).join("");
-  $("#bkCards").innerHTML = bk==="2"
-    ? `<div class="card-t">Scenario cards (one per group)</div><div class="cards">`+
-      SCEN.map((s,i)=>`<button class="sc" data-i="${i}">
-        <div class="sn">${s.n}</div><h4>${s.t}</h4>
-        <dl>${s.d.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>
-        <div class="curve instructor">${s.c}</div></button>`).join("")+`</div>`
-    : "";
-  $$("#bkCards .sc").forEach(el=>el.onclick=()=>{
-    const was=el.classList.contains("pick");
-    $$("#bkCards .sc").forEach(x=>x.classList.remove("pick"));
-    if(!was) el.classList.add("pick");
-  });
+function renderBk(n){
+  const d=BK[n];
+  $("#bkIntro"+n).textContent=d.intro;
+  $("#bkTaskT"+n).textContent=d.taskT;
+  $("#bkTask"+n).innerHTML=d.short.map(t=>`<li>${t}</li>`).join("");
+  $("#bkFull"+n).innerHTML=d.task.map(t=>`<li>${t}</li>`).join("");
+  $("#bkRoles"+n).innerHTML=d.roles.map(([r,p])=>`<div class="role"><div class="rn">${r}</div><p>${p}</p></div>`).join("");
+  $("#bkReport"+n).textContent=d.report;
+  $("#bkListen"+n).innerHTML=d.listen.map(l=>`<li>${l}</li>`).join("");
 }
-$$("[data-bk]").forEach(b=>b.onclick=()=>{
-  $$("[data-bk]").forEach(x=>x.setAttribute("aria-pressed",x===b));
-  bk=b.dataset.bk; renderBk();
-  setTimer(bk==="1"?20:25);
+renderBk(1); renderBk(2);
+$("#bkCards").innerHTML=`<div class="cards">`+
+  SCEN.map((s,i)=>`<button class="sc" data-i="${i}">
+    <div class="sn">${s.n}</div><h4>${s.t}</h4>
+    <dl>${s.d.map(([k,v])=>`<dt>${k}</dt><dd>${v}</dd>`).join("")}</dl>
+    <div class="curve instructor">${s.c}</div></button>`).join("")+`</div>`;
+$$("#bkCards .sc").forEach(el=>el.onclick=()=>{
+  const was=el.classList.contains("pick");
+  $$("#bkCards .sc").forEach(x=>x.classList.remove("pick"));
+  if(!was) el.classList.add("pick");
 });
 
-/* timer */
-let tLeft=20*60, tTick=null, tOn=false;
-function paint(){
-  const m=Math.floor(Math.abs(tLeft)/60), s=Math.abs(tLeft)%60;
-  $("#clock").textContent=(tLeft<0?"-":"")+m+":"+String(s).padStart(2,"0");
-  const t=$("#timer");
-  t.classList.toggle("warn",tLeft<=120&&tLeft>30);
-  t.classList.toggle("crit",tLeft<=30);
+/* timers: one in each exercise step */
+function makeTimer(root, defMin){
+  const clock=root.querySelector(".clock"), run=root.querySelector("[data-run]"), rst=root.querySelector("[data-rst]");
+  let left=defMin*60, tick=null, on=false;
+  function paint(){
+    const m=Math.floor(Math.abs(left)/60), s=Math.abs(left)%60;
+    clock.textContent=(left<0?"-":"")+m+":"+String(s).padStart(2,"0");
+    root.classList.toggle("warn",left<=120&&left>30);
+    root.classList.toggle("crit",left<=30);
+  }
+  function stop(){ clearInterval(tick); on=false; run.textContent="▶ Start"; }
+  function set(min){ stop(); left=min*60; paint(); }
+  run.onclick=()=>{
+    if(on){ stop(); return; }
+    on=true; run.textContent="❚❚ Pause";
+    tick=setInterval(()=>{ left--; paint(); },1000);
+  };
+  rst.onclick=()=>set(defMin);
+  root.querySelectorAll(".presets button").forEach(b=>b.onclick=()=>set(+b.dataset.m));
+  paint();
 }
-function setTimer(min){ stopTimer(); tLeft=min*60; paint(); }
-function stopTimer(){ clearInterval(tTick); tOn=false; $("#tRun").textContent="▶ Start"; }
-$("#tRun").onclick=()=>{
-  if(tOn){ stopTimer(); return; }
-  tOn=true; $("#tRun").textContent="❚❚ Pause";
-  tTick=setInterval(()=>{ tLeft--; paint(); },1000);
-};
-$("#tRst").onclick=()=>setTimer(bk==="1"?20:25);
-$$(".presets button").forEach(b=>b.onclick=()=>setTimer(+b.dataset.m));
-renderBk(); paint();
+$$(".timer[data-timer]").forEach(t=>makeTimer(t,+t.dataset.timer));
 
 /* keyboard */
 addEventListener("keydown",e=>{
@@ -140,7 +151,10 @@ addEventListener("keydown",e=>{
     if(e.key==="ArrowRight"){e.preventDefault();$("#stepJ").click()}
   }
   if(on==="p-server" && e.key===" "){e.preventDefault();$("#simRun").click()}
-  if(on==="p-break" && e.key===" "){e.preventDefault();$("#tRun").click()}
+  if(on==="p-break"){
+    const run=document.querySelector("#p-break .sec.on [data-run]");
+    if(run && e.key===" "){e.preventDefault();run.click()}
+  }
   if(on==="p-tiers" && document.querySelector("#p-tiers .sec.on[data-sec=\"trace\"]")){
     if(e.key==="ArrowRight"){e.preventDefault();$("#trNext").click()}
     if(e.key==="ArrowLeft"){e.preventDefault();$("#trPrev").click()}

@@ -9,7 +9,7 @@ const TERMS=[
  {t:"Enrollment",        k:"E", why:"An <b class=\"i\">event</b>: a student signing up for a course. It has a date, a status and a grade, and none of those belong to the student or to the course alone."},
  {t:"Enrolled on 12 Aug",k:"I", why:"One enrollment. It is one example of the Enrollment entity."},
  {t:"Grade",             k:"A", why:"A property of an enrollment. It belongs to neither the student nor the course alone."},
- {t:"Section",           k:"E", why:"Debatable. If a section only names a letter, it is an attribute. If it also has a room, a schedule and a seat limit, it is an entity."}
+ {t:"Section",           k:"E", why:"Debatable. It is an attribute if it only names a letter, and an entity if it also has a room, a schedule and a seat limit."}
 ];
 const KIND={E:"entity",A:"attribute",I:"instance"};
 const ENT={ans:{}};
@@ -27,12 +27,12 @@ function renderEnt(){
   });
   const done=Object.keys(ENT.ans).length, right=TERMS.filter((x,i)=>ENT.ans[i]===x.k).length;
   const v=$("#entVerdict");
-  if(!done){ v.className="verdict"; v.innerHTML=`<b>Sort all ten</b>Choose entity, attribute or instance for each term. The explanation appears after you answer.`; return; }
+  if(!done){ v.className="verdict"; v.innerHTML=`<b>Sort all ten</b>Each answer shows a short explanation.`; return; }
   if(done<TERMS.length){ v.className="verdict warn"; v.innerHTML=`<b>${right} of ${done} correct so far</b>Keep going.`; return; }
   v.className = right===TERMS.length ? "verdict ok" : "verdict warn";
   v.innerHTML = right===TERMS.length
-    ? `<b>All ten correct</b>You decided which nouns become tables (entities), columns (attributes) and rows (instances). Making these decisions before writing any SQL is called conceptual modeling.`
-    : `<b>${right} of ${TERMS.length} correct</b>Read the explanations under the terms marked in red. Look at <em>Enrollment</em> and <em>Section</em> in particular, because those two are where real diagrams most often go wrong.`;
+    ? `<b>All ten correct</b>You decided which nouns become tables, columns and rows. Making these decisions before writing any SQL is called conceptual modeling.`
+    : `<b>${right} of ${TERMS.length} correct</b>Read the explanations under the terms marked in red. Enrollment and Section are where real diagrams most often go wrong.`;
 }
 renderEnt();
 

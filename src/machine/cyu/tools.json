@@ -3,9 +3,9 @@
  "items": [
   {
    "id": "tools-1",
-   "sec": "who-runs",
+   "sec": null,
    "type": "mc",
-   "stem": "An AI assistant tells you, \"I deleted the rows.\" In the setup shown in this panel, what did the model itself do?",
+   "stem": "An AI assistant tells you, \"I deleted the rows.\" What did the model itself do?",
    "options": [
     {
      "text": "It wrote a text request for a tool call. The client then ran it.",
@@ -32,8 +32,8 @@
   {
    "id": "tools-2",
    "sec": "who-runs",
-   "type": "predict",
-   "stem": "Before you try it: on the risky tool, where can a person stop the deletion?",
+   "type": "mc",
+   "stem": "On the risky tool, where can a person stop the deletion?",
    "options": [
     {
      "text": "After the model writes the request and before the client runs it.",
@@ -55,40 +55,11 @@
      "correct": false,
      "feedback": "The client decides whether to run each request, so a person can place a check there."
     }
-   ],
-   "try": "Choose A risky one, press Step three times, and look for the Refuse it button."
-  },
-  {
-   "id": "tools-3",
-   "sec": "who-runs",
-   "type": "mc",
-   "stem": "An agent keeps calling the wrong tool for a task. Where is the first place to look?",
-   "options": [
-    {
-     "text": "The tool descriptions, since the model picks a tool by reading them.",
-     "correct": true,
-     "feedback": "A vague or misleading description leads to the wrong choice. The model has no other information about the tool."
-    },
-    {
-     "text": "The database, because it may be returning the wrong rows.",
-     "correct": false,
-     "feedback": "The tool is chosen before the database is involved."
-    },
-    {
-     "text": "The speed of the client, because slow clients confuse the model.",
-     "correct": false,
-     "feedback": "Speed does not affect which tool the model chooses."
-    },
-    {
-     "text": "Retrain the model from scratch, because it learned the wrong tool.",
-     "correct": false,
-     "feedback": "The description can be edited in minutes. Retraining is not needed for this kind of problem."
-    }
    ]
   },
   {
    "id": "tools-4",
-   "sec": "mcp",
+   "sec": null,
    "type": "mc",
    "stem": "A company has 6 AI applications and 8 internal systems. How many adapters does it write without a shared standard, and how many pieces does it write with MCP?",
    "options": [
@@ -116,7 +87,7 @@
   },
   {
    "id": "tools-5",
-   "sec": "mcp",
+   "sec": null,
    "type": "mc",
    "stem": "Which of these stays your responsibility even when you use MCP?",
    "options": [

@@ -56,8 +56,8 @@ function nnDiagram(){
     el.onmouseenter=()=>{ NN.pick=+el.dataset.u; nnRender(); };
   });
   $("#nnDiagCap").innerHTML = NN.pick===null
-    ? `The diagram above and the plot below show the same network. <b style="color:var(--ink)">Point at any circle in the middle row</b> to see which line on the plot belongs to it.`
-    : `That circle is one unit. The two arrows going into it each carry a weight. Those two weights and a bias set the angle and position of <b style="color:var(--req)">the highlighted line below</b>. A unit has nothing else.`;
+    ? `The diagram and the plot show the same network. <b style="color:var(--ink)">Point at any circle in the middle row</b> to see which line on the plot belongs to it.`
+    : `That circle is one unit. Its two input weights and a bias set the angle and position of <b style="color:var(--req)">the highlighted line</b> on the plot.`;
 }
 function nnRender(){
   const k=NN.units, {ph,r}=nnFit(k);
@@ -111,16 +111,16 @@ function nnRender(){
   const v=$("#nnVerdict");
   if(!NN.act){
     v.className="verdict bad";
-    v.innerHTML=`<b>${pct}% with ${k} units, and the boundary is straight again</b>With the nonlinearity switched off, the layer can only add its units together. Adding any number of straight lines gives one more straight line, so the second layer has nothing new to work with.<br><br>Move the slider from 2 up to 8 and watch: <b class="i">nothing changes</b>. A deeper network without a nonlinearity gains nothing. Eight units build one straight line, the same kind as two units.<br><br>That small step between the layers is the reason any of this works. Turn it back on.`;
+    v.innerHTML=`<b>${pct}% with ${k} units, and the boundary is straight again</b>With the nonlinearity off, a layer can only add its units together, and adding straight lines gives one more straight line. Move the slider from 2 to 8 and nothing changes.`;
   } else if(k===1){
     v.className="verdict bad";
-    v.innerHTML=`<b>${pct}%, and no straight line does better</b>One unit is one line, and a line can only say <em>this side or that side</em>. The students who stay are surrounded, so whichever way you angle the line, some of them end up on the same side as the dropouts. The circled points are the ones it gets wrong.<br><br>Add a second unit.`;
+    v.innerHTML=`<b>${pct}%, and no straight line does better</b>One unit is one line, and the students who stay are surrounded, so some always land on the dropouts' side. Add a second unit.`;
   } else if(pct<100){
     v.className="verdict warn";
-    v.innerHTML=`<b>${pct}% with ${k} lines</b>Each line is still straight. A second layer now takes all ${k} answers and says <em>stays</em> only when they all agree. The overlap of the lines is a shape that none of them could draw alone.`;
+    v.innerHTML=`<b>${pct}% with ${k} lines</b>A second layer takes all ${k} answers and says <em>stays</em> only when they all agree. The overlap is a shape none of the lines could draw alone.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>100% with ${k} straight lines</b>Look at the boundary. It is a curve, and every piece of it is a straight line. A unit cuts the space once, a layer cuts it several times, and the next layer combines the cuts. This combination of cuts is the basic idea of a neural network.<br><br>Deeper networks repeat this. Each layer works on what the previous layer found, so the shapes become more elaborate while every piece is still a straight cut. A language model does this with billions of numbers in place of ${k*3}. <b class="i">Attention</b>, covered later in "Attention and transformers", is one particular kind of layer.<br><br>Pushing the slider higher stops helping. Extra capacity that you do not need is how you get the bent line in "Training and test data".`;
+    v.innerHTML=`<b>100% with ${k} straight lines</b>The boundary is a curve made entirely of straight pieces. A layer cuts the space several times and the next layer combines the cuts, which is the basic idea of a neural network.`;
   }
 }
 $("#sUnits").oninput=e=>{NN.units=+e.target.value;$("#vUnits").textContent=NN.units;nnRender()};

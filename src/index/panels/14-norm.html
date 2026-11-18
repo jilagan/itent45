@@ -1,30 +1,22 @@
     <section class="panel" id="p-norm">
       <div class="head">
         <h2>Normalization: storing each fact once</h2>
-        <p>Suppose you keep a class list in Excel and type the course title on every student's row. When the course changes its title, you have to fix every row, and if you miss one, the sheet holds two titles for the same course.</p>
-        <p>The better layout is a second sheet that lists each course once, with each student row pointing to it. In a database this is called <b style="color:var(--ink)">normalization</b>: store each fact once and point to it from everywhere else. A table is a grid of rows and columns, like one sheet.</p>
-        <p>Below, the same enrollments are stored two ways, as one flat table that holds everything and as two linked tables.</p>
-        <div class="ask"><b>Think first.</b> Suppose the title is stored once on a course sheet, and each student row holds only a course number. What must you do each time you print a student's schedule with the course titles? Write down your answer, then compare it with the two tables below.</div>
+        <p><dfn title="Storing each fact once and pointing to it from everywhere else">Normalization</dfn> means storing each fact in one place only. Every other place that needs the fact points to it.</p>
       </div>
 
-      <div class="srv srv2">
-        <div class="card">
-          <div class="card-t">One flat table &nbsp;<span style="color:var(--faint)">enrollments</span></div>
-          <div style="overflow-x:auto"><table class="db" id="flatTbl"></table></div>
-          <div class="verdict" id="flatVerdict" style="margin-top:12px"></div>
+      <div class="sec" data-sec="class-list" data-title="Start with a class list">
+        <p>Suppose you keep a class list in Excel and type the course title on every student's row. When the title changes, you must fix every row, and one missed row leaves two titles for the same course. A better layout is a second sheet that lists each course once, with each student row pointing to it.</p>
+        <div class="scene" data-art="class-list" data-art-desc="A printed class list with the same course title written beside every student's name, next to a small separate sheet that lists each course title only once." role="group" aria-label="One long sheet is a flat table, two linked sheets are two tables">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>One long sheet</b><span>One <dfn title="A grid of rows and columns, like one sheet">table</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Two linked sheets</b><span>Two tables</span></figcaption></figure>
         </div>
-        <div class="card">
-          <div class="card-t">Split in two &nbsp;<span style="color:var(--faint)">courses + enrollments</span></div>
-          <div style="overflow-x:auto"><table class="db" id="normTbl"></table></div>
-          <div style="overflow-x:auto;margin-top:9px"><table class="db" id="normTbl2"></table></div>
-          <div class="verdict" id="normVerdict" style="margin-top:12px"></div>
-        </div>
+        <div class="ask"><b>Think first.</b> Suppose each student row holds only a course number, and titles sit on a course sheet. What must you do to print one student's schedule with titles?</div>
+        <div class="instructor">The answer is to look up each course number on the course sheet, which the database calls a join. Collect a few answers before anyone opens the next step. Some students will say it is more work, which is true and is covered in the last step.</div>
       </div>
 
-      <div class="srv" style="margin-top:20px">
-        <div class="card">
-          <div class="card-t">Change one fact</div>
-          <p style="margin:0 0 11px;font-size:.82em;color:var(--dim);line-height:1.6">The course gets a new title. Apply the change to both versions and count the rows you write.</p>
+      <div class="sec" data-sec="rename" data-title="Change one fact">
+        <p>The same enrollments are stored in two layouts. The course gets a new title. Press Rename ITENT 45 and compare the rows each layout writes. Then press the second button to see what a missed row looks like.</p>
+        <div class="card" style="margin-bottom:20px">
           <div class="ctrls">
             <button class="btn primary" id="nmRename">Rename ITENT 45</button>
             <button class="btn" id="nmPartial">Rename it, but miss two rows</button>
@@ -36,24 +28,42 @@
           </div>
           <div class="verdict" id="nmVerdict" style="margin-top:13px"></div>
         </div>
-        <div class="card">
-          <div class="card-t">How many enrollments</div>
+        <div class="srv srv2">
+          <div class="card">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg>
+            <div class="card-t">One flat table &nbsp;<span style="color:var(--faint)">enrollments</span></div>
+            <div style="overflow-x:auto"><table class="db" id="flatTbl"></table></div>
+            <div class="verdict" id="flatVerdict" style="margin-top:12px"></div>
+          </div>
+          <div class="card">
+            <span style="display:flex;gap:6px"><svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg><svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></span>
+            <div class="card-t">Split in two &nbsp;<span style="color:var(--faint)">courses + enrollments</span></div>
+            <div style="overflow-x:auto"><table class="db" id="normTbl"></table></div>
+            <div style="overflow-x:auto;margin-top:9px"><table class="db" id="normTbl2"></table></div>
+            <div class="verdict" id="normVerdict" style="margin-top:12px"></div>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Change how many students are enrolled</h4>
+          <p>The flat table repeats the title once for each enrollment, and the split version stores it once. Raise the slider to 400 and think about running a script that makes 400 separate changes to a live database.</p>
           <div class="sliders">
             <div class="field">
               <label>Students enrolled in it <span class="val" id="vEnr">40</span></label>
               <input type="range" id="sEnr" min="2" max="400" value="40">
             </div>
           </div>
-          <div class="rtt-note" style="margin-top:14px">
-            The flat table repeats the title once for each enrollment. The split version stores it once and points to it.
-            <br><br>Both designs are valid. The flat table can show one student's schedule without a join, which is a query that combines rows from two tables. People propose it for that reason. Changing a course title in the flat table costs one write for each enrollment.
-          </div>
-        </div>
+        </details>
       </div>
 
-      <div class="whynot" style="margin-top:20px">
-        <b>The rule behind normalization</b>
-        Store each fact once, and point to it from every place that needs it. A title stored in one row has one value. A title stored in four hundred rows can have different values in different rows, and nothing in your code will notice, because each of those rows is valid on its own. The split design prevents that failure. A schema generated by an AI tool can work and still have this problem, and the tool will not warn you.
+      <div class="sec" data-sec="rule" data-title="Store each fact once">
+        <p>Store each fact once, and point to it from every place that needs it. A title kept in one row has one value. A title copied into four hundred rows can differ from row to row, and nothing in your code will notice, because each row is valid on its own.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The cost of splitting</h4>
+          <p>Both designs are valid. The flat table can show one student's schedule without a <dfn title="A query that combines rows from two tables">join</dfn>, which is why people propose it, and the split design needs the join each time it reads. The size of that cost is measured in "The N+1 query problem".</p>
+          <h4>AI-generated schemas</h4>
+          <p>A schema generated by an AI tool can work and still repeat facts like this. The tool will not warn you.</p>
+        </details>
       </div>
     </section>
-

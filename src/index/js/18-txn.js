@@ -2,55 +2,55 @@
 /* each step: [who, text, seatsAfter, flag]  who: a | b | db */
 const TXN=[
  {id:"none", n:"No transaction", ok:false,
-  note:"Each session sends four ordinary statements, and the order they run in depends on timing. This is one possible order. Here slots is the number of free seats. No single statement is wrong. The problem is the gap between reading the seat count and writing it.",
+  note:"Each session reads the seat count, decides, then writes. This is one possible timing.",
   steps:[
-   ["a","SELECT slots FROM courses  &rarr; 1",1],
-   ["b","SELECT slots FROM courses  &rarr; 1",1],
-   ["a","slots > 0, so go ahead",1],
-   ["b","slots > 0, so go ahead",1],
-   ["a","UPDATE courses SET slots = 0",0],
-   ["b","UPDATE courses SET slots = 0",0],
-   ["a","INSERT INTO enrollments &hellip;",0],
-   ["b","INSERT INTO enrollments &hellip;",0]],
-  v:`<b>Two enrollments, one seat</b>Both sessions read <code>1</code> before either one wrote, so both passed the check. The second UPDATE wrote a value based on a number that was already out of date. Neither session made a mistake, and the seat is still sold twice.<br><br>This is called a <b class="i">lost update</b>, and it is a common bug in student projects when two users change the same data at once.`},
- {id:"begin", n:"BEGIN … COMMIT", ok:false,
-  note:"The same statements, with each session wrapped in a transaction. A transaction starts with BEGIN and ends with COMMIT, which saves its changes. Many people try this first. Watch the result, which is the same as before.",
+   ["a","Read seats left &rarr; 1",1],
+   ["b","Read seats left &rarr; 1",1],
+   ["a","1 seat left, so go ahead",1],
+   ["b","1 seat left, so go ahead",1],
+   ["a","Set seats left to 0",0],
+   ["b","Set seats left to 0",0],
+   ["a","Record the enrollment",0],
+   ["b","Record the enrollment",0]],
+  v:`<b>Two enrollments, one seat</b>Both sessions read 1 before either one wrote, so both went ahead. Neither made a mistake, and the seat is sold twice.`},
+ {id:"begin", n:"Transaction only", ok:false,
+  note:"Each session wraps its steps in a transaction, which many people try first. Watch whether the result changes.",
   steps:[
-   ["a","BEGIN",1],
-   ["b","BEGIN",1],
-   ["a","SELECT slots  &rarr; 1",1],
-   ["b","SELECT slots  &rarr; 1",1],
-   ["a","UPDATE courses SET slots = 0",0],
-   ["a","INSERT INTO enrollments &hellip;",0],
-   ["a","COMMIT",0],
-   ["b","UPDATE courses SET slots = 0",0],
-   ["b","INSERT INTO enrollments &hellip;",0],
-   ["b","COMMIT",0]],
-  v:`<b>Still two enrollments</b>The transaction did not help. Atomicity means that <em>each</em> session's statements succeed together or not at all, and both sessions got that. It does not control whether the other session read the row while you were deciding.<br><br>The isolation level is the setting that controls how much sessions see of each other. At <code>READ COMMITTED</code>, the default in Postgres, session B's SELECT could still see the old value. <b class="i">A transaction groups statements into one unit of work. It does not lock the row.</b>`},
- {id:"lock", n:"SELECT … FOR UPDATE", ok:true,
-  note:"Session A asks the database to hold the row while it decides. If session B asks for the same row in the same way, it waits until A finishes. Watch what B reads when it gets in.",
+   ["a","Start a transaction",1],
+   ["b","Start a transaction",1],
+   ["a","Read seats left &rarr; 1",1],
+   ["b","Read seats left &rarr; 1",1],
+   ["a","Set seats left to 0",0],
+   ["a","Record the enrollment",0],
+   ["a","Save the transaction",0],
+   ["b","Set seats left to 0",0],
+   ["b","Record the enrollment",0],
+   ["b","Save the transaction",0]],
+  v:`<b>Still two enrollments</b>A transaction makes each session's own steps succeed together. It does not stop the other session from reading the old seat count in the meantime.`},
+ {id:"lock", n:"Lock the row", ok:true,
+  note:"Session A asks the database to hold the row while it decides. Session B must wait for the same row.",
   steps:[
-   ["a","BEGIN",1],
-   ["a","SELECT slots FOR UPDATE  &rarr; 1",1],
-   ["b","BEGIN",1],
-   ["b","SELECT slots FOR UPDATE &hellip;",1,"blocked"],
-   ["a","UPDATE courses SET slots = 0",0],
-   ["a","INSERT INTO enrollments &hellip;",0],
-   ["a","COMMIT",0],
-   ["b","&hellip; unblocked, reads  &rarr; 0",0],
-   ["b","slots is 0, refuse",0,"fail"],
-   ["b","ROLLBACK",0]],
-  v:`<b>One enrollment, and B was refused</b>The lock made B wait. When B finally read the row, it saw the current value, which was 0. The lock has a cost: B waited while A finished, and on enlistment morning that waiting line would be nine thousand users long.<br><br>The result is correct. It is also why adding web servers does not raise the database limit, as covered later in "Case study: enlistment".`},
+   ["a","Start a transaction",1],
+   ["a","Read seats left and lock the row &rarr; 1",1],
+   ["b","Start a transaction",1],
+   ["b","Read seats left and lock the row &hellip;",1,"blocked"],
+   ["a","Set seats left to 0",0],
+   ["a","Record the enrollment",0],
+   ["a","Save the transaction",0],
+   ["b","Lock released, reads &rarr; 0",0],
+   ["b","0 seats left, so refuse",0,"fail"],
+   ["b","Undo the transaction",0]],
+  v:`<b>One enrollment, and B was refused</b>The lock made B wait, so B read the current count, which was 0. The cost is the waiting, and on enlistment morning nine thousand users would wait in line.`},
  {id:"atomic", n:"One statement", ok:true,
-  note:"There is no lock and no read followed by a write. The decision and the change are one statement, so the database can order the two requests itself. Look at how many rows each statement reports changing.",
+  note:"The check and the change are one statement, with no lock. The database orders the two requests itself.",
   steps:[
-   ["a","UPDATE courses SET slots = slots - 1<br>&nbsp;WHERE code = 'ITENT 45' AND slots > 0",0],
-   ["a","&rarr; UPDATE 1, so the seat is mine",0],
-   ["b","UPDATE courses SET slots = slots - 1<br>&nbsp;WHERE code = 'ITENT 45' AND slots > 0",0],
-   ["b","&rarr; UPDATE 0, nothing matched",0,"fail"],
-   ["a","INSERT INTO enrollments &hellip;",0],
-   ["b","no seat, no insert",0,"fail"]],
-  v:`<b>One enrollment, and nobody waited</b>The check is now inside the <code>WHERE</code> clause, so there is no gap between reading and deciding. The database ran the two statements one after the other, and the second one matched no rows.<br><br><b class="i">The row count tells you the result.</b> <code>UPDATE 1</code> means you got the seat. <code>UPDATE 0</code> means somebody else did. This is cheaper than a lock and harder to get wrong, whenever the decision can be written as a condition.`}
+   ["a","Subtract 1 seat, only if seats left &gt; 0",0],
+   ["a","&rarr; 1 row changed, so the seat is mine",0],
+   ["b","Subtract 1 seat, only if seats left &gt; 0",0],
+   ["b","&rarr; 0 rows changed, nothing matched",0,"fail"],
+   ["a","Record the enrollment",0],
+   ["b","No seat, so no enrollment",0,"fail"]],
+  v:`<b>One enrollment, and nobody waited</b>The check sits inside the same statement as the change, so the database handles the two requests one after the other. The number of rows changed tells each student whether they got the seat.`}
 ];
 let txnSel="none", txnAt=0, txnTimer=null;
 function renderTxn(){
@@ -61,7 +61,7 @@ function renderTxn(){
     clearTimeout(txnTimer); txnSel=el.dataset.t; txnAt=0; renderTxn();
   });
 
-  let h=`<div class="th a">Juan &middot; session A</div><div class="th b">Maria &middot; session B</div><div class="th">Seats left</div>`;
+  let h=`<div class="th a">${ICO("cash-register")} Juan &middot; session A</div><div class="th b">${ICO("cash-register")} Maria &middot; session B</div><div class="th">Seats left</div>`;
   t.steps.forEach((st,i)=>{
     const [who,txt,seats,flag]=st;
     const on=i<txnAt, act=i===txnAt-1;
@@ -75,7 +75,7 @@ function renderTxn(){
   const v=$("#txnVerdict");
   if(txnAt<t.steps.length){
     v.className="verdict";
-    v.innerHTML=`<b>${txnAt} of ${t.steps.length} steps</b>Press Step, or Run it. Watch the seats column, and watch when each session reads it.`;
+    v.innerHTML=`<b>${txnAt} of ${t.steps.length} steps</b>Press Step or Run it, and watch the Seats left column.`;
   } else {
     v.className="verdict "+(t.ok?"ok":"bad");
     v.innerHTML=t.v;

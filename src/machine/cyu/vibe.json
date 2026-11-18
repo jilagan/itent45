@@ -3,7 +3,7 @@
  "items": [
   {
    "id": "vibe-1",
-   "sec": "four-snippets",
+   "sec": "find",
    "type": "mc",
    "stem": "A function passes all its tests with your 5 test students. In production, with 5,000 enrollments, the page takes 30 seconds to load. Which kind of defect is most likely?",
    "options": [
@@ -31,7 +31,7 @@
   },
   {
    "id": "vibe-2",
-   "sec": "four-snippets",
+   "sec": null,
    "type": "mc",
    "stem": "Of the four snippets, the one that calls the invented method get_or_none() is the easiest to catch. Why?",
    "options": [
@@ -59,7 +59,7 @@
   },
   {
    "id": "vibe-3",
-   "sec": "vibe-vs-agentic",
+   "sec": null,
    "type": "mc",
    "stem": "A student describes a landing page to a model, pastes the result into a browser, and asks for changes until it looks right. The student never reads the code. Which term fits best?",
    "options": [
@@ -87,12 +87,12 @@
   },
   {
    "id": "vibe-4",
-   "sec": "vibe-vs-agentic",
+   "sec": null,
    "type": "mc",
    "stem": "Why can agentic coding do more damage without being asked than a chat that only suggests code?",
    "options": [
     {
-     "text": "It runs commands and changes files itself, so a wrong decision takes effect at once.",
+     "text": "It runs commands and edits files itself, so a wrong decision takes effect.",
      "correct": true,
      "feedback": "A suggestion does nothing until you use it. An agent acts, and its actions can include deleting or overwriting files."
     },
@@ -107,37 +107,9 @@
      "feedback": "Length is not the main risk. The risk is that the agent acts without your reading each step."
     },
     {
-     "text": "Agents ignore your test suite, so nothing checks their changes.",
+     "text": "Agents ignore your test suite, so nothing checks any of their changes.",
      "correct": false,
      "feedback": "Agents usually run the tests. The tests can still miss a defect, as the snippets show."
-    }
-   ]
-  },
-  {
-   "id": "vibe-5",
-   "sec": "vibe-vs-agentic",
-   "type": "multi",
-   "stem": "You are watching an agent work on a project. Which of these are worth writing down? Select all that apply.",
-   "options": [
-    {
-     "text": "A confident claim that turned out wrong",
-     "correct": true,
-     "feedback": "This shows how a plausible answer can be wrong, and how you found out."
-    },
-    {
-     "text": "A change of course after a failing test",
-     "correct": true,
-     "feedback": "This shows what outside information corrected it, and how many steps it had built on the wrong answer."
-    },
-    {
-     "text": "A change nobody asked for",
-     "correct": true,
-     "feedback": "Unrequested changes add review work and can hide new problems."
-    },
-    {
-     "text": "How fast it typed its answers",
-     "correct": false,
-     "feedback": "Speed does not tell you whether the work can be trusted."
     }
    ]
   }

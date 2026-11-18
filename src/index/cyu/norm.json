@@ -3,9 +3,9 @@
  "items": [
   {
    "id": "norm-1",
-   "sec": null,
-   "type": "predict",
-   "stem": "Before you try it: 40 students are enrolled in ITENT 45 and the course title changes. How many rows are written in the flat table, and how many in the split design?",
+   "sec": "rename",
+   "type": "mc",
+   "stem": "40 students are enrolled in ITENT 45 and the course title changes. How many rows are written in the flat table, and how many in the split design?",
    "options": [
     {
      "text": "40 in the flat table and 1 in the split design.",
@@ -25,10 +25,9 @@
     {
      "text": "1 in the flat table and 40 in the split design.",
      "correct": false,
-     "feedback": "This is reversed. The copies are in the flat table."
+     "feedback": "The copies are in the flat table, so the flat table needs the 40 writes."
     }
-   ],
-   "try": "Press \"Rename ITENT 45\" in the widget above and read the two Rows written values."
+   ]
   },
   {
    "id": "norm-2",
@@ -37,7 +36,7 @@
    "stem": "A developer renames a course in the flat table but misses 2 of the 40 rows. What does the database do?",
    "options": [
     {
-     "text": "It accepts the change, leaving two titles for the same course.",
+     "text": "It accepts the change and leaves two titles.",
      "correct": true,
      "feedback": "Each row is valid on its own, so no rule is broken. The disagreement stays unnoticed until someone sees it."
     },
@@ -77,7 +76,7 @@
     {
      "text": "Joins cost nothing, so the split design has no downside at all.",
      "correct": false,
-     "feedback": "A join does cost something, as covered later in \"The N+1 query problem\". The cost is usually small compared with the risk of inconsistent copies."
+     "feedback": "A join does cost something. The cost is usually small compared with the risk of inconsistent copies."
     },
     {
      "text": "The split design takes longer to write, so it matters only for large projects.",

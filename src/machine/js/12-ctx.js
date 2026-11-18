@@ -16,13 +16,13 @@ function ctxRender(){
   const v=$("#ctxVerdict");
   if(!over){
     v.className="verdict ok";
-    v.innerHTML=`<b>Everything still fits</b>The system prompt and your files were in the window before the conversation started, as the operating system uses part of a server's memory before your code does. This is the same budget idea as in the Module 1 site, "Server memory". The conversation can use the space that is left.`;
+    v.innerHTML=`<b>Everything still fits</b>The system prompt and your files use part of the window before the conversation starts. The conversation can use the space that is left.`;
   } else if(CTX.files >= CTX.win*0.5){
     v.className="verdict bad";
-    v.innerHTML=`<b>Your files take up much of the window</b>You pasted at least half the window before saying anything. Everything after that shares the space that is left, and the earliest turns are already dropping out.<br><br>Pasting a whole code repository into a chat can push out the earliest turns, and it fails without any warning.`;
+    v.innerHTML=`<b>Your files take up much of the window</b>Everything after that shares the space that is left, so the earliest turns drop out. Nothing warns you when it happens.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>The oldest turns have dropped out</b>The instruction you gave at the start is no longer in the window, so the model cannot see it. It answers from what remains.<br><br>When a long session starts to drift, this is usually the reason. Asking the model to concentrate does not bring the text back.`;
+    v.innerHTML=`<b>The oldest turns have dropped out</b>The instruction you gave at the start is no longer in the window, so the model cannot see it. Asking the model to concentrate does not bring the text back.`;
   }
 }
 ["sWin","sFiles","sTurns"].forEach(id=>{

@@ -31,32 +31,31 @@
   },
   {
    "id": "backprop-2",
-   "sec": null,
-   "type": "predict",
-   "stem": "Before you try it: the network in the widget has six weights. How many of them connect directly to the output unit?",
+   "sec": "trace",
+   "type": "mc",
+   "stem": "A network has two inputs, two hidden units and one output. Two of its six weights connect to the output. How do the other four get their slopes?",
    "options": [
     {
-     "text": "Two",
+     "text": "From the blame passed back by the units closer to the output.",
      "correct": true,
-     "feedback": "One connects each hidden unit to the output. The other four connect the inputs to the hidden units."
+     "feedback": "The blame at the output is passed back through the hidden units, so each earlier weight gets its slope from numbers already worked out."
     },
     {
-     "text": "Four",
+     "text": "By nudging each one and running the whole network again.",
      "correct": false,
-     "feedback": "Four weights connect the two inputs to the two hidden units. The output unit has only two incoming weights."
+     "feedback": "That is the costly method that backpropagation avoids, because it needs a full run for every weight."
     },
     {
-     "text": "Six",
+     "text": "They need no slopes, because only the last layer is adjusted.",
      "correct": false,
-     "feedback": "Only the last layer of weights connects to the output. The rest connect earlier layers."
+     "feedback": "Every weight in the network is adjusted, so the four earlier weights need slopes too."
     },
     {
-     "text": "One",
+     "text": "Directly from the loss, the same way the output weights do.",
      "correct": false,
-     "feedback": "There are two hidden units, and each has its own weight to the output."
+     "feedback": "Only the output weights sit close enough to the loss for that. The other four affect the answer through the hidden units."
     }
-   ],
-   "try": "Press Step until the second Slopes line appears, and notice that the four earlier weights get their slopes from the blame passed back."
+   ]
   },
   {
    "id": "backprop-3",

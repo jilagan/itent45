@@ -15,7 +15,7 @@ const TLC=[
    ["gap","Nothing has run yet","The request is only text at this point. The client decides whether to run it."],
    ["ob","Client runs it and returns",'{"rows":[{"count":38}]}'],
    ["th","Model answers","38 students are enrolled in ITENT 45."]],
-  ok:`<b>The model asked and the client acted</b>Step 2 is text, like everything else the model produces. It is a request written in a format the client can read.<br><br>Step 3 is the one to remember. Between the request and the result, a program can log the request, change it, ask you first or refuse it. <b class="i">That step is where you can log, approve or refuse each action.</b>`},
+  ok:`<b>The model asked and the client acted</b>Step 2 is only text. Between that request and the result, <b class="i">a program can log it, ask you first or refuse it</b>.`},
  {id:"drop", label:"A risky one", danger:true,
   def:`<span class="c">// a second tool, offered by the same MCP server</span>
 {
@@ -28,11 +28,11 @@ const TLC=[
   steps:[
    ["th","You","The test data is out of date. Clean it up before the demo."],
    ["ac","Model writes",'{"tool":"run_sql","sql":"DELETE FROM enrollments"}'],
-   ["gap","Nothing has run yet","This statement has no WHERE clause, which limits a statement to certain rows, so it applies to every row. You have four seconds to notice."],
+   ["gap","Nothing has run yet","This statement has no filter, so it applies to every row. You have four seconds to notice."],
    ["ob","Client runs it and returns",'{"rows_affected":11482}'],
    ["th","Model answers","Cleaned up the stale test data."]],
-  ok:`<b>11,482 rows deleted, and the model reported success</b>The model did what it was asked, as it understood the request. "Clean it up" has no precise meaning, so it chose a statement that certainly cleans, and the tool description said writes were allowed.<br><br>Nothing malfunctioned. The client carried out the request correctly and the model's summary is accurate. This is the missing WHERE clause from the Module 1 site, "SQL basics", this time sent by an agent and carried out in a moment.`,
-  denied:`<b>Refused, and nothing happened</b>You stopped the request at the one point where that was possible. The model is told the call failed and continues from there. It may try a different request, and that request goes through the same check.<br><br>Notice how little time you had. In a loop of twenty steps, requests like this can go past faster than you can read them. So people set standing rules and stop reading every call. Typical rules: read-only tools by default, approval required for writes, destructive statements refused.`}
+  ok:`<b>11,482 rows deleted, and the model reported success</b>The model did what it was asked, as it understood the request, and the client ran it correctly. Nothing malfunctioned, and the rows cannot be restored.`,
+  denied:`<b>Refused, and nothing happened</b>You stopped the request at the one point where that was possible. The model is told the call failed, and any new request goes through the same check.`}
 ];
 const TL={sel:"read", at:0, denied:false};
 function tlRender(){
@@ -60,9 +60,9 @@ function tlRender(){
   const v=$("#tlVerdict");
   if(TL.denied){ v.className="verdict ok"; v.innerHTML=c.denied; return; }
   if(TL.at===0){ v.className="verdict";
-    v.innerHTML=`<b>Five steps</b>Press Step. Notice which steps the model produces and which ones the client produces.`; return; }
+    v.innerHTML=`<b>Five steps</b>The model writes the request and the final answer. The client runs the request.`; return; }
   if(TL.at===3){ v.className="verdict warn";
-    v.innerHTML=`<b>Stop here for a moment</b>The model has written its request and is waiting. Nothing has touched the database. What happens next is the client's decision${c.danger?", and once the client runs this statement the change cannot be undone":""}.`; return; }
+    v.innerHTML=`<b>Stop here for a moment</b>The model has written its request and nothing has touched the database. What happens next is the client's decision${c.danger?", and a delete cannot be undone":""}.`; return; }
   if(TL.at<c.steps.length){ v.className="verdict";
     v.innerHTML=`<b>Step ${TL.at} of ${c.steps.length}</b>Press Step to continue.`; return; }
   v.className="verdict "+(c.danger?"bad":"ok"); v.innerHTML=c.ok;

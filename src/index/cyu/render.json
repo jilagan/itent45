@@ -3,9 +3,9 @@
  "items": [
   {
    "id": "render-1",
-   "sec": "page-models",
+   "sec": "formats",
    "type": "predict",
-   "stem": "The same two courses are written as JSON, XML and HTML. Before you try it: which format is the largest, and why?",
+   "stem": "The same two courses are written as JSON, XML and HTML. Which format is the largest, and why?",
    "options": [
     {
      "text": "HTML, because it also carries layout such as table widths",
@@ -23,11 +23,11 @@
      "feedback": "JSON is the smallest of the three, because it has the least packaging around the values."
     }
    ],
-   "try": "Select each format above and compare the three bars."
+   "try": "In the step \"Compare data formats\", select each format and compare the three bars."
   },
   {
    "id": "render-2",
-   "sec": "page-models",
+   "sec": null,
    "type": "mc",
    "stem": "A university news site shows articles. Most visitors read one article and leave. Which way of building pages fits this best?",
    "options": [
@@ -50,7 +50,7 @@
   },
   {
    "id": "render-3",
-   "sec": "session-and-costs",
+   "sec": null,
    "type": "mc",
    "stem": "Staff keep an internal tool open all day and click through hundreds of screens. Which model moves less data over a day?",
    "options": [
@@ -60,12 +60,12 @@
      "feedback": "The bundle is downloaded once. Every later click moves much less data than a full HTML page."
     },
     {
-     "text": "Server-rendered pages, because they never need a bundle",
+     "text": "Server-rendered pages, because they never have to download a bundle",
      "correct": false,
      "feedback": "Each click sends a full page of about 45 KB. Over hundreds of clicks that adds up to far more than the bundle."
     },
     {
-     "text": "Both move the same amount, because the data is the same",
+     "text": "Both move the same amount, because the data in each page is the same",
      "correct": false,
      "feedback": "The data is the same, but the packaging is not. A full page repeats layout on every click."
     }

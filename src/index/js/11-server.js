@@ -9,7 +9,7 @@ function sizeCanvas(){
 }
 addEventListener("resize",sizeCanvas);
 
-const S={lam:20,svc:50,workers:4,memReq:12,ram:512};
+const S={lam:20,svc:50,workers:4,memReq:12,ram:4096};
 let queue=[],workers=[],flying=[],done=[],lat=[],
     running=false,acc=0,last=0,tDone=0,tWin=0,dropped=0,thr=0;
 
@@ -147,8 +147,8 @@ function updateGauges(){
   if(ml && typeof memModel==="function"){
     const mm=memModel(), gb=(MEM.ram/1024).toFixed(1).replace(/\.0$/,"");
     ml.innerHTML = S.workers>mm.maxW
-      ? `<span style="color:var(--warn)">"Server memory" showed that only ${mm.maxW} workers fit in ${gb} GB, so these ${S.workers} would not all start.</span>`
-      : `"Server memory" showed that ${mm.maxW} workers fit in ${gb} GB of RAM.`;
+      ? `<span style="color:var(--warn)">In "Server memory" only ${mm.maxW} workers fit in ${gb} GB, so these ${S.workers} would not all start.</span>`
+      : `In "Server memory", ${mm.maxW} workers fit in ${gb} GB of RAM.`;
   }
 
   const v=$("#verdict"); const rho=S.lam/cap;
@@ -156,13 +156,13 @@ function updateGauges(){
   if(!running){ v.innerHTML="<b>Idle</b>Press Start to send requests to the server."; return; }
   if(mem>S.ram*.9){
     v.className="verdict bad";
-    v.innerHTML=`<b>Out of memory</b>${inFlight} requests being handled or waiting × ${S.memReq} MB is over the ${S.ram} MB limit. The operating system starts stopping processes. More workers would not help, because each one needs RAM too. Reduce the memory per request or use a machine with more RAM.`;
+    v.innerHTML=`<b>Out of memory</b>${inFlight} requests being handled or waiting at ${S.memReq} MB each is over the ${S.ram} MB limit. The operating system starts stopping processes, and more workers would not help because each one needs RAM too.`;
   } else if(rho>=1){
-    v.innerHTML=`<b>Saturated, utilization ${rho.toFixed(2)}</b>Requests arrive at ${S.lam} per second, which is above the maximum of ${Math.round(cap)} per second. The queue fills up and then new requests are rejected, p95 latency stays high, and throughput stays at the maximum. The two fixes are more workers or a faster handler.`;
+    v.innerHTML=`<b>Saturated, utilization ${rho.toFixed(2)}</b>Requests arrive at ${S.lam} per second, but the workers finish at most ${Math.round(cap)}. The queue fills and new requests are rejected, p95 latency stays high, and throughput stays at the maximum.`;
   } else if(rho>.7){
-    v.innerHTML=`<b>Approaching the limit, utilization ${rho.toFixed(2)}</b>The workers are still keeping up, but time spent waiting in the queue is now the main part of latency. Above about 70% utilization, latency rises much faster than the load does. For this reason a machine is not sized to run at 100%.`;
+    v.innerHTML=`<b>Approaching the limit, utilization ${rho.toFixed(2)}</b>The workers keep up, but time in the queue is now the main part of latency. Above about 70% utilization, latency rises much faster than the load, so a machine is not sized to run at 100%.`;
   } else {
-    v.innerHTML=`<b>Healthy, utilization ${rho.toFixed(2)}</b>The workers finish requests faster than they arrive, so waiting time stays near zero and p95 latency is close to the handler time.`;
+    v.innerHTML=`<b>Healthy, utilization ${rho.toFixed(2)}</b>The workers finish requests faster than they arrive, so waiting time stays near zero. p95 latency is close to the handler time.`;
   }
 }
 function loop(ts){
@@ -202,7 +202,7 @@ $("#srvCode").innerHTML=
 srv = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
 srv.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, <span class="s">1</span>)
 srv.bind((<span class="s">"127.0.0.1"</span>, <span class="s">8080</span>))   <span class="c"># reserve port 8080 for this program</span>
-srv.listen(<span class="s">64</span>)                     <span class="c"># allow up to 64 waiting connections, like the queue above</span>
+srv.listen(<span class="s">64</span>)                     <span class="c"># allow up to 64 waiting connections, like the line of customers</span>
 
 <span class="kw">while</span> <span class="s">True</span>:
     conn, addr = srv.accept()      <span class="c"># wait here until a client connects</span>

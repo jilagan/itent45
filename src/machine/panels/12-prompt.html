@@ -1,46 +1,62 @@
     <section class="panel" id="p-prompt">
       <div class="head">
         <h2>Writing better prompts</h2>
-        <p>If you tell a tricycle driver "somewhere near the market," you could be dropped at any of a dozen places. If you say "the Loyola Heights gate on Katipunan," only one place fits.</p>
-        <p style="margin-top:11px">A prompt works the same way. A prompt is the text you give a language model, and a constraint is a fact or limit you add to it. Each constraint rules out some of the answers the model might give. A driver can ask what you meant. The model picks one answer from the range that is left, as described in "Predicting the next word".</p>
-        <div class="ask"><b>Think first.</b> Suppose you ask a model for "a function to enroll a student in a course." How many different working answers could that describe? Which one do you expect the model to give you most often, and why?</div>
+        <p>A <dfn title="The text you give a language model to continue">prompt</dfn> is the text you give a language model. Each fact you add rules out some of the answers it might give.</p>
+      </div>
+
+      <div class="sec" data-sec="tricycle" data-title="Start with a tricycle ride">
+        <p>Tell a tricycle driver "somewhere near the market" and you could be dropped at any of a dozen places. Say "the Loyola Heights gate on Katipunan" and only one place fits. A prompt works the same way. Every fact you add rules out some of the answers the model might give.</p>
+        <div class="scene" data-art="tricycle-directions" data-art-desc="A passenger tells a tricycle driver where to go. A vague 'near the market' could mean many stops, while a named gate points to one place." role="group" aria-label="Your directions are the prompt, the driver is the model, where you are dropped off is the answer">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Your directions</b><span>Prompt</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-taxi"/></svg></div><figcaption><b>Driver</b><span>Model</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bowl-food"/></svg></div><figcaption><b>Where you are dropped off</b><span>Answer</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> A model is asked for "a function to enroll a student in a course." Which kind of answer will it give most often, and why?</div>
         <div class="instructor">Let students commit to a guess before they open the widget. Most guess the careful-looking answer that checks the seat count first. Ask them what happens when two students click at the same moment.</div>
       </div>
-      <p>In this example you ask a model for code in Django, a toolkit for building web applications in Python. The code should enroll a student in a course. The bars show how likely each kind of answer is. Turn on the constraints one at a time and watch the three numbers change.</p>
-      <div class="srv">
-        <div>
-          <div class="art" id="prPrompt" style="margin-bottom:12px"></div>
+
+      <div class="sec" data-sec="narrow" data-title="Add facts and watch the answers narrow">
+        <p>You ask a model for <dfn title="A toolkit for building web applications in Python">Django</dfn> code that enrolls a student in a course. Each bar is one kind of answer, and its length is how likely the model is to give it. Blue bars keep working when two students click at once. Turn on the three facts one at a time and watch the bars.</p>
+        <div class="srv" style="grid-template-columns:clamp(220px,27%,300px) minmax(0,1fr)">
           <div class="card">
-            <div class="card-t">What it might give back</div>
-            <p style="margin:0 0 10px;font-size:.85em;color:var(--faint);line-height:1.5">Each bar is code that has been used in real systems. The blue bars still work when two students click at the same moment.</p>
-            <div class="probs" id="prBars"></div>
+            <div class="card-t">Add to the prompt</div>
+            <div class="toggles" id="prToggles"></div>
           </div>
-          <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
+          <div>
+            <div class="art" id="prPrompt" style="margin-bottom:12px"></div>
+            <div class="probs" id="prBars"></div>
+            <div class="verdict" id="prVerdict" style="margin-top:13px"></div>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The three numbers</h4>
+          <div class="meter" style="grid-template-columns:repeat(3,1fr)">
             <div class="g" id="prCount"><div class="gl">Answers still possible</div><div class="gv">&mdash;</div></div>
             <div class="g" id="prTop"><div class="gl">Most likely answer</div><div class="gv">&mdash;</div></div>
             <div class="g" id="prSafe"><div class="gl">Chance the answer is correct</div><div class="gv">&mdash;</div></div>
           </div>
-          <div class="verdict" id="prVerdict" style="margin-top:13px"></div>
-          <p style="margin:12px 0 0;font-size:.85em;color:var(--dim);line-height:1.6">The box below shows the Django code for the most likely answer.</p>
-          <div class="art" id="prCode" style="margin-top:8px"></div>
-        </div>
-        <div class="card">
-          <div class="card-t">Add to the prompt</div>
-          <div class="toggles" id="prToggles"></div>
-          <div class="rtt-note" style="margin-top:14px">
-            Each switch adds one fact the model could not have known. Each fact rules out a group of answers that were otherwise reasonable. The ORM (object-relational mapper) is the part of Django that lets code read and write database rows as Python objects, without typing SQL, the database's own language. Watch the three numbers change, then read the code.
-          </div>
-          <div class="whynot" style="margin-top:14px">
-            <b>System prompts and context</b>
-            A <b style="color:var(--ink)">system prompt</b> is text placed ahead of every conversation. It holds the rules that are true every time: the framework you use, your house style, what the model must never do without asking. It is set once and applies to everything.
-            <br><br>Context is what applies to one task: the table definitions, the file, an example. Both narrow the range of answers. A system prompt lasts for every conversation and context lasts for one task.
-          </div>
-        </div>
+          <h4>The eight kinds of answer</h4>
+          <ul id="prKinds"></ul>
+          <h4>The code for the most likely answer</h4>
+          <p>The code uses Django's ORM, the part of Django that reads and writes database rows as Python objects, so nobody types SQL. Each bar is code that has been used in real systems.</p>
+          <div class="art" id="prCode"></div>
+          <h4>The model does not ask what you meant</h4>
+          <p>A driver can ask "which market?" and the model never does. It picks one answer from the range that is left, as described in "Predicting the next word".</p>
+        </details>
       </div>
-      <div class="whynot" style="margin-top:20px">
-        <b>Why the most likely answer is wrong</b>
-        With nothing specified, the most likely answer reads the seat count, checks it, and then creates the row. It looks careful and most tutorials show it. It fails when two students click at the same moment, because both can read the same count before either one writes. This failure is called a race condition. You can see it in the Module 1 site, "Transactions", and later in "Checking AI-written code".
-        <br><br>The model gives this answer because it is the most common pattern in the text it learned from, and nothing in your prompt ruled it out.
+
+      <div class="sec" data-sec="facts" data-title="What to put in a prompt">
+        <p>A fact helps when it rules out answers. "Be careful" rules out none, so it changes little. The facts that matter are the ones the model could not know: the framework you use, that two requests can overlap, and what your tables look like. Most examples the model learned from check first and write second, which fails as a <dfn title="A bug that appears only when two actions overlap in time">race condition</dfn>.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>System prompts and context</h4>
+          <p>A system prompt is text placed ahead of every conversation. It holds rules that are true every time, such as the framework you use, your house style and what the model must never do without asking. Context is what applies to one task: the table definitions, the file, an example. Both narrow the range of answers.</p>
+          <h4>Why the most likely answer is wrong</h4>
+          <p>With nothing specified, the most likely answer reads the seat count, checks it and then creates the row. Both of two simultaneous requests can read the same count before either one writes. The model gives this answer because it is the most common pattern in the text it learned from, and nothing in the prompt ruled it out.</p>
+          <p>See the Module 1 site, "Transactions", and later "Finding mistakes in AI-written code".</p>
+          <h4>Lock or conditional update</h4>
+          <p>Two answers survive every fact. One locks the course row, which makes other requests wait. The other runs one conditional update and checks how many rows changed. The second holds no lock, which helps on enlistment morning.</p>
+        </details>
       </div>
     </section>
-

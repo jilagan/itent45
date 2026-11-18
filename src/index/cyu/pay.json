@@ -3,7 +3,7 @@
  "items": [
   {
    "id": "pay-1",
-   "sec": "checkout-flow",
+   "sec": null,
    "type": "mc",
    "stem": "A shop's developer reads every request that reaches the shop's own server during a card payment. Will the card number appear in them?",
    "options": [
@@ -18,7 +18,7 @@
      "feedback": "If that were the design, the shop's server would fall under PCI DSS. Gateways exist so the card skips the shop's server."
     },
     {
-     "text": "Yes, but only when the payment fails and the shop retries it",
+     "text": "Yes, but only when the payment fails and the shop has to retry the charge",
      "correct": false,
      "feedback": "The card number does not reach the shop's server at all, whether the payment succeeds or fails."
     }
@@ -26,7 +26,7 @@
   },
   {
    "id": "pay-2",
-   "sec": "checkout-flow",
+   "sec": null,
    "type": "mc",
    "stem": "Your server asks the gateway to charge a customer's GCash wallet, and the gateway replies with the status `pending`. What should the shop do?",
    "options": [
@@ -48,38 +48,10 @@
    ]
   },
   {
-   "id": "pay-5",
-   "sec": "why-json",
-   "type": "mc",
-   "stem": "A shop's server sends charge requests to a gateway. The same facts could be sent as JSON, as SOAP/XML or as an HTML form. Why do new payment gateways usually choose JSON?",
-   "options": [
-    {
-     "text": "It is small and maps directly onto the data structures that programs use",
-     "correct": true,
-     "feedback": "The JSON charge request here is 92 bytes, against 558 for SOAP. Python and Node can read it without converting it first."
-    },
-    {
-     "text": "It is the only format that HTTPS can carry between two companies",
-     "correct": false,
-     "feedback": "HTTPS carries any format, and SOAP messages travel over HTTPS too. The choice depends on size and convenience."
-    },
-    {
-     "text": "It enforces rules such as a positive amount before the data reaches the code",
-     "correct": false,
-     "feedback": "That describes an XML schema. JSON carries values and no rules, so each check is written in application code."
-    },
-    {
-     "text": "It describes how to display the charge, so the gateway can show it to a shopper",
-     "correct": false,
-     "feedback": "HTML describes a page for a person to read. The gateway needs facts that a program can read, with no layout."
-    }
-   ]
-  },
-  {
    "id": "pay-3",
    "sec": "double-charge",
    "type": "predict",
-   "stem": "A shopper presses Pay three times on a stalled checkout. The shop sends no idempotency key. Before you try it: how many charges does the shopper pay?",
+   "stem": "A shopper presses Pay three times on a stalled checkout. The shop sends no idempotency key. How many charges does the shopper pay?",
    "options": [
     {
      "text": "Three, because each POST creates a separate charge",
@@ -97,11 +69,11 @@
      "feedback": "A customer can legitimately pay the same amount twice, so gateways cannot reject on amount alone. They need a key."
     }
    ],
-   "try": "Leave the idempotency key off, press Pay three times, and read the total. Then turn the key on and try again."
+   "try": "In the step \"A double charge\", leave the key off, press Pay three times and read the total. Then turn the key on and try again."
   },
   {
    "id": "pay-4",
-   "sec": "double-charge",
+   "sec": null,
    "type": "mc",
    "stem": "The gateway takes 800 ms to answer. Your server waits for it inside each request, and you have 4 workers. About how many requests per second can the server finish?",
    "options": [

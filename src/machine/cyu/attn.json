@@ -8,7 +8,7 @@
    "stem": "In \"The animal didn't cross the street because it was too tired\", how does attention decide that \"it\" refers to \"animal\"?",
    "options": [
     {
-     "text": "It scores every word on how well it matches what it asks for, and animal scores highest.",
+     "text": "It scores every word on how well it matches what \"it\" asks for, and animal scores highest.",
      "correct": true,
      "feedback": "The score is a similarity between positions. Tired asks for something that can be tired, and animal matches."
     },
@@ -18,45 +18,44 @@
      "feedback": "The model uses no grammar rule. The result changes when the last word changes."
     },
     {
-     "text": "It picks the nearest noun, because words close together are related.",
+     "text": "It picks the nearest noun, because words close together are usually related.",
      "correct": false,
      "feedback": "Street is nearer to \"it\" than animal is, and the model still picks animal."
     },
     {
-     "text": "It picks the noun that was read first, because earlier words count more.",
+     "text": "It picks the noun that was read first, because earlier words count for more.",
      "correct": false,
-     "feedback": "Order of reading is not used. Every word is available at once."
+     "feedback": "The order of reading plays no part. Every word is available at once."
     }
    ]
   },
   {
    "id": "attn-2",
-   "sec": null,
-   "type": "predict",
-   "stem": "Before you try it: you change the last word from \"tired\" to \"wide\". What happens to what \"it\" looks at?",
+   "sec": "look",
+   "type": "mc",
+   "stem": "You change the last word of the sentence from \"tired\" to \"wide\". What happens to what \"it\" looks at?",
    "options": [
     {
-     "text": "It shifts toward \"street\".",
+     "text": "It shifts toward \"street\", because wide describes a street.",
      "correct": true,
      "feedback": "\"It\" builds its question from the words around it. Wide asks for something with width, and street matches."
     },
     {
-     "text": "It stays on \"animal\", because the nouns have not changed.",
+     "text": "It stays on \"animal\", because the nouns in the sentence have not changed.",
      "correct": false,
      "feedback": "The question that \"it\" asks depends on the last word, so the weights change."
     },
     {
-     "text": "It spreads evenly across all words.",
+     "text": "It spreads evenly across all the words in the sentence.",
      "correct": false,
      "feedback": "The weights stay concentrated on the best match."
     },
     {
-     "text": "It looks only at the last word.",
+     "text": "It looks only at the last word, because that word changed.",
      "correct": false,
-     "feedback": "The last word gets some weight, but the strongest weight goes to street."
+     "feedback": "The last word gets some weight, and the strongest weight goes to street."
     }
-   ],
-   "try": "Switch between the two sentences in the widget and compare the bars for \"it\"."
+   ]
   },
   {
    "id": "attn-3",
@@ -72,7 +71,7 @@
     {
      "text": "It doubles, in line with the length.",
      "correct": false,
-     "feedback": "Doubling would be true if each token were compared with a fixed number of others. Here every token is compared with all the others."
+     "feedback": "Doubling would be true if each token were compared with a fixed number of others. Here each token is compared with all the others."
     },
     {
      "text": "It stays the same, whatever the length.",
@@ -82,7 +81,7 @@
     {
      "text": "It grows about eight times.",
      "correct": false,
-     "feedback": "The growth is quadratic: doubling the length multiplies the work by four."
+     "feedback": "Doubling the length multiplies the work by four."
     }
    ]
   },
@@ -100,7 +99,7 @@
     {
      "text": "The note was made much larger, so it holds the whole sentence.",
      "correct": false,
-     "feedback": "There is no note. The words themselves are kept."
+     "feedback": "A transformer has no note. The words themselves are kept."
     },
     {
      "text": "The model skips most words and reads only the important ones.",
@@ -108,9 +107,9 @@
      "feedback": "All words are kept and compared."
     },
     {
-     "text": "Words are now read in a random order, which avoids the fading.",
+     "text": "Words are read in a random order, which avoids the fading.",
      "correct": false,
-     "feedback": "The order is still part of the input. The change is that reading order no longer limits what a word can look at."
+     "feedback": "The order is still part of the input. A word's reach no longer depends on reading order."
     }
    ]
   }

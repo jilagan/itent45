@@ -3,7 +3,7 @@
  "items": [
   {
    "id": "vm-1",
-   "sec": "slicing",
+   "sec": "slices",
    "type": "mc",
    "stem": "A provider's host machine has 256 GB of RAM, and 8 GB is kept for the hypervisor. The provider sells 40 guests with 8 GB each. What is the likely result?",
    "options": [
@@ -31,9 +31,9 @@
   },
   {
    "id": "vm-2",
-   "sec": "provisioning",
-   "type": "predict",
-   "stem": "Before you try it: in the cloud setup you provision three servers and then delete two of them. What happens to the bill after that?",
+   "sec": null,
+   "type": "mc",
+   "stem": "In the cloud setup you provision three servers and then delete two of them. What happens to the bill after that?",
    "options": [
     {
      "text": "It keeps growing, but only for the one server that is still running.",
@@ -55,41 +55,11 @@
      "correct": false,
      "feedback": "The bill never goes down, because you pay for hours already used. It only stops growing for the deleted servers."
     }
-   ],
-   "try": "Choose the cloud setup, press Provision a server three times, then press delete on two of them. Watch the Bill so far meter."
-  },
-  {
-   "id": "vm-3",
-   "sec": "elasticity",
-   "type": "predict",
-   "stem": "Before you try it: enlistment opens and thousands of students arrive in the same second. Autoscaling is on and each new machine takes 60 seconds to boot. What happens to requests in that first minute?",
-   "options": [
-    {
-     "text": "Many are turned away, because the new machines are still booting.",
-     "correct": true,
-     "feedback": "The autoscaler reacts within seconds, but a machine that is still booting cannot serve anyone. A surge that arrives in one second ends before the new capacity does."
-    },
-    {
-     "text": "All are served, because autoscaling adds machines instantly.",
-     "correct": false,
-     "feedback": "Autoscaling is fast, but each new machine still needs time to boot."
-    },
-    {
-     "text": "None are turned away, because the machines already running can absorb any surge.",
-     "correct": false,
-     "feedback": "The machines running before the surge are sized for ordinary load. A surge many times larger exceeds their capacity."
-    },
-    {
-     "text": "The autoscaler cannot detect the surge until it ends.",
-     "correct": false,
-     "feedback": "The autoscaler checks the load every few seconds and orders machines quickly. The delay comes from booting."
-    }
-   ],
-   "try": "Choose Enlistment, 8:00:00, keep the boot time at 60 s and press Start the day. Then lower the boot time and compare the Turned away figure."
+   ]
   },
   {
    "id": "vm-4",
-   "sec": "characteristics",
+   "sec": null,
    "type": "mc",
    "stem": "Your capstone team forgets a test server over the holidays and receives a bill for it. Which NIST characteristic explains the bill?",
    "options": [
@@ -117,7 +87,7 @@
   },
   {
    "id": "vm-5",
-   "sec": "characteristics",
+   "sec": null,
    "type": "mc",
    "stem": "Your team first rents a bare cloud server (IaaS) and later moves the same app to a platform such as Railway (PaaS). Who is responsible for installing operating system updates in each case?",
    "options": [

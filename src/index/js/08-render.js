@@ -6,7 +6,7 @@ const FMTS=[
   {<span class="s">"code"</span>:<span class="s">"ITENT 45"</span>,<span class="s">"title"</span>:<span class="s">"Application Dev"</span>,<span class="s">"units"</span>:3,<span class="s">"slots"</span>:4},
   {<span class="s">"code"</span>:<span class="s">"CSCI 21"</span>,<span class="s">"title"</span>:<span class="s">"Data Structures"</span>,<span class="s">"units"</span>:3,<span class="s">"slots"</span>:0}
 ]}`,
-  v:`<b>144 bytes, 34% of it your data</b>The smallest of the three, and the one that maps directly onto the objects a program already uses. JSON carries values and no rules. It cannot say, for example, that <code>units</code> must be a number from 1 to 6.`},
+  v:`<b>144 bytes, 34% of it your data</b>The smallest of the three, and it maps directly onto the objects a program already uses. JSON carries values and no rules.`},
  {id:"xml", n:"XML", bytes:264,
   body:`<span class="d">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="d">&lt;courses&gt;</span>
@@ -15,7 +15,7 @@ const FMTS=[
   <span class="d">&lt;course&gt;&lt;code&gt;</span>CSCI 21<span class="d">&lt;/code&gt;&lt;title&gt;</span>Data Structures<span class="d">&lt;/title&gt;</span>
           <span class="d">&lt;units&gt;</span>3<span class="d">&lt;/units&gt;&lt;slots&gt;</span>0<span class="d">&lt;/slots&gt;&lt;/course&gt;</span>
 <span class="d">&lt;/courses&gt;</span>`,
-  v:`<b>264 bytes, 19% of it your data</b>Nearly twice the size of JSON, because every value is wrapped in an opening tag and a closing tag. In return, an XML schema (a file of rules) can state that <code>units</code> is a whole number from 1 to 6, and a parser rejects anything else before your code sees it. Banks and government systems still use XML for this reason.`},
+  v:`<b>264 bytes, 19% of it your data</b>Nearly twice the size of JSON, because every value is wrapped in an opening tag and a closing tag. In return, a schema (a file of rules) can reject a bad value before your code sees it.`},
  {id:"html", n:"HTML", bytes:385,
   body:`<span class="d">&lt;table class="gridTable" width="680" cellpadding="2"&gt;</span>
   <span class="d">&lt;tr&gt;&lt;td class="hdr"&gt;</span>Subject<span class="d">&lt;/td&gt;&lt;td class="hdr"&gt;</span>Title<span class="d">&lt;/td&gt;</span>
@@ -25,7 +25,7 @@ const FMTS=[
   <span class="d">&lt;tr&gt;&lt;td&gt;</span>CSCI 21<span class="d">&lt;/td&gt;&lt;td&gt;</span>Data Structures<span class="d">&lt;/td&gt;</span>
       <span class="d">&lt;td align="center"&gt;</span>3<span class="d">&lt;/td&gt;&lt;td align="center"&gt;</span>0<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="d">&lt;/table&gt;</span>`,
-  v:`<b>385 bytes, 13% of it your data</b>The largest of the three. It also carries decisions unrelated to the courses: a table width, cell padding and column order. A phone app cannot use any of that. This is the server-rendered response from "One API, many clients", measured.`}
+  v:`<b>385 bytes, 13% of it your data</b>The largest of the three, because it also carries a table width, cell padding and column order. A phone app cannot use any of that.`}
 ];
 let fmtSel="json";
 function renderFmt(){
@@ -77,13 +77,13 @@ function renderNav(){
   const v=$("#navVerdict");
   if(m.n<=2){
     v.className="verdict warn";
-    v.innerHTML=`<b>At ${m.n} page${m.n===1?"":"s"}, the bundle has not paid off</b>The single-page app sent ${KB(m.spa)} to show what the server-rendered version showed in ${KB(m.mpa)}, and it showed it later, because nothing appears until the JavaScript has downloaded and run. Most visitors to most sites view one or two pages. Check your analytics before assuming otherwise.`;
+    v.innerHTML=`<b>At ${m.n} page${m.n===1?"":"s"}, the bundle has not paid off</b>The single-page app sent ${KB(m.spa)} where the server-rendered version sent ${KB(m.mpa)}, and it showed the page later. Most visitors view one or two pages.`;
   } else if(!spaWins){
     v.className="verdict warn";
     v.innerHTML=`<b>Server-rendered is still ahead by ${KB(m.spa-m.mpa)}</b>The bundle is a fixed cost paid at the start, and later pages have not made up for it yet. Keep dragging.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>Single-page app ahead by ${KB(m.mpa-m.spa)}</b>Past about seven pages, the 4 KB navigations make up for the bundle, and the gap grows with every click. The model suits tools that people use for a long time. It suits a brochure site (a site of a few fixed pages) poorly. The first screen is still slower, and more clicking does not change that.`;
+    v.innerHTML=`<b>Single-page app ahead by ${KB(m.mpa-m.spa)}</b>Past about seven pages, the 4 KB navigations make up for the bundle. The model suits tools that people use for a long time, and the first screen is still slower.`;
   }
 }
 $("#sPages").oninput=e=>{NAV.pages=+e.target.value;$("#vPages").textContent=NAV.pages;renderNav()};

@@ -29,15 +29,15 @@ function nmRender(){
 
   $("#flatVerdict").className="verdict "+(NM.renamed&&NM.partial?"bad":NM.renamed?"warn":"");
   $("#flatVerdict").innerHTML = !NM.renamed
-    ? `<b>The title is stored ${NM.n} times</b>Every enrollment row carries its own copy. Nothing has gone wrong yet.`
+    ? `<b>The title is stored ${NM.n} times</b>Every enrollment row carries its own copy.`
     : NM.partial
-      ? `<b>Two rows disagree with the other ${NM.n-2}</b>The database no longer has one answer to "what is this course called?". Both titles are stored, both look valid, and no rule was broken.`
-      : `<b>${NM.n} rows rewritten to change one fact</b>It worked this time. It has to work every time, in every part of the code that changes a title.`;
+      ? `<b>Two rows disagree with the other ${NM.n-2}</b>Both titles look valid to the database, so it raises no error.`
+      : `<b>${NM.n} rows rewritten</b>It worked this time, and it has to work every time.`;
 
   $("#normVerdict").className="verdict "+(NM.renamed?"ok":"");
   $("#normVerdict").innerHTML = NM.renamed
-    ? `<b>One row rewritten</b>The enrollments never stored the title, so they needed no change. Two rows cannot disagree, because only one row holds the title.`
-    : `<b>The title is stored once</b>Each enrollment holds the course id and nothing else about the course. Reading a schedule now needs a join, which combines the two tables when you read. What that costs is measured later in "The N+1 query problem".`;
+    ? `<b>One row rewritten</b>The enrollments never stored the title, so they needed no change.`
+    : `<b>The title is stored once</b>Each enrollment holds only the course id.`;
 
   const set=(id,v,hot,good)=>{const g=$(id);g.querySelector(".gv").firstChild.nodeValue=v;
     g.classList.toggle("hot",!!hot);g.classList.toggle("good",!!good)};
@@ -48,10 +48,10 @@ function nmRender(){
   if(!NM.renamed){ v.className="verdict"; v.innerHTML=`<b>Nothing has changed yet</b>Press one of the buttons.`; }
   else if(NM.partial){
     v.className="verdict bad";
-    v.innerHTML=`<b>${NM.n-2} rows updated and 2 missed</b>The database accepts this without an error. Two titles now answer the same question, and nobody is told until someone notices. The split version has one row to change, so there is nothing to miss.`;
+    v.innerHTML=`<b>${NM.n-2} rows updated and 2 missed</b>The database accepts this without an error, and nobody is told until someone notices.`;
   } else {
     v.className="verdict warn";
-    v.innerHTML=`<b>${NM.wroteFlat} writes against 1</b>Both versions end in the same state. The flat table needed ${NM.wroteFlat} writes that could each go wrong, and none did this time. Raise the slider to 400 and think about running a script that makes 400 separate changes to a live database.`;
+    v.innerHTML=`<b>${NM.wroteFlat} writes against 1</b>Both versions end in the same state. The flat table needed ${NM.wroteFlat} writes that could each go wrong.`;
   }
 }
 $("#sEnr").oninput=e=>{NM.n=+e.target.value;$("#vEnr").textContent=NM.n;

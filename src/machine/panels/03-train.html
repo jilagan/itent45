@@ -1,53 +1,65 @@
     <section class="panel" id="p-train">
       <div class="head">
         <h2>Training: adjusting a model to reduce its errors</h2>
-        <p>Suppose you are standing on a hillside in thick fog and want to reach the bottom. You cannot see the bottom, but you can feel which way the ground slopes under your feet. So you take a step downhill, feel the slope again, and repeat.</p>
-        <p style="margin-top:11px">Training a model follows the same routine. Start with a line placed at random. Measure how wrong it is with a single number called the <b style="color:var(--ink)">loss</b>. Nudge the line in whichever direction makes the loss smaller, and repeat a few hundred times. The fog stands for the fact that the program never sees the best line in advance and only measures the slope where it is standing.</p>
-        <p style="margin-top:11px">The panel "Training and test data" used a boundary line without showing where it came from. This panel shows how the line is found.</p>
-        <div class="ask"><b>Think first.</b> Each step downhill in the fog has a size. What could go wrong if every step is very large? What could go wrong if every step is very small? Write down your guesses, then test them with the step size control below.</div>
+        <p>Training repeats one routine: measure how wrong the line is, nudge it, and measure again. This lesson shows how the line is found and what the size of each nudge does.</p>
       </div>
-      <div class="srv">
-        <div>
-          <div class="scatter" id="trPlot"></div>
-          <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
-            <div class="g" id="trLoss"><div class="gl">Loss (how wrong the line is)</div><div class="gv">—</div></div>
-            <div class="g" id="trAcc"><div class="gl">Correct</div><div class="gv">—</div></div>
-            <div class="g" id="trStep"><div class="gl">Steps taken</div><div class="gv">0</div></div>
-          </div>
-          <div class="ctrls" style="margin-top:13px">
-            <button class="btn primary" id="trStepBtn">One step</button>
-            <button class="btn" id="trRun">Run 200</button>
-            <button class="btn" id="trReset">Start over</button>
-          </div>
-          <div class="verdict" id="trVerdict" style="margin-top:13px"></div>
+
+      <div class="sec" data-sec="fog" data-title="Start with a hill in the fog">
+        <p>Suppose you are standing on a hillside in thick fog and want to reach the bottom. You cannot see it, but you can feel which way the ground slopes under your feet. So you step downhill, feel the slope again and repeat.</p>
+        <div class="scene" data-art="fog-hillside" data-art-desc="A hiker standing on a hillside in thick fog, one foot forward, feeling the slope of the ground with a walking stick and unable to see the bottom." role="group" aria-label="The hiker is the training program, feeling the slope is measuring the loss">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>You, in the fog</b><span>The training program</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Feel the slope, step downhill</b><span>Measure the <dfn title="One number for how wrong the line is across all the examples">loss</dfn>, nudge the line</span></figcaption></figure>
         </div>
-        <div class="card">
-          <div class="card-t">Step size (learning rate)</div>
-          <div class="sliders">
-            <div class="field">
-              <label>Learning rate <span class="val" id="vLr">6</span></label>
-              <input type="range" id="sLr" min="0" max="3" step="1" value="1">
+        <div class="ask"><b>Think first.</b> Each step downhill has a size. What goes wrong if every step is very large? What goes wrong if every step is very small? You will test both next.</div>
+      </div>
+
+      <div class="sec" data-sec="walk" data-title="Walk downhill">
+        <p>Press Run 200 and watch the loss fall as the line settles. Then move the step size, also called the <dfn title="The size of each nudge the training program gives the line">learning rate</dfn>, to its largest setting, press Start over and run 200 steps again.</p>
+        <div class="srv">
+          <div>
+            <div class="scatter" id="trPlot"></div>
+            <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
+              <div class="g" id="trLoss"><div class="gl">Loss (how wrong the line is)</div><div class="gv">—</div></div>
+              <div class="g" id="trAcc"><div class="gl">Correct</div><div class="gv">—</div></div>
+              <div class="g" id="trStep"><div class="gl">Steps taken</div><div class="gv">0</div></div>
             </div>
+            <div class="ctrls" style="margin-top:13px">
+              <button class="btn primary" id="trStepBtn">One step</button>
+              <button class="btn" id="trRun">Run 200</button>
+              <button class="btn" id="trReset">Start over</button>
+            </div>
+            <div class="verdict" id="trVerdict" style="margin-top:13px"></div>
           </div>
-          <div class="art" id="trCurve" style="margin-top:12px"></div>
-          <div class="rtt-note" style="margin-top:12px" id="trNote"></div>
-          <div class="whynot" style="margin-top:14px">
-            <b>The terms on this screen</b>
-            Loss, cross-entropy and gradient descent are the standard terms for this process. Here is what each one means on this screen.
-            <br><br><b style="color:var(--ink)">Loss</b> is the number in the first box. It is one score for how wrong the line is across all of the students. Lower is better.
-            <br><br><b style="color:var(--ink)">Cross-entropy</b> is the formula that produces the loss. It gives a large penalty when the model is confident and wrong.
-            <br><br><b style="color:var(--ink)">Gradient descent</b> is the routine of working out the slope of the loss for each of the three numbers the model adjusts, and moving each one a small step downhill.
-          </div>
-          <div class="whynot" style="margin-top:14px">
-            <b>Three numbers to adjust</b>
-            This line has a weight for hours, a weight for attendance, and a bias. A weight sets how much one measurement counts, and the bias moves the line up or down. Training adjusts those three numbers. A large language model does the same kind of adjusting to hundreds of billions of numbers, for months, on thousands of machines. The arithmetic is similar, and the cost is far larger.
+          <div class="card">
+            <div class="card-t">Step size (learning rate)</div>
+            <div class="sliders">
+              <div class="field">
+                <label>Learning rate <span class="val" id="vLr">6</span></label>
+                <input type="range" id="sLr" min="0" max="3" step="1" value="1">
+              </div>
+            </div>
+            <div class="art" id="trCurve" style="margin-top:12px"></div>
+            <div class="rtt-note" style="margin-top:12px" id="trNote"></div>
           </div>
         </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Choosing the learning rate</h4>
+          <p>The learning rate is the size of each step, and somebody has to choose it. If it is too small, training crawls, and you pay for computing power that is barely moving the line. If it is too large, the line jumps past the bottom and ends up on the other side, over and over, and the loss goes up when it should go down.</p>
+          <p>Nothing detects this for you. It is the most common reason a training run produces nothing, and it is the setting beginners change most often.</p>
+        </details>
       </div>
-      <div class="whynot" style="margin-top:20px">
-        <b>Choosing the learning rate</b>
-        The learning rate is the size of each step, and somebody has to choose it. If it is too small, training crawls, and you pay for computing power that is barely moving the line. If it is too large, the line jumps past the bottom and ends up on the other side, over and over, and the loss goes up when it should go down. Nothing detects this for you. It is the most common reason a training run produces nothing, and it is the setting beginners change most often.
-        <br><br>Select the largest setting and watch the loss curve go up.
+
+      <div class="sec" data-sec="adjusted" data-title="What gets adjusted">
+        <p>The line you just moved has three numbers. A <dfn title="A number that sets how strongly one measurement counts">weight</dfn> sets how much hours studied counts, another weight does the same for attendance, and the <dfn title="A number that moves the line up or down">bias</dfn> shifts the line. Each step nudges all three to lower the loss. Nobody writes the final line down.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The terms on this screen</h4>
+          <p>Loss is one score for how wrong the line is across all of the students. Lower is better. Cross-entropy is the formula that produces the loss, and it gives a large penalty when the model is confident and wrong. Gradient descent is the routine of working out the slope of the loss for each of the three numbers and moving each one a small step downhill.</p>
+          <h4>Scale</h4>
+          <p>A large language model does the same kind of adjusting to hundreds of billions of numbers, for months, on thousands of machines. The arithmetic is similar, and the cost is far larger.</p>
+          <h4>Where the line came from</h4>
+          <p>The lesson "Training data and test data" used a boundary line without showing where it came from. This is how that line is found. The two students the line still gets wrong are the same two as there, and no straight line can catch them. The fix is covered in "Neural networks".</p>
+        </details>
       </div>
     </section>
-

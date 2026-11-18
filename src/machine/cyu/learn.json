@@ -3,7 +3,7 @@
  "items": [
   {
    "id": "learn-1",
-   "sec": "hold-out",
+   "sec": null,
    "type": "mc",
    "stem": "A team fits a model to 1,000 customer records and reports 99 percent accuracy, measured on those same 1,000 records. What does this score tell you?",
    "options": [
@@ -31,9 +31,9 @@
   },
   {
    "id": "learn-2",
-   "sec": "hold-out",
-   "type": "predict",
-   "stem": "Before you try it: in the widget, the bent line scores 100 percent on the twelve training students. How do you expect its score on the five test students to compare with the straight line's score?",
+   "sec": null,
+   "type": "mc",
+   "stem": "A line is bent so that it scores 100 percent on twelve training students. How will its score on five new students compare with a straight line's score?",
    "options": [
     {
      "text": "Higher than the straight line, because it fits the twelve perfectly.",
@@ -41,21 +41,20 @@
      "feedback": "Fitting the twelve perfectly does not mean the line will fit new students. A line that bends around individual students can get new students wrong."
     },
     {
-     "text": "Lower than the straight line.",
+     "text": "Lower than the straight line, because it follows the quirks of the twelve.",
      "correct": true,
      "feedback": "The bent line follows the quirks of the twelve students, so it does worse on the five it never saw. This is overfitting."
     },
     {
-     "text": "The same as the straight line.",
+     "text": "The same as the straight line, because both were fitted to the same students.",
      "correct": false,
      "feedback": "The two lines treat the test students differently, and the bent line has a visibly larger gap between its training and test scores."
     }
-   ],
-   "try": "Go to step 4 in the widget, then switch between the straight line and the bent line and compare the test scores."
+   ]
   },
   {
    "id": "learn-3",
-   "sec": "train-vs-test",
+   "sec": null,
    "type": "mc",
    "stem": "An analyst fits a model, checks the test set score, changes some settings, and checks the test set score again. She repeats this ten times and reports the best test score. What is wrong with this?",
    "options": [

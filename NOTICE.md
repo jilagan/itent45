@@ -27,3 +27,5 @@ licence granted here. The tool falls back to system fonts when they are
 unavailable.
 
 Icons are from Phosphor Icons (https://phosphoricons.com), MIT licence, copyright Phosphor Icons. The regular-weight SVG files in src/shared/icons are copied unchanged and inlined into each page as a sprite.
+
+Scene pictures in src/shared/art (when present) are generated with Google's Nano Banana 2.1 model through Replicate, from the prompts in tools/make_art.py and docs/ART-STYLE.md, and are reviewed by the course team. They are not covered by any licence granted here until the terms of the image service's output have been checked.

@@ -22,8 +22,8 @@ function renderFall(){
   $("#ttfb").textContent=Math.round(tot)+" ms";
   const rt = PHASES.reduce((a,p)=>a+p.rtt,0);
   const waitMs = Math.round(rt*rttMs*2), otherMs = Math.round(tot-40-rt*rttMs*2);
-  $("#totNote").innerHTML=`Your code accounts for <b style="color:var(--ink)">40 ms</b> of that. Waiting on round trips accounts for <b style="color:var(--ink)">${waitMs} ms</b>. The remaining ${otherMs} ms is fixed processing time in the DNS server and the handshakes.`;
-  $("#rttNote").innerHTML=`At ${rttMs} ms one-way, a round trip is <b>${rttMs*2} ms</b>. This request spends <b>${rt} round trips</b> waiting on the network, about <b>${Math.round(rt*rttMs*2)} ms</b>, in addition to the time your code runs and the fixed processing time.`;
+  $("#totNote").innerHTML=`Your code accounts for <b style="color:var(--ink)">40 ms</b> of that. Waiting on round trips accounts for <b style="color:var(--ink)">${waitMs} ms</b>.`;
+  $("#rttNote").innerHTML=`At ${rttMs} ms one-way, a round trip is <b>${rttMs*2} ms</b>. This request spends <b>${rt} round trips</b> waiting, about <b>${Math.round(rt*rttMs*2)} ms</b>.`;
 }
 $("#rtt").oninput=e=>{
   rttMs=+e.target.value;
@@ -135,13 +135,13 @@ function fragVerdict(m){
   const v=$("#segVerdict");
   if(m.n===1){
     v.className="verdict ok";
-    v.innerHTML=`<b>One packet each way, and ${m.pct.toFixed(0)}% of the reply is headers</b>The reply fits in a single frame, so nothing needs cutting in either direction. The smaller the message, the larger the share taken by headers. The 144-byte JSON reply covered later in "Server or browser rendering" arrives with ${PKT_HDR} bytes of headers, so 27% of that transfer is headers.`;
+    v.innerHTML=`<b>One packet each way, and ${m.pct.toFixed(0)}% of the reply is headers</b>The reply fits in a single frame, so nothing needs cutting. The smaller the message, the larger the share taken by headers.`;
   } else if(m.rtts<=2){
     v.className="verdict ok";
-    v.innerHTML=`<b>One packet out, ${m.n} back</b>The request fit in a single frame. The reply needed ${m.n}. Your code gave the network one message, the network carried it as ${m.n} packets, and the browser received one message.`;
+    v.innerHTML=`<b>One packet out, ${m.n} back</b>Your code gave the network one message, the network carried it as ${m.n} packets, and the browser received one message.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>One packet out, ${m.n} back, over ${m.rtts} round trips</b>The reply is larger than TCP will send before hearing back. It sends about ten packets, waits a full round trip for confirmation, sends twice as many, and waits again. At ${FRAG.rtt} ms per round trip that is <b class="i">${m.rtts*FRAG.rtt} ms spent waiting</b>, on top of the time the bytes take to move. The 280 KB JavaScript bundle (the file of code the browser downloads) covered later in "Server or browser rendering", needs several round trips for the same reason. Shrinking a reply helps even when bandwidth is not the limit.`;
+    v.innerHTML=`<b>One packet out, ${m.n} back, over ${m.rtts} round trips</b>TCP sends about ten packets, waits for confirmation, then sends twice as many. At ${FRAG.rtt} ms per round trip that is <b class="i">${m.rtts*FRAG.rtt} ms spent waiting</b>.`;
   }
 }
 function fragPlay(){
@@ -199,7 +199,7 @@ function fragPlay(){
       if(arrived>=m.n){
         $("#jRightCap").textContent="Idle";
         bar("#jRight","",0);
-        $("#jPhase").innerHTML=`<b class="i" style="color:var(--res)">The reply is whole again.</b> Neither your server code nor your browser code ever handles packets. Your code sends one reply, <code>fetch()</code> (the browser's function for requesting data) receives one reply, and the cutting happens only on the wire.`;
+        $("#jPhase").innerHTML=`<b class="i" style="color:var(--res)">The reply is whole again.</b> Your code sends one reply and receives one reply, and the cutting happens only on the wire.`;
         $("#segSend").textContent="Send it";
       }
     }

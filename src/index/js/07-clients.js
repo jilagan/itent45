@@ -9,7 +9,7 @@ Content-Length: 118
 ]}`;
 
 const CLIENTS=[
- {id:"web", n:"Web browser", s:"Runs in a browser on a laptop",
+ {id:"web", ic:"browser", n:"Web browser", s:"Runs in a browser on a laptop",
   req:`<span class="kw">GET</span> /api/courses HTTP/1.1
 Host: enlist.university.edu
 Accept: application/json
@@ -24,10 +24,10 @@ User-Agent: Mozilla/5.0 (Macintosh...)`,
     &lt;li key={c.code}&gt;{c.code} &amp;middot; {c.units}u&lt;/li&gt;
   )}
 &lt;/ul&gt;`,
-  note:"The browser attaches the session cookie by itself. The server set the cookie at login and the browser has stored it since then, so you never wrote code to send it. Cookies therefore need protection against CSRF (cross-site request forgery), because the browser also attaches them to a request that another website triggers.",
+  note:"The browser attaches the session cookie by itself, because the server set it at login. Cookies need protection against CSRF (cross-site request forgery), since the browser also attaches them to a request that another website triggers.",
   cons:["Stable network","Large screen","You control every deploy","Cookie login, automatic"]},
 
- {id:"ios", n:"iOS app", s:"Native app written in Swift",
+ {id:"ios", ic:"device-mobile", n:"iOS app", s:"Native app written in Swift",
   req:`<span class="kw">GET</span> /api/courses HTTP/1.1
 Host: enlist.university.edu
 Accept: application/json
@@ -45,10 +45,10 @@ req.setValue(<span class="s">"Bearer \\(token)"</span>,
         Text(<span class="s">"\\(c.units)u"</span>)
     }
 }`,
-  note:"A native app is built for one phone system. This app has no cookie storage, so it keeps a token (a long code that proves who the user is) in the Keychain, the phone's secure storage, and attaches the token to every request on purpose. The User-Agent line carries the app's version number. You will use it later to find out how many people still run old versions against your API.",
+  note:"A native app is built for one phone system. It keeps a token (a code that proves who the user is) in the Keychain, the phone's secure storage, and attaches it to every request. The User-Agent line carries the app version, which shows how many people still run old versions.",
   cons:["Mobile data, high latency","Small screen","App Store review to ship","Bearer token, manual","Payload size costs battery"]},
 
- {id:"android", n:"Android app", s:"Native app written in Kotlin",
+ {id:"android", ic:"device-mobile", n:"Android app", s:"Native app written in Kotlin",
   req:`<span class="kw">GET</span> /api/courses HTTP/1.1
 Host: enlist.university.edu
 Accept: application/json
@@ -68,14 +68,14 @@ User-Agent: EnlistMobile/2.0 (Android 14)`,
         }
     }
 }`,
-  note:"This is the same as iOS, written in a different language and calling the same URL. Android users typically update more slowly and over a wider range of devices and system versions than iOS users. This matters once you start changing the API.",
+  note:"This is the same as iOS, written in a different language and calling the same URL. Android users update more slowly and on a wider range of devices, which matters once you change the API.",
   cons:["Mobile data, high latency","Many device sizes","Store review to ship","Bearer token, manual","Slowest update adoption"]}
 ];
 let clSel=0;
 function renderClients(){
   $("#clientPick").innerHTML=CLIENTS.map((c,i)=>`
     <button class="cbox${i===clSel?" on":""}" data-i="${i}">
-      <div class="cn">${c.n}</div><div class="cs">${c.s}</div></button>`).join("");
+      <div class="cn">${ICO(c.ic)} ${c.n}</div><div class="cs">${c.s}</div></button>`).join("");
   const c=CLIENTS[clSel];
   $("#clReq").innerHTML=c.req;
   $("#clCode").innerHTML=c.code;
@@ -87,20 +87,16 @@ function renderClients(){
 }
 renderClients();
 
-/* version drift */
 /* the server-rendered counterexample: markup where the data should be */
 $("#enlistHtml").innerHTML = `<span class="kw">HTTP/1.1 200 OK</span>
-Content-Type: <span class="d">text/html; charset=UTF-8</span>
+Content-Type: <span class="d">text/html</span>
 
-<span class="d">&lt;table class=</span><span class="s">"gridTable"</span><span class="d"> width=</span><span class="s">"680"</span><span class="d"> cellpadding=</span><span class="s">"2"</span><span class="d">&gt;</span>
- <span class="d">&lt;tr&gt;&lt;td class=</span><span class="s">"hdr"</span><span class="d">&gt;</span>Subject<span class="d">&lt;/td&gt;</span>
-     <span class="d">&lt;td class=</span><span class="s">"hdr"</span><span class="d">&gt;</span>Units<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
+<span class="d">&lt;table width=</span><span class="s">"680"</span><span class="d"> class=</span><span class="s">"gridTable"</span><span class="d">&gt;</span>
  <span class="d">&lt;tr&gt;&lt;td&gt;</span>ITENT 45<span class="d">&lt;/td&gt;&lt;td align=</span><span class="s">"center"</span><span class="d">&gt;</span>3<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
  <span class="d">&lt;tr&gt;&lt;td&gt;</span>CSCI 21<span class="d">&lt;/td&gt;&lt;td align=</span><span class="s">"center"</span><span class="d">&gt;</span>3<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="d">&lt;/table&gt;</span>
 
-<span class="c">// The data is in there, mixed with the layout,</span>
-<span class="c">// the column order and the table width.</span>`;
+<span class="c">// The data sits inside the layout.</span>`;
 
 $("#enlistJson").innerHTML = `<span class="kw">HTTP/1.1 200 OK</span>
 Content-Type: <span class="d">application/json</span>
@@ -110,9 +106,9 @@ Content-Type: <span class="d">application/json</span>
   {<span class="s">"code"</span>: <span class="s">"CSCI 21"</span>,  <span class="s">"units"</span>: 3}
 ]}
 
-<span class="c">// This says nothing about how it looks.</span>
-<span class="c">// Each client decides that for itself.</span>`;
+<span class="c">// Only the data. Each client decides the look.</span>`;
 
+/* version drift */
 const DRIFT={days:7, breaking:false};
 const PLATFORMS=[
  {n:"Web", f:d=>Math.min(1, d<0.5?d*2:1), note:"next reload"},
@@ -142,16 +138,16 @@ function renderDrift(){
   const v=$("#driftVerdict");
   if(!DRIFT.breaking){
     v.className="verdict ok";
-    v.innerHTML=`<b>Nothing breaks on any platform</b>You added a field and removed nothing. Old clients read the response, ignore the field they do not know, and carry on. So the rule for a public API is <em>additive changes only</em>. Adding a field is safe, and removing one breaks old clients.`;
+    v.innerHTML=`<b>Nothing breaks on any platform</b>You added a field and removed nothing, so old clients ignore the field they do not know and carry on. Adding a field is safe, and removing one breaks old clients.`;
   } else if(d===0){
     v.className="verdict warn";
-    v.innerHTML=`<b>You shipped the change a moment ago</b>Everyone is still on the old version, as expected on day zero. Nothing has failed yet. Drag the slider to see who updates and who does not.`;
+    v.innerHTML=`<b>You shipped the change a moment ago</b>Everyone is still on the old version, so nothing has failed yet. Drag the slider to see who updates and who does not.`;
   } else if(worstOld<0.05){
     v.className="verdict warn";
-    v.innerHTML=`<b>Day ${d}: a small group is still affected</b>About ${(mobileOld*100).toFixed(0)}% of mobile users are still on the old version and still failing. Web users were clean within a day. If you must break something, wait about this long before switching the old path off, and keep serving both until then.`;
+    v.innerHTML=`<b>Day ${d}: a small group is still affected</b>About ${(mobileOld*100).toFixed(0)}% of mobile users still run the old version and fail. If you must break something, keep serving both versions until this number is near zero.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>Day ${d}: ${(mobileOld*100).toFixed(0)}% of mobile users are broken right now</b>You renamed or removed a field, and every app copy that expects the old shape fails. You cannot fix those copies. The users have to update, and many will not for weeks. Web users were fine within hours, so this bug is easy to miss in testing. Versioning the endpoint (publishing the new version at a new URL such as <code>/api/v2/courses</code>) or keeping the old field next to the new one avoids the problem.`;
+    v.innerHTML=`<b>Day ${d}: ${(mobileOld*100).toFixed(0)}% of mobile users are broken right now</b>You renamed or removed a field, and every app copy that expects the old shape fails. Web users recovered within hours, so this bug is easy to miss in testing.`;
   }
 }
 $("#sDays").oninput=e=>{DRIFT.days=+e.target.value;$("#vDays").textContent=DRIFT.days+" days";renderDrift()};

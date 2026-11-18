@@ -4,55 +4,54 @@
   {
    "id": "embed-1",
    "sec": null,
-   "type": "predict",
-   "stem": "Before you press Run the training: in the corpus, king and queen share several sentences, and king and hospital never appear together. What do you expect the map to show at the end?",
+   "type": "mc",
+   "stem": "A program moves words in the same sentence closer together. King and queen share several sentences, and king and hospital never appear together. What will the map show at the end?",
    "options": [
     {
-     "text": "King and queen end up close together; king and hospital end up far apart.",
+     "text": "King and queen end up close together, and king and hospital end up far apart.",
      "correct": true,
-     "feedback": "Words that appear in the same sentences are pulled together. Words that never appear together are only pushed apart."
+     "feedback": "Words that share sentences are pulled together. Words that never share a sentence are only pushed apart."
     },
     {
      "text": "All the words end up in the same place after enough sentences.",
      "correct": false,
-     "feedback": "Every sentence pulls its own words together, but all words also push each other apart a little, so the map spreads into groups."
+     "feedback": "Every sentence pulls its own words together, and all words also push each other apart a little. The map spreads into groups."
     },
     {
-     "text": "King and hospital end up close, because both are common words.",
+     "text": "King and hospital end up close together, because both are common words.",
      "correct": false,
-     "feedback": "Closeness here depends on appearing in the same sentences. How common a word is does not matter."
+     "feedback": "Closeness depends on appearing in the same sentences. How common a word is has no effect."
     },
     {
      "text": "The words stay where they started, because positions are never updated.",
      "correct": false,
      "feedback": "Each sentence moves the words in it. After many sentences the positions are very different."
     }
-   ],
-   "try": "Press Run the training and read the gauge called Groups apart by."
+   ]
   },
   {
    "id": "embed-2",
-   "sec": null,
+   "sec": "corpus",
    "type": "mc",
    "stem": "A colleague says someone must have labeled the royalty words in advance, or they could not form a cluster. What does the demo show?",
    "options": [
     {
      "text": "The only input was fourteen sentences, so the clusters come from words appearing together.",
      "correct": true,
-     "feedback": "The colors on the map are added afterward to show the groups. The training does not use them."
+     "feedback": "The colors on the map are added afterward to show the groups. The training never uses them."
     },
     {
-     "text": "The program contains a built-in dictionary that says which words are about royalty.",
+     "text": "The program contains a dictionary of word meanings that says which words are about royalty.",
      "correct": false,
-     "feedback": "There is no dictionary. The program only moves words according to which sentences they appear in."
+     "feedback": "There is no dictionary. The program moves words according to which sentences they appear in."
     },
     {
-     "text": "The groups only form because the starting positions were chosen by hand.",
+     "text": "The groups form only because someone chose the starting positions by hand to favor them.",
      "correct": false,
      "feedback": "The starting positions are random. The groups come from the sentences."
     },
     {
-     "text": "The clusters form because the words were typed in alphabetical order.",
+     "text": "The clusters form because the words were typed into the program in alphabetical order.",
      "correct": false,
      "feedback": "The order of the words in the list has no effect on where they end up."
     }
@@ -62,25 +61,25 @@
    "id": "embed-3",
    "sec": null,
    "type": "mc",
-   "stem": "The small demo produces clear clusters, but it cannot reproduce the word arithmetic shown in \"Vectors and similarity\". Why?",
+   "stem": "The small demo produces clear clusters, but it cannot reproduce arithmetic such as king minus man plus woman. Why?",
    "options": [
     {
-     "text": "It needs each word in thousands of contexts, and fourteen sentences cannot supply that.",
+     "text": "It needs each word in thousands of contexts, which fourteen sentences cannot supply.",
      "correct": true,
      "feedback": "Real training uses billions of words. A small corpus is enough for clusters and too small for the finer patterns."
     },
     {
-     "text": "The demo only has two dimensions, and arithmetic needs exactly three.",
+     "text": "The demo has only two dimensions, and the arithmetic needs exactly three of them.",
      "correct": false,
-     "feedback": "Real models use hundreds of dimensions, but the main limit here is the amount and variety of text."
+     "feedback": "Real models use hundreds of dimensions. The main limit here is the amount and variety of text."
     },
     {
-     "text": "The demo does not push words apart, so groups never separate properly.",
+     "text": "The demo never pushes words apart, so the groups never separate properly.",
      "correct": false,
      "feedback": "All words push apart a little in every step. That is how the groups separate."
     },
     {
-     "text": "Word arithmetic only works for names of places and people, not other words.",
+     "text": "Word arithmetic works only for the names of places and the names of people.",
      "correct": false,
      "feedback": "The arithmetic works for many kinds of relationships when there is enough text."
     }

@@ -59,7 +59,7 @@
   },
   {
    "id": "card-3",
-   "sec": null,
+   "sec": "third-table",
    "type": "mc",
    "stem": "A student takes many courses, and a course has many students. A grade is recorded for each student in each course. Where should the grade be stored?",
    "options": [

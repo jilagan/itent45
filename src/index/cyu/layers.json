@@ -3,7 +3,7 @@
  "items": [
   {
    "id": "layers-1",
-   "sec": "layers-of-a-message",
+   "sec": null,
    "type": "mc",
    "stem": "A request passes through five routers on its way to the server. What does each router do with the message?",
    "options": [
@@ -15,7 +15,7 @@
     {
      "text": "It opens the HTTP message and rewrites the request for the next router.",
      "correct": false,
-     "feedback": "Routers do not read HTTP. They only need the IP header to forward the packet."
+     "feedback": "Routers do not read HTTP. They need only the IP header to forward the packet."
     },
     {
      "text": "It replaces every header, including the IP addresses, with its own.",
@@ -31,19 +31,19 @@
   },
   {
    "id": "layers-2",
-   "sec": "layers-of-a-message",
+   "sec": null,
    "type": "mc",
    "stem": "The owner of a café's wifi can see every packet you send. Which layer's header stops the owner from reading your HTTP request?",
    "options": [
     {
-     "text": "TLS, which encrypts everything above it.",
+     "text": "TLS, which encrypts the message it wraps.",
      "correct": true,
      "feedback": "TLS scrambles the HTTP message so only the two ends can read it. The owner can still see the IP addresses and ports on the outside."
     },
     {
      "text": "TCP, which numbers every byte.",
      "correct": false,
-     "feedback": "TCP numbers and resends data, but it does not hide the contents."
+     "feedback": "TCP numbers and resends data, and the contents stay readable."
     },
     {
      "text": "IP, which carries the addresses.",
@@ -53,15 +53,15 @@
     {
      "text": "Ethernet, which handles the wifi hop.",
      "correct": false,
-     "feedback": "The Ethernet or wifi header only labels one hop. It does not encrypt the contents."
+     "feedback": "The Ethernet or wifi header labels one hop and leaves the contents readable."
     }
    ]
   },
   {
    "id": "layers-3",
-   "sec": "large-messages",
-   "type": "predict",
-   "stem": "Before you try it: a reply is 45 KB and the round trip is 38 ms. TCP sends about ten packets, then doubles each time. Roughly how long does the browser spend waiting on round trips?",
+   "sec": null,
+   "type": "mc",
+   "stem": "A reply is 45 KB and the round trip is 38 ms. TCP sends about ten packets, then doubles each time. Roughly how long does the browser spend waiting on round trips?",
    "options": [
     {
      "text": "About 114 ms, because the reply needs three round trips.",
@@ -71,7 +71,7 @@
     {
      "text": "About 38 ms, because the reply needs only one round trip.",
      "correct": false,
-     "feedback": "One round trip would carry only about ten packets. The reply is larger than that."
+     "feedback": "One round trip carries only about ten packets, and this reply is larger than that."
     },
     {
      "text": "About 1,200 ms, with one round trip for every packet.",
@@ -81,14 +81,13 @@
     {
      "text": "Almost nothing, because the data travels so fast.",
      "correct": false,
-     "feedback": "Speed of the data is not the issue. Each wave of packets has to be confirmed before the next, and that costs a full round trip."
+     "feedback": "Each wave of packets must be confirmed before the next one, and each confirmation costs a full round trip."
     }
-   ],
-   "try": "Set the sliders to 45 KB and 38 ms, then read the round trips and waiting time gauges."
+   ]
   },
   {
    "id": "layers-4",
-   "sec": "large-messages",
+   "sec": "packets",
    "type": "mc",
    "stem": "A developer shrinks a page's reply from 280 KB to 60 KB. The user's bandwidth does not change. Why can the page still load faster?",
    "options": [

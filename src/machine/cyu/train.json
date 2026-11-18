@@ -31,12 +31,12 @@
   },
   {
    "id": "train-2",
-   "sec": null,
-   "type": "predict",
-   "stem": "Before you try it: you set the learning rate to its largest value and press Run 200. What happens to the loss?",
+   "sec": "walk",
+   "type": "mc",
+   "stem": "A team sets the learning rate to its largest value and runs 200 steps. What happens to the loss?",
    "options": [
     {
-     "text": "It rises or bounces and does not settle.",
+     "text": "It rises or bounces up and down and does not settle.",
      "correct": true,
      "feedback": "Each step is so large that it goes past the bottom and ends higher on the other side. The model gets worse while training runs."
     },
@@ -46,17 +46,16 @@
      "feedback": "A larger step is faster only up to a point. Beyond that, each step overshoots."
     },
     {
-     "text": "It stays exactly the same.",
+     "text": "It stays exactly the same from one step to the next.",
      "correct": false,
      "feedback": "The line still moves on every step. It moves too far."
     },
     {
-     "text": "The page shows an error message.",
+     "text": "The page shows an error message once the steps get too large.",
      "correct": false,
      "feedback": "Nothing raises an error when the learning rate is too large. You find out by watching the loss."
     }
-   ],
-   "try": "Move the learning rate slider to its highest setting, press Run 200, and compare the loss curve with the second setting."
+   ]
   },
   {
    "id": "train-3",

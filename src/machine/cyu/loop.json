@@ -30,38 +30,10 @@
    ]
   },
   {
-   "id": "loop-2",
-   "sec": null,
-   "type": "mc",
-   "stem": "What makes an agent different from a chat with a language model?",
-   "options": [
-    {
-     "text": "It takes actions, gets results back from outside the model, and acts on them.",
-     "correct": true,
-     "feedback": "The loop of Thought, Action and Observation is the difference. A chat produces only text."
-    },
-    {
-     "text": "The agent uses a much larger model than the chat does.",
-     "correct": false,
-     "feedback": "Size is not the difference. The same model can run in a chat or inside an agent."
-    },
-    {
-     "text": "The agent remembers everything between sessions, which a chat cannot.",
-     "correct": false,
-     "feedback": "An agent sees only what fits in its context window, the same as a chat does."
-    },
-    {
-     "text": "The agent does not make mistakes because it checks its work.",
-     "correct": false,
-     "feedback": "It can still make mistakes, and it can act on them quickly. Checking only helps when an Observation contradicts it."
-    }
-   ]
-  },
-  {
    "id": "loop-3",
-   "sec": null,
-   "type": "predict",
-   "stem": "Before you try it: the tests pass at step 15 and the task is done. What do you expect the agent to do next?",
+   "sec": "trace",
+   "type": "mc",
+   "stem": "The tests pass at step 15 and the task is done. What do you expect the agent to do next?",
    "options": [
     {
      "text": "Keep going and make a change nobody asked for.",
@@ -78,8 +50,7 @@
      "correct": false,
      "feedback": "The agent in this trace does not ask. Approval only happens if the client is set up to require it."
     }
-   ],
-   "try": "Press Run it in the widget above and watch the last three steps and the two cost numbers."
+   ]
   },
   {
    "id": "loop-4",
@@ -88,7 +59,7 @@
    "stem": "An agent has worked for 25 steps. It now ignores the formatting rule you gave in your first message. What is the most likely cause?",
    "options": [
     {
-     "text": "The first message has left the context window, so the rule is no longer visible.",
+     "text": "The first message left the context window, so the rule is no longer visible.",
      "correct": true,
      "feedback": "Every thought, action and observation is added to the context. When it fills, the oldest text, which includes your first instruction, is no longer visible."
     },
@@ -98,12 +69,12 @@
      "feedback": "A model does not tire. Its behavior changes only because of what is in its context."
     },
     {
-     "text": "The tests failed, so the agent stopped following instructions.",
+     "text": "The tests failed once, so the agent stopped following instructions.",
      "correct": false,
      "feedback": "A failed test is one more Observation. It does not cancel your instructions."
     },
     {
-     "text": "The model never read the first message in the first place.",
+     "text": "The model did not read the first message when the task began.",
      "correct": false,
      "feedback": "It read it at the start. The problem is that the message is no longer in view."
     }
@@ -116,7 +87,7 @@
    "stem": "At step 3 an agent reads a file and misunderstands what it does. What is most likely to happen over steps 4 to 20?",
    "options": [
     {
-     "text": "It treats the mistake as fact and builds on it until an Observation contradicts it.",
+     "text": "It treats the mistake as fact and builds on it until a result contradicts it.",
      "correct": true,
      "feedback": "Errors compound. The model's confidence does not fade, and only a result from outside the model can correct it."
     },
@@ -126,12 +97,12 @@
      "feedback": "Nothing in the loop checks the reading. The model has no outside source for that check."
     },
     {
-     "text": "Only step 4 is affected, because each later step starts fresh.",
+     "text": "Only step 4 is affected, because each later step starts from a clean slate.",
      "correct": false,
      "feedback": "Each later step uses everything before it, so one wrong belief can shape many steps."
     },
     {
-     "text": "It stops as soon as it makes any error, since errors end the loop.",
+     "text": "It stops as soon as it makes any error, because errors end the loop at once.",
      "correct": false,
      "feedback": "The loop has no rule that stops on errors. It stops when the model predicts an end signal."
     }

@@ -59,7 +59,7 @@
   },
   {
    "id": "entity-3",
-   "sec": null,
+   "sec": "pairing",
    "type": "mc",
    "stem": "A student enrolls in ITENT 45 on 12 August and later receives a grade. Where should the enrollment date and the grade be stored?",
    "options": [

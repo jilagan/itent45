@@ -10,21 +10,21 @@ const bpDo=(bpO-BPT)*bpO*(1-bpO);
 const bpDh=[0,1].map(i=>bpDo*BPW2[i]*bpH[i]*(1-bpH[i]));
 const BPSTEP=[
  {dir:"f", lb:"Forward", txt:`h1 = ${bpH[0].toFixed(3)},  h2 = ${bpH[1].toFixed(3)}`,
-  note:`The inputs go in. Each hidden unit adds up its weighted inputs and converts the total to a number between 0 and 1. This is ordinary arithmetic, left to right.`},
+  note:`The inputs go in. Each hidden unit adds up its weighted inputs and converts the total to a number between 0 and 1.`},
  {dir:"f", lb:"Forward", txt:`out = ${bpO.toFixed(3)}`,
   note:`The output unit does the same to the two hidden values. The result is the network's prediction.`},
  {dir:"f", lb:"Compare", txt:`target ${BPT}, out ${bpO.toFixed(3)}, loss ${bpLoss.toFixed(4)}`,
   note:`This one number says how wrong the whole network is. Everything after this works backward from it.`},
  {dir:"b", lb:"Blame", txt:`at the output: ${bpDo.toFixed(4)}`,
-  note:`This is how much the loss would change if the output moved. It is the only slope computed directly from the loss. All the other slopes are built from this one.`},
+  note:`This is how much the loss would change if the output moved. Every other slope is built from this one.`},
  {dir:"b", lb:"Slopes", txt:`out&larr;h1: ${bpDo.toFixed(4)} &times; ${bpH[0].toFixed(3)} = ${(bpDo*bpH[0]).toFixed(4)}   &nbsp; out&larr;h2: ${(bpDo*bpH[1]).toFixed(4)}`,
-  note:`A weight's slope is the blame at its destination multiplied by the value the weight carried. Both numbers are already on screen, so this takes two multiplications.`},
+  note:`A weight's slope is the blame at its destination multiplied by the value the weight carried. Both are already on screen, so this takes two multiplications.`},
  {dir:"b", lb:"Pass back", txt:`to h1: ${bpDh[0].toFixed(4)}   &nbsp; to h2: ${bpDh[1].toFixed(4)}`,
-  note:`Each hidden unit receives a share of the blame, sized by the weight that connects it forward. The share for h2 has the opposite sign, because its weight is negative. It was pushing the answer the wrong way.`},
+  note:`Each hidden unit receives a share of the blame, sized by the weight that connects it forward. The share for h2 has the opposite sign because its weight is negative.`},
  {dir:"b", lb:"Slopes", txt:`h1&larr;x1: ${(bpDh[0]*BPX[0]).toFixed(4)} &nbsp; h1&larr;x2: ${(bpDh[0]*BPX[1]).toFixed(4)} &nbsp; h2&larr;x1: ${(bpDh[1]*BPX[0]).toFixed(4)} &nbsp; h2&larr;x2: ${(bpDh[1]*BPX[1]).toFixed(4)}`,
-  note:`The same rule applies one layer further back. Every weight in the network now has a slope, and the backward pass is finished.`},
+  note:`The same rule applies one layer further back. Every weight now has a slope.`},
  {dir:"u", lb:"Update", txt:`every weight moves against its own slope`,
-  note:`This is the rule from "How training works", applied to all six weights at once. Then the whole process repeats with the next example.`}
+  note:`Each weight takes a small step against its own slope. Then the process repeats with the next example.`}
 ];
 let bpAt=0, bpTimer=null;
 function bpRender(){
@@ -59,20 +59,20 @@ function bpRender(){
     return `<div class="${cls} ${on?"on":""}"><span class="lb">${st.lb}</span><span>${st.txt}</span></div>`;
   }).join("");
   $("#bpNote").innerHTML = bpAt===0
-    ? `A network with two inputs, two hidden units and one output. It has six weights, which is few enough to watch every one of them get a slope. Biases are left out to keep the example small.`
+    ? `A network with two inputs, two hidden units and one output. It has six weights, and biases are left out to keep the example small.`
     : BPSTEP[bpAt-1].note;
 
   const v=$("#bpVerdict");
   if(bpAt===0){ v.className="verdict";
-    v.innerHTML=`<b>Six weights, and each one needs a slope</b>Two of them connect to the output directly. The other four do not. Step through and watch where their numbers come from.`; }
+    v.innerHTML=`<b>Six weights, and each one needs a slope</b>Two of them connect to the output directly and four do not. Step through and watch where their numbers come from.`; }
   else if(bpAt<4){ v.className="verdict";
-    v.innerHTML=`<b>Still going forward</b>Nothing is being learned yet. The network is making a prediction and finding out that it was wrong by ${Math.abs(bpO-BPT).toFixed(3)}.`; }
+    v.innerHTML=`<b>Still going forward</b>The network is making a prediction and finding out that it was wrong by ${Math.abs(bpO-BPT).toFixed(3)}.`; }
   else if(bpAt===4){ v.className="verdict warn";
-    v.innerHTML=`<b>One slope, computed from the loss</b>This is the only number that comes straight from how wrong the answer was. Every other slope in the network is built from it.`; }
+    v.innerHTML=`<b>One slope, computed from the loss</b>This is the only number that comes straight from how wrong the answer was. Every other slope is built from it.`; }
   else if(bpAt<BPSTEP.length){ v.className="verdict";
-    v.innerHTML=`<b>Blame moving backward</b>Look at the last line: each number is the one above it multiplied by something already known. No part of the network is run again.`; }
+    v.innerHTML=`<b>Blame moving backward</b>Each number in the last line is the one above it multiplied by something already known. No part of the network is run again.`; }
   else { v.className="verdict ok";
-    v.innerHTML=`<b>Six slopes, one pass, nothing computed twice</b>Every weight now knows which way to move, including the four that do not connect to the output directly. They found out from the units closer to the output.<br><br>Count the multiplications: about the same as running the network forward once. <b class="i">This low cost is what makes training large networks possible.</b> The alternative is to nudge each weight and run the network again to see whether the loss improved. That would cost six full runs here, and a billion for a real model.`; }
+    v.innerHTML=`<b>Six slopes, one pass, nothing computed twice</b>Every weight now knows which way to move, including the four that do not connect to the output directly. That low cost makes training large networks possible.`; }
 }
 $("#bpStep").onclick=()=>{ if(bpAt<BPSTEP.length){bpAt++;bpRender();} };
 $("#bpAll").onclick=()=>{ clearInterval(bpTimer); bpAt=0; bpRender();

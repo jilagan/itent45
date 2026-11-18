@@ -62,16 +62,16 @@ function renderCost(){
   const v=$("#costVerdict");
   if(!COST.capex){
     v.className="verdict ok";
-    v.innerHTML=`<b>Capacity follows demand</b>You pay for roughly what you used, little capacity sits idle, and the enlistment spike is served without you owning hardware for it. The cost is the meter, which runs every hour indefinitely. There is no asset to depreciate.`;
+    v.innerHTML=`<b>Capacity follows demand</b>You pay for roughly what you used, and the enlistment spike is served without owning hardware for it. The cost is a meter that runs every hour.`;
   } else if(lostPct>=.005 && m.waste/m.capSum>.5){
     v.className="verdict bad";
-    v.innerHTML=`<b>Wrong in both directions at once</b>${pct(m.waste)} of the capacity you bought sat idle across the year, and you still turned people away on enlistment morning. A flat capacity line cannot match spiky demand.`;
+    v.innerHTML=`<b>Wrong in both directions at once</b>${pct(m.waste)} of the capacity you bought sat idle across the year, and you still turned people away on enlistment morning.`;
   } else if(lostPct>=.005){
     v.className="verdict bad";
-    v.innerHTML=`<b>Too little capacity</b>You turned away demand at the peak. Each request turned away is a student refreshing the enlistment system at 8:00. Raise the capacity to the peak and look at what it costs you for the rest of the year.`;
+    v.innerHTML=`<b>Too little capacity</b>You turned away demand at the peak, which means students refreshing the enlistment system at 8:00. Raise the capacity to the peak and see what that costs for the rest of the year.`;
   } else {
     v.className="verdict warn";
-    v.innerHTML=`<b>Sized for the peak, paid for all year</b>Nobody is turned away, but ${pct(m.waste)} of the capacity is idle, and the year costs ${mult.toFixed(1)}× what renting the same shape would cost. The servers are busy for about twenty minutes at each enlistment period and idle the rest of the time. This chart shows what buying for the peak looks like.`;
+    v.innerHTML=`<b>Sized for the peak, paid for all year</b>Nobody is turned away, but ${pct(m.waste)} of the capacity is idle and the year costs ${mult.toFixed(1)}× what renting would cost. The servers are busy for about twenty minutes at each enlistment period.`;
   }
 }
 $("#sCap").oninput=e=>{COST.cap=+e.target.value;$("#vCap").textContent=COST.cap+" units";renderCost()};

@@ -65,13 +65,13 @@ function renderMem(){
   const v=$("#ramVerdict");
   if(m.over){
     v.className="verdict bad";
-    v.innerHTML=`<b>Out of memory, ${Math.abs(Math.round(m.free))} MB over</b>When memory runs out, the kernel (the core of the operating system) picks a process and stops it. It usually picks the largest one, which is one of your workers, and any requests that worker was handling are lost. Reduce the workers to ${m.maxW}, reduce what each worker loads, or add RAM.`;
+    v.innerHTML=`<b>Out of memory, ${Math.abs(Math.round(m.free))} MB over</b>The operating system stops a process, usually one of your workers, and the requests it was handling are lost. Reduce the workers to ${m.maxW} or add RAM.`;
   } else if(m.tight){
     v.className="verdict warn";
-    v.innerHTML=`<b>Only ${Math.round(m.free)} MB free</b>Everything fits, but nothing is left for the disk cache, so every file the system reads now comes from the disk and not from memory. The machine will feel slow before it runs out. ${m.maxW} worker${m.maxW===1?"":"s"} is the most that keeps 15% of the RAM free.`;
+    v.innerHTML=`<b>Only ${Math.round(m.free)} MB free</b>Everything fits, but no memory is left for recently read files, so the machine will feel slow. ${m.maxW} worker${m.maxW===1?"":"s"} is the most that keeps 15% of the RAM free.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>Comfortable, ${Math.round(m.free)} MB free</b>${MEM.workers} worker${MEM.workers===1?"":"s"} at ${m.perW} MB each${MEM.preload?" after preload sharing":""}, plus ${OS_MB+NGINX_MB+m.dbMB} MB that the operating system, nginx and the database use before your application starts. You could add workers up to ${m.maxW} before less than 15% of the RAM is free.`;
+    v.innerHTML=`<b>Comfortable, ${Math.round(m.free)} MB free</b>${MEM.workers} worker${MEM.workers===1?"":"s"} at ${m.perW} MB each${MEM.preload?" after preload sharing":""} fit with room to spare. You could add workers up to ${m.maxW} before less than 15% of the RAM is free.`;
   }
 }
 let simReady=false;   // the server capacity state is declared later in this script
@@ -133,10 +133,9 @@ function renderOff(){
   const v=$("#offVerdict"), gain=m.gain.toFixed(2);
   if(m.twoPer<m.onePer){
     v.className="verdict ok";
-    v.innerHTML=`<b>${gain}\u00d7 the requests for 2\u00d7 the machines, and it roughly pays for itself</b>At ${(MEM.ram/1024).toFixed(MEM.ram%1024?1:0)} GB the database was taking memory the workers needed, so giving it its own machine adds real capacity. Cost per request per second falls from ${peso2(m.onePer)} to ${peso2(m.twoPer)}. At this size the split is easiest to justify on capacity alone.`;
+    v.innerHTML=`<b>${gain}\u00d7 the requests for 2\u00d7 the machines, and it roughly pays for itself</b>At this size the database was taking memory the workers needed. Cost per request per second falls from ${peso2(m.onePer)} to ${peso2(m.twoPer)}.`;
   } else {
     v.className="verdict warn";
-    v.innerHTML=`<b>${gain}\u00d7 the requests for 2\u00d7 the cost</b>You doubled the machines and got ${((m.gain-1)*100).toFixed(0)}% more throughput. Cost per request per second went <b class="i">up</b>, from ${peso2(m.onePer)} to ${peso2(m.twoPer)}. The second machine doubled the cost, and every request now spends 0.8 ms on the network.<br><br>Doubling the RAM on one machine would cost less than this. Splitting can still be the right choice for the operational reasons listed under "Reasons to separate the database".`;
+    v.innerHTML=`<b>${gain}\u00d7 the requests for 2\u00d7 the cost</b>Throughput rose ${((m.gain-1)*100).toFixed(0)}%, and cost per request per second went <b class="i">up</b> from ${peso2(m.onePer)} to ${peso2(m.twoPer)}. Splitting can still be justified by backups and fault isolation.`;
   }
 }
-

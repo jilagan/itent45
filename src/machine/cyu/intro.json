@@ -30,57 +30,28 @@
    ]
   },
   {
-   "id": "intro-2",
-   "sec": "rings",
-   "type": "predict",
-   "stem": "Before you try it: the widget lists eight systems. How many of them are artificial intelligence without being machine learning?",
-   "options": [
-    {
-     "text": "None",
-     "correct": false,
-     "feedback": "The chess engine and the route finder both follow rules that people wrote, so they are AI without machine learning."
-    },
-    {
-     "text": "Two",
-     "correct": true,
-     "feedback": "The chess engine and the route finder follow hand-written rules and learn nothing. The other six learned from examples."
-    },
-    {
-     "text": "Four",
-     "correct": false,
-     "feedback": "Four would include the spam filter and the credit scoring model. Both learned their rules from examples, so they are machine learning."
-    },
-    {
-     "text": "All eight",
-     "correct": false,
-     "feedback": "Six of the eight learned from examples, so they fall inside the machine learning circle."
-    }
-   ],
-   "try": "Select each system in the widget and read which circles it falls inside. Count the ones that stop at the outer circle."
-  },
-  {
    "id": "intro-3",
-   "sec": "plain-terms",
+   "sec": null,
    "type": "mc",
    "stem": "A bank has two loan-screening systems. System A applies rules written by the bank's staff. System B was trained on past loan records. Both wrongly reject a valid applicant. Which statement about fixing the problem is most likely true?",
    "options": [
     {
-     "text": "System A: find the faulty rule and edit it. System B: the cause is in its training examples, so the fix means new data or retraining.",
+     "text": "Edit the faulty rule in System A. For System B, change the training examples and retrain.",
      "correct": true,
      "feedback": "Hand-written rules can be read and changed one at a time. A trained model has no single rule to point at, because its behavior comes from patterns in its training examples."
     },
     {
-     "text": "Both can be fixed the same way, by finding the one line of code that caused the rejection and editing it.",
+     "text": "Find the one line of code that caused the rejection and edit it, in both systems.",
      "correct": false,
      "feedback": "A trained model has no such line. What it does depends on the examples it was shown."
     },
     {
-     "text": "System A will make different mistakes each time it sees the same applicant, because rules vary between runs.",
+     "text": "System A makes different mistakes each time it sees the same applicant, because rules vary.",
      "correct": false,
      "feedback": "Hand-written rules give the same answer for the same input, so System A is wrong in the same way every time."
     },
     {
-     "text": "System B cannot wrongly reject anyone, because it learned from real loan records that the bank collected.",
+     "text": "System B cannot wrongly reject anyone, because it learned from real loan records.",
      "correct": false,
      "feedback": "Learning from real data does not guarantee correct answers. A model can be wrong when an applicant looks different from the examples it saw."
     }
@@ -88,7 +59,7 @@
   },
   {
    "id": "intro-4",
-   "sec": "plain-terms",
+   "sec": null,
    "type": "mc",
    "stem": "A team builds a spam filter. Version 1 uses three measurements chosen by an analyst: the number of links, whether the sender is a known contact, and how often the word \"free\" appears. Version 2 is given the raw text of the emails and works out for itself what to measure. Which version is deep learning?",
    "options": [
@@ -108,15 +79,15 @@
      "feedback": "Both versions learn from labeled emails, so both are machine learning. Only the one that works out its own features counts as deep learning."
     },
     {
-     "text": "Neither, because a spam filter gives only a yes or no",
+     "text": "Neither version",
      "correct": false,
-     "feedback": "The kind of answer separates generative AI from the other terms. A yes or no output can still come from a deep learning model."
+     "feedback": "A yes or no output can still come from a deep learning model. What matters is that Version 2 finds its own features from raw input."
     }
    ]
   },
   {
    "id": "intro-5",
-   "sec": "plain-terms",
+   "sec": null,
    "type": "mc",
    "stem": "A tool takes a one-line product description and returns a new 100-word advertisement. What makes this generative AI?",
    "options": [

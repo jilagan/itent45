@@ -31,7 +31,7 @@
   },
   {
    "id": "bytes-2",
-   "sec": "anatomy",
+   "sec": null,
    "type": "multi",
    "stem": "Select all that apply. A POST request sends the body `{\"code\":\"ITENT 45\"}` to the server. Which headers help the server read that body correctly?",
    "options": [
@@ -59,9 +59,9 @@
   },
   {
    "id": "bytes-3",
-   "sec": "anatomy",
-   "type": "predict",
-   "stem": "Before you try it: in the 201 Created response, where does the server tell the client the address of the new enrollment?",
+   "sec": null,
+   "type": "mc",
+   "stem": "In the 201 Created response, where does the server tell the client the address of the new enrollment?",
    "options": [
     {
      "text": "In the `Location` header.",
@@ -83,12 +83,11 @@
      "correct": false,
      "feedback": "The blank line only marks where the headers end."
     }
-   ],
-   "try": "Choose the POST scenario above and click each line of the response."
+   ]
   },
   {
    "id": "bytes-4",
-   "sec": "run-it",
+   "sec": null,
    "type": "mc",
    "stem": "In the server log you see some lines of text, then an empty line, then `{\"code\":\"ITENT 45\"}`. What is the empty line?",
    "options": [

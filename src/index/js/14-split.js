@@ -56,13 +56,13 @@ function renderSplit(){
   if(diff>0){
     const x=(m.mRam/m.sRam).toFixed(1);
     v.className="verdict ok";
-    v.innerHTML=`<b>Splitting uses ${gb(diff)} less memory (${x}× less)</b>At ${SPLIT.load} rps the monolith pays for ${m.mInst*WPM} workers that could each be asked to build a PDF, so every one is sized at ${m.worstRam} MB. Only ${m.svc[2].inst*WPM} workers ever do that job. That unused memory is the case for splitting. Read the four costs in the next section before you decide.`;
+    v.innerHTML=`<b>Splitting uses ${gb(diff)} less memory (${x}× less)</b>At ${SPLIT.load} rps the monolith pays for ${m.mInst*WPM} workers that could each be asked to build a PDF, so every one is sized at ${m.worstRam} MB, and only ${m.svc[2].inst*WPM} workers ever do that job. That unused memory is the case for splitting.`;
   } else if(diff===0){
     v.className="verdict warn";
-    v.innerHTML=`<b>Equal memory</b>This is the crossover. Below this load the monolith uses less memory. Above it, sizing each part separately starts to pay off. The comparison covers memory only. The operating costs in the next section start on the first day you split.`;
+    v.innerHTML=`<b>Equal memory</b>This is the crossover. Below this load the monolith uses less memory, and above it sizing each part separately pays off.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>Splitting uses ${gb(-diff)} more memory</b>Every service needs at least one machine even when it is nearly idle, so four services need at least four machines. At ${SPLIT.load} rps the monolith fits on ${m.mInst} machine${m.mInst===1?"":"s"} and does the same work. Most capstone projects are in this situation, and one application is the sensible default.`;
+    v.innerHTML=`<b>Splitting uses ${gb(-diff)} more memory</b>Every service needs at least one machine even when it is nearly idle, so four services need at least four machines. At ${SPLIT.load} rps the monolith fits on ${m.mInst} machine${m.mInst===1?"":"s"} and does the same work.`;
   }
 }
 $("#sLoad2").oninput=e=>{SPLIT.load=+e.target.value;$("#vLoad2").textContent=SPLIT.load+" rps";renderSplit()};

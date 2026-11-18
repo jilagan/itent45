@@ -1,210 +1,255 @@
     <section class="panel" id="p-rest">
       <div class="head">
         <h2>HTTP verbs, URLs and status codes (REST)</h2>
-        <p>When you order at a restaurant counter, the order slip says what you want done (place an order, change it, cancel it) and which order it applies to.</p>
-        <p>A web request works the same way. It carries a verb, such as GET or POST, that says what to do, and a URL that says what to do it to. A set of conventions for using verbs, URLs and status codes together is called REST.</p>
-        <p>Two terms describe what happens when a request is repeated. A verb is safe if it changes nothing on the server. It is idempotent if doing it twice leaves things the same as doing it once. GET, PUT, PATCH and DELETE make promises that POST does not. Pressing an elevator button twice is idempotent, because the second press changes nothing.</p>
-        <div class="ask"><b>Think first.</b> You submit an enrollment form and the page hangs, so you press refresh. Could you now be enrolled twice? Write down your answer and what you would need to know to be sure.</div>
+        <p>A web request carries a <dfn title="The word in a request that says what to do, such as GET or POST">verb</dfn> that says what to do and a URL that says what to do it to. The server replies with a <dfn title="A three-digit number in the reply that reports what happened">status code</dfn>.</p>
+      </div>
+
+      <div class="sec" data-sec="order-slip" data-title="Start with an order slip">
+        <p>At a restaurant counter, the order slip says what to do (place, change or cancel) and which order it applies to. A web request has the same two parts, a verb and a URL. Place the same order twice and you get two meals. Cancel it twice and it stays cancelled.</p>
+        <div class="scene" role="group" aria-label="The order slip is the request, the waiter is the server, the reply is the response with a status code" data-art="order-slip" data-art-desc="A customer at a restaurant counter hands a handwritten order slip to a waiter; the slip shows an action (new order or cancel) and an order number.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></div><figcaption><b>Order slip</b><span>Request: verb and URL</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bell-simple"/></svg></div><figcaption><b>Waiter</b><span>Server</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bowl-food"/></svg></div><figcaption><b>The reply</b><span>Response: status code</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> You submit an enrollment form and the page hangs, so you press refresh. Could you now be enrolled twice? What would you need to know to be sure?</div>
         <div class="instructor">Ask students to name what the form sent when it was submitted (the verb). Listen for the idea that refreshing sends the same request again, and for whether they think the result depends on the verb.</div>
       </div>
 
-      <div class="sec" data-sec="request-lab" data-title="Try requests on a table">
-      <p>The table below holds three courses in a database. Send a request and watch the table. Then send the identical request a second time. The second result shows what the verb promises. A request body is the data sent along with the request. Here it is written in JSON, a plain-text format for data.</p>
+      <div class="sec" data-sec="try-requests" data-title="Send a request">
+        <p>The table holds three courses. A request is a verb and a URL, plus a <dfn title="The data sent along with a request, here written in JSON text">body</dfn> when it carries data. POST asks the server to create a course. Press Send, then Send the same one again, and count the rows.</p>
 
-<div class="srv" style="margin-bottom:22px">
-        <div class="dbwrap">
-          <div class="dbtitle">
-            <span class="t">courses</span>
-            <span class="c" id="dbCount">3 rows</span>
-          </div>
-          <table class="db"><thead><tr>
-            <th>code<span style="font-weight:400;opacity:.65"> / id</span></th><th>title</th><th>units</th><th>slots</th>
-          </tr></thead><tbody id="dbBody"></tbody></table>
-          <div class="rlog" id="reqLog"></div>
-          <div class="verdict" id="dbVerdict" style="margin-top:12px"></div>
-        </div>
-
-        <div class="card">
-          <div class="card-t">Pick a request</div>
-          <div class="reqlist" id="reqList"></div>
-          <div id="bodyForm" style="display:none;margin-top:13px;padding:13px;border:1px solid var(--req);border-radius:7px;background:var(--panel2)">
-            <div style="font-weight:600;color:var(--req);margin-bottom:4px">Compose the body</div>
-            <p style="margin:0 0 10px;color:var(--faint);line-height:1.5">Untick a field to leave it out of the body. PUT and PATCH differ only in how they treat the missing field.</p>
-            <label class="bf"><input type="checkbox" id="bfOnTitle" checked><span>title</span><input type="text" id="bfTitle" value="Data Structures" maxlength="40"></label>
-            <label class="bf"><input type="checkbox" id="bfOnUnits" checked><span>units</span><input type="number" id="bfUnits" value="3" min="0" max="9"></label>
-            <label class="bf"><input type="checkbox" id="bfOnSlots" checked><span>slots</span><input type="number" id="bfSlots" value="3" min="0" max="99"></label>
-            <div class="art" id="bfBody" style="margin-top:11px;white-space:pre-wrap;overflow-wrap:anywhere"></div>
-          </div>
-          <div id="postForm" style="display:none;margin-top:13px;padding:13px;border:1px solid var(--req);border-radius:7px;background:var(--panel2)">
-            <div style="font-weight:600;color:var(--req);margin-bottom:9px">The body you are sending</div>
-            <label class="pf"><span>Course code</span><input id="pfCode" type="text" placeholder="MATH 11" maxlength="12"></label>
-            <label class="pf"><span>Title</span><input id="pfTitle" type="text" placeholder="Linear Algebra" maxlength="44"></label>
-            <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
-              <label class="pf stack"><span>Units</span><input id="pfUnits" type="number" value="3" min="0" max="9"></label>
-              <label class="pf stack"><span>Slots open</span><input id="pfSlots" type="number" value="12" min="0" max="99"></label>
+        <div class="srv" style="margin-bottom:22px">
+          <div class="dbwrap">
+            <div class="dbtitle">
+              <span class="t">courses</span>
+              <span class="c" id="dbCount">3 rows</span>
             </div>
-            <div class="art" id="pfBody" style="margin-top:11px;white-space:pre-wrap;overflow-wrap:anywhere"></div>
+            <table class="db"><thead><tr>
+              <th>code<span style="font-weight:400;opacity:.65"> / id</span></th><th>title</th><th>units</th><th>slots</th>
+            </tr></thead><tbody id="dbBody"></tbody></table>
+            <div class="rlog" id="reqLog"></div>
+            <div class="verdict" id="dbVerdict" style="margin-top:12px"></div>
           </div>
-          <div class="ctrls" style="margin-top:14px">
-            <button class="btn primary" id="reqSend">Send</button>
-            <button class="btn" id="reqAgain" disabled>Send the same one again</button>
-            <button class="btn" id="reqReset">Reset table</button>
-          </div>
-          <div class="rtt-note" style="margin-top:14px" id="reqNote"></div>
-        </div>
-      </div>
 
+          <div class="card">
+            <div class="card-t">Pick a request</div>
+            <div class="reqlist" id="reqList"></div>
+            <div class="ctrls" style="margin-top:14px">
+              <button class="btn primary" id="reqSend">Send</button>
+              <button class="btn" id="reqAgain" disabled>Send the same one again</button>
+              <button class="btn" id="reqReset">Reset table</button>
+            </div>
+            <div id="bodyForm" style="display:none;margin-top:13px;padding:13px;border:1px solid var(--req);border-radius:7px;background:var(--panel2)">
+              <div style="font-weight:600;color:var(--req);margin-bottom:4px">Compose the body</div>
+              <p style="margin:0 0 10px;color:var(--faint);line-height:1.5">Untick a field to leave it out of the body. PUT and PATCH differ only in how they treat the missing field.</p>
+              <label class="bf"><input type="checkbox" id="bfOnTitle" checked><span>title</span><input type="text" id="bfTitle" value="Data Structures" maxlength="40"></label>
+              <label class="bf"><input type="checkbox" id="bfOnUnits" checked><span>units</span><input type="number" id="bfUnits" value="3" min="0" max="9"></label>
+              <label class="bf"><input type="checkbox" id="bfOnSlots" checked><span>slots</span><input type="number" id="bfSlots" value="3" min="0" max="99"></label>
+              <div class="art" id="bfBody" style="margin-top:11px;white-space:pre-wrap;overflow-wrap:anywhere"></div>
+            </div>
+            <div id="postForm" style="display:none;margin-top:13px;padding:13px;border:1px solid var(--req);border-radius:7px;background:var(--panel2)">
+              <div style="font-weight:600;color:var(--req);margin-bottom:9px">The body you are sending</div>
+              <label class="pf"><span>Course code</span><input id="pfCode" type="text" placeholder="MATH 11" value="MATH 11" maxlength="12"></label>
+              <label class="pf"><span>Title</span><input id="pfTitle" type="text" placeholder="Linear Algebra" value="Linear Algebra" maxlength="44"></label>
+              <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+                <label class="pf stack"><span>Units</span><input id="pfUnits" type="number" value="3" min="0" max="9"></label>
+                <label class="pf stack"><span>Slots open</span><input id="pfSlots" type="number" value="12" min="0" max="99"></label>
+              </div>
+              <div class="art" id="pfBody" style="margin-top:11px;white-space:pre-wrap;overflow-wrap:anywhere"></div>
+            </div>
+            <div class="rtt-note" style="margin-top:14px" id="reqNote"></div>
+          </div>
+        </div>
+
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Try the other requests</h4>
+          <p>Pick another request in the list and send it twice. PUT and PATCH show a body you can edit. Untick a field and compare what each verb does with the missing value. Send DELETE twice and the second reply is 404.</p>
+          <h4>Course code and id</h4>
+          <p>Each row has two identifying fields. The code is what people read, such as <code>ITENT 45</code>. The id underneath it is what the URL uses, such as <code>ITENT45</code>. The id is the code with spaces removed, because a space cannot appear in a URL unless it is written as <code>%20</code>. The server stores both when it creates the course, and the id never changes after that.</p>
+          <h4>One request or fifty?</h4>
+          <p>A page lists a student's enrollments and needs the course title for each one. You can fetch the list and then fetch each course in turn, or you can design an endpoint (a URL the server answers) that returns everything in one request. A round trip is one request and its reply, and "Round trips and latency" shows what each one costs. A handler is the code on the server that answers one request.</p>
+          <div class="srv">
+            <div class="card">
+              <div class="card-t">Fetching <span id="granN">50</span> courses</div>
+              <table class="hostreq" style="margin-top:2px"><thead><tr>
+                <th>&nbsp;</th><th>one at a time</th><th>one request</th>
+              </tr></thead><tbody id="granBody"></tbody></table>
+              <div class="verdict" id="granVerdict" style="margin-top:13px"></div>
+            </div>
+            <div class="card">
+              <div class="card-t">Settings</div>
+              <div class="sliders">
+                <div class="field">
+                  <label>Items the page needs <span class="val" id="vGran">50</span></label>
+                  <input type="range" id="sGran" min="1" max="200" value="50">
+                </div>
+              </div>
+              <div class="toggles" style="margin-top:14px">
+                <button class="tg" id="tgH2" aria-pressed="false"><span class="dot"></span><span>Use HTTP/2<small>One connection carries many requests at once, and headers are compressed.</small></span></button>
+              </div>
+              <div class="rtt-note" style="margin-top:15px">
+                The model uses a 38 ms round trip, about 700 bytes of request headers per request (cookies, user agent, accept) and 120 bytes per course.
+                <br><br>Over HTTP/1.1 a browser opens six connections to one host, so fifty-one requests wait in batches of six. HTTP/2 is a newer version of the protocol that sends many requests at once over one connection. Turn it on and watch which numbers change and which do not.
+              </div>
+            </div>
+          </div>
+          <h4>When fetching everything is wasteful</h4>
+          <p>The first widget fetched fifty courses because the page needed all fifty. Many lists are different. A course catalog has five hundred entries and a student scrolls past a dozen. Fetching all of them in one request is efficient for each item and wasteful overall, and the first screen waits for data nobody asked to see.</p>
+          <div class="srv">
+            <div class="card">
+              <div class="card-t">A 500-item catalog, 20 per page</div>
+              <table class="hostreq" style="margin-top:2px"><thead><tr>
+                <th>&nbsp;</th><th>everything up front</th><th>as they scroll</th>
+              </tr></thead><tbody id="lazyBody"></tbody></table>
+              <div class="verdict" id="lazyVerdict" style="margin-top:13px"></div>
+            </div>
+            <div class="card">
+              <div class="card-t">How far does a student scroll?</div>
+              <div class="sliders">
+                <div class="field">
+                  <label>Items the student looks at <span class="val" id="vLazy">10</span></label>
+                  <input type="range" id="sLazy" min="5" max="500" step="5" value="10">
+                </div>
+              </div>
+              <div class="rtt-note" style="margin-top:15px">
+                The model uses the same 38 ms round trip, 120 bytes per item and a connection that moves about a megabyte per second.
+                <br><br>Drag the slider all the way right to see a student who reads every course. Even then, check which row still favors loading as the student scrolls.
+              </div>
+            </div>
+          </div>
+          <h4>Choosing how much an endpoint returns</h4>
+          <p>Both designs fail for the same reason: the endpoint was designed without knowing what the page does with it. One request per item costs a round trip each. One request for everything moves data nobody scrolls to. In both cases the fix is to add a parameter to the endpoint. <code>GET /courses?codes=ITENT45,CSCI21</code> returns exactly the missing pieces in one trip. <code>GET /enrollments?include=course</code> lets the caller choose how much detail to receive. <code>GET /courses?limit=20&amp;offset=40</code> lets the caller ask for one slice, which is called pagination.</p>
+          <p>To decide, ask how many of the returned items will be looked at, and how soon the reader needs the first one. If every client loops over your list endpoint to fill in gaps, the endpoint returned too little. If most of what you send is never scrolled to, it returned too much.</p>
+        </details>
       </div>
 
       <div class="sec" data-sec="verb-promises" data-title="What each verb promises">
-      <p>Each verb is safe or not safe, and idempotent or not idempotent. A verb is safe if it changes nothing on the server. It is idempotent if doing it twice leaves things the same as doing it once. Select a verb to see what happens when you send it twice. The code line at the bottom of each card shows how a web framework (a toolkit for writing servers) such as Django checks which verb arrived. A collection is a list of items, such as <code>/courses</code>. One item is a single entry, such as <code>/courses/ITENT45</code>.</p>
-      <div class="verbs" id="verbList"></div>
-      <div class="card" id="verbDetail" style="margin-bottom:22px"></div>
+        <p>Two properties tell you how risky a verb is to repeat. A verb is <dfn title="Changes nothing on the server, so repeating it does no harm">safe</dfn> if it changes nothing. It is <dfn title="Sending it twice leaves the same result as sending it once">idempotent</dfn> if sending it twice gives the same result as sending it once. Select each verb and read what happens when you send it twice.</p>
+        <div class="verbs" id="verbList"></div>
+        <div class="card" id="verbDetail" style="margin-bottom:22px"></div>
 
-      <div class="card-t">The same verb on different URLs</div>
-      <div class="card" style="padding:0;overflow-x:auto">
-        <table class="mtx">
-          <thead><tr>
-            <th style="width:88px">Verb</th>
-            <th>On a collection &nbsp;<code style="color:var(--res)">/courses</code></th>
-            <th>On one item &nbsp;<code style="color:var(--res)">/courses/ITENT45</code></th>
-          </tr></thead>
-          <tbody id="mtxBody"></tbody>
-        </table>
-      </div>
-      <div class="explain" id="mtxOut" style="margin-top:0">
-        <div class="et">Select a cell</div>
-        <p class="hint">Click any cell above to see what that combination means and what it returns.</p>
-      </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The same verb on a collection and on one item</h4>
+          <p>A collection is a list of items, such as <code>/courses</code>. One item is a single entry, such as <code>/courses/ITENT45</code>. Select a cell to see what that combination means and what it returns.</p>
+          <div class="card" style="padding:0;overflow-x:auto">
+            <table class="mtx">
+              <thead><tr>
+                <th style="width:88px">Verb</th>
+                <th>On a collection &nbsp;<code style="color:var(--res)">/courses</code></th>
+                <th>On one item &nbsp;<code style="color:var(--res)">/courses/ITENT45</code></th>
+              </tr></thead>
+              <tbody id="mtxBody"></tbody>
+            </table>
+          </div>
+          <div class="explain" id="mtxOut" style="margin-top:0">
+            <div class="et">Select a cell</div>
+            <p class="hint">The meaning appears here.</p>
+          </div>
 
-      </div>
-
-      <div class="sec" data-sec="status-codes" data-title="Status codes">
-      <p>After you hand in an order slip, the kitchen sends something back: the food, a note that an item is sold out, or nothing because the kitchen is closed. A web server replies with a status code, a three-digit number that reports what happened to your request. The first digit tells you which kind of reply it is.</p>
-
-      <div class="fams">
-        <div class="fam f1"><div class="fc">1xx</div><div class="fn">Informational</div><div class="fw">The server is still working. You will rarely see these.</div></div>
-        <div class="fam f2"><div class="fc">2xx</div><div class="fn">Success</div><div class="fw">The request worked. The codes differ in what came back.</div></div>
-        <div class="fam f3"><div class="fc">3xx</div><div class="fn">Redirect</div><div class="fw">Go to another URL, or use the copy you already have.</div></div>
-        <div class="fam f4"><div class="fc">4xx</div><div class="fn">Client error</div><div class="fw">The request was wrong. The server is working. Fix the request.</div></div>
-        <div class="fam f5"><div class="fc">5xx</div><div class="fn">Server error</div><div class="fw">The request was fine. The server failed. Check the server logs, which are its written record of what happened.</div></div>
-      </div>
-
-      <div class="codes" id="codeChips"></div>
-      <div class="explain" id="codeOut" style="margin-top:0">
-        <div class="et">Select a code</div>
-        <p class="hint">Click any status code above.</p>
-      </div>
-
-      <div class="confuse">
-        <div class="cf">
-          <h5>401 and 403</h5>
-          <p><code>401 Unauthorized</code> means the server does not know who you are. The name is misleading, because the real meaning is unauthenticated. Send your login details and try again.</p>
-          <p><code>403 Forbidden</code> means the server knows who you are and still says no. Better credentials will not help, because you are not allowed.</p>
-        </div>
-        <div class="cf">
-          <h5>404 and 500</h5>
-          <p><code>404</code> and <code>500</code> both look like a broken page to a user, but they point to different places to look.</p>
-          <p>404 means the URL names nothing, so check the request, the path and the id. 500 means the server code failed with an error, so read the server's error report (called a traceback) and ignore the page itself.</p>
-        </div>
-      </div>
-      </div>
-
-      <div class="sec" data-sec="naming-and-one-vs-fifty" data-title="URL names and request size">
-      <p>A URL should name a thing, such as courses or students, and the verb says what to do with it. A common first mistake is to put the action in the URL. This section covers how to name URLs and how much data one request should return.</p>
-
-      <div class="card-t">Naming URLs</div>
-      <div class="urlcmp">
-        <div class="uc no">
-          <div class="uh">✕ Verbs inside the URL</div>
-          <ul>
-            <li>GET /getCourses</li>
-            <li>GET /createEnrollment?student=5</li>
-            <li>POST /updateCourseName</li>
-            <li>GET /deleteStudent?id=5</li>
-          </ul>
-          <p style="margin:11px 0 0;color:var(--dim);line-height:1.5">Every new action needs a new URL, so the list keeps growing. The fourth one also changes data behind a GET. A search engine crawler (a program that follows links) could delete your students.</p>
-        </div>
-        <div class="uc yes">
-          <div class="uh">✓ Nouns in the URL, verb in the method</div>
-          <ul>
-            <li>GET&nbsp;&nbsp;&nbsp;&nbsp;/courses</li>
-            <li>POST&nbsp;&nbsp;&nbsp;/enrollments</li>
-            <li>PATCH&nbsp;&nbsp;/courses/ITENT45</li>
-            <li>DELETE /students/5</li>
-          </ul>
-          <p style="margin:11px 0 0;color:var(--dim);line-height:1.5">A small fixed set of verbs works with a growing set of nouns. Anyone who knows HTTP can guess your URLs without reading documentation. A predictable URL scheme is one of the main benefits of REST.</p>
-        </div>
-      </div>
-
-
-      <div class="card-t" style="margin-top:26px">One request or fifty?</div>
-      <p>A page lists a student's enrollments and needs the course title for each one. You can fetch the list and then fetch each course in turn, or you can design an endpoint (a URL the server answers) that returns everything in one request. A round trip is one request and its reply, and "Round trips and latency" shows what each one costs. A handler is the code on the server that answers one request.</p>
-
-      <div class="srv">
-        <div class="card">
-          <div class="card-t">Fetching <span id="granN">50</span> courses</div>
-          <table class="hostreq" style="margin-top:2px"><thead><tr>
-            <th>&nbsp;</th><th>one at a time</th><th>one request</th>
-          </tr></thead><tbody id="granBody"></tbody></table>
-          <div class="verdict" id="granVerdict" style="margin-top:13px"></div>
-        </div>
-        <div class="card">
-          <div class="card-t">Settings</div>
-          <div class="sliders">
-            <div class="field">
-              <label>Items the page needs <span class="val" id="vGran">50</span></label>
-              <input type="range" id="sGran" min="1" max="200" value="50">
+          <h4>Naming URLs</h4>
+          <p>A URL should name a thing, such as courses or students, and the verb says what to do with it. A common first mistake is to put the action in the URL.</p>
+          <div class="urlcmp">
+            <div class="uc no">
+              <div class="uh">✕ Verbs inside the URL</div>
+              <ul>
+                <li>GET /getCourses</li>
+                <li>GET /createEnrollment?student=5</li>
+                <li>POST /updateCourseName</li>
+                <li>GET /deleteStudent?id=5</li>
+              </ul>
+              <p style="margin:11px 0 0;color:var(--dim);line-height:1.5">Every new action needs a new URL, so the list keeps growing. The fourth one also changes data behind a GET. A search engine crawler (a program that follows links) could delete your students.</p>
+            </div>
+            <div class="uc yes">
+              <div class="uh">✓ Nouns in the URL, verb in the method</div>
+              <ul>
+                <li>GET&nbsp;&nbsp;&nbsp;&nbsp;/courses</li>
+                <li>POST&nbsp;&nbsp;&nbsp;/enrollments</li>
+                <li>PATCH&nbsp;&nbsp;/courses/ITENT45</li>
+                <li>DELETE /students/5</li>
+              </ul>
+              <p style="margin:11px 0 0;color:var(--dim);line-height:1.5">A small fixed set of verbs works with a growing set of nouns. Anyone who knows HTTP can guess your URLs without reading documentation. A predictable URL scheme is one of the main benefits of REST.</p>
             </div>
           </div>
-          <div class="toggles" style="margin-top:14px">
-            <button class="tg" id="tgH2" aria-pressed="false"><span class="dot"></span><span>Use HTTP/2<small>One connection carries many requests at once, and headers are compressed.</small></span></button>
+
+          <h4>What REST asks of you</h4>
+          <p>REST is a set of conventions for using verbs, URLs and status codes together. Model your system as resources: the nouns your users talk about, such as courses, enrollments and students. Give each resource a URL. Act on resources with the standard verbs. Let the status code report the outcome. Keep each request self-contained, so the server does not need to remember the previous one. This is called being stateless. Stateless servers are easier to copy onto many machines, as "Load balancers and scaling" shows.</p>
+
+          <h4>Full example requests</h4>
+          <div class="art"><span class="kw">GET</span> /courses/ITENT45 HTTP/1.1
+
+<span class="kw">POST</span> /enrollments HTTP/1.1
+Content-Type: application/json
+
+{"student":"20-1234","code":"ITENT 45"}
+
+<span class="kw">PUT</span> /courses/ITENT45 HTTP/1.1
+Content-Type: application/json
+
+{"title":"App Dev and Emerging Tech","units":3}
+
+<span class="kw">PATCH</span> /courses/ITENT45 HTTP/1.1
+Content-Type: application/json
+
+{"units":6}
+
+<span class="kw">DELETE</span> /enrollments/8891 HTTP/1.1</div>
+          <p>POST needs protection that you build, such as a unique constraint (a database rule that rejects duplicates) or an idempotency key (a unique code the client sends with each request). "Payments and gateways" shows the second one at work.</p>
+
+          <h4>In Django, Express and Laravel</h4>
+          <p>A web framework is a toolkit for writing servers. Each one checks which verb arrived and runs the matching code.</p>
+          <div class="card" style="padding:0;overflow-x:auto">
+          <table class="meta-table">
+            <thead><tr><th>Verb</th><th>Django</th><th>Express</th><th>Laravel</th></tr></thead>
+            <tbody>
+              <tr><td>GET</td><td><code>request.method == "GET"</code> runs your list or detail view</td><td><code>router.get(path, handler)</code> runs your list or detail route</td><td><code>Route::get(...)</code> runs index() or show()</td></tr>
+              <tr><td>POST</td><td><code>request.method == "POST"</code> calls form.save() or Model.objects.create()</td><td><code>router.post(...)</code> calls prisma.model.create({ data })</td><td><code>Route::post(...)</code> calls Model::create($validated)</td></tr>
+              <tr><td>PUT</td><td><code>request.method == "PUT"</code> overwrites every field on the instance</td><td><code>router.put(...)</code> calls prisma.model.update({ where, data })</td><td><code>Route::put(...)</code> calls $model->update($all)</td></tr>
+              <tr><td>PATCH</td><td><code>request.method == "PATCH"</code> updates only the keys you were sent</td><td><code>router.patch(...)</code> updates only the keys you were sent</td><td><code>Route::patch(...)</code> calls $model->fill($partial)->save()</td></tr>
+              <tr><td>DELETE</td><td><code>request.method == "DELETE"</code> calls instance.delete()</td><td><code>router.delete(...)</code> calls prisma.model.delete({ where })</td><td><code>Route::delete(...)</code> calls $model->delete()</td></tr>
+            </tbody>
+          </table>
           </div>
-          <div class="rtt-note" style="margin-top:15px">
-            The model uses a 38 ms round trip, about 700 bytes of request headers per request (cookies, user agent, accept) and 120 bytes per course.
-            <br><br>Over HTTP/1.1 a browser opens six connections to one host, so fifty-one requests wait in batches of six. HTTP/2 is a newer version of the protocol that sends many requests at once over one connection. Turn it on and watch which numbers change and which do not.
-          </div>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="first-digit" data-title="Read the first digit">
+        <p>After you hand in the order slip, the kitchen replies with the food, a note that an item is sold out, or nothing because it is closed. A web server replies with a status code. The first digit says which kind of reply it is.</p>
+        <div class="fams">
+          <div class="fam f1"><div class="fc">1xx</div><div class="fn">Informational</div><div class="fw">The server is still working. You will rarely see these.</div></div>
+          <div class="fam f2"><div class="fc">2xx</div><div class="fn">Success</div><div class="fw">The request worked. The codes differ in what came back.</div></div>
+          <div class="fam f3"><div class="fc">3xx</div><div class="fn">Redirect</div><div class="fw">Go to another URL, or use the copy you already have.</div></div>
+          <div class="fam f4"><div class="fc">4xx</div><div class="fn">Client error</div><div class="fw">The request was wrong. The server is working. Fix the request.</div></div>
+          <div class="fam f5"><div class="fc">5xx</div><div class="fn">Server error</div><div class="fw">The request was fine. The server failed. Its logs show why.</div></div>
         </div>
       </div>
 
-      </div>
-
-      <div class="sec" data-sec="lazy-loading" data-title="Fetching too much">
-      <div class="card-t">When fetching everything is wasteful</div>
-      <p>The previous section fetched fifty courses because the page needed all fifty. Many lists are different. A course catalog has five hundred entries and a student scrolls past a dozen. Fetching all of them in one request is efficient per item but wasteful overall, and the first screen waits for data nobody asked to see.</p>
-
-      <div class="srv">
-        <div class="card">
-          <div class="card-t">A 500-item catalog, 20 per page</div>
-          <table class="hostreq" style="margin-top:2px"><thead><tr>
-            <th>&nbsp;</th><th>everything up front</th><th>as they scroll</th>
-          </tr></thead><tbody id="lazyBody"></tbody></table>
-          <div class="verdict" id="lazyVerdict" style="margin-top:13px"></div>
+      <div class="sec" data-sec="read-code" data-title="Look up a status code">
+        <p>Select 401 and 403, then 404 and 500. Each explanation says where to look first.</p>
+        <div class="codes" id="codeChips"></div>
+        <div class="explain" id="codeOut" style="margin-top:0">
+          <div class="et">Select a code</div>
+          <p class="hint">The meaning appears here.</p>
         </div>
-        <div class="card">
-          <div class="card-t">How far does a student scroll?</div>
-          <div class="sliders">
-            <div class="field">
-              <label>Items the student looks at <span class="val" id="vLazy">10</span></label>
-              <input type="range" id="sLazy" min="5" max="500" step="5" value="10">
+
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Two pairs that are easy to mix up</h4>
+          <div class="confuse">
+            <div class="cf">
+              <h5>401 and 403</h5>
+              <p><code>401 Unauthorized</code> means the server does not know who you are. The name is misleading, because the real meaning is unauthenticated. Send your login details and try again.</p>
+              <p><code>403 Forbidden</code> means the server knows who you are and still says no. Better credentials will not help, because you are not allowed.</p>
+            </div>
+            <div class="cf">
+              <h5>404 and 500</h5>
+              <p><code>404</code> and <code>500</code> both look like a broken page to a user, and they point to different places to look.</p>
+              <p>404 means the URL names nothing, so check the request, the path and the id. 500 means the server code failed with an error, so read the server's error report (called a traceback) and ignore the page itself.</p>
             </div>
           </div>
-          <div class="rtt-note" style="margin-top:15px">
-            The model uses the same 38 ms round trip, 120 bytes per item and a connection that moves about a megabyte per second.
-            <br><br>Drag the slider all the way right to see a student who reads every course. Even then, check which row still favors loading as the student scrolls.
-          </div>
-        </div>
-      </div>
-
-      <div class="whynot" style="margin-top:18px">
-        <b>Choosing how much an endpoint returns</b>
-        Both designs fail for the same reason: the endpoint was designed without knowing what the page does with it. One request per item costs a round trip each. One request for everything moves data nobody scrolls to. In both cases the fix is to add a parameter to the endpoint. <code>GET /courses?codes=ITENT45,CSCI21</code> returns exactly the missing pieces in one trip. <code>GET /enrollments?include=course</code> lets the caller choose how much detail to receive. <code>GET /courses?limit=20&amp;offset=40</code> lets the caller ask for one slice, which is called pagination.<br><br>To decide, ask how many of the returned items will be looked at, and how soon the reader needs the first one. If every client loops over your list endpoint to fill in gaps, the endpoint returned too little. If most of what you send is never scrolled to, it returned too much.
-      </div>
-
-      <div class="whynot" style="margin-top:20px">
-        <b>What REST asks of you</b>
-        Model your system as resources: the nouns your users talk about, such as courses, enrollments and students. Give each resource a URL. Act on resources with the standard verbs. Let the status code report the outcome. Keep each request self-contained, so the server does not need to remember the previous one. This is called being stateless. Stateless servers are easier to copy onto many machines, as covered later in "Load balancers and scaling".
-      </div>
+          <h4>More status codes</h4>
+          <div class="codes" id="codeChipsMore"></div>
+        </details>
       </div>
     </section>
-

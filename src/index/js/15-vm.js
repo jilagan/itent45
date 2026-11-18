@@ -8,9 +8,9 @@ function vmModel(){
 }
 function renderVm(){
   const m=vmModel();
-  $("#guestRow").innerHTML=Array.from({length:Math.min(VM.guests,8)},(_,i)=>
+  $("#guestRow").innerHTML=Array.from({length:Math.min(VM.guests,4)},(_,i)=>
     `<div class="guest"><div class="gt">Guest ${i+1}</div><div>Applications</div><div>Shell</div><div>Kernel</div></div>`
-  ).join("") + (VM.guests>8?`<div class="guest" style="border-style:dashed;flex:0 0 46px"><div class="gt">+${VM.guests-8}</div></div>`:"");
+  ).join("") + (VM.guests>4?`<div class="guest" style="border-style:dashed;flex:0 0 46px"><div class="gt">+${VM.guests-4}</div></div>`:"");
 
   $("#hostSplit").innerHTML=[
     ["var(--req)", `${VM.guests} guests × ${VM.per} GB each`, m.sold+" GB"],
@@ -21,21 +21,21 @@ function renderVm(){
   const v=$("#vmVerdict");
   if(m.over){
     v.className="verdict bad";
-    v.innerHTML=`<b>Oversold by ${Math.abs(m.free)} GB</b>The guests have been promised ${m.sold} GB, and the host has ${m.avail} GB available. Providers do this on purpose, because guests are rarely all busy at the same time. When they are, your VM slows down without crashing, and nothing in your own code explains why. This is called the noisy-neighbor problem. It is a cost of resource pooling, which means many customers sharing the same hardware.`;
+    v.innerHTML=`<b>Oversold by ${Math.abs(m.free)} GB</b>The guests have been promised ${m.sold} GB and the host has ${m.avail} GB available. When many guests are busy at once, every guest slows down, which is called the noisy-neighbor problem.`;
   } else if(m.ratio>0.85){
     v.className="verdict warn";
-    v.innerHTML=`<b>${Math.round(m.ratio*100)}% committed</b>${m.free} GB is spare on a ${HOST_RAM} GB machine. This is efficient for the provider. It leaves little room if one guest suddenly uses much more memory.`;
+    v.innerHTML=`<b>${Math.round(m.ratio*100)}% committed</b>${m.free} GB is spare on a ${HOST_RAM} GB machine. That is efficient for the provider and leaves little room if one guest suddenly needs more memory.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>${VM.guests} guest${VM.guests===1?"":"s"}, ${m.free} GB spare</b>One physical machine is running ${VM.guests} virtual server${VM.guests===1?"":"s"}. Nobody bought a separate computer for each one, and any guest can be deleted and recreated in about a minute. The rest of this panel depends on that.`;
+    v.innerHTML=`<b>${VM.guests} guest${VM.guests===1?"":"s"}, ${m.free} GB spare</b>One physical machine is running ${VM.guests} virtual server${VM.guests===1?"":"s"}. Any guest can be deleted and recreated in about a minute.`;
   }
 }
 const NIST=[
- ["On-demand self-service","You create capacity yourself, through an API (a way for programs to send commands to the provider) or a web console, without talking to a person or raising a purchase order. Each of the seven servers for the enlistment system needed a procurement cycle, which means a quotation, a purchase order and a delivery. A cloud server needs a credit card and about a minute. This changes how quickly an organization can fix a wrong decision."],
- ["Broad network access","Capabilities are reachable over the network through standard methods, from phones, laptops and other devices. In \"One API, many clients\", the same HTTP endpoint served a browser, an iPhone and an Android app. Standard access methods make that possible."],
- ["Resource pooling","Physical resources are pooled and assigned to many customers as needed, and you generally cannot tell where yours physically run. The diagram at the start of this panel shows this. Pooling keeps cloud prices low. It also means your server sometimes slows down for reasons that are not your fault."],
- ["Rapid elasticity","Capacity can be added and released quickly, and to the customer it looks unlimited. The autoscaling web tier in \"Case study: enlistment\" depends on it. Elasticity changed what is possible for the web tier, but the case study showed that the web tier was not the limit. The database was."],
- ["Measured service","Usage is metered and billed by the unit, such as CPU-hours, gigabytes or requests. Metering turns capital expenditure into operational expenditure, and it produces the cost chart covered later in \"CapEx and OpEx\". It also means a resource you forgot about keeps charging you."]
+ ["On-demand self-service","You create capacity yourself, through an API (a way for programs to send commands to the provider) or a web console, with no purchase order. A cloud server needs a credit card and about a minute, so a wrong decision is cheap to fix."],
+ ["Broad network access","Capabilities are reachable over the network by standard methods, from phones, laptops and other devices. The same HTTP endpoint can serve a browser, an iPhone and an Android app."],
+ ["Resource pooling","Physical resources are pooled and assigned to many customers as needed, and you generally cannot tell where yours run. Pooling keeps cloud prices low and sometimes slows your server for reasons you cannot see."],
+ ["Rapid elasticity","Capacity can be added and released quickly, and to the customer it looks unlimited. A new machine still takes time to boot."],
+ ["Measured service","Usage is metered and billed by the unit, such as CPU-hours, gigabytes or requests. Metering makes cloud costs an ongoing expense, and a resource you forgot about keeps charging you."]
 ];
 $("#nistCards").innerHTML=NIST.map(([t],i)=>
   `<button class="nc" data-i="${i}"><div class="nn">0${i+1}</div><h5>${t}</h5></button>`).join("");
@@ -71,9 +71,9 @@ let elasticityShown=false;   // set by the autoscaler below, which is declared l
 const PROV={mode:"cloud", servers:[], hours:0, bill:0, seq:0, firstUp:null, timer:null, peak:0};
 const MODES={
   cloud:{ readyH:0.02, hourly:3, upfront:0,
-    note:"Provisioning takes about a minute and costs nothing to start. You are billed <b>₱3 per running hour</b> for each server, and the meter stops when you delete one.<br><br>Provision three, then delete two, and watch the bill stop growing for those two. Then leave one running and forget about it." },
+    note:"Provisioning takes about a minute and costs nothing to start. You are billed <b>₱3 per running hour</b> for each server, and the meter stops when you delete one." },
   onprem:{ readyH:1008, hourly:0, upfront:180000,
-    note:"Six weeks: quotation, purchase order, approval, delivery, racking (mounting the server in a cabinet) and imaging (installing the operating system). <b>₱180,000 is charged once</b>, whether or not the machine is ever busy.<br><br>Press delete on a server here and look at the bill. You bought the machine, so it is yours and the money does not come back. This is capital expenditure." }
+    note:"Six weeks pass for quotation, purchase order, delivery and setup, and <b>₱180,000 is charged once</b> whether or not the machine is busy. Deleting a server returns no money, because you own the hardware." }
 };
 function provFmtClock(){
   const d=Math.floor(PROV.hours/24), h=Math.floor(PROV.hours%24), m=Math.floor((PROV.hours%1)*60);
@@ -126,16 +126,16 @@ function renderProv(){
   const v=$("#provVerdict");
   if(!PROV.servers.length){
     v.className="verdict";
-    v.innerHTML="<b>Nothing running</b>Press \"Provision a server\" and watch the clock in the corner.";
+    v.innerHTML="<b>Nothing running</b>Press \"Provision a server\" and watch the clock.";
   } else if(PROV.mode==="onprem"){
     v.className="verdict bad";
-    v.innerHTML=`<b>₱${Math.round(PROV.bill).toLocaleString()} spent, ${up} running</b>You committed the money when you placed the order, and you wait six weeks whatever happens next. Deleting a server here gives nothing back, because you still own the hardware. This is how the servers for the enlistment system were bought.`;
+    v.innerHTML=`<b>₱${Math.round(PROV.bill).toLocaleString()} spent, ${up} running</b>You committed the money when you placed the order, and you wait six weeks whatever happens next.`;
   } else if(done[3]){
     v.className="verdict ok";
-    v.innerHTML=`<b>You have demonstrated four of the five characteristics</b>You created servers in about a minute without asking anyone, reached them over the network, scaled up and back down, and paid by the hour for the time the servers existed.`;
+    v.innerHTML=`<b>You have shown four of the five cloud characteristics</b>You created servers in about a minute without asking anyone, scaled up and back down, and paid by the hour.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>${up} running, ₱${Math.round(PROV.bill).toLocaleString()} so far</b>The meter runs while the servers exist, and only then. Now provision three and delete two. That demonstrates elasticity, the card that has not lit yet.`;
+    v.innerHTML=`<b>${up} running, ₱${Math.round(PROV.bill).toLocaleString()} so far</b>The meter runs only while the servers exist. Provision three and delete two to see capacity grow and shrink.`;
   }
 }
 function provTick(){
@@ -265,16 +265,16 @@ function elRender(){
   if(!EL.running && !EL.hist.length){ v.className="verdict"; v.innerHTML="<b>Not started</b>Press \"Start the day\"."; return; }
   if(!EL.auto){
     v.className="verdict warn";
-    v.innerHTML=`<b>Four machines all day, whatever the load</b>${Math.round(EL.dropped).toLocaleString()} requests have been turned away so far, and in quiet periods most of that capacity sits idle. This is the fixed capacity line covered later in "CapEx and OpEx", drawn one minute at a time.`;
+    v.innerHTML=`<b>Four machines all day, whatever the load</b>${Math.round(EL.dropped).toLocaleString()} requests have been turned away so far, and in quiet periods most of that capacity sits idle.`;
   } else if(EL.shape==="spike" && spikePct>.15){
     v.className="verdict bad";
-    v.innerHTML=`<b>The machines arrived after the rush</b>${Math.round(spikePct*100)}% of the enlistment surge was turned away. The autoscaler noticed within seconds and ordered machines at once. Each machine took ${EL.boot}s to boot, and the students did not wait. Elasticity is fast, but it is not instant.<br><br>Drag the boot time down to see how much you recover. You never recover all of it, because a surge that arrives in one second cannot be absorbed by anything that has to react first. Three things help: capacity that is already running, a queue in front, or spreading out the arrival times. Spreading out the arrivals is the fix from "Case study: enlistment". The slow boot is a second reason why the cloud migration did not fix enlistment morning, in addition to the database limit.`;
+    v.innerHTML=`<b>The machines arrived after the rush</b>${Math.round(spikePct*100)}% of the enlistment surge was turned away, because each machine took ${EL.boot}s to boot. Lower the boot time to recover some of it.`;
   } else if(EL.shape==="spike"){
     v.className="verdict ok";
-    v.innerHTML=`<b>Caught it, at ${EL.boot}s boot</b>Capacity arrived while the surge was still running. Real machines rarely boot this quickly. Pre-warmed instances (machines that are already running and waiting) or a queue in front give the same effect.`;
+    v.innerHTML=`<b>Caught it, at ${EL.boot}s boot</b>Capacity arrived while the surge was still running. Real machines rarely boot this quickly, so providers keep machines warm or put a queue in front.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>Following the load</b>Capacity climbs a few steps behind demand and settles back afterward. Gradual changes suit autoscaling. Capacity always lags demand, and you pay for the lag and for the cooldown period (the wait before a machine is removed) as well as for the work.`;
+    v.innerHTML=`<b>Following the load</b>Capacity climbs a few steps behind demand and settles back afterward. You pay for the lag and for the cooldown, the wait before a machine is removed.`;
   }
 }
 function elLoop(){
@@ -324,13 +324,13 @@ function renderChat(){
   const v=$("#chVerdict");
   if(m.n===0){
     v.className="verdict ok";
-    v.innerHTML=`<b>No extra calls</b>Each request is served by one service and never asks another. Splitting works best in this case, and the case is rare. Drag the slider to see how quickly it stops being true.`;
+    v.innerHTML=`<b>No extra calls</b>Each request is served by one service and never asks another. Splitting works best here, and this case is rare.`;
   } else if(m.n<=3){
     v.className="verdict warn";
-    v.innerHTML=`<b>${m.n} call${m.n===1?"":"s"}, still affordable</b>The handler goes from ${m.mono.toFixed(0)} to ${m.svc.toFixed(0)} ms, and combined uptime drops to ${(m.av*100).toFixed(2)}%. This is manageable, and worth watching. Every new feature that needs one more lookup moves this slider to the right, and it rarely moves back.`;
+    v.innerHTML=`<b>${m.n} call${m.n===1?"":"s"}, still affordable</b>The handler goes from ${m.mono.toFixed(0)} to ${m.svc.toFixed(0)} ms, and combined uptime drops to ${(m.av*100).toFixed(2)}%. Every new feature that needs one more lookup moves the slider to the right.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>${m.n} calls: ${m.mult.toFixed(1)}× slower and unavailable ${m.downMin<60?Math.round(m.downMin)+" minutes":(m.downMin/60).toFixed(1)+" hours"} a month</b>The handler that took ${m.mono.toFixed(0)} ms now takes ${m.svc.toFixed(0)} ms, even though the network is working normally. The extra time comes from ${m.n} separate network round trips where there used to be ${m.n} function calls. You also need all ${m.n} services running at the same time. Each is up ${(SVC_AVAIL*100).toFixed(1)}% of the time, and together they are up ${(m.av*100).toFixed(2)}% of the time. On any request there is a ${(m.slow*100).toFixed(0)}% chance that at least one of them is slow. The problem covered later in "The N+1 query problem" has the same pattern one layer down: many small requests where one would do. A database option such as <code>select_related</code> cannot fix it here.`;
+    v.innerHTML=`<b>${m.n} calls: ${m.mult.toFixed(1)}× slower and unavailable ${m.downMin<60?Math.round(m.downMin)+" minutes":(m.downMin/60).toFixed(1)+" hours"} a month</b>The handler goes from ${m.mono.toFixed(0)} to ${m.svc.toFixed(0)} ms because it makes ${m.n} network round trips where it used to make ${m.n} function calls. All ${m.n} services must be up at once, so combined uptime is ${(m.av*100).toFixed(2)}% and at least one call is slow on ${(m.slow*100).toFixed(0)}% of requests.`;
   }
 }
 $("#sChat").oninput=e=>{CHAT.n=+e.target.value;$("#vChat").textContent=CHAT.n;renderChat()};

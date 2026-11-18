@@ -36,16 +36,16 @@ function renderEnlist(){
   const v=$("#aVerdict");
   if(m.webBreaks && m.dbBreaks){
     v.className="verdict bad";
-    v.innerHTML=`<b>Both tiers overloaded</b>${Math.round(m.peak).toLocaleString()} rps are arriving, against a web tier maximum of ${m.web.toLocaleString()} rps and a database maximum of ${DB_CEIL} ops/s. This is the enlistment morning many students remember. Adding servers fixes the web tier. The database needs the staggering or separating switches.`;
+    v.innerHTML=`<b>Both tiers overloaded</b>${Math.round(m.peak).toLocaleString()} rps are arriving, against a web tier maximum of ${m.web.toLocaleString()} rps and a database maximum of ${DB_CEIL} ops/s. Adding servers fixes the web tier only.`;
   } else if(m.dbBreaks){
     v.className="verdict bad";
-    v.innerHTML=`<b>Web tier coping, database overloaded</b>The web tier handles all ${Math.round(m.peak).toLocaleString()} rps, and ${Math.round(m.dbLoad).toLocaleString()} ops/s still reach one primary database whose maximum is ${DB_CEIL}. ${AI.era==="cloud"?"Moving to the cloud did not fix enlistment day. Autoscaling fixed the web tier, and the web tier was not the limit.":"Adding web servers here would change nothing."} Seat reservations cannot be cached and cannot be spread across replicas, because two students must never get the same last slot.`;
+    v.innerHTML=`<b>Web tier coping, database overloaded</b>The web tier handles all ${Math.round(m.peak).toLocaleString()} rps, but ${Math.round(m.dbLoad).toLocaleString()} ops/s reach one primary database whose maximum is ${DB_CEIL}. ${AI.era==="cloud"?"Autoscaling fixed the web tier, which was not the limit.":"More web servers would change nothing here."}`;
   } else if(m.webBreaks){
     v.className="verdict warn";
-    v.innerHTML=`<b>Web tier is the limit</b>${Math.round(m.peak).toLocaleString()} rps against a maximum of ${m.web.toLocaleString()}. The seven-server setup reached this limit first, and moving to the cloud removed it. Switch to the cloud case to see what limits the system next.`;
+    v.innerHTML=`<b>Web tier is the limit</b>${Math.round(m.peak).toLocaleString()} rps are arriving against a maximum of ${m.web.toLocaleString()}. ${AI.era==="cloud"?"This is the limit of the autoscaled web tier.":"The cloud setup removes this limit, so switch to Now to see what fails next."}`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>Holding, everything fits</b>The peak of ${Math.round(m.peak).toLocaleString()} rps is under the web tier maximum of ${m.web.toLocaleString()} rps, and only ${Math.round(m.dbLoad).toLocaleString()} ops/s reach the primary. ${AI.stag&&AI.split?"Both changes were needed: staggering flattened the peak, and moving reads off the primary left it with only the reservations.":AI.stag?"Staggering flattened the peak and needed no extra hardware.":AI.split?"Moving reads off the primary left it with only the reservations.":"The load is low enough that no changes are needed."}`;
+    v.innerHTML=`<b>Holding, everything fits</b>The peak of ${Math.round(m.peak).toLocaleString()} rps is under the web tier maximum of ${m.web.toLocaleString()} rps, and only ${Math.round(m.dbLoad).toLocaleString()} ops/s reach the primary. ${AI.stag&&AI.split?"Staggering flattened the peak, and moving reads off the primary left it with only the reservations.":AI.stag?"Staggering flattened the peak and needed no extra hardware.":AI.split?"Moving reads off the primary left it with only the reservations.":"The load is low enough that no changes are needed."}`;
   }
 }
 const bindA=(sel,key,fmt,lbl)=>{

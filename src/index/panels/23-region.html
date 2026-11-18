@@ -1,14 +1,22 @@
     <section class="panel" id="p-region">
       <div class="head">
         <h2>Regions, availability zones and failover</h2>
-        <p>Think of a bank with branches in Manila and Cebu. A customer in Manila is served faster at the Manila branch. If a typhoon closes that branch, the Cebu branch can keep serving customers only if it already has a copy of the records.</p>
-        <p>Cloud providers organize their locations in a similar way. A <b>region</b> is a geographic area that contains several data centers, like a city. An <b>availability zone</b> is one data center in a region, like one building in that city. Zones in the same region are far enough apart to fail separately and close enough to copy data between them almost instantly. <b>Failover</b> means switching to a standby copy when the main one fails.</p>
-        <p>Latency is the delay before a response arrives, and it depends on distance. In "Round trips and latency", most of a page load was round trips, and more server capacity did not make a slow round trip shorter. Choosing a region trades speed, survival and cost against each other.</p>
-        <div class="ask"><b>Think first.</b> Light in fiber travels about 200,000 km per second. A round trip between Manila and Virginia covers 27,400 km. What is the fastest a response could come back on a perfect network with no server at all?</div>
+        <p>A cloud provider offers servers in <dfn title="A geographic area that contains several data centers">regions</dfn> around the world. The region you choose sets how far your servers are from your users and how well your site survives a failure.</p>
+      </div>
+
+      <div class="sec" data-sec="bank" data-title="Start with two bank branches">
+        <p>A bank has branches in Manila and Cebu. A customer in Manila is served faster at the Manila branch. If a typhoon closes that branch, the Cebu branch can keep serving customers only if it already has a copy of the records.</p>
+        <div class="scene" role="group" aria-label="A branch in a city is a region, one building in the city is an availability zone, the copy of the records in Cebu supports failover" data-art="bank-branches" data-art-desc="Two bank branches in different cities with tellers and customers, a storm closing the first while the second still holds a copy of its records.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bank"/></svg></div><figcaption><b>Branch in a city</b><span>Region</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-building-apartment"/></svg></div><figcaption><b>One building in the city</b><span><dfn title="One data center inside a region">Availability zone</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Cebu has a copy of the records</b><span><dfn title="Switching to a standby copy when the main one fails">Failover</dfn></span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> If light in fiber travels 200,000 km per second, what is the fastest possible round trip between Manila and Virginia, which is 27,400 km there and back?</div>
+        <div class="instructor">The answer is 27,400 divided by 200,000, which is 0.137 seconds or about 137 ms. Students who answer 69 ms have counted one direction only. The slider in the next step shows the same figure.</div>
       </div>
 
       <div class="sec" data-sec="distance" data-title="What distance costs">
-        <p>Pick a region and see how far away it is from your users in Metro Manila, and what that distance does to the wait for a page.</p>
+        <p>Distance sets the <dfn title="The delay before a response arrives, which grows with distance">latency</dfn> your users feel. Move the slider or click a region on the map, then read the <dfn title="The wait before the first part of the page arrives">time to first byte</dfn>.</p>
         <div class="worldwrap">
           <svg id="worldMap" viewBox="0 0 960 470" preserveAspectRatio="xMidYMid meet"></svg>
           <div class="maplegend">
@@ -19,8 +27,9 @@
           </div>
         </div>
 
-        <div class="srv" style="margin-bottom:22px">
+        <div class="srv">
           <div class="card">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-bank"/></svg>
             <div class="card-t">What the distance costs</div>
             <div class="legend2" id="latStats"></div>
             <div class="verdict" id="latVerdict"></div>
@@ -32,23 +41,24 @@
                 <label>Region <span class="val" id="vRegion">Singapore</span></label>
                 <input type="range" id="sRegion" min="0" max="7" value="1">
               </div>
-              <p style="margin:8px 0 0;color:var(--faint);line-height:1.5">You can also click a region on the map.</p>
-            </div>
-            <div class="rtt-note" style="margin-top:15px">
-              The minimum round trip is the round-trip distance divided by the speed of light in glass fiber. Real networks take about 1.5 times that, because packets pass through switches and rarely travel in a straight line.
-              <br><br>Time to first byte is the wait before the first part of the page arrives. Here it is five round trips plus the 40 ms your code takes to run.
-              <br><br>No code, purchase or optimization gets below this minimum. Only moving closer does.
             </div>
           </div>
         </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>How the figures are worked out</h4>
+          <p>The minimum round trip is the round-trip distance divided by the speed of light in glass fiber. Real networks take about 1.5 times that, because packets pass through switches and rarely travel in a straight line.</p>
+          <p>Time to first byte here is five round trips plus the 40 ms your code takes to run. No code, purchase or optimization gets below the minimum. Only moving closer does.</p>
+          <h4>Where you have seen this</h4>
+          <p>In "Round trips and latency", most of a page load was round trips, and more server capacity did not make a slow round trip shorter. A distant region produces the same effect.</p>
+        </details>
       </div>
 
-      <div class="sec" data-sec="failover" data-title="What happens when something fails">
-        <div class="card-t">What happens when something fails</div>
-        <p style="margin:0 0 14px;font-size:.85em;color:var(--dim);line-height:1.6">A load balancer uses health checks to stop sending traffic to a failed machine, as in "Load balancers and scaling". Health checks help when one machine fails. A data center failure needs one of the four options below, listed from cheapest to most expensive.</p>
-
+      <div class="sec" data-sec="failure" data-title="What happens when something fails">
+        <p>Choose how much protection to buy, then press a failure button and see what survives. The options run from cheapest to most expensive.</p>
         <div class="srv">
           <div class="card">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-building-apartment"/></svg>
             <div class="card-t">Simulate a failure</div>
             <div class="ctrls">
               <button class="btn" id="killSrv">Kill one machine</button>
@@ -56,7 +66,7 @@
               <button class="btn" id="killReg">Kill the whole region</button>
               <button class="btn primary" id="fixAll">Recover</button>
             </div>
-            <div class="legend2" id="foStats" style="margin-top:14px"></div>
+            <div class="legend2" id="foStats"></div>
             <div class="verdict" id="foVerdict"></div>
           </div>
           <div class="card">
@@ -64,11 +74,23 @@
             <div class="postures" id="postureList"></div>
           </div>
         </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Load balancers and data center failures</h4>
+          <p>A load balancer uses health checks to stop sending traffic to a failed machine, as in "Load balancers and scaling". A data center failure takes every machine in it, so it needs one of the options above.</p>
+          <h4>Two ways to copy data</h4>
+          <p>Multi-AZ saves each write in both data centers before confirming it. This is called synchronous replication, and it works because the buildings are milliseconds apart.</p>
+          <p>Multi-region copies each write to Tokyo after confirming it. This is called asynchronous replication, and the newest writes can be lost if the primary region fails.</p>
+          <h4>Recovery time and recovery point</h4>
+          <p>The recovery time objective (RTO) is how long until you are back. The recovery point objective (RPO) is how much data you accept losing. Choose both before an outage, because afterward they are chosen for you.</p>
+        </details>
+      </div>
 
-        <div class="whynot" style="margin-top:20px">
-          <b>What this means for your capstone</b>
-          Every user of your capstone is in Metro Manila, so choose Singapore. Use multi-AZ (two data centers in one region) if the provider offers it by default, because it costs little and protects against a data center failure. Do not use multi-region. It doubles the cost, needs code to resolve conflicting writes, and accepts a window of lost data, all to survive an event that has never happened to your users. Multi-region makes sense when a region outage costs more than running two of everything. Know that number before you decide.
-        </div>
+      <div class="sec" data-sec="choose" data-title="Choose for your capstone">
+        <p>Every user of your capstone is in Metro Manila, so choose Singapore. Use multi-AZ, which means two data centers in one region, if the provider offers it by default. It costs little and protects against a data center failure. Skip multi-region, which doubles the cost and needs code to resolve conflicting writes.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>Multi-region also accepts a window of lost data, all to survive an event that has never happened to your users. It makes sense when a region outage costs more than running two of everything. Know that number before you decide.</p>
+        </details>
       </div>
     </section>
-

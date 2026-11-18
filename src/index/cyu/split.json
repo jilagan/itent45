@@ -3,7 +3,7 @@
  "items": [
   {
    "id": "split-1",
-   "sec": "memory",
+   "sec": null,
    "type": "mc",
    "stem": "An app runs as six identical copies behind a load balancer. Each copy can do everything the app does. How should you describe it?",
    "options": [
@@ -32,8 +32,8 @@
   {
    "id": "split-2",
    "sec": "memory",
-   "type": "predict",
-   "stem": "Before you try it: the application is quiet at 40 rps and busy at 400 rps. Which design uses less memory at each load?",
+   "type": "mc",
+   "stem": "The application is quiet at 40 rps and busy at 400 rps. Which design uses less memory at each load?",
    "options": [
     {
      "text": "The monolith at 40 rps, and the services at 400 rps.",
@@ -55,12 +55,11 @@
      "correct": false,
      "feedback": "This reverses the pattern. Splitting pays off as load grows."
     }
-   ],
-   "try": "Drag Total load to 40 rps and read the two memory totals, then drag it to 400 rps and read them again."
+   ]
   },
   {
    "id": "split-3",
-   "sec": "costs",
+   "sec": null,
    "type": "mc",
    "stem": "After a split, showing one enrollment page needs 4 calls to other services. Each service is up 99.9% of the time. About how often will that page fail because a service is down?",
    "options": [
@@ -84,12 +83,11 @@
      "correct": false,
      "feedback": "Small failure rates add up when a request depends on several services at once."
     }
-   ],
-   "try": "Set Calls to other services to 4 and read Combined uptime."
+   ]
   },
   {
    "id": "split-4",
-   "sec": "costs",
+   "sec": null,
    "type": "mc",
    "stem": "Which situation is the best reason to split one part of your application into its own service?",
    "options": [

@@ -13,7 +13,7 @@ const ATT=[
   words:["The","animal","didn't","cross","the","street","because","it","was","too","tired","."],
   w:{it:{animal:.62,street:.09,cross:.05,tired:.14,The:.02,didn_t:.03,because:.04,was:.01},
      tired:{animal:.41,it:.28,street:.06,was:.12,too:.09,cross:.04}},
-  v:`<b><code>it</code> is looking hardest at <code>animal</code></b>The weight is 0.62 for animal against 0.09 for street. No grammar rule decides this, and word order does not explain it, because street is the nearer of the two words to <code>it</code>.<br><br>The weight is a <strong>similarity score</strong>. <code>it</code> sends out a question, every other word describes what it offers, and the score shows how well the two match. In a real model, both are positions in the space described in "Vectors and similarity", so the match is a distance, calculated fresh for each sentence.<br><br>What <code>it</code> asks for depends on the words around it, and one of those words is <em>tired</em>. Switch to the other sentence to see what changes.`},
+  v:`<b><code>it</code> is looking hardest at <code>animal</code></b>The weight is 0.62 for animal and 0.09 for street, although street is the nearer word. Switch the last word to wide and see what changes.`},
  {id:"wide", asks:{it:"a noun that can be wide", wide:"a thing this could describe"},
   offers:{animal:"a living thing that acts, and gets tired",
           street:"a place, a surface, something with width",
@@ -23,7 +23,7 @@ const ATT=[
   words:["The","animal","didn't","cross","the","street","because","it","was","too","wide","."],
   w:{it:{animal:.11,street:.58,cross:.08,wide:.16,The:.02,didn_t:.02,because:.02,was:.01},
      wide:{street:.47,it:.26,animal:.07,was:.11,too:.06,cross:.03}},
-  v:`<b>One word changed and <code>it</code> now points at <code>street</code></b>The weight is 0.58 for street against 0.11 for animal. The sentence has the same structure as the last one, and every word is in the same position. Only the final adjective is different.<br><br>Because <code>it</code> builds its question from the words around it, a different last word gives a different question. <em>Tired</em> asks for something that can be tired. <em>Wide</em> asks for something with width, so <code>street</code> is now the better match.<br><br>No rule about pronouns was used. Two positions were compared, and one was closer.`}
+  v:`<b>One word changed and <code>it</code> now points at <code>street</code></b>The weight is 0.58 for street and 0.11 for animal. Each word builds its question from the words around it, so a new last word gives a new question.`}
 ];
 const AS={sel:"tired", word:"it", n:1000};
 function attRender(){
@@ -80,7 +80,7 @@ function attCost(){
   set("#atRel", "×"+(c/(1000*1000)).toFixed(c/1e6<10?1:0));
   $("#atCostNote").innerHTML = n<=1000
     ? `A thousand tokens needs a million comparisons. This is the baseline.`
-    : `${n.toLocaleString()} tokens needs ${(c/1e6).toFixed(1)} million comparisons. That is <b>${(c/1e6).toFixed(0)}×</b> the work of a thousand-token prompt for ${(n/1000).toFixed(0)}× the text. Doubling the context roughly quadruples the cost, so the cost of long contexts rises faster than the number of tokens.`;
+    : `${n.toLocaleString()} tokens needs ${(c/1e6).toFixed(1)} million comparisons. That is <b>${(c/1e6).toFixed(0)}×</b> the work of a thousand-token prompt for ${(n/1000).toFixed(0)}× the text.`;
 }
 $("#sCtxN").oninput=e=>{AS.n=+e.target.value;attCost()};
 attRender();

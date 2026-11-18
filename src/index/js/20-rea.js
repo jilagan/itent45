@@ -71,10 +71,10 @@ function renderErd(){
   const v=$("#erdVerdict");
   if(erdMode==="messy"){
     v.className="verdict warn";
-    v.innerHTML=`<b>Same diagram, harder to read</b>Every box is correct. The crow's feet point in five directions and the lines cross, and where a box sits tells you nothing about it. Switch to "Crow's feet up and left" to compare.`;
+    v.innerHTML=`<b>Same diagram, harder to read</b>Every box is correct, but the lines cross and where a box sits tells you nothing. Switch to "Crow's feet up and left" to compare.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>The busy tables moved to the top left</b>The only rule applied was to point the crow's feet up and to the left. The crow's foot sits on the many side, and the many side is the entity that records events, so those entities moved to the top left and the entities they refer to moved to the bottom right.<br><br>Read the diagonal. <b class="i">Payment and Enrollment</b> are at the top left, with tens of thousands of rows a term. <b class="i">Student, Course and Room</b> are at the bottom right and change slowly. Section is in the middle because it is on the many side of Course and Room and on the one side of Enrollment. Every foreign key, which is a column that holds the id of a row in another table, now points down and to the right. That is also the direction of "depends on".`;
+    v.innerHTML=`<b>The busy tables moved to the top left</b>Payment and Enrollment have tens of thousands of rows a term and sit at the top left. Student, Course and Room change slowly and sit at the bottom right.`;
   }
 }
 renderErd();
@@ -86,25 +86,25 @@ const REA=[
         agtIn:"Registrar", agtOut:"Student"},
   take:{res:"Tuition", resS:"cash, or a promise of it", evt:"Payment", evtS:"a row per amount received",
         agtIn:"Cashier", agtOut:"Student"},
-  gap:"A student holds a seat with no matching payment. Every school has a report for this, and the report exists because the two events are recorded separately."},
+  gap:"The gap to look for is a seat with no matching payment."},
  {id:"shop", n:"Online store",
   give:{res:"Stock item", resS:"what is on the shelf", evt:"Sale", evtS:"a row per line of an order",
         agtIn:"Merchant", agtOut:"Customer"},
   take:{res:"Cash", resS:"what the gateway settles", evt:"Payment", evtS:"a row per charge",
         agtIn:"Merchant", agtOut:"Customer"},
-  gap:"Goods were shipped and no payment has settled. \"Payments and gateways\" covers the same problem as it appears on the network. Here it appears as a missing row in the data."},
+  gap:"The gap to look for is goods shipped with no settled payment."},
  {id:"lib", n:"Library loan",
   give:{res:"Book copy", resS:"a physical thing, one at a time", evt:"Loan", evtS:"a row per borrowing",
         agtIn:"Librarian", agtOut:"Borrower"},
   take:{res:"Book copy", resS:"the same one, coming back", evt:"Return", evtS:"a row per return",
         agtIn:"Librarian", agtOut:"Borrower"},
-  gap:"A loan with no matching return. This is the overdue notice, and the model produces it directly."},
+  gap:"The gap to look for is a loan with no matching return, which is an overdue notice."},
  {id:"clinic", n:"Clinic visit",
   give:{res:"Consultation slot", resS:"a doctor's time", evt:"Appointment", evtS:"a row per booking",
         agtIn:"Doctor", agtOut:"Patient"},
   take:{res:"Fee", resS:"cash or an insurance claim", evt:"Billing", evtS:"a row per charge raised",
         agtIn:"Clinic", agtOut:"Patient or insurer"},
-  gap:"A consultation that was given and never billed, which is a missing Billing row."}
+  gap:"The gap to look for is a consultation that was given and never billed."}
 ];
 let reaSel="enroll";
 const RB_W=240, RB_H=60;
@@ -158,7 +158,7 @@ function renderRea(){
 
   const v=$("#reaVerdict");
   v.className="verdict ok";
-  v.innerHTML=`<b>The same structure in every case</b>Switch between the four cases. The labels change and the structure stays the same: a resource, an event that moved it, two agents, and a second event that pairs with the first.<br><br>Look at where the crow's feet sit. One resource appears in many events, and one agent takes part in many events, so <b class="i">the event table holds both foreign keys</b>. This follows the rule from "Relationships" that the foreign key goes on the many side.<br><br><b class="i">A question this model answers directly:</b> ${r.gap}`;
+  v.innerHTML=`<b>The same structure in every case</b>The labels change and the six boxes stay the same. ${r.gap}`;
 }
 renderRea();
 

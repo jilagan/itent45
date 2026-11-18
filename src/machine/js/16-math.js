@@ -20,18 +20,16 @@ function mtDotRender(){
       <line x1="${X(B[0])}" y1="${Y(B[1])}" x2="${X(B[0])}" y2="${oy}" stroke="var(--req)" stroke-width="1" stroke-dasharray="3 3" opacity=".6"/>`;
   $("#mtDot").innerHTML=g+`</svg>`;
   $("#mtDotSum").innerHTML=
-    `<span class="c">// a is [4, 0]. b is [${B[0].toFixed(2)}, ${B[1].toFixed(2)}].</span>\n`+
-    `a &middot; b  =  4 &times; ${B[0].toFixed(2)}  +  0 &times; ${B[1].toFixed(2)}\n`+
-    `       =  <span class="kw">${dot.toFixed(2)}</span>`;
+    `a &middot; b  =  4 &times; ${B[0].toFixed(2)}  +  0 &times; ${B[1].toFixed(2)}  =  <span class="kw">${dot.toFixed(2)}</span>`;
   const set=(id,v,hot,good)=>{const g2=$(id);g2.querySelector(".gv").firstChild.nodeValue=v;
     g2.classList.toggle("hot",!!hot);g2.classList.toggle("good",!!good)};
   set("#mtDotVal", dot.toFixed(2), dot<-0.01, dot>8);
   $("#vMtAng").textContent=MT.ang+"\u00b0";
   $("#mtDotNote").innerHTML = MT.ang<12
-    ? `The arrows point the same way, so the number is at its largest. <b style="color:var(--ink)">A large positive number means the vectors are closely aligned.</b>`
-    : MT.ang<85 ? `The arrows are partly aligned. Only the part of <b>b</b> that lies along <b>a</b> counts, which is the shaded stretch on the horizontal axis.`
-    : MT.ang<95 ? `At a right angle the number is <b style="color:var(--ink)">zero</b>. No part of <b>b</b> lies along <b>a</b>, so the two vectors share nothing.`
-    : `Past a right angle the number is negative, which means the arrows point apart. A negative dot product is a useful signal, not an error.`;
+    ? `The arrows point the same way, so the number is at its largest.`
+    : MT.ang<85 ? `The arrows are partly aligned. Only the part of <b>b</b> that lies along <b>a</b> counts, shown by the shaded stretch.`
+    : MT.ang<95 ? `At a right angle the number is <b style="color:var(--ink)">zero</b>, because no part of <b>b</b> lies along <b>a</b>.`
+    : `Past a right angle the number is negative, which means the arrows point apart.`;
 }
 /* --- 2. slope --- */
 function mtSlopeRender(){
@@ -49,7 +47,7 @@ function mtSlopeRender(){
       stroke="var(--req)" stroke-width="2.2" stroke-dasharray="${Math.abs(s)<0.2?"none":"5 4"}"/>
     <circle cx="${px}" cy="${py}" r="6" fill="var(--req)"/></g>
     <text x="${X(3)}" y="${Y(1)-13}" font-size="12.5" fill="var(--res)" text-anchor="middle">Lowest point</text>
-    <text x="${ox}" y="18" font-size="12.5" fill="var(--faint)">How wrong the model is</text>
+    <text x="462" y="18" font-size="12.5" fill="var(--faint)" text-anchor="end">How wrong the model is</text>
     <text x="462" y="${oy+15}" font-size="12.5" fill="var(--faint)" text-anchor="end">The weight &rarr;</text>`;
   $("#mtSlope").innerHTML=g+`</svg>`;
   const set=(id,v,hot,good)=>{const g2=$(id);g2.querySelector(".gv").firstChild.nodeValue=v;
@@ -60,9 +58,9 @@ function mtSlopeRender(){
   $("#vMtW").textContent=w.toFixed(1);
   const v=$("#mtSlopeV");
   if(Math.abs(s)<0.25){ v.className="verdict ok";
-    v.innerHTML=`<b>The slope is zero and the straight line is flat</b>The slope gives no direction to move, so training stops here. This is the lowest point of the curve.`;
+    v.innerHTML=`<b>The slope is zero, so the line is flat</b>There is no direction to move, so training stops here at the lowest point.`;
   } else { v.className="verdict";
-    v.innerHTML=`<b>The slope is ${(s>=0?"+":"")+s.toFixed(1)}, so move ${s>0?"left":"right"}</b>The straight line through the dot shows the slope at this point. The curve ${s>0?"rises":"falls"} as you go right, so moving ${s>0?"left":"right"} lowers the number. Training makes this decision once for each weight at every step.`;
+    v.innerHTML=`<b>The slope is ${(s>=0?"+":"")+s.toFixed(1)}, so move ${s>0?"left":"right"}</b>The curve ${s>0?"rises":"falls"} as you go right, so moving ${s>0?"left":"right"} lowers how wrong the model is.`;
   }
 }
 /* --- 3. distribution and loss --- */
@@ -78,16 +76,20 @@ function mtDistRender(){
   const loss=-Math.log(p);
   const set=(id,v,hot,good)=>{const g=$(id);g.querySelector(".gv").firstChild.nodeValue=v;
     g.classList.toggle("hot",!!hot);g.classList.toggle("good",!!good)};
-  set("#mtSum","100%",false,true);
+  const total=Math.round(rows.reduce((a,r)=>a+r[1],0)*100);
+  set("#mtSum",total+"%",false,true);
   set("#mtLoss", loss.toFixed(2), loss>1.5, loss<0.4);
   $("#vMtP").textContent=MT.p+"%";
   const v=$("#mtDistV");
-  if(p>=.8){ v.className="verdict ok";
-    v.innerHTML=`<b>Loss ${loss.toFixed(2)}, close to the minimum</b>Most of the probability is on the answer that turned out to be right. Training pushes every example toward this state. The minimum loss is zero, which needs 100% on the right answer.`;
-  } else if(p<=.15){ v.className="verdict bad";
-    v.innerHTML=`<b>Loss ${loss.toFixed(2)}, and rising fast</b>Almost no probability is on the right answer. Each time the probability halves, the loss goes up by the same amount, about 0.69. A confident wrong answer therefore costs the model a lot during training.`;
-  } else { v.className="verdict warn";
-    v.innerHTML=`<b>Loss ${loss.toFixed(2)}</b>Move the slider and watch the loss. The bars always add up to 100%, so any probability given to Paris comes from the other words.`;
+  v.className="verdict ok";
+  v.innerHTML=`<b>Paris has ${MT.p}%, and the other words share ${100-MT.p}%</b>The total stays at 100%, so more probability for Paris means less for the rest.`;
+  const lv=$("#mtLossV");
+  if(p>=.8){ lv.className="verdict ok";
+    lv.innerHTML=`<b>Loss ${loss.toFixed(2)}, close to the minimum</b>Most of the probability is on the right answer. The minimum loss is zero, which needs 100% on the right answer.`;
+  } else if(p<=.15){ lv.className="verdict bad";
+    lv.innerHTML=`<b>Loss ${loss.toFixed(2)}, and rising fast</b>Almost no probability is on the right answer, so a confident wrong answer costs the model a lot during training.`;
+  } else { lv.className="verdict warn";
+    lv.innerHTML=`<b>Loss ${loss.toFixed(2)}</b>Move the slider and watch how the loss changes.`;
   }
 }
 $("#sMtAng").oninput=e=>{MT.ang=+e.target.value;mtDotRender()};

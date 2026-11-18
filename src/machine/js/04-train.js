@@ -65,25 +65,25 @@ function trRender(){
 
   $("#vLr").textContent=LRS[TR.lr][0];
   $("#trNote").innerHTML={
-    0:`Each step moves the line only a little. It is going the right way, and it will need thousands of steps to arrive. This is wasted computing.`,
+    0:`Each step moves the line only a little. It goes the right way but needs thousands of steps, which wastes computing.`,
     1:`Steady progress. The loss falls on every step and the line settles where it should.`,
-    2:`Watch the loss curve. It falls, goes past the bottom, comes back, and starts bouncing. The line jitters and does not settle.`,
-    3:`The steps are so large that each one ends higher up the hill than where it started. The loss climbs, and waiting does not fix it.`
+    2:`The loss falls, goes past the bottom and starts bouncing. The line jitters and does not settle.`,
+    3:`Each step ends higher up the hill than where it started. The loss climbs, and waiting does not fix it.`
   }[TR.lr];
 
   const v=$("#trVerdict");
   if(TR.step===0){
     v.className="verdict";
-    v.innerHTML=`<b>A line placed at random</b>Loss ${L.toFixed(3)}. It gets ${ok} of ${TRD.length} right, which is about what guessing gets you. Press <em>One step</em> a few times and watch both the line and the loss.`;
+    v.innerHTML=`<b>A line placed at random</b>Loss ${L.toFixed(3)}, with ${ok} of ${TRD.length} right, which is about what guessing gets you. Press <em>One step</em> a few times, or <em>Run 200</em>.`;
     return;
   }
   const rising = h.length>6 && h[h.length-1] > h[Math.max(0,h.length-6)];
   if(TR.lr===3 || (rising && TR.lr===2)){
     v.className="verdict bad";
-    v.innerHTML=`<b>The loss is going up</b>The steps are too large, so each one goes past the bottom and ends higher up the other side. Training is running, the computer is busy, and the model is getting worse.<br><br>Nothing raises an error when this happens. You find out by watching the loss, and anyone who trains a model watches it.`;
+    v.innerHTML=`<b>The loss is going up</b>The steps are too large, so each one goes past the bottom and ends higher up the other side. Nothing raises an error, so you find out by watching the loss.`;
   } else if(L<0.45){
     v.className="verdict ok";
-    v.innerHTML=`<b>Loss ${L.toFixed(3)} after ${TR.step} step${TR.step===1?"":"s"}, ${ok} of ${TRD.length} correct</b>The line stopped moving because the slope under it flattened out. The loss cannot go lower with a straight line.<br><br>The two students it still gets wrong are the same two as in "Training and test data", and no straight line can catch them. The fix is covered later in "Neural networks".`;
+    v.innerHTML=`<b>Loss ${L.toFixed(3)} after ${TR.step} step${TR.step===1?"":"s"}, ${ok} of ${TRD.length} correct</b>The line stopped moving because the slope under it flattened out. No straight line can catch the two students it still gets wrong.`;
   } else {
     v.className="verdict warn";
     v.innerHTML=`<b>Loss ${L.toFixed(3)}, ${ok} of ${TRD.length} correct after ${TR.step} step${TR.step===1?"":"s"}</b>The loss is still falling. Keep pressing <em>One step</em>, or press <em>Run 200</em>.`;

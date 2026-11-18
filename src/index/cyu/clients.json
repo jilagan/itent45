@@ -3,7 +3,7 @@
  "items": [
   {
    "id": "clients-1",
-   "sec": "one-backend",
+   "sec": "one-api",
    "type": "mc",
    "stem": "A university already has a web API that returns course data as JSON. It now wants an Android app that shows the same courses. What does the Android app need from the backend?",
    "options": [
@@ -26,7 +26,7 @@
   },
   {
    "id": "clients-2",
-   "sec": "server-rendered",
+   "sec": null,
    "type": "mc",
    "stem": "A system returns finished HTML tables from its server. The university wants an iOS app that shows the same course list. What is the main difficulty?",
    "options": [
@@ -36,7 +36,7 @@
      "feedback": "There is no separate data layer to call. Scraping breaks whenever the page layout changes, so building an API means pulling the logic out of the page-generating code."
     },
     {
-     "text": "iOS apps cannot open a connection to a server that returns HTML.",
+     "text": "iOS apps cannot open a connection to a server that returns HTML pages.",
      "correct": false,
      "feedback": "Any app can connect to the server. The problem is that the response is built for a browser and not for another program."
     },
@@ -49,7 +49,7 @@
   },
   {
    "id": "clients-3",
-   "sec": "version-drift",
+   "sec": null,
    "type": "mc",
    "stem": "Your team adds a new optional field to an API response and removes nothing. What happens to people who still run an old version of the app?",
    "options": [
@@ -72,9 +72,9 @@
   },
   {
    "id": "clients-4",
-   "sec": "version-drift",
+   "sec": null,
    "type": "predict",
-   "stem": "You rename the field `slots` to `seats` and ship the change. Before you try it: seven days later, who is most likely to see errors?",
+   "stem": "You rename the field `slots` to `seats` and ship the change. Seven days later, who is most likely to see errors?",
    "options": [
     {
      "text": "Mobile users who have not updated their app",
@@ -92,7 +92,7 @@
      "feedback": "The server now sends `seats`, but old app copies still look for `slots` and fail."
     }
    ],
-   "try": "Select Breaking, move the slider to 7 days, and read the percentage on each platform's bar."
+   "try": "In the step \"Change an API\", select Breaking, move the slider to 7 days, and read the percentage on each platform's bar."
   }
  ]
 }

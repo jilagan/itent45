@@ -1,14 +1,21 @@
     <section class="panel on" id="p-intro">
       <div class="head">
         <h2>AI, machine learning, deep learning and generative AI</h2>
-        <p>A calculator gives the right change because someone wrote the rules of arithmetic into it. A new cashier learns to spot a fake bill by handling thousands of bills, and nobody writes down the rule. Both are useful, and they get there in different ways. That difference separates four terms that people often use as if they meant the same thing: artificial intelligence (AI), machine learning, deep learning and generative AI. Each one sits inside the one before it.</p>
-        <p style="margin-top:11px">Knowing which term fits a system tells you how it was built and how it tends to fail.</p>
-        <div class="ask"><b>Think first.</b> A chess program beat the world champion in 1997. Would you call it artificial intelligence? Did it learn from the games it played? Decide on your answers, then check them against the chess example below.</div>
-        <div class="instructor">Ask for a show of hands on both questions before students open the chess example. Most will say yes to AI and split on learning. The rule-based case matters most for the rest of the module, because later panels assume students can tell a learned model from a hand-written program.</div>
+        <p><dfn title="Software that does something we would call intelligent if a person did it">Artificial intelligence</dfn>, machine learning, deep learning and generative AI are often used as if they meant the same thing. Each one sits inside the one before it.</p>
       </div>
 
-      <div class="sec" data-sec="rings" data-title="Where each term sits">
-        <p>Each system below is one of the four kinds. Select a system to see which circles it falls inside.</p>
+      <div class="sec" data-sec="calculator" data-title="Start with a calculator and a cashier">
+        <p>A calculator gives the right change because someone wrote the rules of arithmetic into it. A new cashier learns to spot a fake bill by handling thousands of bills, and nobody writes down the rule. Both are useful. The four terms describe which way a system was built.</p>
+        <div class="scene" data-art="calculator-and-cashier" data-art-desc="A shop counter with a pocket calculator on one side and a cashier on the other, holding a banknote up to the light to check it." role="group" aria-label="A calculator follows written rules, a trained cashier learns from examples">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Calculator, rules written by people</b><span>AI without learning</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Trained cashier, learns from examples</b><span><dfn title="Programs that work out their own rule from examples">Machine learning</dfn></span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> A chess program beat the world champion in 1997. Is it artificial intelligence, and did it learn from its games? Decide, then check in the next step.</div>
+        <div class="instructor">Ask for a show of hands on both questions before students open the chess example. Most will say yes to AI and split on learning. The rule-based case matters most for the rest of the module, because later lessons assume students can tell a learned model from a hand-written program.</div>
+      </div>
+
+      <div class="sec" data-sec="rings" data-title="Place systems in the circles">
+        <p>Select a system in the list to see which circles it falls inside. Two of the eight are AI that does no machine learning at all.</p>
         <div class="srv">
           <div>
             <div class="scatter" id="inRings"></div>
@@ -17,49 +24,49 @@
           <div class="card">
             <div class="card-t">Choose a system</div>
             <div class="reqlist" id="inList"></div>
-            <div class="rtt-note" style="margin-top:14px">
-              Two of these systems are AI that does no machine learning at all. Many people forget that this kind exists.
-            </div>
           </div>
         </div>
       </div>
 
-      <div class="sec" data-sec="plain-terms" data-title="The four terms in plain language">
-        <p>Here are the four terms from the outside in. Three terms need defining first. A <b style="color:var(--ink)">feature</b> is one measurement that a person decides to feed the program, such as the number of links in an email. <b style="color:var(--ink)">Labeled data</b> means examples that come with the right answer attached, such as emails already marked spam or not spam. An <b style="color:var(--ink)">algorithm</b> is a fixed set of steps for solving a problem.</p>
-        <div class="famgrid">
-          <div class="fam s">
-            <div class="ft">Outermost</div>
-            <h5>Artificial intelligence</h5>
-            <p>Any program that does something we would call intelligent if a person did it, such as searching, planning, following rules or reasoning with logic. Most of it was written by hand, learns nothing, and is decades old.</p>
-            <span class="eg">chess engines &middot; route finding &middot; scheduling</span>
+      <div class="sec" data-sec="plain-terms" data-title="The four terms in plain words">
+        <p>Read the circles from the outside in.</p>
+        <div class="cmp">
+          <div class="card">
+            <div class="card-t">Artificial intelligence</div>
+            <p>Any program that does something we would call intelligent. Most of it is hand-written rules.</p>
           </div>
-          <div class="fam s">
-            <div class="ft">Inside that</div>
-            <h5>Machine learning</h5>
-            <p>Programs that work out their own rule from examples. Nobody writes the rule down. People supply a million emails already labeled spam or not spam, and the program finds the dividing line between the two groups itself.</p>
-            <span class="eg">spam filters &middot; credit scoring &middot; recommendations</span>
+          <div class="card">
+            <div class="card-t">Machine learning</div>
+            <p>Programs that work out their own rule from <dfn title="Examples that come with the right answer attached">labeled data</dfn>.</p>
           </div>
-          <div class="fam u">
-            <div class="ft">Inside that</div>
-            <h5>Deep learning</h5>
-            <p>Machine learning built from many stacked layers. The layers work out for themselves what is worth measuring, so a person no longer chooses the features. You give it the raw input, such as pixels or sound.</p>
-            <span class="eg">face recognition &middot; speech to text &middot; translation</span>
+          <div class="card">
+            <div class="card-t">Deep learning</div>
+            <p>Machine learning with stacked layers that choose their own <dfn title="One measurement a program uses, such as the number of links in an email">features</dfn> from raw input.</p>
           </div>
-          <div class="fam u">
-            <div class="ft">Innermost</div>
-            <h5>Generative AI</h5>
-            <p>Systems that produce new content, such as a paragraph, an image or a working function. A spam filter gives one of two answers, spam or not spam. A generative system writes out something that did not exist before.</p>
-            <span class="eg">language models &middot; image models &middot; coding assistants</span>
+          <div class="card">
+            <div class="card-t">Generative AI</div>
+            <p>Systems that produce new content, such as text, images or code.</p>
           </div>
         </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Examples of each kind</h4>
+          <p>Artificial intelligence: chess engines, route finding, scheduling. Machine learning: spam filters, credit scoring, recommendations. Deep learning: face recognition, speech to text, translation. Generative AI: language models, image models, coding assistants.</p>
+          <h4>Labeled data and features</h4>
+          <p>For a spam filter, labeled data is a million emails already marked spam or not spam. A feature is one measurement a person decides to feed the program, such as the number of links. Deep learning takes over the job of choosing features, so you give it the raw input, such as pixels or sound.</p>
+          <h4>Generative AI and the other three</h4>
+          <p>A spam filter gives one of two answers. A generative system writes out something that did not exist before.</p>
+        </details>
+      </div>
 
-        <div class="whynot" style="margin-top:20px">
-          <b>Three points to keep in mind</b>
-          <b style="color:var(--ink)">AI is not new.</b> The term was coined in 1956. What changed recently is the small innermost circle in the diagram.
-          <br><br><b style="color:var(--ink)">Most AI does not learn.</b> A great deal of what runs your bank, your airline and your traffic lights is rules that people wrote. It works, and nobody markets it as AI any more.
-          <br><br><b style="color:var(--ink)">When a product says "AI" today, it usually means the innermost circle.</b> Ask which kind it is, because the four fail in different ways. A rule that is wrong is wrong the same way every time. A model that is wrong is wrong in a way that depends on the examples it was trained on.
-          <br><br>The rest of this module is about the innermost circle. It covers what the model predicts, how it is trained, what it reads, and what happens when you give it tools.
-        </div>
+      <div class="sec" data-sec="ask-which" data-title="What to ask about a product">
+        <p>AI is not new. The term dates from 1956, and much of what runs banks and airlines is hand-written rules. Today a product that says "AI" usually means generative AI. Ask which kind it is, because a wrong rule is wrong the same way every time, and a wrong model is wrong in ways that depend on its training examples.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Most AI does not learn</h4>
+          <p>A great deal of what runs your bank, your airline and your traffic lights is rules that people wrote. It works, and nobody markets it as AI any more. What changed recently is the small innermost circle in the diagram.</p>
+          <h4>Where this module goes</h4>
+          <p>The rest of the module is about the innermost circle. It covers what the model predicts, how it is trained, what it reads, and what happens when you give it tools.</p>
+        </details>
       </div>
     </section>
-

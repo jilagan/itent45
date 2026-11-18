@@ -34,15 +34,15 @@ function lpRender(){
   set("#lpCost", "₱"+(lpAt*0.9+Math.pow(lpAt,1.6)*0.11).toFixed(2), lpAt>12);
   const v=$("#lpVerdict");
   if(lpAt===0){ v.className="verdict";
-    v.innerHTML=`<b>Six iterations, eighteen lines</b>Press Step. Pay attention to the Observation lines. They are the only lines that do not come from the model.`; return; }
+    v.innerHTML=`<b>Six rounds, eighteen lines</b>Each round is a Thought, an Action and an Observation. Observation lines are the only ones that do not come from the model.`; return; }
   if(lpAt<9){ v.className="verdict";
-    v.innerHTML=`<b>Iteration ${Math.ceil(lpAt/3)} of 6</b>Each iteration is a Thought, an Action and an Observation. So far the agent is doing what a careful person would do.`; return; }
+    v.innerHTML=`<b>Round ${Math.ceil(lpAt/3)} of 6</b>So far the agent is doing what a careful person would do.`; return; }
   if(lpAt===9){ v.className="verdict ok";
-    v.innerHTML=`<b>The test failed, and the agent found out</b>This line matters most. The failing test came from the test runner, not from the model, and it contradicted a conclusion the model had already reached. Without tools, that mistake would have gone unnoticed and shipped.<br><br>With tools, the model can be wrong <b class="i">and find out</b>. Keep stepping.`; return; }
+    v.innerHTML=`<b>The test failed, and the agent found out</b>The failing test came from the test runner and contradicted the model's own conclusion. With tools, the model can be wrong <b class="i">and find out</b>.`; return; }
   if(lpAt<16){ v.className="verdict warn";
     v.innerHTML=`<b>The agent corrected itself and the tests pass</b>This looks like success. Keep stepping.`; return; }
   v.className="verdict bad";
-  v.innerHTML=`<b>Nobody asked it to reorder the imports</b>The task was finished at step 15. The agent kept going and changed a file that was already correct. Imports are the lines at the top of a file that list the code it uses. The change leaves a diff, a list of edits, for you to review.<br><br>Look at the two numbers on the right. The context grows with every step. The cost per step grows faster than the step count, because attention cost rises with the square of the context length. The greyed-out lines at the top have dropped out of what the model can still see, <b class="i">including the instruction you started with</b>.<br><br>A question for later: at which step should you have stepped in? Module 3 covers how to decide.`;
+  v.innerHTML=`<b>Nobody asked it to reorder the imports</b>The task was finished at step 15, yet the agent kept going and changed a file that was already correct. The greyed lines have left what the model can still see, <b class="i">including your first instruction</b>.`;
 }
 $("#lpStep").onclick=()=>{ if(lpAt<STEPS.length){lpAt++;lpRender();} };
 $("#lpPlay").onclick=()=>{

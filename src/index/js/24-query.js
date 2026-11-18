@@ -3,7 +3,7 @@ const Q={rows:50, mode:"naive"};
 const Q_MS=0.4, Q_BASE=24, Q_WORKERS=8;
 const QMODES=[
  {id:"naive", n:"One query per row", s:"Loop over the enrollments and read the title from each one."},
- {id:"join",  n:"One join", s:"One query fetches each enrollment together with its course. Django calls this select_related."},
+ {id:"join",  n:"One join", s:"One query fetches each enrollment together with its course."},
  {id:"cache", n:"Cache the titles", s:"Titles change rarely, so keep a copy in memory."}
 ];
 function qModel(){
@@ -55,19 +55,19 @@ rows = Enrollment.objects.filter(student=me)      <span class="c"># 1 query</spa
   set("#qQueries", m.queries, m.queries>10, m.queries<=2);
   set("#qDb", m.dbMs.toFixed(1)+" ms", m.dbMs>10, m.dbMs<2);
   set("#qHandler", m.handler.toFixed(1)+" ms", m.handler>40, m.handler<28);
-  set("#qCeil", Math.round(m.rps)+" rps", m.rps<120, m.rps>250);
+  set("#qCeil", Math.round(m.rps), m.rps<120, m.rps>250);
 
   const naive=(()=>{const q=n+1,d=q*Q_MS,h=Q_BASE+d;return {q,h,rps:Q_WORKERS/(h/1000)};})();
   const v=$("#qVerdict");
   if(Q.mode==="naive"){
     v.className = n>20 ? "verdict bad" : "verdict warn";
-    v.innerHTML=`<b>${n+1} queries for one page</b>The view runs one query to fetch the enrollments. The template then runs one more query for each row, because it asks for <code>e.course.title</code> and the course was never loaded. This is the <b class="i">N+1 query problem</b>, and it is a common performance bug in applications built this way.<br><br>At ${n} rows the server tops out at <b class="i">${Math.round(m.rps)} requests a second</b>. Switch to "One join" and compare that number.`;
+    v.innerHTML=`<b>${n+1} queries: the N+1 query problem</b>The page asks once for the enrollments, then once more for each row's course. At ${n} rows the server tops out at ${Math.round(m.rps)} pages a second, so try One join and compare.`;
   } else if(Q.mode==="join"){
     v.className="verdict ok";
-    v.innerHTML=`<b>1 query, and the ceiling rose from ${Math.round(naive.rps)} to ${Math.round(m.rps)} rps</b>The page, the rows and the output are the same. <code>select_related("course")</code> tells the database to return the courses together with the enrollments in one query, so the template finds them already loaded. One line of code gives <b class="i">${(m.rps/naive.rps).toFixed(1)}×</b> the capacity.<br><br>AI tools often leave this line out, because the version without it also produces a correct page.`;
+    v.innerHTML=`<b>1 query, and the server now serves up to ${Math.round(m.rps)} pages a second, up from ${Math.round(naive.rps)}</b>The page and its output are the same, and the capacity is ${(m.rps/naive.rps).toFixed(1)}× higher. One line of code asks the database for each enrollment together with its course.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>Also 1 query, with no join needed</b>Course titles change a few times a year, so a cache, which is a copy kept in memory, can hold them for an hour at almost no cost. The title lookups then leave the request entirely. This works well when the table is small and rarely changes. It works badly when the data changes often, because then you hold two copies of the same fact and one of them is out of date. "Normalization" describes the same problem.`;
+    v.innerHTML=`<b>Also 1 query, with no join</b>Course titles change a few times a year, so a copy kept in memory can serve them for an hour. This works for small tables that rarely change.`;
   }
 }
 $("#sQRows").oninput=e=>{Q.rows=+e.target.value;$("#vQRows").textContent=Q.rows;qRender()};

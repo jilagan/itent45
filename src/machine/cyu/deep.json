@@ -3,7 +3,7 @@
  "items": [
   {
    "id": "deep-1",
-   "sec": "stacked-units",
+   "sec": "stack",
    "type": "mc",
    "stem": "Students drop a course when they study very little and when they take on far too many other commitments. The students in the middle stay. Why can a single straight line not separate the stayers from the dropouts?",
    "options": [
@@ -31,9 +31,9 @@
   },
   {
    "id": "deep-2",
-   "sec": "stacked-units",
-   "type": "predict",
-   "stem": "Before you try it: you switch off \"Keep the nonlinearity\" and set the Units slider to 2 and then move it up to 8. What do you expect to happen to the accuracy?",
+   "sec": null,
+   "type": "mc",
+   "stem": "A network has its nonlinearity switched off, and the number of units goes from 2 to 8. What happens to the accuracy?",
    "options": [
     {
      "text": "It stays flat. Adding straight lines together gives another straight line.",
@@ -55,14 +55,13 @@
      "correct": false,
      "feedback": "The network still draws a straight line, so some students are classified correctly."
     }
-   ],
-   "try": "Switch off \"Keep the nonlinearity\", set the Units slider to 2, move it up to 8, and watch the Correct box."
+   ]
   },
   {
    "id": "deep-3",
-   "sec": "what-it-means",
+   "sec": null,
    "type": "mc",
-   "stem": "A neural network diagram for the dropout problem has four circles in the middle row. What does each circle correspond to on the plot?",
+   "stem": "A neural network for the dropout problem has four units in its hidden layer. What does each unit correspond to on the plot of students?",
    "options": [
     {
      "text": "One straight line, set by that unit's weights and bias",
@@ -82,13 +81,13 @@
     {
      "text": "One of the measurements a person chose to feed into the network",
      "correct": false,
-     "feedback": "The measurements are the inputs on the left of the diagram. The middle circles are hidden units that the network sets up itself."
+     "feedback": "The measurements are the inputs to the network. The hidden units are set up by the network itself."
     }
    ]
   },
   {
    "id": "deep-4",
-   "sec": "what-it-means",
+   "sec": null,
    "type": "mc",
    "stem": "A bank uses a deep learning model to score loan applications. The model is very accurate, but a regulator asks which measurements drove a particular rejection. Why is that hard to answer?",
    "options": [

@@ -31,9 +31,9 @@
   },
   {
    "id": "journey-2",
-   "sec": null,
-   "type": "predict",
-   "stem": "Before you try it: you double the one-way latency from 5 ms to 10 ms. What happens to the time spent in the server handler and to the network time?",
+   "sec": "distance",
+   "type": "mc",
+   "stem": "You double the one-way latency from 5 ms to 10 ms. What happens to the time spent in the server handler and to the network time?",
    "options": [
     {
      "text": "The handler stays at 40 ms and the network time roughly doubles.",
@@ -48,15 +48,14 @@
     {
      "text": "The handler time doubles and the network time stays the same.",
      "correct": false,
-     "feedback": "This reverses the effect. Distance changes network time and has no effect on how long your code runs."
+     "feedback": "This reverses the effect. Distance changes network time, and it has no effect on how long your code runs."
     },
     {
      "text": "Neither changes, because distance does not affect the server.",
      "correct": false,
      "feedback": "The network time changes because each round trip takes twice as long."
     }
-   ],
-   "try": "Move the one-way latency slider from 5 ms to 10 ms and compare the timing chart."
+   ]
   },
   {
    "id": "journey-3",

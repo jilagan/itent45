@@ -1,48 +1,46 @@
     <section class="panel" id="p-vectors">
       <div class="head">
         <h2>Vectors and similarity of meaning</h2>
-        <p>On a map, two pins that are close together mark places that are near each other. Words can be treated the same way. A token is only an ID number, and an ID number carries no meaning, so each token is converted into a <b>vector</b>: a list of numbers that gives the word a position.</p>
-        <p style="margin-top:11px">Real models use a few hundred numbers per word, so their map has a few hundred directions. This list of numbers is the word's embedding. Words that appear in similar company end up in similar places, as "Word embeddings" showed. Nobody labels the words.</p>
-        <div class="ask"><b>Think first.</b> Which other words would you want a search for <em>enroll</em> to find? Why might a computer place those words near <em>enroll</em> without anyone telling it they mean the same thing?</div>
+        <p>A <dfn title="A list of numbers that gives a word a position on a map">vector</dfn> places a word on a map. Words used in similar ways get nearby positions, so closeness on the map stands for closeness in meaning.</p>
       </div>
-      <div class="sec" data-sec="words" data-title="Words as positions">
-        <div class="whynot" style="margin-top:0">
-          <b>Before you read the map</b>
-          The sixteen words on this map were placed by hand so the relationships come out cleanly. "Word embeddings" showed the real process on a corpus small enough to watch. This panel skips ahead to what a large corpus produces. A real embedding has hundreds of dimensions, and its positions are learned from text. The map is a diagram of the idea, and the word arithmetic was set up to work.
+
+      <div class="sec" data-sec="map" data-title="Start with a map">
+        <p>On a map, two pins that are close together mark places that are near each other. A word gets a position the same way. Real models use hundreds of numbers per word, and nobody labels the words. Words that appear in similar company get similar positions.</p>
+        <div class="scene" data-art="map-pins" data-art-desc="A paper map of a city with colored pins, where pins for places in the same neighborhood sit close together and a far-away pin sits alone." role="group" aria-label="A pin's coordinates are a vector, nearby pins are similar words">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-table"/></svg></div><figcaption><b>Pin's coordinates</b><span>Vector</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg></div><figcaption><b>Pins close together</b><span>Similar words</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>A pin for a whole message</b><span>Sentence position</span></figcaption></figure>
         </div>
-        <p style="margin:14px 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Each button shows a sum of three word positions: the first word, minus the second, plus the third. The circle marked <em>result</em> is where the sum ends up, and the nearest word to it is the answer.</p>
-        <div class="ctab" id="vcPick"></div>
-        <div class="srv">
-          <div>
-            <div class="wordmap" id="vcMap"></div>
-            <div class="art" id="vcSum" style="margin-top:12px"></div>
-            <div class="verdict" id="vcVerdict" style="margin-top:13px"></div>
-          </div>
-          <div class="card">
-            <div class="card-t">A detail that is often left out</div>
-            <div class="toggles">
-              <button class="tg" id="tgExcl" aria-pressed="true"><span class="dot"></span>Do not answer with the input words</button>
-            </div>
-            <div class="rtt-note" style="margin-top:14px">
-              Turn this option off to see which word is nearest to the result. The well-known answer only appears when the three input words are removed from the candidates, and this rule is rarely mentioned.
-              <br><br>The pattern exists in real models. These word positions were placed by hand to show it.
-            </div>
-            <div class="whynot" style="margin-top:14px">
-              <b>Newer models give one vector per use of a word</b>
-              In this panel, <em>bank</em> would get a single point, somewhere between the river and the money. Modern models give a word a different vector depending on the sentence around it. That change is a main reason retrieval, which means finding the passages most relevant to a question, works as well as it does today.
-            </div>
-          </div>
+        <div class="ask"><b>Think first.</b> Which other words would you want a search for <em>enroll</em> to find? Why might a computer place them near <em>enroll</em> without being told they mean the same?</div>
+        <div class="instructor">Students tend to give synonyms such as register and sign up. Ask what in the text could place them close together without anyone labeling them.</div>
+      </div>
+
+      <div class="sec" data-sec="words" data-title="Add and subtract words">
+        <p>Each button is a sum of three word positions: the first word, minus the second, plus the third. The circle marked <em>result</em> is where the sum ends up, and the nearest word is the answer. These positions were placed by hand to show the idea.</p>
+        <div>
+          <div class="ctab" id="vcPick"></div>
+          <div class="wordmap" id="vcMap"></div>
+          <div class="verdict" id="vcVerdict" style="margin-top:13px"></div>
         </div>
-        <div class="whynot" style="margin-top:20px">
-          <b>What to take from the bias example</b>
-          Embeddings absorb the statistics of the text they were built from. That matters when the space is used inside a hiring screen or a scholarship filter. The famous analogies also overstate how cleanly this can be read off, because the example was arranged to work.
-          <br><br>A model reflects the text it was built from. A prompt cannot remove that, because it is built into the positions the model uses. Anyone who claims a single tidy number for how biased a model is should be asked how they measured it.
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The rule that is often left out</h4>
+          <p>The well-known answer appears only when the three input words are removed from the candidates. Turn the option off to see which word is nearest to the result.</p>
+          <div class="toggles">
+            <button class="tg" id="tgExcl" aria-pressed="true"><span class="dot"></span>Do not answer with the input words</button>
+          </div>
+          <div class="art" id="vcSum" style="margin-top:12px"></div>
+          <h4>Why the bias example is disputed</h4>
+          <p>A 2016 paper by Bolukbasi and colleagues reported the programmer analogy using word2vec trained on Google News, and it became a standard illustration of bias in embeddings. Nissim and colleagues showed in 2020 that the analogy method produces part of the result. The search must exclude the input words, so it has to return something other than <code>programmer</code>, and a gendered-looking answer is partly a product of that rule.</p>
+          <p>What holds up is smaller. An embedding is built from a corpus, and patterns in that corpus become geometry. A prompt cannot remove that, because it is built into the positions the model uses. Anyone who claims one tidy number for how biased a model is should be asked how it was measured.</p>
+          <h4>One vector per use of a word</h4>
+          <p>On this map, <em>bank</em> would get one point, somewhere between the river and the money. Newer models give a word a different vector depending on the sentence around it. That change is a main reason retrieval works as well as it does today.</p>
           <div class="instructor">Both statements hold, and students tend to keep only one of them: embeddings do absorb the statistics of their corpus, and the famous analogies overstate how cleanly that shows up.</div>
-        </div>
+        </details>
       </div>
-      <div class="sec" data-sec="sentences" data-title="Sentences as positions">
-        <div class="card-t">Similarity between sentences</div>
-        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A sentence also gets a position, worked out from the words in it. Once two sentences are positions, how alike they are depends on the angle between their arrows. Pick any two sentences and compare the score with the number of words they share.</p>
+
+      <div class="sec" data-sec="sentences" data-title="Compare two sentences">
+        <p>A sentence also gets a position, worked out from its words. How alike two sentences are depends on the angle between their arrows. Pick two sentences and compare the <dfn title="A score from 0 to 1 for how closely two arrows point the same way">similarity</dfn> score with the number of words they share.</p>
         <div class="srv">
           <div>
             <div class="wordmap" id="simMap"></div>
@@ -55,20 +53,23 @@
           <div class="card">
             <div class="card-t">Pick two sentences</div>
             <div class="reqlist" id="simList"></div>
-            <div class="rtt-note" style="margin-top:14px">
-              The score is the <b style="color:var(--ink)">cosine</b> of the angle between the two arrows. It is 1 when the arrows point the same way and 0 when they are at right angles. It measures direction only, so a long sentence and a short one can score highly when they are about the same thing.
-            </div>
           </div>
         </div>
-        <div class="whynot" style="margin-top:16px">
-          <b>Search by meaning</b>
-          A student types <em>how do I sign up for a class</em>. Your help page is titled <em>course enrollment process</em>. They share almost no words, so a keyword search, which matches the exact words typed, finds nothing useful. As positions, the two point in nearly the same direction.
-          <br><br>The reverse also happens. <em>How do I drop a class</em> shares five words with the sign-up question and means the opposite, and the score reflects that. Two sentences can share many words and mean opposite things. The score here measures meaning.
-        </div>
-        <div class="whynot" style="margin-top:20px">
-          <b>Retrieval</b>
-          If similar meanings sit near each other, then finding the chunks of text nearest to a question becomes something a computer can calculate. This is called retrieval. It is what happens when you point an AI assistant at your documents. A student asking how to stop a double enrollment can be matched to a page about idempotency keys, which stop a repeated request from being processed twice, without the two sharing a single word.
-        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>What the score is</h4>
+          <p>The score is the cosine of the angle between the two arrows. It is 1 when the arrows point the same way and 0 when they are at right angles. It measures direction only, so a long sentence and a short one can score highly when they are about the same thing.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="search" data-title="Search by meaning">
+        <p>A student types <em>how do I sign up for a class</em>. The help page is titled <em>course enrollment process</em>. The two share almost no words, so a <dfn title="A search that matches the exact words typed">keyword search</dfn> finds nothing useful. Their positions point the same way, so finding the nearest text, called <dfn title="Finding the passages of text nearest in meaning to a question">retrieval</dfn>, finds the page.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Retrieval in AI assistants</h4>
+          <p>Retrieval happens when you point an AI assistant at your documents. A student asking how to stop a double enrollment can be matched to a page about idempotency keys, which stop a repeated request from being processed twice, without the two sharing a single word.</p>
+          <h4>The reverse case</h4>
+          <p><em>How do I drop a class</em> shares five words with the sign-up question and means the opposite, and the score reflects that. Two sentences can share many words and mean opposite things.</p>
+        </details>
       </div>
     </section>
-

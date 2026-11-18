@@ -73,3 +73,18 @@ Final report: under 20 lines. Files changed, anything you could not do, facts yo
 
 ## Videos
 Videos go on the Ateneo BUILD YouTube channel and are embedded through src/<page>/videos.json. The BUILD logo must be prominent in every video: on the opening card, as a persistent corner mark through the video, and on the end card. Videos are scripted from the final panel copy, so they are made after the rewrite is merged.
+
+## Simplicity rules (round 2, overrides anything above that conflicts)
+The owner's verdict on round 1: "still too complex and intimidating. Too many things going on in each page." A first screen held three paragraphs, a question, a framework switch, three dense cards, a trace and a 26-item rail. The rule now is one idea and one thing to do per screen.
+
+A panel is a lesson. A lesson is a short run of steps shown one at a time.
+- Lesson head: the h2 and one lede of at most 2 sentences and 35 words. Nothing else in `.head`.
+- Every panel is divided into `.sec` steps (`<div class="sec" data-sec="slug" data-title="Short title">`), 3 to 5 of them. More than 5 means something moves to "More detail" or is cut.
+- Step 1 is the everyday picture: the analogy in at most 60 words, one line or small picture mapping it to the technical terms, then the "Think first" question (one sentence, at most 30 words). No widget in step 1 unless the widget is the picture.
+- Each later step: at most 70 words of visible prose, at most ONE widget, and one sentence saying what to do with it ("Press Play and watch where the request goes."). The prose comes before the widget. What the widget shows after use (its verdict text) is at most 2 sentences.
+- At most 3 new terms per step. Mark each new term once as `<dfn title="plain definition in under 15 words">term</dfn>`.
+- Depth goes in `<details class="more"><summary>More detail</summary>...</details>`, closed by default: second-order facts, framework variants (Django/Express/Laravel switches), tables of options, byte counts, edge cases, caveats, code listings, extra comparisons, cross-references. A student who never opens one must still meet the lesson's three outcomes (docs/audit-structure.md D2). When in doubt, it goes in More detail. Cutting is allowed when the text only repeats.
+- Inside widgets: card text at most 20 words per card; secondary rows ("Runs on", "You write", "In practice", "Stack") go inside More detail or appear only when the card is active. Secondary controls that a business student does not need to meet the outcomes are moved into More detail or removed from view.
+- Questions: at most one Check Your Understanding item at the end of a step (set its "sec"); the remaining items (sec null) form the final step, which the platform adds itself, titled "Check your understanding". Keep 3 to 4 items per lesson in total.
+- Keep widgets working and keep ids. Moving a widget's secondary control into a `<details>` is fine; test that the widget still initialises when the details is closed.
+- Plain words on buttons and step titles ("See the three tiers", "Follow one request", "Check your understanding").

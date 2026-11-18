@@ -1,0 +1,37 @@
+    <section class="panel" id="p-bytes">
+      <div class="head">
+        <div class="eyebrow">04 — The wire format</div>
+        <h2>HTTP is text you could type by hand</h2>
+        <p>There is no magic in an HTTP call. It is a plain text message with a first line, some key–value headers, a blank line, and optionally a body. Click any highlighted part to see what it does.</p>
+        <div class="ask"><b>Ask the room</b> If this is just text over a socket, what stops you from typing it yourself with <code>telnet</code>? (Nothing. We'll do it live.)</div>
+      </div>
+
+      <div class="ctrls">
+        <button class="btn" data-scn="get" aria-pressed="true">GET · 200 OK</button>
+        <button class="btn" data-scn="post" aria-pressed="false">POST · 201 Created</button>
+        <button class="btn" data-scn="miss" aria-pressed="false">GET · 404 Not Found</button>
+      </div>
+
+      <div class="bytes">
+        <div>
+          <div class="card-t">Request, browser to server</div>
+          <div class="raw" id="rawReq"></div>
+        </div>
+        <div>
+          <div class="card-t">Response, server to browser</div>
+          <div class="raw resp" id="rawRes"></div>
+        </div>
+      </div>
+      <div class="explain" id="explain">
+        <div class="et">SELECT A LINE</div>
+        <p class="hint">Click any highlighted part of the request or response above.</p>
+      </div>
+      <div class="card-t" style="margin-top:26px">Run this yourself</div>
+      <p style="margin:0 0 6px;font-size:.85em;color:var(--dim);line-height:1.6">Everything above is a picture of bytes. Here is how to see the real ones on your own machine, which is also the setup for Breakout 1. You need Python 3.8 or newer and nothing else.</p>
+      <div class="fmtpick" id="shellPick" style="margin-top:12px"></div>
+      <div class="steps3" id="runSteps"></div>
+
+
+    </section>
+
+    <!-- ================= 05 VERBS & REST ================= -->

@@ -1,0 +1,29 @@
+    <section class="panel" id="p-card">
+      <div class="head">
+        <div class="eyebrow">10 — Module 5 · relationships</div>
+        <h2>Cardinality decides what your tables look like</h2>
+        <p>Two entities, one relationship between them, and a question: how many of each side can pair with how many of the other? The answer is one of three, and each produces a different set of tables. Get it wrong on the diagram and you will discover it later, in production, when somebody needs a second one of something you allowed only one of.</p>
+        <div class="ask"><b>Ask the room</b>. Can a student take more than one course? Can a course have more than one student? Two yeses, and the tables you are about to draw are not the tables you expected.</div>
+      </div>
+
+      <div class="ctab" id="cardTab"></div>
+
+      <div class="srv">
+        <div>
+          <div class="art" id="cardDia" style="text-align:center;padding:22px 12px"></div>
+          <div class="cards2" id="cardTables" style="margin-top:13px"></div>
+          <div class="verdict" id="cardVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">What each one costs you</div>
+          <div class="rtt-note" id="cardNote"></div>
+        </div>
+      </div>
+
+      <div class="whynot" style="margin-top:20px">
+        <b>The junction table is where the interesting columns live</b>
+        Students meet many-to-many and treat the extra table as bookkeeping, a nuisance the database imposes. It is the opposite. That table is the only place a date, a status or a grade can sit, because those facts describe the pairing and belong to neither side. Panel 09 called <em>Enrolment</em> an entity for exactly this reason. The diagram was telling you a table was missing before you knew you needed one.
+      </div>
+    </section>
+
+    <!-- ================= REA / UNIVERSAL DATA MODELS ================= -->

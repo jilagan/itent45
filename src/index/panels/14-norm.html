@@ -1,0 +1,59 @@
+    <section class="panel" id="p-norm">
+      <div class="head">
+        <div class="eyebrow">14 — Module 5 · one table or many</div>
+        <h2>The same fact, written down in forty places</h2>
+        <p>An agent will happily design your schema, and the first one it offers usually works. Whether it keeps working depends on a question no test will ask: when one fact changes, how many rows have to change with it? Here are the same enrolments stored two ways.</p>
+        <div class="ask"><b>Ask the room</b>. A course changes its title. In a spreadsheet, how many cells do you edit? Now: how sure are you that you got all of them?</div>
+      </div>
+
+      <div class="srv">
+        <div class="card">
+          <div class="card-t">One flat table &nbsp;<span style="font-family:var(--mono);font-size:.7em;color:var(--faint)">enrollments</span></div>
+          <div style="overflow-x:auto"><table class="db" id="flatTbl"></table></div>
+          <div class="verdict" id="flatVerdict" style="margin-top:12px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">Split in two &nbsp;<span style="font-family:var(--mono);font-size:.7em;color:var(--faint)">courses + enrollments</span></div>
+          <div style="overflow-x:auto"><table class="db" id="normTbl"></table></div>
+          <div style="overflow-x:auto;margin-top:9px"><table class="db" id="normTbl2"></table></div>
+          <div class="verdict" id="normVerdict" style="margin-top:12px"></div>
+        </div>
+      </div>
+
+      <div class="srv" style="margin-top:20px">
+        <div class="card">
+          <div class="card-t">Change one fact</div>
+          <p style="margin:0 0 11px;font-size:.82em;color:var(--dim);line-height:1.6">The course changes its title. Do it on both sides and count what you touched.</p>
+          <div class="ctrls">
+            <button class="btn primary" id="nmRename">Rename ITENT 45</button>
+            <button class="btn" id="nmPartial">Rename it, but miss two rows</button>
+            <button class="btn" id="nmReset">Reset</button>
+          </div>
+          <div class="meter" style="grid-template-columns:repeat(2,1fr);margin-top:14px">
+            <div class="g" id="nmFlat"><div class="gl">Rows written, flat</div><div class="gv">—</div></div>
+            <div class="g" id="nmNorm"><div class="gl">Rows written, split</div><div class="gv">—</div></div>
+          </div>
+          <div class="verdict" id="nmVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">How many enrolments</div>
+          <div class="sliders">
+            <div class="field">
+              <label>Students enrolled in it <span class="val" id="vEnr">40</span></label>
+              <input type="range" id="sEnr" min="2" max="400" value="40">
+            </div>
+          </div>
+          <div class="rtt-note" style="margin-top:14px">
+            The flat table repeats the title once per enrolment. The split version stores it once and points at it.
+            <br><br>Neither is wrong. The flat one answers <em>"show me this student's schedule"</em> without a join. People keep proposing it for that reason. It just cannot change its mind cheaply.
+          </div>
+        </div>
+      </div>
+
+      <div class="whynot" style="margin-top:20px">
+        <b>The rule under all of this</b>
+        Store each fact once, and point at it from everywhere else that needs it. A title living in one row can be wrong, but it cannot be <em>inconsistent</em>. A title living in four hundred rows can disagree with itself, and nothing in your code will notice, because every one of those rows is individually valid. This shape prevents that failure. An agent will not warn you about it, because the schema it wrote does work.
+      </div>
+    </section>
+
+    <!-- ================= 18 QUERY COST ================= -->

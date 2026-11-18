@@ -1,0 +1,45 @@
+    <section class="panel" id="p-query">
+      <div class="head">
+        <div class="eyebrow">15 — Module 5 · what a query costs</div>
+        <h2>The loop that costs one query per row</h2>
+        <p>Panel 14 split the title into its own table, so reading a schedule now needs a join. This is the panel where that gets a number. It is also where the phrase every other panel keeps pointing at finally happens in front of you.</p>
+        <div class="ask"><b>Ask the room</b>. Your page shows fifty enrolments with their course titles. How many times did the database get asked something? Most people guess one. Some guess two.</div>
+      </div>
+
+      <div class="card-t">The template that costs you everything</div>
+      <div class="srv">
+        <div>
+          <div class="art" id="qCode"></div>
+          <div class="phase" id="qNote" style="margin-top:9px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">How the view is written</div>
+          <div class="toggles" id="qMode"></div>
+          <div class="sliders" style="margin-top:14px">
+            <div class="field">
+              <label>Enrolments on the page <span class="val" id="vQRows">50</span></label>
+              <input type="range" id="sQRows" min="1" max="200" value="50">
+            </div>
+          </div>
+          <div class="rtt-note" style="margin-top:14px">
+            Modelled at 0.4 ms for a query the database can answer from an index, and 24 ms of handler time that is not database work at all.
+            <br><br>Nothing in the first version is a mistake. It reads well, it passes review, and an agent writes exactly this when you ask for a schedule page.
+          </div>
+        </div>
+      </div>
+
+      <div class="meter" style="grid-template-columns:repeat(4,1fr);margin-top:16px">
+        <div class="g" id="qQueries"><div class="gl">Queries per request</div><div class="gv">—</div></div>
+        <div class="g" id="qDb"><div class="gl">Time in the database</div><div class="gv">—</div></div>
+        <div class="g" id="qHandler"><div class="gl">Handler time</div><div class="gv">—</div></div>
+        <div class="g" id="qCeil"><div class="gl">Ceiling, 8 workers</div><div class="gv">—</div></div>
+      </div>
+      <div class="verdict" id="qVerdict"></div>
+
+      <div class="whynot" style="margin-top:20px">
+        <b>Why nobody catches this in testing</b>
+        With three rows in your development database the loop costs four queries and a millisecond and a half. It is invisible. The number of queries scales with the number of rows, and your test data never has enough rows, so the bug lives in the difference between your laptop and production, which is the one place your tests do not run.
+      </div>
+    </section>
+
+    <!-- ================= 19 ROWS OR DOCUMENTS ================= -->

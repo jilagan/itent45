@@ -1,0 +1,48 @@
+    <section class="panel" id="p-attn">
+      <div class="head">
+        <div class="eyebrow">10 — The T in GPT</div>
+        <h2>Every word looks at every other word and decides which ones matter</h2>
+        <p>The last panel showed the problem: one note, rewritten each word, and <code>animal</code> faded to almost nothing by the time the sentence needed it. Here is the fix. Stop summarizing, keep every word, and let each one look at all the others directly.</p>
+        <div class="ask"><b>Ask the room</b>. What does <em>it</em> refer to? Everyone knows instantly. Now: how did you know? You read the whole sentence and worked out which noun goes with the last word.</div>
+      </div>
+      <div class="ctab" id="atPick"></div>
+      <div class="srv">
+        <div>
+          <div class="sent" id="atSent"></div>
+          <p style="margin:10px 0 0;font-size:.8em;color:var(--faint)" id="atWho"></p>
+          <div class="probs" id="atBars" style="margin-top:12px"></div>
+          <div class="card" id="atWhy" style="margin-top:13px"></div>
+          <div class="verdict" id="atVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">What it costs</div>
+          <div class="sliders">
+            <div class="field">
+              <label>Tokens in the prompt <span class="val" id="vCtxN">1,000</span></label>
+              <input type="range" id="sCtxN" min="1000" max="32000" step="1000" value="1000">
+            </div>
+          </div>
+          <div class="meter" style="grid-template-columns:1fr 1fr;margin-top:12px">
+            <div class="g" id="atComp"><div class="gl">Comparisons</div><div class="gv">—</div></div>
+            <div class="g" id="atRel"><div class="gl">Against 1k</div><div class="gv">—</div></div>
+          </div>
+          <div class="rtt-note" style="margin-top:12px" id="atCostNote"></div>
+          <div class="whynot" style="margin-top:14px">
+            <b>Where these numbers came from</b>
+            The weights on this screen were chosen by hand to show the shape of the thing. A real model produces them by multiplying vectors together, and the descriptions in quotes above are our words for what those vectors encode. The model holds no sentences about meaning, only positions.
+          </div>
+          <div class="whynot" style="margin-top:14px">
+            <b>If you only remember one sentence</b>
+            Attention lets every word look at every other word and decide which ones matter to it. Everything else in a transformer is engineering around that idea.
+          </div>
+        </div>
+      </div>
+      <div class="whynot" style="margin-top:20px">
+        <b>Three things this explains at once</b>
+        <b style="color:var(--ink)">No distance penalty.</b> Word 1 and word 5,000 are one hop apart. That is what lets these models handle long documents at all.
+        <br><br><b style="color:var(--ink)">Long context is expensive.</b> Every token compares itself to every other token, so doubling the input roughly quadruples the work.
+        <br><br><b style="color:var(--ink)">It could be trained.</b> All those comparisons happen at once. Training spreads across thousands of chips instead of crawling word by word. The 2017 paper is called <em>Attention Is All You Need</em>, and the title is the claim.
+      </div>
+    </section>
+
+    <!-- 05 CONTEXT -->

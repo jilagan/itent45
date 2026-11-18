@@ -1,0 +1,115 @@
+    <section class="panel" id="p-clients">
+      <div class="head">
+        <div class="eyebrow">06 — Why REST is worth the trouble</div>
+        <h2>One backend, three clients that have never met</h2>
+        <p>A web page, an iPhone app and an Android app can all be built against the same API without any of them knowing the others exist. The server does not check who is calling. It receives a request for a resource and returns a representation of it, and every client renders that however it likes.</p>
+        <div class="ask"><b>Ask the room</b> If the enlistment system shipped a mobile app tomorrow, how much of the backend could it reuse? Answer for the diagram below first. Then answer for the real the enlistment system, which is a different answer, and the more useful one.</div>
+      </div>
+
+      <div class="fan">
+        <div class="cl3" id="clientPick"></div>
+        <div class="fanArrow">→</div>
+        <div class="apibox">
+          <div class="an">ONE API</div>
+          <div class="ad">GET /api/courses<br>Speaks HTTP and JSON. Does not know what is calling it.</div>
+        </div>
+        <div class="fanArrow">→</div>
+        <div class="apibox" style="border-color:var(--line2);background:var(--panel2)">
+          <div class="an" style="color:var(--dim)">ONE DATABASE</div>
+          <div class="ad">One schema, one source of truth</div>
+        </div>
+      </div>
+
+      <div class="cmp">
+        <div>
+          <div class="card-t">What this client sends <span class="diff">DIFFERS</span></div>
+          <div class="art" id="clReq"></div>
+          <div class="artlbl">How it asks, in its own language</div>
+          <div class="art" id="clCode"></div>
+        </div>
+        <div>
+          <div class="card-t">What the server sends back <span class="same">IDENTICAL</span></div>
+          <div class="art" id="clRes"></div>
+          <div class="artlbl">How it draws the result on screen</div>
+          <div class="art" id="clRender"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:18px">
+        <div class="card-t">What is actually different about this client</div>
+        <p style="margin:0;font-size:.85em;color:var(--dim);line-height:1.6" id="clNote"></p>
+        <div class="cons" id="clCons"></div>
+      </div>
+
+      <div class="whynot" style="margin-top:18px">
+        <b>This is what the name means</b>
+        REST stands for <em>Representational State Transfer</em>. The server holds state. When you ask for it you get a <em>representation</em> of that state: JSON text, in this case. What you do with it is your business. Render it as a table, a list, a native scroll view, or a printout. The server never needed to know.
+      </div>
+
+
+      <div class="head" style="margin-top:32px;border-bottom:none;padding-bottom:0">
+        <div class="eyebrow">THE COUNTEREXAMPLE IS THE SITE YOU USE EVERY DAY</div>
+        <h2 style="font-size:1.45em">A server-rendered system has no API layer, and that is why this is hard for it</h2>
+        <p>Systems like it were servlet-based, from an era when that stack was what you chose. The server does not return data. It returns a finished page. Tier 1 and tier 2 exist as separate machines but are welded together in the code, because the business logic lives inside the thing that generates the markup.</p>
+      </div>
+
+      <div class="cmp" style="margin-top:16px">
+        <div>
+          <div class="card-t">What a server-rendered system returns <span class="diff">HTML</span></div>
+          <div class="art" id="enlistHtml"></div>
+        </div>
+        <div>
+          <div class="card-t">What an API would return <span class="same">JSON</span></div>
+          <div class="art" id="enlistJson"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:16px">
+        <div class="card-t">Same data. Only one of them can serve a phone.</div>
+        <p style="margin:0 0 10px;font-size:.85em;color:var(--dim);line-height:1.6">Everything a mobile app needs is in the left-hand response, tangled up with table widths, CSS class names and a decision about column order. An iOS app cannot use any of it without scraping, parsing HTML meant for a browser and hoping the layout never changes. It always changes.</p>
+        <p style="margin:0;font-size:.85em;color:var(--dim);line-height:1.6"><b style="color:var(--ink)">This was not a mistake.</b> One client, browsers only, and server-rendered HTML was the fastest correct answer available. The cost only appears years later, when a second kind of client turns up and there is nothing for it to call. Retrofitting an API means going into those page-generating classes and pulling the logic back out of the markup. "It already works, why change it" is a harder argument to answer than it sounds.</p>
+      </div>
+
+      <div class="head" style="margin-top:34px;border-bottom:none;padding-bottom:0">
+        <div class="eyebrow">WHAT SERVING THOSE THREE CLIENTS COSTS YOU</div>
+        <h2 style="font-size:1.45em">Once phones call your API, you cannot change it freely</h2>
+        <p>That is the bill for everything above. Serving clients you do not control means you no longer control when they update. Web users get new code on their next reload. Someone with your iOS app has to visit the store and choose to update, and some of them never will. So old copies keep calling your API for months. <b>The question below is what happens to those stragglers when you change something.</b></p>
+      </div>
+
+      <div class="srv" style="margin-top:16px">
+        <div>
+          <div class="card">
+            <div class="card-t">Who is on which version</div>
+            <div class="legend" style="margin:0 0 14px">
+              <span><i style="background:var(--res)"></i>updated to the new version</span>
+              <span><i style="background:var(--warn)"></i>still running the old one</span>
+            </div>
+            <div class="drift" id="driftBars"></div>
+          </div>
+          <div class="verdict" id="driftVerdict"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">What kind of change did you ship?</div>
+          <div class="toggles">
+            <button class="tg" id="tgAdd" aria-pressed="true"><span class="dot"></span><span>Additive<small>You added a field. Nothing was renamed or removed.</small></span></button>
+            <button class="tg danger" id="tgBreak" aria-pressed="false"><span class="dot"></span><span>Breaking<small>You renamed a field, or deleted one. Old clients expected the old shape.</small></span></button>
+          </div>
+          <div class="sliders" style="margin-top:16px">
+            <div class="field">
+              <label>Days since you shipped it <span class="val" id="vDays">7 days</span></label>
+              <input type="range" id="sDays" min="0" max="180" value="7">
+            </div>
+          </div>
+          <div class="whynot" style="margin-top:16px">
+            <b>The rule this leads to</b>
+            On an API with clients you cannot update: <b style="display:inline;font-family:inherit;font-size:1em;letter-spacing:0;text-transform:none;color:var(--res)">add freely, remove almost never.</b> When you truly must break something, publish it at a new path (<code>/api/v2/courses</code>) and keep the old one answering until the tail is thin enough to accept, or leave the old field in place alongside the new one and stop documenting it.
+          </div>
+          <div class="rtt-note" style="margin-top:14px">
+            <b style="color:var(--faint)">Adoption curves here are typical industry shapes, not measurements of any specific app.</b>
+          </div>
+        </div>
+      </div>
+    </section>
+
+
+    <!-- ================= 07 RENDERING & PAYLOADS ================= -->

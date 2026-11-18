@@ -1,0 +1,46 @@
+    <section class="panel" id="p-txn">
+      <div class="head">
+        <div class="eyebrow">13 — Module 5 · transactions</div>
+        <h2>One seat, two students, and both of them get it</h2>
+        <p>Everything so far assumed you were the only person talking to the database. On enlistment morning you are one of nine thousand. Two sessions read the same row at the same moment, both decide there is room, and both write. Neither did anything wrong. Step through it, then try the fixes, and notice which one does not work.</p>
+        <div class="ask"><b>Ask the room</b>. If both students saw one seat free, which of them made the mistake? Neither of them did. The database has to be the one that decides.</div>
+      </div>
+
+      <div class="ctab" id="txnTab"></div>
+
+      <div class="srv">
+        <div>
+          <div class="tln" id="txnLine"></div>
+          <div class="ctrls" style="margin-top:13px">
+            <button class="btn primary" id="txnStep">Step</button>
+            <button class="btn" id="txnPlay">Run it</button>
+            <button class="btn" id="txnReset">Reset</button>
+          </div>
+          <div class="verdict" id="txnVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">What this attempt does</div>
+          <div class="rtt-note" id="txnNote"></div>
+        </div>
+      </div>
+
+      <div class="card-t" style="margin-top:26px">The four letters, and which one you just broke</div>
+      <div class="acid">
+        <div class="ac"><div class="k">A</div><h5>Atomicity</h5>
+          <p>All of it happens or none of it does. If the INSERT succeeds and the UPDATE fails, the database undoes the INSERT. This is the one BEGIN and COMMIT actually give you.</p></div>
+        <div class="ac"><div class="k">C</div><h5>Consistency</h5>
+          <p>Rules you declared stay true. A <code>CHECK (slots &gt;= 0)</code> or a unique key will refuse a write that breaks them, no matter which session sent it or how well timed it was.</p></div>
+        <div class="ac"><div class="k">I</div><h5>Isolation</h5>
+          <p>How much two sessions running at once can see of each other. This is the one that was broken above, and the one people assume they get for free. They do not.</p></div>
+        <div class="ac"><div class="k">D</div><h5>Durability</h5>
+          <p>Once COMMIT returns, it survives the power going out. Written to disk, not sitting in memory hoping. The cheapest of the four to believe in and the most expensive to provide.</p></div>
+      </div>
+
+      <div class="whynot" style="margin-top:20px">
+        <b>A transaction is not a lock, and this is the mistake to expect</b>
+        Wrapping the same four statements in <code>BEGIN</code> and <code>COMMIT</code> feels like it should fix this, and it does not. Atomicity says your own statements land together. It says nothing about whether somebody else read the row while you were thinking. At the isolation level almost every database ships with by default, both sessions still see one free seat.
+        <br><br>What fixes it is telling the database what you actually need: lock the row while you decide, or write the decision as a single statement it can serialize for you. Panel 19's enlistment morning is nine thousand people doing this at once, and panel 08's idempotency key is the same problem arriving over HTTP.
+      </div>
+    </section>
+
+<!-- ================= 17 NORMALISATION ================= -->

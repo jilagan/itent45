@@ -1,0 +1,70 @@
+    <section class="panel" id="p-layers">
+      <div class="head">
+        <div class="eyebrow">02 — Encapsulation</div>
+        <h2>Your message travels inside a stack of envelopes</h2>
+        <p>A protocol is just an agreement about the shape of a message. Each layer takes what it was handed, wraps it in its own header, and passes it down. The receiving machine unwraps in reverse. Nobody talks across layers. Each layer only talks to its counterpart on the far end.</p>
+        <div class="ask"><b>Ask the room</b> Click through the layers. Notice that the thing you wrote (<code>GET /courses</code>) never changes. Everything else is packaging. So: how many bytes of packaging does it cost to send 24 bytes of message?</div>
+      </div>
+      <div class="layer-wrap">
+        <div class="nest" id="nest"></div>
+        <div class="card">
+          <div class="card-t">Layer detail</div>
+          <dl class="detail" id="lyrDetail"></dl>
+        </div>
+      </div>
+      <div class="card-t" style="margin-top:26px">What happens when it does not fit in one envelope</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A network link will not carry a message of any size. Ethernet tops out at about 1,500 bytes per frame, so anything larger is chopped into pieces and <b style="color:var(--ink)">every piece gets its own full set of envelopes</b>. Drag the response size and watch one reply become many.</p>
+
+      <div class="srv">
+        <div>
+          <div class="journey" id="jrn">
+            <div class="zone send">
+              <div class="zl">your browser</div>
+              <div class="holder" id="jLeft"></div>
+              <div class="zc" id="jLeftCap">about to ask</div>
+            </div>
+            <div class="wire" id="jWire"><div class="wline"></div><div class="think" id="jThink"></div></div>
+            <div class="zone recv">
+              <div class="zl">the server</div>
+              <div class="holder" id="jRight"></div>
+              <div class="zc" id="jRightCap">idle</div>
+            </div>
+          </div>
+          <div class="phase" id="jPhase"></div>
+          <div class="waveline" id="waveLine"></div>
+          <div class="meter" style="grid-template-columns:repeat(4,1fr);margin-top:13px">
+            <div class="g" id="sgPkts"><div class="gl">Packets</div><div class="gv">1</div></div>
+            <div class="g" id="sgOver"><div class="gl">Header overhead</div><div class="gv">—</div></div>
+            <div class="g" id="sgRtt"><div class="gl">Round trips</div><div class="gv">1</div></div>
+            <div class="g" id="sgTime"><div class="gl">Just in waiting</div><div class="gv">—</div></div>
+          </div>
+          <div class="verdict" id="segVerdict"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-t">How big is the reply?</div>
+          <div class="sliders">
+            <div class="field">
+              <label>Response size <span class="val" id="vResp">45 KB</span></label>
+              <input type="range" id="sResp" min="1" max="300" value="45">
+            </div>
+            <div class="field">
+              <label>Round trip to the server <span class="val" id="vRtt2">38 ms</span></label>
+              <input type="range" id="sRtt2" min="2" max="220" value="38">
+            </div>
+          </div>
+          <div class="ctrls" style="margin-top:14px">
+            <button class="btn primary" id="segSend">Send it</button>
+            <button class="btn" id="segReset">Reset</button>
+          </div>
+          <div class="rtt-note" style="margin-top:14px">
+            Each packet carries 1,460 bytes of your data and 54 bytes of Ethernet, IP and TCP headers.
+            <br><br>Press <b>Send it</b> and watch them leave. They do not all go at once: TCP starts by sending about ten and waiting to see if they arrive, then doubles. That waiting is why a large reply costs round trips, not just bandwidth.
+          </div>
+        </div>
+      </div>
+
+
+    </section>
+
+    <!-- ================= 02 JOURNEY ================= -->

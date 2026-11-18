@@ -1,0 +1,51 @@
+    <section class="panel" id="p-train">
+      <div class="head">
+        <div class="eyebrow">03 — Where the line comes from</div>
+        <h2>The line gets pushed until it stops being wrong so often</h2>
+        <p>The last panel said a model is a line somebody found, and left out the finding. Here it is. Start from a line drawn at random, measure how badly it is doing, then nudge it in whatever direction makes that number smaller. Repeat a few hundred times. That is training, and there is no more to it than that.</p>
+        <div class="ask"><b>Ask the room</b>. If you are standing on a hillside in fog and want to reach the bottom, what can you do without seeing where the bottom is? Feel which way is downhill. Step. Repeat.</div>
+      </div>
+      <div class="srv">
+        <div>
+          <div class="scatter" id="trPlot"></div>
+          <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
+            <div class="g" id="trLoss"><div class="gl">Loss, how wrong it is</div><div class="gv">—</div></div>
+            <div class="g" id="trAcc"><div class="gl">Correct</div><div class="gv">—</div></div>
+            <div class="g" id="trStep"><div class="gl">Steps taken</div><div class="gv">0</div></div>
+          </div>
+          <div class="ctrls" style="margin-top:13px">
+            <button class="btn primary" id="trStepBtn">One step</button>
+            <button class="btn" id="trRun">Run 200</button>
+            <button class="btn" id="trReset">Start over</button>
+          </div>
+          <div class="verdict" id="trVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">How big a step</div>
+          <div class="sliders">
+            <div class="field">
+              <label>Learning rate <span class="val" id="vLr">6</span></label>
+              <input type="range" id="sLr" min="0" max="3" step="1" value="1">
+            </div>
+          </div>
+          <div class="art" id="trCurve" style="margin-top:12px"></div>
+          <div class="rtt-note" style="margin-top:12px" id="trNote"></div>
+          <div class="whynot" style="margin-top:14px">
+            <b>You are watching logistic regression being fitted</b>
+            The loss on the left is cross-entropy, the standard way of scoring a boundary that predicts a category. Steps come from the slope of that loss with respect to each of the three numbers, which is gradient descent.
+            <br><br>Those three words appear in every textbook and every framework. This screen is all they mean.
+          </div>
+          <div class="whynot" style="margin-top:14px">
+            <b>Three numbers, and only three</b>
+            This line has a weight for hours, a weight for attendance, and a bias. Training adjusts those three. A language model does the identical thing to several hundred billion of them, for months, on thousands of machines. The arithmetic is the same size; the bill is not.
+          </div>
+        </div>
+      </div>
+      <div class="whynot" style="margin-top:20px">
+        <b>The step size is a choice somebody has to make</b>
+        Too small and it crawls, and you pay for compute that is barely moving. Too large and it leaps past the bottom and comes down the other side, over and over, and the loss climbs instead of falling. Nothing detects this for you. It is the most common reason a training run produces nothing and the most common thing a beginner fiddles with.
+        <br><br>Try the largest setting and watch the loss curve go the wrong way.
+      </div>
+    </section>
+
+    <!-- 02 STACKING LINES -->

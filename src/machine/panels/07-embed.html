@@ -1,0 +1,40 @@
+    <section class="panel" id="p-embed">
+      <div class="head">
+        <div class="eyebrow">07 — How the positions get found</div>
+        <h2>The words start in random places and get shoved around by sentences</h2>
+        <p>The next panel shows words sitting in meaningful places and asks you to accept that they got there. Here is the getting there. Every word starts somewhere arbitrary. Sentences arrive one at a time, and each one nudges the words it contains a little closer together, while everything else drifts apart. Nobody says what any word means at any point.</p>
+        <div class="ask"><b>Ask the room</b>. If the only rule is <em>words that turn up together move together</em>, what would you expect to happen to <em>king</em> and <em>queen</em>? What about <em>king</em> and <em>hospital</em>?</div>
+      </div>
+      <div class="srv">
+        <div>
+          <div class="wordmap" id="emMap"></div>
+          <div class="art" id="emFeed" style="margin-top:12px;min-height:54px"></div>
+          <div class="ctrls" style="margin-top:12px">
+            <button class="btn primary" id="emRun">Run the training</button>
+            <button class="btn" id="emStep">One sentence</button>
+            <button class="btn" id="emReset">Scatter again</button>
+          </div>
+          <div class="verdict" id="emVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">The whole corpus</div>
+          <div class="art" id="emCorpus" style="font-size:.66em"></div>
+          <div class="rtt-note" style="margin-top:12px">
+            Fourteen sentences, and that is all the input there is. No dictionary, no labels, nobody marking which words are about royalty and which are about hospitals.
+            <br><br>The positions below are computed live from those sentences while you watch. Nothing here was placed by hand.
+          </div>
+          <div class="meter" style="grid-template-columns:1fr 1fr;margin-top:12px">
+            <div class="g" id="emSeen"><div class="gl">Sentences read</div><div class="gv">0</div></div>
+            <div class="g" id="emSep"><div class="gl">Groups apart by</div><div class="gv">&mdash;</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="whynot" style="margin-top:20px">
+        <b>What this is and is not</b>
+        This is the real idea behind word2vec, run small enough to watch: pull together what co-occurs, push apart what does not, repeat. Real training does it over billions of words with hundreds of directions rather than two, and with the words appearing in vastly more varied company than fourteen sentences can offer.
+        <br><br>What you get from a corpus this size is the clustering. What you do <b class="i">not</b> get is the fine structure that makes the arithmetic in the next panel work, because that needs the same word appearing in thousands of different contexts before the directions settle down. The next panel says so on its face.
+        <br><br>Carry this forward instead, narrower and more important: <b style="color:var(--ink)">the positions were never assigned by anyone.</b> Meaning here is a side effect of company.
+      </div>
+    </section>
+
+<!-- 03 VECTORS -->

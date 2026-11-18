@@ -1,0 +1,156 @@
+    <section class="panel" id="p-vm">
+      <div class="head">
+        <div class="eyebrow">21 — Module 4 · what "the cloud" actually is</div>
+        <h2>Whose computer is it, actually?</h2>
+        <p>Panel 17 treated your server as a physical machine with a fixed amount of RAM. That was a useful lie. The 2 GB box you rent is almost certainly a <em>slice</em> of a much larger machine, created in seconds by software, sitting alongside slices belonging to people you will never meet. That slicing is virtualization, and every property we call "cloud" follows from it.</p>
+        <div class="ask"><b>Ask the room</b> When you rent a 2 GB server, what did you rent? Nobody unwrapped a computer and put it on a shelf for you.</div>
+      </div>
+
+      <div class="stacks">
+        <div class="stk">
+          <div class="sh">Bare metal · one machine, one OS</div>
+          <div class="lyrbox">
+            <div>Applications</div>
+            <div>Shell</div>
+            <div>Kernel</div>
+            <div class="hw">Hardware</div>
+          </div>
+          <p style="margin:11px 0 0;font-size:.75em;color:var(--dim);line-height:1.5">One operating system owns the whole machine. Buy a bigger box and you own all of it, including the 80% you are not using at 3 a.m.</p>
+        </div>
+        <div class="stk virt">
+          <div class="sh">Virtualized · one machine, many guests</div>
+          <div class="guests" id="guestRow"></div>
+          <div class="lyrbox">
+            <div class="hyp">Hypervisor &nbsp;·&nbsp; the software that hands out slices</div>
+            <div>Host operating system</div>
+            <div class="hw">Hardware &nbsp;·&nbsp; <span id="hostSpec">256 GB RAM, 64 cores</span></div>
+          </div>
+          <p style="margin:11px 0 0;font-size:.75em;color:var(--dim);line-height:1.5">Each <b style="color:var(--req)">guest</b> believes it has its own kernel, its own disk and its own network card. None of that is true. The <b style="color:var(--res)">host</b> and its hypervisor are dividing one real machine, and can create or destroy a guest in seconds, which is the whole trick.</p>
+        </div>
+      </div>
+
+      <div class="srv" style="margin-bottom:22px">
+        <div class="card">
+          <div class="card-t">One physical machine, sliced</div>
+          <div class="legend2" id="hostSplit"></div>
+          <div class="verdict" id="vmVerdict"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">How thin do you slice it?</div>
+          <div class="sliders">
+            <div class="field">
+              <label>Guests on this host <span class="val" id="vGuests">8</span></label>
+              <input type="range" id="sGuests" min="1" max="40" value="8">
+            </div>
+            <div class="field">
+              <label>RAM per guest <span class="val" id="vGuestRam">8 GB</span></label>
+              <input type="range" id="sGuestRam" min="1" max="32" value="8">
+            </div>
+          </div>
+          <div class="rtt-note" style="margin-top:15px">
+            Your panel 17 box is one of these guests. The hypervisor also keeps a little for itself.
+            <br><br>Providers routinely sell slightly more than they have, betting that not every guest is busy at once. Push the sliders past the host and see what that bet looks like.
+          </div>
+        </div>
+      </div>
+
+      <div class="card-t">Try it: get yourself a server</div>
+      <p style="margin:0 0 14px;font-size:.85em;color:var(--dim);line-height:1.6">Two eras, one button. Watch the clock, and watch the meter. The five characteristics below light up as you demonstrate them, so you find out what they mean by doing them instead of by reading them.</p>
+
+      <div class="srv" style="margin-bottom:22px">
+        <div class="console2">
+          <div class="ctrls" style="margin-bottom:4px">
+            <button class="btn primary" id="provAdd">+ Provision a server</button>
+            <button class="btn" id="provReset">Reset</button>
+            <span style="margin-left:auto;font-family:var(--mono);font-size:.68em;color:var(--faint)" id="provClock">day 0, 00:00</span>
+          </div>
+          <div class="srvlist" id="srvList"></div>
+          <div class="meter">
+            <div class="g" id="pgUp"><div class="gl">Running</div><div class="gv">0</div></div>
+            <div class="g" id="pgWait"><div class="gl">Wait for first</div><div class="gv">—</div></div>
+            <div class="g" id="pgBill"><div class="gl">Bill so far</div><div class="gv">₱0</div></div>
+          </div>
+          <div class="verdict" id="provVerdict" style="margin-top:13px"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-t">Which era are you in?</div>
+          <div class="toggles">
+            <button class="tg" id="tgCloudMode" aria-pressed="true"><span class="dot"></span><span>Cloud · self-service<small>You have an API key. Nobody else is involved.</small></span></button>
+            <button class="tg danger" id="tgPremMode" aria-pressed="false"><span class="dot"></span><span>On-premise · 2012<small>Quotation, purchase order, delivery, racking.</small></span></button>
+          </div>
+          <div class="rtt-note" style="margin-top:15px" id="modeNote"></div>
+        </div>
+      </div>
+
+      <div class="card-t">Now let a policy do it: elasticity as work arrives</div>
+      <p style="margin:0 0 14px;font-size:.85em;color:var(--dim);line-height:1.6">Same provisioning, no human. An autoscaler watches load and adds machines when they are needed. Watch what it can absorb, and what it cannot, because booting a server is not instant.</p>
+
+      <div class="srv" style="margin-bottom:22px">
+        <div class="elwrap">
+          <canvas id="elCanvas"></canvas>
+          <div class="instrip" id="elStrip"></div>
+          <div class="ellegend">
+            <span><i style="background:var(--dim)"></i>demand</span>
+            <span><i style="background:var(--req)"></i>capacity · booting</span>
+            <span><i style="background:var(--res)"></i>running</span>
+            <span><i style="background:var(--warn)"></i>turned away</span>
+          </div>
+          <div class="meter" style="grid-template-columns:repeat(4,1fr)">
+            <div class="g" id="egRun"><div class="gl">Machines</div><div class="gv">0</div></div>
+            <div class="g" id="egServed"><div class="gl">Served since start</div><div class="gv">—</div></div>
+            <div class="g" id="egDrop"><div class="gl">Turned away</div><div class="gv">0</div></div>
+            <div class="g" id="egCost"><div class="gl">Machine-minutes</div><div class="gv">0</div></div>
+          </div>
+          <div class="verdict" id="elVerdict"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-t">What kind of day is it?</div>
+          <div class="toggles">
+            <button class="tg" data-shape="steady" aria-pressed="false"><span class="dot"></span><span>Ordinary Tuesday<small>Flat load with a little noise.</small></span></button>
+            <button class="tg" data-shape="ramp" aria-pressed="false"><span class="dot"></span><span>Gradual build<small>Load climbs over a few minutes.</small></span></button>
+            <button class="tg danger" data-shape="spike" aria-pressed="true"><span class="dot"></span><span>Enlistment, 8:00:00<small>Everyone arrives in the same second.</small></span></button>
+          </div>
+          <div class="sliders" style="margin-top:16px">
+            <div class="field">
+              <label>Time to boot a machine <span class="val" id="vBoot">60 s</span></label>
+              <input type="range" id="sBoot" min="5" max="180" step="5" value="60">
+            </div>
+          </div>
+          <div class="toggles" style="margin-top:12px">
+            <button class="tg" id="tgAuto" aria-pressed="true"><span class="dot"></span><span>Autoscaling on<small>Off means a fixed four machines, all day.</small></span></button>
+          </div>
+          <div class="ctrls" style="margin-top:14px">
+            <button class="btn primary" id="elRun">▶ Start the day</button>
+            <button class="btn" id="elReset">Reset</button>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-t">Five things that follow from slicing</div>
+      <p style="margin:0 0 14px;font-size:.85em;color:var(--dim);line-height:1.6">NIST's definition (Mell &amp; Grance, 2011) lists five essential characteristics. None of them are marketing. Each is a direct consequence of a machine being software instead of furniture. Three of them you just demonstrated with the button above. Click any card for the detail.</p>
+      <div class="nist" id="nistCards"></div>
+      <div class="explain" id="nistOut" style="margin-top:0">
+        <div class="et">SELECT ONE</div>
+        <p class="hint">Click any of the five.</p>
+      </div>
+
+      <div class="card-t" style="margin-top:26px">Service models: the line moves, the work does not disappear</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Every layer below still has to be run by somebody. Choosing a service model is choosing where you stop being that somebody, and paying them to be it instead.</p>
+      <div class="card" style="padding:14px 16px;overflow-x:auto">
+        <table class="resp"><thead><tr>
+          <th>Layer</th><th>On-premise</th><th>IaaS</th><th>PaaS</th><th>SaaS</th>
+        </tr></thead><tbody id="respBody"></tbody></table>
+        <div class="legend" style="margin-top:12px">
+          <span><i style="background:var(--req)"></i>you run it</span>
+          <span><i style="background:var(--res)"></i>the provider runs it</span>
+        </div>
+      </div>
+      <div class="rtt-note" style="margin-top:14px">
+        <b>In the terms from Module 1:</b> a bare EC2 or Droplet is <b style="color:var(--req)">IaaS</b>. You still patch the operating system. Railway and Supabase are <b style="color:var(--req)">PaaS</b>. You push code and they run everything under it. your student portal, Canvas and Gmail are <b style="color:var(--req)">SaaS</b> to the people using them. Your capstone is a PaaS tenant that is a SaaS provider to its own users.
+      </div>
+    </section>
+
+
+    <!-- ================= 14 CLOUD ECONOMICS ================= -->

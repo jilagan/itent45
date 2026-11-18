@@ -1,0 +1,71 @@
+    <section class="panel" id="p-vectors">
+      <div class="head">
+        <div class="eyebrow">08 — How words get compared</div>
+        <h2>Meaning turns into a position, and positions can be subtracted</h2>
+        <p>Tokens are numbers, and numbers do not have meanings. So each one becomes a <b>vector</b>: a position in a space with a few hundred directions. Words that turn up in similar company end up in similar places. There is no labelling step anywhere in it.</p>
+        <div class="ask"><b>Ask the room</b>. If <em>enrol</em>, <em>register</em> and <em>sign up</em> land near each other without anyone declaring them synonyms, what else might be sitting near your search terms?</div>
+        <div class="whynot" style="margin-top:14px">
+          <b>Read this before you trust the map below</b>
+          The sixteen words here were placed by hand so the relationships come out cleanly. The previous panel showed the real process on a corpus small enough to watch; this one skips ahead to what a large one produces. A real embedding has hundreds of directions, and the positions are learned from text. What follows is a diagram of an idea, and the arithmetic is arranged to work.
+        </div>
+      </div>
+      <div class="ctab" id="vcPick"></div>
+      <div class="srv">
+        <div>
+          <div class="wordmap" id="vcMap"></div>
+          <div class="art" id="vcSum" style="margin-top:12px"></div>
+          <div class="verdict" id="vcVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">The part the textbook leaves out</div>
+          <div class="toggles">
+            <button class="tg" id="tgExcl" aria-pressed="true"><span class="dot"></span>Exclude the input words from the search</button>
+          </div>
+          <div class="rtt-note" style="margin-top:14px">
+            Turn that off and see what the nearest word actually is. The famous result needs the three inputs removed from the candidates, and almost nobody mentions it.
+            <br><br>The relationship is real. The demonstration is arranged.
+          </div>
+          <div class="whynot" style="margin-top:14px">
+            <b>One vector per word is the old version</b>
+            Here <em>bank</em> would get a single point, somewhere between the river and the money. Modern models give a word a different vector depending on the sentence around it, Retrieval works as well as it now does because of that change.
+          </div>
+        </div>
+      </div>
+      <div class="whynot" style="margin-top:20px">
+        <b>What to take from the contested example</b>
+        Two things are true at once and students will want to collapse them. Embeddings do absorb the statistics of the text they were fitted to, and that has consequences when the space sits inside a hiring screen or a scholarship filter. And the famous analogies overstate how cleanly you can read that off, because the method is arranged.
+        <br><br>The version worth carrying: a model reflects its corpus, you cannot prompt that away because it is not an opinion, and anyone claiming a tidy number for how biased a model is should be asked how they measured it.
+      </div>
+
+
+      <div class="card-t" style="margin-top:26px">The same trick, applied to whole sentences</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A sentence gets a position too, worked out from the words in it. Once two sentences are positions, asking how alike they are becomes a question about the angle between them. Pick any two and compare the score with the number of words they actually share.</p>
+      <div class="srv">
+        <div>
+          <div class="wordmap" id="simMap"></div>
+          <div class="meter" style="grid-template-columns:1fr 1fr;margin-top:13px">
+            <div class="g" id="simScore"><div class="gl">Similarity</div><div class="gv">&mdash;</div></div>
+            <div class="g" id="simWords"><div class="gl">Words in common</div><div class="gv">&mdash;</div></div>
+          </div>
+          <div class="verdict" id="simVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">Pick two sentences</div>
+          <div class="reqlist" id="simList"></div>
+          <div class="rtt-note" style="margin-top:14px">
+            The number is a <b style="color:var(--ink)">cosine</b>: 1 when two arrows point the same way, 0 when they are at right angles. It measures direction only, so a long sentence and a short one can still score highly if they are about the same thing.
+          </div>
+        </div>
+      </div>
+      <div class="whynot" style="margin-top:16px">
+        <b>This is what makes search work on meaning rather than spelling</b>
+        A student types <em>how do I sign up for a class</em>. Your help page is titled <em>course enrolment process</em>. They share almost nothing as text, and a keyword search returns nothing useful. Compared as positions they are nearly the same direction.
+        <br><br>Turn it around and the point is sharper. <em>How do I drop a class</em> shares five words with the sign-up question and means the opposite, and the score says so. <b class="i">Word overlap and meaning are different measurements, and only one of them is the one you wanted.</b>
+      </div>
+      <div class="whynot" style="margin-top:20px">
+        <b>Why this matters an hour from now</b>
+        If similar meanings sit near each other, then <em>find me the nearest chunks to this question</em> becomes a meaningful thing to compute. That is what retrieval does when you point an agent at your documents. A student asking how to stop a double enrolment can be matched to a page about idempotency keys without the two sharing a single word.
+      </div>
+    </section>
+
+        <!-- 06 RNN -->

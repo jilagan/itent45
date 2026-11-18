@@ -1,0 +1,101 @@
+    <section class="panel" id="p-basics">
+      <div class="head">
+        <div class="eyebrow">00 — Before anything else</div>
+        <h2>What is a server, actually?</h2>
+        <p>You have heard the word your whole life and almost nobody is taught what it means. It is worth ten minutes, because every panel after this one assumes it. The short version: a server is a job a computer is doing right now, and any computer can do it, including the one in front of you.</p>
+        <div class="ask"><b>Ask the room</b>. Hands up if you could point at a server. Now: is your laptop one? The honest answer is that it depends on what is running on it at this moment.</div>
+        <div class="card" style="margin-top:14px;padding:13px 15px">
+          <div style="font-family:var(--mono);font-size:.58em;letter-spacing:.13em;text-transform:uppercase;color:var(--faint);margin-bottom:6px">Where this page came from</div>
+          <div id="ctxLine" style="font-size:.86em;color:var(--dim);line-height:1.55"></div>
+        </div>
+      </div>
+
+      <div class="card-t">Which of these can be a server?</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Click each one and see.</p>
+      <div class="guess" id="guessRow"></div>
+      <div class="verdict" id="guessVerdict"></div>
+
+      <div class="card" style="margin-top:20px">
+        <div class="card-t">The word means two different things</div>
+        <div class="cmp">
+          <div>
+            <div class="artlbl" style="margin-top:0">The machine</div>
+            <p style="margin:0;font-size:.82em;color:var(--dim);line-height:1.6">A physical computer somewhere. It has a processor, memory and a network cable. Panel 17 is entirely about this one, and about how little of it you actually get.</p>
+          </div>
+          <div>
+            <div class="artlbl" style="margin-top:0">The program</div>
+            <p style="margin:0;font-size:.82em;color:var(--dim);line-height:1.6">Software running on that machine, sitting in a loop, waiting for someone to connect. nginx, gunicorn, node, or the twenty lines in <code>teaching_server.py</code>.</p>
+          </div>
+        </div>
+        <p style="margin:14px 0 0;font-size:.85em;color:var(--dim);line-height:1.6">When somebody says <b style="color:var(--ink)">the server is down</b> they almost always mean the second one. The machine is usually fine. A program on it stopped waiting.</p>
+      </div>
+
+      <div class="card-t" style="margin-top:26px">How anything finds it: reading an address</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">You type these every day. Click each part.</p>
+      <div class="urlbar" id="urlBar"></div>
+      <div class="explain" id="urlOut" style="margin-top:0">
+        <div class="et">SELECT A PART</div>
+        <p class="hint">Click any coloured section above.</p>
+      </div>
+
+      <div class="srv" style="margin-top:22px">
+        <div class="card">
+          <div class="card-t">Who can reach what</div>
+          <p style="margin:0 0 4px;font-size:.85em;color:var(--dim);line-height:1.6">Say your laptop is running the tool on port 8080. Pick who is trying to open it.</p>
+          <div class="reach" id="reachRows"></div>
+          <div class="verdict" id="reachVerdict" style="margin-top:12px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">Who is asking?</div>
+          <div class="toggles" id="whoList"></div>
+          <div class="rtt-note" style="margin-top:15px">
+            <b>An IP address says which machine. A port says which program on it.</b>
+            <br><br>Think of the IP as the building and the port as the unit number. One building, many units, and a delivery needs both.
+            <br><br><code>127.0.0.1</code>, also spelled <code>localhost</code>, is a special one. It always means <em>this machine, right here</em>, so it means something different on every computer that types it.
+          </div>
+        </div>
+      </div>
+
+      <div class="card-t" style="margin-top:26px">Your laptop has more than one IP address</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">One per network interface, and they mean different things. None of them is <em>the</em> address of your laptop. Click each and watch how far a packet sent to it actually travels.</p>
+
+      <div class="srv">
+        <div>
+          <div class="ifaces" id="ifaceList"></div>
+          <div class="hops" id="hopTrack"></div>
+          <div class="turn" id="hopTurn"></div>
+          <div class="verdict" id="ifaceVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">Why this trips people up</div>
+          <p style="margin:0 0 10px;font-size:.8em;color:var(--dim);line-height:1.55"><b style="color:var(--ink)">127.0.0.1</b> is a real address, and nothing sent to it ever leaves the machine. The packet goes down the operating system's network code and turns straight back up into another program on the same computer. Unplug the wifi and it still works, which is the giveaway.</p>
+          <p style="margin:0 0 10px;font-size:.8em;color:var(--dim);line-height:1.55"><b style="color:var(--ink)">192.168.x.x</b> is a private range. Millions of homes use the same numbers at the same moment, so the number alone cannot identify anything on the wider internet. Your router hands these out and keeps track of which one asked for what.</p>
+          <p style="margin:0;font-size:.8em;color:var(--dim);line-height:1.55">The <b style="color:var(--ink)">public address</b> belongs to your router, not to your laptop, and everyone in the building shares it. That translation, many private addresses behind one public one, is why nothing on the internet can start a conversation with your laptop.</p>
+        </div>
+      </div>
+
+      <div class="card-t" style="margin-top:26px">So can you just host the capstone on your laptop?</div>
+      <p style="margin:0 0 6px;font-size:.85em;color:var(--dim);line-height:1.6">This question comes up every year and the answer is more interesting than a flat no. Your laptop <em>is</em> a server, in the sense that matters for the definition. Serving the public internet from it needs six things, and it has one of them.</p>
+      <div class="card" style="padding:12px 16px;overflow-x:auto;margin-top:12px">
+        <table class="hostreq"><thead><tr>
+          <th>What public traffic needs</th><th>Your laptop</th><th>A rented box</th>
+        </tr></thead><tbody>
+          <tr><td>A program listening<small>the only part that stays the same</small></td><td class="y">yes</td><td class="y">yes</td></tr>
+          <tr><td>An address the internet can route to<small>yours is private, behind your router, and shared with the whole building</small></td><td class="n">no</td><td class="y">yes</td></tr>
+          <tr><td>That address staying the same<small>home connections get a new one whenever the router feels like it</small></td><td class="n">no</td><td class="y">yes</td></tr>
+          <tr><td>Ports 80 and 443 reachable<small>most residential providers block them, deliberately</small></td><td class="n">no</td><td class="y">yes</td></tr>
+          <tr><td>Being awake<small>you close the lid, you go to campus, the wifi changes</small></td><td class="n">no</td><td class="y">yes</td></tr>
+          <tr><td>Upload bandwidth<small>home plans are lopsided: fast down, slow up, and serving is all up</small></td><td class="n">no</td><td class="y">yes</td></tr>
+        </tbody></table>
+      </div>
+      <div class="whynot" style="margin-top:16px">
+        <b>The gap between those two columns is the product</b>
+        Every row your laptop fails is a thing somebody sells. A routable address that does not change, an always-on machine with real upload capacity, and a network that does not block the ports you need. Panel 21 shows what slicing one physical machine into many of those looks like, and panel 22 shows what it costs. The student who thought a laptop was enough had the definition exactly right and was only missing this table, which nobody had ever shown them.
+      </div>
+
+      <div class="whynot" style="margin-top:22px">
+        <b>You have already done this</b>
+        <span id="ctxClose"></span>
+      </div>
+    </section>
+

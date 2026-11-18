@@ -1,0 +1,51 @@
+    <section class="panel" id="p-rnn">
+      <div class="head">
+        <div class="eyebrow">09 — What came before</div>
+        <h2>One word at a time, and one note to itself, rewritten after every word</h2>
+        <p>Here is how this was done until 2017, and it is worth two minutes because the next panel only makes sense as an answer to it. The model reads left to right. After each word it updates a single small note summarizing everything so far, then throws away the word and moves on. The note is a fixed size, so everything new that goes in pushes something old out.</p>
+        <div class="ask"><b>Ask the room</b>. Read the whole sentence, then ask the model what <em>it</em> referred to. The catch is that the sentence is no longer available to it.</div>
+      </div>
+      <div class="srv">
+        <div>
+          <div class="ctab" id="rnPick" style="margin-bottom:12px"></div>
+          <div class="sent" id="rnSent"></div>
+          <p style="margin:10px 0 0;font-size:.8em;color:var(--faint)" id="rnCaption"></p>
+          <div class="card" style="margin-top:12px">
+            <div class="card-t">What is left on the note</div>
+            <p style="margin:0 0 10px;font-size:.78em;color:var(--faint);line-height:1.5">Every word that went in, and how much of it survived. This is not a list of answers.</p>
+            <div class="probs" id="rnBars"></div>
+          </div>
+          <div class="card" id="rnAnsBox" style="margin-top:13px;display:none">
+            <div class="card-t">Only two words could be the answer</div>
+            <p style="margin:0 0 10px;font-size:.78em;color:var(--faint);line-height:1.5"><code>it</code> stands for a thing, so the candidates are the two nouns. Nothing else in the sentence can be what <code>it</code> meant.</p>
+            <div class="probs" id="rnCand"></div>
+            <div class="art" id="rnAnswer" style="margin-top:11px"></div>
+          </div>
+          <div class="ctrls" style="margin-top:13px">
+            <button class="btn primary" id="rnStep">Read the next word</button>
+            <button class="btn" id="rnAll">Read it all and ask</button>
+            <button class="btn" id="rnReset">Start over</button>
+          </div>
+          <div class="verdict" id="rnVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">The note is one fixed size</div>
+          <div class="rtt-note">
+            Whatever the sentence length, the note stays the same size. A short sentence fits comfortably. A paragraph does not, and nothing warns you which parts got squeezed out.
+            <br><br>This is what people mean by a <b style="color:var(--ink)">recurrent</b> network: the same small step applied over and over, each time taking the previous note and the next word, and producing a new note.
+          </div>
+          <div class="whynot" style="margin-top:14px">
+            <b>Two problems, and the second is worse</b>
+            <b style="color:var(--ink)">Distance.</b> Early words fade, so anything depending on a long-range connection gets lost.
+            <br><br><b style="color:var(--ink)">Order.</b> Word fifty cannot be read until word forty-nine has been. Training could not be spread across many machines, which put a ceiling on how much text anyone could train on.
+          </div>
+        </div>
+      </div>
+      <div class="whynot" style="margin-top:20px">
+        <b>Both problems have the same fix</b>
+        Stop summarizing. Keep every word, and let each one look directly at all the others, weighing them by how well they fit rather than by how recently they arrived. Every word is then one hop from every other, and all the comparisons can happen at once instead of in sequence.
+        <br><br>That is the next panel, and the reason this one exists.
+      </div>
+    </section>
+
+<!-- 04 ATTENTION -->

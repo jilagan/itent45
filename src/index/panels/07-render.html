@@ -1,0 +1,97 @@
+    <section class="panel" id="p-render">
+      <div class="head">
+        <div class="eyebrow">07 — Who builds the page</div>
+        <h2>The server sent data. Something still has to turn it into a page.</h2>
+        <p>Panel 06 ended with a response that was identical for every client. That response was data, not a page, which leaves a question nobody asked out loud: who assembles the thing a person actually looks at, and where does that work happen? There are two answers, they were popular in different decades, and the choice changes what travels over the wire, how fast the first screen appears, and how much work your server is doing per visitor.</p>
+        <div class="ask"><b>Ask the room</b>. When you click a link on a normal website, does the browser throw away the whole page and get a new one? On some sites yes, on others no. You can usually tell by watching the tab spinner.</div>
+      </div>
+
+      <div class="models">
+        <div class="md trad">
+          <div class="mh">Server-rendered &middot; the older model</div>
+          <h4>Every click fetches a whole new page</h4>
+          <p>The server runs your template, produces finished HTML, and sends a complete document. The browser throws away what it had and draws the new one. The enlistment system works this way.</p>
+          <div class="seq">
+            <span>click &rarr; request &rarr; server renders &rarr; full HTML &rarr; repaint</span>
+            <span>first screen: fast, the HTML arrives ready to draw</span>
+            <span>every click after: another full page, every time</span>
+          </div>
+        </div>
+        <div class="md spa">
+          <div class="mh">Single-page app &middot; the newer model</div>
+          <h4>One page, then only data moves</h4>
+          <p>The first load fetches an almost-empty shell and a large bundle of JavaScript. After that, clicks fetch JSON and the browser rewrites the parts of the DOM that changed. Nothing else reloads.</p>
+          <div class="seq">
+            <span>first load &rarr; shell + bundle &rarr; fetch JSON &rarr; build DOM</span>
+            <span>first screen: slower, nothing shows until the bundle runs</span>
+            <span>every click after: a few KB of JSON, no repaint of the rest</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-t">Same two courses, three ways of writing them down</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">The information is identical: eight values, 49 characters of actual data. Only the packaging changes.</p>
+      <div class="fmtpick" id="fmtPick"></div>
+      <div class="art" id="fmtBody"></div>
+      <div class="sizebars" id="fmtBars"></div>
+      <div class="verdict" id="fmtVerdict"></div>
+
+      <div class="card-t" style="margin-top:26px">Which model moves less over a session</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A student opens your app and looks at some number of pages before closing the tab. Drag it.</p>
+
+      <div class="srv">
+        <div class="card">
+          <div class="sizebars wide" id="navBars"></div>
+          <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:14px">
+            <div class="g" id="ngFirst"><div class="gl">First screen</div><div class="gv">—</div></div>
+            <div class="g" id="ngTotal"><div class="gl">Total transferred</div><div class="gv">—</div></div>
+            <div class="g" id="ngWho"><div class="gl">Ahead</div><div class="gv">—</div></div>
+          </div>
+          <div class="verdict" id="navVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">How much do they look at?</div>
+          <div class="sliders">
+            <div class="field">
+              <label>Pages viewed before leaving <span class="val" id="vPages">7</span></label>
+              <input type="range" id="sPages" min="1" max="40" value="7">
+            </div>
+          </div>
+          <div class="rtt-note" style="margin-top:15px">
+            Modelled at 45 KB of HTML per server-rendered page, a 280 KB bundle for the single-page app, and 4 KB of JSON per navigation after it. Stylesheets and scripts are counted once, because the browser caches them.
+            <br><br>Most people bounce after one or two pages. Drag it down there and look at which column wins.
+          </div>
+        </div>
+      </div>
+
+      <div class="card-t" style="margin-top:26px">What each choice costs you somewhere else</div>
+      <div class="bill">
+        <div class="bl">
+          <h5>Rendering moves to the user's device</h5>
+          <p>A single-page app makes the browser do the templating, so your handler stops paying for it. That raises the ceiling you measured in panel 19, on hardware you did not buy.</p>
+          <span class="ref">&rarr; panel 19, and the user's battery</span>
+        </div>
+        <div class="bl">
+          <h5>The first screen gets slower</h5>
+          <p>Server-rendered HTML is ready to draw when it lands. A bundle has to download, parse and execute before anything appears, and then fetch its data.</p>
+          <span class="ref">&rarr; panel 03, but the cost is on the client now</span>
+        </div>
+        <div class="bl">
+          <h5>You inherit things the browser did for free</h5>
+          <p>Back button, scroll position, the address bar, opening a link in a new tab. Server-rendered pages get all of it by default. A single-page app has to implement each one.</p>
+          <span class="ref">&rarr; nobody warns you about this until it breaks</span>
+        </div>
+        <div class="bl">
+          <h5>XML is not wrong, it is just heavy</h5>
+          <p>It carries schemas, namespaces and attributes that JSON has no answer for. Banks and government systems still run on it. You will meet it in a SOAP integration eventually.</p>
+          <span class="ref">&rarr; heavier on the wire, stricter on the contract</span>
+        </div>
+      </div>
+
+      <div class="whynot" style="margin-top:20px">
+        <b>What to pick for your capstone</b>
+        If the thing you are building is mostly pages people read, server-rendered is fewer moving parts and a faster first screen, and Django does it out of the box. If it is a tool people sit inside for twenty minutes clicking around, the bundle pays for itself before the third click. Most student projects are the first kind and get built as the second, because that is what the tutorials show. Decide on the shape of the session, not on what is fashionable.
+      </div>
+    </section>
+
+    <!-- ================= 07 CHECKOUT ================= -->

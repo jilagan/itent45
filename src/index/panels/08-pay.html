@@ -1,0 +1,124 @@
+    <section class="panel" id="p-pay">
+      <div class="head">
+        <div class="eyebrow">08 — E-commerce · your server becomes a client</div>
+        <h2>Checkout, where your API is the one doing the asking</h2>
+        <p>Up to now your server has answered requests. In a checkout it also sends them, to a payment gateway like PayMongo, Stripe or Xendit, over the same HTTP, with the same verbs and status codes you saw in panel 04. Nothing new to learn. What is new is that three parties now hold pieces of one transaction, and each of them can fail separately.</p>
+        <div class="ask"><b>Ask the room</b> When you type your card number into a checkout page, which machines does that number touch on its way to the bank? Most people guess wrong, and the right answer is the reason online shops are not constantly leaking cards.</div>
+      </div>
+
+      <div class="pflow" id="pflow">
+        <div class="pty" data-k="browser" id="pBrowser"></div>
+        <div class="plane" data-lane="A">
+          <div class="pcap" id="pcapA"></div>
+          <div><div class="prail fwd" id="prailAf"></div><div class="ptag">request</div></div>
+          <div><div class="prail back" id="prailAb"></div><div class="ptag">response</div></div>
+        </div>
+        <div class="pty" data-k="server" id="pApi"></div>
+        <div class="plane" data-lane="B">
+          <div class="pcap" id="pcapB"></div>
+          <div><div class="prail fwd" id="prailBf"></div><div class="ptag">charge</div></div>
+          <div><div class="prail back" id="prailBb"></div><div class="ptag">result</div></div>
+        </div>
+        <div class="pty" data-k="gateway" id="pGw"></div>
+        <div class="plane" data-lane="C">
+          <div class="pcap" id="pcapC"></div>
+          <div><div class="prail fwd" id="prailCf"></div><div class="ptag">settle</div></div>
+          <div><div class="prail back" id="prailCb"></div><div class="ptag">confirm</div></div>
+        </div>
+        <div class="pty remote" data-k="bank" id="pBank"></div>
+
+        <div class="bypass" id="bypass">
+          <span class="tick a"></span><span class="tick b"></span>
+          <i class="l"></i><i class="r"></i>
+          <span class="bl">the card goes straight here &mdash; your server is never in this conversation</span>
+        </div>
+        <div class="ball" id="payBall"></div>
+      </div>
+
+      <div class="trace">
+        <div class="card">
+          <div class="tstep" id="pyStep">Step 1</div>
+          <span class="hop" id="pyHop"></span>
+          <h3 style="margin:0 0 8px;font-size:1.05em;font-weight:600" id="pyTitle"></h3>
+          <p style="margin:0;font-size:.86em;color:var(--dim);line-height:1.6" id="pyText"></p>
+          <div class="artlbl" id="pyLbl"></div>
+          <div class="art" id="pyArt"></div>
+        </div>
+        <div>
+          <div class="ctrls">
+            <button class="btn primary" id="pyPlay">▶ Play flow</button>
+            <button class="btn" id="pyPrev">←</button>
+            <button class="btn" id="pyNext">→</button>
+            <button class="btn" id="pyRst">Reset</button>
+          </div>
+          <div class="whynot">
+            <b>Why the card skips your server</b>
+            The browser sends the card straight to the gateway and gets back an opaque token. Your server only ever handles that token. This is deliberate: the moment card numbers touch a machine you own, that machine falls inside PCI DSS scope, and so does every system it talks to. Handling a token instead keeps that burden with the people whose entire business is carrying it.
+          </div>
+          <div class="rtt-note" style="margin-top:14px">
+            <b>Roles invert at step 8.</b> The gateway calls you. Your API is the server in that conversation, and the signature header is the only thing standing between you and anyone on the internet marking their own order paid.
+          </div>
+        </div>
+      </div>
+
+      <div class="card-t" style="margin-top:28px">Why is every message in that flow JSON?</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Nothing in this exchange is ever looked at by a person. Two programs at two companies are stating facts to each other. That is the situation JSON was shaped for, and it is worth seeing the alternatives written out before accepting it. Here is the same charge request, three ways.</p>
+      <div class="fmtpick" id="whyPick"></div>
+      <div class="art" id="whyBody"></div>
+      <div class="sizebars" id="whyBars"></div>
+      <div class="verdict" id="whyVerdict"></div>
+
+      <div class="whynot" style="margin-top:18px">
+        <b>When XML is still the right answer</b>
+        JSON carries values. It has no way to state that <code>amount</code> must be a positive integer, or that <code>currency</code> must be a real ISO code, so every one of those checks lives in somebody's application code and gets written again on both sides. An XML schema states them once and a parser enforces them before your code runs, and XML-DSig can sign the document itself rather than the bytes around it. When the thing being exchanged is money between institutions, that is worth six times the payload. Several Philippine banks still expose exactly this, so if your capstone touches a real bank rather than a modern gateway, expect SOAP and budget a week for it.
+      </div>
+
+      <div class="head" style="margin-top:34px;border-bottom:none;padding-bottom:0">
+        <div class="eyebrow">THE PAYOFF FOR PANEL 05</div>
+        <h2 style="font-size:1.45em">POST is not idempotent, and this is what that costs</h2>
+        <p>The customer's connection stalls. They press Pay again. Then again. Try it below, click the button as many times as an impatient shopper would.</p>
+      </div>
+
+      <div class="srv" style="margin-top:16px">
+        <div class="card">
+          <div class="card-t">Checkout, one pair of shoes, ₱1,299</div>
+          <button class="paybtn" id="payGo">Pay ₱1,299</button>
+          <div class="charges" id="chgList"></div>
+          <div class="total" id="chgTotal">
+            <span style="font-family:var(--mono);font-size:.62em;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)">Actually charged</span>
+            <span class="tn" id="chgAmt">₱0</span>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-t">The one header that fixes it</div>
+          <div class="toggles">
+            <button class="tg" id="tgIdem" aria-pressed="false"><span class="dot"></span><span>Send an Idempotency-Key<small>One UUID generated per checkout, reused on every retry</small></span></button>
+          </div>
+          <div class="art" style="margin-top:14px;min-height:0" id="idemArt"></div>
+          <div class="ctrls" style="margin-top:14px">
+            <button class="btn" id="payReset">New checkout</button>
+          </div>
+          <div class="rtt-note" style="margin-top:14px" id="idemNote"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-top:20px">
+        <div class="card-t">What a slow gateway does to the capacity you measured in panel 18</div>
+        <div class="cmp">
+          <div>
+            <div class="artlbl" style="margin-top:0">Charging inside the request</div>
+            <div class="art" style="min-height:0">handler 40 ms + gateway 800 ms = <span class="kw">840 ms</span>
+4 workers ÷ 0.840 s = <span class="kw">4.8 rps</span></div>
+          </div>
+          <div>
+            <div class="artlbl" style="margin-top:0">Charging on a queue, confirming by webhook</div>
+            <div class="art" style="min-height:0">handler 40 ms, gateway call moved off the path
+4 workers ÷ 0.040 s = <span class="s">100 rps</span></div>
+          </div>
+        </div>
+        <p style="margin:14px 0 0;font-size:.84em;color:var(--dim);line-height:1.6">Every third-party call you make inside a request becomes part of your handler time, which means their bad afternoon becomes your outage. Twenty times the capacity here comes from moving the call off the request path. The same move that fixed Card C in the breakout.</p>
+      </div>
+    </section>
+
+
+    <!-- ================= 08 MEMORY ================= -->

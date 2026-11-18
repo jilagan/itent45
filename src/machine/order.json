@@ -1,0 +1,19 @@
+[
+ "00-intro.html",
+ "01-next.html",
+ "02-learn.html",
+ "03-train.html",
+ "04-deep.html",
+ "05-backprop.html",
+ "06-tokens.html",
+ "07-embed.html",
+ "08-vectors.html",
+ "09-rnn.html",
+ "10-attn.html",
+ "11-ctx.html",
+ "14-tools.html",
+ "12-prompt.html",
+ "13-loop.html",
+ "16-math.html",
+ "15-vibe.html"
+]

@@ -1,0 +1,30 @@
+    <section class="panel" id="p-entity">
+      <div class="head">
+        <div class="eyebrow">09 — Module 5 · what the words mean</div>
+        <h2>Before you draw anything, sort the nouns</h2>
+        <p>A data model starts as a pile of nouns from a conversation with whoever wants the system. Three of those nouns are three different kinds of thing, and mixing them up is the single most common way a first diagram goes wrong. An <b style="color:var(--ink)">entity</b> is a thing worth keeping data about. An <b style="color:var(--ink)">attribute</b> is a fact that describes one. An <b style="color:var(--ink)">instance</b> is one actual specimen. Sort these.</p>
+        <div class="ask"><b>Ask the room</b>. Is <em>Room</em> an attribute of a class, or a thing in its own right? Both answers are defensible, and which one you pick decides whether you can ever ask what else is scheduled in SOM 407.</div>
+      </div>
+
+      <div class="srv">
+        <div>
+          <div class="terms" id="entList"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">How you tell them apart</div>
+          <div class="rtt-note">
+            <b style="color:var(--res)">Entity</b> &mdash; a person, place, object, event or concept the organization wants to keep data about. It has many possible specimens, and each has something that tells it apart from the others.
+            <br><br><b style="color:var(--res)">Attribute</b> &mdash; a property of an entity. On its own it describes nothing; it only makes sense attached to something.
+            <br><br><b style="color:var(--res)">Instance</b> &mdash; one specimen. Not a thing you design, a thing you store. If you find yourself drawing a box around it, you have gone wrong.
+          </div>
+          <div class="verdict" id="entVerdict" style="margin-top:13px"></div>
+        </div>
+      </div>
+
+      <div class="whynot" style="margin-top:20px">
+        <b>Events are entities too, and students always miss them</b>
+        Student and Course are easy. <em>Enrolment</em> is the one that gets left out, because it does not feel like a thing, it feels like something that happened. But it has a date, a status and a grade, and none of those belong to the student or to the course. The moment two entities need facts that describe the pairing rather than either side, the pairing is an entity. Panel 10 is what happens to your tables when you notice.
+      </div>
+    </section>
+
+    <!-- ================= RELATIONSHIPS & CARDINALITY ================= -->

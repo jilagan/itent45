@@ -1,0 +1,75 @@
+    <section class="panel" id="p-deep">
+      <div class="head">
+        <div class="eyebrow">04 — Why anyone stacks layers</div>
+        <h2>Some questions have no straight-line answer, so you use several lines</h2>
+        <p>The last panel found one line and it worked, because passing really does get more likely with hours and attendance. Not every question is shaped like that. Here is one that is not: who drops the course. Students drop when they are barely engaged, and they drop when they are carrying far too much. The ones in the middle stay.</p>
+        <div class="ask"><b>Ask the room</b>. Try to draw one straight line that puts every stayer on one side. You cannot. So what do you do instead?</div>
+      </div>
+      <div class="srv">
+        <div>
+          <div class="scatter" id="nnDiag" style="margin-bottom:12px"></div>
+          <p style="margin:0 0 12px;font-size:.79em;color:var(--faint);line-height:1.55" id="nnDiagCap"></p>
+          <div class="scatter" id="nnPlot"></div>
+          <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
+            <div class="g" id="nnAcc"><div class="gl">Correct</div><div class="gv">—</div></div>
+            <div class="g" id="nnUnits"><div class="gl">Lines used</div><div class="gv">—</div></div>
+            <div class="g" id="nnParams"><div class="gl">Numbers to learn</div><div class="gv">—</div></div>
+          </div>
+          <div class="verdict" id="nnVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">Add units to the layer</div>
+          <div class="sliders">
+            <div class="field">
+              <label>Units <span class="val" id="vUnits">1</span></label>
+              <input type="range" id="sUnits" min="1" max="8" value="1">
+            </div>
+          </div>
+          <div class="toggles" style="margin-top:12px">
+            <button class="tg" id="tgLines" aria-pressed="true"><span class="dot"></span>Show what each unit is doing</button>
+            <button class="tg" id="tgAct" aria-pressed="true"><span class="dot"></span>Keep the nonlinearity</button>
+          </div>
+          <div class="rtt-note" style="margin-top:14px">
+            Each unit is one straight line, exactly like the one in the last panel. On its own it can only cut the space in two.
+            <br><br>The next layer takes their answers and combines them. Slide it up and watch a curve appear out of pieces that are all perfectly straight.
+          </div>
+          <div class="whynot" style="margin-top:14px">
+            <b>This is the whole of it</b>
+            A unit is a line. A layer is a set of lines. Depth is layers feeding layers, so later ones combine what earlier ones found. Nobody hand-draws the shape at the bottom of this screen. Training moves each line until the combination stops being wrong so often.
+          </div>
+        </div>
+      </div>
+
+      <div class="whynot" style="margin-top:20px">
+        <b>Two pictures of the same object</b>
+        Most people meet neural networks as the circles-and-arrows diagram and never see what it does, so the diagram becomes a logo rather than an explanation. It is the <b style="color:var(--ink)">wiring</b>: which number gets multiplied by which weight and passed to where.
+        <br><br>The plot underneath is the <b style="color:var(--ink)">effect</b>: what that wiring does to the space of possible students. One circle in the middle row is one line on the plot. Four circles, four lines. The weights on the two arrows entering a circle set that line's angle; its bias sets how far out it sits. Three numbers, exactly as in panel 03.
+        <br><br>Neither picture is more correct. The diagram tells you what is connected, and the plot tells you what the connections bought you, and people who only ever see the first one end up believing the second is somehow deeper than it is.
+      </div>
+
+      <div class="whynot" style="margin-top:20px">
+        <b>This is no longer regression of any kind</b>
+        One line fitted to data is logistic regression, which is what the last two panels were. The moment you use several lines and combine their answers, you have <b style="color:var(--ink)">a neural network with one hidden layer</b>.
+        <br><br>The vocabulary maps onto what is on screen. Each line is a <b style="color:var(--res)">unit</b>, sometimes called a neuron. The set of them is a <b style="color:var(--res)">layer</b>. The step that takes their answers and produces one verdict is the <b style="color:var(--res)">output unit</b>, and here it says <em>pass</em> only when every line agrees.
+        <br><br>Hidden means only that you never see what those units decided. You gave the network two numbers and read one answer out; whatever the units settled on in between is not shown to you and was not chosen by anyone.
+      </div>
+
+      <div class="card-t" style="margin-top:26px">What you gave up to get that shape</div>
+      <div class="cmp">
+        <div class="card">
+          <div class="card-t" style="color:var(--res)">Before deep learning</div>
+          <p style="margin:0;font-size:.84em;color:var(--dim);line-height:1.6">You picked the features yourself. To spot a dropout you would decide what to measure: hours, attendance, whether they had missed two submissions in a row. Getting those right was the job, and it took someone who knew the domain. When the model failed you could point at which feature was wrong.</p>
+        </div>
+        <div class="card">
+          <div class="card-t" style="color:var(--req)">After</div>
+          <p style="margin:0;font-size:.84em;color:var(--dim);line-height:1.6">You hand it raw input and enough units, and the early layers work out their own features. In an image model the first layers end up finding edges, later ones shapes, later still faces. The word "edge" appears nowhere in the design. It was the most useful thing for that layer to notice.</p>
+        </div>
+      </div>
+      <div class="whynot" style="margin-top:16px">
+        <b>The bill arrives later</b>
+        You no longer know what the features are. The eight numbers on this screen are legible; a real model has billions, and no one of them means anything on its own. So a model can be excellent and unexplainable at the same time, and when it goes wrong there is often nothing to point at.
+        <br><br>Keep that in mind for panel 07, on where meaning comes from. The same property that lets a model find features nobody named also lets it absorb patterns nobody intended.
+      </div>
+    </section>
+
+    <!-- BACKPROP -->

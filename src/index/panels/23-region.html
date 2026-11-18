@@ -1,0 +1,68 @@
+    <section class="panel" id="p-region">
+      <div class="head">
+        <div class="eyebrow">23 — Module 4 · regions, latency and failover</div>
+        <h2>Where you run it is a decision, and physics gets a vote</h2>
+        <p>Panel 03 showed that most of a page load is round trips, and that no amount of server capacity fixes a slow one. This is the panel that answers it. A <b>region</b> is a geographic place with datacentres in it; an <b>availability zone</b> is one of those datacentres, far enough from its neighbours to fail separately and close enough to replicate to instantly. Choosing between them is a trade between speed, survival and money, and you cannot have all three.</p>
+        <div class="ask"><b>Ask the room</b> Light in fibre travels about 200,000 km per second. Manila to Virginia and back is 27,000 km. What is the fastest a response could <em>possibly</em> come back, on a perfect network with no server at all?</div>
+      </div>
+
+      <div class="worldwrap">
+        <svg id="worldMap" viewBox="0 0 960 470" preserveAspectRatio="xMidYMid meet"></svg>
+        <div class="maplegend">
+          <span><i style="background:var(--res)"></i>your users</span>
+          <span><i style="background:var(--req)"></i>primary region</span>
+          <span><i style="background:var(--faint)"></i>other regions you could pick</span>
+          <span><i style="background:var(--warn)"></i>failed</span>
+        </div>
+      </div>
+
+      <div class="srv" style="margin-bottom:22px">
+        <div class="card">
+          <div class="card-t">What the distance costs you</div>
+          <div class="legend2" id="latStats"></div>
+          <div class="verdict" id="latVerdict"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">Where do you put the servers?</div>
+          <div class="sliders">
+            <div class="field">
+              <label>Region <span class="val" id="vRegion">Singapore</span></label>
+              <input type="range" id="sRegion" min="0" max="7" value="1">
+            </div>
+            <p style="margin:8px 0 0;font-size:.74em;color:var(--faint);line-height:1.5">Or click any region on the map.</p>
+          </div>
+          <div class="rtt-note" style="margin-top:15px">
+            The physics figure is the hard floor, two-way distance divided by the speed of light in glass. Real networks land at roughly 1.5× that, because packets go through switches and rarely travel in a straight line.
+            <br><br>Nothing you write, buy or optimize gets you under the floor. Only moving closer does.
+          </div>
+        </div>
+      </div>
+
+      <div class="card-t">And what happens when something catches fire</div>
+      <p style="margin:0 0 14px;font-size:.85em;color:var(--dim);line-height:1.6">Panel 19's health checks reroute around a dead machine. They cannot reroute around a dead building. These four postures are what that costs, in order of price.</p>
+
+      <div class="srv">
+        <div class="card">
+          <div class="card-t">Break something and see</div>
+          <div class="ctrls">
+            <button class="btn" id="killSrv">Kill one machine</button>
+            <button class="btn" id="killAz">Kill a datacentre</button>
+            <button class="btn" id="killReg">Kill the whole region</button>
+            <button class="btn primary" id="fixAll">Recover</button>
+          </div>
+          <div class="legend2" id="foStats" style="margin-top:14px"></div>
+          <div class="verdict" id="foVerdict"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">How much survival do you want to buy?</div>
+          <div class="postures" id="postureList"></div>
+        </div>
+      </div>
+
+      <div class="whynot" style="margin-top:20px">
+        <b>What this means for your capstone</b>
+        Every one of your users is in Metro Manila, so put the servers in Singapore and stop thinking about it. Take multi-AZ if the provider gives it to you by default, because it costs almost nothing and removes an entire category of disaster. Do <em>not</em> go multi-region: you would be paying double, writing conflict-resolution code, and accepting a data-loss window, in order to survive an event that has never happened to your users. Multi-region is what you reach for when a region going down costs more than running two of everything, and you should be able to say what that number is before you do it.
+      </div>
+    </section>
+
+            <!-- ================= ENTITY / ATTRIBUTE / INSTANCE ================= -->

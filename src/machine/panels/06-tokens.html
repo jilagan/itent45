@@ -1,0 +1,39 @@
+    <section class="panel" id="p-tokens">
+      <div class="head">
+        <div class="eyebrow">06 — What it actually reads</div>
+        <h2>It has never seen a letter in its life</h2>
+        <p>Text does not reach the model as text. It is cut into <b>tokens</b> first, and the model only ever sees the numbers those tokens map to. Everything below the cut is invisible: the letters, the spelling, the fact that two words rhyme.</p>
+        <div class="ask"><b>Ask the room</b>. How many r's in <em>strawberry</em>? Now look at how the word arrives.</div>
+      </div>
+      <div class="ctab" id="tkPick"></div>
+      <div class="srv">
+        <div>
+          <div class="card">
+            <div class="card-t">As you typed it</div>
+            <div class="art" id="tkRaw" style="margin-bottom:12px"></div>
+            <div class="card-t">As the model receives it</div>
+            <div class="chips" id="tkChips"></div>
+          </div>
+          <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
+            <div class="g" id="tkChars"><div class="gl">Characters</div><div class="gv">—</div></div>
+            <div class="g" id="tkToks"><div class="gl">Tokens</div><div class="gv">—</div></div>
+            <div class="g" id="tkRatio"><div class="gl">Characters per token</div><div class="gv">—</div></div>
+          </div>
+          <div class="verdict" id="tkVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">What this explains</div>
+          <div class="rtt-note">
+            <b style="color:var(--ink)">Why it miscounts letters.</b> Asking it how many r's are in a word it received as three chunks is like asking you to count brushstrokes in printed text. The information was gone before it arrived.
+            <br><br><b style="color:var(--ink)">Why there is a size limit.</b> The window is measured in tokens, never in words or pages.
+            <br><br><b style="color:var(--ink)">Why the bill looks like that.</b> You are charged per token, so the same sentence costs different amounts in different languages.
+          </div>
+          <div class="whynot" style="margin-top:14px">
+            <b>Not every language costs the same</b>
+            English averages about four characters a token because most of the training text was English. Filipino and Tagalog fragment harder, so the same meaning takes more tokens, costs more to send, and fills the window faster. It fell out of what the tokenizer was fitted to, and the people paying for it were not in the room.
+          </div>
+        </div>
+      </div>
+    </section>
+
+        <!-- 06 LEARNING POSITIONS -->

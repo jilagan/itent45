@@ -1,0 +1,52 @@
+    <section class="panel" id="p-tools">
+      <div class="head">
+        <div class="eyebrow">14 — Who actually runs things</div>
+        <h2>The model never touches your database. It writes a note asking someone else to.</h2>
+        <p>The last panel gave the agent a shell and a test runner and called it a loop. That skipped something worth knowing before you let one near your repository: at no point does the model execute anything. It emits a request, in text, and a separate program decides whether to carry it out.</p>
+        <div class="ask"><b>Ask the room</b>. If the model cannot run anything itself, where exactly is the point at which somebody could say no?</div>
+      </div>
+      <div class="ctab" id="tlPick"></div>
+      <div class="srv">
+        <div>
+          <div class="trace" id="tlTrace"></div>
+          <div class="ctrls" style="margin-top:13px">
+            <button class="btn primary" id="tlStep">Step</button>
+            <button class="btn" id="tlReset">Reset</button>
+            <button class="btn" id="tlDeny">Refuse it</button>
+          </div>
+          <div class="verdict" id="tlVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">What the model was given</div>
+          <div class="art" id="tlDef"></div>
+          <div class="rtt-note" style="margin-top:12px">
+            This is the whole of what it knows about the tool: a name, a sentence, and the shape of the arguments. It has never seen your schema, your rows or your server.
+            <br><br>So it picks a tool the way you pick one from a menu you have not tasted: <b style="color:var(--ink)">by reading the description</b>. A vague description gets the wrong tool called, and that is a bug in the description, not the model.
+          </div>
+        </div>
+      </div>
+
+      <div class="card-t" style="margin-top:26px">Why there is a standard for this</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Every AI application needs to reach the same systems: your files, your database, your issue tracker, your calendar. Before there was a common format, each pairing needed its own adapter, and the count multiplies.</p>
+      <div class="cmp">
+        <div class="card">
+          <div class="card-t" style="color:var(--warn)">One adapter per pairing</div>
+          <div class="art" id="tlBefore"></div>
+        </div>
+        <div class="card">
+          <div class="card-t" style="color:var(--res)">One standard, implemented once each</div>
+          <div class="art" id="tlAfter"></div>
+        </div>
+      </div>
+      <p style="margin:12px 0 0;font-size:.84em;color:var(--faint);line-height:1.6">That is what <b style="color:var(--ink)">MCP</b>, the Model Context Protocol, is for. Anthropic published it as an open standard in November 2024 and other vendors adopted it. A <b>server</b> wraps a system and advertises what it offers. A <b>client</b>, sitting inside the application you are using, asks for that list and relays calls. Write the server once and any client that speaks the protocol can use it.</p>
+
+      <div class="whynot" style="margin-top:20px">
+        <b>Three things this buys you, and one it does not</b>
+        <b style="color:var(--ink)">A place to say no.</b> Every call passes through the client before it reaches anything real, so approval, logging and refusal all have somewhere to live.
+        <br><br><b style="color:var(--ink)">A list you control.</b> The model can only ask for tools it was offered. If it says it cannot read your file, the usual reason is that nobody gave it a tool that reads files.
+        <br><br><b style="color:var(--ink)">Portability.</b> The same server works in whichever editor or agent you move to next.
+        <br><br><b style="color:var(--warn)">What it does not buy you is judgement.</b> A tool that deletes rows will delete rows when called correctly. The protocol carries the request faithfully; deciding whether the request should have been made is still yours, and in an agent loop the requests arrive faster than you can read them.
+      </div>
+    </section>
+
+    <!-- PROMPTING -->

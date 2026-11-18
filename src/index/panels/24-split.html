@@ -1,0 +1,115 @@
+    <section class="panel" id="p-split">
+      <div class="head">
+        <div class="eyebrow">24 — Module 6 · monolith and microservices</div>
+        <h2>Scaling out is not the same as splitting up</h2>
+        <p>Panel 19 gave you six machines. Every one of them was an identical copy of the same application. That is a monolith, scaled horizontally. Most systems should be one. Splitting up is a different move on a different axis: several different things, each sized for its own appetite. Panel 20 already showed you a candidate, when browsing the catalog and reserving a seat turned out to want opposite things from the same box.</p>
+        <div class="ask"><b>Ask the room</b> If one part of your app needs 400 MB and the rest need 90, how much memory does a copy of the monolith need? Now multiply that by every copy you run.</div>
+      </div>
+
+      <div class="arch">
+        <div class="ar mono">
+          <div class="ah">Monolith · one app, many copies</div>
+          <h4>Every copy can do everything</h4>
+          <div class="boxrow" id="monoBoxes"></div>
+          <p>Any machine can serve any request, so the load balancer does not care which one it picks. Simple to deploy, simple to reason about, and one stack trace when something breaks. The cost: every worker must be sized for the heaviest thing it might be asked to do.</p>
+          <div class="archstat"><span class="n" id="monoRam">—</span><span class="l">total RAM · <span id="monoInst">—</span></span></div>
+        </div>
+        <div class="ar svc">
+          <div class="ah">Services · several apps, sized separately</div>
+          <h4>Each part gets what it needs</h4>
+          <div class="boxrow" id="svcBoxes"></div>
+          <p>The catalog service never loads the PDF library and never needs 400 MB. You scale the slow part without paying for copies of the fast parts. The cost is on the next row down, and it is not small.</p>
+          <div class="archstat"><span class="n" id="svcRam">—</span><span class="l">total RAM · <span id="svcInst">—</span></span></div>
+        </div>
+      </div>
+
+      <div class="srv">
+        <div class="card">
+          <div class="card-t">The four things this app does</div>
+          <div class="parts" id="partList"></div>
+          <div class="verdict" id="splitVerdict" style="margin-top:14px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">How busy is it?</div>
+          <div class="sliders">
+            <div class="field">
+              <label>Total load <span class="val" id="vLoad2">400 rps</span></label>
+              <input type="range" id="sLoad2" min="10" max="2000" step="10" value="400">
+            </div>
+          </div>
+          <div class="rtt-note" style="margin-top:16px">
+            Both columns use the same 4 workers per machine from panel 18. The only difference is what each worker has to be able to do.
+            <br><br>Drag the load down to 40 rps and watch which column wins. Then drag it up past 800.
+            <br><br><b style="color:var(--faint)">Illustrative profiles, not measurements.</b>
+          </div>
+        </div>
+      </div>
+
+      <div class="card-t" style="margin-top:26px">What splitting actually costs you</div>
+      <p style="margin:0 0 6px;font-size:.85em;color:var(--dim);line-height:1.6">Every one of these is something you already met in this session, arriving again inside your own system.</p>
+      <div class="bill">
+        <div class="bl">
+          <h5>A function call becomes a network call</h5>
+          <p>What was a method invocation is now a request that can be slow, time out, or fail while the other side has already done the work.</p>
+          <span class="ref">→ panel 03, now happening inside your own building</span>
+        </div>
+        <div class="bl">
+          <h5>Your services drift apart</h5>
+          <p>You cannot deploy them all at the same instant, so a new field has to be additive here too. You are now your own difficult mobile client.</p>
+          <span class="ref">→ panel 06, version drift, applied internally</span>
+        </div>
+        <div class="bl">
+          <h5>Every call needs the caller's discipline</h5>
+          <p>Retries, timeouts, and an idempotency key so a retry does not double the effect. Exactly what the payment gateway made you do.</p>
+          <span class="ref">→ panel 08, but now for calls you wrote</span>
+        </div>
+        <div class="bl">
+          <h5>One stack trace becomes several logs</h5>
+          <p>A single failure is now spread across services, and you cannot read it until you have correlated the requests with a shared trace id.</p>
+          <span class="ref">→ nothing in panel 04 prepares you for this</span>
+        </div>
+      </div>
+
+      <div class="card-t" style="margin-top:26px">The question the memory graph cannot answer: do the parts talk?</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Everything above assumed each request is served by one part. Real systems are rarely that clean: showing an enrolment page might need the catalog, the student record and the billing status. Inside a monolith those are function calls costing nothing. Across services each one is a network request, and they do not add up, they multiply.</p>
+
+      <div class="srv">
+        <div class="card">
+          <div class="card-t">One request, several services deep</div>
+          <div class="meter" style="grid-template-columns:repeat(2,1fr)">
+            <div class="g" id="chLat"><div class="gl">Handler time</div><div class="gv">—</div></div>
+            <div class="g" id="chSlow"><div class="gl">Chance one is slow</div><div class="gv">—</div></div>
+            <div class="g" id="chAvail"><div class="gl">Combined uptime</div><div class="gv">—</div></div>
+            <div class="g" id="chDown"><div class="gl">Dark per month</div><div class="gv">—</div></div>
+          </div>
+          <div class="verdict" id="chVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">How chatty is one request?</div>
+          <div class="sliders">
+            <div class="field">
+              <label>Calls to other services <span class="val" id="vChat">4</span></label>
+              <input type="range" id="sChat" min="0" max="20" value="4">
+            </div>
+          </div>
+          <div class="rtt-note" style="margin-top:15px">
+            Each cross-service call costs about <b>3 ms</b> more than the same work done in-process: connection, serialization, network, deserialization. That is on a good day, inside one datacentre.
+            <br><br>Assume each service is up 99.9% of the time and has a slow moment 1% of the time. Those are respectable numbers for one service. Watch what they become when you need several of them to answer a single request.
+            <br><br>Drag it to 10 and read the bottom two figures out loud.
+          </div>
+        </div>
+      </div>
+
+      <div class="whynot" style="margin-top:18px">
+        <b>The failure mode this describes has a name</b>
+        Splitting an application that still needs all its pieces on every request gives you a <em>distributed monolith</em>: you paid every cost of separation and kept every bit of the coupling. It is slower than what you started with, it fails more often than what you started with, and it is harder to debug than what you started with. Cut the boundary only where the parts truly do not need each other, which is a fact about your domain and not about your infrastructure. If two services call each other on every request, they were one service.
+      </div>
+
+      <div class="whynot" style="margin-top:20px">
+        <b>What to do in your capstone</b>
+        Build the monolith. Keep the parts cleanly separated <em>inside</em> it. Separate modules, no reaching into each other's tables. So that a boundary is there if you ever need to cut along it. Almost every microservices horror story starts with a team that split before they had a reason, and paid all four costs above to solve a scaling problem they did not yet have. Split when one part's appetite really is different from the rest, and you can say which part and why.
+      </div>
+    </section>
+
+
+    <!-- ================= 13 VIRTUALIZATION ================= -->

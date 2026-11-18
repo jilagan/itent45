@@ -1,0 +1,68 @@
+    <section class="panel" id="p-server">
+      <div class="head">
+        <div class="eyebrow">18 — Capacity · still one machine</div>
+        <h2>Still one machine. Now watch those workers do the work.</h2>
+        <p><b>Same box as panel 17, same workers.</b> There you counted how many processes fit in the RAM; here you find out what they buy you. Requests arrive whether or not you are ready. They wait in a queue, the workers pull from it one at a time, and pushing arrivals past what they can drain makes the queue grow without bound. Latency goes vertical while throughput stays flat. Several machines only appear in panel 19.</p>
+        <div class="ask"><b>Ask the room</b> Set workers to 4 and handler time to 200&nbsp;ms. What is the absolute maximum requests per second this box can serve? Now raise arrivals past it and watch p95 latency.</div>
+      </div>
+
+      <div class="srv">
+        <div>
+          <canvas id="simCanvas"></canvas>
+          <div class="legend">
+            <span><i style="background:var(--req)"></i>Waiting in queue</span>
+            <span><i style="background:var(--res)"></i>Completed</span>
+            <span><i style="background:var(--warn)"></i>Dropped, queue or RAM full</span>
+          </div>
+          <div class="gauges">
+            <div class="g" id="gThr"><div class="gl">Throughput</div><div class="gv">0<span class="gu">rps</span></div></div>
+            <div class="g" id="gQ"><div class="gl">Queue depth</div><div class="gv">0</div></div>
+            <div class="g" id="gP95"><div class="gl">p95 latency</div><div class="gv">0<span class="gu">ms</span></div></div>
+            <div class="g" id="gCpu"><div class="gl">Worker util</div><div class="gv">0<span class="gu">%</span></div></div>
+            <div class="g" id="gMem"><div class="gl">Memory</div><div class="gv">0<span class="gu">MB</span></div></div>
+            <div class="g" id="gDrop"><div class="gl">Dropped</div><div class="gv">0</div></div>
+          </div>
+          <div class="verdict" id="verdict"><b>Idle</b>Press Start to send traffic at the server.</div>
+        </div>
+
+        <div class="card">
+          <div class="card-t">Machine &amp; load</div>
+          <div class="sliders">
+            <div class="field">
+              <label>Arrival rate <span class="val" id="vLam">20 rps</span></label>
+              <input type="range" id="sLam" min="1" max="200" value="20">
+            </div>
+            <div class="field">
+              <label>Handler time <span class="val" id="vSvc">50 ms</span></label>
+              <input type="range" id="sSvc" min="5" max="500" value="50">
+            </div>
+            <div class="field">
+              <label>Workers on this box <span class="val" id="vW">4</span></label>
+              <input type="range" id="sW" min="1" max="32" value="4">
+            </div>
+            <div class="field">
+              <label>RAM per request <span class="val" id="vMem">12 MB</span></label>
+              <input type="range" id="sMem" min="1" max="80" value="12">
+            </div>
+            <div class="field">
+              <label>Total RAM <span class="val" id="vRam">512 MB</span></label>
+              <input type="range" id="sRam" min="128" max="4096" step="128" value="512">
+            </div>
+          </div>
+          <div class="ctrls" style="margin-top:18px">
+            <button class="btn primary" id="simRun">▶ Start</button>
+            <button class="btn" id="simReset">Reset</button>
+          </div>
+          <div class="rtt-note" style="margin-top:14px">
+            Ceiling = workers ÷ handler time.<br>
+            <b id="capLine">4 ÷ 0.05 s = 80 rps</b>
+            <br><br><span style="color:var(--faint)">Same workers as panel 17. Separate OS processes on this one machine.</span><br>
+            <b id="memLink" style="color:var(--res)"></b>
+          </div>
+        </div>
+      </div>
+
+      <div class="srv-code" id="srvCode"></div>
+    </section>
+
+    <!-- ================= 05 SCALE ================= -->

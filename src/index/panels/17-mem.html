@@ -1,0 +1,87 @@
+    <section class="panel" id="p-mem">
+      <div class="head">
+        <div class="eyebrow">17 — What a server is actually holding</div>
+        <h2>Before anything of yours runs, the box is already half full</h2>
+        <p>A server is a computer with a fixed amount of RAM, and your application is only one of the things living in it. The operating system was there first. So was the web server, and often the database too. Whatever is left over is what you get to spend on workers, and each worker costs far more than students expect.</p>
+        <div class="ask"><b>Ask the room</b>. Your laptop has 8 GB. How much of it is free right now, before you open anything? Same question, same answer shape, for a server.</div>
+      </div>
+
+      <div class="srv">
+        <div>
+          <div class="card">
+            <div class="card-t">Memory budget</div>
+            <div class="ramwrap">
+              <div class="rambar" id="ramBar"></div>
+            </div>
+            <div class="legend2" id="ramLegend"></div>
+          </div>
+          <div class="verdict" id="ramVerdict"></div>
+
+          <div class="wexp">
+            <h4>What one worker actually is</h4>
+            <p>When you run <code>gunicorn --workers 8</code>, you do not get eight threads sharing one Django. You get <b>eight separate operating system processes</b>, and each one loads its own Python interpreter, its own copy of Django, and its own copy of every library you imported. Pandas alone can cost 100 MB before a single request arrives.</p>
+            <p>That is why the per-worker number below is the one that decides how big your box has to be. It is paid once per worker, whether or not anyone is using the site.</p>
+            <p><b>Threads are cheaper but weaker.</b> Threads inside one process share all that memory, so twenty threads cost almost nothing extra. But Python's global interpreter lock means they cannot run Python code at the same time on different cores. Threads are for waiting on the database. Processes are for actually computing.</p>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-t">The machine you are paying for</div>
+          <div class="sliders">
+            <div class="field">
+              <label>Total RAM <span class="val" id="vRam2">2 GB</span></label>
+              <input type="range" id="sRam2" min="512" max="16384" step="512" value="2048">
+            </div>
+            <div class="field">
+              <label>Workers <span class="val" id="vW2">8</span></label>
+              <input type="range" id="sW2" min="1" max="32" value="8">
+            </div>
+            <div class="field">
+              <label>RAM per worker <span class="val" id="vPer">90 MB</span></label>
+              <input type="range" id="sPer" min="30" max="300" step="5" value="90">
+            </div>
+            <div class="field">
+              <label>RAM per in-flight request <span class="val" id="vInflight">8 MB</span></label>
+              <input type="range" id="sInflight" min="1" max="60" value="8">
+            </div>
+          </div>
+          <div class="toggles">
+            <button class="tg" id="tgDb2" aria-pressed="true"><span class="dot"></span><span>Database on the same box<small>Cheap to start with. Postgres wants memory of its own.</small></span></button>
+            <button class="tg" id="tgPre" aria-pressed="false"><span class="dot"></span><span>Preload the app<small>Workers fork after loading, sharing code pages until they are written to</small></span></button>
+          </div>
+          <div class="rtt-note" style="margin-top:15px">
+            <b>How many workers actually fit</b><br>
+            <span id="maxW" style="color:var(--res)">—</span>
+            <br><br>Keep 15% free. RAM that looks idle is doing real work as disk cache, and a box with none of it left starts swapping to disk, which is roughly a thousand times slower.
+            <br><br><b style="color:var(--faint)">Typical figures for a small Django deployment, not measurements of any particular system.</b>
+          </div>
+        </div>
+      </div>
+      <div class="card-t" style="margin-top:26px">What if Postgres moves out?</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">The toggle above frees the database's memory in place. This is the version where you actually pay for it: a second machine, running nothing but Postgres, with the app box keeping everything it had. Drag the RAM slider and watch which column wins, and by how much.</p>
+
+      <div class="srv">
+        <div class="card">
+          <div class="card-t">One box against two</div>
+          <table class="hostreq" style="margin-top:2px"><thead><tr>
+            <th>&nbsp;</th><th>everything on one</th><th>Postgres moved out</th>
+          </tr></thead><tbody id="offBody"></tbody></table>
+          <div class="verdict" id="offVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">What splitting actually buys</div>
+          <div class="rtt-note">
+            The app box gets the database's memory back, so more workers fit. Postgres gets a whole machine, so its cache holds the working set instead of going to disk. Both help.
+            <br><br>Every query now crosses a network instead of a socket, which adds about <b>0.4 ms</b> each way. At two queries a request that is most of a millisecond, every request.
+            <br><br>Modelled at &#8369;540 a month per gigabyte. Read the bottom row, not the top one.
+          </div>
+          <div class="whynot" style="margin-top:14px">
+            <b>Capacity is the weakest reason to do this</b>
+            You split the database out so it can be backed up, replicated and restarted without touching the app, so a runaway query cannot take the web tier down with it, and so the two can be sized independently. Those are good reasons. Watch the cost-per-request row and notice that <em>going faster</em> is not really one of them.
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- ================= 04 SERVER ================= -->

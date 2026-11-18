@@ -1,0 +1,81 @@
+    <section class="panel on" id="p-tiers">
+      <div class="head">
+        <div class="eyebrow">01 — Orientation</div>
+        <h2>A web app is three programs on different machines, passing messages</h2>
+        <p>An agent will write most of this code for you. The shape underneath still earns an afternoon. You have used Django views and SQL queries; what is usually left vague is where each piece runs and what has to happen between them. There are three tiers. Two run on a machine you control. One runs on a stranger's laptop, and that difference decides most of what follows.</p>
+        <div class="ask"><b>Ask the room</b> Point at any part of a page you use daily. Which tier produced it? Most people cannot say, and that is the gap this session closes.</div>
+      </div>
+
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
+        <span style="font-family:var(--mono);font-size:.6em;letter-spacing:.14em;text-transform:uppercase;color:var(--faint)">Stack</span>
+        <div class="viewtog" style="margin:0" id="stackTog">
+          <button data-st="django" aria-pressed="true">DJANGO · PYTHON</button>
+          <button data-st="express" aria-pressed="false">EXPRESS · NODE</button>
+          <button data-st="laravel" aria-pressed="false">LARAVEL · PHP</button>
+        </div>
+        <span style="font-size:.74em;color:var(--faint);margin-left:auto">Same twelve steps. Different words.</span>
+      </div>
+      <div class="flow">
+        <div class="tbox" data-t="1" id="tb1"></div>
+        <div class="lane" data-lane="A">
+          <div class="lcap" id="capA"></div>
+          <div><div class="arail fwd" id="railAf"></div>
+               <div class="aratag">request</div></div>
+          <div><div class="arail back" id="railAb"></div>
+               <div class="aratag">response</div></div>
+        </div>
+        <div class="tbox" data-t="2" id="tb2"></div>
+        <div class="lane" data-lane="B">
+          <div class="lcap" id="capB"></div>
+          <div><div class="arail fwd" id="railBf"></div>
+               <div class="aratag">query</div></div>
+          <div><div class="arail back" id="railBb"></div>
+               <div class="aratag">rows</div></div>
+        </div>
+        <div class="tbox" data-t="3" id="tb3"></div>
+        <div class="ball" id="flowBall"></div>
+      </div>
+
+      <div class="trace">
+        <div class="card">
+          <div class="tstep" id="trStep">Step 1 of 12</div>
+          <h3 style="margin:0 0 8px;font-size:1.05em;font-weight:600" id="trTitle"></h3>
+          <p style="margin:0;font-size:.86em;color:var(--dim);line-height:1.6" id="trText"></p>
+          <div class="artlbl" id="trLbl"></div>
+          <div class="viewtog">
+            <button id="vWire" aria-pressed="true">WIRE FORMAT</button>
+            <button id="vDom" aria-pressed="false">DOM TREE</button>
+            <button id="vRender" aria-pressed="false">RENDERED VIEW</button>
+          </div>
+          <div class="art" id="trArt"></div>
+          <div class="art" id="trDom" style="display:none"></div>
+          <div class="brow-cap" id="domCap" style="display:none;border:1px solid var(--line);border-top:none;border-radius:0 0 7px 7px;margin-top:-1px"></div>
+          <div class="brow" id="trBrow" style="display:none">
+            <div class="brow-bar">
+              <div class="brow-dots"><i></i><i></i><i></i></div>
+              <div class="brow-url">https://enlist.university.edu/my-courses</div>
+              <div class="brow-spin" id="browSpin"></div>
+            </div>
+            <iframe id="browFrame" sandbox="allow-same-origin" title="Rendered page"></iframe>
+            <div class="brow-cap" id="browCap"></div>
+          </div>
+        </div>
+        <div>
+          <div class="ctrls">
+            <button class="btn primary" id="trPlay">▶ Play trace</button>
+            <button class="btn" id="trPrev">←</button>
+            <button class="btn" id="trNext">→</button>
+            <button class="btn" id="trRst">Reset</button>
+          </div>
+          <div class="whynot">
+            <b>The question worth asking</b>
+            Why not let the browser talk to the database directly and skip the middle? Because the database password would then have to live in code running on the user's laptop. Anyone could read it, and then run any query they liked. The application tier exists to be the only thing holding the keys, and the only thing deciding which questions are allowed.
+          </div>
+          <div class="rtt-note" style="margin-top:14px">
+            <b id="stackNote"></b>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- ================= 01 LAYERS ================= -->

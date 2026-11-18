@@ -1,0 +1,195 @@
+    <section class="panel" id="p-rest">
+      <div class="head">
+        <div class="eyebrow">05 — Verbs &amp; REST</div>
+        <h2>The verb says what you want done. The URL says what to do it to.</h2>
+        <p>Every request carries a verb. Django's <code>request.method</code> is that verb, and most of the design mistakes people make come from ignoring what each one promises. Two promises matter: whether it changes anything, and whether doing it twice differs from doing it once.</p>
+        <div class="ask"><b>Ask the room</b>. You submit a form, the page hangs, you hit refresh. Have you now enrolled twice? The answer depends entirely on which verb that form used.</div>
+      </div>
+
+      <div class="card-t">Fire a request at a real table and watch what happens</div>
+      <p style="margin:0 0 14px;font-size:.85em;color:var(--dim);line-height:1.6">Three rows in a database. Send a request, watch the table. Then send the identical request a second time, which is the part that tells you what the verb actually promised.</p>
+
+      <div class="srv" style="margin-bottom:22px">
+        <div class="dbwrap">
+          <div class="dbtitle">
+            <span class="t">courses</span>
+            <span class="c" id="dbCount">3 rows</span>
+          </div>
+          <table class="db"><thead><tr>
+            <th>code<span style="font-weight:400;opacity:.65"> / id</span></th><th>title</th><th>units</th><th>slots</th>
+          </tr></thead><tbody id="dbBody"></tbody></table>
+          <div class="rlog" id="reqLog"></div>
+          <div class="verdict" id="dbVerdict" style="margin-top:12px"></div>
+        </div>
+
+        <div class="card">
+          <div class="card-t">Pick a request</div>
+          <div class="reqlist" id="reqList"></div>
+          <div id="bodyForm" style="display:none;margin-top:13px;padding:13px;border:1px solid var(--req);border-radius:7px;background:var(--panel2)">
+            <div style="font-family:var(--mono);font-size:.6em;letter-spacing:.12em;text-transform:uppercase;color:var(--req);margin-bottom:4px">Compose the body</div>
+            <p style="margin:0 0 10px;font-size:.72em;color:var(--faint);line-height:1.5">Untick a field to leave it out of the body. The two verbs differ in nothing else.</p>
+            <label class="bf"><input type="checkbox" id="bfOnTitle" checked><span>title</span><input type="text" id="bfTitle" value="Data Structures" maxlength="40"></label>
+            <label class="bf"><input type="checkbox" id="bfOnUnits" checked><span>units</span><input type="number" id="bfUnits" value="3" min="0" max="9"></label>
+            <label class="bf"><input type="checkbox" id="bfOnSlots" checked><span>slots</span><input type="number" id="bfSlots" value="3" min="0" max="99"></label>
+            <div class="art" id="bfBody" style="margin-top:11px;font-size:.68em"></div>
+          </div>
+          <div id="postForm" style="display:none;margin-top:13px;padding:13px;border:1px solid var(--req);border-radius:7px;background:var(--panel2)">
+            <div style="font-family:var(--mono);font-size:.6em;letter-spacing:.12em;text-transform:uppercase;color:var(--req);margin-bottom:9px">The body you are sending</div>
+            <label class="pf"><span>Course code</span><input id="pfCode" type="text" placeholder="MATH 11" maxlength="12"></label>
+            <label class="pf"><span>Title</span><input id="pfTitle" type="text" placeholder="Linear Algebra" maxlength="44"></label>
+            <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
+              <label class="pf stack"><span>Units</span><input id="pfUnits" type="number" value="3" min="0" max="9"></label>
+              <label class="pf stack"><span>Slots open</span><input id="pfSlots" type="number" value="12" min="0" max="99"></label>
+            </div>
+            <div class="art" id="pfBody" style="margin-top:11px;font-size:.68em"></div>
+          </div>
+          <div class="ctrls" style="margin-top:14px">
+            <button class="btn primary" id="reqSend">Send</button>
+            <button class="btn" id="reqAgain" disabled>Send the same one again</button>
+            <button class="btn" id="reqReset">Reset table</button>
+          </div>
+          <div class="rtt-note" style="margin-top:14px" id="reqNote"></div>
+        </div>
+      </div>
+
+      <div class="verbs" id="verbList"></div>
+      <div class="card" id="verbDetail" style="margin-bottom:22px"></div>
+
+      <div class="card-t">Same verb, different URL, different meaning</div>
+      <div class="card" style="padding:0;overflow-x:auto">
+        <table class="mtx">
+          <thead><tr>
+            <th style="width:88px">Verb</th>
+            <th>On a collection &nbsp;<code style="color:var(--res)">/courses</code></th>
+            <th>On one item &nbsp;<code style="color:var(--res)">/courses/ITENT45</code></th>
+          </tr></thead>
+          <tbody id="mtxBody"></tbody>
+        </table>
+      </div>
+      <div class="explain" id="mtxOut" style="margin-top:0">
+        <div class="et">SELECT A CELL</div>
+        <p class="hint">Click any cell above to see what that combination means and what it returns.</p>
+      </div>
+
+      <div class="card-t" style="margin-top:26px">The other half of the sentence: what came back</div>
+      <p style="margin:0 0 16px;font-size:.85em;color:var(--dim);line-height:1.6">The verb says what you wanted. The status code says what happened. You only need to remember one thing to read them: <b style="color:var(--ink)">the first digit tells you whose problem it is.</b></p>
+
+      <div class="fams">
+        <div class="fam f1"><div class="fc">1xx</div><div class="fn">Hold on</div><div class="fw">Still working. You will almost never see these.</div></div>
+        <div class="fam f2"><div class="fc">2xx</div><div class="fn">It worked</div><div class="fw">Did what you asked. The differences are about what came back.</div></div>
+        <div class="fam f3"><div class="fc">3xx</div><div class="fn">Look elsewhere</div><div class="fw">Go to another URL, or use the copy you already have.</div></div>
+        <div class="fam f4"><div class="fc">4xx</div><div class="fn">Your fault</div><div class="fw">The request was wrong. The server is healthy. Fix the request.</div></div>
+        <div class="fam f5"><div class="fc">5xx</div><div class="fn">Their fault</div><div class="fw">The request was fine. The server broke. Read the server logs.</div></div>
+      </div>
+
+      <div class="codes" id="codeChips"></div>
+      <div class="explain" id="codeOut" style="margin-top:0">
+        <div class="et">SELECT A CODE</div>
+        <p class="hint">Click any status code above.</p>
+      </div>
+
+      <div class="confuse">
+        <div class="cf">
+          <h5>THE PAIR EVERYONE MIXES UP</h5>
+          <p><code>401 Unauthorized</code> is badly named. It means <b>unauthenticated</b>. The server does not know who you are. Send credentials and try again.</p>
+          <p><code>403 Forbidden</code> means the server knows exactly who you are, and the answer is still no. Better credentials will not help; you simply are not allowed.</p>
+        </div>
+        <div class="cf">
+          <h5>THE FORK THAT SAVES YOU AN HOUR</h5>
+          <p><code>404</code> and <code>500</code> look equally broken to a user, and they send you to completely different places.</p>
+          <p>404 means your URL named nothing, check the request, the path, the id. 500 means your code raised an exception, stop reading the front end and go and read the traceback.</p>
+        </div>
+      </div>
+
+      <div class="card-t" style="margin-top:24px">Naming things: the mistake almost everyone makes first</div>
+      <div class="urlcmp">
+        <div class="uc no">
+          <div class="uh">✕ Verbs baked into the URL</div>
+          <ul>
+            <li>GET /getCourses</li>
+            <li>GET /createEnrollment?student=5</li>
+            <li>POST /updateCourseName</li>
+            <li>GET /deleteStudent?id=5</li>
+          </ul>
+          <p style="margin:11px 0 0;font-size:.76em;color:var(--dim);line-height:1.5">Every new action needs a new URL, so the list grows without end. Worse, the fourth one changes data behind a GET. So a search engine crawling your site can delete your students.</p>
+        </div>
+        <div class="uc yes">
+          <div class="uh">✓ Nouns in the URL, verb in the method</div>
+          <ul>
+            <li>GET&nbsp;&nbsp;&nbsp;&nbsp;/courses</li>
+            <li>POST&nbsp;&nbsp;&nbsp;/enrollments</li>
+            <li>PATCH&nbsp;&nbsp;/courses/ITENT45</li>
+            <li>DELETE /students/5</li>
+          </ul>
+          <p style="margin:11px 0 0;font-size:.76em;color:var(--dim);line-height:1.5">A small fixed set of verbs against a growing set of nouns. Anyone who knows HTTP can guess your API without reading documentation. That guessability is most of what REST is worth.</p>
+        </div>
+      </div>
+
+
+      <div class="card-t" style="margin-top:26px">One request or fifty? How much should an endpoint return</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A page lists a student's enrolments and needs the course title for each one. You can fetch the list, then loop and fetch each course, or you can design an endpoint that returns the whole thing once. Panel 02 showed what a round trip costs. This is the same bill, arriving at the API design.</p>
+
+      <div class="srv">
+        <div class="card">
+          <div class="card-t">Fetching <span id="granN">50</span> courses</div>
+          <table class="hostreq" style="margin-top:2px"><thead><tr>
+            <th>&nbsp;</th><th>one at a time</th><th>one request</th>
+          </tr></thead><tbody id="granBody"></tbody></table>
+          <div class="verdict" id="granVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">How many, and over what</div>
+          <div class="sliders">
+            <div class="field">
+              <label>Items the page needs <span class="val" id="vGran">50</span></label>
+              <input type="range" id="sGran" min="1" max="200" value="50">
+            </div>
+          </div>
+          <div class="toggles" style="margin-top:14px">
+            <button class="tg" id="tgH2" aria-pressed="false"><span class="dot"></span><span>Use HTTP/2<small>One connection, many requests at once, compressed headers.</small></span></button>
+          </div>
+          <div class="rtt-note" style="margin-top:15px">
+            Modelled at 38 ms round trip, about 700 bytes of request headers each time (cookies, user agent, accept), and 120 bytes per course.
+            <br><br>Over HTTP/1.1 a browser opens six connections to one host and no more, so fifty-one requests queue up in batches of six. Turn HTTP/2 on and watch which number moves and which one does not.
+          </div>
+        </div>
+      </div>
+
+      <div class="card-t" style="margin-top:26px">And the reverse: when fetching everything is the waste</div>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">That comparison quietly assumed the page needs all fifty. Most lists are not like that. A course catalog has five hundred entries and a student scrolls past a dozen. Fetching the lot in one trip is efficient per item and enormously wasteful overall, and it makes the first screen wait for data nobody asked to see.</p>
+
+      <div class="srv">
+        <div class="card">
+          <div class="card-t">A 500-item catalog, 20 per page</div>
+          <table class="hostreq" style="margin-top:2px"><thead><tr>
+            <th>&nbsp;</th><th>everything up front</th><th>as they scroll</th>
+          </tr></thead><tbody id="lazyBody"></tbody></table>
+          <div class="verdict" id="lazyVerdict" style="margin-top:13px"></div>
+        </div>
+        <div class="card">
+          <div class="card-t">How far do they actually scroll?</div>
+          <div class="sliders">
+            <div class="field">
+              <label>Items the student looks at <span class="val" id="vLazy">10</span></label>
+              <input type="range" id="sLazy" min="5" max="500" step="5" value="10">
+            </div>
+          </div>
+          <div class="rtt-note" style="margin-top:15px">
+            Same 38 ms round trip, 120 bytes an item, and a connection moving about a megabyte a second.
+            <br><br>Drag it all the way right, to the student who reads every single course. Even then, look at which row still favours loading as they scroll, and ask what your users actually do.
+          </div>
+        </div>
+      </div>
+
+      <div class="whynot" style="margin-top:18px">
+        <b>The answer is usually neither extreme</b>
+        Two failure modes, opposite directions, same cause: designing the endpoint without knowing what the page does with it. One request per item pays a round trip for each. One request for everything pays for data nobody scrolls to. The fix in both cases is a parameter rather than a new endpoint. <code>GET /courses?codes=ITENT45,CSCI21</code> fetches exactly the missing pieces in one trip. <code>GET /enrollments?include=course</code> lets the caller say how much detail it wants. <code>GET /courses?limit=20&amp;offset=40</code> lets it ask for a slice.<br><br>The question that settles it is how many of the things you return will actually be looked at, and how soon the reader needs the first one. If every client immediately loops over your list endpoint to fill in gaps, it returned too little. If most of what you send is never scrolled to, it returned too much.
+      </div>
+
+      <div class="whynot" style="margin-top:20px">
+        <b>What REST actually asks of you</b>
+        Model your system as <em>resources</em>. The nouns your users talk about: courses, enrollments, students. Give each one a URL. Act on them with the standard verbs. Let the status code carry the outcome. Keep each request self-contained, so the server needs no memory of the last one. Which is the same statelessness that panel 19 shows you cannot scale without.
+      </div>
+    </section>
+
+    <!-- ================= 06 CLIENTS ================= -->

@@ -6,27 +6,16 @@
  "homes": [
   {
    "file": "index.html",
-   "title": "Under the Hood",
-   "subtitle": "What happens when you load a page",
-   "kicker": "ITENT 45 · Module 1",
-   "intro": "This module follows one web request from your browser to a database, then shows how servers store data, handle crowds and run in the cloud. Each lesson is a few short steps: read the step, try the one thing it asks, then answer the check at the end.",
-   "links": [
-    {
-     "label": "Next: Module 2",
-     "home": "machine.html"
-    },
-    {
-     "label": "Course code on GitHub",
-     "href": "https://github.com/jilagan/itent45"
-    },
-    {
-     "label": "All lessons",
-     "home": "library.html"
-    }
+   "aliases": [
+    "machine.html"
    ],
+   "kicker": "ITENT 45",
+   "title": "Application Development and Emerging Technologies",
+   "subtitle": "Lessons by module",
+   "intro": "These lessons follow the course modules in order: how a web application works, how AI language models work, how to build with AI tools, then cloud, data and architecture. Each lesson is a few short steps: read the step, try the one thing it asks, then answer the check at the end.",
    "groups": [
     {
-     "label": "Module 1 · Anatomy",
+     "label": "Module 1 · How a web app works",
      "lessons": [
       "basics",
       "tiers",
@@ -40,7 +29,51 @@
      ]
     },
     {
-     "label": "Module 5 · Data",
+     "label": "Module 2 · Introduction to AI: how models learn",
+     "lessons": [
+      "intro",
+      "next",
+      "learn",
+      "train",
+      "deep",
+      "backprop"
+     ]
+    },
+    {
+     "label": "Module 2 · Introduction to AI: language models",
+     "lessons": [
+      "tokens",
+      "embed",
+      "vectors",
+      "rnn",
+      "attn",
+      "ctx",
+      "math"
+     ]
+    },
+    {
+     "label": "Module 3 · Vibe coding and agentic development",
+     "lessons": [
+      "prompt",
+      "loop",
+      "tools",
+      "vibe"
+     ]
+    },
+    {
+     "label": "Module 4 · Cloud computing fundamentals",
+     "lessons": [
+      "mem",
+      "server",
+      "scale",
+      "enlist",
+      "vm",
+      "cost",
+      "region"
+     ]
+    },
+    {
+     "label": "Module 5 · Data modeling",
      "lessons": [
       "entity",
       "card",
@@ -53,79 +86,26 @@
      ]
     },
     {
-     "label": "Module 4 · Capacity & cloud",
-     "lessons": [
-      "mem",
-      "server",
-      "scale",
-      "enlist",
-      "vm",
-      "cost",
-      "region"
-     ]
-    },
-    {
-     "label": "Module 6 · Architecture",
+     "label": "Module 6 · Software architecture",
      "lessons": [
       "split"
      ]
     },
     {
-     "label": "Work",
+     "label": "Group exercises",
      "lessons": [
       "break"
      ]
     }
-   ]
-  },
-  {
-   "file": "machine.html",
-   "title": "What the Machine Is Doing",
-   "subtitle": "Before you let it write your code",
-   "kicker": "ITENT 45 · Module 2",
-   "intro": "This module explains how an AI language model works, from choosing one word to checking the code it writes. Each lesson is a few short steps: read the step, try the one thing it asks, then answer the check at the end.",
+   ],
    "links": [
-    {
-     "label": "Module 1",
-     "home": "index.html"
-    },
     {
      "label": "All lessons",
      "home": "library.html"
-    }
-   ],
-   "groups": [
-    {
-     "label": "Foundations",
-     "lessons": [
-      "intro",
-      "next",
-      "learn",
-      "train",
-      "deep",
-      "backprop"
-     ]
     },
     {
-     "label": "How language models work",
-     "lessons": [
-      "tokens",
-      "embed",
-      "vectors",
-      "rnn",
-      "attn",
-      "ctx"
-     ]
-    },
-    {
-     "label": "Using AI well",
-     "lessons": [
-      "prompt",
-      "loop",
-      "tools",
-      "vibe",
-      "math"
-     ]
+     "label": "Course code on GitHub",
+     "href": "https://github.com/jilagan/itent45"
     }
    ]
   }

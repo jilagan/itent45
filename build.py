@@ -379,7 +379,10 @@ def main():
         wr(OUT / "courses" / f"{cid}.js", course_script(cid, c, L))
         ids = [i for h in c.get("homes", []) for g in h["groups"] for i in g["lessons"]]
         for h in c.get("homes", []):
-            wr(OUT / h["file"], home_page(cid, c, h, L, ids))
+            page = home_page(cid, c, h, L, ids)
+            wr(OUT / h["file"], page)
+            for alias in h.get("aliases", []):   # old addresses that should show the same home and keep redirecting
+                wr(OUT / alias, page)
     wr(OUT / "library.html", library_page(lib, L, C))
     wr(OUT / "embed.html", embed_page(lib, L, C))
     big = max(sizes.values())

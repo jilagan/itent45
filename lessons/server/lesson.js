@@ -189,11 +189,11 @@ bind("#sMem","memReq",v=>v+" MB","#vMem");
 bind("#sRam","ram",v=>v+" MB","#vRam");
 
 $("#simRun").onclick=e=>{
-  running=!running; e.target.textContent=running?"❚❚ Pause":"▶ Play";
+  running=!running; e.target.textContent=running?"Pause":"Play";
   if(running){ last=performance.now(); requestAnimationFrame(loop); } else updateGauges();
 };
 $("#simReset").onclick=()=>{
-  running=false; $("#simRun").textContent="▶ Play"; resetSim();
+  running=false; $("#simRun").textContent="Play"; resetSim();
 };
 
 $("#srvCode").innerHTML=
@@ -213,7 +213,7 @@ srv.listen(<span class="s">64</span>)                     <span class="c"># allo
     line = raw.split(<span class="s">"\\r\\n"</span>)[<span class="s">0</span>]
     method, path, _ = line.split(<span class="s">" "</span>)
 
-    body = <span class="s">'{"courses":[{"code":"ITENT 45","units":3}]}'</span>
+    body = <span class="s">'{"courses":[{"code":"MGT 45","units":3}]}'</span>
     conn.sendall((
         <span class="s">"HTTP/1.1 200 OK\\r\\n"</span>
         <span class="s">"Content-Type: application/json\\r\\n"</span>

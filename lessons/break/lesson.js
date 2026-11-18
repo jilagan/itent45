@@ -20,7 +20,7 @@ const BK={
   "Open a terminal. A terminal is a window where you type commands as text and the computer prints the result. Start the server with <code>python3 start.py demo</code>, or <code>python start.py demo</code> on Windows. Leave that terminal visible, because the server prints every byte a client sends it. The commands for the remaining steps are at the bottom of <a data-lesson='bytes'>HTTP messages</a>, ready to copy for both kinds of shell.",
   "Send a request with <code>curl http://localhost:8080/courses</code>. curl is a command-line program that sends a web request and prints the reply. Then open the same URL in a browser. <b>Count the headers each one sends.</b> Headers are the extra lines of information that travel with a request. Why does the browser send so many more?",
   "Make the server return a 404 (page not found). Read the <code>Content-Length</code> header in the response, then count the characters in the body yourself. <b>Do the two numbers agree?</b>",
-  "Send a POST request, which submits data: <code>curl -X POST localhost:8080/enrollments -d '{\"code\":\"ITENT 45\"}'</code>. In the server log, find the blank line. <b>What is on each side of it?</b>",
+  "Send a POST request, which submits data: <code>curl -X POST localhost:8080/enrollments -d '{\"code\":\"MGT 45\"}'</code>. In the server log, find the blank line. <b>What is on each side of it?</b>",
   "Open two terminals. Request <code>/slow</code> in both at the same time. <b>Time the second one.</b> Then set <code>THREADED = True</code> near the bottom of the file, which lets the server handle more than one request at once. Restart the server and repeat. What changed, and what did it cost?",
   "Type a request by hand. Run <code>nc localhost 8080</code>, which opens a plain connection to the server. Then type <code>GET /courses HTTP/1.1</code> and press Enter twice. Try again <b>without</b> the <code>Host:</code> header, and again with a made-up <code>User-Agent</code>. <b>Which header can you not leave out, and which can you change freely?</b>"],
  report:"Each group has 90 seconds to report, standing, with no notes and no screen. State one thing that surprised you and the evidence for it. If another group has already given yours, give a different one, so prepare a spare.",
@@ -130,11 +130,11 @@ function makeTimer(root, defMin){
     root.classList.toggle("warn",left<=120&&left>30);
     root.classList.toggle("crit",left<=30);
   }
-  function stop(){ clearInterval(tick); on=false; run.textContent="▶ Start"; }
+  function stop(){ clearInterval(tick); on=false; run.textContent="Start"; }
   function set(min){ stop(); left=min*60; paint(); }
   run.onclick=()=>{
     if(on){ stop(); return; }
-    on=true; run.textContent="❚❚ Pause";
+    on=true; run.textContent="Pause";
     tick=setInterval(()=>{ left--; paint(); },1000);
   };
   rst.onclick=()=>set(defMin);

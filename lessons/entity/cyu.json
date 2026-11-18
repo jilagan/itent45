@@ -61,7 +61,7 @@
    "id": "entity-3",
    "sec": "pairing",
    "type": "mc",
-   "stem": "A student enrolls in ITENT 45 on 12 August and later receives a grade. Where should the enrollment date and the grade be stored?",
+   "stem": "A student enrolls in MGT 45 on 12 August and later receives a grade. Where should the enrollment date and the grade be stored?",
    "options": [
     {
      "text": "In an Enrollment entity that links the student and the course.",

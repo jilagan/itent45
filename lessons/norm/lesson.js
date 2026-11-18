@@ -1,7 +1,7 @@
 /* Lesson norm. Widget code for the markup in lesson.html. */
 /* ================= 17 NORMALISATION ================= */
 const NM={n:40, renamed:false, partial:false, wroteFlat:0, wroteNorm:0};
-const NM_OLD="Application Dev & Emerging Tech", NM_NEW="App Development & Emerging Tech";
+const NM_OLD="Operations Management", NM_NEW="Operations and Quality Management";
 const nmTitle=i=>{
   if(!NM.renamed) return NM_OLD;
   if(NM.partial && i>=NM.n-2) return NM_OLD;     // the two nobody updated
@@ -22,9 +22,9 @@ function nmRender(){
 
   const t=nmTitle(0);
   $("#normTbl").innerHTML=`<thead><tr><th>courses.id</th><th>title</th><th>units</th></tr></thead><tbody>
-    <tr><td class="k">ITENT45</td><td class="${NM.renamed?"hl":""}">${NM.renamed?NM_NEW:NM_OLD}</td><td>3</td></tr></tbody>`;
+    <tr><td class="k">MGT45</td><td class="${NM.renamed?"hl":""}">${NM.renamed?NM_NEW:NM_OLD}</td><td>3</td></tr></tbody>`;
   const er=[];
-  for(let i=0;i<Math.min(NM.n,3);i++) er.push(`<tr><td class="k">20-${1000+i}</td><td>ITENT45</td></tr>`);
+  for(let i=0;i<Math.min(NM.n,3);i++) er.push(`<tr><td class="k">20-${1000+i}</td><td>MGT45</td></tr>`);
   if(NM.n>3) er.push(`<tr><td class="k" style="color:var(--faint)">…</td><td style="color:var(--faint)">${NM.n-3} more, all pointing at the same row</td></tr>`);
   $("#normTbl2").innerHTML=`<thead><tr><th>enrollments.student</th><th>course_id</th></tr></thead><tbody>${er.join("")}</tbody>`;
 

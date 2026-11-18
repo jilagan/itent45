@@ -58,7 +58,7 @@ function rtVerdict(cls, head, body) {
   const v = $("#rtVerdict");
   if (head === undefined) {
     if (!T.checked) { cls = ""; head = "Fill the table"; body = "Choose a discount for every row, then press Check."; }
-    else if (T.solved) { cls = "ok"; head = "Four rows, four results"; body = "A student with an order over 1,000 pesos gets 10 percent, the larger of the two."; }
+    else if (T.solved) { cls = "ok"; head = "Four rows, four results"; body = "A student with an order over 1,000 pesos gets 10 percent, the larger of the two. Try your own order below."; }
     else {
       const n = ROWS.filter((r, i) => T.pick[i] !== "" && +T.pick[i] === r.answer).length;
       cls = "warn"; head = n + " of " + ROWS.length + " rows right"; body = "Read the note under each marked row and change your choice.";
@@ -113,8 +113,8 @@ const F = {sel: -1, tested: new Set(), flags: new Set(), checked: false};
 
 function ftBuild() {
   $("#rtOrders").innerHTML = ORDERS.map((o, i) =>
-    `<div class="rtord" data-i="${i}"><button type="button" class="pick" data-i="${i}">${label(o)}</button>
-     <button type="button" class="btn flag" data-i="${i}" aria-pressed="false" aria-label="Flag order: ${label(o)}">${ICO("flag")}Flag</button><span class="why" hidden></span></div>`).join("");
+    `<div class="rtord" data-i="${i}"><button type="button" class="btn pick" data-i="${i}">${label(o)}</button>
+     <button type="button" class="btn flag" data-i="${i}" aria-pressed="false" aria-label="Flag order: ${label(o)}">${ICO("flag")}Flag</button><span class="run" role="status" hidden></span><span class="why" hidden></span></div>`).join("");
   $$("#rtOrders .pick").forEach(b => b.onclick = () => { F.sel = +b.dataset.i; F.tested.add(F.sel); ftRender(); });
   $$("#rtOrders .flag").forEach(b => b.onclick = () => {
     const i = +b.dataset.i;
@@ -122,22 +122,20 @@ function ftBuild() {
     F.tested.add(i); F.sel = i; F.checked = false; ftRender();
   });
 }
+const ruleName = r => r.kind === "shipping" ? "free shipping" : r.pct === STUDENT_PCT ? "student discount" : "large-order discount";
 function ftRender() {
-  const o = ORDERS[F.sel];
-  $("#rtRulesBox").innerHTML = RULES.map(r => {
-    const f = o && r.fires(o);
-    return `<div class="wrow rtrule${f ? " on" : ""}"><span>${r.text}</span><span class="f">${o ? (f ? "Fires" : "Does not fire") : ""}</span></div>`;
-  }).join("");
-  if (o) {
-    const d = RULES.filter(r => r.kind === "discount" && r.fires(o));
+  if (!$("#rtRulesBox").children.length) $("#rtRulesBox").innerHTML = RULES.map(r => `<div class="wrow rtrule"><span>${r.text}</span></div>`).join("");
+  const runText = o => {
+    const fired = RULES.filter(r => r.fires(o)), d = fired.filter(r => r.kind === "discount");
     const parts = [d.length === 0 ? "No discount." : d.length === 1 ? "Discount: " + d[0].pct + " percent." : "Two discounts fire: " + d.map(r => r.pct + " percent").join(" and ") + "."];
     if (o.member) parts.push("Shipping: free.");
-    $("#rtResult").innerHTML = `<b>${label(o)}.</b> ${parts.join(" ")}`;
-  } else $("#rtResult").textContent = "Press an order to run the rules on it.";
+    return (fired.length ? "Fires: " + fired.map(ruleName).join(", ") + ". " : "No rule fires. ") + parts.join(" ");
+  };
   $$("#rtOrders .rtord").forEach((row, i) => {
     row.classList.remove("sel", "right", "wrong");
     row.classList.toggle("sel", i === F.sel);
-    const fb = row.querySelector(".flag"), why = row.querySelector(".why");
+    const fb = row.querySelector(".flag"), why = row.querySelector(".why"), run = row.querySelector(".run");
+    run.hidden = i !== F.sel; run.textContent = i === F.sel ? runText(ORDERS[i]) : "";
     fb.setAttribute("aria-pressed", F.flags.has(i));
     why.hidden = true; why.textContent = "";
     if (F.checked) {
@@ -155,7 +153,7 @@ function ftRender() {
   $("#rtFound .gv").textContent = F.checked ? found + " of " + need.length : "None yet";
   $("#rtFound").classList.toggle("good", F.checked && found === need.length && !extra);
   const v = $("#rtFlagVerdict");
-  if (!F.checked) { v.className = "verdict"; v.innerHTML = "<b>Test the orders</b>Press each order, flag the ones with a problem, then press Check my flags."; return; }
+  if (!F.checked) { v.className = "verdict"; v.innerHTML = "<b>Test the orders</b>Press each order, flag the ones with a problem, then press Check."; return; }
   if (found === need.length && !extra) {
     v.className = "verdict ok";
     v.innerHTML = `<b>All ${need.length} problems found</b>Two student orders over 1,000 pesos fire two discount rules. The 1,000 peso order sits on the edge of "over 1,000."`;

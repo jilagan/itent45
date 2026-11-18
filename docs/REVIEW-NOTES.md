@@ -125,7 +125,7 @@ For the instructor. Built from the final state of the `overhaul` branch.
 
 | Where | Old | New |
 |---|---|---|
-| [lessons/pay.html](../lessons/pay.html) | "a reply this size arrives with 54 bytes of headers", so the packaging costs more than the message | Sizes taken from the widget: 248, 92 and 558 bytes. The JSON sample is one line of 92 bytes. |
+| [lessons/pay.html](../lessons/pay.html) | "a reply this size arrives with 54 bytes of headers", so the packaging costs more than the message | Sizes taken from the widget: 248, 90 and 556 bytes (after the sample course changed). The JSON sample is one line of 90 bytes. |
 | [lessons/layers.html](../lessons/layers.html) | "the 24-byte request GET /courses" | A 24-byte message as an example; the widget shows the headers adding up to 145 bytes at the bottom layer. |
 | [lessons/journey.html](../lessons/journey.html) | 103 ms first byte, with 13 ms unexplained | The 103 ms and the five round trips now agree with what the widget shows. |
 | [lessons/rest.html](../lessons/rest.html) | "Each verb makes two promises" | GET, PUT, PATCH and DELETE make promises that POST does not. Safe and idempotent are defined separately. |
@@ -181,8 +181,6 @@ They are in the area "Computational thinking" (teaching order below), need no pr
 
 Plan figures checked and corrected during the build: fastest route 38 minutes with 4 rides, fewest rides 43 minutes with 3 rides, closing Marikina to Ortigas gives 39, 17 routes in all; 8 cards have 40,320 orders, so 16 comparisons are the least that always work, and 15 comparisons separate at most 32,768 orders; the sorting text no longer says "fifteen halvings"; the growth text says comparing every customer with every customer takes 10 billion comparisons at 100,000 (every distinct pair would be about 5 billion); rules: 1,080 against 1,020 and three problems in the tester; debug: 123 against 324. Nineteen questions were reworded so that the correct option is at most 1.3 times the mean wrong option, and every option now has an explicit `correct` value.
 
-Two things to know. In decompose, the task list shows hours for the tree and days for the plan, so Buy materials is 3 hours of work in one and 2 calendar days in the other. The established lessons use the sample course code "ITENT 45" in their example records. Those records are sample data, but ITENT 21 students will see them. Replacing the code with a neutral one would touch 18 lessons, so it is left for a later pass.
-
 ## 7. ITENT 21: draft course and lessons still needed
 
 `courses/itent21.json` is a draft built from the approved course proposal, which has no weekly outline. It lists only lessons that exist: the ten computational thinking lessons first, then the core web, data, cloud and AI lessons, then a group "Going further" (layers, journey, bytes, txn, query, enlist, split, tokens). Replace the order with the real syllabus when you have it.
@@ -198,4 +196,25 @@ Lessons ITENT 21 still needs, from the outcomes in the proposal:
 7. Spreadsheets: a small model with inputs, formulas and a result.
 
 The outlines are in the planning notes (itent21-map.md).
+
+## 8. Changed just before publication
+
+Decompose (Breaking a task into parts)
+- The splitter and the plan now use one set of durations. One day in the plan is a 2-hour work session. Hours (old to new): Design layout 3 to 2, Buy materials 3 to 4, Make signs 4 (same), Make shift schedule 2 (same), Brief volunteers 2 (same), Run the morning shift 4 to 2, Design sign-up sheet 2 to 4, Record sign-ups 4 to 2. Total 24 h to 22 h.
+- Days in the plan (old to new): only Design sign-up sheet changed, 1 to 2. Others stay 1, 2, 2, 1, 1, 1 and 1. The plan widget derives its days from the splitter hours (hours divided by 2) and shows both.
+- The "Volunteers on the day" group was removed from the splitter tree (its two pieces were 4 h in total, so no Split button could reach them). Pieces are still eight. Group totals: Prepare the booth 10 h, Staff the booth 6 h, Follow up with visitors 6 h.
+- Recomputed by exhaustive search over all schedules: longest chain 5 days (Design layout, Buy materials, Run the morning shift, Record sign-ups, unique); shortest finish 5 days with 3 people (old 5), 5 with 4 people (old 5), 6 with 2 people (old 6). One-day delay on a job (3 people): Design layout, Buy materials, Run the morning shift, Record sign-ups finish on day 6 (old 6); Make signs, Make shift schedule, Brief volunteers, Design sign-up sheet stay at 5 (old 5). The text, verdicts, More detail and four questions already held; only question 4's wording about Design sign-up sheet changed (it is no longer the smallest job).
+
+Sample course in older lessons
+- The sample course "ITENT 45 / ITENT45 / ITENT99, Application Dev & Emerging Tech" is now "MGT 45 / MGT45 / MGT99, Operations Management" in 15 lessons (break, bytes, clients, entity, norm, pay, rea, render, rest, server, shape, sql, tiers, tools, txn, with their questions). Other sample courses (CSCI 21, ITMGT 25, MATH 11, SOM 407) are unchanged. The renamed title in Normalization is "Operations and Quality Management". Spacing in aligned code samples and tables was adjusted. The GitHub clone URL in HTTP messages is the real repository and is unchanged.
+- Byte counts recomputed from the strings (old to new): bytes lesson Content-Length 51 to 49, 41 to 39, 50 to 48; clients lesson Content-Length 118 to 109 (the old value matched no count of the body as shown); pay lesson JSON 92 to 90 bytes, SOAP 558 to 556 bytes, HTML 248 (same), data 38 to 36 characters, SOAP data share 7% to 6%; render lesson (sizes now count the text with line breaks and indentation removed) JSON 144 to 148 bytes and 34% to 36%, XML 264 to 260 bytes and 19% to 20%, HTML 385 to 379 bytes and 13% to 14%, data 49 to 53 characters.
+
+Other number
+- N+1 lessons disagreed: How work grows with the list used 5 ms per question, The N+1 query problem uses 0.4 ms. Growth now uses 0.4 ms: 40 courses load in 16 ms (old 205 ms) against 0.8 ms (old 5 ms); 2,000 courses 800 ms against 20 ms (old 10,005 against 25); the question about 4,000 courses now answers about 1.6 seconds (old about 20 seconds).
+
+Routes: on phones the map is taller (aspect ratio 5 to 12, old 33 to 58), labels are 15 px (old 14), the layout was rearranged so no label or stop overlaps at 360, 375 and 390 px. Rules: the rule text is shown above the table, each order shows what fires beneath it, the Check my flags and Try order buttons are now Check and Run.
+
+Wording: nine step-1 titles now start "Start with a ..."; the Play and Pause buttons no longer carry symbols; "Check my pick" and "Check order" are "Check"; US spelling (gray, canceled, standardizes, idealized); "this panel" and "this module" removed from two questions and one description; two link texts match their lesson (Debug to Writing steps for a robot, Rules to HTTP verbs and status codes).
+
+Found and not changed: Entities and attributes and its questions use "SOM 407" as a sample room (a campus building name). Pages built for the CT and ITENT 21 courses show the repository name itent45 only in the git clone command in HTTP messages, which is the real repository.
 

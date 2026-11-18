@@ -20,6 +20,6 @@
   "sec": null,
   "youtube": "",
   "title": "One click, for real: the Network tab",
-  "about": "A real site's request waterfall in the browser's Network tab: dozens of requests, third-party calls, real header values and real timings, next to the five idealised round trips on this page."
+  "about": "A real site's request waterfall in the browser's Network tab: dozens of requests, third-party calls, real header values and real timings, next to the five idealized round trips on this page."
  }
 }

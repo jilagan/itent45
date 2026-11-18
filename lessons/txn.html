@@ -2049,7 +2049,7 @@ html.libpage body{background:var(--bg,#fff);color:var(--ink,#1a1d23)}
         <p>A <dfn title="A group of statements that the database treats as one unit">transaction</dfn> groups database statements into one unit. Two users changing the same row at the same moment can still leave wrong data.</p>
       </div>
 
-      <div class="sec" data-sec="last-seat" data-title="Start with the last seat">
+      <div class="sec" data-sec="last-seat" data-title="Start with a last seat">
         <p>Picture the last seat in a class and two cashiers selling it at the same moment. Each cashier looks at the seat map, sees one free seat and sells it. Both customers are told the seat is theirs. A database has the same problem when two users change one row.</p>
         <div class="scene" role="group" aria-label="The cashiers are sessions and the seat map is a row in the courses table" data-art="last-seat-two-cashiers" data-art-desc="Two cashiers at side-by-side counters both point at the same seat map showing one free seat, and each hands a ticket to a different customer.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Two cashiers</b><span>Two <dfn title="One user's connection to the database">sessions</dfn></span></figcaption></figure>
@@ -2082,20 +2082,20 @@ html.libpage body{background:var(--bg,#fff);color:var(--ink,#1a1d23)}
           <h4>The statements behind each tab</h4>
           <p>Here <code>slots</code> is the number of free seats. <code>BEGIN</code> starts a transaction and <code>COMMIT</code> saves it.</p>
           <div class="art">-- No transaction: each session reads, decides, then writes
-SELECT slots FROM courses WHERE code = 'ITENT 45';
-UPDATE courses SET slots = 0 WHERE code = 'ITENT 45';
+SELECT slots FROM courses WHERE code = 'MGT 45';
+UPDATE courses SET slots = 0 WHERE code = 'MGT 45';
 
 -- Transaction only: the same statements between BEGIN and COMMIT
 BEGIN;  SELECT ...;  UPDATE ...;  INSERT ...;  COMMIT;
 
 -- Lock the row: the second session waits at the SELECT
 BEGIN;
-SELECT slots FROM courses WHERE code = 'ITENT 45' FOR UPDATE;
+SELECT slots FROM courses WHERE code = 'MGT 45' FOR UPDATE;
 UPDATE ...;  INSERT ...;  COMMIT;
 
 -- One statement: the check is part of the change
 UPDATE courses SET slots = slots - 1
- WHERE code = 'ITENT 45' AND slots > 0;</div>
+ WHERE code = 'MGT 45' AND slots > 0;</div>
           <h4>Lost update</h4>
           <p>In the first tab, session B wrote a value based on a seat count that was already out of date. This bug is called a <b>lost update</b>, and it is common in student projects.</p>
           <h4>What the fixes cost</h4>

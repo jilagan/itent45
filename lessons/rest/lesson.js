@@ -2,9 +2,9 @@
 /* ================= 05 VERBS & REST ================= */
 /* ---- live table: what each verb does to real rows ---- */
 const SEED=[
- {id:"ITENT45", code:"ITENT 45", title:"Application Dev & Emerging Tech", units:3, slots:4},
- {id:"CSCI21",  code:"CSCI 21",  title:"Data Structures",                units:3, slots:0},
- {id:"ITMGT25", code:"ITMGT 25", title:"Programming Fundamentals",       units:3, slots:12}
+ {id:"MGT45",   code:"MGT 45",   title:"Operations Management",    units:3, slots:4},
+ {id:"CSCI21",  code:"CSCI 21",  title:"Data Structures",          units:3, slots:0},
+ {id:"ITMGT25", code:"ITMGT 25", title:"Programming Fundamentals", units:3, slots:12}
 ];
 const REQS=[
  {id:"getall", v:"GET",    d:"list every course"},
@@ -14,7 +14,7 @@ const REQS=[
  {id:"patch",  v:"PATCH",  item:true, body:true, d:"change only what the body contains"},
  {id:"del",    v:"DELETE", item:true, d:"remove it"}
 ];
-const DB={rows:JSON.parse(JSON.stringify(SEED)), sel:"post", row:"ITENT45", log:[], mark:null, sent:0, lastId:null, seq:0};
+const DB={rows:JSON.parse(JSON.stringify(SEED)), sel:"post", row:"MGT45", log:[], mark:null, sent:0, lastId:null, seq:0};
 const key=r=>r.id;                       // identity, not the display code
 const slug=c=>c.trim().replace(/\s+/g,"").toUpperCase();
 // the row a single-item request will act on
@@ -225,7 +225,7 @@ function dbVerdict(q){
 $("#reqSend").onclick=()=>{ DB.lastId=null; send(); };
 $("#reqAgain").onclick=send;
 $("#reqReset").onclick=()=>{
-  DB.rows=JSON.parse(JSON.stringify(SEED)); DB.log=[]; DB.mark=null; DB.row="ITENT45"; DB.goneRow=null;
+  DB.rows=JSON.parse(JSON.stringify(SEED)); DB.log=[]; DB.mark=null; DB.row="MGT45"; DB.goneRow=null;
   DB.sent=0; DB.lastId=null; DB.seq=0; $("#reqAgain").disabled=true;
   $("#dbVerdict").className="verdict"; $("#dbVerdict").innerHTML="<b>Reset</b>Three rows, as they started.";
   dbRender();
@@ -236,7 +236,7 @@ $("#dbVerdict").innerHTML="<b>Ready</b>Pick a request and press Send.";
 
 const VERBS=[
  {v:"GET",d:"Fetch something. Change nothing.",safe:true,idem:true,body:false,
-  ex:`GET /courses/ITENT45`,
+  ex:`GET /courses/MGT45`,
   twice:"The answer is the same both times, because nothing changed.",
   note:"Search engines send GET to every link they find, so a GET must never delete anything."},
  {v:"POST",d:"Create something new, or submit work.",safe:false,idem:false,body:true,
@@ -244,11 +244,11 @@ const VERBS=[
   twice:"Two enrollments are created. This is the double-enrollment bug after a page refresh.",
   note:"POST is the only common verb that is neither safe nor idempotent. Anything that must not happen twice needs protection that you build."},
  {v:"PUT",d:"Replace an item completely.",safe:false,idem:true,body:true,
-  ex:`PUT /courses/ITENT45`,
+  ex:`PUT /courses/MGT45`,
   twice:"The result is the same. The second request replaces the item with the same values.",
   note:"PUT means the whole item, so any field you leave out is cleared."},
  {v:"PATCH",d:"Change part of an item.",safe:false,idem:true,body:true,
-  ex:`PATCH /courses/ITENT45`,
+  ex:`PATCH /courses/MGT45`,
   twice:"The result is the same for a plain value like units: 6. A patch that says 'add 3 units' would not be idempotent.",
   note:"The usual verb for edit forms. Send only what changed."},
  {v:"DELETE",d:"Remove an item.",safe:false,idem:true,body:false,
@@ -281,7 +281,7 @@ const MTX=[
  ["GET",  ["List them all","200 + a list",0,"Returns every course, usually one page at a time."],
           ["Fetch that one","200, or 404",0,"The standard way to read one item. If the code does not exist, the server returns 404."]],
  ["POST", ["Create a new one","201 + Location",0,"The server assigns the id and returns the new item's URL in the Location header. Sending this twice creates two."],
-          ["Rarely meaningful","405",1,"The item already exists, so there is nothing to create. Some APIs use this form for actions such as /courses/ITENT45/archive."]],
+          ["Rarely meaningful","405",1,"The item already exists, so there is nothing to create. Some APIs use this form for actions such as /courses/MGT45/archive."]],
  ["PUT",  ["Replace the whole set","405 in practice",1,"This would mean discard every course and use these instead. Almost no API allows it."],
           ["Replace that one","200 or 204",0,"Overwrites every field, and any field you leave out is cleared. People make this mistake first."]],
  ["PATCH",["Not meaningful","405",1,"There is no single item to update part of."],
@@ -298,7 +298,7 @@ $$("#mtxBody .mc").forEach(el=>el.onclick=()=>{
   $$("#mtxBody .mc").forEach(x=>x.classList.remove("pick"));
   el.classList.add("pick");
   const row=MTX[+el.dataset.r], cell=[row[1],row[2]][+el.dataset.c];
-  const url=+el.dataset.c===0?"/courses":"/courses/ITENT45";
+  const url=+el.dataset.c===0?"/courses":"/courses/MGT45";
   $("#mtxOut").innerHTML=`<div class="et">${row[0]} ${url}</div><p>${cell[3]}</p>`;
 });
 

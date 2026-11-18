@@ -7,9 +7,9 @@ const EDGES=[["Home","Marikina",8],["Home","Katipunan",15],["Marikina","Ortigas"
   ["Katipunan","Cubao",20],["Ortigas","Loyola",12],["Ortigas","Cubao",10],["Cubao","Loyola",5],
   ["Loyola","School",6],["Cubao","School",18],["Ortigas","School",23]];
 const LAYOUT={
- narrow:{N:{Home:[50,5],Marikina:[21,23],Katipunan:[79,23],Ortigas:[21,48],Cubao:[79,48],Loyola:[50,66],School:[50,95]},
-  T:{"Home-Marikina":.5,"Home-Katipunan":.55,"Marikina-Ortigas":.35,"Katipunan-Ortigas":.35,"Katipunan-Cubao":.55,"Ortigas-Loyola":.45,
-     "Ortigas-Cubao":.35,"Cubao-Loyola":.45,"Loyola-School":.7,"Cubao-School":.6,"Ortigas-School":.6}},
+ narrow:{N:{Home:[50,4],Marikina:[21,22],Katipunan:[79,22],Ortigas:[21,46],Cubao:[79,46],Loyola:[50,66],School:[50,95]},
+  T:{"Home-Marikina":.5,"Home-Katipunan":.5,"Marikina-Ortigas":.5,"Katipunan-Ortigas":.5,"Katipunan-Cubao":.5,"Ortigas-Loyola":.5,
+     "Ortigas-Cubao":.5,"Cubao-Loyola":.5,"Loyola-School":.5,"Cubao-School":.55,"Ortigas-School":.55}},
  wide:{N:{Home:[9,50],Marikina:[28,12],Katipunan:[28,88],Ortigas:[57,12],Cubao:[57,88],Loyola:[68,50],School:[92,50]},
   T:{"Home-Marikina":.4,"Home-Katipunan":.65,"Marikina-Ortigas":.45,"Katipunan-Ortigas":.75,"Katipunan-Cubao":.5,"Ortigas-Loyola":.5,
      "Ortigas-Cubao":.5,"Cubao-Loyola":.65,"Loyola-School":.45,"Cubao-School":.3,"Ortigas-School":.65}}

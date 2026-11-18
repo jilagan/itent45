@@ -43,7 +43,7 @@ function lpRender(){
   if(lpAt<16){ v.className="verdict warn";
     v.innerHTML=`<b>The agent corrected itself and the tests pass</b>This looks like success. Keep stepping.`; return; }
   v.className="verdict bad";
-  v.innerHTML=`<b>Nobody asked it to reorder the imports</b>The task was finished at step 15, yet the agent kept going and changed a file that was already correct. The greyed lines have left what the model can still see, <b class="i">including your first instruction</b>.`;
+  v.innerHTML=`<b>Nobody asked it to reorder the imports</b>The task was finished at step 15, yet the agent kept going and changed a file that was already correct. The grayed lines have left what the model can still see, <b class="i">including your first instruction</b>.`;
 }
 $("#lpStep").onclick=()=>{ if(lpAt<STEPS.length){lpAt++;lpRender();} };
 $("#lpPlay").onclick=()=>{

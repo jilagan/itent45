@@ -153,8 +153,8 @@ $$("[data-algo]").forEach(b=>b.onclick=()=>{
   LB.algo=b.dataset.algo; LB.count=[0,0,0,0,0]; LB.total=0; LB.lost=0; LB.rr=0; lbRender();
 });
 $("#lbRun").onclick=e=>{
-  if(LB.timer){ clearInterval(LB.timer); LB.timer=null; e.target.textContent="▶ Play"; return; }
-  e.target.textContent="❚❚ Pause";
+  if(LB.timer){ clearInterval(LB.timer); LB.timer=null; e.target.textContent="Play"; return; }
+  e.target.textContent="Pause";
   LB.timer=setInterval(lbDispatch, REDUCED?260:110);
 };
 $("#lbKill").onclick=e=>{
@@ -163,7 +163,7 @@ $("#lbKill").onclick=e=>{
   lbRender();
 };
 $("#lbReset").onclick=()=>{
-  clearInterval(LB.timer); LB.timer=null; $("#lbRun").textContent="▶ Play";
+  clearInterval(LB.timer); LB.timer=null; $("#lbRun").textContent="Play";
   LB.count=[0,0,0,0,0]; LB.flight=[0,0,0,0,0]; LB.total=0; LB.lost=0; LB.rr=0; LB.dead=-1;
   $("#lbKill").textContent="Take E down"; lbRender();
 };

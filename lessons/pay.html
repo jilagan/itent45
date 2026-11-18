@@ -2064,7 +2064,7 @@ html.libpage body{background:var(--bg,#fff);color:var(--ink,#1a1d23)}
         <p>Four parties take part in a checkout: the shopper's browser, your server, the gateway and the bank. Press Play and watch where the card number goes. Your server receives only a <dfn title="A code that stands in for the card number">token</dfn>.</p>
 
         <div class="ctrls">
-          <button class="btn primary" id="pyPlay">▶ Play</button>
+          <button class="btn primary" id="pyPlay">Play</button>
           <button class="btn" id="pyPrev">Previous</button>
           <button class="btn" id="pyNext">Next</button>
           <button class="btn" id="pyRst">Reset</button>
@@ -2449,26 +2449,26 @@ addEventListener("resize",()=>{ if($(".panel.on")?.id==="p-pay"){ layoutBypass()
 
 $("#pyNext").onclick=()=>{clearInterval(pyTimer);pyI=Math.min(PAYFLOW.length-1,pyI+1);renderPay()};
 $("#pyPrev").onclick=()=>{clearInterval(pyTimer);pyI=Math.max(0,pyI-1);renderPay()};
-$("#pyRst").onclick=()=>{clearInterval(pyTimer);pyI=0;renderPay();$("#pyPlay").dataset.on="";$("#pyPlay").textContent="▶ Play"};
+$("#pyRst").onclick=()=>{clearInterval(pyTimer);pyI=0;renderPay();$("#pyPlay").dataset.on="";$("#pyPlay").textContent="Play"};
 $("#pyPlay").onclick=e=>{
   clearInterval(pyTimer);
-  if(e.target.dataset.on==="1"){e.target.dataset.on="";e.target.textContent="▶ Play";return}
-  e.target.dataset.on="1"; e.target.textContent="❚❚ Pause";
+  if(e.target.dataset.on==="1"){e.target.dataset.on="";e.target.textContent="Play";return}
+  e.target.dataset.on="1"; e.target.textContent="Pause";
   pyTimer=setInterval(()=>{
-    if(pyI>=PAYFLOW.length-1){clearInterval(pyTimer);$("#pyPlay").dataset.on="";$("#pyPlay").textContent="▶ Play";return}
+    if(pyI>=PAYFLOW.length-1){clearInterval(pyTimer);$("#pyPlay").dataset.on="";$("#pyPlay").textContent="Play";return}
     pyI++; renderPay();
   }, REDUCED?900:3000);
 };
 renderPay();
 
 /* ---- the same charge request, three ways ---- */
-const CHG_DATA=38;
+const CHG_DATA=36;
 const WHYF=[
- {id:"json", n:"JSON", bytes:92,
-  body:`{<span class="s">"amount"</span>:129900,<span class="s">"currency"</span>:<span class="s">"PHP"</span>,<span class="s">"source"</span>:<span class="s">"tok_1a2b3c"</span>,<span class="s">"description"</span>:<span class="s">"ITENT 45 enrollment"</span>}`,
+ {id:"json", n:"JSON", bytes:90,
+  body:`{<span class="s">"amount"</span>:129900,<span class="s">"currency"</span>:<span class="s">"PHP"</span>,<span class="s">"source"</span>:<span class="s">"tok_1a2b3c"</span>,<span class="s">"description"</span>:<span class="s">"MGT 45 enrollment"</span>}`,
   cls:"ok",
-  v:`<b>92 bytes, and it already matches the data structures that programs use</b>Python code reads <code>data["amount"]</code> and Node code reads <code>data.amount</code>, with no conversion first. About 121 bytes of headers (HTTP, TLS, TCP, IP and Ethernet) already surround a short message like this, so making it six times larger would be a real cost.`},
- {id:"soap", n:"SOAP / XML", bytes:558,
+  v:`<b>90 bytes, and it already matches the data structures that programs use</b>Python code reads <code>data["amount"]</code> and Node code reads <code>data.amount</code>, with no conversion first. About 121 bytes of headers (HTTP, TLS, TCP, IP and Ethernet) already surround a short message like this, so making it six times larger would be a real cost.`},
+ {id:"soap", n:"SOAP / XML", bytes:556,
   body:`<span class="d">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="d">&lt;soap:Envelope xmlns:soap=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span>
 <span class="d">               xmlns:pay=</span><span class="s">"https://gateway.example.com/schema/payments/v2"</span><span class="d">&gt;</span>
@@ -2479,12 +2479,12 @@ const WHYF=[
     <span class="d">&lt;pay:CreateChargeRequest&gt;</span>
       <span class="d">&lt;pay:Amount currency=</span><span class="s">"PHP"</span><span class="d">&gt;</span>129900<span class="d">&lt;/pay:Amount&gt;</span>
       <span class="d">&lt;pay:Source&gt;</span>tok_1a2b3c<span class="d">&lt;/pay:Source&gt;</span>
-      <span class="d">&lt;pay:Description&gt;</span>ITENT 45 enrollment<span class="d">&lt;/pay:Description&gt;</span>
+      <span class="d">&lt;pay:Description&gt;</span>MGT 45 enrollment<span class="d">&lt;/pay:Description&gt;</span>
     <span class="d">&lt;/pay:CreateChargeRequest&gt;</span>
   <span class="d">&lt;/soap:Body&gt;</span>
 <span class="d">&lt;/soap:Envelope&gt;</span>`,
   cls:"warn",
-  v:`<b>558 bytes, six times the size of JSON</b>Only 7% of it is the four values you meant to send, and the rest is namespaces, an envelope and a header block. In return, a schema can reject a negative amount or an invalid currency before your code runs, which is a fair trade between two banks.`},
+  v:`<b>556 bytes, six times the size of JSON</b>Only 6% of it is the four values you meant to send, and the rest is namespaces, an envelope and a header block. In return, a schema can reject a negative amount or an invalid currency before your code runs, which is a fair trade between two banks.`},
  {id:"html", n:"HTML", bytes:248,
   body:`<span class="d">&lt;form method=</span><span class="s">"post"</span><span class="d"> action=</span><span class="s">"/charges"</span><span class="d">&gt;</span>
   <span class="d">&lt;input type=</span><span class="s">"hidden"</span><span class="d"> name=</span><span class="s">"amount"</span><span class="d"> value=</span><span class="s">"129900"</span><span class="d">&gt;</span>

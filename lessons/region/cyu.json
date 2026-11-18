@@ -89,7 +89,7 @@
    "id": "region-5",
    "sec": null,
    "type": "mc",
-   "stem": "Every user of your {{project}} is in Metro Manila, and your budget is small. Which setup does this panel recommend?",
+   "stem": "Every user of your {{project}} is in Metro Manila, and your budget is small. Which setup does this lesson recommend?",
    "options": [
     {
      "text": "A Singapore region, with multi-AZ if offered by default.",

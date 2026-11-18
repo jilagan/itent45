@@ -2049,7 +2049,7 @@ html.libpage body{background:var(--bg,#fff);color:var(--ink,#1a1d23)}
         <p>A server can finish only so many requests per second. The limit depends on the number of workers and on the time each request takes.</p>
       </div>
 
-      <div class="sec" data-sec="cashiers" data-title="Start with the cashiers">
+      <div class="sec" data-sec="cashiers" data-title="Start with a row of cashiers">
         <p>A fast-food branch has a few cashiers and one line. Customers arrive whether or not a cashier is free, and each cashier serves one customer at a time. If customers arrive faster than the cashiers can serve them, the line keeps growing.</p>
         <div class="scene" role="group" aria-label="Customers are requests, the line is the queue, the cashiers are workers" data-art="fast-food-counters" data-art-desc="Two cashiers stand ready at their fast-food counters while a single line of two customers waits to be called forward.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Customers</b><span><dfn title="A message from a browser asking for a page or for data">Requests</dfn></span></figcaption></figure>
@@ -2097,7 +2097,7 @@ html.libpage body{background:var(--bg,#fff);color:var(--ink,#1a1d23)}
               </div>
             </div>
             <div class="ctrls" style="margin-top:18px">
-              <button class="btn primary" id="simRun">▶ Play</button>
+              <button class="btn primary" id="simRun">Play</button>
               <button class="btn" id="simReset">Reset</button>
             </div>
             <div class="rtt-note" style="margin-top:14px">
@@ -2425,11 +2425,11 @@ bind("#sMem","memReq",v=>v+" MB","#vMem");
 bind("#sRam","ram",v=>v+" MB","#vRam");
 
 $("#simRun").onclick=e=>{
-  running=!running; e.target.textContent=running?"❚❚ Pause":"▶ Play";
+  running=!running; e.target.textContent=running?"Pause":"Play";
   if(running){ last=performance.now(); requestAnimationFrame(loop); } else updateGauges();
 };
 $("#simReset").onclick=()=>{
-  running=false; $("#simRun").textContent="▶ Play"; resetSim();
+  running=false; $("#simRun").textContent="Play"; resetSim();
 };
 
 $("#srvCode").innerHTML=
@@ -2449,7 +2449,7 @@ srv.listen(<span class="s">64</span>)                     <span class="c"># allo
     line = raw.split(<span class="s">"\\r\\n"</span>)[<span class="s">0</span>]
     method, path, _ = line.split(<span class="s">" "</span>)
 
-    body = <span class="s">'{"courses":[{"code":"ITENT 45","units":3}]}'</span>
+    body = <span class="s">'{"courses":[{"code":"MGT 45","units":3}]}'</span>
     conn.sendall((
         <span class="s">"HTTP/1.1 200 OK\\r\\n"</span>
         <span class="s">"Content-Type: application/json\\r\\n"</span>

@@ -87,9 +87,9 @@
      "feedback": "The briefing ends on day 2 and the morning shift starts on day 4, so one more day still fits."
     },
     {
-     "text": "Design sign-up sheet, because it is the smallest job.",
+     "text": "Design sign-up sheet, because the last job needs it.",
      "correct": false,
-     "feedback": "The sheet is needed only for the last job, so it has days to spare."
+     "feedback": "The sheet can finish days before the last job starts, so a late day costs nothing."
     },
     {
      "text": "Buy materials, because it sits on the longest chain.",

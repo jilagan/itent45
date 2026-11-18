@@ -2049,15 +2049,14 @@ html.libpage body{background:var(--bg,#fff);color:var(--ink,#1a1d23)}
 #p-rules .rtform label{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--ink)}
 #p-rules .rtform input[type=checkbox]{width:22px;height:22px}
 #p-rules .rtform input[type=number]{width:120px}
-#p-rules .rtrule .f{flex:0 0 auto;font-size:14px;color:var(--dim)}
-#p-rules .rtrule.on .f{color:var(--req-deep);font-weight:600}
-#p-rules .rtord{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:4px 8px 4px 0;border-top:1px solid var(--line)}
+#p-rules .rtord{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:6px 8px;border-top:1px solid var(--line)}
 #p-rules .rtord:first-child{border-top:0}
-#p-rules .rtord .pick{text-align:left;min-height:44px;padding:6px 12px;font-size:15px;color:var(--ink);border-radius:0;background:none}
+#p-rules .rtord .pick{text-align:left;justify-content:flex-start;min-height:44px;padding:6px 12px;font-size:15px;color:var(--ink)}
 #p-rules .rtord .pick:hover{color:var(--res)}
 #p-rules .rtord.sel{background:var(--bg2);box-shadow:inset 3px 0 0 var(--ink)}
 #p-rules .rtord .flag{display:inline-flex;align-items:center;gap:6px;min-width:84px;justify-content:center}
 #p-rules .rtord .flag .ico{width:16px;height:16px}
+#p-rules .rtord .run{grid-column:1 / -1;padding:0 12px 6px;font-size:14px;color:var(--ink)}
 #p-rules .rtord .why{grid-column:1 / -1;padding:0 12px 6px;font-size:14px;color:var(--dim)}
 #p-rules .rtord.right .why{color:var(--res)}
 #p-rules .rtord.wrong{background:color-mix(in srgb,var(--warn) 7%,var(--panel))}
@@ -2094,7 +2093,7 @@ html.libpage body{background:var(--bg,#fff);color:var(--ink,#1a1d23)}
       </div>
 
       <div class="sec" data-sec="table" data-title="Fill the decision table">
-        <p>A <dfn title="A table with one row for every combination of conditions and the result for each">decision table</dfn> has a row for every combination of <dfn title="A yes or no test, such as order over 1,000 pesos">conditions</dfn>. Two conditions make four rows, and each new condition doubles the rows. The store takes the larger discount when two rules apply. Choose a discount for each row, then press Check.</p>
+        <p>A <dfn title="A table with one row for every combination of conditions and the result for each">decision table</dfn> has a row for every combination of <dfn title="A yes or no test, such as order over 1,000 pesos">conditions</dfn>. Two conditions make four rows. Students get 10 percent off and orders over 1,000 pesos get 5 percent off. When both apply, the store takes the larger discount. Choose a discount for each row, then press Check.</p>
         <div class="card wg" id="rtTable">
           <div class="wlist rtgrid" id="rtRows" role="group" aria-label="Decision table"></div>
           <div class="ctrls">
@@ -2111,7 +2110,7 @@ html.libpage body{background:var(--bg,#fff);color:var(--ink,#1a1d23)}
             <div class="rtform">
               <label class="rtcheck"><input type="checkbox" id="rtStudent" checked> Student</label>
               <label class="rtamt">Order amount in pesos <input type="number" id="rtAmount" value="1200" min="0" step="1" inputmode="numeric"></label>
-              <button type="button" class="btn primary" id="rtTryBtn">Try order</button>
+              <button type="button" class="btn primary" id="rtTryBtn">Run</button>
             </div>
             <div class="verdict" id="rtTryVerdict" role="status" aria-live="polite"></div>
           </div>
@@ -2119,20 +2118,21 @@ html.libpage body{background:var(--bg,#fff);color:var(--ink,#1a1d23)}
         <details class="more">
           <summary>More detail</summary>
           <h4>How many rows</h4>
-          <p>Two conditions make 4 rows, three make 8 and ten make 1,024. A table stays readable for a few conditions, so large rule sets are split into smaller tables.</p>
+          <p>Each new condition doubles the rows. Two conditions make 4 rows, three make 8 and ten make 1,024. A table stays readable for a few conditions, so large rule sets are split into smaller tables.</p>
           <h4>In software</h4>
-          <p>An if statement, a SQL <code>WHERE</code> clause and a spreadsheet IF formula each write a decision table in a different notation. <a data-lesson="sql">Reading and changing data with SQL</a> shows <code>WHERE</code>, and <a data-lesson="rest">HTTP verbs, URLs and status codes</a> shows how a service answers a request by applying such rules.</p>
+          <p>An if statement, a SQL <code>WHERE</code> clause and a spreadsheet IF formula each write a decision table in a different notation. <a data-lesson="sql">Reading and changing data with SQL</a> shows <code>WHERE</code>, and <a data-lesson="rest">HTTP verbs and status codes</a> shows how a service answers a request by applying such rules.</p>
         </details>
       </div>
 
       <div class="sec" data-sec="gap" data-title="Find the problems">
-        <p>Rules written as sentences can clash or leave a case open. Press an order to run the rules on it. Flag an order when two discounts compete, or when its amount sits exactly on the edge of a rule.</p>
+        <p>Rules written as sentences can clash or leave a case open. Press an order to see which rules fire on it. Press Flag on an order that has a problem: two discounts compete, or the amount sits exactly on the edge of a rule. Then press Check.</p>
         <div class="card wg" id="rtTester">
+          <p class="wline">The store's rules</p>
           <div class="wlist rtrules" id="rtRulesBox"></div>
-          <div class="wline rtresult" id="rtResult" role="status" aria-live="polite"></div>
+          <p class="wline">Orders to test</p>
           <div class="wlist rtorders" id="rtOrders" role="group" aria-label="Test orders"></div>
           <div class="ctrls">
-            <button type="button" class="btn primary" id="rtFlagCheck">Check my flags</button>
+            <button type="button" class="btn primary" id="rtFlagCheck">Check</button>
             <button type="button" class="btn" id="rtFlagReset">Reset</button>
           </div>
           <div class="meter">
@@ -2290,7 +2290,7 @@ function rtVerdict(cls, head, body) {
   const v = $("#rtVerdict");
   if (head === undefined) {
     if (!T.checked) { cls = ""; head = "Fill the table"; body = "Choose a discount for every row, then press Check."; }
-    else if (T.solved) { cls = "ok"; head = "Four rows, four results"; body = "A student with an order over 1,000 pesos gets 10 percent, the larger of the two."; }
+    else if (T.solved) { cls = "ok"; head = "Four rows, four results"; body = "A student with an order over 1,000 pesos gets 10 percent, the larger of the two. Try your own order below."; }
     else {
       const n = ROWS.filter((r, i) => T.pick[i] !== "" && +T.pick[i] === r.answer).length;
       cls = "warn"; head = n + " of " + ROWS.length + " rows right"; body = "Read the note under each marked row and change your choice.";
@@ -2345,8 +2345,8 @@ const F = {sel: -1, tested: new Set(), flags: new Set(), checked: false};
 
 function ftBuild() {
   $("#rtOrders").innerHTML = ORDERS.map((o, i) =>
-    `<div class="rtord" data-i="${i}"><button type="button" class="pick" data-i="${i}">${label(o)}</button>
-     <button type="button" class="btn flag" data-i="${i}" aria-pressed="false" aria-label="Flag order: ${label(o)}">${ICO("flag")}Flag</button><span class="why" hidden></span></div>`).join("");
+    `<div class="rtord" data-i="${i}"><button type="button" class="btn pick" data-i="${i}">${label(o)}</button>
+     <button type="button" class="btn flag" data-i="${i}" aria-pressed="false" aria-label="Flag order: ${label(o)}">${ICO("flag")}Flag</button><span class="run" role="status" hidden></span><span class="why" hidden></span></div>`).join("");
   $$("#rtOrders .pick").forEach(b => b.onclick = () => { F.sel = +b.dataset.i; F.tested.add(F.sel); ftRender(); });
   $$("#rtOrders .flag").forEach(b => b.onclick = () => {
     const i = +b.dataset.i;
@@ -2354,22 +2354,20 @@ function ftBuild() {
     F.tested.add(i); F.sel = i; F.checked = false; ftRender();
   });
 }
+const ruleName = r => r.kind === "shipping" ? "free shipping" : r.pct === STUDENT_PCT ? "student discount" : "large-order discount";
 function ftRender() {
-  const o = ORDERS[F.sel];
-  $("#rtRulesBox").innerHTML = RULES.map(r => {
-    const f = o && r.fires(o);
-    return `<div class="wrow rtrule${f ? " on" : ""}"><span>${r.text}</span><span class="f">${o ? (f ? "Fires" : "Does not fire") : ""}</span></div>`;
-  }).join("");
-  if (o) {
-    const d = RULES.filter(r => r.kind === "discount" && r.fires(o));
+  if (!$("#rtRulesBox").children.length) $("#rtRulesBox").innerHTML = RULES.map(r => `<div class="wrow rtrule"><span>${r.text}</span></div>`).join("");
+  const runText = o => {
+    const fired = RULES.filter(r => r.fires(o)), d = fired.filter(r => r.kind === "discount");
     const parts = [d.length === 0 ? "No discount." : d.length === 1 ? "Discount: " + d[0].pct + " percent." : "Two discounts fire: " + d.map(r => r.pct + " percent").join(" and ") + "."];
     if (o.member) parts.push("Shipping: free.");
-    $("#rtResult").innerHTML = `<b>${label(o)}.</b> ${parts.join(" ")}`;
-  } else $("#rtResult").textContent = "Press an order to run the rules on it.";
+    return (fired.length ? "Fires: " + fired.map(ruleName).join(", ") + ". " : "No rule fires. ") + parts.join(" ");
+  };
   $$("#rtOrders .rtord").forEach((row, i) => {
     row.classList.remove("sel", "right", "wrong");
     row.classList.toggle("sel", i === F.sel);
-    const fb = row.querySelector(".flag"), why = row.querySelector(".why");
+    const fb = row.querySelector(".flag"), why = row.querySelector(".why"), run = row.querySelector(".run");
+    run.hidden = i !== F.sel; run.textContent = i === F.sel ? runText(ORDERS[i]) : "";
     fb.setAttribute("aria-pressed", F.flags.has(i));
     why.hidden = true; why.textContent = "";
     if (F.checked) {
@@ -2387,7 +2385,7 @@ function ftRender() {
   $("#rtFound .gv").textContent = F.checked ? found + " of " + need.length : "None yet";
   $("#rtFound").classList.toggle("good", F.checked && found === need.length && !extra);
   const v = $("#rtFlagVerdict");
-  if (!F.checked) { v.className = "verdict"; v.innerHTML = "<b>Test the orders</b>Press each order, flag the ones with a problem, then press Check my flags."; return; }
+  if (!F.checked) { v.className = "verdict"; v.innerHTML = "<b>Test the orders</b>Press each order, flag the ones with a problem, then press Check."; return; }
   if (found === need.length && !extra) {
     v.className = "verdict ok";
     v.innerHTML = `<b>All ${need.length} problems found</b>Two student orders over 1,000 pesos fire two discount rules. The 1,000 peso order sits on the edge of "over 1,000."`;

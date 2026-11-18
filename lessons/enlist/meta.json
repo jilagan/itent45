@@ -2,7 +2,7 @@
  "id": "enlist",
  "title": "Case study: enlistment day",
  "label": "Case study: enlistment",
- "desc": "One busy day that tests everything in this module.",
+ "desc": "One busy day that tests the capacity lessons together.",
  "outcomes": [
   "Separate read-heavy browsing from reserving, where every write must be correct",
   "Explain why adding web servers does not fix one database",

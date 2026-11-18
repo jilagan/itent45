@@ -28,15 +28,15 @@
    "id": "growth-2",
    "sec": "page",
    "type": "mc",
-   "stem": "A page asks one question for the course list and one more for each course, at 5 milliseconds a question. With 40 courses it loads in about 0.2 seconds. What should the developer expect with 4,000 courses?",
+   "stem": "A page asks one question for the course list and one more for each course, at 0.4 milliseconds a question. With 40 courses it loads in about 16 milliseconds. What should the developer expect with 4,000 courses?",
    "options": [
     {
-     "text": "About 20 seconds, because the questions grow in step with the courses.",
+     "text": "About 1.6 seconds, because the questions grow in step with the courses.",
      "correct": true,
-     "feedback": "4,001 questions at 5 milliseconds each take about 20,000 milliseconds. That is 100 times the courses and about 100 times the time."
+     "feedback": "4,001 questions at 0.4 milliseconds each take about 1,600 milliseconds. That is 100 times the courses and about 100 times the time."
     },
     {
-     "text": "About 0.2 seconds, because the page code does not change.",
+     "text": "About 16 milliseconds, because the page code does not change.",
      "correct": false,
      "feedback": "The code is the same, and the number of questions follows the number of courses."
     },

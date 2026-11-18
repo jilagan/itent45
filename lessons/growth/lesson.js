@@ -43,10 +43,11 @@ gcRender();
 
 /* ---------- step 3: page load time ---------- */
 const GP_STOPS=[10,20,40,100,200,500,1000,2000,5000];
-const GP_Q_MS=5, GP_ROW_MS=0.01, GP_SLOW_MS=1000;
+const GP_Q_MS=0.4, GP_ROW_MS=0.01, GP_SLOW_MS=1000;
 const GP={i:2};
+const gpMs=t=>t<10?t.toFixed(1):gcFmt(Math.round(t));
 function gpWords(ms){
-  if(ms<1000) return Math.round(ms)+" milliseconds";
+  if(ms<1000) return gpMs(ms)+" milliseconds";
   const s=ms/1000;
   const t = s<10 ? s.toFixed(1).replace(/\.0$/,"") : String(Math.round(s));
   return t+(t==="1"?" second":" seconds");
@@ -61,7 +62,7 @@ function gpRender(){
   [["#gpA",q1,t1],["#gpB",q2,t2]].forEach(([id,q,t])=>{
     const g=$(id), slow=t>GP_SLOW_MS;
     g.querySelector(".gq").textContent=gcFmt(q);
-    g.querySelector(".gm").textContent=gcFmt(Math.round(t))+" ms";
+    g.querySelector(".gm").textContent=gpMs(t)+" ms";
     g.classList.toggle("slow",slow);
     g.querySelector(".gf").textContent = slow ? "Over 1 second" : "";
   });

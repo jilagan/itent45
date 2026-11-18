@@ -4,7 +4,7 @@ const SH={shape:"rows", q:"schedule"};
 const SH_SHAPES=[{id:"rows",n:"Rows",i:"list-bullets"},{id:"docs",n:"Documents",i:"student"}];
 const SH_QS=[
  {id:"schedule", n:"One student's schedule", s:"Asked on every page load."},
- {id:"roster",   n:"Who is in ITENT 45?",    s:"Asked by the instructor, weekly."},
+ {id:"roster",   n:"Who is in MGT 45?",    s:"Asked by the instructor, weekly."},
  {id:"rename",   n:"Rename a course",         s:"Asked twice a year, and every copy must change."}
 ];
 const SH_ANS={
@@ -30,21 +30,21 @@ function shRender(){
 
   $("#shBody").innerHTML = SH.shape==="rows"
    ? `<span class="c">-- courses</span>
-id         title                              units
-<span class="s">ITENT45</span>    App Development &amp; Emerging Tech   3
-<span class="s">CSCI21</span>     Data Structures                    3
+id         title                    units
+<span class="s">MGT45</span>      Operations Management    3
+<span class="s">CSCI21</span>     Data Structures          3
 
 <span class="c">-- enrollments</span>
 student    course_id
-<span class="s">20-1000</span>    <span class="s">ITENT45</span>
+<span class="s">20-1000</span>    <span class="s">MGT45</span>
 <span class="s">20-1000</span>    <span class="s">CSCI21</span>
-<span class="s">20-1001</span>    <span class="s">ITENT45</span>`
+<span class="s">20-1001</span>    <span class="s">MGT45</span>`
    : `<span class="c">// students/20-1000</span>
 {
   <span class="s">"student"</span>: <span class="s">"20-1000"</span>,
   <span class="s">"enrollments"</span>: [
-    {<span class="s">"code"</span>:<span class="s">"ITENT45"</span>, <span class="s">"title"</span>:<span class="s">"App Development &amp; Emerging Tech"</span>, <span class="s">"units"</span>:3},
-    {<span class="s">"code"</span>:<span class="s">"CSCI21"</span>,  <span class="s">"title"</span>:<span class="s">"Data Structures"</span>,  <span class="s">"units"</span>:3}
+    {<span class="s">"code"</span>:<span class="s">"MGT45"</span>,  <span class="s">"title"</span>:<span class="s">"Operations Management"</span>, <span class="s">"units"</span>:3},
+    {<span class="s">"code"</span>:<span class="s">"CSCI21"</span>, <span class="s">"title"</span>:<span class="s">"Data Structures"</span>,       <span class="s">"units"</span>:3}
   ]
 }
 <span class="c">// the title is copied into the document of every student who takes it</span>`;

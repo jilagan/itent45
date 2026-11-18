@@ -2,11 +2,11 @@
 /* ================= 06 CLIENTS ================= */
 const SHARED_RES = `<span class="kw">HTTP/1.1 200 OK</span>
 Content-Type: application/json
-Content-Length: 118
+Content-Length: 109
 
 {<span class="s">"courses"</span>: [
-  {<span class="s">"code"</span>: <span class="s">"ITENT 45"</span>, <span class="s">"units"</span>: 3, <span class="s">"slots"</span>: 4},
-  {<span class="s">"code"</span>: <span class="s">"CSCI 21"</span>,  <span class="s">"units"</span>: 3, <span class="s">"slots"</span>: 0}
+  {<span class="s">"code"</span>: <span class="s">"MGT 45"</span>,  <span class="s">"units"</span>: 3, <span class="s">"slots"</span>: 4},
+  {<span class="s">"code"</span>: <span class="s">"CSCI 21"</span>, <span class="s">"units"</span>: 3, <span class="s">"slots"</span>: 0}
 ]}`;
 
 const CLIENTS=[
@@ -94,7 +94,7 @@ $("#enlistHtml").innerHTML = `<span class="kw">HTTP/1.1 200 OK</span>
 Content-Type: <span class="d">text/html</span>
 
 <span class="d">&lt;table width=</span><span class="s">"680"</span><span class="d"> class=</span><span class="s">"gridTable"</span><span class="d">&gt;</span>
- <span class="d">&lt;tr&gt;&lt;td&gt;</span>ITENT 45<span class="d">&lt;/td&gt;&lt;td align=</span><span class="s">"center"</span><span class="d">&gt;</span>3<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
+ <span class="d">&lt;tr&gt;&lt;td&gt;</span>MGT 45<span class="d">&lt;/td&gt;&lt;td align=</span><span class="s">"center"</span><span class="d">&gt;</span>3<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
  <span class="d">&lt;tr&gt;&lt;td&gt;</span>CSCI 21<span class="d">&lt;/td&gt;&lt;td align=</span><span class="s">"center"</span><span class="d">&gt;</span>3<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="d">&lt;/table&gt;</span>
 
@@ -104,8 +104,8 @@ $("#enlistJson").innerHTML = `<span class="kw">HTTP/1.1 200 OK</span>
 Content-Type: <span class="d">application/json</span>
 
 {<span class="s">"enrollments"</span>: [
-  {<span class="s">"code"</span>: <span class="s">"ITENT 45"</span>, <span class="s">"units"</span>: 3},
-  {<span class="s">"code"</span>: <span class="s">"CSCI 21"</span>,  <span class="s">"units"</span>: 3}
+  {<span class="s">"code"</span>: <span class="s">"MGT 45"</span>,  <span class="s">"units"</span>: 3},
+  {<span class="s">"code"</span>: <span class="s">"CSCI 21"</span>, <span class="s">"units"</span>: 3}
 ]}
 
 <span class="c">// Only the data. Each client decides the look.</span>`;

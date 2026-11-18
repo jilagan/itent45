@@ -16,7 +16,7 @@
       </div>
 
       <div class="sec" data-sec="table" data-title="Fill the decision table">
-        <p>A <dfn title="A table with one row for every combination of conditions and the result for each">decision table</dfn> has a row for every combination of <dfn title="A yes or no test, such as order over 1,000 pesos">conditions</dfn>. Two conditions make four rows, and each new condition doubles the rows. The store takes the larger discount when two rules apply. Choose a discount for each row, then press Check.</p>
+        <p>A <dfn title="A table with one row for every combination of conditions and the result for each">decision table</dfn> has a row for every combination of <dfn title="A yes or no test, such as order over 1,000 pesos">conditions</dfn>. Two conditions make four rows. Students get 10 percent off and orders over 1,000 pesos get 5 percent off. When both apply, the store takes the larger discount. Choose a discount for each row, then press Check.</p>
         <div class="card wg" id="rtTable">
           <div class="wlist rtgrid" id="rtRows" role="group" aria-label="Decision table"></div>
           <div class="ctrls">
@@ -33,7 +33,7 @@
             <div class="rtform">
               <label class="rtcheck"><input type="checkbox" id="rtStudent" checked> Student</label>
               <label class="rtamt">Order amount in pesos <input type="number" id="rtAmount" value="1200" min="0" step="1" inputmode="numeric"></label>
-              <button type="button" class="btn primary" id="rtTryBtn">Try order</button>
+              <button type="button" class="btn primary" id="rtTryBtn">Run</button>
             </div>
             <div class="verdict" id="rtTryVerdict" role="status" aria-live="polite"></div>
           </div>
@@ -41,20 +41,21 @@
         <details class="more">
           <summary>More detail</summary>
           <h4>How many rows</h4>
-          <p>Two conditions make 4 rows, three make 8 and ten make 1,024. A table stays readable for a few conditions, so large rule sets are split into smaller tables.</p>
+          <p>Each new condition doubles the rows. Two conditions make 4 rows, three make 8 and ten make 1,024. A table stays readable for a few conditions, so large rule sets are split into smaller tables.</p>
           <h4>In software</h4>
-          <p>An if statement, a SQL <code>WHERE</code> clause and a spreadsheet IF formula each write a decision table in a different notation. <a data-lesson="sql">Reading and changing data with SQL</a> shows <code>WHERE</code>, and <a data-lesson="rest">HTTP verbs, URLs and status codes</a> shows how a service answers a request by applying such rules.</p>
+          <p>An if statement, a SQL <code>WHERE</code> clause and a spreadsheet IF formula each write a decision table in a different notation. <a data-lesson="sql">Reading and changing data with SQL</a> shows <code>WHERE</code>, and <a data-lesson="rest">HTTP verbs and status codes</a> shows how a service answers a request by applying such rules.</p>
         </details>
       </div>
 
       <div class="sec" data-sec="gap" data-title="Find the problems">
-        <p>Rules written as sentences can clash or leave a case open. Press an order to run the rules on it. Flag an order when two discounts compete, or when its amount sits exactly on the edge of a rule.</p>
+        <p>Rules written as sentences can clash or leave a case open. Press an order to see which rules fire on it. Press Flag on an order that has a problem: two discounts compete, or the amount sits exactly on the edge of a rule. Then press Check.</p>
         <div class="card wg" id="rtTester">
+          <p class="wline">The store's rules</p>
           <div class="wlist rtrules" id="rtRulesBox"></div>
-          <div class="wline rtresult" id="rtResult" role="status" aria-live="polite"></div>
+          <p class="wline">Orders to test</p>
           <div class="wlist rtorders" id="rtOrders" role="group" aria-label="Test orders"></div>
           <div class="ctrls">
-            <button type="button" class="btn primary" id="rtFlagCheck">Check my flags</button>
+            <button type="button" class="btn primary" id="rtFlagCheck">Check</button>
             <button type="button" class="btn" id="rtFlagReset">Reset</button>
           </div>
           <div class="meter">

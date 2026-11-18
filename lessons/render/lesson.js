@@ -1,32 +1,32 @@
 /* Lesson render. Widget code for the markup in lesson.html. */
 /* ================= 07 RENDERING & PAYLOADS ================= */
-const DATA_CHARS=49;                 // the eight values, without any packaging
+const DATA_CHARS=53;                 // the eight values, without any packaging
 const FMTS=[
- {id:"json", n:"JSON", bytes:144,
+ {id:"json", n:"JSON", bytes:148,
   body:`{<span class="s">"courses"</span>:[
-  {<span class="s">"code"</span>:<span class="s">"ITENT 45"</span>,<span class="s">"title"</span>:<span class="s">"Application Dev"</span>,<span class="s">"units"</span>:3,<span class="s">"slots"</span>:4},
+  {<span class="s">"code"</span>:<span class="s">"MGT 45"</span>,<span class="s">"title"</span>:<span class="s">"Operations Management"</span>,<span class="s">"units"</span>:3,<span class="s">"slots"</span>:4},
   {<span class="s">"code"</span>:<span class="s">"CSCI 21"</span>,<span class="s">"title"</span>:<span class="s">"Data Structures"</span>,<span class="s">"units"</span>:3,<span class="s">"slots"</span>:0}
 ]}`,
-  v:`<b>144 bytes, 34% of it your data</b>The smallest of the three, and it maps directly onto the objects a program already uses. JSON carries values and no rules.`},
- {id:"xml", n:"XML", bytes:264,
+  v:`<b>148 bytes, 36% of it your data</b>The smallest of the three, and it maps directly onto the objects a program already uses. JSON carries values and no rules.`},
+ {id:"xml", n:"XML", bytes:260,
   body:`<span class="d">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="d">&lt;courses&gt;</span>
-  <span class="d">&lt;course&gt;&lt;code&gt;</span>ITENT 45<span class="d">&lt;/code&gt;&lt;title&gt;</span>Application Dev<span class="d">&lt;/title&gt;</span>
+  <span class="d">&lt;course&gt;&lt;code&gt;</span>MGT 45<span class="d">&lt;/code&gt;&lt;title&gt;</span>Operations Management<span class="d">&lt;/title&gt;</span>
           <span class="d">&lt;units&gt;</span>3<span class="d">&lt;/units&gt;&lt;slots&gt;</span>4<span class="d">&lt;/slots&gt;&lt;/course&gt;</span>
   <span class="d">&lt;course&gt;&lt;code&gt;</span>CSCI 21<span class="d">&lt;/code&gt;&lt;title&gt;</span>Data Structures<span class="d">&lt;/title&gt;</span>
           <span class="d">&lt;units&gt;</span>3<span class="d">&lt;/units&gt;&lt;slots&gt;</span>0<span class="d">&lt;/slots&gt;&lt;/course&gt;</span>
 <span class="d">&lt;/courses&gt;</span>`,
-  v:`<b>264 bytes, 19% of it your data</b>Nearly twice the size of JSON, because every value is wrapped in an opening tag and a closing tag. In return, a schema (a file of rules) can reject a bad value before your code sees it.`},
- {id:"html", n:"HTML", bytes:385,
+  v:`<b>260 bytes, 20% of it your data</b>Nearly twice the size of JSON, because every value is wrapped in an opening tag and a closing tag. In return, a schema (a file of rules) can reject a bad value before your code sees it.`},
+ {id:"html", n:"HTML", bytes:379,
   body:`<span class="d">&lt;table class="gridTable" width="680" cellpadding="2"&gt;</span>
   <span class="d">&lt;tr&gt;&lt;td class="hdr"&gt;</span>Subject<span class="d">&lt;/td&gt;&lt;td class="hdr"&gt;</span>Title<span class="d">&lt;/td&gt;</span>
       <span class="d">&lt;td class="hdr"&gt;</span>Units<span class="d">&lt;/td&gt;&lt;td class="hdr"&gt;</span>Slots<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
-  <span class="d">&lt;tr&gt;&lt;td&gt;</span>ITENT 45<span class="d">&lt;/td&gt;&lt;td&gt;</span>Application Dev<span class="d">&lt;/td&gt;</span>
+  <span class="d">&lt;tr&gt;&lt;td&gt;</span>MGT 45<span class="d">&lt;/td&gt;&lt;td&gt;</span>Operations Management<span class="d">&lt;/td&gt;</span>
       <span class="d">&lt;td align="center"&gt;</span>3<span class="d">&lt;/td&gt;&lt;td align="center"&gt;</span>4<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
   <span class="d">&lt;tr&gt;&lt;td&gt;</span>CSCI 21<span class="d">&lt;/td&gt;&lt;td&gt;</span>Data Structures<span class="d">&lt;/td&gt;</span>
       <span class="d">&lt;td align="center"&gt;</span>3<span class="d">&lt;/td&gt;&lt;td align="center"&gt;</span>0<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="d">&lt;/table&gt;</span>`,
-  v:`<b>385 bytes, 13% of it your data</b>The largest of the three, because it also carries a table width, cell padding and column order. A phone app cannot use any of that.`}
+  v:`<b>379 bytes, 14% of it your data</b>The largest of the three, because it also carries a table width, cell padding and column order. A phone app cannot use any of that.`}
 ];
 let fmtSel="json";
 function renderFmt(){

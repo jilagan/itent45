@@ -2037,20 +2037,20 @@ html.libpage body{background:var(--bg,#fff);color:var(--ink,#1a1d23)}
 .libhow code{font-family:var(--mono,ui-monospace,monospace);font-size:.92em}
 /* lessons/routes/lesson.css */
 #p-routes .rt-map{position:relative;margin:0 auto 14px;width:100%}
-#p-routes .rt-map.narrow{max-width:380px;aspect-ratio:33/58}
+#p-routes .rt-map.narrow{max-width:380px;aspect-ratio:5/12}
 #p-routes .rt-map.wide{max-width:720px;aspect-ratio:2/1}
 #p-routes .rt-svg{position:absolute;inset:0;width:100%;height:100%;overflow:visible}
 #p-routes .rt-svg line{stroke:var(--line2);stroke-width:2;vector-effect:non-scaling-stroke;stroke-linecap:round}
 #p-routes .rt-svg line.mine{stroke:var(--req);stroke-width:6}
 #p-routes .rt-svg line.fast{stroke:var(--res);stroke-width:6}
-#p-routes .rt-svg line.few{stroke:var(--ink);stroke-width:3;stroke-dasharray:3 7}
+#p-routes .rt-svg line.few{stroke:var(--ink);stroke-width:4;stroke-dasharray:2 8}
 #p-routes .rt-svg line.closed{stroke:var(--line3);stroke-width:2;stroke-dasharray:2 8}
-#p-routes .rt-node,#p-routes .rt-lab{position:absolute;transform:translate(-50%,-50%);font-size:14px;line-height:1.1}
+#p-routes .rt-node,#p-routes .rt-lab{position:absolute;transform:translate(-50%,-50%);font-size:15px;line-height:1.1}
 #p-routes .rt-node{display:flex;align-items:center;justify-content:center;min-height:44px;min-width:44px;padding:0 12px;border:1px solid var(--ink);border-radius:22px;background:var(--panel);color:var(--ink);font-weight:600;cursor:pointer;white-space:nowrap}
 #p-routes .rt-node.on{border:3px solid var(--req);padding:0 10px}
 #p-routes .rt-node.here{background:color-mix(in srgb,var(--req) 12%,var(--panel))}
 #p-routes .rt-node:disabled{cursor:default;color:var(--ink)}
-#p-routes .rt-lab{min-height:30px;min-width:34px;padding:0 6px;border:1px solid var(--line2);border-radius:15px;background:var(--bg);color:var(--dim);display:flex;align-items:center;justify-content:center;font-weight:600}
+#p-routes .rt-lab{min-height:32px;min-width:36px;padding:0 6px;border:1px solid var(--line2);border-radius:15px;background:var(--bg);color:var(--dim);display:flex;align-items:center;justify-content:center;font-weight:600}
 #p-routes button.rt-lab{min-height:44px;min-width:46px;cursor:pointer;color:var(--ink);background:var(--panel)}
 #p-routes button.rt-lab.closed{border-style:dashed;color:var(--warn)}
 #p-routes button.rt-lab .ico{width:22px;height:22px}
@@ -2207,9 +2207,9 @@ const EDGES=[["Home","Marikina",8],["Home","Katipunan",15],["Marikina","Ortigas"
   ["Katipunan","Cubao",20],["Ortigas","Loyola",12],["Ortigas","Cubao",10],["Cubao","Loyola",5],
   ["Loyola","School",6],["Cubao","School",18],["Ortigas","School",23]];
 const LAYOUT={
- narrow:{N:{Home:[50,5],Marikina:[21,23],Katipunan:[79,23],Ortigas:[21,48],Cubao:[79,48],Loyola:[50,66],School:[50,95]},
-  T:{"Home-Marikina":.5,"Home-Katipunan":.55,"Marikina-Ortigas":.35,"Katipunan-Ortigas":.35,"Katipunan-Cubao":.55,"Ortigas-Loyola":.45,
-     "Ortigas-Cubao":.35,"Cubao-Loyola":.45,"Loyola-School":.7,"Cubao-School":.6,"Ortigas-School":.6}},
+ narrow:{N:{Home:[50,4],Marikina:[21,22],Katipunan:[79,22],Ortigas:[21,46],Cubao:[79,46],Loyola:[50,66],School:[50,95]},
+  T:{"Home-Marikina":.5,"Home-Katipunan":.5,"Marikina-Ortigas":.5,"Katipunan-Ortigas":.5,"Katipunan-Cubao":.5,"Ortigas-Loyola":.5,
+     "Ortigas-Cubao":.5,"Cubao-Loyola":.5,"Loyola-School":.5,"Cubao-School":.55,"Ortigas-School":.55}},
  wide:{N:{Home:[9,50],Marikina:[28,12],Katipunan:[28,88],Ortigas:[57,12],Cubao:[57,88],Loyola:[68,50],School:[92,50]},
   T:{"Home-Marikina":.4,"Home-Katipunan":.65,"Marikina-Ortigas":.45,"Katipunan-Ortigas":.75,"Katipunan-Cubao":.5,"Ortigas-Loyola":.5,
      "Ortigas-Cubao":.5,"Cubao-Loyola":.65,"Loyola-School":.45,"Cubao-School":.3,"Ortigas-School":.65}}

@@ -5,7 +5,7 @@
    "id": "norm-1",
    "sec": "rename",
    "type": "mc",
-   "stem": "40 students are enrolled in ITENT 45 and the course title changes. How many rows are written in the flat table, and how many in the split design?",
+   "stem": "40 students are enrolled in MGT 45 and the course title changes. How many rows are written in the flat table, and how many in the split design?",
    "options": [
     {
      "text": "40 in the flat table and 1 in the split design.",

@@ -14,19 +14,20 @@ const DC_LIMIT=4;
 /* leaves carry hours (h); every other node carries its children (k), and its hours are the sum */
 const DC_TREE={id:"top",n:"Run the org fair booth",k:[
  {id:"prep",n:"Prepare the booth",k:[
-   {id:"layout",n:"Design layout",h:3},
+   {id:"layout",n:"Design layout",h:2},
    {id:"mats",n:"Materials and signs",k:[
-     {id:"buy",n:"Buy materials",h:3},
+     {id:"buy",n:"Buy materials",h:4},
      {id:"signs",n:"Make signs",h:4}]}]},
  {id:"staff",n:"Staff the booth",k:[
    {id:"sched",n:"Make shift schedule",h:2},
-   {id:"vol",n:"Volunteers on the day",k:[
-     {id:"brief",n:"Brief volunteers",h:2},
-     {id:"shift",n:"Run the morning shift",h:4}]}]},
+   {id:"brief",n:"Brief volunteers",h:2},
+   {id:"shift",n:"Run the morning shift",h:2}]},
  {id:"follow",n:"Follow up with visitors",k:[
-   {id:"sheet",n:"Design sign-up sheet",h:2},
-   {id:"record",n:"Record sign-ups",h:4}]}
+   {id:"sheet",n:"Design sign-up sheet",h:4},
+   {id:"record",n:"Record sign-ups",h:2}]}
 ]};
+/* the plan below counts days; one day is one work session of DC_HPD hours, so the eight pieces keep the same hours in both steps */
+const DC_HPD=2;
 const dcHours=n=>n.k?n.k.reduce((a,c)=>a+dcHours(c),0):n.h;
 function dcFind(n,id){ if(n.id===id) return n; for(const c of (n.k||[])){ const r=dcFind(c,id); if(r) return r; } return null; }
 
@@ -87,15 +88,15 @@ dcSplitRender();
 /* ---------- dependency planner ---------- */
 const DC_PEOPLE=["Mika","Paolo","Bea"];
 const DC_JOBS=[
- {id:"L",n:"Design layout",        d:1,needs:[]},
- {id:"M",n:"Buy materials",        d:2,needs:["L"]},
- {id:"S",n:"Make signs",           d:2,needs:[]},
- {id:"T",n:"Make shift schedule",  d:1,needs:[]},
- {id:"V",n:"Brief volunteers",     d:1,needs:["T"]},
- {id:"R",n:"Run the morning shift",d:1,needs:["M","S","V"]},
- {id:"F",n:"Design sign-up sheet", d:1,needs:[]},
- {id:"X",n:"Record sign-ups",      d:1,needs:["F","R"]}
-];
+ {id:"L",t:"layout",needs:[]},
+ {id:"M",t:"buy",needs:["L"]},
+ {id:"S",t:"signs",needs:[]},
+ {id:"T",t:"sched",needs:[]},
+ {id:"V",t:"brief",needs:["T"]},
+ {id:"R",t:"shift",needs:["M","S","V"]},
+ {id:"F",t:"sheet",needs:[]},
+ {id:"X",t:"record",needs:["F","R"]}
+].map(j=>{ const leaf=dcFind(DC_TREE,j.t); return Object.assign(j,{n:leaf.n,h:leaf.h,d:leaf.h/DC_HPD}); });
 const dcJob=id=>DC_JOBS.find(j=>j.id===id);
 /* earliest finish of every job with unlimited people: the longest chain ending at it */
 const DC_CP=(()=>{
@@ -125,7 +126,7 @@ function dcPlanRender(focusKey){
        +`<div class="meter"><div class="g"><div class="gl">Free people</div><div class="gv">${free.length?dcEsc(free.join(", ")):"Nobody"}</div></div><div class="g"><div class="gl">Jobs done</div><div class="gv">${dcP.done.length} of ${DC_JOBS.length}</div></div></div>`
        +`<div class="verdict ${dcP.v.cls}" role="status">${dcP.v.h}</div>`;
   h+=`<div class="wopts dcjobs">`+DC_JOBS.map(j=>{
-      const dur=dcPlural(j.d,"day");
+      const dur=dcPlural(j.d,"day")+" ("+j.h+" h)";
       let cls,meta,st,dis=false;
       if(dcP.done.includes(j.id)){ cls="done"; meta=dur; st=ICO("check-circle")+"Done"; dis=true; }
       else if(j.id in dcP.run){ const r=dcP.run[j.id]; cls="run"; meta=dur+" · "+dcPlural(r.left,"day")+" left"; st=DC_PEOPLE[r.p]; }

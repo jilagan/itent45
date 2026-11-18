@@ -10,7 +10,7 @@
     {
      "text": "HTML, because it also carries layout such as table widths",
      "correct": true,
-     "feedback": "HTML describes how to draw the table, so only 13% of its bytes are the data. JSON is the smallest."
+     "feedback": "HTML describes how to draw the table, so only 14% of its bytes are the data. JSON is the smallest."
     },
     {
      "text": "XML, because every single value is wrapped in tags",

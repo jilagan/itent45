@@ -29,7 +29,7 @@
    "id": "rest-2",
    "sec": null,
    "type": "mc",
-   "stem": "An edit form sends `PATCH /courses/ITENT45` with the body `{\"units\": 6}`. Because of network problems the same request reaches the server three times. What is the course's `units` value afterward?",
+   "stem": "An edit form sends `PATCH /courses/MGT45` with the body `{\"units\": 6}`. Because of network problems the same request reaches the server three times. What is the course's `units` value afterward?",
    "options": [
     {
      "text": "6, because every request writes the same value and leaves other fields alone",

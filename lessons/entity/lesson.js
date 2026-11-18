@@ -5,7 +5,7 @@ const TERMS=[
  {t:"Juan dela Cruz",    k:"I", why:"One student, stored as one row. It is an instance."},
  {t:"ID number",         k:"A", why:"A fact that describes a student. It has no meaning on its own."},
  {t:"Course",            k:"E", why:"A kind of thing the school keeps data about, with many examples that can be told apart."},
- {t:"ITENT 45",          k:"I", why:"One course. Drawing a box for each course would take 3,000 boxes."},
+ {t:"MGT 45",          k:"I", why:"One course. Drawing a box for each course would take 3,000 boxes."},
  {t:"Units",             k:"A", why:"A property of a course. The value 3 describes the course."},
  {t:"Enrollment",        k:"E", why:"An <b class=\"i\">event</b>: a student signing up for a course. It has a date, a status and a grade, and none of those belong to the student or to the course alone."},
  {t:"Enrolled on 12 Aug",k:"I", why:"One enrollment. It is one example of the Enrollment entity."},

@@ -1,9 +1,9 @@
 /* Lesson sql. Widget code for the markup in lesson.html. */
 /* ================= SQL CRUD ================= */
 const SQL_SEED=[
- {code:"ITENT 45", title:"Application Dev & Emerging Tech", units:3, slots:4},
- {code:"CSCI 21",  title:"Data Structures",                units:3, slots:0},
- {code:"ITMGT 25", title:"Programming Fundamentals",       units:3, slots:12}
+ {code:"MGT 45",   title:"Operations Management",    units:3, slots:4},
+ {code:"CSCI 21",  title:"Data Structures",          units:3, slots:0},
+ {code:"ITMGT 25", title:"Programming Fundamentals", units:3, slots:12}
 ];
 const STMTS=[
  {id:"sel",  v:"SELECT", danger:false,

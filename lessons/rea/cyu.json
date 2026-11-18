@@ -69,12 +69,12 @@
      "feedback": "This question looks for a gap between two events that should pair up, an enrollment with no matching payment."
     },
     {
-     "text": "How many seats does ITENT 45 have in total?",
+     "text": "How many seats does MGT 45 have in total?",
      "correct": false,
      "feedback": "This needs only the resource, the seats. No event is involved."
     },
     {
-     "text": "Which room is ITENT 45 held in this term?",
+     "text": "Which room is MGT 45 held in this term?",
      "correct": false,
      "feedback": "This is a fact about the course and its room. It needs no payment."
     },

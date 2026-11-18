@@ -33,7 +33,7 @@
    "id": "bytes-2",
    "sec": null,
    "type": "multi",
-   "stem": "Select all that apply. A POST request sends the body `{\"code\":\"ITENT 45\"}` to the server. Which headers help the server read that body correctly?",
+   "stem": "Select all that apply. A POST request sends the body `{\"code\":\"MGT 45\"}` to the server. Which headers help the server read that body correctly?",
    "options": [
     {
      "text": "`Content-Type`, which says the body is JSON.",
@@ -89,7 +89,7 @@
    "id": "bytes-4",
    "sec": null,
    "type": "mc",
-   "stem": "In the server log you see some lines of text, then an empty line, then `{\"code\":\"ITENT 45\"}`. What is the empty line?",
+   "stem": "In the server log you see some lines of text, then an empty line, then `{\"code\":\"MGT 45\"}`. What is the empty line?",
    "options": [
     {
      "text": "The blank line that ends the headers, with the body below it.",

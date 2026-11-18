@@ -2104,7 +2104,7 @@ html.libpage body{background:var(--bg,#fff);color:var(--ink,#1a1d23)}
       <div class="sec" data-sec="trace" data-title="Follow one request">
         <p>Press Play and watch one click travel through the three tiers and back.</p>
         <div class="ctrls">
-          <button class="btn primary" id="trPlay">▶ Play</button>
+          <button class="btn primary" id="trPlay">Play</button>
           <button class="btn" id="trPrev">Previous</button>
           <button class="btn" id="trNext">Next</button>
           <button class="btn" id="trRst">Reset</button>
@@ -2306,21 +2306,21 @@ const TRACE=[
  {t:3,h:"Rows come back",
   x:"The database returns rows, which are lines of values with no behavior attached. It knows nothing about your programming language's classes.",
   l:"The result: two rows (tier 3)",
-  a:`<span class="d"> id  | student_id | code     | title              | units</span>\n<span class="d">-----+------------+----------+--------------------+------</span>\n 881 | 20-1234    | ITENT 45 | Application Dev... |     3\n 882 | 20-1234    | CSCI 21  | Data Structures    |     3`},
+  a:`<span class="d"> id  | student_id | code     | title                 | units</span>\n<span class="d">-----+------------+----------+-----------------------+------</span>\n 881 | 20-1234    | MGT 45   | Operations Management |     3\n 882 | 20-1234    | CSCI 21  | Data Structures       |     3`},
  {t:2,h:"Rows become objects",
   x:"The ORM turns each row into an object, so your code can read fields such as <code>enrollment.course.code</code>. This uses processor time and memory in proportion to the number of rows.",
   lv:{django:"The objects the ORM created (tier 2)", express:"The objects the ORM created (tier 2)", laravel:"The objects the ORM created (tier 2)"},
   av:{
-   django:`[&lt;Enrollment: 20-1234 → ITENT 45&gt;,\n &lt;Enrollment: 20-1234 → CSCI 21&gt;]`,
-   express:`[ { id: 881, course: { code: <span class="s">'ITENT 45'</span>, units: 3 } },\n  { id: 882, course: { code: <span class="s">'CSCI 21'</span>,  units: 3 } } ]`,
+   django:`[&lt;Enrollment: 20-1234 → MGT 45&gt;,\n &lt;Enrollment: 20-1234 → CSCI 21&gt;]`,
+   express:`[ { id: 881, course: { code: <span class="s">'MGT 45'</span>,  units: 3 } },\n  { id: 882, course: { code: <span class="s">'CSCI 21'</span>, units: 3 } } ]`,
    laravel:`Illuminate\\Support\\Collection {\n  <span class="d">#items:</span> [ App\\Models\\Enrollment {...},\n            App\\Models\\Enrollment {...} ]\n}`}},
  {t:2,h:"Objects become text",
   x:"Objects cannot travel over the network, so the server converts them to JSON, a plain text format for data. This step is called serialization.",
   lv:{django:"Converting the objects to JSON (tier 2)", express:"Converting the objects to JSON (tier 2)", laravel:"Converting the objects to JSON (tier 2)"},
   av:{
-   django:`<span class="kw">return</span> JsonResponse({\n  <span class="s">"enrollments"</span>: [\n    {<span class="s">"code"</span>: <span class="s">"ITENT 45"</span>, <span class="s">"units"</span>: 3},\n    {<span class="s">"code"</span>: <span class="s">"CSCI 21"</span>,  <span class="s">"units"</span>: 3}\n  ]\n})`,
-   express:`res.json({\n  enrollments: [\n    { code: <span class="s">"ITENT 45"</span>, units: 3 },\n    { code: <span class="s">"CSCI 21"</span>,  units: 3 }\n  ]\n});`,
-   laravel:`<span class="kw">return</span> response()->json([\n  <span class="s">'enrollments'</span> => [\n    [<span class="s">'code'</span> => <span class="s">'ITENT 45'</span>, <span class="s">'units'</span> => 3],\n    [<span class="s">'code'</span> => <span class="s">'CSCI 21'</span>,  <span class="s">'units'</span> => 3]\n  ]\n]);`}},
+   django:`<span class="kw">return</span> JsonResponse({\n  <span class="s">"enrollments"</span>: [\n    {<span class="s">"code"</span>: <span class="s">"MGT 45"</span>,  <span class="s">"units"</span>: 3},\n    {<span class="s">"code"</span>: <span class="s">"CSCI 21"</span>, <span class="s">"units"</span>: 3}\n  ]\n})`,
+   express:`res.json({\n  enrollments: [\n    { code: <span class="s">"MGT 45"</span>,  units: 3 },\n    { code: <span class="s">"CSCI 21"</span>, units: 3 }\n  ]\n});`,
+   laravel:`<span class="kw">return</span> response()->json([\n  <span class="s">'enrollments'</span> => [\n    [<span class="s">'code'</span> => <span class="s">'MGT 45'</span>,  <span class="s">'units'</span> => 3],\n    [<span class="s">'code'</span> => <span class="s">'CSCI 21'</span>, <span class="s">'units'</span> => 3]\n  ]\n]);`}},
  {t:0,h:"The response crosses back",
   x:"The server sends a status line, headers, a blank line and the body. The trip back costs the same network time as the trip out.",
   l:"The HTTP response text",
@@ -2365,7 +2365,7 @@ const VIEWS={
    cap:`Ten of the twelve parts happen while the user sees this spinner. The user cannot tell where the time goes. They only see how long the wait is.` },
  done:{ html:`${PAGE_CSS}<h1>My Courses</h1><div class="sub">First Semester, 2026&ndash;2027</div>
    <ul>
-     <li data-src="json"><span class="code">ITENT 45</span><span class="units">3 units</span></li>
+     <li data-src="json"><span class="code">MGT 45</span><span class="units">3 units</span></li>
      <li data-src="json"><span class="code">CSCI 21</span><span class="units">3 units</span></li>
    </ul>`,
    spin:false, url:"https://enlist.university.edu/my-courses",
@@ -2538,13 +2538,13 @@ function renderTrace(){
 }
 $("#trNext").onclick=()=>{clearInterval(trTimer);trI=Math.min(TRACE.length-1,trI+1);renderTrace()};
 $("#trPrev").onclick=()=>{clearInterval(trTimer);trI=Math.max(0,trI-1);renderTrace()};
-$("#trRst").onclick=()=>{clearInterval(trTimer);trI=0;renderTrace();$("#trPlay").textContent="▶ Play"};
+$("#trRst").onclick=()=>{clearInterval(trTimer);trI=0;renderTrace();$("#trPlay").textContent="Play"};
 $("#trPlay").onclick=e=>{
   clearInterval(trTimer);
-  if(e.target.dataset.on==="1"){e.target.dataset.on="";e.target.textContent="▶ Play";return}
-  e.target.dataset.on="1"; e.target.textContent="❚❚ Pause";
+  if(e.target.dataset.on==="1"){e.target.dataset.on="";e.target.textContent="Play";return}
+  e.target.dataset.on="1"; e.target.textContent="Pause";
   trTimer=setInterval(()=>{
-    if(trI>=TRACE.length-1){clearInterval(trTimer);$("#trPlay").dataset.on="";$("#trPlay").textContent="▶ Play";return}
+    if(trI>=TRACE.length-1){clearInterval(trTimer);$("#trPlay").dataset.on="";$("#trPlay").textContent="Play";return}
     trI++; renderTrace();
   }, REDUCED?900:2600);
 };

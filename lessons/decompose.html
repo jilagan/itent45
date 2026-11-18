@@ -2086,12 +2086,12 @@ html.libpage body{background:var(--bg,#fff);color:var(--ink,#1a1d23)}
         <details class="more">
           <summary>More detail</summary>
           <h4>Why 4 hours</h4>
-          <p>The limit is a choice made for this lesson. Real teams pick a size that fits how often they meet. Each piece should be something one person can start, finish and check.</p>
+          <p>The limit is a choice made for this lesson. In the next step each day is a 2-hour work session, so the same pieces take 1 or 2 days. Real teams pick a size that fits how often they meet. Each piece should be something one person can start, finish and check.</p>
         </details>
       </div>
 
       <div class="sec" data-sec="order" data-title="Find the order">
-        <p>Some jobs need another job first. A <dfn title="A job that must finish before another job can start">dependency</dfn> is a job that must finish before another job can start. Three people can work at the same time, and each job takes one or more days. Each day, press the jobs you can start, then press End day. Finish in as few days as you can.</p>
+        <p>Some jobs need another job first. A <dfn title="A job that must finish before another job can start">dependency</dfn> is a job that must finish before another job can start. Three people can work at the same time. One day is a 2-hour work session, so a 4-hour piece takes 2 days. Each day, press the jobs you can start, then press End day. Finish in as few days as you can.</p>
         <div class="card wg" id="dcPlan"></div>
       </div>
 
@@ -2101,7 +2101,7 @@ html.libpage body{background:var(--bg,#fff);color:var(--ink,#1a1d23)}
         <details class="more">
           <summary>More detail</summary>
           <h4>The longest chain</h4>
-          <p>In the booth plan the longest chain is Design layout (1 day), Buy materials (2), Run the morning shift (1) and Record sign-ups (1). That adds up to 5 days. Project managers call it the <dfn title="The longest chain of dependent jobs, which sets the minimum time">critical path</dfn>. A job outside it, such as Design sign-up sheet, can start late without moving the finish.</p>
+          <p>In the booth plan the longest chain is Design layout (1 day), Buy materials (2), Run the morning shift (1) and Record sign-ups (1). That adds up to 5 days, or 10 hours of sessions. Project managers call it the <dfn title="The longest chain of dependent jobs, which sets the minimum time">critical path</dfn>. A job outside it, such as Design sign-up sheet, can start late without moving the finish.</p>
           <h4>Parts of a software system</h4>
           <p>A web application splits into a browser part, a server part and a database part. Each part can be built and tested by a different person. Splitting an application into services is the same idea at a larger size, as in <a data-lesson="split">One application or many services?</a></p>
           <p>Jobs that do not depend on each other can run at the same time. This is how <a data-lesson="scale">Scaling out with a load balancer</a> adds capacity. An AI agent also splits a goal into steps before it acts, as in <a data-lesson="loop">AI agents: the think, act and observe loop</a>.</p>
@@ -2111,7 +2111,7 @@ html.libpage body{background:var(--bg,#fff);color:var(--ink,#1a1d23)}
 
 </main>
 </div>
-<script>window.LESSON={"id": "decompose", "title": "Breaking a task into parts", "label": "Breaking down", "area": "computational-thinking", "areaLabel": "Computational thinking", "root": "../", "library": "../library.html", "next": {"id": "patterns", "label": "Spotting patterns"}, "cyu": [{"id": "decompose-1", "sec": null, "type": "mc", "stem": "A teammate is assigned \"Do the research\" with no other detail. After a week she says she is not sure what is left. What would have helped most?", "options": [{"text": "Giving her one more week to finish all the research.", "correct": false, "feedback": "More time does not tell her what finished means. She would still be unsure after another week."}, {"text": "Splitting it into pieces, each with a clear end point.", "correct": true, "feedback": "Small pieces with clear ends let her say what is done and what is left."}, {"text": "Asking two more people to also do the same research.", "correct": false, "feedback": "Two more people on an unclear job make it more confusing. Each of them would pick a different meaning of finished."}]}, {"id": "decompose-2", "sec": null, "type": "mc", "stem": "In the booth plan, Buy materials needs the layout first. The layout is finished two days late. Which jobs slip?", "options": [{"text": "Only Buy materials, because it is the only job that names the layout.", "correct": false, "feedback": "Run the morning shift needs the materials, and Record sign-ups needs the shift. Both move too."}, {"text": "Every job, including the shift schedule and the sign-up sheet.", "correct": false, "feedback": "The schedule and the sign-up sheet need no layout, so they keep their dates."}, {"text": "Buy materials, Run the morning shift and Record sign-ups.", "correct": true, "feedback": "Each of these waits for the layout, directly or through another job. Delays travel along the chain of dependencies."}]}, {"id": "decompose-3", "sec": "time", "type": "mc", "stem": "The booth plan needs 5 days with 3 people. A fourth person joins. How many days does the plan need now?", "options": [{"text": "Still 5 days, since the longest chain stays the same.", "correct": true, "feedback": "Design layout, Buy materials, Run the morning shift and Record sign-ups take 5 days one after another, however many people help."}, {"text": "4 days, since a fourth person finishes more of the work.", "correct": false, "feedback": "An extra person helps only with jobs that can run at the same time. The jobs in the chain run one after another."}, {"text": "3 days, since the work is shared among four people.", "correct": false, "feedback": "A job cannot start before the jobs it needs are done, so the plan cannot shrink below its longest chain."}]}, {"id": "decompose-4", "sec": null, "type": "mc", "stem": "A one-day delay hits one job. Which delay makes the whole project finish a day late?", "options": [{"text": "Make signs, because it takes two days like Buy materials.", "correct": false, "feedback": "Make signs has a day to spare. It can run a day late and still be done before the morning shift starts."}, {"text": "Brief volunteers, because the morning shift cannot start without it.", "correct": false, "feedback": "The briefing ends on day 2 and the morning shift starts on day 4, so one more day still fits."}, {"text": "Design sign-up sheet, because it is the smallest job.", "correct": false, "feedback": "The sheet is needed only for the last job, so it has days to spare."}, {"text": "Buy materials, because it sits on the longest chain.", "correct": true, "feedback": "Every job after it waits, and no other job can cover the gap."}]}], "videos": [], "analytics": {"ga4": "G-FJCYDSFPGQ", "debug": false}, "art": ["bank-branches", "barangay-clerk-desk", "barkada-party-seating", "branch-floor-area", "branch-guard-counters", "calculator-and-cashier", "campus-store-discount-sign", "cashier-claim-stub", "child-sounding-out-word", "class-list", "classroom-whiteboard", "commuter-route-map", "condo-building", "courier-parcel", "dish-sent-back", "exam-paper-early", "fast-food-counters", "file-clerk-cart", "fog-hillside", "group-chat-reply", "id-cards-and-class-lists", "jeepney-route-map", "kitchen-three-channels", "last-seat-two-cashiers", "lecture-sticky-note", "map-pins", "menu-print-or-board", "one-cook-or-food-court", "order-slip", "org-booth-whiteboard", "own-or-hail-ride", "phone-autocomplete", "poster-in-pieces", "receipt-string-store", "recipe-card-crew", "registrar-card-pile", "registrar-file-check", "registrar-line-clerk", "registrar-window", "restaurant-phone-calls", "restaurant-three-tiers", "sari-sari-sale", "sari-sari-store-hours", "scholarship-committee", "sour-soup-recipe", "student-folders", "tricycle-directions", "weighted-grade", "wrong-total-receipt"], "artBase": "../art/"};</script>
+<script>window.LESSON={"id": "decompose", "title": "Breaking a task into parts", "label": "Breaking down", "area": "computational-thinking", "areaLabel": "Computational thinking", "root": "../", "library": "../library.html", "next": {"id": "patterns", "label": "Spotting patterns"}, "cyu": [{"id": "decompose-1", "sec": null, "type": "mc", "stem": "A teammate is assigned \"Do the research\" with no other detail. After a week she says she is not sure what is left. What would have helped most?", "options": [{"text": "Giving her one more week to finish all the research.", "correct": false, "feedback": "More time does not tell her what finished means. She would still be unsure after another week."}, {"text": "Splitting it into pieces, each with a clear end point.", "correct": true, "feedback": "Small pieces with clear ends let her say what is done and what is left."}, {"text": "Asking two more people to also do the same research.", "correct": false, "feedback": "Two more people on an unclear job make it more confusing. Each of them would pick a different meaning of finished."}]}, {"id": "decompose-2", "sec": null, "type": "mc", "stem": "In the booth plan, Buy materials needs the layout first. The layout is finished two days late. Which jobs slip?", "options": [{"text": "Only Buy materials, because it is the only job that names the layout.", "correct": false, "feedback": "Run the morning shift needs the materials, and Record sign-ups needs the shift. Both move too."}, {"text": "Every job, including the shift schedule and the sign-up sheet.", "correct": false, "feedback": "The schedule and the sign-up sheet need no layout, so they keep their dates."}, {"text": "Buy materials, Run the morning shift and Record sign-ups.", "correct": true, "feedback": "Each of these waits for the layout, directly or through another job. Delays travel along the chain of dependencies."}]}, {"id": "decompose-3", "sec": "time", "type": "mc", "stem": "The booth plan needs 5 days with 3 people. A fourth person joins. How many days does the plan need now?", "options": [{"text": "Still 5 days, since the longest chain stays the same.", "correct": true, "feedback": "Design layout, Buy materials, Run the morning shift and Record sign-ups take 5 days one after another, however many people help."}, {"text": "4 days, since a fourth person finishes more of the work.", "correct": false, "feedback": "An extra person helps only with jobs that can run at the same time. The jobs in the chain run one after another."}, {"text": "3 days, since the work is shared among four people.", "correct": false, "feedback": "A job cannot start before the jobs it needs are done, so the plan cannot shrink below its longest chain."}]}, {"id": "decompose-4", "sec": null, "type": "mc", "stem": "A one-day delay hits one job. Which delay makes the whole project finish a day late?", "options": [{"text": "Make signs, because it takes two days like Buy materials.", "correct": false, "feedback": "Make signs has a day to spare. It can run a day late and still be done before the morning shift starts."}, {"text": "Brief volunteers, because the morning shift cannot start without it.", "correct": false, "feedback": "The briefing ends on day 2 and the morning shift starts on day 4, so one more day still fits."}, {"text": "Design sign-up sheet, because the last job needs it.", "correct": false, "feedback": "The sheet can finish days before the last job starts, so a late day costs nothing."}, {"text": "Buy materials, because it sits on the longest chain.", "correct": true, "feedback": "Every job after it waits, and no other job can cover the gap."}]}], "videos": [], "analytics": {"ga4": "G-FJCYDSFPGQ", "debug": false}, "art": ["bank-branches", "barangay-clerk-desk", "barkada-party-seating", "branch-floor-area", "branch-guard-counters", "calculator-and-cashier", "campus-store-discount-sign", "cashier-claim-stub", "child-sounding-out-word", "class-list", "classroom-whiteboard", "commuter-route-map", "condo-building", "courier-parcel", "dish-sent-back", "exam-paper-early", "fast-food-counters", "file-clerk-cart", "fog-hillside", "group-chat-reply", "id-cards-and-class-lists", "jeepney-route-map", "kitchen-three-channels", "last-seat-two-cashiers", "lecture-sticky-note", "map-pins", "menu-print-or-board", "one-cook-or-food-court", "order-slip", "org-booth-whiteboard", "own-or-hail-ride", "phone-autocomplete", "poster-in-pieces", "receipt-string-store", "recipe-card-crew", "registrar-card-pile", "registrar-file-check", "registrar-line-clerk", "registrar-window", "restaurant-phone-calls", "restaurant-three-tiers", "sari-sari-sale", "sari-sari-store-hours", "scholarship-committee", "sour-soup-recipe", "student-folders", "tricycle-directions", "weighted-grade", "wrong-total-receipt"], "artBase": "../art/"};</script>
 <script>
 /* lib/core.js */
 /* lib/core.js: the globals every lesson page has. Always loaded first.
@@ -2195,19 +2195,20 @@ const DC_LIMIT=4;
 /* leaves carry hours (h); every other node carries its children (k), and its hours are the sum */
 const DC_TREE={id:"top",n:"Run the org fair booth",k:[
  {id:"prep",n:"Prepare the booth",k:[
-   {id:"layout",n:"Design layout",h:3},
+   {id:"layout",n:"Design layout",h:2},
    {id:"mats",n:"Materials and signs",k:[
-     {id:"buy",n:"Buy materials",h:3},
+     {id:"buy",n:"Buy materials",h:4},
      {id:"signs",n:"Make signs",h:4}]}]},
  {id:"staff",n:"Staff the booth",k:[
    {id:"sched",n:"Make shift schedule",h:2},
-   {id:"vol",n:"Volunteers on the day",k:[
-     {id:"brief",n:"Brief volunteers",h:2},
-     {id:"shift",n:"Run the morning shift",h:4}]}]},
+   {id:"brief",n:"Brief volunteers",h:2},
+   {id:"shift",n:"Run the morning shift",h:2}]},
  {id:"follow",n:"Follow up with visitors",k:[
-   {id:"sheet",n:"Design sign-up sheet",h:2},
-   {id:"record",n:"Record sign-ups",h:4}]}
+   {id:"sheet",n:"Design sign-up sheet",h:4},
+   {id:"record",n:"Record sign-ups",h:2}]}
 ]};
+/* the plan below counts days; one day is one work session of DC_HPD hours, so the eight pieces keep the same hours in both steps */
+const DC_HPD=2;
 const dcHours=n=>n.k?n.k.reduce((a,c)=>a+dcHours(c),0):n.h;
 function dcFind(n,id){ if(n.id===id) return n; for(const c of (n.k||[])){ const r=dcFind(c,id); if(r) return r; } return null; }
 
@@ -2268,15 +2269,15 @@ dcSplitRender();
 /* ---------- dependency planner ---------- */
 const DC_PEOPLE=["Mika","Paolo","Bea"];
 const DC_JOBS=[
- {id:"L",n:"Design layout",        d:1,needs:[]},
- {id:"M",n:"Buy materials",        d:2,needs:["L"]},
- {id:"S",n:"Make signs",           d:2,needs:[]},
- {id:"T",n:"Make shift schedule",  d:1,needs:[]},
- {id:"V",n:"Brief volunteers",     d:1,needs:["T"]},
- {id:"R",n:"Run the morning shift",d:1,needs:["M","S","V"]},
- {id:"F",n:"Design sign-up sheet", d:1,needs:[]},
- {id:"X",n:"Record sign-ups",      d:1,needs:["F","R"]}
-];
+ {id:"L",t:"layout",needs:[]},
+ {id:"M",t:"buy",needs:["L"]},
+ {id:"S",t:"signs",needs:[]},
+ {id:"T",t:"sched",needs:[]},
+ {id:"V",t:"brief",needs:["T"]},
+ {id:"R",t:"shift",needs:["M","S","V"]},
+ {id:"F",t:"sheet",needs:[]},
+ {id:"X",t:"record",needs:["F","R"]}
+].map(j=>{ const leaf=dcFind(DC_TREE,j.t); return Object.assign(j,{n:leaf.n,h:leaf.h,d:leaf.h/DC_HPD}); });
 const dcJob=id=>DC_JOBS.find(j=>j.id===id);
 /* earliest finish of every job with unlimited people: the longest chain ending at it */
 const DC_CP=(()=>{
@@ -2306,7 +2307,7 @@ function dcPlanRender(focusKey){
        +`<div class="meter"><div class="g"><div class="gl">Free people</div><div class="gv">${free.length?dcEsc(free.join(", ")):"Nobody"}</div></div><div class="g"><div class="gl">Jobs done</div><div class="gv">${dcP.done.length} of ${DC_JOBS.length}</div></div></div>`
        +`<div class="verdict ${dcP.v.cls}" role="status">${dcP.v.h}</div>`;
   h+=`<div class="wopts dcjobs">`+DC_JOBS.map(j=>{
-      const dur=dcPlural(j.d,"day");
+      const dur=dcPlural(j.d,"day")+" ("+j.h+" h)";
       let cls,meta,st,dis=false;
       if(dcP.done.includes(j.id)){ cls="done"; meta=dur; st=ICO("check-circle")+"Done"; dis=true; }
       else if(j.id in dcP.run){ const r=dcP.run[j.id]; cls="run"; meta=dur+" · "+dcPlural(r.left,"day")+" left"; st=DC_PEOPLE[r.p]; }

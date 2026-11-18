@@ -295,10 +295,10 @@ $("#sBoot").oninput=e=>{EL.boot=+e.target.value;$("#vBoot").textContent=EL.boot+
 $("#tgAuto").onclick=()=>{EL.auto=!EL.auto;$("#tgAuto").setAttribute("aria-pressed",EL.auto);elResetState();elRender()};
 $("#elRun").onclick=e=>{
   EL.running=!EL.running;
-  e.target.textContent=EL.running?"❚❚ Pause":"▶ Play";
+  e.target.textContent=EL.running?"Pause":"Play";
   if(EL.running) elLoop(); else clearTimeout(EL.raf);
 };
-$("#elReset").onclick=()=>{EL.running=false;clearTimeout(EL.raf);$("#elRun").textContent="▶ Play";elResetState();elRender()};
+$("#elReset").onclick=()=>{EL.running=false;clearTimeout(EL.raf);$("#elRun").textContent="Play";elResetState();elRender()};
 elRender();
 
 /* called by the platform when this lesson or a step or More detail becomes visible */

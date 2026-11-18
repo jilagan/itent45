@@ -43,15 +43,15 @@
       </div>
 
       <div class="sec" data-sec="page" data-title="Apply it to a web page">
-        <p>A page lists courses with their teachers. One method asks the database one question for the course list, then one more for each course. This is the <dfn title="One question for the list, then one more question for each item">N+1 problem</dfn>. The other method asks one question for everything. Each question takes 5 milliseconds (thousandths of a second). Move the slider to change the number of courses and compare the load times.</p>
+        <p>A page lists courses with their teachers. One method asks the database one question for the course list, then one more for each course. This is the <dfn title="One question for the list, then one more question for each item">N+1 problem</dfn>. The other method asks one question for everything. Each question takes 0.4 milliseconds (thousandths of a second). Move the slider to change the number of courses and compare the load times.</p>
         <div class="card wg" id="gpBox">
           <div class="field">
             <label for="gpN">Courses on the page <span class="val" id="gpNv">40</span></label>
             <input type="range" id="gpN" min="0" max="8" step="1" value="2">
           </div>
           <div class="pgrid">
-            <div class="g" id="gpA"><div class="gt">One question per course</div><div class="gr"><span>Questions</span><b class="gq">41</b></div><div class="gr"><span>Load time</span><b class="gm">205 ms</b></div><div class="gf"></div></div>
-            <div class="g" id="gpB"><div class="gt">One question for everything</div><div class="gr"><span>Questions</span><b class="gq">1</b></div><div class="gr"><span>Load time</span><b class="gm">5 ms</b></div><div class="gf"></div></div>
+            <div class="g" id="gpA"><div class="gt">One question per course</div><div class="gr"><span>Questions</span><b class="gq">41</b></div><div class="gr"><span>Load time</span><b class="gm">16 ms</b></div><div class="gf"></div></div>
+            <div class="g" id="gpB"><div class="gt">One question for everything</div><div class="gr"><span>Questions</span><b class="gq">1</b></div><div class="gr"><span>Load time</span><b class="gm">0.8 ms</b></div><div class="gf"></div></div>
           </div>
           <div class="verdict" id="gpV" role="status"></div>
           <div class="ctrls">
@@ -61,7 +61,7 @@
         <details class="more">
           <summary>More detail</summary>
           <h4>Where the times come from</h4>
-          <p>One question per course takes (1 + courses) times 5 milliseconds. One question for everything takes 5 milliseconds plus 0.01 milliseconds for each course sent back. At 2,000 courses that is 10,005 milliseconds against 25. These are teaching figures. Real times depend on the network and the database.</p>
+          <p>One question per course takes (1 + courses) times 0.4 milliseconds. One question for everything takes 0.4 milliseconds plus 0.01 milliseconds for each course sent back. At 2,000 courses that is 800 milliseconds against 20. These are teaching figures. Real times depend on the network and the database.</p>
           <h4>Why small numbers can hide the problem</h4>
           <p>A job that does 100 steps for each item is slower than one that does 3, even though both double when the list doubles. Growth shows what happens at large sizes. Measure to compare small ones. <a data-lesson="sorting">Sorting and searching</a> shows two methods whose steps grow at very different rates. <a data-lesson="query">The N+1 query problem</a> follows this case in detail.</p>
         </details>

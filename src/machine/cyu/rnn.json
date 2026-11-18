@@ -8,7 +8,7 @@
    "stem": "Which description matches how a recurrent network reads a sentence?",
    "options": [
     {
-     "text": "It reads one word at a time and rewrites a single fixed-size note after each word.",
+     "text": "It reads one word at a time and rewrites a fixed-size note each time.",
      "correct": true,
      "feedback": "The note is the hidden state. Each step takes the previous note and the next word and produces a new note."
     },
@@ -65,7 +65,7 @@
    "stem": "You switch the sentence from \"too tired\" to \"too wide\", and the model still answers \"street\". What does this show?",
    "options": [
     {
-     "text": "The answer depends on how recently each noun was read, and the last word has no effect.",
+     "text": "The answer follows how recently each noun was read. The last word has no effect.",
      "correct": true,
      "feedback": "The note holds street more strongly in both sentences, so the answer is the same. Meaning played no part."
     },

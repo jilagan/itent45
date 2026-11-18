@@ -13,7 +13,7 @@
      "feedback": "Every reservation is a change to the database, and one primary has to handle them in order. More web servers only send it more requests."
     },
     {
-     "text": "Reservations become twice as fast.",
+     "text": "Reservations become about twice as fast, because there are twice as many servers.",
      "correct": false,
      "feedback": "The web servers were already coping, and reservations wait for the database."
     },
@@ -36,7 +36,7 @@
      "feedback": "Spreading the arrivals over time lowers the peak rate, and the system needs no extra machines."
     },
     {
-     "text": "Add 20 more web servers.",
+     "text": "Add 20 more web servers to share the load.",
      "correct": false,
      "feedback": "This adds capacity to the web tier, which was not the limit."
     },

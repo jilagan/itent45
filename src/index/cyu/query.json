@@ -13,7 +13,7 @@
      "feedback": "This is the N+1 pattern: one query to fetch N rows, then N more queries."
     },
     {
-     "text": "1, because the page is one request.",
+     "text": "1, because the page is a single request to the server.",
      "correct": false,
      "feedback": "One page request can trigger many queries. Each course title that was not loaded needs its own query."
     },
@@ -23,7 +23,7 @@
      "feedback": "That would happen with a join or a single extra query for all courses. The template here asks for each title separately."
     },
     {
-     "text": "50, one for each row.",
+     "text": "50, one for each of the enrollment rows.",
      "correct": false,
      "feedback": "The 50 title queries are right, but the view also ran one query to fetch the enrollments first."
     }

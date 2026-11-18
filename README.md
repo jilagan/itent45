@@ -85,12 +85,6 @@ The tables come from the navigation in each `shell.html`. Run `python3 tools/pan
 |  | Checking AI-written code | Finding mistakes in AI-written code |
 |  | The math behind it | The math behind it: vectors, slopes and probabilities |
 
-Single-key shortcuts on the full site jump to panels. On Module 1, `0` to `9` open the first ten panels
-and letters open the later ones (`c` relationships, `a` REA, `w` SQL, `t` transactions, `n` normalization,
-`q` query cost, `h` shapes, `m` memory, `s` inside the server, `p` past one box, `e` enlistment,
-`v` virtualization, `k` cost, `r` regions, `o` one app or many, `b` breakouts). On Module 2, `0` to `9` open the first ten panels.
-The shortcuts are off when Ctrl, Cmd or Alt is held, when focus is in a form field, and in embed mode.
-
 ## How the site is built
 
 The two pages are generated from `src/`. Edit the files in `src/`, never `index.html` or `machine.html`.
@@ -150,6 +144,39 @@ Each panel has a whole-panel snippet. The links work after the branch is publish
 2. In the Canvas Rich Content Editor, switch to the HTML view and paste the snippet.
 3. Canvas cannot auto-resize plain iframes, so every snippet has a fixed height. Check it on the live page and change `height` if the content is cut off or leaves a gap.
 4. Test it on the university's Canvas before the term starts. Some Canvas instances restrict which iframe sources are allowed, and `jilagan.github.io` may have to be added by the Canvas administrators. Put a plain link to the full site under each frame in case it is blocked.
+
+## Analytics
+
+The site can report to Google Analytics 4. It is off until you add a measurement ID.
+
+Open `src/shared/analytics.json` and put the ID in `ga4`, for example `{"ga4":"G-ABC123XYZ9", "debug":false}`. Run `python3 build.py` and publish. With an empty `ga4` the pages make no analytics request and set nothing in the browser.
+
+Tracking is also off when the page is opened from a file, when the address has `?notrack=1` (the browser remembers this for the rest of the tab session), and when the browser sends Do Not Track. Instructor mode (`?instructor=1`) still tracks, with `instructor` set to true.
+
+In the GA4 stream settings, switch off "Page changes based on browser history events" and "Outbound clicks" under Enhanced measurement. The site sends both itself, and leaving them on counts them twice.
+
+Events. Every event also carries `module` (index or machine), `embedded` and `instructor` (true or false).
+
+| Event | When | Parameters |
+|---|---|---|
+| `page_view` | a panel or section is shown, once per view | `page_title`, `page_location`, `panel_id`, `section_id` |
+| `select_content` | a click on the rail or a section tab | `content_type` (panel or section), `item_id` |
+| `widget_click` | a button, slider, menu or checkbox in a panel, not the questions | `panel_id`, `section_id`, `control`, `control_type` |
+| `cyu_answer` | a question is checked | `panel_id`, `section_id`, `item_id`, `item_type`, `correct`, `attempt` |
+| `cyu_complete` | every question in a panel is answered correctly | `panel_id`, `item_count`, `attempts` |
+| `video_start` | a video is played | `panel_id`, `section_id`, `video_id` |
+| `click` | a link that leaves the site, including "Open full site" in an embed | `outbound` (true), `link_url`, `link_domain`, `link_text`, `panel_id` |
+| `panel_time` | the reader leaves a panel or section, or the tab is hidden or closed | `panel_id`, `section_id`, `seconds` (visible time only) |
+
+Sliders send at most one `widget_click` per control every 2 seconds. Nothing a student types is sent.
+
+Register these custom dimensions in GA4 (Admin, Custom definitions, Create custom dimension, scope Event, use the parameter name as the event parameter): `panel_id`, `section_id`, `module`, `embedded`, `instructor`, `item_id`, `correct`, `control`. They show in reports and Explorations about 24 hours after registration. Register `seconds` as a custom metric (unit: seconds) to report time on panel.
+
+To leave out the instructor's visits, add a filter `instructor` does not exactly match `true` to a report or Exploration, or build a segment that excludes events where `instructor` is `true`. GA4 data filters cannot filter on this parameter.
+
+For testing, set `"debug":true` in `analytics.json` or add `?gadebug=1` to the address. Each event is then written to the browser console as a table row and appears in GA4 DebugView.
+
+In Canvas the pages run as third-party iframes, so the analytics cookie is set with `SameSite=None;Secure`. Browsers that block third-party cookies (Safari, Firefox in strict mode, some Chrome settings) give a returning student a new identity on every visit in an embed. Users counts then run high in embeds. Event counts stay correct.
 
 ## Questions
 

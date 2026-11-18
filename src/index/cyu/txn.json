@@ -42,9 +42,9 @@
      "feedback": "A transaction groups statements into one unit, but at the default isolation level it does not lock the row."
     },
     {
-     "text": "The second session is blocked until the first one commits.",
+     "text": "The database stops the second session from enrolling.",
      "correct": false,
-     "feedback": "Blocking happens only when you ask for a lock, for example with SELECT ... FOR UPDATE. A plain transaction does not lock."
+     "feedback": "Nothing checks the earlier read. Both sessions already read 1 before either wrote, so both go ahead. Holding the row for the whole decision needs SELECT ... FOR UPDATE."
     },
     {
      "text": "The database rolls back the second enrollment automatically.",
@@ -62,7 +62,7 @@
    "id": "txn-3",
    "sec": null,
    "type": "mc",
-   "stem": "Which fix lets the second student find out that the seat is gone, without anyone waiting?",
+   "stem": "Which fix lets the second student find out that the seat is gone, without a separate lock?",
    "options": [
     {
      "text": "One `UPDATE ... WHERE slots > 0`, then check the rows changed.",
@@ -72,7 +72,7 @@
     {
      "text": "Lock the row with `SELECT ... FOR UPDATE` before deciding.",
      "correct": false,
-     "feedback": "This also works, but the second session waits for the first to finish. The question asks for a fix with no waiting."
+     "feedback": "This also works, but it locks the row and the second session waits for the first to finish. The question asks for a fix without a separate lock."
     },
     {
      "text": "Read the seat count twice before writing the new value.",

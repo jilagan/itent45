@@ -12,6 +12,11 @@
         <div>
           <div class="art" id="qCode"></div>
           <div class="phase" id="qNote" style="margin-top:9px"></div>
+          <div class="rtt-note" style="margin-top:14px">
+            The code above is Django. The view (views.py) fetches rows from the database. The template (schedule.html) is the page layout, and it loops over the rows.
+            <br><br>The model assumes each query takes 0.4 ms (milliseconds), because the database can answer it from an index, which is a lookup structure like the index of a book. It also assumes 24 ms of handler time that is not database work. Handler time is the total time the server spends on one request. A worker is a server process that handles one request at a time, and the ceiling is the most requests per second (rps) that 8 workers can finish.
+            <br><br>The first version looks correct, and AI tools often produce it when asked for a schedule page. It is still slow.
+          </div>
         </div>
         <div class="card">
           <div class="card-t">How the view is written</div>
@@ -21,11 +26,6 @@
               <label>Enrollments on the page <span class="val" id="vQRows">50</span></label>
               <input type="range" id="sQRows" min="1" max="200" value="50">
             </div>
-          </div>
-          <div class="rtt-note" style="margin-top:14px">
-            The code on the left is Django. The view (views.py) fetches rows from the database. The template (schedule.html) is the page layout, and it loops over the rows.
-            <br><br>The model assumes each query takes 0.4 ms (milliseconds), because the database can answer it from an index, which is a lookup structure like the index of a book. It also assumes 24 ms of handler time that is not database work. Handler time is the total time the server spends on one request. A worker is a server process that handles one request at a time, and the ceiling is the most requests per second (rps) that 8 workers can finish.
-            <br><br>The first version looks correct, and AI tools often produce it when asked for a schedule page. It is still slow.
           </div>
         </div>
       </div>
@@ -44,4 +44,3 @@
       </div>
     </section>
 
-    <!-- ================= 19 ROWS OR DOCUMENTS ================= -->

@@ -111,7 +111,7 @@ function nnRender(){
   const v=$("#nnVerdict");
   if(!NN.act){
     v.className="verdict bad";
-    v.innerHTML=`<b>${pct}% with ${k} units, and the boundary is straight again</b>With the nonlinearity switched off, the layer can only add its units together. Adding any number of straight lines gives one more straight line, so the second layer has nothing new to work with.<br><br>Move the slider up to 8 and watch: <b class="i">nothing changes</b>. A deeper network without a nonlinearity gains nothing. Eight units build the same single straight line as before.<br><br>That small step between the layers is the reason any of this works. Turn it back on.`;
+    v.innerHTML=`<b>${pct}% with ${k} units, and the boundary is straight again</b>With the nonlinearity switched off, the layer can only add its units together. Adding any number of straight lines gives one more straight line, so the second layer has nothing new to work with.<br><br>Move the slider from 2 up to 8 and watch: <b class="i">nothing changes</b>. A deeper network without a nonlinearity gains nothing. Eight units build one straight line, the same kind as two units.<br><br>That small step between the layers is the reason any of this works. Turn it back on.`;
   } else if(k===1){
     v.className="verdict bad";
     v.innerHTML=`<b>${pct}%, and no straight line does better</b>One unit is one line, and a line can only say <em>this side or that side</em>. The students who stay are surrounded, so whichever way you angle the line, some of them end up on the same side as the dropouts. The circled points are the ones it gets wrong.<br><br>Add a second unit.`;

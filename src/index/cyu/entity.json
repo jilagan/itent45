@@ -36,7 +36,7 @@
    "stem": "A scheduling system records the room where each class meets, such as SOM 407. The registrar also wants each room's capacity and whether it has a projector, and wants to list everything scheduled in one room. Should Room be an attribute of Class or an entity?",
    "options": [
     {
-     "text": "An entity, because a room has facts of its own and many classes refer to it.",
+     "text": "An entity, because a room has facts of its own and is shared.",
      "correct": true,
      "feedback": "Capacity and projector describe the room, and one room hosts many classes. Both are signs that Room needs its own table."
     },

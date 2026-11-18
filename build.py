@@ -93,9 +93,10 @@ for page in ("index","machine"):
     for f in sorted((d/"cyu").glob("*.json")):
         j=json.loads(f.read_text(encoding="utf-8")); cyu[j["panel"]]=j["items"]
     vids=json.loads(opt(d/"videos.json") or "[]")
-    data="window.COURSE="+json.dumps({"page":page,"cyu":cyu,"videos":vids},ensure_ascii=False).replace("</","<\\/")+";\n"
+    ga=json.loads(opt(sh/"analytics.json") or "{}")
+    data="window.COURSE="+json.dumps({"page":page,"cyu":cyu,"videos":vids,"analytics":ga},ensure_ascii=False).replace("</","<\\/")+";\n"
     css=rd("style.css")+opt(sh/"theme.css")+opt(sh/"platform.css")
-    js=data+"".join(rd("js/"+f) for f in json.loads(rd("js-order.json")))+opt(sh/"platform.js")
+    js=data+"".join(rd("js/"+f) for f in json.loads(rd("js-order.json")))+opt(sh/"platform.js")+opt(sh/"analytics.js")
     out=(rd("shell.html").replace("/*@@STYLE@@*/\n",css,1)
          .replace("<!--@@PANELS@@-->\n",panels,1)
          .replace("/*@@SCRIPT@@*/\n",js,1))

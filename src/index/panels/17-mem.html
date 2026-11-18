@@ -64,7 +64,14 @@
 
       <div class="sec" data-sec="separate-database" data-title="Moving the database to its own machine">
       <div class="card-t" style="margin-top:26px">Moving the database to its own machine</div>
-      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">The "Database on the same machine" switch in the first section removes the database's memory from the budget without adding a machine. The comparison here charges you for it: a second machine that runs only Postgres, while the application machine keeps everything it had. Drag the RAM slider and compare the two columns.</p>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">The "Database on the same machine" switch in the first section removes the database's memory from the budget without adding a machine. The comparison here charges you for it: a second machine that runs only Postgres, while the application machine keeps everything it had. The memory per worker and per request come from the first section. Drag the RAM slider and compare the two columns.</p>
+
+      <div class="sliders">
+        <div class="field">
+          <label>Total RAM <span class="val" id="vRam3">2 GB</span></label>
+          <input type="range" id="sRam3" min="512" max="16384" step="512" value="2048">
+        </div>
+      </div>
 
       <div class="srv">
         <div class="card">
@@ -91,4 +98,3 @@
 
     </section>
 
-    <!-- ================= 04 SERVER ================= -->

@@ -8,7 +8,7 @@
    "stem": "A student's laptop is on wifi and showing a web page from another website. No course software is running on it. Is the laptop acting as a server at this moment?",
    "options": [
     {
-     "text": "No. It is acting as a client, because no program on it is waiting for requests.",
+     "text": "No. It is a client, because no program on it is waiting for requests.",
      "correct": true,
      "feedback": "A computer is a server only while a program on it is waiting for connections. Here the laptop is sending requests and receiving pages, which makes it a client."
     },
@@ -131,7 +131,7 @@
      "feedback": "Home connections are often given a new address, so a site that depends on one fixed address stops working."
     },
     {
-     "text": "Home plans are slow to upload, and serving a site is all upload.",
+     "text": "Home plans are slow to upload, and serving a site is mostly upload.",
      "correct": true,
      "feedback": "Every page sent to a visitor is upload traffic, and home plans give much less upload speed than download speed."
     },

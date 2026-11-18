@@ -6,7 +6,7 @@ const PARTS=[
  {n:"Send notifications", ms:150,  ram:80,  share:.02}
 ];
 const SPLIT={load:400};
-const WPM=4;                              // workers per machine, from panel 18
+const WPM=4;                              // workers per machine
 const inst = (rps,ms) => Math.max(1, Math.ceil(rps*(ms/1000)/WPM));
 
 function splitModel(){

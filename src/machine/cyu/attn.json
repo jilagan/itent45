@@ -15,7 +15,7 @@
     {
      "text": "A grammar rule says a pronoun refers to the subject of the sentence.",
      "correct": false,
-     "feedback": "No grammar rule is used. The result changes when the last word changes."
+     "feedback": "The model uses no grammar rule. The result changes when the last word changes."
     },
     {
      "text": "It picks the nearest noun, because words close together are related.",
@@ -70,17 +70,17 @@
      "feedback": "Every token is compared with every other token, so the work grows with the square of the length."
     },
     {
-     "text": "It doubles.",
+     "text": "It doubles, in line with the length.",
      "correct": false,
      "feedback": "Doubling would be true if each token were compared with a fixed number of others. Here every token is compared with all the others."
     },
     {
-     "text": "It stays the same.",
+     "text": "It stays the same, whatever the length.",
      "correct": false,
      "feedback": "More tokens means more comparisons."
     },
     {
-     "text": "It grows eight times.",
+     "text": "It grows about eight times.",
      "correct": false,
      "feedback": "The growth is quadratic: doubling the length multiplies the work by four."
     }

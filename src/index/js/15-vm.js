@@ -107,11 +107,11 @@ function renderProv(){
       PROV.firstUp!==null&&PROV.firstUp>1, PROV.firstUp!==null&&PROV.firstUp<1);
   set("#pgBill","₱"+Math.round(PROV.bill).toLocaleString(), PROV.bill>50000, false);
 
-  // light up what has actually been demonstrated
+  // light up what has been demonstrated
   const done={
     0: PROV.mode==="cloud" && PROV.servers.length>0,                 // on-demand self-service
     1: up>0,                                                          // broad network access
-    2: PROV.servers.length>0,                                         // resource pooling
+    2: false,                                                         // resource pooling is shown by the host diagram in the first section
     3: (PROV.peak>=3 && up<PROV.peak) || elasticityShown,             // rapid elasticity
     4: PROV.bill>0                                                    // measured service
   };

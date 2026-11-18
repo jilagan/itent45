@@ -105,7 +105,7 @@ const POSTURES=[
   d:"Each write is copied to both data centers before it is confirmed (synchronous replication). This works because the buildings are milliseconds apart.",
   survives:{srv:true,az:true,reg:false}, rpo:"nothing", rto:"under a minute", cost:"2×"},
  {id:"mreg", n:"Multi-region: standby in Tokyo",
-  d:"Writes are copied to Tokyo after they are confirmed (asynchronous replication), because Tokyo is 3,000 km away.",
+  d:"Writes are copied to Tokyo after they are confirmed (asynchronous replication), because Tokyo is thousands of kilometers from Singapore.",
   survives:{srv:true,az:true,reg:true}, rpo:"up to 30 seconds of writes", rto:"10 to 30 minutes", cost:"2.3×"}
 ];
 const REG={idx:1, posture:"maz", dead:{srv:false,az:false,reg:false}};
@@ -227,7 +227,7 @@ function renderRegion(){
     fv.innerHTML=`<b>Everything is running</b>Press one of the buttons to see what this option protects against.`;
   } else if(up && REG.dead.reg){
     fv.className="verdict warn";
-    fv.innerHTML=`<b>Failed over to Tokyo, with a cost</b>You survived losing ${why}. The standby in Tokyo was updated asynchronously across 3,000 km, so you lost ${P.rpo} and the site was unavailable for ${P.rto}. All users now connect to Tokyo, which is farther away than Singapore, so the whole site is slower until you switch back.`;
+    fv.innerHTML=`<b>Failed over to Tokyo, with a cost</b>You survived losing ${why}. The standby in Tokyo was updated asynchronously over a distance of thousands of kilometers, so you lost ${P.rpo} and the site was unavailable for ${P.rto}. All users now connect to Tokyo, which is farther away than Singapore, so the whole site is slower until you switch back.`;
   } else if(up){
     fv.className="verdict ok";
     fv.innerHTML=`<b>Still running</b>You lost ${why} and users noticed nothing, because another machine or data center kept serving requests. With two data centers in one region, the buildings are close enough that each write is saved in both before the user gets a reply.`;

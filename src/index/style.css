@@ -673,7 +673,7 @@ input[type=range]::-moz-range-thumb{
   padding:8px 11px;background:var(--panel2);border-bottom:1px solid var(--line);color:var(--faint)}
 .tln .th.a{color:var(--req)} .tln .th.b{color:var(--res)}
 .tstep{padding:7px 11px;font-family:var(--mono);font-size:max(14px,.66em);border-bottom:1px solid #1f2a36;
-  min-height:31px;display:flex;align-items:center;transition:.18s;opacity:.22}
+  min-height:31px;display:flex;align-items:center;transition:.18s;opacity:.5}
 html[data-theme="light"] .tstep{border-bottom-color:var(--line)}
 .tstep.on{opacity:1}
 .tstep.act{background:color-mix(in srgb,var(--req) 12%,transparent)}
@@ -1246,3 +1246,7 @@ table.db td.hlnull{background:color-mix(in srgb,var(--warn) 18%,transparent);col
 
 html[data-theme="light"] .msgbar{color:#FFFFFF}
 html[data-theme="light"] .ibox.m,html[data-theme="light"] .ibox.s{background:var(--panel2)}
+
+#trStep,#pyStep{opacity:1;color:var(--dim)}
+.srv.srv2{grid-template-columns:1fr 1fr}
+@media(max-width:1000px){.srv.srv2{grid-template-columns:1fr}}

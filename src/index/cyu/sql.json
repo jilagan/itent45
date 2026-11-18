@@ -5,7 +5,7 @@
    "id": "sql-1",
    "sec": null,
    "type": "predict",
-   "stem": "Before you try it: the courses table has three rows. You run `UPDATE courses SET slots = 0;` with no WHERE clause. How many rows change?",
+   "stem": "Before you try it: the courses table has three rows. You run `UPDATE courses SET slots = 0;` with no WHERE clause. How many rows does it apply to?",
    "options": [
     {
      "text": "All three rows.",
@@ -25,7 +25,7 @@
     {
      "text": "Two rows, because the third already has 0 slots.",
      "correct": false,
-     "feedback": "The command sets slots to 0 whatever the current value is, and every row is counted as changed."
+     "feedback": "The command sets slots to 0 whatever the current value is, so it applies to every row."
     }
    ],
    "try": "Select the UPDATE with no WHERE clause in the widget above, press Run, and compare the table with the result of the filtered UPDATE."

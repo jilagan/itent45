@@ -204,9 +204,7 @@ renderPay();
 const CHG_DATA=38;
 const WHYF=[
  {id:"json", n:"JSON", bytes:92,
-  body:`{<span class="s">"amount"</span>:129900,<span class="s">"currency"</span>:<span class="s">"PHP"</span>,
- <span class="s">"source"</span>:<span class="s">"tok_1a2b3c"</span>,
- <span class="s">"description"</span>:<span class="s">"ITENT 45 enrollment"</span>}`,
+  body:`{<span class="s">"amount"</span>:129900,<span class="s">"currency"</span>:<span class="s">"PHP"</span>,<span class="s">"source"</span>:<span class="s">"tok_1a2b3c"</span>,<span class="s">"description"</span>:<span class="s">"ITENT 45 enrollment"</span>}`,
   cls:"ok",
   v:`<b>92 bytes, and it already matches the data structures that programs use</b>Python code reads <code>data["amount"]</code> and Node code reads <code>data.amount</code>, and neither side has to convert it first. The section "The layers of a message" in "Protocol layers" showed about 121 bytes of headers (HTTP, TLS, TCP, IP and Ethernet) around a short message, so the headers already outweigh this 92-byte message. Making the message six times larger would be a real cost.`},
  {id:"soap", n:"SOAP / XML", bytes:558,

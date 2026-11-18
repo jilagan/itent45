@@ -16,7 +16,7 @@ Accept: application/json
 <span class="kw">Cookie</span>: sessionid=8f2a91c4...
 User-Agent: Mozilla/5.0 (Macintosh...)`,
   code:`<span class="kw">const</span> r = <span class="kw">await</span> fetch(<span class="s">"/api/courses"</span>, {
-  credentials: <span class="s">"include"</span>   <span class="c">// sends the cookie with the request</span>
+  credentials: <span class="s">"include"</span>   <span class="c">// sends the cookie</span>
 });
 <span class="kw">const</span> { courses } = <span class="kw">await</span> r.json();`,
   render:`&lt;ul&gt;

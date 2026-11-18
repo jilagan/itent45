@@ -36,22 +36,22 @@
    "stem": "Before you try it: the application is quiet at 40 rps and busy at 400 rps. Which design uses less memory at each load?",
    "options": [
     {
-     "text": "The monolith at 40 rps, and the separate services at 400 rps.",
+     "text": "The monolith at 40 rps, and the services at 400 rps.",
      "correct": true,
      "feedback": "At low load each service still needs at least one machine, so four services cost more. At higher load, sizing each part for its own need saves memory."
     },
     {
-     "text": "The separate services at both loads.",
+     "text": "The separate services at both 40 rps and 400 rps.",
      "correct": false,
      "feedback": "At 40 rps the four services need at least four machines, which uses more memory than the monolith."
     },
     {
-     "text": "The monolith at both loads.",
+     "text": "The monolith at both 40 rps and 400 rps.",
      "correct": false,
      "feedback": "At 400 rps most monolith workers are sized for the 400 MB PDF job even though few of them ever do it."
     },
     {
-     "text": "The separate services at 40 rps, and the monolith at 400 rps.",
+     "text": "The services at 40 rps, and the monolith at 400 rps.",
      "correct": false,
      "feedback": "This reverses the pattern. Splitting pays off as load grows."
     }

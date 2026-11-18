@@ -95,7 +95,7 @@
     {
      "text": "The site returns after 10 to 30 minutes, and up to 30 seconds of writes may be lost.",
      "correct": true,
-     "feedback": "Tokyo is 3,000 km away, so its copy is updated after each write is confirmed. A failure can lose the newest writes, and switching over takes time."
+     "feedback": "Tokyo is thousands of kilometers from the primary, so its copy is updated after each write is confirmed. A failure can lose the newest writes, and switching over takes time."
     },
     {
      "text": "The site never goes down, and no data is lost because Tokyo has a full copy.",
@@ -121,7 +121,7 @@
    "stem": "Every user of your capstone is in Metro Manila, and your budget is small. Which setup does this panel recommend?",
    "options": [
     {
-     "text": "A Singapore region, using multi-AZ if the provider offers it by default.",
+     "text": "A Singapore region, with multi-AZ if offered by default.",
      "correct": true,
      "feedback": "Singapore gives a comfortable time to first byte, and multi-AZ protects against a data center failure at little extra cost."
     },

@@ -60,7 +60,7 @@
    "stem": "An analyst fits a model, checks the test set score, changes some settings, and checks the test set score again. She repeats this ten times and reports the best test score. What is wrong with this?",
    "options": [
     {
-     "text": "The test set guided her changes, so information leaked into the model and the score is too optimistic.",
+     "text": "The test set guided her choices, so information leaked and the score is too optimistic.",
      "correct": true,
      "feedback": "Once the test set influences decisions, it works as extra training data. The score no longer shows how the model will treat new data."
     },
@@ -88,7 +88,7 @@
    "stem": "Two models both score 90 percent on the training set. Model X scores 88 percent on the test set. Model Y scores 61 percent. Which statement is most accurate?",
    "options": [
     {
-     "text": "Model Y has probably memorized its training examples, and Model X has found the general pattern.",
+     "text": "Model Y probably memorized its training data. Model X found the pattern.",
      "correct": true,
      "feedback": "A small gap between training and test scores suggests the model found the general shape. A large gap suggests memorizing."
     },

@@ -67,7 +67,7 @@ function drawSim(){
   cx.beginPath(); cx.moveTo(padL,midY); cx.lineTo(qX-10,midY); cx.stroke();
   cx.beginPath(); cx.moveTo(wX+70,midY); cx.lineTo(oX+30,midY); cx.stroke();
 
-  const lab=(t,x,y)=>{cx.fillStyle=CSSV("--faint");cx.font="600 12px system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";cx.textAlign="center";cx.fillText(t,x,y)};
+  const lab=(t,x,y)=>{cx.fillStyle=CSSV("--faint");cx.font="600 14px system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif";cx.textAlign="center";cx.fillText(t,x,y)};
   lab("Arriving",padL+30,20); lab("Queue",qX+18,20); lab("Workers",wX+34,20); lab("Done",oX+14,20);
 
   // in-flight arrivals
@@ -91,7 +91,7 @@ function drawSim(){
     cx.globalAlpha=1;
   });
   cx.fillStyle= queue.length>=QMAX?"var(--warn)":"var(--dim)";
-  cx.font="600 12px system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"; cx.textAlign="center";
+  cx.font="600 14px system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"; cx.textAlign="center";
   cx.fillText(queue.length + (queue.length>=QMAX?" (full)":""), qX+qw/2, H-16);
 
   // workers
@@ -107,7 +107,7 @@ function drawSim(){
     }
   });
   if(workers.length*(bh+3)>H-64){
-    cx.fillStyle=CSSV("--faint"); cx.font="12px system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"; cx.textAlign="left";
+    cx.fillStyle=CSSV("--faint"); cx.font="14px system-ui,-apple-system,'Segoe UI',Roboto,Helvetica,Arial,sans-serif"; cx.textAlign="left";
     cx.fillText(workers.length+" workers", wX, H-10);
   }
 
@@ -158,7 +158,7 @@ function updateGauges(){
     v.className="verdict bad";
     v.innerHTML=`<b>Out of memory</b>${inFlight} requests being handled or waiting × ${S.memReq} MB is over the ${S.ram} MB limit. The operating system starts stopping processes. More workers would not help, because each one needs RAM too. Reduce the memory per request or use a machine with more RAM.`;
   } else if(rho>=1){
-    v.innerHTML=`<b>Saturated, utilization ${rho.toFixed(2)}</b>Requests arrive at ${S.lam} per second, which is above the maximum of ${Math.round(cap)} per second. The queue grows without limit and latency keeps rising, while throughput stays at the maximum. The two fixes are more workers or a faster handler.`;
+    v.innerHTML=`<b>Saturated, utilization ${rho.toFixed(2)}</b>Requests arrive at ${S.lam} per second, which is above the maximum of ${Math.round(cap)} per second. The queue fills up and then new requests are rejected, p95 latency stays high, and throughput stays at the maximum. The two fixes are more workers or a faster handler.`;
   } else if(rho>.7){
     v.innerHTML=`<b>Approaching the limit, utilization ${rho.toFixed(2)}</b>The workers are still keeping up, but time spent waiting in the queue is now the main part of latency. Above about 70% utilization, latency rises much faster than the load does. For this reason a machine is not sized to run at 100%.`;
   } else {

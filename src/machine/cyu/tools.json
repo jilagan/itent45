@@ -103,7 +103,7 @@
      "feedback": "These are reversed. Multiplying gives the larger number, and that is the case without a standard."
     },
     {
-     "text": "48 in both cases.",
+     "text": "48 adapters in both cases, with or without MCP.",
      "correct": false,
      "feedback": "A shared standard lets each application and each system be written once, so the count is the sum of the two sides."
     },
@@ -131,9 +131,9 @@
      "feedback": "This is what MCP is for. Each client and each server is written once."
     },
     {
-     "text": "Having an MCP client that lets you approve, log or refuse calls.",
+     "text": "Deciding how the model and the tool server format their messages.",
      "correct": false,
-     "feedback": "Every call passes through the client, so an MCP client gives you a place to approve, log or refuse it. MCP does cover this."
+     "feedback": "MCP defines the message format, so you do not design one."
     },
     {
      "text": "Using the same server in a different editor later.",

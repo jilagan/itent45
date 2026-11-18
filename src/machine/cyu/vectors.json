@@ -122,7 +122,7 @@
    "stem": "A student asks how to avoid being charged twice for an enrollment. The best help page is titled \"Idempotency keys\". Why might a search by meaning still find it?",
    "options": [
     {
-     "text": "The question and the page have similar positions, even though they share no words.",
+     "text": "The question and the page sit at similar positions, though they share no words.",
      "correct": true,
      "feedback": "This is retrieval: finding the text whose position is nearest to the question."
     },

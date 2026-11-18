@@ -8,12 +8,12 @@
    "stem": "A course grade is 0.5 × exam + 0.3 × project + 0.2 × quiz. Which operation from this panel is that?",
    "options": [
     {
-     "text": "A dot product: multiply each pair of numbers and add the results.",
+     "text": "A dot product: multiply each pair of numbers and add them.",
      "correct": true,
      "feedback": "The scores and the weights are two vectors. Pairing them, multiplying and adding gives one number."
     },
     {
-     "text": "A slope: how fast the grade changes.",
+     "text": "A slope: how fast the grade changes with a score.",
      "correct": false,
      "feedback": "A slope would tell you how much the grade changes when one score changes. This formula gives the grade itself."
     },
@@ -23,7 +23,7 @@
      "feedback": "The weights do add to 1 here, but a distribution describes the chance of outcomes. These weights describe how much each score counts."
     },
     {
-     "text": "A loss: how wrong a prediction is.",
+     "text": "A loss: how wrong a prediction is, compared with the truth.",
      "correct": false,
      "feedback": "A loss compares a prediction with the truth. This formula involves no prediction."
     }
@@ -38,7 +38,7 @@
     {
      "text": "Zero.",
      "correct": true,
-     "feedback": "No part of b lies along a, so the two vectors share nothing."
+     "feedback": "Vector b has no part along a, so the two vectors share nothing."
     },
     {
      "text": "A large positive number.",
@@ -103,7 +103,7 @@
      "feedback": "Each number is valid alone. The whole set must also add up to 1."
     },
     {
-     "text": "The numbers are too large.",
+     "text": "The numbers are too large for probabilities.",
      "correct": false,
      "feedback": "A single word can have a large probability. The problem is the total."
     },
@@ -136,7 +136,7 @@
      "feedback": "The total stays at 100%, but the loss depends on how much of it sits on the right answer."
     },
     {
-     "text": "It becomes zero.",
+     "text": "It becomes zero, because the model is now more right.",
      "correct": false,
      "feedback": "The loss is zero only with 100% on the right answer."
     }

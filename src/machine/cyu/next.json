@@ -80,7 +80,7 @@
      "feedback": "Varying the answer needs a temperature above 0. At 0 the answer never varies."
     },
     {
-     "text": "The chatbot refuses to answer.",
+     "text": "The chatbot refuses to answer, because it is unsure.",
      "correct": false,
      "feedback": "The model has no step that decides to refuse based on its probabilities. It writes whatever the top word leads to."
     }

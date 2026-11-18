@@ -8,7 +8,7 @@
    "stem": "A provider's host machine has 256 GB of RAM, and 8 GB is kept for the hypervisor. The provider sells 40 guests with 8 GB each. What is the likely result?",
    "options": [
     {
-     "text": "The guests share 248 GB, so they slow down whenever many of them are busy at the same time.",
+     "text": "The guests share 248 GB and slow down whenever many are busy together.",
      "correct": true,
      "feedback": "The provider has promised 320 GB and has 248 GB. This works while guests are rarely all busy together. When they are, every guest slows down, which is the noisy-neighbor problem."
     },
@@ -94,7 +94,7 @@
    "stem": "Your capstone team forgets a test server over the holidays and receives a bill for it. Which NIST characteristic explains the bill?",
    "options": [
     {
-     "text": "Measured service: usage is metered and billed for as long as the resource exists.",
+     "text": "Measured service: usage is metered and billed while the resource exists.",
      "correct": true,
      "feedback": "Metering is the reason cloud costs are operational expenses, and the reason a forgotten resource keeps charging you."
     },

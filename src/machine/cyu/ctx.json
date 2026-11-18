@@ -8,7 +8,7 @@
    "stem": "You paste a large file into a long chat, and the assistant stops following the first instruction you gave. What is the most likely explanation?",
    "options": [
     {
-     "text": "The file pushed the oldest turns, including your instruction, out of the window.",
+     "text": "The file pushed your first instruction out of the window.",
      "correct": true,
      "feedback": "The model only sees what fits in the window. Text that drops out is invisible to it, with no warning."
     },
@@ -70,17 +70,17 @@
      "feedback": "The model has no memory outside the window. Anything it should know has to be in the window."
     },
     {
-     "text": "A short summary that it wrote itself.",
+     "text": "A short summary that the model wrote itself in the old chat.",
      "correct": false,
      "feedback": "The model writes no summary unless the product does so and puts it in the window."
     },
     {
-     "text": "The last few turns of the old chat.",
+     "text": "The last few turns of the old chat, kept as a reminder.",
      "correct": false,
      "feedback": "Those turns are not in the new window, so the model cannot see them."
     },
     {
-     "text": "Everything, stored inside the model.",
+     "text": "Everything, because it is stored inside the model.",
      "correct": false,
      "feedback": "A chat does not change the model. It only fills the window."
     }

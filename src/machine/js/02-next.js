@@ -13,7 +13,7 @@ const NX=[
   d:[["idempotency",.22],["index",.19],["if",.17],["assert",.14],["extra",.12],["email",.09],["alert",.07]],
   v:`<b>A flat list means the model is unsure</b>No word is above 0.25. When the top word is barely ahead, the model is closer to guessing than deciding. The sentence it writes will still read as confidently as the France one did, so you cannot tell the difference from the output.`}
 ];
-const NXS={sel:"fr", temp:.7, tally:{}, last:null};
+const NXS={sel:"fr", temp:1, tally:{}, last:null};
 function softmax(d,T){
   if(T<=0.01){ const m=Math.max(...d.map(x=>x[1])); return d.map(x=>x[1]===m?1:0); }
   const lp=d.map(x=>Math.log(Math.max(x[1],1e-6))/T);

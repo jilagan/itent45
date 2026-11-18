@@ -69,17 +69,17 @@
      "feedback": "The grade describes the pairing, so it lives in the table that has one row for each pairing."
     },
     {
-     "text": "In the students table, in a column called grade.",
+     "text": "In the students table, as a column called grade on each student.",
      "correct": false,
      "feedback": "A student has many courses and so would need many grades. One column cannot hold them."
     },
     {
-     "text": "In the courses table, in a column called grade.",
+     "text": "In the courses table, as a column called grade on each course.",
      "correct": false,
      "feedback": "A course has many students, each with a different grade. One column cannot hold them."
     },
     {
-     "text": "In both the students table and the courses table.",
+     "text": "In both the students table and the courses table, so either can be read.",
      "correct": false,
      "feedback": "Storing it in both places gives two copies that can disagree, and neither one says which pairing the grade belongs to."
     }

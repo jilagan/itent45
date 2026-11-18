@@ -1,6 +1,7 @@
 /* ================= MEMORY BUDGET ================= */
 const MEM={ram:2048, workers:8, per:90, inflight:8, db:true, preload:false};
 const OS_MB=350, NGINX_MB=20, HEADROOM=0.15;
+const OFF_HR_PER_GB=0.75, OFF_MO=720, OFF_Q=2;   // two queries a request
 
 function memModel(){
   const dbMB = MEM.db ? Math.min(1024, Math.max(256, Math.round(MEM.ram*0.2))) : 0;
@@ -79,7 +80,11 @@ const bindM=(sel,key,fmt,lbl)=>{
   $(sel).oninput=e=>{MEM[key]=+e.target.value;$(lbl).textContent=fmt(MEM[key]);renderMem();syncMemLink()};
   $(sel).dispatchEvent(new Event("input"));
 };
-bindM("#sRam2","ram",v=>v>=1024?(v/1024).toFixed(1).replace(/\.0$/,"")+" GB":v+" MB","#vRam2");
+const ramText=v=>v>=1024?(v/1024).toFixed(1).replace(/\.0$/,"")+" GB":v+" MB";
+const setRam=v=>{MEM.ram=+v;[["#sRam2","#vRam2"],["#sRam3","#vRam3"]].forEach(([a,b])=>{$(a).value=MEM.ram;$(b).textContent=ramText(MEM.ram)});renderMem();syncMemLink()};
+$("#sRam2").oninput=e=>setRam(e.target.value);
+$("#sRam3").oninput=e=>setRam(e.target.value);
+setRam(MEM.ram);
 bindM("#sW2","workers",v=>v,"#vW2");
 bindM("#sPer","per",v=>v+" MB","#vPer");
 bindM("#sInflight","inflight",v=>v+" MB","#vInflight");
@@ -88,7 +93,6 @@ $("#tgPre").onclick=()=>{MEM.preload=!MEM.preload;$("#tgPre").setAttribute("aria
 renderMem();
 
 /* ---- moving Postgres onto its own machine ---- */
-const OFF_HR_PER_GB=0.75, OFF_MO=720, OFF_Q=2;   // two queries a request
 function offModel(){
   const ram=MEM.ram, per=MEM.per+MEM.inflight;
   const dbMB=Math.min(1024, Math.max(256, Math.round(ram*0.2)));
@@ -132,7 +136,7 @@ function renderOff(){
     v.innerHTML=`<b>${gain}\u00d7 the requests for 2\u00d7 the machines, and it roughly pays for itself</b>At ${(MEM.ram/1024).toFixed(MEM.ram%1024?1:0)} GB the database was taking memory the workers needed, so giving it its own machine adds real capacity. Cost per request per second falls from ${peso2(m.onePer)} to ${peso2(m.twoPer)}. At this size the split is easiest to justify on capacity alone.`;
   } else {
     v.className="verdict warn";
-    v.innerHTML=`<b>${gain}\u00d7 the requests for 2\u00d7 the cost</b>You doubled the machines and got ${((m.gain-1)*100).toFixed(0)}% more throughput. Cost per request per second went <b class="i">up</b>, from ${peso2(m.onePer)} to ${peso2(m.twoPer)}. At this size the machine was not short of memory, so freeing the database's share added little, and every request now spends 0.8 ms on the network.<br><br>Doubling the RAM on one machine would cost less than this. Splitting can still be the right choice for the operational reasons listed under "Reasons to separate the database".`;
+    v.innerHTML=`<b>${gain}\u00d7 the requests for 2\u00d7 the cost</b>You doubled the machines and got ${((m.gain-1)*100).toFixed(0)}% more throughput. Cost per request per second went <b class="i">up</b>, from ${peso2(m.onePer)} to ${peso2(m.twoPer)}. The second machine doubled the cost, and every request now spends 0.8 ms on the network.<br><br>Doubling the RAM on one machine would cost less than this. Splitting can still be the right choice for the operational reasons listed under "Reasons to separate the database".`;
   }
 }
 

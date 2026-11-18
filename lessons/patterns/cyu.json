@@ -5,27 +5,27 @@
    "id": "patterns-1",
    "sec": "together",
    "type": "mc",
-   "stem": "An owner sees that noodles and sardines share 6 of 12 receipts. She puts them on the same shelf. What does the pattern tell her?",
+   "stem": "An online store sees that notebooks and pens share 6 of 12 orders. It shows them as often bought together. What does the pattern tell the store?",
    "options": [
     {
-     "text": "Buying noodles makes shoppers want sardines as well.",
+     "text": "Buying a notebook makes shoppers want pens as well.",
      "correct": false,
-     "feedback": "Receipts show what was bought together. They do not show that one purchase causes the other."
+     "feedback": "Orders show what was bought together. They do not show that one purchase causes the other."
     },
     {
-     "text": "Half the receipts is too few to act on at all.",
+     "text": "Half the orders is too few to act on at all.",
      "correct": false,
-     "feedback": "Half of all receipts is a large share. A pair on 3 of 12 receipts would be a weaker case."
+     "feedback": "Half of all orders is a large share. A pair on 3 of 12 orders would be a weaker case."
     },
     {
-     "text": "Shoppers often buy the two together, so a shared shelf fits.",
+     "text": "Shoppers often buy the two together, so showing them together fits.",
      "correct": true,
-     "feedback": "A pair on half the receipts is common enough to act on."
+     "feedback": "A pair on half the orders is common enough to act on."
     },
     {
      "text": "Both items sell out on the same day every week.",
      "correct": false,
-     "feedback": "The count covers pairs on one receipt. It says nothing about daily totals."
+     "feedback": "The count covers pairs in one order. It says nothing about daily totals."
     }
    ]
   },
@@ -33,7 +33,7 @@
    "id": "patterns-2",
    "sec": null,
    "type": "mc",
-   "stem": "A rider's message is SSSLSSSLSSSL. A teammate shortens it to \"SSSL, repeat 3 times.\" A rider follows the short version and goes straight twice, then turns left. What went wrong?",
+   "stem": "A walking route is sent as SSSLSSSLSSSL. A teammate shortens it to \"SSSL, repeat 3 times.\" A student follows the short version and goes straight twice, then turns left. What went wrong?",
    "options": [
     {
      "text": "The message has no repeat, so it cannot be shortened.",
@@ -51,7 +51,7 @@
      "feedback": "The short version has 5 symbols and the original has 12."
     },
     {
-     "text": "The rider dropped an S, so the block became SSL.",
+     "text": "The student dropped an S, so the block became SSL.",
      "correct": true,
      "feedback": "SSSL means straight three times, then left. Two straights and a left is a different block."
     }
@@ -61,7 +61,7 @@
    "id": "patterns-3",
    "sec": null,
    "type": "mc",
-   "stem": "Saturdays sold 60 and 58 cups in weeks 1 and 3, and 20 cups in week 2. Every other day is close to its twin in the other weeks. What should the owner do before changing next week's order?",
+   "stem": "Saturdays sold 60 and 58 cups in weeks 1 and 3, and 20 cups in week 2. Every other day is close to its twin in the other weeks. What should the café do before changing next week's order?",
    "options": [
     {
      "text": "Order only 20 cups on Saturdays from now on.",
@@ -94,7 +94,7 @@
     {
      "text": "Storing a repeated fact once and pointing to it.",
      "correct": true,
-     "feedback": "This is the same move as shortening a repeating message. The repeat is stored once."
+     "feedback": "The repeated title is stored once, and each row points to it."
     },
     {
      "text": "Sorting all the rows by course title, A to Z.",

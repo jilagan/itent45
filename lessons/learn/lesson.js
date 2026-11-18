@@ -95,13 +95,13 @@ function lnRender(){
   } else if(st===2){ v.className="verdict "+(trp===100?"warn":"");
     v.innerHTML = LN.mode==="line"
       ? `<b>${trp}% on the twelve, and two are wrong</b>No straight line can catch both of those students. Try the bent line next.`
-      : `<b>100% on the twelve. Every student is right.</b>The boundary weaves between the students and looks like the better model. Press Next to test it on the five set aside.`;
+      : `<b>100% on the twelve. Every student is right.</b>The boundary passes between the students and looks like the better model. Press Next to test it on the five set aside.`;
   } else {
     const gap=trp-tep;
     v.className="verdict "+(gap>25?"bad":"ok");
     v.innerHTML = LN.mode==="line"
       ? `<b>${trp}% training, ${tep}% test, a gap of ${gap} points</b>The two scores are close, so the line found the general shape and it holds for students it has never met.`
-      : `<b>${trp}% training, ${tep}% test, a gap of ${gap} points</b>Three of the five test students are wrong, because the bends were carved around single awkward students in the training set. The bent line memorized the twelve, and only the test set showed it.`;
+      : `<b>${trp}% training, ${tep}% test, a gap of ${gap} points</b>Three of the five test students are wrong, because the bends were fitted to single unusual students in the training set. The bent line memorized the twelve, and only the test set showed it.`;
   }
 }
 $("#lnNext").onclick=()=>{ if(LN.stage<3){LN.stage++;lnRender();} };

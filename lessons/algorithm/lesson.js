@@ -154,7 +154,7 @@ algRender();
 
 /* ================= repeat block ================= */
 const RP_STEPS = ["Take cup", "Add tea", "Add milk", "Seal", "Serve"];
-const RP_RULES = [{label: "6 times", text: "6 times", count: 6}, {label: "Until the line is empty", text: "until the line is empty", count: null}];
+const RP_RULES = [{label: "6 times", text: "6 times", count: 6}, {label: "Until the queue is empty", text: "until the queue is empty", count: null}];
 const RP_MAX = 12;
 const R = {rule: 0, n: 6, res: null};
 
@@ -182,37 +182,37 @@ function rpRender() {
   for (let i = 0; i < R.n; i++) {
     const served = res && i < res.served;
     const waiting = res && i >= res.served;
-    line += `<span class="rpc${waiting ? " wait" : ""}">${ICO("user")}<span class="tick">${served ? ICO("check") : ""}</span></span>`;
+    line += `<span class="rpc${waiting ? " wait" : ""}">${ICO("coffee")}<span class="tick">${served ? ICO("check") : ""}</span></span>`;
   }
-  $("#rpLine").innerHTML = line || `<span class="rplinenote">The line is empty.</span>`;
+  $("#rpLine").innerHTML = line || `<span class="rplinenote">The queue is empty.</span>`;
   $("#rpLine").setAttribute("role", "img");
-  $("#rpLine").setAttribute("aria-label", plural(R.n, "customer") + " in line" + (res ? ", " + res.served + " served and " + res.waiting + " waiting" : ""));
+  $("#rpLine").setAttribute("aria-label", plural(R.n, "order") + " in the queue" + (res ? ", " + res.served + " served and " + res.waiting + " waiting" : ""));
   const set = (id, v, cls) => { const g = $(id); g.querySelector(".gv").textContent = v; g.classList.toggle("good", cls === "good"); g.classList.toggle("hot", cls === "hot"); };
   set("#rpRan", res ? res.ran : "None yet");
   set("#rpWaiting", res ? res.waiting : "None yet", res ? (res.waiting ? "hot" : "good") : "");
   if (!res) {
-    rpVerdict("", `Line of ${R.n}`, R.n ? "Press Run line to serve the line with this rule." : "The line is empty. Press Add customer.");
+    rpVerdict("", `Queue of ${R.n}`, R.n ? "Press Run queue to run this rule on the queue." : "The queue is empty. Press Add order.");
     return;
   }
   const r = RP_RULES[R.rule];
   if (r.count === null) {
-    if (res.n === 0) rpVerdict("ok", "Nothing to do", "The line is empty, so the loop made no drinks.");
-    else rpVerdict("ok", `All ${res.n} customers served`, `The same ${RP_STEPS.length} steps ran ${plural(res.passes, "time")}, once for each customer.`);
+    if (res.n === 0) rpVerdict("ok", "Nothing to do", "The queue is empty, so the loop made no drinks.");
+    else rpVerdict("ok", `All ${res.n} orders served`, `The same ${RP_STEPS.length} steps ran ${plural(res.passes, "time")}, once for each order.`);
   } else if (res.waiting > 0) {
-    rpVerdict("bad", `${plural(res.waiting, "customer")} still waiting`, `The program counted to ${r.count} but the line had ${res.n}.`);
+    rpVerdict("bad", `${plural(res.waiting, "order")} still waiting`, `The program counted to ${r.count} but the queue had ${res.n}.`);
   } else if (res.empty > 0) {
-    rpVerdict("warn", `${plural(res.empty, "cup")} for nobody`, `The line had ${res.n}, but the program counted to ${r.count}. It kept making drinks after the last customer.`);
+    rpVerdict("warn", `${plural(res.empty, "cup")} for nobody`, `The queue had ${res.n}, but the program counted to ${r.count}. It kept making drinks after the last order.`);
   } else {
-    rpVerdict("ok", `All ${res.n} customers served`, `The count of ${r.count} matches this line. A line of any other length changes the result.`);
+    rpVerdict("ok", `All ${res.n} orders served`, `The count of ${r.count} matches this queue. A queue of any other length changes the result.`);
   }
 }
 $("#rpRun").onclick = () => { R.res = rpCompute(); rpRender(); };
 $("#rpAdd").onclick = () => {
-  if (R.n >= RP_MAX) { rpVerdict("warn", `Line of ${R.n}`, `The line holds up to ${RP_MAX} customers.`); return; }
+  if (R.n >= RP_MAX) { rpVerdict("warn", `Queue of ${R.n}`, `The queue holds up to ${RP_MAX} orders.`); return; }
   R.n++; R.res = null; rpRender();
 };
 $("#rpRemove").onclick = () => {
-  if (R.n <= 0) { rpVerdict("warn", "Line of 0", "There is nobody left to remove."); return; }
+  if (R.n <= 0) { rpVerdict("warn", "Queue of 0", "There is no order left to remove."); return; }
   R.n--; R.res = null; rpRender();
 };
 $("#rpReset").onclick = () => { R.rule = 0; R.n = 6; R.res = null; rpRender(); };

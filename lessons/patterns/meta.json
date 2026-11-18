@@ -4,7 +4,7 @@
  "label": "Spotting patterns",
  "desc": "Find what repeats in data and describe it once.",
  "outcomes": [
-  "Say which pair of items appears together most often in a set of receipts",
+  "Say which pair of items appears together most often in a set of orders",
   "Explain how a repeating message can be written once with a repeat count",
   "Name the record that breaks a pattern and say what to do before acting on it"
  ],

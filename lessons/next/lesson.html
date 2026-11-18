@@ -5,8 +5,8 @@
       </div>
 
       <div class="sec" data-sec="keyboard" data-title="Start with a phone keyboard">
-        <p>When you type a message, your phone keyboard suggests the next word. It has not understood your message. It has learned which words usually follow the ones you typed. A language model works on the same idea at a much larger scale.</p>
-        <div class="scene" role="group" aria-label="Your message so far is the context, the suggestions are probabilities" data-art="phone-autocomplete" data-art-desc="A person holds a phone in both hands and types a message while three blank suggestion chips float above the keyboard.">
+        <p>You type a message on your phone. Three words appear above the keyboard. You tap one, and three new words appear. The keyboard picks them from the words you have typed so far. The language model behind an AI chatbot also picks each next word from the text so far.</p>
+        <div class="scene" role="group" aria-label="The message so far and the suggested next words" data-art="keyboard-word-suggestions" data-art-desc="A student sits on a bench holding a phone in both hands and types, with three plain blank boxes above the on-screen keyboard.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Your message so far</b><span><dfn title="All the text the model has read so far">Context</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-keyboard"/></svg></div><figcaption><b>Suggested next words</b><span><dfn title="A number from 0 to 1 that says how likely something is">Probability</dfn> for each</span></figcaption></figure>
         </div>
@@ -15,7 +15,7 @@
       </div>
 
       <div class="sec" data-sec="one-word" data-title="Choose one word">
-        <p>The model gives every candidate word a probability, then picks one. Press Pick one a few times. Then set the <dfn title="A setting that controls how far down the list the model is willing to reach">temperature</dfn> to 0, press Do it ten times and compare the two tallies.</p>
+        <p>The model gives every candidate word a probability, then picks one. Press Pick one a few times. Then set the <dfn title="A setting that controls how much randomness goes into each word choice">temperature</dfn> to 0, press Do it ten times and compare the two tallies.</p>
         <div class="srv">
           <div>
             <div class="art" id="nxPrompt" style="margin-bottom:12px"></div>
@@ -40,7 +40,7 @@
         <details class="more">
           <summary>More detail</summary>
           <h4>What temperature does</h4>
-          <p>Temperature controls how far down the list the model is willing to reach. At 0 it takes the top word every time. At 1 it picks at random, in proportion to the percentages shown. Picking at random in proportion to the percentages is called sampling.</p>
+          <p>Temperature controls how much randomness goes into the choice. At 0 the model takes the top word every time. At 1 it picks at random, in proportion to the percentages shown. Picking at random in proportion to the percentages is called sampling.</p>
           <h4>The top word can still be wrong</h4>
           <p>At temperature 0 the model takes the most likely word each time. If that top word is wrong, you get the same wrong answer every time you ask, worded the same way and equally confident. That is harder to spot than an answer that changes from run to run.</p>
           <h4>Try other prompts</h4>

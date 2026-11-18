@@ -4,29 +4,29 @@
         <p>Software can be built as one application or as several small ones. This lesson compares the memory each design needs and what splitting costs.</p>
       </div>
 
-      <div class="sec" data-sec="court" data-title="Start with a carinderia and a food court">
-        <p>A small carinderia has one cook who prepares every dish. When it gets busy, you hire more identical cooks. A food court has a stall for each kind of food, each staffed for how busy that food is, and runners carry orders between the stalls.</p>
-        <div class="scene" role="group" aria-label="The carinderia is a monolith, the food court is microservices, the runner is a network call" data-art="one-cook-or-food-court" data-art-desc="A cook at a small carinderia stands beside a food court where each stall prepares one kind of food and a runner carries an order between two stalls.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-fork-knife"/></svg></div><figcaption><b>Carinderia, one cook</b><span><dfn title="One application that does everything">Monolith</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-storefront"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-storefront"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-storefront"/></svg></div><figcaption><b>Food court, one stall per food</b><span><dfn title="Several small applications, each doing one job">Microservices</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></div><figcaption><b>Runner with an order</b><span>Network call</span></figcaption></figure>
+      <div class="sec" data-sec="delivery-app" data-title="Start with a delivery app at dinner time">
+        <p>You open a food delivery app at dinner time. The restaurant list loads at once. You press Place order and the screen waits, then shows an error. You go back, and the restaurant list still works.</p>
+        <div class="scene" role="group" aria-label="One application does every job. Several services each do one job and call each other over the network." data-art="delivery-app-order-error" data-art-desc="A student sits on a bench holding a phone. The phone screen shows a plain list of bars with one block marked by a small cross.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-app-window"/></svg></div><figcaption><b>One program does every job</b><span><dfn title="One application that does everything">Monolith</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-squares-four"/></svg></div><figcaption><b>Several programs, one job each</b><span><dfn title="Several small applications, each doing one job">Microservices</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-arrows-left-right"/></svg></div><figcaption><b>One service asks another</b><span>Network call</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> If each of your 24 <dfn title="One copy of the program, handling one request at a time">workers</dfn> must be able to do every task and the heaviest task needs 400 MB, how much memory do the workers need in total?</div>
+        <div class="ask"><b>Think first.</b> If the app runs as 24 <dfn title="One copy of the program, handling one request at a time">workers</dfn> that can each do every task, and the heaviest task needs 400 MB, how much memory do the workers need in total?</div>
         <div class="instructor">The answer is 24 times 400 MB, which is 9,600 MB or about 9.4 GB. Most of that memory sits unused, because few workers ever do the heavy task. The next step shows the same effect.</div>
         <details class="more">
           <summary>More detail</summary>
           <p>The identical machines in <a data-lesson="scale">Load balancers and scaling</a> were a monolith running as several copies. Most systems should be a monolith. <a data-lesson="enlist">Case study: enlistment</a> showed one candidate for splitting: browsing the catalog and reserving a seat need opposite things from the same machine.</p>
-          <p>The runners are like the network calls between services, and each call has a cost.</p>
+          <p>Calls between services cross the network, and each call has a cost.</p>
         </details>
       </div>
 
       <div class="sec" data-sec="memory" data-title="Compare the memory">
-        <p>Building a transcript PDF needs 400 MB per worker, and the other three parts need 120 MB or less. Drag the load down to 40 <dfn title="Requests per second">rps</dfn> and see which column uses less memory. Then drag it above 800.</p>
+        <p>Building a receipt PDF needs 400 MB per worker, and the other three parts need 120 MB or less. Drag the load down to 40 <dfn title="Requests per second">rps</dfn> and see which column uses less memory. Then drag it above 800.</p>
         <div class="srv">
           <div>
             <div class="arch">
               <div class="ar mono">
-                <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-fork-knife"/></svg>
+                <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-app-window"/></svg>
                 <div class="ah">Monolith</div>
                 <h4>Every copy does everything</h4>
                 <div class="boxrow" id="monoBoxes"></div>
@@ -34,7 +34,7 @@
                 <div class="archstat"><span class="n" id="monoRam">—</span><span class="l">total RAM: <span id="monoInst">—</span></span></div>
               </div>
               <div class="ar svc">
-                <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-storefront"/></svg>
+                <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-squares-four"/></svg>
                 <div class="ah">Services</div>
                 <h4>Each part gets what it needs</h4>
                 <div class="boxrow" id="svcBoxes"></div>
@@ -64,7 +64,7 @@
           <h4>How the columns are sized</h4>
           <p>Both columns use 4 workers per machine, as in <a data-lesson="server">Server capacity</a>. The workers differ in what each one must be able to do.</p>
           <p>In the monolith, any machine can serve any request, so the load balancer can pick any of them. The application is simple to deploy, and a failure produces one stack trace, which is the error report that shows where in the code the failure happened. Every worker needs enough memory for the heaviest task it might be given.</p>
-          <p>The catalog service never loads the PDF library, so it never needs 400 MB. You can add copies of the slow part without paying for extra copies of the fast parts.</p>
+          <p>The restaurant list service never loads the PDF library, so it never needs 400 MB. You can add copies of the slow part without paying for extra copies of the fast parts.</p>
         </details>
       </div>
 
@@ -76,7 +76,7 @@
             <p>A call can be slow, time out, or fail after the work is done.</p>
           </div>
           <div class="bl">
-            <h5>Services get out of step</h5>
+            <h5>Services change at different times</h5>
             <p>Services deploy at different times, so a message change must add fields and remove none.</p>
           </div>
           <div class="bl">
@@ -92,17 +92,17 @@
           <summary>More detail</summary>
           <h4>Where you have met these costs</h4>
           <p>Calls cross the network: see <a data-lesson="journey">Round trips and latency</a>. The same delays now happen inside your own system.</p>
-          <p>Services get out of step: see <a data-lesson="clients">One API, many clients</a>. Version drift now happens between your own services, which behave like old app versions that other services still depend on.</p>
+          <p>Services get out of step: see <a data-lesson="clients">One API, many clients</a>. Version drift now happens between your own services, because they deploy at different times.</p>
           <p>Every call needs retry rules: see <a data-lesson="pay">Payments and gateways</a>. The same rules now apply to calls you wrote yourself.</p>
-          <p>One failure, several logs: in <a data-lesson="bytes">HTTP messages</a>, you followed one request at a time. Now one request leaves a trail in several services.</p>
+          <p>One failure, several logs: in <a data-lesson="bytes">HTTP messages</a>, you followed one request at a time. Now one request leaves entries in the logs of several services.</p>
         </details>
       </div>
 
       <div class="sec" data-sec="chatter" data-title="Services that call each other">
-        <p>Showing one enrollment page can need the catalog, the student record and the billing status. Across services, each of these is a network call. Drag the slider to 10 calls and read the bottom two figures.</p>
+        <p>Showing one order screen can need the restaurant list, the customer account and the payment status. Across services, each of these is a network call. Drag the slider to 10 calls and read the bottom two figures.</p>
         <div class="srv">
           <div class="card">
-            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg>
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-arrows-left-right"/></svg>
             <div class="card-t">One request that needs several services</div>
             <div class="meter" style="grid-template-columns:repeat(2,1fr)">
               <div class="g" id="chLat"><div class="gl">Handler time</div><div class="gv">—</div></div>

@@ -61,7 +61,7 @@
    "id": "prompt-3",
    "sec": "narrow",
    "type": "mc",
-   "stem": "You switch on \"Use Django, not raw SQL.\" The most likely answer is still wrong. Why?",
+   "stem": "You switch on \"Name the framework (Django).\" The most likely answer is still wrong. Why?",
    "options": [
     {
      "text": "It removes only other tools' answers, so check-then-create Django code remains.",
@@ -89,7 +89,7 @@
    "id": "prompt-4",
    "sec": null,
    "type": "mc",
-   "stem": "Your {{project}} has a checkout page. Two customers can buy the last item at the same time. Which sentence added to your prompt most improves the chance of correct code?",
+   "stem": "Your {{project}} has a checkout page. Two users can buy the last item at the same time. Which sentence added to your prompt most improves the chance of correct code?",
    "options": [
     {
      "text": "Two requests can arrive at once, and only one may buy the last item.",

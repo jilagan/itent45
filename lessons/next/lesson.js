@@ -12,7 +12,7 @@ const NX=[
   v:`<b>Two plausible words that behave differently</b>Both <code>get</code> and <code>filter</code> are plausible, but <code>get</code> raises an error when there is no match and <code>filter</code> returns an empty result. The model picks whichever word usually comes next and does not know what your program needs.`},
  {id:"risky", pre:"To stop the double enrollment, add an",
   d:[["idempotency",.22],["index",.19],["if",.17],["assert",.14],["extra",.12],["email",.09],["alert",.07]],
-  v:`<b>A flat list means the model is unsure</b>No word is above 0.25, so the model is closer to guessing than deciding. The sentence it writes will still read as confidently as the France one did.`}
+  v:`<b>A flat list means no word is clearly best</b>No word is above 0.25, so the choice is close to a guess. The sentence it writes will still read as fluently as the France one did.`}
 ];
 const NXS={sel:"fr", temp:1, tally:{}, last:null};
 function softmax(d,T){

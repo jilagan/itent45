@@ -10,9 +10,9 @@ const WV={
 };
 const SUMS=[
  {id:"queen", a:"king", b:"man", c:"woman",
-  v:`<b>Man to king is the same step as woman to queen</b>A relationship between words shows up as a direction on the map. Nobody told the model what royalty is, and the pattern comes from which words appear near which across a very large amount of text.`},
+  v:`<b>Man to king is the same step as woman to queen</b>A relationship between words shows up as a direction on the plot. Nobody told the model what royalty is, and the pattern comes from which words appear near which across a very large amount of text.`},
  {id:"tokyo", a:"Paris", b:"France", c:"Japan",
-  v:`<b>France to Paris is the same step as Japan to Tokyo</b>That step stands for <em>capital of</em>, and nobody named it. Italy and Rome on the map follow the same step.`},
+  v:`<b>France to Paris is the same step as Japan to Tokyo</b>That step stands for <em>capital of</em>, and nobody named it. Italy and Rome on the plot follow the same step.`},
  {id:"bias", a:"programmer", b:"man", c:"woman", lbl:"programmer &minus; man + woman (disputed)",
   v:`<b>This example is disputed</b>A 2016 paper reported this analogy in a real model, and these positions were set by hand to reproduce it. Later work showed that the method of searching for the answer produces part of the result.`}
 ];

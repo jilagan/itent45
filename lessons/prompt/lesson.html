@@ -4,14 +4,14 @@
         <p>A <dfn title="The text you give a language model to continue">prompt</dfn> is the text you give a language model. Each fact you add rules out some of the answers it might give.</p>
       </div>
 
-      <div class="sec" data-sec="tricycle" data-title="Start with a tricycle ride">
-        <p>Tell a tricycle driver "somewhere near the market" and you could be dropped at any of a dozen places. Say "the Loyola Heights gate on Katipunan" and only one place fits. A prompt works the same way. Every fact you add rules out some of the answers the model might give.</p>
-        <div class="scene" role="group" aria-label="Your directions are the prompt, the driver is the model, where you are dropped off is the answer" data-art="tricycle-directions" data-art-desc="A passenger points at one gate along a road lined with several stops while a tricycle driver listens.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Your directions</b><span>Prompt</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-taxi"/></svg></div><figcaption><b>Driver</b><span>Model</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bowl-food"/></svg></div><figcaption><b>Where you are dropped off</b><span>Answer</span></figcaption></figure>
+      <div class="sec" data-sec="vague-request" data-title="Start with a vague request">
+        <p>You type "Write a function that enrolls a student in a course" into an AI chatbot. Code comes back in seconds. It is written for a different Python toolkit than your project uses. You add one sentence naming your toolkit and ask again, and the new answer is different.</p>
+        <div class="scene" role="group" aria-label="Your request goes to the chatbot, which returns code" data-art="chatbot-vague-request" data-art-desc="A student at a laptop in a plain room looks at a chat window on the screen, drawn as a short message and a longer reply made of plain bars.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-keyboard"/></svg></div><figcaption><b>Your request</b><span><dfn title="The text you give a language model to continue">Prompt</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>The AI chatbot</b><span>Model</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-code"/></svg></div><figcaption><b>The code it returns</b><span>Answer</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> A model is asked for "a function to enroll a student in a course." Which kind of answer will it give most often, and why?</div>
+        <div class="ask"><b>Think first.</b> The model did not ask which toolkit you meant. For this request, which kind of answer will it give most often, and why?</div>
         <div class="instructor">Let students commit to a guess before they open the widget. Most guess the careful-looking answer that checks the seat count first. Ask them what happens when two students click at the same moment.</div>
       </div>
 
@@ -42,7 +42,7 @@
           <p>The code uses Django's ORM, the part of Django that reads and writes database rows as Python objects, so nobody types SQL. Each bar is code that has been used in real systems.</p>
           <div class="art" id="prCode"></div>
           <h4>The model does not ask what you meant</h4>
-          <p>A driver can ask "which market?" and the model never does. It picks one answer from the range that is left, as described in <a data-lesson="next">Predicting the next word</a>.</p>
+          <p>The model does not ask which toolkit you meant. It picks one answer from the range that is left, as described in <a data-lesson="next">Predicting the next word</a>.</p>
         </details>
       </div>
 

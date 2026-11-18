@@ -5,25 +5,25 @@
    "id": "backprop-1",
    "sec": null,
    "type": "mc",
-   "stem": "A customer sends a dish back because it is too salty. Which way of deciding who should change their work matches backpropagation?",
+   "stem": "A network names the wrong person in a photo. Which way of deciding how to change its weights matches backpropagation?",
    "options": [
     {
-     "text": "Start at the complaint and work backward, asking how much each person's work affected the result.",
+     "text": "Start at the loss and work backward through the layers, finding how much each weight affected the result.",
      "correct": true,
-     "feedback": "Backpropagation passes blame backward from the loss, layer by layer, using what each step handed to the next."
+     "feedback": "Backpropagation passes the error backward from the loss, layer by layer, using what each step handed to the next."
     },
     {
-     "text": "Ask each person to change their work at random and see whether the complaint goes away.",
+     "text": "Change each weight at random and see whether the loss goes down.",
      "correct": false,
      "feedback": "That is closer to nudging each weight and running the whole network again, which is the costly approach backpropagation avoids."
     },
     {
-     "text": "Blame only the last person who handled the dish, because that person served it.",
+     "text": "Change only the weights in the last layer, because that layer produced the answer.",
      "correct": false,
-     "feedback": "That ignores the earlier steps, and the earlier weights are exactly the ones that need a slope."
+     "feedback": "That ignores the earlier layers, and the earlier weights are exactly the ones that need a slope."
     },
     {
-     "text": "Ask everyone to change their work by the same amount and see what happens.",
+     "text": "Change every weight by the same amount and see what happens.",
      "correct": false,
      "feedback": "Each weight affects the result by a different amount, so each needs its own slope."
     }
@@ -36,9 +36,9 @@
    "stem": "A network has two inputs, two hidden units and one output. Two of its six weights connect to the output. How do the other four get their slopes?",
    "options": [
     {
-     "text": "From the blame passed back by the units closer to the output.",
+     "text": "From the error passed back by the units closer to the output.",
      "correct": true,
-     "feedback": "The blame at the output is passed back through the hidden units, so each earlier weight gets its slope from numbers already worked out."
+     "feedback": "The error at the output is passed back through the hidden units, so each earlier weight gets its slope from numbers already worked out."
     },
     {
      "text": "By nudging each one and running the whole network again.",

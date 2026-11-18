@@ -4,14 +4,14 @@
         <p>A web page can be built on the server or in the browser. The choice changes how fast the first screen appears and how much data travels.</p>
       </div>
 
-      <div class="sec" data-sec="menu" data-title="Start with a menu">
-        <p>A restaurant can print a fresh menu for every customer, or hang one menu board and change only the prices that change. A web server faces the same choice. It can build every page itself, or send one page once and let the browser update it.</p>
-        <div class="scene" role="group" aria-label="The printed menu is the server-rendered page, the menu board is the single-page app" data-art="menu-print-or-board" data-art-desc="A waiter hands a customer a printed menu on one side, while on the other a staff member changes one item on a wall menu board with a marker.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>Fresh printed menu</b><span>Server-rendered page</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg></div><figcaption><b>One menu board</b><span>Single-page app</span></figcaption></figure>
+      <div class="sec" data-sec="menu-page" data-title="Start with a menu page">
+        <p>You open a food delivery app in your browser and click through categories and menu items. On some sites the whole page goes blank and redraws after every click. On others only the list changes, and the header and the search box stay where they are.</p>
+        <div class="scene" role="group" aria-label="A browser sends a request to the app's server and receives either a whole page or only data" data-art="food-menu-page-load" data-art-desc="A student sitting at a desk looks at a laptop whose screen shows a header bar and a list of plain boxes, with one hand on the trackpad.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg></div><figcaption><b>Your browser</b><span>Shows the page</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>The app's server</b><span>Sends what the page needs</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> When you click a link on a site you use, does the whole page reload or only part of it? Watch the browser tab for a loading spinner.</div>
-        <div class="instructor">On some sites the whole page reloads and on others it does not. Ask students to name one site of each kind and say how they could tell.</div>
+        <div class="ask"><b>Think first.</b> Both kinds of site show the same menu. What must be different about what the server sends to your browser for each click?</div>
+        <div class="instructor">On some sites the whole page reloads and on others it does not. Ask students to name one site of each kind and say how they could tell, for example by watching the browser tab for a loading spinner.</div>
       </div>
 
       <div class="sec" data-sec="page-models" data-title="Two ways to build a page">
@@ -32,7 +32,7 @@
         <details class="more">
           <summary>More detail</summary>
           <h4>Server-rendered page, the older model</h4>
-          <p>The server fills in a template (a page layout with blanks), produces finished HTML (the language that describes a web page), and sends a complete document. The browser discards the old page and draws the new one. The enlistment system works this way.</p>
+          <p>The server fills in a template (a page layout with blanks), produces finished HTML (the language that describes a web page), and sends a complete document. The browser discards the old page and draws the new one. Many older sites work this way.</p>
           <div class="seq">
             <span>click &rarr; request &rarr; server renders &rarr; full HTML &rarr; repaint</span>
             <span>first screen: fast, the HTML arrives ready to draw</span>
@@ -49,7 +49,7 @@
       </div>
 
       <div class="sec" data-sec="formats" data-title="Compare data formats">
-        <p>The same two courses can be sent as <dfn title="A plain-text format for data, written as named values in braces">JSON</dfn>, <dfn title="A plain-text format for data that wraps every value in named tags">XML</dfn> or HTML. Select each format and read its size in <dfn title="A unit of data size. About 1,000 bytes make one kilobyte (KB)">bytes</dfn>. The blue part of each bar is the data itself and the gray part is packaging.</p>
+        <p>The same two menu items can be sent as <dfn title="A plain-text format for data, written as named values in braces">JSON</dfn>, <dfn title="A plain-text format for data that wraps every value in named tags">XML</dfn> or HTML. Select each format and read its size in <dfn title="A unit of data size. About 1,000 bytes make one kilobyte (KB)">bytes</dfn>. The blue part of each bar is the data itself and the gray part is packaging.</p>
         <div class="fmtpick" id="fmtPick"></div>
         <div class="sizebars" id="fmtBars"></div>
         <div class="verdict" id="fmtVerdict"></div>
@@ -57,7 +57,7 @@
         <details class="more">
           <summary>More detail</summary>
           <h4>The text of each format</h4>
-          <p>The information is the same each time: eight values, 53 characters of data. Only the packaging differs. Each size counts the text with its line breaks and indentation removed. HTML is the format for web pages, and XML wraps every value in named tags.</p>
+          <p>The information is the same each time: six values, 32 characters of data. Only the packaging differs. Each size counts the text with its line breaks and indentation removed. HTML is the format for web pages, and XML wraps every value in named tags.</p>
           <div class="art" id="fmtBody"></div>
         </details>
       </div>

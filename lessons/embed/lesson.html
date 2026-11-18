@@ -1,18 +1,18 @@
     <section class="panel" id="p-embed">
       <div class="head">
         <h2>Word embeddings: how words get positions</h2>
-        <p>A word's <dfn title="The position a word gets on a map, written as a list of numbers">embedding</dfn> is its position on a map, found by reading sentences. Words that appear together end up close together.</p>
+        <p>A word's <dfn title="The position a word gets on a plot, written as a list of numbers">embedding</dfn> is a list of numbers that gives it a position on a plot. The positions come from reading sentences, and words that appear together end up close together.</p>
       </div>
 
-      <div class="sec" data-sec="party" data-title="Start with a party">
-        <p>At a barkada party, nobody hands out seat numbers, yet people who keep talking to each other end up sitting together. Words find their positions in a similar way. Words that appear in the same sentences end up close together on a map.</p>
-        <div class="scene" role="group" aria-label="Guests are words, conversations are sentences, seats are positions" data-art="barkada-party-seating" data-art-desc="Two friends chat closely at one table while a third friend sits alone at a table across the room.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg></div><figcaption><b>Guests</b><span>Words</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Conversations</b><span>Sentences in the <dfn title="The set of sentences a program learns from">corpus</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-table"/></svg></div><figcaption><b>Where each guest sits</b><span>Position</span></figcaption></figure>
+      <div class="sec" data-sec="search" data-title="Start with a document search">
+        <p>You upload a reading to an AI chatbot and ask, "Where does it talk about cutting costs?" The chatbot points to a paragraph about reducing expenses. That paragraph contains neither cutting nor costs.</p>
+        <div class="scene" role="group" aria-label="The parts of the search: your question, your uploaded reading, and a position for each word" data-art="document-search-question" data-art-desc="A student sits at a desk with a laptop. The screen shows a search bar and a list of plain gray bars, with one bar highlighted in blue.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-magnifying-glass"/></svg></div><figcaption><b>Your question</b><span>Typed in the chat</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-file-text"/></svg></div><figcaption><b>Your uploaded reading</b><span>The text it searches</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-numbers"/></svg></div><figcaption><b>A position for each word</b><span>Its embedding</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> Suppose words in the same sentence move closer together. Where would you expect <em>king</em> and <em>queen</em> to end up, and where <em>king</em> and <em>hospital</em>?</div>
-        <div class="instructor">Collect guesses before anyone presses Run the training. Most students expect king and queen to be close and king and hospital to be far apart.</div>
+        <div class="ask"><b>Think first.</b> What would the program need to know about <em>cutting</em> and <em>reducing</em>, and where could it learn that?</div>
+        <div class="instructor">Collect guesses before anyone presses Run the training. Most students say a dictionary or a person who labeled the words. The next steps show that sentences alone are enough.</div>
       </div>
 
       <div class="sec" data-sec="train" data-title="Run the training">
@@ -36,12 +36,12 @@
             <div class="g" id="emSep"><div class="gl">Groups apart by</div><div class="gv">&mdash;</div></div>
           </div>
           <h4>Each step is small and fixed</h4>
-          <p>Each sentence moves the words by the same small step, so no word chooses where it goes. The map has two directions, called dimensions, so each embedding is two numbers. Real models use hundreds of numbers per word.</p>
+          <p>Each sentence moves the words by the same small step, so no word chooses where it goes. The plot has two directions, called dimensions, so each embedding is two numbers. Real models use hundreds of numbers per word.</p>
         </details>
       </div>
 
       <div class="sec" data-sec="corpus" data-title="Read the corpus">
-        <p>Look at the list. These fourteen sentences were the only input. It holds no dictionary and no labels, and nobody marked which words are about royalty. The colors on the map were added afterward to show the groups.</p>
+        <p>Look at the list. These fourteen sentences, called the <dfn title="The set of sentences a program learns from">corpus</dfn>, were the only input. There is no dictionary and there are no labels. Nobody marked which words are about royalty. The colors on the plot were added afterward to show the groups.</p>
         <div class="card">
           <div class="card-t">The whole corpus</div>
           <div class="art" id="emCorpus"></div>

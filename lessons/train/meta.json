@@ -4,7 +4,7 @@
  "label": "How training works",
  "desc": "How a model improves by reducing its errors step by step.",
  "outcomes": [
-  "Describe training as repeated nudges downhill",
+  "Describe training as repeated nudges that lower the loss",
   "Predict what a learning rate too high or too low does",
   "Say that nobody writes the rule"
  ],

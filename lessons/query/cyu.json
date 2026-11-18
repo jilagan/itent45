@@ -5,12 +5,12 @@
    "id": "query-1",
    "sec": "count",
    "type": "mc",
-   "stem": "A page lists 50 enrollments and looks up each course title separately. The courses were not loaded in advance. How many queries does the database receive?",
+   "stem": "A page lists 50 enlistments and looks up each course title separately. The courses were not loaded in advance. How many queries does the database receive?",
    "options": [
     {
-     "text": "51: one for the enrollments and one for each row.",
+     "text": "51: one for the enlistments and one for each row.",
      "correct": true,
-     "feedback": "One query fetches the enrollments and one more fetches each row's title. This is the N+1 pattern: one query for the list, then N more."
+     "feedback": "One query fetches the enlistments and one more fetches each row's title. This is the N+1 pattern: one query for the list, then N more."
     },
     {
      "text": "1, because the page is a single request to the server.",
@@ -18,14 +18,14 @@
      "feedback": "One page request can trigger many queries. Each course title that was not loaded needs its own query."
     },
     {
-     "text": "2: one for enrollments and one for courses.",
+     "text": "2: one for enlistments and one for courses.",
      "correct": false,
      "feedback": "That would happen with a join or a single extra query for all courses. The template here asks for each title separately."
     },
     {
-     "text": "50, one for each of the enrollment rows.",
+     "text": "50, one for each of the enlistment rows.",
      "correct": false,
-     "feedback": "The 50 title queries are right, but the view also ran one query to fetch the enrollments first."
+     "feedback": "The 50 title queries are right, but the view also ran one query to fetch the enlistments first."
     }
    ]
   },
@@ -33,7 +33,7 @@
    "id": "query-2",
    "sec": null,
    "type": "mc",
-   "stem": "A schedule page with 3 enrollments is fast in testing. In production it lists 200 enrollments and is slow. Which explanation fits?",
+   "stem": "A schedule page with 3 enlistments is fast in testing. In production it lists 200 enlistments and is slow. Which explanation fits?",
    "options": [
     {
      "text": "Queries grow with the rows: 4 in testing and 201 in production.",
@@ -64,7 +64,7 @@
    "stem": "Which change fixes the N+1 problem on the schedule page?",
    "options": [
     {
-     "text": "Fetch each enrollment with its course in one query (a join).",
+     "text": "Fetch each enlistment with its course in one query (a join).",
      "correct": true,
      "feedback": "One query returns everything the template needs, so the loop makes no extra queries."
     },

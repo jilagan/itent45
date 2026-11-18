@@ -5,12 +5,12 @@
    "id": "rest-1",
    "sec": "try-requests",
    "type": "predict",
-   "stem": "A shopper presses Submit twice on a form that sends `POST /enrollments`. What will the table hold after two identical POST requests?",
+   "stem": "A user taps Place order twice on a screen that sends `POST /orders`. What will the table hold after two identical POST requests?",
    "options": [
     {
-     "text": "Two new rows, because every POST creates a new item",
+     "text": "Two new rows, because every POST creates a new order",
      "correct": true,
-     "feedback": "POST is not idempotent. The server treats each POST as a new request and creates a new item every time, even when the body is identical."
+     "feedback": "POST is not idempotent. The server treats each POST as a new request and creates a new order every time, even when the body is identical."
     },
     {
      "text": "One row, because the second request is identical to the first",
@@ -29,25 +29,25 @@
    "id": "rest-2",
    "sec": null,
    "type": "mc",
-   "stem": "An edit form sends `PATCH /courses/MGT45` with the body `{\"units\": 6}`. Because of network problems the same request reaches the server three times. What is the course's `units` value afterward?",
+   "stem": "An edit screen sends `PATCH /orders/1041` with the body `{\"qty\": 2}`. Because of network problems the same request reaches the server three times. What is the order's `qty` value afterward?",
    "options": [
     {
-     "text": "6, because every request writes the same value and leaves other fields alone",
+     "text": "2, because every request writes the same value and leaves other fields alone",
      "correct": true,
      "feedback": "PATCH sets the fields in the body to the given values. Repeating it writes the same value again, so PATCH here is idempotent."
     },
     {
-     "text": "18, because each of the three requests added 6 units to the course",
+     "text": "6, because each of the three requests added 2 to the quantity",
      "correct": false,
-     "feedback": "PATCH with a plain value replaces the field. Only a request written as an increment, such as 'add 6 units', would add up, and that kind of request would not be idempotent."
+     "feedback": "PATCH with a plain value replaces the field. Only a request written as an increment, such as 'add 2 to qty', would add up, and that kind of request would not be idempotent."
     },
     {
-     "text": "6, but the second and third requests also create two extra courses",
+     "text": "2, but the second and third requests also create two extra orders",
      "correct": false,
-     "feedback": "Creating new items is what POST does. PATCH changes an existing item and does not create anything."
+     "feedback": "Creating new items is what POST does. PATCH changes an existing order and does not create anything."
     },
     {
-     "text": "The title and slots are cleared, because the body left them out of the request",
+     "text": "The item and tip are cleared, because the body left them out of the request",
      "correct": false,
      "feedback": "That describes PUT. PATCH leaves fields that are not in the body untouched."
     }

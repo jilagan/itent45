@@ -10,7 +10,7 @@
     {
      "text": "The guests share 248 GB and slow down whenever many are busy together.",
      "correct": true,
-     "feedback": "The provider has promised 320 GB and has 248 GB. This works while guests are rarely all busy together. When they are, every guest slows down, which is the noisy-neighbor problem."
+     "feedback": "The provider has promised 320 GB and has 248 GB. This works while guests are rarely all busy together. When they are, every guest slows down because they compete for the same memory."
     },
     {
      "text": "Each guest crashes as soon as it starts, because there is not enough memory for all of them.",
@@ -43,12 +43,12 @@
     {
      "text": "It stops growing for all three servers, because the setup fee was already paid.",
      "correct": false,
-     "feedback": "There is no setup fee in the cloud setup. The meter runs for as long as a server exists."
+     "feedback": "There is no setup fee in the cloud setup. Charges accrue for as long as a server exists."
     },
     {
      "text": "It keeps growing for all three servers until the end of the month.",
      "correct": false,
-     "feedback": "That describes a fixed purchase or contract. In this setup the meter stops when you delete a server."
+     "feedback": "That describes a fixed purchase or contract. In this setup charges stop when you delete a server."
     },
     {
      "text": "It drops back to zero, because you released most of your capacity.",
@@ -71,7 +71,7 @@
     {
      "text": "Resource pooling: the provider shares hardware between customers.",
      "correct": false,
-     "feedback": "Pooling explains why prices are low and why neighbors can slow you down. It does not explain a bill for an idle server."
+     "feedback": "Pooling explains why prices are low and why other customers on the same host can slow you down. It does not explain a bill for an idle server."
     },
     {
      "text": "On-demand self-service: you create servers yourself.",
@@ -99,7 +99,7 @@
     {
      "text": "The provider on both, because the servers are in the provider's data center.",
      "correct": false,
-     "feedback": "The building and hardware belong to the provider on both. On IaaS the operating system is yours to maintain."
+     "feedback": "The data center and hardware belong to the provider on both. On IaaS the operating system is yours to maintain."
     },
     {
      "text": "Your team on both, because the app is yours.",

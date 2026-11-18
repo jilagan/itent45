@@ -1,7 +1,7 @@
 /* Lesson rnn. Widget code for the markup in lesson.html. */
 /* ================= 06 RECURRENT ================= */
 /* Same two sentences as the attention panel, so the comparison is exact.
-   The last stage is the point: the words are discarded and only the note remains. */
+   The last stage is the point: the words are discarded and only the hidden state remains. */
 const RNS=[
  {id:"tired", adj:"tired", ref:"animal", wrong:"street",
   w:["The","animal","didn't","cross","the","street","because","it","was","too","tired"]},
@@ -32,9 +32,9 @@ function rnRender(){
     }).join(" ")+' <span style="opacity:.25">.</span>';
   }
   $("#rnCaption").innerHTML = asking ? "" : at===0
-    ? "Nothing read yet. The note is blank."
+    ? "Nothing read yet. The hidden state is empty."
     : at===N ? "Whole sentence read. Now press the button once more."
-             : `Read ${at} of ${N} words. The word read most recently is the strongest item on the note.`;
+             : `Read ${at} of ${N} words. The word read most recently is the strongest item in the hidden state.`;
 
   const share={};
   for(let k=0;k<at;k++) share[W[k]+"_"+k]=Math.pow(RNDECAY, at-1-k);
@@ -54,7 +54,7 @@ function rnRender(){
     return `<div class="pr"><span class="tok" style="color:${key?"var(--req)":"inherit"};opacity:${v<0.2&&!key?.5:1}">${w}</span>
       <div class="lane"><div class="bar" style="width:${(v/mx*100).toFixed(0)}%;background:${v<0.2?"var(--line3)":"var(--res)"}"></div></div>
       <span class="pc">${(v*100).toFixed(0)}%</span></div>`;
-  }).join("") : `<p style="margin:0;color:var(--faint)">The note is empty.</p>`;
+  }).join("") : `<p style="margin:0;color:var(--faint)">The hidden state is empty.</p>`;
 
   const idxOf=w=>W.indexOf(w);
   const surv=w=>at>idxOf(w) ? Math.pow(RNDECAY, at-1-idxOf(w))*100 : 0;
@@ -69,7 +69,7 @@ function rnRender(){
         <span class="pc">${v.toFixed(0)}%</span></div>`).join("");
     const picked=cand[0][0], right=picked===q.ref;
     $("#rnAnswer").innerHTML=
-      `<span class="c">The model can only compare how strong each word is on the note, so it takes the stronger one.</span>\n`+
+      `<span class="c">The model can only compare how strong each word is in the hidden state, so it takes the stronger one.</span>\n`+
       `it  &rarr;  <span class="kw">${picked}</span>\n`+
       `<span class="c">The sentence meant ${q.ref}.</span>\n`+
       `<span style="color:${right?"var(--res)":"var(--warn)"};font-weight:600">${right?"correct" : "wrong"}</span>`;
@@ -80,17 +80,17 @@ function rnRender(){
 
   const v=$("#rnVerdict");
   if(at===0 && !asking){ v.className="verdict";
-    v.innerHTML=`<b>The note is empty</b>The model reads one word at a time and rewrites one fixed-size note after each word.`; return; }
+    v.innerHTML=`<b>The hidden state is empty</b>The model reads one word at a time and rewrites one fixed-size hidden state after each word.`; return; }
   if(!asking && at<N){ v.className="verdict";
-    v.innerHTML=`<b>${at} of ${N} words read</b>Each new word goes on the note at full strength, and every word already there gets weaker.`; return; }
+    v.innerHTML=`<b>${at} of ${N} words read</b>Each new word goes into the hidden state at full strength, and every word already there gets weaker.`; return; }
   if(!asking){ v.className="verdict warn";
-    v.innerHTML=`<b>The whole sentence has been read</b>Only the note remains. Press the button once more to ask the question.`; return; }
+    v.innerHTML=`<b>The whole sentence has been read</b>Only the hidden state remains. Press the button once more to ask the question.`; return; }
   const picked = surv("street")>surv("animal") ? "street" : "animal";
   const right = picked===q.ref;
   v.className="verdict "+(right?"warn":"bad");
   v.innerHTML = right
-    ? `<b>It answered <code>street</code>, and street is correct this time</b>That is luck: street was read last, so ${surv("street").toFixed(0)}% of it is left on the note against ${surv("animal").toFixed(0)}% for animal. Switch to the other sentence and the answer stays street, which is then wrong.`
-    : `<b>It answered <code>street</code>, but the sentence meant <code>animal</code></b>Animal was read earlier, so ${surv("animal").toFixed(0)}% of it is left on the note against ${surv("street").toFixed(0)}% for street. The model cannot reread the sentence, so it takes the stronger word, and switching to the other sentence leaves the answer unchanged.`
+    ? `<b>It answered <code>street</code>, and street is correct this time</b>That is luck: street was read last, so ${surv("street").toFixed(0)}% of it is left in the hidden state against ${surv("animal").toFixed(0)}% for animal. Switch to the other sentence and the answer stays street, which is then wrong.`
+    : `<b>It answered <code>street</code>, but the sentence meant <code>animal</code></b>Animal was read earlier, so ${surv("animal").toFixed(0)}% of it is left in the hidden state against ${surv("street").toFixed(0)}% for street. The model cannot reread the sentence, so it takes the stronger word, and switching to the other sentence leaves the answer unchanged.`
 }
 $("#rnStep").onclick=()=>{ const q=RNS.find(x=>x.id===RN.sel); if(RN.at<=q.w.length){RN.at++;rnRender();} };
 $("#rnAll").onclick=()=>{ RN.at=RNS.find(x=>x.id===RN.sel).w.length+1; rnRender(); };

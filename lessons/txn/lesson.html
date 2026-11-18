@@ -4,18 +4,19 @@
         <p>A <dfn title="A group of statements that the database treats as one unit">transaction</dfn> groups database statements into one unit. Two users changing the same row at the same moment can still leave wrong data.</p>
       </div>
 
-      <div class="sec" data-sec="last-seat" data-title="Start with a last seat">
-        <p>Picture the last seat in a class and two cashiers selling it at the same moment. Each cashier looks at the seat map, sees one free seat and sells it. Both customers are told the seat is theirs. A database has the same problem when two users change one row.</p>
-        <div class="scene" role="group" aria-label="The cashiers are sessions and the seat map is a row in the courses table" data-art="last-seat-two-cashiers" data-art-desc="Two cashiers at side-by-side counters both point at the same seat map showing one free seat, and each hands a ticket to a different customer.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Two cashiers</b><span>Two <dfn title="One user's connection to the database">sessions</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Seat map</b><span>Course row</span></figcaption></figure>
+      <div class="sec" data-sec="enlistment-day" data-title="Start with enlistment day">
+        <p>On enlistment day you open the university's online enlistment system. Section A of MGT 45 shows 1 slot left, and you press Enlist. On another laptop, a second student presses Enlist for the same section at the same moment.</p>
+        <div class="scene" role="group" aria-label="The parts involved: two students' laptops, the enlistment system and its database" data-art="last-slot-two-laptops" data-art-desc="Two students sit at separate desks and each press a button on a laptop, and both laptop screens show the same plain section card with a single empty box.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-laptop"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-laptop"/></svg></div><figcaption><b>Two laptops</b><span>Two <dfn title="One user's connection to the database">sessions</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>Enlistment system</b><span>The server</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-database"/></svg></div><figcaption><b>Database</b><span>Section row, 1 slot left</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> Two students both see one free seat and both enroll. What would the database have to do to stop the second enrollment? Write down one idea.</div>
-        <div class="instructor">Typical answers are "check again", "lock it" and "do it in one step". The next step tests each of them. Collect a few answers before anyone presses Run it. Ask what the second student should see when the seat is gone.</div>
+        <div class="ask"><b>Think first.</b> One slot is left and two students press Enlist together. What must the database do so that only one of them is enlisted? Write down one idea.</div>
+        <div class="instructor">Typical answers are "check again", "lock it" and "do it in one step". The next step tests each of them. Collect a few answers before anyone presses Play. Ask what the second student should see when the slot is gone.</div>
       </div>
 
-      <div class="sec" data-sec="attempts" data-title="Try four ways to sell the seat">
-        <p>Each tab is a different way to sell the last seat. Press Play on each tab, from left to right, and watch the Seats left column.</p>
+      <div class="sec" data-sec="attempts" data-title="Try four ways to take the last slot">
+        <p>Each tab is a different way to enlist a student in the last slot. Press Play on each tab, from left to right, and watch the Slots left column.</p>
         <div class="ctab" id="txnTab"></div>
         <div class="srv">
           <div>
@@ -35,7 +36,7 @@
         <details class="more">
           <summary>More detail</summary>
           <h4>The statements behind each tab</h4>
-          <p>Here <code>slots</code> is the number of free seats. <code>BEGIN</code> starts a transaction and <code>COMMIT</code> saves it.</p>
+          <p>Here <code>slots</code> is the number of free slots in the section. <code>BEGIN</code> starts a transaction and <code>COMMIT</code> saves it.</p>
           <div class="art">-- No transaction: each session reads, decides, then writes
 SELECT slots FROM courses WHERE code = 'MGT 45';
 UPDATE courses SET slots = 0 WHERE code = 'MGT 45';
@@ -52,18 +53,18 @@ UPDATE ...;  INSERT ...;  COMMIT;
 UPDATE courses SET slots = slots - 1
  WHERE code = 'MGT 45' AND slots > 0;</div>
           <h4>Lost update</h4>
-          <p>In the first tab, session B wrote a value based on a seat count that was already out of date. This bug is called a <b>lost update</b>, and it is common in student projects.</p>
+          <p>In the first tab, session B wrote a value based on a slot count that was already out of date. This bug is called a <b>lost update</b>, and it is common in student projects.</p>
           <h4>What the fixes cost</h4>
-          <p>The lock makes the second session wait, so on enlistment morning a line of nine thousand users would wait on one row. The single statement needs no waiting, and the row count it reports tells you the result: 1 means you got the seat, 0 means somebody else did. It works whenever the decision can be written as a condition.</p>
-          <p>Enlistment morning is covered in <a data-lesson="enlist">Case study: enlistment</a>. The idempotency key in <a data-lesson="pay">Payments and gateways</a> solves a similar problem for repeated requests that arrive over HTTP.</p>
+          <p>The lock makes the second session wait, so on enlistment day nine thousand users pressing Enlist would wait on one row. The single statement needs no waiting, and the row count it reports tells you the result: 1 means you got the slot, 0 means somebody else did. It works whenever the decision can be written as a condition.</p>
+          <p>Enlistment day is covered in <a data-lesson="enlist">Case study: enlistment</a>. The idempotency key in <a data-lesson="pay">Payments and gateways</a> solves a similar problem for repeated requests that arrive over HTTP.</p>
         </details>
       </div>
 
       <div class="sec" data-sec="gap" data-title="Why a transaction is not enough">
-        <p>A transaction makes a group of statements succeed together or fail together. It does not hold the seat while you decide. To protect the seat, <dfn title="A hold that makes other sessions wait for a row">lock</dfn> the row during the decision, or write the check and the change as one statement.</p>
+        <p>A transaction makes a group of statements succeed together or fail together. At the default setting it leaves other sessions free to read the old slot count while you decide. To protect the slot, <dfn title="A hold that makes other sessions wait for a row">lock</dfn> the row during the decision, or write the check and the change as one statement.</p>
         <details class="more">
           <summary>More detail</summary>
-          <p>Isolation is the setting that controls how much two sessions can see of each other's work. At the default level in Postgres, called <code>READ COMMITTED</code>, session B can still read the old seat count while session A is deciding. Many people assume the defaults protect them fully, and they do not.</p>
+          <p>Isolation is the setting that controls how much two sessions can see of each other's work. At the default level in Postgres, called <code>READ COMMITTED</code>, session B can still read the old slot count while session A is deciding. Many people assume the defaults protect them fully, and they do not.</p>
           <p>The fix is to tell the database what you need. A lock holds the row, and a single statement lets the database order the two requests itself.</p>
         </details>
       </div>

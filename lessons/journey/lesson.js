@@ -28,7 +28,7 @@ function renderFall(){
 }
 $("#rtt").oninput=e=>{
   rttMs=+e.target.value;
-  const d = rttMs<=2?"same building":rttMs<=8?"same city":rttMs<=40?"same region":rttMs<=90?"across an ocean":"opposite side of Earth";
+  const d = rttMs<=2?"same site":rttMs<=8?"same city":rttMs<=40?"same region":rttMs<=90?"across an ocean":"opposite side of Earth";
   $("#rttVal").textContent=`${rttMs} ms · ${d}`;
   renderFall();
 };

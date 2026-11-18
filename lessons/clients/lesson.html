@@ -4,15 +4,16 @@
         <p>A website, an iPhone app and an Android app can all use one <dfn title="The server and database that hold the data">backend</dfn>. They reach it through an <dfn title="A set of URLs that return data for other programs to use">API</dfn>. The server does not care which one is calling.</p>
       </div>
 
-      <div class="sec" data-sec="kitchen" data-title="Start with a shared kitchen">
-        <p>A restaurant kitchen can serve dine-in customers, the drive-thru window and a delivery app. It prepares the same order for all three, and each channel presents it in its own way. A website, an iPhone app and an Android app can share one backend in the same way.</p>
-        <div class="scene" role="group" aria-label="The kitchen is the backend, the dish is the data, and the dining channels are the web, iOS and Android clients" data-art="kitchen-three-channels" data-art-desc="A cook at a kitchen hatch hands a paper bag to a delivery rider in a helmet, while a customer sits at a table beside the hatch eating from a bowl.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cooking-pot"/></svg></div><figcaption><b>Kitchen</b><span>Backend</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bowl-food"/></svg></div><figcaption><b>The same dish</b><span><dfn title="A plain-text format for data">JSON</dfn> data</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg></div><figcaption><b>Dine-in, drive-thru, delivery</b><span>Web, iOS, Android</span></figcaption></figure>
+      <div class="sec" data-sec="three-devices" data-title="Start with one order on three devices">
+        <p>You place a dinner order in the food delivery app on an iPhone. A friend opens the same app on an Android phone. A third person uses the delivery site in a laptop browser. All three see the same menu, the same prices and the same order status.</p>
+        <div class="scene" role="group" aria-label="An iPhone, an Android phone and a laptop browser all show the same menu from one server" data-art="food-order-three-devices" data-art-desc="Three friends sit around a table: one holds an iPhone, one holds an Android phone and one has a laptop, and each screen shows the same plain list of bars.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg></div><figcaption><b>iPhone app</b><span>One client</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg></div><figcaption><b>Android app</b><span>A second client</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg></div><figcaption><b>Website</b><span>A third client</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>The app's server</b><span>Holds the data once</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> A university has a web API that returns course data. It now wants an Android app. Which parts of the backend must be rewritten?</div>
-        <div class="instructor">For the web API the answer is that the whole backend is reused. The real enlistment system returns finished web pages, so the answer there is much less. Ask students to explain the difference after the step "A system with no API".</div>
+        <div class="ask"><b>Think first.</b> The delivery company adds an app for smartwatches. Which parts of its backend must be rewritten?</div>
+        <div class="instructor">For a backend with an API, none of it is rewritten. A system that returns finished web pages needs much more work. Ask students to explain the difference after the step "A system with no API".</div>
       </div>
 
       <div class="sec" data-sec="one-api" data-title="One API, three clients">
@@ -23,7 +24,7 @@
           <div class="fanArrow">→</div>
           <div class="apibox">
             <div class="an"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg> One API</div>
-            <div class="ad">GET /api/courses<br>It works the same way for every client.</div>
+            <div class="ad">GET /api/menu<br>Every client calls the same URL.</div>
           </div>
           <div class="fanArrow">→</div>
           <div class="apibox" style="border-color:var(--line2);background:var(--panel2)">
@@ -39,7 +40,7 @@
           </div>
           <div class="card">
             <div class="card-t">What the server sends back <span class="same">Same</span></div>
-            <p>The course list as JSON, a plain text format for data. Every client receives the same reply.</p>
+            <p>The menu as JSON, a plain text format for data. Every client receives the same reply.</p>
           </div>
         </div>
 
@@ -76,7 +77,7 @@
       </div>
 
       <div class="sec" data-sec="no-api" data-title="A system with no API">
-        <p>Older systems, such as the enlistment system, are <dfn title="Build each page on the server and send it as finished HTML">server-rendered</dfn>. They return finished web pages, with the data mixed into the layout. A phone app cannot use that page directly. Compare what each kind of system returns.</p>
+        <p>Some systems are <dfn title="Build each page on the server and send it as finished HTML">server-rendered</dfn>. They return finished web pages, with the data mixed into the layout. A phone app cannot use that page directly. Compare what each kind of system returns.</p>
 
         <div class="cmp">
           <div class="card">
@@ -97,11 +98,11 @@
           <div class="cmp">
             <div>
               <div class="card-t">What a server-rendered system returns <span class="diff">HTML</span></div>
-              <div class="art" id="enlistHtml"></div>
+              <div class="art" id="pageHtml"></div>
             </div>
             <div>
               <div class="card-t">What an API would return <span class="same">JSON</span></div>
-              <div class="art" id="enlistJson"></div>
+              <div class="art" id="pageJson"></div>
             </div>
           </div>
           <h4>The same data in two forms</h4>
@@ -109,7 +110,7 @@
           <h4>Why teams build it this way</h4>
           <p>With one kind of client, browsers only, server-rendered HTML was the fastest correct design. The cost shows up years later, when a second kind of client arrives and there is nothing for it to call. Adding an API later means going into the page-generating code and pulling the business logic (the rules for what the system does) out of the markup. Teams often keep the old design because it still works.</p>
         </details>
-        <div class="instructor">The answer to the Think first question for the enlistment system is much less. There is no separate layer that a mobile app could call, because the data and the layout are mixed in one reply. Ask students how much of the backend a new mobile app could reuse before they open the comparison.</div>
+        <div class="instructor">For a server-rendered system, a new app could reuse much less. There is no separate layer that an app could call, because the data and the layout are mixed in one reply. Ask students how much of the backend a new app could reuse before they open the comparison.</div>
       </div>
 
       <div class="sec" data-sec="version-drift" data-title="Change an API">
@@ -146,7 +147,7 @@
         <details class="more">
           <summary>More detail</summary>
           <h4>Rule for changing an API</h4>
-          <p>If you cannot update the clients, add freely and remove almost never. When you must break something, publish the new version at a new path (<code>/api/v2/courses</code>) and keep the old one running until few users remain on old versions. Another option is to keep the old field next to the new one and stop documenting it.</p>
+          <p>If you cannot update the clients, add freely and remove almost never. When you must break something, publish the new version at a new path (<code>/api/v2/menu</code>) and keep the old one running until few users remain on old versions. Another option is to keep the old field next to the new one and stop documenting it.</p>
           <p>The adoption curves are illustrations of typical patterns. They do not come from measurements of a specific app.</p>
         </details>
       </div>

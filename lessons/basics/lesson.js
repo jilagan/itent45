@@ -5,7 +5,7 @@ const CTX=(()=>{
   const proto=location.protocol, host=location.hostname, port=location.port;
   if(proto==="file:") return {
     mode:"file",
-    line:`Your address bar starts with <code>file://</code>. <b class="i">No server is involved.</b> The browser opened this document straight from your disk, the way it opens a photo.`,
+    line:`Your address bar starts with <code>file://</code>. <b class="i">No server is involved.</b> The browser read this document directly from your disk.`,
     laptop:`The address bar says <code>file://</code>, so no program is listening.`,
     close:`Right now it is not. The address bar shows <code>file://</code>, so the browser opened a file and made no connection. If you run <code>python3 start.py</code> in a terminal (a window where you type commands), Python starts a program that waits on port 8080. Your browser then connects to it, and your laptop is both the server and the client. So <code>localhost:8080</code> means this computer, port 8080, and a classmate who opens that link reaches their own computer. The next topic is <a data-lesson="tiers">Three tiers</a>.`
   };
@@ -33,7 +33,7 @@ const GUESS=[
  {n:"Your laptop", d:"the one in front of you",
   a:CTX.mode==="local"?"yes, right now":"yes, when a program is listening",
   x:CTX.laptop},
- {n:"A Raspberry Pi", d:"a credit-card-sized computer, about ₱2,000",
+ {n:"A Raspberry Pi", d:"a small, low-cost computer",
   a:"yes",
   x:"Many real websites run on hardware weaker than this."},
  {n:"A rented cloud server", d:"rented by the hour from a company",
@@ -42,7 +42,7 @@ const GUESS=[
  {n:"Your phone", d:"in your pocket",
   a:"yes, technically",
   x:"Apps exist that turn a phone into a web server."},
- {n:"A rack in a data center", d:"a shelf of computers in a server room",
+ {n:"A rack in a data center", d:"a frame that holds many computers in a server room",
   a:"only if a program is running",
   x:"A powered rack with no program listening serves nothing."}
 ];
@@ -82,14 +82,14 @@ $$("#urlBar .up").forEach(el=>el.onclick=()=>{
 });
 
 /* ---- your laptop's several addresses, and how far a packet gets ---- */
-const HOPS=["your program","operating system","wifi card","home router","internet provider","the internet"];
+const HOPS=["your program","operating system","wifi card","router","internet provider","the internet"];
 const IFACES=[
  {dev:"lo0", ip:"127.0.0.1", s:"loopback", reach:2, turn:"turns around here, inside the operating system",
   v:`<b>It never leaves the machine</b>There is no cable, no wifi and no router. If you turn off your wifi, <code>localhost:8080</code> still works.`},
  {dev:"en0", ip:"192.168.1.7", s:"wifi, assigned by your router", reach:4, turn:"stops at your router, the farthest point where this address means anything",
-  v:`<b>It reaches your router and goes no further</b>A classmate on the same wifi can reach this address. Outside your building it means nothing, because millions of homes use the same private range.`},
+  v:`<b>It reaches your router and goes no further</b>A classmate on the same wifi can reach this address. Outside your network it means nothing, because millions of homes use the same private range.`},
  {dev:"wan", ip:"112.198.44.19", s:"your router's public address", reach:6, turn:"reaches the internet, and belongs to your router",
-  v:`<b>This address works on the internet, and it belongs to your router</b>Everyone in the building shares it, so nothing on the internet can start a conversation with your laptop. The router rewrites outgoing packets to use this address, which is called network address translation (NAT).`}
+  v:`<b>This address works on the internet, and it belongs to your router</b>Every device behind the router shares it, so nothing on the internet can start a conversation with your laptop. The router rewrites outgoing packets to use this address, which is called network address translation (NAT).`}
 ];
 let ifSel=0;
 function renderIface(){
@@ -115,10 +115,10 @@ const WHO=[
  {id:"me",   n:"You, on your own laptop", s:"the machine running it",
   r:[true,true,true],
   v:`<b>Everything works</b>All three addresses reach it, because you are on the machine itself. A project that works on your machine can still fail for everyone else.`},
- {id:"lan",  n:"A classmate on the same wifi", s:"same room, same network",
+ {id:"lan",  n:"A classmate on the same wifi", s:"same wifi network",
   r:[false,true,true],
   v:`<b>The local network address works. Localhost does not.</b>Their own computer answers to <code>localhost</code>. If you give them <code>192.168.1.7:8080</code>, it works on the same wifi.`},
- {id:"far",  n:"Someone at home in Cebu", s:"a different network entirely",
+ {id:"far",  n:"Someone on another network", s:"for example, at home in another city",
   r:[false,false,true],
   v:`<b>Only the public address works</b>The row that works is the university's own public server, which is not your laptop. Your laptop has no address that the wider internet can reach.`}
 ];

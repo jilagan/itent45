@@ -31,14 +31,14 @@ function nnDiagram(){
   // edges in, edges out
   for(let i=0;i<k;i++){
     const on = NN.pick===i;
-    iy.forEach(y=>{ g+=`<line x1="86" y1="${y}" x2="${W/2}" y2="${hy[i]}"
+    iy.forEach(y=>{ g+=`<line x1="104" y1="${y}" x2="${W/2}" y2="${hy[i]}"
       stroke="${on?"var(--req)":"var(--line2)"}" stroke-width="${on?1.8:0.9}" opacity="${on?1:.5}"/>`; });
     g+=`<line x1="${W/2}" y1="${hy[i]}" x2="${W-110}" y2="${H/2}"
       stroke="${on?"var(--req)":"var(--line2)"}" stroke-width="${on?1.8:0.9}" opacity="${on?1:.5}"/>`;
   }
-  ["hours","attendance"].forEach((lb,i)=>{
-    g+=`<circle cx="86" cy="${iy[i]}" r="9" fill="var(--panel2)" stroke="var(--res)" stroke-width="1.6"/>
-        <text x="70" y="${iy[i]+4}" text-anchor="end" font-size="12.5" fill="var(--dim)">${lb}</text>`;
+  ["hours","commitments"].forEach((lb,i)=>{
+    g+=`<circle cx="104" cy="${iy[i]}" r="9" fill="var(--panel2)" stroke="var(--res)" stroke-width="1.6"/>
+        <text x="88" y="${iy[i]+4}" text-anchor="end" font-size="12.5" fill="var(--dim)">${lb}</text>`;
   });
   for(let i=0;i<k;i++){
     const on=NN.pick===i;
@@ -48,7 +48,7 @@ function nnDiagram(){
   }
   g+=`<circle cx="${W-110}" cy="${H/2}" r="10" fill="var(--panel2)" stroke="var(--res)" stroke-width="1.8"/>
       <text x="${W-94}" y="${H/2+4}" font-size="12.5" fill="var(--dim)">stays or drops</text>
-      <text x="86" y="14" text-anchor="middle" font-size="12.5" fill="var(--faint)">Input</text>
+      <text x="104" y="14" text-anchor="middle" font-size="12.5" fill="var(--faint)">Input</text>
       <text x="${W/2}" y="14" text-anchor="middle" font-size="12.5" fill="var(--req)">Hidden layer</text>
       <text x="${W-110}" y="14" text-anchor="middle" font-size="12.5" fill="var(--faint)">Output</text>`;
   $("#nnDiag").innerHTML=g+`</svg>`;

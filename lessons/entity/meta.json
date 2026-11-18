@@ -6,7 +6,7 @@
  "outcomes": [
   "Tell entity, attribute and instance apart",
   "Decide when an attribute should become an entity (Room)",
-  "Recognize a pairing as an entity (Enrollment)"
+  "Recognize a pairing as an entity (Enlistment)"
  ],
  "tags": [
   "entity",

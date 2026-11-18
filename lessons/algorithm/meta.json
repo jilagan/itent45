@@ -5,7 +5,7 @@
  "desc": "Write exact steps from a tiny set of instructions.",
  "outcomes": [
   "Write steps in an exact order, using a small set of instructions",
-  "Explain how a repeat rule serves a line of any length",
+  "Explain how a repeat rule handles a queue of any length",
   "Predict what a program does by running it step by step"
  ],
  "tags": [

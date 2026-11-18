@@ -5,22 +5,22 @@
    "id": "sorting-1",
    "sec": null,
    "type": "mc",
-   "stem": "A clerk has 1,000 cards in no order and must find one ID. A second clerk has 1,000 cards in ID order and must find one ID. Which clerk is faster, and by how much?",
+   "stem": "One program must find an ID in 1,000 entries in no order. A second program must find an ID in 1,000 entries in ID order. Which is faster, and by how much?",
    "options": [
     {
-     "text": "The second clerk, who needs about 10 checks. The first may need all 1,000.",
+     "text": "The second program, which needs about 10 checks. The first may need all 1,000.",
      "correct": true,
-     "feedback": "Halving 1,000 cards takes at most 10 guesses, because 1,000 is below 1,024. The unsorted pile may need every card."
+     "feedback": "Halving 1,000 entries takes at most 10 guesses, because 1,000 is below 1,024. The unsorted list may need every entry."
     },
     {
-     "text": "The first clerk, because sorting is not needed for one search.",
+     "text": "The first program, because sorting is not needed for one search.",
      "correct": false,
-     "feedback": "The second pile is already sorted, so nobody has to sort it. That pile gives the shorter search."
+     "feedback": "The second list is already sorted, so nobody has to sort it. That list gives the shorter search."
     },
     {
-     "text": "They take the same time, because both piles hold 1,000 cards.",
+     "text": "They take the same time, because both lists hold 1,000 entries.",
      "correct": false,
-     "feedback": "The piles have the same size, but only the sorted pile lets the clerk rule out half the cards per guess."
+     "feedback": "The lists have the same size, but only the sorted list lets the program rule out half the entries per guess."
     }
    ]
   },
@@ -28,7 +28,7 @@
    "id": "sorting-2",
    "sec": "sort",
    "type": "mc",
-   "stem": "You have learned that card C is larger than card F, and that card F is larger than card B. Do you need to compare C and B?",
+   "stem": "You have learned that item C is larger than item F, and that item F is larger than item B. Do you need to compare C and B?",
    "options": [
     {
      "text": "Yes, a comparison is the only way to know.",
@@ -43,7 +43,7 @@
     {
      "text": "Only if C and B end up next to each other.",
      "correct": false,
-     "feedback": "The order of C and B follows from the first two results, wherever the cards sit."
+     "feedback": "The order of C and B follows from the first two results, wherever the items sit."
     }
    ]
   },

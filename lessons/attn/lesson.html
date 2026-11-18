@@ -4,15 +4,15 @@
         <p><dfn title="Each word looks at the other words and weighs how much each one matters">Attention</dfn> lets each word in a sentence look at the other words and decide which ones matter. A <dfn title="A model built around attention. It is the T in GPT">transformer</dfn> is a model built around this idea.</p>
       </div>
 
-      <div class="sec" data-sec="chat" data-title="Start with a group chat">
-        <p>In a busy group chat, a reply such as "yes, that one" only makes sense if you look back and decide which earlier message it answers. Attention works the same way. Each word looks back at the other words and decides which ones matter for it.</p>
-        <div class="scene" role="group" aria-label="The chat is the sentence, earlier messages are the other words, the reply is the word it" data-art="group-chat-reply" data-art-desc="A smartphone stands upright on a desk with its screen facing us, showing five blank chat bubbles and a curved arrow from the last bubble back to the second bubble. No people.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Group chat</b><span>The sentence</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg></div><figcaption><b>Earlier messages</b><span>The other words</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>The reply "yes, that one"</b><span>The word <em>it</em></span></figcaption></figure>
+      <div class="sec" data-sec="pronoun-answer" data-title="Start with a chatbot answer">
+        <p>You type "The animal didn't cross the street because it was too tired" into an AI chatbot and ask what "it" refers to. It answers the animal. You change tired to wide and ask again. This time it answers the street.</p>
+        <div class="scene" role="group" aria-label="The parts of the exchange: the words you typed, the language model, and its answer" data-art="chatbot-pronoun-answer" data-art-desc="A student sits on a bench holding a phone. The screen shows a short gray message bar with one block highlighted in orange and a reply bar below it.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-text-align-left"/></svg></div><figcaption><b>The words you typed</b><span>One sentence</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cpu"/></svg></div><figcaption><b>The language model</b><span>Processes the sentence</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Its answer</b><span>The animal or the street</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> In <em>The animal didn't cross the street because it was too tired</em>, what does <em>it</em> refer to? Change <em>tired</em> to <em>wide</em>. Does the answer change?</div>
-        <div class="instructor">Ask students what they looked at in the sentence to decide. The answer in both cases is the last word, and the widget shows the model doing the same thing.</div>
+        <div class="ask"><b>Think first.</b> One word changed and the answer changed. What must the chatbot have done with the other words in the sentence to produce a different answer?</div>
+        <div class="instructor">Ask students what they looked at in the sentence to decide. In both cases they looked at the last word, and the widget shows the model doing the same.</div>
       </div>
 
       <div class="sec" data-sec="look" data-title="See what a word looks at">
@@ -26,9 +26,9 @@
         </div>
         <details class="more">
           <summary>More detail</summary>
-          <h4>What the word asks for and what the others offer</h4>
+          <h4>What the word needs and what the others contain</h4>
           <div class="card" id="atWhy"></div>
-          <p>The weight is a similarity score between a question and a description. In a real model, both are positions in the space described in <a data-lesson="vectors">Vectors and similarity</a>, and the match is a distance calculated fresh for each sentence. The short descriptions in quotes are our own words for what those positions encode. The model holds positions and holds no sentences about meaning.</p>
+          <p>The weight is a similarity score between a <dfn title="A description of what one word needs from the others">query</dfn> and a <dfn title="A description of what another word contains">key</dfn>. In a real model, both are positions in the space described in <a data-lesson="vectors">Vectors and similarity</a>, and the match is a distance calculated fresh for each sentence. The short descriptions in quotes are our own words for what those positions encode. The model holds positions and holds no sentences about meaning.</p>
         </details>
       </div>
 
@@ -49,13 +49,13 @@
         </div>
       </div>
 
-      <div class="sec" data-sec="fix" data-title="Why it replaced the note">
-        <p>Older models squeezed everything read so far into one small note, and early words faded. A transformer keeps every word, so word 1 and word 5,000 are one step apart. All the comparisons happen at once, so training can be spread across many chips.</p>
-        <p class="outcome">You can now say what attention does and why it replaced the single note.</p>
+      <div class="sec" data-sec="fix" data-title="Why attention replaced the hidden state">
+        <p>Older recurrent models compressed everything read so far into one fixed-size hidden state, and early words faded. A transformer keeps every word, so word 1 and word 5,000 are one step apart. All the comparisons happen at once, so training can be spread across many chips.</p>
+        <p class="outcome">You can now say what attention does and why it replaced the single hidden state.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>The older approach</h4>
-          <p><a data-lesson="rnn">Recurrent networks</a> showed the single note that was rewritten after each word, where <code>animal</code> had faded by the time the sentence needed it. Attention keeps every word and lets each one look at all the others directly.</p>
+          <p><a data-lesson="rnn">Recurrent networks</a> showed the single hidden state that was rewritten after each word, where <code>animal</code> had faded by the time the sentence needed it. Attention keeps every word and lets each one look at all the others directly.</p>
           <h4>Where the name comes from</h4>
           <p>The T in GPT stands for transformer, and GPT stands for Generative Pre-trained Transformer. The 2017 paper that introduced the design was titled <em>Attention Is All You Need</em>.</p>
           <h4>Doubling the prompt</h4>

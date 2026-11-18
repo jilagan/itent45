@@ -100,7 +100,7 @@ const ORDERS = [
   {student: false, member: false, amount: 200},
   {student: false, member: false, amount: 999}
 ];
-const who = o => o.student && o.member ? "Student and member" : o.student ? "Student" : o.member ? "Member" : "Regular customer";
+const who = o => o.student && o.member ? "Student and member" : o.student ? "Student" : o.member ? "Member" : "Regular shopper";
 const label = o => `${who(o)}, ${peso(o.amount)} pesos`;
 /* The problems come from the rules and the data, so the answer key follows the rules. */
 const problem = o => {

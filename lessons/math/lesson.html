@@ -1,15 +1,15 @@
     <section class="panel" id="p-math">
       <div class="head">
         <h2>The math behind it: vectors, slopes and probabilities</h2>
-        <p>Three ideas from school arithmetic appear in every lecture on language models: a weighted sum, a slope and a probability distribution. Each connects to a screen you have already seen.</p>
+        <p>Three calculations appear in every lecture on language models: a weighted sum, a slope and a probability distribution. Each one is school arithmetic.</p>
       </div>
 
-      <div class="sec" data-sec="grade" data-title="Start with a weighted grade">
-        <p>Your grade in a course is a weighted sum. Exams count 0.6 and projects count 0.4. You score 80 on exams and 90 on projects, so your grade is 80 &times; 0.6 + 90 &times; 0.4 = 84. You multiplied each score by its weight and added the results.</p>
-        <div class="scene" role="group" aria-label="Your scores and the weights are two vectors, and your grade is their dot product" data-art="weighted-grade" data-art-desc="A teacher at a desk watches a two-pan balance scale tilt: a thick blue folder sits on the lower pan and a thin dark orange folder on the higher pan.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Your scores</b><span><dfn title="A list of numbers, such as 80 and 90">Vector</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>The weights</b><span>Vector</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>Your grade</b><span><dfn title="Multiply each pair of numbers, then add the results">Dot product</dfn></span></figcaption></figure>
+      <div class="sec" data-sec="three-calculations" data-title="Start with three calculations">
+        <p>A chatbot's model does three calculations when it answers. It adds weighted numbers. For example, scores of 80 and 90 with weights 0.6 and 0.4 give a course grade of 80 &times; 0.6 + 90 &times; 0.4 = 84. It finds a slope, which says which way to adjust a number. It turns scores into probabilities that add to 1.</p>
+        <div class="scene" role="group" aria-label="The three calculations: a weighted sum, a slope and probabilities that add to 1" data-art="three-calculations-chat-answer" data-art-desc="A student at a laptop reads a chatbot answer on the screen, with three plain panels beside it: a short row of bars, a rising line and a set of bars of different lengths.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-calculator"/></svg></div><figcaption><b>Weighted sum</b><span><dfn title="Multiply each pair of numbers, then add the results">Dot product</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chart-line"/></svg></div><figcaption><b>Which way to adjust</b><span>Slope</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chart-pie-slice"/></svg></div><figcaption><b>Chance of each outcome</b><span>Probability distribution</span></figcaption></figure>
         </div>
         <div class="ask"><b>Think first.</b> A course weights exams at 0.7 and projects at 0.3. You score 60 on exams and 100 on projects. What is your grade?</div>
         <div class="instructor">The answer is 72. Students who answer 80 averaged the two scores and ignored the weights. Ask why 72 is closer to the exam score.</div>
@@ -45,7 +45,7 @@
       </div>
 
       <div class="sec" data-sec="slope" data-title="Slopes tell you which way to adjust">
-        <p>A <dfn title="A number inside the model that training can adjust">weight</dfn> is a number the model can adjust. The curve shows how wrong the model is at each weight. The <dfn title="How fast the answer changes when you nudge the input">slope</dfn> at your position says which way is downhill. Drag the slider along the curve and watch the slope.</p>
+        <p>A <dfn title="A number inside the model that training can adjust">weight</dfn> is a number the model can adjust. The curve shows how wrong the model is at each weight. The <dfn title="How fast the answer changes when you nudge the input">slope</dfn> at your position says which way lowers the error. Drag the slider along the curve and watch the slope.</p>
         <div class="srv">
           <div>
             <div class="scatter" id="mtSlope"></div>
@@ -69,7 +69,7 @@
             <div class="g" id="mtW"><div class="gl">The weight</div><div class="gv">&mdash;</div></div>
           </div>
           <h4>Slope and derivative</h4>
-          <p>A car's speedometer tells you how fast your position is changing right now. A slope is the same idea for any curve. A derivative is the formal name for the slope at one point. The slope is negative on the left of the dip, positive on the right and zero at the bottom. To get downhill, move in the direction opposite to the slope.</p>
+          <p>A derivative is the formal name for the slope at one point. The slope is negative on the left of the dip, positive on the right and zero at the bottom. To lower how wrong the model is, move in the direction opposite to the slope.</p>
           <h4>Gradient</h4>
           <p>A gradient is the slope worked out for every number at once. With three numbers it is three slopes. With a billion numbers it is a billion slopes, and the arithmetic for each one is the same.</p>
           <h4>Where you have met it</h4>
@@ -78,7 +78,7 @@
       </div>
 
       <div class="sec" data-sec="distribution" data-title="Probabilities add up to 1">
-        <p>A weather forecast might say 60% rain, 30% cloudy and 10% clear. Those percentages are a <dfn title="A set of outcomes whose probabilities add up to 100%">probability distribution</dfn>. A model's choice of next word is one too. Raise the probability of Paris and watch the other words shrink.</p>
+        <p>Given "The capital of France is", a model gives every possible next word a probability. Together those probabilities form a <dfn title="A set of outcomes whose probabilities add up to 100%">probability distribution</dfn>, and they add up to 100%. Raise the probability of Paris and watch the other words shrink.</p>
         <div class="srv">
           <div>
             <div class="probs" id="mtDist"></div>

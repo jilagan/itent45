@@ -28,11 +28,11 @@
    "id": "algorithm-2",
    "sec": "repeat",
    "type": "predict",
-   "stem": "A program serves customers with \"repeat 6 times.\" On a busy afternoon the line has 9 people. What happens?",
+   "stem": "A program makes drinks with \"repeat 6 times.\" On a busy afternoon the queue has 9 orders. What happens?",
    "options": [
     {
-     "text": "The robot serves all 9, because it checks the line.",
-     "feedback": "The count is fixed at 6, so the robot stops after six drinks whatever the line holds.",
+     "text": "The robot makes all 9, because it checks the queue.",
+     "feedback": "The count is fixed at 6, so the robot stops after six drinks whatever the queue holds.",
      "correct": false
     },
     {
@@ -41,32 +41,32 @@
      "correct": false
     },
     {
-     "text": "Three customers wait, because the program stops after 6.",
+     "text": "Three orders wait, because the program stops after 6.",
      "correct": true,
-     "feedback": "A fixed count ignores the real line. 9 minus 6 leaves 3 customers waiting."
+     "feedback": "A fixed count ignores the real queue. 9 minus 6 leaves 3 orders waiting."
     }
    ],
-   "try": "Choose 6 times, press Add customer three times, then press Run line."
+   "try": "Choose 6 times, press Add order three times, then press Run queue."
   },
   {
    "id": "algorithm-3",
    "sec": null,
    "type": "mc",
-   "stem": "A shop owner wants the robot to serve every customer, whatever the length of the line. Which rule gives that behavior?",
+   "stem": "The café wants the robot to make every order, whatever the length of the queue. Which rule gives that behavior?",
    "options": [
     {
-     "text": "Repeat the steps until the line is empty.",
+     "text": "Repeat the steps until the queue is empty.",
      "correct": true,
-     "feedback": "The stop rule follows the real line, so it works for a line of any length."
+     "feedback": "The stop rule follows the real queue, so it works for a queue of any length."
     },
     {
-     "text": "Repeat 10 times every time the shift runs.",
-     "feedback": "A line of 12 leaves two customers waiting, and a line of 5 makes five cups for nobody.",
+     "text": "Repeat 10 times, every time.",
+     "feedback": "A queue of 12 leaves two orders waiting, and a queue of 5 makes five cups for nobody.",
      "correct": false
     },
     {
      "text": "Repeat forever, with no stopping rule.",
-     "feedback": "A loop with no stopping rule keeps making drinks after the last customer leaves.",
+     "feedback": "A loop with no stopping rule keeps making drinks after the last order.",
      "correct": false
     }
    ]

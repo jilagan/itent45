@@ -33,22 +33,22 @@
    "id": "tiers-2",
    "sec": null,
    "type": "mc",
-   "stem": "A student edits the student number in the address bar and sees another student's grades. Which tier should have refused the request?",
+   "stem": "A user edits the order number in the address bar and sees someone else's order. Which tier should have refused the request?",
    "options": [
     {
-     "text": "The application tier, which checks who is logged in before querying.",
+     "text": "The application tier, which checks who is logged in and who owns the order before querying.",
      "correct": true,
-     "feedback": "The application tier knows who is logged in and decides which rows that person may see."
+     "feedback": "The application tier knows who is logged in and decides which orders that person may see."
     },
     {
-     "text": "The browser, because it already knows which student is logged in.",
+     "text": "The browser, because it already knows which user is logged in.",
      "correct": false,
      "feedback": "The browser runs on the user's device and the user can change anything in it. It cannot be trusted to enforce rules."
     },
     {
-     "text": "The database, because it holds the grades and knows who owns them.",
+     "text": "The database, because it holds the orders and knows who owns them.",
      "correct": false,
-     "feedback": "The database answers any query it is given by a trusted caller. It does not know which student is logged in."
+     "feedback": "The database answers any query it is given by a trusted caller. It does not know which user is logged in."
     },
     {
      "text": "None of them, because anything in the address bar is public.",
@@ -89,7 +89,7 @@
    "id": "tiers-4",
    "sec": null,
    "type": "mc",
-   "stem": "A student opens the enlistment page on a phone. Which tier is running on the phone itself?",
+   "stem": "A user opens a food delivery app on a phone. Which tier is running on the phone itself?",
    "options": [
     {
      "text": "The browser tier, which shows the page.",
@@ -97,12 +97,12 @@
      "feedback": "The browser runs on the user's own device. The other two tiers run on servers you manage."
     },
     {
-     "text": "The application tier, because it handles the student's request.",
+     "text": "The application tier, because it handles the user's request.",
      "correct": false,
      "feedback": "The application tier runs on your server. The phone only sends the request and receives the response."
     },
     {
-     "text": "The database tier, because the grades are saved there.",
+     "text": "The database tier, because the orders are saved there.",
      "correct": false,
      "feedback": "The database runs on your server or its own machine. The phone never connects to it."
     },

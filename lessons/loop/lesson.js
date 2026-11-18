@@ -37,7 +37,7 @@ function lpRender(){
   if(lpAt===0){ v.className="verdict";
     v.innerHTML=`<b>Six rounds, eighteen lines</b>Each round is a Thought, an Action and an Observation. Observation lines are the only ones that do not come from the model.`; return; }
   if(lpAt<9){ v.className="verdict";
-    v.innerHTML=`<b>Round ${Math.ceil(lpAt/3)} of 6</b>So far the agent is doing what a careful person would do.`; return; }
+    v.innerHTML=`<b>Round ${Math.ceil(lpAt/3)} of 6</b>So far each Action follows from the Thought before it.`; return; }
   if(lpAt===9){ v.className="verdict ok";
     v.innerHTML=`<b>The test failed, and the agent found out</b>The failing test came from the test runner and contradicted the model's own conclusion. With tools, the model can be wrong <b class="i">and find out</b>.`; return; }
   if(lpAt<16){ v.className="verdict warn";

@@ -4,14 +4,14 @@
         <p><dfn title="The rules that browsers and servers use to talk to each other">HTTP</dfn> messages are plain text. Each has a first line, headers, a blank line and an optional body.</p>
       </div>
 
-      <div class="sec" data-sec="slip" data-title="Start with an order slip">
-        <p>At a restaurant, the waiter writes your order on a slip that always has the same fields, such as table number, items and notes. The kitchen knows where to look because every slip has the same layout. An HTTP message is a slip like that, written in text.</p>
-        <div class="scene" role="group" aria-label="The customer is the browser, the order slip is the request, the food is the response" data-art="order-slip" data-art-desc="A waiter at a restaurant table writes the customer's order on a small slip while the customer waits.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Customer</b><span>Browser</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></div><figcaption><b>Order slip</b><span>HTTP request</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bowl-food"/></svg></div><figcaption><b>The food</b><span>HTTP response</span></figcaption></figure>
+      <div class="sec" data-sec="order-and-reply" data-title="Start with an order and its reply">
+        <p>You tap Place order in a food delivery app. A spinner shows, then the screen says Order confirmed with an order number. In between, your phone sent one text message to the app's server and received one text message back. You never see either message.</p>
+        <div class="scene" role="group" aria-label="Your phone sends an HTTP request to the server and receives an HTTP response" data-art="order-reply-on-phone" data-art-desc="A student at a plain table taps a phone while two plain arrows beside it point away from the phone and back toward it.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg></div><figcaption><b>Your phone</b><span>Client</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-envelope-simple"/></svg></div><figcaption><b>First message</b><span>HTTP request</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-envelope-simple-open"/></svg></div><figcaption><b>Second message</b><span>HTTP response</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> A browser is a program that writes these text messages for you. Could you write one yourself without a browser? Write down what you would need.</div>
+        <div class="ask"><b>Think first.</b> A browser or app writes the first message for you. Could you write one yourself without it? Write down what you would need to know.</div>
         <div class="instructor">Nothing stops anyone from typing a request by hand. We do this live with <code>nc</code> in the last step of "Send a request yourself".</div>
       </div>
 

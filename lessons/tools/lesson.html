@@ -4,15 +4,15 @@
         <p>A language model cannot run anything. It writes a request in text, and a separate program decides whether to carry it out.</p>
       </div>
 
-      <div class="sec" data-sec="barangay" data-title="Start with a barangay hall">
-        <p>At a barangay hall, you hand a request slip to the clerk at the front desk. The clerk decides whether to fetch the record from the records room, ask for an ID or turn you down. You never enter the records room yourself. A language model that uses tools works the same way.</p>
-        <div class="scene" role="group" aria-label="The request slip is the tool call, the front-desk clerk is the client, the records room is the database" data-art="barangay-clerk-desk" data-art-desc="A resident at a barangay hall hands a request slip to a clerk at the front desk, with the records room visible behind the clerk and the resident on the public side.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Request slip</b><span><dfn title="A request written in plain text, asking a program to do something">Tool call</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-traffic-signal"/></svg></div><figcaption><b>Front-desk clerk</b><span><dfn title="The part of your AI application that decides whether to run a tool call">Client</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-database"/></svg></div><figcaption><b>Records room</b><span>Database</span></figcaption></figure>
+      <div class="sec" data-sec="permission-prompt" data-title="Start with a permission prompt">
+        <p>You ask an AI assistant what is on your calendar tomorrow. A box appears asking to let the assistant read your calendar, with Allow and Deny buttons. You press Allow and the answer appears. A language model produces only text, so a separate program must have asked for that lookup and run it.</p>
+        <div class="scene" role="group" aria-label="The model writes a request, the assistant app decides whether to run it, and the tool reads the data" data-art="permission-prompt-laptop" data-art-desc="A student at a laptop looks at a small window on the screen with two plain buttons, drawn beside a chat window made of plain bars.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>The model's request</b><span><dfn title="A request written in plain text, asking a program to do something">Tool call</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg></div><figcaption><b>The assistant app</b><span><dfn title="The part of your AI application that decides whether to run a tool call">Client</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-database"/></svg></div><figcaption><b>Your calendar or database</b><span>Data</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> A model produces only text. Between your question and the database, where could a person or a program stop a harmful request?</div>
-        <div class="instructor">Collect answers before anyone opens the next step. The point to reach is that the request exists as text before anything runs, and the client sits between the model and the database.</div>
+        <div class="ask"><b>Think first.</b> A model produces only text. Between your question and your data, where could a person or a program stop a harmful request?</div>
+        <div class="instructor">Collect answers before anyone opens the next step. The point to reach is that the request exists as text before anything runs, and the client sits between the model and the data.</div>
       </div>
 
       <div class="sec" data-sec="who-runs" data-title="Follow one tool call">
@@ -39,7 +39,7 @@
       </div>
 
       <div class="sec" data-sec="mcp" data-title="Why there is a standard (MCP)">
-        <p>Phone chargers once differed by brand. AI applications had the same problem: each needed its own <dfn title="A piece of code that connects one application to one system">adapter</dfn> for every system it reached. The <dfn title="A published standard for how AI applications ask tools to do things">Model Context Protocol</dfn> (MCP) is a shared standard, so each side is built once. MCP delivers requests and does not decide whether to make one. Compare the counts.</p>
+        <p>Without a standard, each AI application needs its own <dfn title="A piece of code that connects one application to one system">adapter</dfn> for every system it reaches. The <dfn title="A published standard for how AI applications ask tools to do things">Model Context Protocol</dfn> (MCP) is a shared standard, so each side is built once. MCP delivers requests. It does not decide whether to make one. Compare the counts.</p>
         <div class="cmp">
           <div class="card">
             <div class="card-t" style="color:var(--warn)">One adapter per pairing</div>

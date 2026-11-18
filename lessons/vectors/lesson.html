@@ -1,22 +1,22 @@
     <section class="panel" id="p-vectors">
       <div class="head">
         <h2>Vectors and similarity of meaning</h2>
-        <p>A <dfn title="A list of numbers that gives a word a position on a map">vector</dfn> places a word on a map. Words used in similar ways get nearby positions, so closeness on the map stands for closeness in meaning.</p>
+        <p>A <dfn title="A list of numbers that gives a word a position on a plot">vector</dfn> is a list of numbers that gives a word a position on a plot. Words used in similar ways get nearby positions, so small distance stands for similar meaning.</p>
       </div>
 
-      <div class="sec" data-sec="map" data-title="Start with a map">
-        <p>On a map, two pins that are close together mark places that are near each other. A word gets a position the same way. Real models use hundreds of numbers per word, and nobody labels the words. Words that appear in similar company get similar positions.</p>
-        <div class="scene" role="group" aria-label="A pin's coordinates are a vector, nearby pins are similar words" data-art="map-pins" data-art-desc="A paper map of a city with colored pins, where pins for places in the same neighborhood sit close together and a far-away pin sits alone.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-table"/></svg></div><figcaption><b>Pin's coordinates</b><span>Vector</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg></div><figcaption><b>Pins close together</b><span>Similar words</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>A pin for a whole message</b><span>Sentence position</span></figcaption></figure>
+      <div class="sec" data-sec="help-search" data-title="Start with a help search">
+        <p>You type "how do I sign up for a class" into the help search of the learning management system. The top result is a page called "Course enrollment process". The page title shares no word with your question.</p>
+        <div class="scene" role="group" aria-label="The parts of the search: your question, the help pages, and the ranked results" data-art="help-search-enrollment" data-art-desc="A student sits at a desk with a laptop. The screen shows a search box and a short list of plain gray bars, with the top bar highlighted in blue.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-magnifying-glass"/></svg></div><figcaption><b>Your question</b><span>Typed in the search box</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-file-text"/></svg></div><figcaption><b>The help pages</b><span>Each one has a title and text</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>The results list</b><span>Best match first</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> Which other words would you want a search for <em>enroll</em> to find? Why might a computer place them near <em>enroll</em> without being told they mean the same?</div>
-        <div class="instructor">Students tend to give synonyms such as register and sign up. Ask what in the text could place them close together without anyone labeling them.</div>
+        <div class="ask"><b>Think first.</b> No word matches, yet the search found the page. What could the computer store for each text so that it can tell the two are related?</div>
+        <div class="instructor">Students tend to say a list of synonyms. Ask what in ordinary text could place two phrases close together without anyone writing a synonym list.</div>
       </div>
 
       <div class="sec" data-sec="words" data-title="Add and subtract words">
-        <p>Each button is a sum of three word positions: the first word, minus the second, plus the third. The circle marked <em>result</em> is where the sum ends up, and the nearest word is the answer. These positions were placed by hand to show the idea.</p>
+        <p>Each word here has two numbers, which give its position on the plot. Real models use hundreds of numbers per word. Each button adds the first word's position, subtracts the second and adds the third. The circle marked <em>result</em> is where the sum ends up, and the nearest word is the answer. These positions were placed by hand.</p>
         <div>
           <div class="ctab" id="vcPick"></div>
           <div class="wordmap" id="vcMap"></div>
@@ -34,7 +34,7 @@
           <p>A 2016 paper by Bolukbasi and colleagues reported the programmer analogy using word2vec trained on Google News, and it became a standard illustration of bias in embeddings. Nissim and colleagues showed in 2020 that the analogy method produces part of the result. The search must exclude the input words, so it has to return something other than <code>programmer</code>, and a gendered-looking answer is partly a product of that rule.</p>
           <p>What holds up is smaller. An embedding is built from a corpus, and patterns in that corpus become geometry. A prompt cannot remove that, because it is built into the positions the model uses. Anyone who claims one tidy number for how biased a model is should be asked how it was measured.</p>
           <h4>One vector per use of a word</h4>
-          <p>On this map, <em>bank</em> would get one point, somewhere between the river and the money. Newer models give a word a different vector depending on the sentence around it. That change is a main reason retrieval works as well as it does today.</p>
+          <p>On this plot, <em>bank</em> would get one point, placed between its river sense and its money sense. Newer models give a word a different vector depending on the sentence around it. That change is a main reason retrieval works as well as it does today.</p>
           <div class="instructor">Both statements hold, and students tend to keep only one of them: embeddings do absorb the statistics of their corpus, and the famous analogies overstate how cleanly that shows up.</div>
         </details>
       </div>
@@ -63,7 +63,7 @@
       </div>
 
       <div class="sec" data-sec="search" data-title="Search by meaning">
-        <p>A student types <em>how do I sign up for a class</em>. The help page is titled <em>course enrollment process</em>. The two share almost no words, so a <dfn title="A search that matches the exact words typed">keyword search</dfn> finds nothing useful. Their positions point the same way, so finding the nearest text, called <dfn title="Finding the passages of text nearest in meaning to a question">retrieval</dfn>, finds the page.</p>
+        <p>The help search turns your question and every help page into positions. A <dfn title="A search that matches the exact words typed">keyword search</dfn> would find nothing useful, because the question and the title share no words. The two positions point almost the same way. Finding the text with the nearest position, called <dfn title="Finding the passages of text nearest in meaning to a question">retrieval</dfn>, returns the enrollment page.</p>
         <p class="outcome">You can now explain how a search by meaning finds a page that shares no words.</p>
         <details class="more">
           <summary>More detail</summary>

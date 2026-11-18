@@ -5,7 +5,7 @@
    "id": "clients-1",
    "sec": "one-api",
    "type": "mc",
-   "stem": "A university already has a web API that returns course data as JSON. It now wants an Android app that shows the same courses. What does the Android app need from the backend?",
+   "stem": "A food delivery company already has a web API that returns its menu as JSON. It now wants an Android app that shows the same menu. What does the Android app need from the backend?",
    "options": [
     {
      "text": "Nothing new. The app can call the same URLs and show the JSON its own way",
@@ -28,7 +28,7 @@
    "id": "clients-2",
    "sec": null,
    "type": "mc",
-   "stem": "A system returns finished HTML tables from its server. The university wants an iOS app that shows the same course list. What is the main difficulty?",
+   "stem": "A system returns finished HTML tables from its server. The company wants an iOS app that shows the same menu. What is the main difficulty?",
    "options": [
     {
      "text": "The data is mixed with layout, so someone must scrape the HTML or build an API.",
@@ -74,12 +74,12 @@
    "id": "clients-4",
    "sec": null,
    "type": "predict",
-   "stem": "You rename the field `slots` to `seats` and ship the change. Seven days later, who is most likely to see errors?",
+   "stem": "You rename the field `left` to `remaining` and ship the change. Seven days later, who is most likely to see errors?",
    "options": [
     {
      "text": "Mobile users who have not updated their app",
      "correct": true,
-     "feedback": "Web users get new code on their next reload, but mobile users must update through the store, and many wait weeks. Old app copies still ask for `slots`."
+     "feedback": "Web users get new code on their next reload, but mobile users must update through the store, and many wait weeks. Old app copies still ask for `left`."
     },
     {
      "text": "Web users, because browsers cache old pages",
@@ -89,7 +89,7 @@
     {
      "text": "Nobody, because the server was updated",
      "correct": false,
-     "feedback": "The server now sends `seats`, but old app copies still look for `slots` and fail."
+     "feedback": "The server now sends `remaining`, but old app copies still look for `left` and fail."
     }
    ],
    "try": "In the step \"Change an API\", select Breaking, move the slider to 7 days, and read the percentage on each platform's bar."

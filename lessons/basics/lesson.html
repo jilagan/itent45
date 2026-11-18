@@ -4,15 +4,15 @@
         <p>A <dfn title="A program that waits for requests from other computers and answers them">server</dfn> is a program that waits for requests and answers them. Any computer can run one, including the laptop in front of you.</p>
       </div>
 
-      <div class="sec" data-sec="store" data-title="Start with a sari-sari store">
-        <p>A sari-sari store is a store only while it is open and someone is behind the counter. With the shutter down, it is a room with shelves. A server works the same way. The computer is the room, and the server program is the shopkeeper who answers customers.</p>
-        <div class="scene" role="group" aria-label="The neighbor is the client, the open store is the server program, the room with shelves is the machine" data-art="sari-sari-store-hours" data-art-desc="A neighbor asks the shopkeeper at a small sari-sari store counter for an item, and the shopkeeper reaches back to a shelf with the shutter rolled up.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Neighbor</b><span><dfn title="The program that sends requests, such as your web browser">Client</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-storefront"/></svg></div><figcaption><b>Open store</b><span>Server program</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>Room with shelves</b><span>The machine</span></figcaption></figure>
+      <div class="sec" data-sec="food-order" data-title="Start with a food order">
+        <p>You open a food delivery app on your phone, pick your dinner and tap Place order. A moment later the screen says Order confirmed and shows an order number. Your phone did not make that number. A computer somewhere else did.</p>
+        <div class="scene" role="group" aria-label="Your phone is the client, a server program receives the order, the computer it runs on is the machine" data-art="food-order-on-phone" data-art-desc="A student at a plain table taps the large button on a phone screen that shows a few blank bars, with a closed laptop beside the phone.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg></div><figcaption><b>Your phone</b><span><dfn title="The program that sends requests, such as your web browser">Client</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-terminal-window"/></svg></div><figcaption><b>Program that receives orders</b><span>Server program</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>Computer it runs on</b><span>The machine</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> Is the laptop in front of you a server at this moment? Decide, then write down one thing you could check to find out.</div>
-        <div class="instructor">Let students commit to an answer before they click anything in the next step. The answer depends on whether a program on the laptop is waiting for connections right now.</div>
+        <div class="ask"><b>Think first.</b> Which computer produced the order number? Write down what must be running on it for your order to be received at all.</div>
+        <div class="instructor">Let students commit to an answer before they click anything in the next step. The answer is a program on a computer that waits for requests and replies to them.</div>
         <details class="more">
           <summary>More detail</summary>
           <h4>Where this page came from</h4>
@@ -54,7 +54,7 @@
       </div>
 
       <div class="sec" data-sec="reach" data-title="Who can reach your laptop">
-        <p>An IP address picks the machine, like a building. A <dfn title="A number that picks one program on a machine">port</dfn> picks the program, like a unit number in it. The name <dfn title="A name that always means the computer you type it on">localhost</dfn> always means your own computer. Choose who is trying to open a tool on your laptop at port 8080.</p>
+        <p>An IP address picks the machine. A <dfn title="A number that picks one program on a machine">port</dfn> picks one program on that machine. The name <dfn title="A name that always means the computer you type it on">localhost</dfn> always means your own computer. Choose who is trying to open a tool on your laptop at port 8080.</p>
         <div class="srv">
           <div class="card">
             <div class="reach" id="reachRows"></div>
@@ -79,7 +79,7 @@
             <div>
               <p><b>127.0.0.1</b> is a real address, and nothing sent to it leaves the machine. The packet goes down into the operating system's network code and turns straight back up to another program on the same computer. It still works with the wifi unplugged.</p>
               <p><b>192.168.x.x</b> is a private range. Millions of homes use the same numbers at the same time, so the number alone cannot identify anything on the wider internet. Your router assigns these addresses and keeps track of which device asked for what.</p>
-              <p>The <b>public address</b> belongs to your router, and everyone in the building shares it. Many private addresses sit behind that one public address, so nothing on the internet can start a conversation with your laptop.</p>
+              <p>The <b>public address</b> belongs to your router, and every device behind the router shares it. Many private addresses sit behind that one public address, so nothing on the internet can start a conversation with your laptop.</p>
             </div>
           </div>
         </details>
@@ -103,7 +103,7 @@
         <details class="more">
           <summary>More detail</summary>
           <h4>Why each row fails on a laptop</h4>
-          <p>Your laptop's address is private, sits behind your router and is shared with the whole building. A home connection can be given a new address at any time. Most home internet providers block ports 80 and 443 on purpose, and these are the standard ports for HTTP and HTTPS. You close the lid, go to campus or change wifi, so the laptop is not always awake. Home plans are fast to download and slow to upload, and serving a website is all upload.</p>
+          <p>Your laptop's address is private, sits behind your router and shares the router's public address with every other device on that network. A home connection can be given a new address at any time. Most home internet providers block ports 80 and 443 on purpose, and these are the standard ports for HTTP and HTTPS. You close the lid, go to campus or change wifi, so the laptop is not always awake. Home plans are fast to download and slow to upload, and serving a website is all upload.</p>
           <h4>What a rented server adds</h4>
           <p>A hosting company sells a public address that does not change, an always-on machine with real upload capacity, and a network that leaves the needed ports open. <a data-lesson="vm">Virtual machines and the cloud</a> covers how one physical machine is divided into many rented servers, and <a data-lesson="cost">CapEx and OpEx</a> covers the cost.</p>
         </details>

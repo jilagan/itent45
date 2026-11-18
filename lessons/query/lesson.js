@@ -1,10 +1,10 @@
 /* Lesson query. Widget code for the markup in lesson.html. */
-/* ================= 18 QUERY COST ================= */
+/* ================= QUERY COST ================= */
 const Q={rows:50, mode:"naive"};
 const Q_MS=0.4, Q_BASE=24, Q_WORKERS=8;
 const QMODES=[
- {id:"naive", n:"One query per row", s:"Loop over the enrollments and read the title from each one."},
- {id:"join",  n:"One join", s:"One query fetches each enrollment together with its course."},
+ {id:"naive", n:"One query per row", s:"Loop over the enlistments and read the title from each one."},
+ {id:"join",  n:"One join", s:"One query fetches each enlistment together with its course."},
  {id:"cache", n:"Cache the titles", s:"Titles change rarely, so keep a copy in memory."}
 ];
 function qModel(){
@@ -23,7 +23,7 @@ function qRender(){
 
   const code = Q.mode==="naive"
    ? `<span class="c"># views.py</span>
-rows = Enrollment.objects.filter(student=me)      <span class="c"># 1 query</span>
+rows = Enlistment.objects.filter(student=me)      <span class="c"># 1 query</span>
 
 <span class="c"># templates/schedule.html</span>
 {% for e in rows %}
@@ -31,7 +31,7 @@ rows = Enrollment.objects.filter(student=me)      <span class="c"># 1 query</spa
 {% endfor %}`
    : Q.mode==="join"
    ? `<span class="c"># views.py</span>
-rows = Enrollment.objects.filter(student=me) \\
+rows = Enlistment.objects.filter(student=me) \\
                  .<span class="kw">select_related</span>(<span class="s">"course"</span>)      <span class="c"># 1 query, joined</span>
 
 <span class="c"># templates/schedule.html</span>
@@ -44,12 +44,12 @@ titles = cache.get(<span class="s">"course_titles"</span>)
     titles = {c.id: c.title <span class="kw">for</span> c <span class="kw">in</span> Course.objects.all()}
     cache.set(<span class="s">"course_titles"</span>, titles, 3600)   <span class="c"># 1 query an hour</span>
 
-rows = Enrollment.objects.filter(student=me)      <span class="c"># 1 query</span>`;
+rows = Enlistment.objects.filter(student=me)      <span class="c"># 1 query</span>`;
   $("#qCode").innerHTML=code;
   $("#qNote").textContent = Q.mode==="naive"
-    ? `${n} enrollments on the page, so the database was queried ${n+1} times`
+    ? `${n} enlistments on the page, so the database was queried ${n+1} times`
     : Q.mode==="join" ? "one query, however many rows come back"
-    : "one query for the enrollments, and the titles were already in memory";
+    : "one query for the enlistments, and the titles were already in memory";
 
   const set=(id,v,hot,good)=>{const g=$(id);g.querySelector(".gv").firstChild.nodeValue=v;
     g.classList.toggle("hot",!!hot);g.classList.toggle("good",!!good)};
@@ -62,10 +62,10 @@ rows = Enrollment.objects.filter(student=me)      <span class="c"># 1 query</spa
   const v=$("#qVerdict");
   if(Q.mode==="naive"){
     v.className = n>20 ? "verdict bad" : "verdict warn";
-    v.innerHTML=`<b>${n+1} queries: the N+1 query problem</b>The page asks once for the enrollments, then once more for each row's course. At ${n} rows the server tops out at ${Math.round(m.rps)} pages a second, so try One join and compare.`;
+    v.innerHTML=`<b>${n+1} queries: the N+1 query problem</b>The page asks once for the enlistments, then once more for each row's course. At ${n} rows the server tops out at ${Math.round(m.rps)} pages a second, so try One join and compare.`;
   } else if(Q.mode==="join"){
     v.className="verdict ok";
-    v.innerHTML=`<b>1 query, and the server now serves up to ${Math.round(m.rps)} pages a second, up from ${Math.round(naive.rps)}</b>The page and its output are the same, and the capacity is ${(m.rps/naive.rps).toFixed(1)}× higher. One line of code asks the database for each enrollment together with its course.`;
+    v.innerHTML=`<b>1 query, and the server now serves up to ${Math.round(m.rps)} pages a second, up from ${Math.round(naive.rps)}</b>The page and its output are the same, and the capacity is ${(m.rps/naive.rps).toFixed(1)}× higher. One line of code asks the database for each enlistment together with its course.`;
   } else {
     v.className="verdict ok";
     v.innerHTML=`<b>Also 1 query, with no join</b>Course titles change a few times a year, so a copy kept in memory can serve them for an hour. This works for small tables that rarely change.`;

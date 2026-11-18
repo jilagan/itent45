@@ -7,9 +7,9 @@ const TERMS=[
  {t:"Course",            k:"E", why:"A kind of thing the school keeps data about, with many examples that can be told apart."},
  {t:"MGT 45",          k:"I", why:"One course. Drawing a box for each course would take 3,000 boxes."},
  {t:"Units",             k:"A", why:"A property of a course. The value 3 describes the course."},
- {t:"Enrollment",        k:"E", why:"An <b class=\"i\">event</b>: a student signing up for a course. It has a date, a status and a grade, and none of those belong to the student or to the course alone."},
- {t:"Enrolled on 12 Aug",k:"I", why:"One enrollment. It is one example of the Enrollment entity."},
- {t:"Grade",             k:"A", why:"A property of an enrollment. It belongs to neither the student nor the course alone."},
+ {t:"Enlistment",        k:"E", why:"An <b class=\"i\">event</b>: a student signing up for a course. It has a date, a status and a grade, and none of those belong to the student or to the course alone."},
+ {t:"Enlisted on 12 Aug",k:"I", why:"One enlistment. It is one example of the Enlistment entity."},
+ {t:"Grade",             k:"A", why:"A property of an enlistment. It belongs to neither the student nor the course alone."},
  {t:"Section",           k:"E", why:"Debatable. It is an attribute if it only names a letter, and an entity if it also has a room, a schedule and a seat limit."}
 ];
 const KIND={E:"entity",A:"attribute",I:"instance"};
@@ -33,6 +33,6 @@ function renderEnt(){
   v.className = right===TERMS.length ? "verdict ok" : "verdict warn";
   v.innerHTML = right===TERMS.length
     ? `<b>All ten correct</b>You decided which nouns become tables, columns and rows. Making these decisions before writing any SQL is called conceptual modeling.`
-    : `<b>${right} of ${TERMS.length} correct</b>Read the explanations under the terms marked in red. Enrollment and Section are where real diagrams most often go wrong.`;
+    : `<b>${right} of ${TERMS.length} correct</b>Read the explanations under the terms marked in red. Enlistment and Section are where real diagrams most often go wrong.`;
 }
 renderEnt();

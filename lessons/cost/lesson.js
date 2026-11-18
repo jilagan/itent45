@@ -63,7 +63,7 @@ function renderCost(){
   const v=$("#costVerdict");
   if(!COST.capex){
     v.className="verdict ok";
-    v.innerHTML=`<b>Capacity follows demand</b>You pay for roughly what you used, and the enlistment spike is served without owning hardware for it. The cost is a meter that runs every hour.`;
+    v.innerHTML=`<b>Capacity follows demand</b>You pay for roughly what you used, and the enlistment spike is served without owning hardware for it. The cost is a charge for every hour the capacity runs.`;
   } else if(lostPct>=.005 && m.waste/m.capSum>.5){
     v.className="verdict bad";
     v.innerHTML=`<b>Wrong in both directions at once</b>${pct(m.waste)} of the capacity you bought sat idle across the year, and you still turned people away on enlistment morning.`;

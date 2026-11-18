@@ -4,7 +4,7 @@
  "label": "Virtual machines and the cloud",
  "desc": "How one physical machine is split into many virtual ones.",
  "outcomes": [
-  "Explain a VM as a slice of a host",
+  "Explain a VM as a share of a host",
   "Name the five NIST characteristics and tie three to things you did",
   "Place IaaS, PaaS and SaaS by who runs what"
  ],

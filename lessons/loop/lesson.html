@@ -4,12 +4,12 @@
         <p>An <dfn title="A language model connected to tools, so it can act and see the result">agent</dfn> is a language model connected to tools. It thinks, acts and checks the result, then repeats.</p>
       </div>
 
-      <div class="sec" data-sec="intern" data-title="Start with an intern at the registrar">
-        <p>Suppose you send an intern to the registrar's office to fix a student's record. The intern decides what to do, does it, looks at what happened, and decides what to do next. A chat model can only produce text. An agent is a model that can also act and see the result.</p>
-        <div class="scene" role="group" aria-label="Deciding is a thought, doing is an action, looking at the result is an observation" data-art="registrar-file-check" data-art-desc="A clerk at a registrar window writes a correction on a student's file with a pen while a student waits outside the window.">
+      <div class="sec" data-sec="coding-agent" data-title="Start with a coding agent">
+        <p>You ask an AI coding agent to fix a bug. On screen it opens a file, edits a line, runs the tests and reads the result. Two tests fail, so it edits another line and runs the tests again. A chat model only produces text. An agent is a model that can also act and see what happened.</p>
+        <div class="scene" role="group" aria-label="The agent writes a thought, makes a request to a tool, and receives the tool's result" data-art="coding-agent-editor" data-art-desc="A student at a laptop watches a code editor on the screen, drawn as a column of plain bars beside a small panel of ticks and crosses.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Decides what to do</b><span><dfn title="A line where the model reasons about what to do next">Thought</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Does it</b><span><dfn title="A request to a tool, such as reading a file or running tests">Action</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bowl-food"/></svg></div><figcaption><b>Looks at what happened</b><span><dfn title="The result a tool sends back to the model">Observation</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-terminal-window"/></svg></div><figcaption><b>Edits a file or runs a command</b><span><dfn title="A request to a tool, such as reading a file or running tests">Action</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-checks"/></svg></div><figcaption><b>Reads the test result</b><span><dfn title="The result a tool sends back to the model">Observation</dfn></span></figcaption></figure>
         </div>
         <div class="ask"><b>Think first.</b> Of thinking, acting and looking at the result, which could a model that only produces text never do by itself, and why?</div>
         <div class="instructor">Students usually say the model cannot act. Push for the second half: it also cannot know what happened without a result from outside itself.</div>
@@ -47,7 +47,7 @@
         <details class="more">
           <summary>More detail</summary>
           <h4>It does not know when to stop</h4>
-          <p>The model stops when it predicts a special end-of-output token, the same way it predicts any other token. That can happen too early, or not at all.</p>
+          <p>The model stops when it predicts a special end-of-output token. That token is one more prediction in the sequence, so it can come too early or not at all.</p>
           <h4>The context window fills</h4>
           <p>Every thought, action and observation is added to it. After twenty steps your original instruction may no longer be in what the model can see.</p>
           <h4>Errors compound</h4>

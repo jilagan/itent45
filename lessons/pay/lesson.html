@@ -1,22 +1,23 @@
     <section class="panel" id="p-pay">
       <div class="head">
         <h2>Online payments and payment gateways</h2>
-        <p>A <dfn title="A company such as PayMongo, Stripe or Xendit that handles card payments for shops">payment gateway</dfn> handles card payments for shops. This lesson follows one payment from the shopper's browser to the bank.</p>
+        <p>A <dfn title="A company that takes card payments on behalf of apps and shops">payment gateway</dfn> handles card payments for an app. This lesson follows one payment from the user's phone to the bank.</p>
       </div>
 
-      <div class="sec" data-sec="cashier" data-title="Start with a cashier">
-        <p>At a store counter you pay the cashier and get a claim stub. The shop does not process your card itself, because the cashier's terminal talks to the bank. Online, the shop's server hands the payment to a payment gateway and gets back a token, which works like the claim stub.</p>
-        <div class="scene" role="group" aria-label="The shopper is the browser, the shop is your server, the cashier and claim stub are the gateway and the token" data-art="cashier-claim-stub" data-art-desc="A shopper hands payment to a cashier at a store counter and receives a small claim stub, while the shop owner stands to one side.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Shopper</b><span>Browser</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-storefront"/></svg></div><figcaption><b>Shop</b><span>Your server</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-ticket"/></svg></div><figcaption><b>Cashier and claim stub</b><span>Gateway and token</span></figcaption></figure>
+      <div class="sec" data-sec="card-payment" data-title="Start with a card payment">
+        <p>You finish a dinner order in a food delivery app. At checkout you pick a card, type the number, the expiration date and the security code, and tap Pay. The screen shows that the payment is being confirmed. A few seconds later the order status changes to paid.</p>
+        <div class="scene" role="group" aria-label="The phone, the app's server, the payment gateway and the bank are the parts involved in a card payment" data-art="dinner-order-card-payment" data-art-desc="A student sitting on a sofa holds a phone whose screen shows a plain card shape and one button, with a closed laptop on the cushion beside them.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg></div><figcaption><b>Your phone</b><span>Where you type the card</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>The app's server</b><span>Holds the order</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-credit-card"/></svg></div><figcaption><b>Payment gateway</b><span>Handles card payments</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bank"/></svg></div><figcaption><b>The bank</b><span>Moves the money</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> When you type your card number into a checkout page, which machines does the number pass through on its way to the bank? List them.</div>
-        <div class="instructor">Most students include the shop's server in their list. The correct list leaves it out. Ask them to say why that matters for the shop.</div>
+        <div class="ask"><b>Think first.</b> When you tap Pay, which machines does the card number pass through on its way to the bank? List them.</div>
+        <div class="instructor">Most students include the delivery app's server in their list. The correct list leaves it out. Ask them to say why that matters for the company that runs the app.</div>
       </div>
 
       <div class="sec" data-sec="checkout-flow" data-title="Follow one payment">
-        <p>Four parties take part in a checkout: the shopper's browser, your server, the gateway and the bank. Press Play and watch where the card number goes. Your server receives only a <dfn title="A code that stands in for the card number">token</dfn>.</p>
+        <p>Four parties take part in a checkout: the user's browser or app, your server, the gateway and the bank. Press Play and watch where the card number goes. Your server receives only a <dfn title="A code that stands in for the card number">token</dfn>.</p>
 
         <div class="ctrls">
           <button class="btn primary" id="pyPlay">Play</button>
@@ -67,7 +68,7 @@
           <div class="artlbl" id="pyLbl"></div>
           <div class="art" id="pyArt"></div>
           <h4>Why the card skips your server</h4>
-          <p>The browser sends the card directly to the gateway and gets back a token, which is an opaque code that stands for the card. Your server only handles the token. If card numbers passed through a machine you own, that machine would fall under PCI DSS (the card industry's security rules), and so would every system it talks to. With a token, that burden stays with the gateway, which is set up to meet those rules.</p>
+          <p>Examples of gateways are PayMongo, Stripe and Xendit. The browser sends the card directly to the gateway and gets back a token, which is an opaque code that stands for the card. Your server only handles the token. If card numbers passed through a machine you own, that machine would fall under PCI DSS (the card industry's security rules), and so would every system it talks to. With a token, that burden stays with the gateway, which is set up to meet those rules.</p>
           <h4>Step 9 reverses the roles</h4>
           <p>The gateway calls your server, so your API is the server in that exchange. The signature header is the only check that stops anyone on the internet from marking their own order paid.</p>
           <h4>Why every message is JSON</h4>
@@ -82,11 +83,11 @@
       </div>
 
       <div class="sec" data-sec="double-charge" data-title="A double charge">
-        <p>When a connection stalls, shoppers press Pay again. Press Pay three times and read the total. Then switch on the <dfn title="A unique code sent with a request so repeats are recognized">idempotency key</dfn>, press New checkout and try again.</p>
+        <p>When a connection stalls, people press Pay again. Press Pay three times and read the total. Then switch on the <dfn title="A unique code sent with a request so repeats are recognized">idempotency key</dfn>, press New checkout and try again.</p>
 
         <div class="srv">
           <div class="card">
-            <div class="card-t">Checkout, one pair of shoes, ₱1,299</div>
+            <div class="card-t">Checkout, one dinner order, ₱1,299</div>
             <button class="paybtn" id="payGo">Pay ₱1,299</button>
             <div class="charges" id="chgList"></div>
             <div class="total" id="chgTotal">

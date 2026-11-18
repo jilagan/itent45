@@ -5,12 +5,12 @@
    "id": "norm-1",
    "sec": "rename",
    "type": "mc",
-   "stem": "40 students are enrolled in MGT 45 and the course title changes. How many rows are written in the flat table, and how many in the split design?",
+   "stem": "40 students are enlisted in MGT 45 and the course title changes. How many rows are written in the flat table, and how many in the split design?",
    "options": [
     {
      "text": "40 in the flat table and 1 in the split design.",
      "correct": true,
-     "feedback": "The flat table stores the title in every enrollment row. The split design stores it once in the courses table."
+     "feedback": "The flat table stores the title in every enlistment row. The split design stores it once in the courses table."
     },
     {
      "text": "1 in both, because only one title changed.",
@@ -20,7 +20,7 @@
     {
      "text": "40 in both, because the database rewrites every table.",
      "correct": false,
-     "feedback": "The split design changes one row in the courses table. The enrollments hold only the course id, which did not change."
+     "feedback": "The split design changes one row in the courses table. The enlistments hold only the course id, which did not change."
     },
     {
      "text": "1 in the flat table and 40 in the split design.",
@@ -64,7 +64,7 @@
    "stem": "A teammate says the flat table is the better design, because the schedule page then needs no join. What is the best response?",
    "options": [
     {
-     "text": "That is true for reads, but each title change needs one write per enrollment.",
+     "text": "That is true for reads, but each title change needs one write per enlistment.",
      "correct": true,
      "feedback": "The flat design saves a join when reading and costs more when changing. A split design stores each fact once."
     },

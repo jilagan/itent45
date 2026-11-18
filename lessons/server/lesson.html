@@ -4,14 +4,14 @@
         <p>A server can finish only so many requests per second. The limit depends on the number of workers and on the time each request takes.</p>
       </div>
 
-      <div class="sec" data-sec="cashiers" data-title="Start with a row of cashiers">
-        <p>A fast-food branch has a few cashiers and one line. Customers arrive whether or not a cashier is free, and each cashier serves one customer at a time. If customers arrive faster than the cashiers can serve them, the line keeps growing.</p>
-        <div class="scene" role="group" aria-label="Customers are requests, the line is the queue, the cashiers are workers" data-art="fast-food-counters" data-art-desc="Two cashiers stand ready at their fast-food counters while a single line of two customers waits to be called forward.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Customers</b><span><dfn title="A message from a browser asking for a page or for data">Requests</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg></div><figcaption><b>The line</b><span>Queue</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Cashiers</b><span>Workers</span></figcaption></figure>
+      <div class="sec" data-sec="ticket-sale" data-title="Start with a ticket sale">
+        <p>A concert ticket sale opens at noon. You load the site and a waiting page appears, asking you to stay on it. A few minutes later the page lets you in, or it shows an error. Thousands of people loaded the same site in the same minute.</p>
+        <div class="scene" role="group" aria-label="Browsers send requests, requests wait in a queue, the server's workers finish them" data-art="ticket-sale-waiting-page" data-art-desc="A student at a desk looks at a laptop whose screen shows a plain page with a long empty progress bar, and a phone on the desk shows the same page.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg></div><figcaption><b>Browsers</b><span><dfn title="A message from a browser asking for a page or for data">Requests</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-numbers"/></svg></div><figcaption><b>Waiting requests</b><span>Queue</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>The ticket site's server</b><span>Workers</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> If four cashiers each need 200 milliseconds per customer, how many customers can they serve in one second?</div>
+        <div class="ask"><b>Think first.</b> If a server has four workers and each request takes 200 milliseconds, how many requests can it finish in one second?</div>
         <div class="instructor">The answer is 4 workers divided by 0.2 seconds, which is 20 requests per second. Watch for students who multiply the two numbers. Ask what they expect p95 latency to do when arrivals reach 30 per second.</div>
       </div>
 

@@ -68,8 +68,8 @@ function trRender(){
   $("#trNote").innerHTML={
     0:`Each step moves the line only a little. It goes the right way but needs thousands of steps, which wastes computing.`,
     1:`Steady progress. The loss falls on every step and the line settles where it should.`,
-    2:`The loss falls, goes past the bottom and starts bouncing. The line jitters and does not settle.`,
-    3:`Each step ends higher up the hill than where it started. The loss climbs, and waiting does not fix it.`
+    2:`The loss falls, overshoots its lowest value and starts bouncing up and down. The line jitters and does not settle.`,
+    3:`Each step leaves the loss larger than before. The loss climbs, and waiting does not fix it.`
   }[TR.lr];
 
   const v=$("#trVerdict");
@@ -81,10 +81,10 @@ function trRender(){
   const rising = h.length>6 && h[h.length-1] > h[Math.max(0,h.length-6)];
   if(TR.lr===3 || (rising && TR.lr===2)){
     v.className="verdict bad";
-    v.innerHTML=`<b>The loss is going up</b>The steps are too large, so each one goes past the bottom and ends higher up the other side. Nothing raises an error, so you find out by watching the loss.`;
+    v.innerHTML=`<b>The loss is going up</b>The steps are too large, so each one overshoots the lowest loss and leaves a worse line than before. Nothing raises an error, so you find out by watching the loss.`;
   } else if(L<0.45){
     v.className="verdict ok";
-    v.innerHTML=`<b>Loss ${L.toFixed(3)} after ${TR.step} step${TR.step===1?"":"s"}, ${ok} of ${TRD.length} correct</b>The line stopped moving because the slope under it flattened out. No straight line can catch the two students it still gets wrong.`;
+    v.innerHTML=`<b>Loss ${L.toFixed(3)} after ${TR.step} step${TR.step===1?"":"s"}, ${ok} of ${TRD.length} correct</b>The line stopped moving because the slope of the loss flattened out. No straight line can catch the two students it still gets wrong.`;
   } else {
     v.className="verdict warn";
     v.innerHTML=`<b>Loss ${L.toFixed(3)}, ${ok} of ${TRD.length} correct after ${TR.step} step${TR.step===1?"":"s"}</b>The loss is still falling. Keep pressing <em>Step</em>, or press <em>Run 200</em>.`;

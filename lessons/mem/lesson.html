@@ -4,23 +4,23 @@
         <p>A server has a fixed amount of <dfn title="Random access memory: the working space for programs that are running now">RAM</dfn>. The operating system and the database take some of it before your application starts, and what is left decides how many workers fit.</p>
       </div>
 
-      <div class="sec" data-sec="branch-floor" data-title="Start with a fast-food branch">
-        <p>A fast-food branch has a fixed floor area. The kitchen, the freezer and the stockroom use space before the first cashier arrives, and every cashier needs a counter. A server has the same budget, and its floor area is memory.</p>
-        <div class="scene" role="group" aria-label="The floor area is RAM, the kitchen and stockroom are the operating system and database, the counters are workers" data-art="branch-floor-area" data-art-desc="A cutaway side view of a fast-food branch where a large freezer and a stockroom with shelves fill most of the floor, with one small cashier counter and a single cashier at the end.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hamburger"/></svg></div><figcaption><b>Floor area</b><span>RAM</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cooking-pot"/></svg></div><figcaption><b>Kitchen and stockroom</b><span>Operating system and database</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Counters</b><span>Workers</span></figcaption></figure>
+      <div class="sec" data-sec="enlistment-error" data-title="Start with an enlistment error">
+        <p>You press Enlist at 8:00 on enlistment day. The page spins for half a minute, then shows an error and asks you to try again. Thousands of students sent requests in the same minute. One cause of such an error is a server that has run out of RAM.</p>
+        <div class="scene" role="group" aria-label="A laptop sends a request to the enlistment server, which has a fixed amount of RAM" data-art="enlistment-error-laptop" data-art-desc="A student sits at a desk looking at a laptop whose screen shows a plain grey box and a small spinning circle, with a phone lying next to the laptop.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-laptop"/></svg></div><figcaption><b>Your laptop</b><span>Sends the request</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>Enlistment server</b><span>Receives thousands of requests</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-memory"/></svg></div><figcaption><b>RAM</b><span>A fixed amount per server</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> A laptop with 8 GB of RAM already has part of it in use before you open any program. How much do you think is in use right now?</div>
-        <div class="instructor">Open Task Manager (Windows) or Activity Monitor (Mac) to show the real figure for the laptop. Students usually guess close to zero. Then ask for a guess for a 2 GB server and compare it with the bar at the default setting in the next step.</div>
+        <div class="ask"><b>Think first.</b> Before any student reaches the enlistment server, part of its RAM is already in use. What do you think is using it?</div>
+        <div class="instructor">Open Task Manager (Windows) or Activity Monitor (Mac) to show how much RAM a laptop uses with no programs open. Students usually guess close to zero. Then ask what a server has running before the first request, and compare their list with the bar at the default setting in the next step.</div>
       </div>
 
       <div class="sec" data-sec="budget" data-title="Count the workers">
-        <p>A <dfn title="One running copy of your application, which handles one request at a time">worker</dfn> needs memory of its own. Drag Total RAM and Workers. Watch the bar and the message under it.</p>
+        <p>Each request from an enlistment page is handled by a <dfn title="One running copy of your application, which handles one request at a time">worker</dfn>, and a worker needs memory of its own. Drag Total RAM and Workers. Watch the bar and the message under it.</p>
         <div class="srv">
           <div>
             <div class="card">
-              <div class="card-t">Memory budget</div>
+              <div class="card-t">How the memory is used</div>
               <div class="ramwrap">
                 <div class="rambar" id="ramBar"></div>
               </div>
@@ -73,7 +73,7 @@
       </div>
 
       <div class="sec" data-sec="workers-threads" data-title="Workers and threads">
-        <p>Each worker is a separate <dfn title="A running program with its own private memory">process</dfn>. Twenty workers need twenty copies of your application in memory. A <dfn title="A separate line of work inside one process, sharing that process's memory">thread</dfn> shares the memory of its process, so many threads cost little extra. Threads suit work that mostly waits, such as waiting for the database.</p>
+        <p>Each worker is a separate <dfn title="A running program with its own private memory">process</dfn>. Twenty workers need twenty copies of your application in memory. A <dfn title="A part of a process that runs on its own and shares the process's memory">thread</dfn> shares the memory of its process, so many threads cost little extra. Threads suit work that mostly waits, such as waiting for the database.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>What one worker is</h4>
@@ -106,7 +106,7 @@
           <h4>What splitting changes</h4>
           <p>The application machine gets the database's memory back, so more workers fit. Postgres gets a whole machine, so it can keep frequently used data in memory and read less from disk. Both help.</p>
           <p>Every query now crosses a network and no longer stays inside one machine. That adds about 0.4 ms to each query. At two queries per request, every request takes 0.8 ms longer.</p>
-          <p>The model charges &#8369;540 a month for each gigabyte of RAM. The bottom row, cost per request per second, shows whether the second machine pays for itself. The "Database on the same machine" switch under the memory budget removes the database's memory from the budget without adding a machine. This comparison charges you for the second machine.</p>
+          <p>The model charges &#8369;540 a month for each gigabyte of RAM. The bottom row, cost per request per second, shows whether the second machine pays for itself. The "Database on the same machine" switch under the memory bar removes the database's memory from the bar without adding a machine. This comparison charges you for the second machine.</p>
           <h4>Reasons to separate the database</h4>
           <p>The main reasons are operational. The database can be backed up, copied to a standby and restarted without touching the application. A runaway query cannot use up the application's memory. The two machines can be sized separately. Speed is a weaker reason, as the cost row shows.</p>
           <p>For the workers' side of the same machine, see <a data-lesson="server">Server capacity</a>.</p>

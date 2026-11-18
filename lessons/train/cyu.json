@@ -10,7 +10,7 @@
     {
      "text": "Repeated measuring and nudging against the data. Nobody wrote the final line.",
      "correct": true,
-     "feedback": "Training finds the line by following the slope of the loss, one small step at a time."
+     "feedback": "Training finds the line by moving it in the direction that lowers the loss, one small step at a time."
     },
     {
      "text": "The programmer, who chose the final position of the line in advance.",
@@ -31,14 +31,14 @@
   },
   {
    "id": "train-2",
-   "sec": "walk",
+   "sec": "steps",
    "type": "mc",
    "stem": "A team sets the learning rate to its largest value and runs 200 steps. What happens to the loss?",
    "options": [
     {
      "text": "It rises or bounces up and down and does not settle.",
      "correct": true,
-     "feedback": "Each step is so large that it goes past the bottom and ends higher on the other side. The model gets worse while training runs."
+     "feedback": "Each step is so large that it overshoots the lowest loss and leaves a worse line. The model gets worse while training runs."
     },
     {
      "text": "It falls fastest and reaches the lowest value soonest.",
@@ -74,7 +74,7 @@
      "feedback": "A model that has finished stops because the slope flattened. A tiny learning rate can look similar, but the cause is the step size."
     },
     {
-     "text": "The learning rate is too large, so the steps overshoot the bottom.",
+     "text": "The learning rate is too large, so the steps overshoot the lowest loss.",
      "correct": false,
      "feedback": "A learning rate that is too large makes the loss rise or bounce. It does not make it barely change."
     },

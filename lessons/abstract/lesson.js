@@ -3,11 +3,11 @@
    Answers are computed from the data below. */
 
 /* ---------- 1. keep the details a question needs ---------- */
-const AB_DETAILS=["Stop names","Order of stops","Fare","Road distance","Traffic","Jeepney color","Building shapes"];
+const AB_DETAILS=["Station names","Order of stations","Ticket price","Distance","Delays","Train color","Building shapes"];
 const AB_QS=[
-  {q:"Which jeepney do I ride from Katipunan to Cubao?", needs:["Stop names","Order of stops"]},
-  {q:"How much is the fare from Katipunan to Cubao?",    needs:["Stop names","Fare"]},
-  {q:"How long will the ride from Katipunan to Cubao take at 5 PM?", needs:["Stop names","Road distance","Traffic"]}];
+  {q:"Which train do I take from North Station to Central Station?", needs:["Station names","Order of stations"]},
+  {q:"How much is the ticket from North Station to Central Station?",    needs:["Station names","Ticket price"]},
+  {q:"How long will the trip from North Station to Central Station take at 5 PM?", needs:["Station names","Distance","Delays"]}];
 const abK={q:0, on:new Set(AB_DETAILS), solved:new Set()};
 
 function abKDraw(){
@@ -49,7 +49,7 @@ abKDraw();
 /* ---------- 2. zoom ---------- */
 const AB_LEVELS=["Tap Order","The app sends the order to the server","The server saves the order in the database","The database writes a row to disk"];
 const AB_PEOPLE=[
-  {name:"Customer", the:"the customer", icon:"user", job:"Wants the order to go through.", level:1},
+  {name:"App user", the:"the app user", icon:"user", job:"Wants the order to go through.", level:1},
   {name:"App developer", the:"the app developer", icon:"device-mobile", job:"Checks what the app sends to the server.", level:2},
   {name:"Database administrator", the:"the database administrator", icon:"database", job:"Checks how each order is written to disk.", level:4}];
 const abZ={lvl:1, done:new Set()};
@@ -76,7 +76,7 @@ function abZPress(i){
     abZ.done.add(i); abZDraw();
     if(abZ.done.size===AB_PEOPLE.length){
       v.className="verdict ok";
-      v.innerHTML=`<b>All three matched</b>The customer needs level 1, the app developer level 2 and the database administrator level 4. Each can ignore the levels they do not work on.`;
+      v.innerHTML=`<b>All three matched</b>The app user needs level 1, the app developer level 2 and the database administrator level 4. Each can ignore the levels they do not work on.`;
     } else {
       v.className="verdict ok";
       v.innerHTML=`<b>Level ${p.level} fits</b>${p.the[0].toUpperCase()+p.the.slice(1)} works at level ${p.level}. The other levels are detail that this job can ignore.`;

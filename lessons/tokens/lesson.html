@@ -4,13 +4,14 @@
         <p>A language model reads text as short pieces called <dfn title="One piece of text a model reads: a whole word, part of a word or punctuation">tokens</dfn>. This lesson shows how sentences are cut up and what that means for accuracy and cost.</p>
       </div>
 
-      <div class="sec" data-sec="pieces" data-title="Start with a word in pieces">
-        <p>A child sounding out a long word reads it in pieces, such as con-ver-sa-tion. The pieces vary in length, and the child does not look at each letter inside a piece. A language model reads text in pieces too: a whole word, part of a word or a punctuation mark.</p>
-        <div class="scene" role="group" aria-label="The child is the model, the pieces of the word are tokens" data-art="child-sounding-out-word" data-art-desc="A child at a desk points at one piece of a long word that has been broken into separate paper tiles.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>The child reading in pieces</b><span>The model</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Pieces such as con-ver-sa-tion</b><span>Tokens, cut by a <dfn title="A program that cuts text into tokens before the model sees it">tokenizer</dfn></span></figcaption></figure>
+      <div class="sec" data-sec="letter-count" data-title="Start with a miscounted letter">
+        <p>You ask an AI chatbot how many times the letter r appears in "strawberry". The answer comes back in a moment, and the number can be wrong. The same chatbot can write a clear paragraph about the topic. It reads text as short pieces called tokens, and the pieces decide what it can see.</p>
+        <div class="scene" role="group" aria-label="Your question is cut into tokens by the tokenizer, and the model reads the tokens" data-art="chatbot-letter-count" data-art-desc="A student sits at a desk with a laptop and leans toward the screen, which shows a short line and one plain grey bar under it.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-keyboard"/></svg></div><figcaption><b>Your question</b><span>Typed text</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-text-aa"/></svg></div><figcaption><b>The text, cut into pieces</b><span>Cut by a <dfn title="A program that cuts text into tokens before the model sees it">tokenizer</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cpu"/></svg></div><figcaption><b>The model</b><span>Reads the tokens</span></figcaption></figure>
         </div>
-        <div class="ask"><b>Think first.</b> Count the r's in <em>strawberry</em>. Now suppose the word reached you as three chunks and you could not see inside any chunk. How well could you count?</div>
+        <div class="ask"><b>Think first.</b> What would the model need to receive as input to count letters reliably? Write down your answer, then compare it with what the model receives in the next step.</div>
       </div>
 
       <div class="sec" data-sec="cut" data-title="See how text is cut">

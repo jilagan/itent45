@@ -4,7 +4,7 @@
  "label": "Recurrent networks",
  "desc": "The older way of reading text one word at a time.",
  "outcomes": [
-  "Describe reading one word at a time with one fixed note",
+  "Describe reading one word at a time with one fixed-size hidden state",
   "Predict what gets forgotten across a long gap",
   "Say why that limits long inputs"
  ],

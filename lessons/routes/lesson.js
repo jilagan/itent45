@@ -3,16 +3,16 @@
 
 /* ---------- data ---------- */
 const FARE=13;
-const EDGES=[["Home","Marikina",8],["Home","Katipunan",15],["Marikina","Ortigas",12],["Katipunan","Ortigas",6],
-  ["Katipunan","Cubao",20],["Ortigas","Loyola",12],["Ortigas","Cubao",10],["Cubao","Loyola",5],
-  ["Loyola","School",6],["Cubao","School",18],["Ortigas","School",23]];
+const EDGES=[["Home","Stop A",8],["Home","Stop B",15],["Stop A","Stop C",12],["Stop B","Stop C",6],
+  ["Stop B","Stop D",20],["Stop C","Stop E",12],["Stop C","Stop D",10],["Stop D","Stop E",5],
+  ["Stop E","School",6],["Stop D","School",18],["Stop C","School",23]];
 const LAYOUT={
- narrow:{N:{Home:[50,4],Marikina:[21,22],Katipunan:[79,22],Ortigas:[21,46],Cubao:[79,46],Loyola:[50,66],School:[50,95]},
-  T:{"Home-Marikina":.5,"Home-Katipunan":.5,"Marikina-Ortigas":.5,"Katipunan-Ortigas":.5,"Katipunan-Cubao":.5,"Ortigas-Loyola":.5,
-     "Ortigas-Cubao":.5,"Cubao-Loyola":.5,"Loyola-School":.5,"Cubao-School":.55,"Ortigas-School":.55}},
- wide:{N:{Home:[9,50],Marikina:[28,12],Katipunan:[28,88],Ortigas:[57,12],Cubao:[57,88],Loyola:[68,50],School:[92,50]},
-  T:{"Home-Marikina":.4,"Home-Katipunan":.65,"Marikina-Ortigas":.45,"Katipunan-Ortigas":.75,"Katipunan-Cubao":.5,"Ortigas-Loyola":.5,
-     "Ortigas-Cubao":.5,"Cubao-Loyola":.65,"Loyola-School":.45,"Cubao-School":.3,"Ortigas-School":.65}}
+ narrow:{N:{Home:[50,4],"Stop A":[21,22],"Stop B":[79,22],"Stop C":[21,46],"Stop D":[79,46],"Stop E":[50,66],School:[50,95]},
+  T:{"Home-Stop A":.5,"Home-Stop B":.5,"Stop A-Stop C":.5,"Stop B-Stop C":.5,"Stop B-Stop D":.5,"Stop C-Stop E":.5,
+     "Stop C-Stop D":.5,"Stop D-Stop E":.5,"Stop E-School":.5,"Stop D-School":.55,"Stop C-School":.55}},
+ wide:{N:{Home:[9,50],"Stop A":[28,12],"Stop B":[28,88],"Stop C":[57,12],"Stop D":[57,88],"Stop E":[68,50],School:[92,50]},
+  T:{"Home-Stop A":.4,"Home-Stop B":.65,"Stop A-Stop C":.45,"Stop B-Stop C":.75,"Stop B-Stop D":.5,"Stop C-Stop E":.5,
+     "Stop C-Stop D":.5,"Stop D-Stop E":.65,"Stop E-School":.45,"Stop D-School":.3,"Stop C-School":.65}}
 };
 const NODES=Object.keys(LAYOUT.wide.N);
 const ekey=(a,b)=>EDGES.findIndex(e=>(e[0]===a&&e[1]===b)||(e[0]===b&&e[1]===a));
@@ -128,7 +128,7 @@ function bDraw(){
   MB.labs.forEach((el,i)=>{
     const e=EDGES[i], c=B.closed[i];
     el.classList.toggle("closed",c);
-    el.innerHTML=c?ICO("waves"):String(e[2]);
+    el.innerHTML=c?ICO("prohibit"):String(e[2]);
     el.setAttribute("aria-label",`${e[0]} to ${e[1]}, ${e[2]} minutes, ${c?"closed. Press to open":"open. Press to close"}`);
     el.setAttribute("aria-pressed",String(c));
   });
@@ -137,7 +137,7 @@ function bDraw(){
   const v=$("#rtBVerdict");
   if(!best){
     $("#rtBMin").textContent="none"; $("#rtBExtra").textContent="none";
-    v.className="verdict bad"; v.innerHTML=`<b>No route is left.</b>Home cannot reach School with these lines closed. Press a flood sign to open that line again.`;
+    v.className="verdict bad"; v.innerHTML=`<b>No route is left.</b>Home cannot reach School with these lines closed. Press a closed line to open it again.`;
     return;
   }
   const extra=best.min-base;

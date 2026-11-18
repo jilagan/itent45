@@ -6,7 +6,7 @@ const VALS=[47,12,89,33,65,5,71,24];          /* fixed deck, so the text stays t
 const L="ABCDEFGH";
 let S;
 function srtReset(){
-  S={order:VALS.map((_,i)=>i), sel:[], cmp:0, done:false, line:"No cards selected.", tag:{}};
+  S={order:VALS.map((_,i)=>i), sel:[], cmp:0, done:false, line:"No items selected.", tag:{}};
   srtDraw();
   const v=$("#srtVerdict"); v.hidden=true; v.textContent="";
 }
@@ -15,7 +15,7 @@ function srtDraw(focusId){
   row.innerHTML=S.order.map((id,pos)=>{
     const sel=S.sel.includes(id), t=S.tag[id]||"";
     const face=S.done?VALS[id]:L[id];
-    const lab=S.done?`Card ${L[id]}, value ${VALS[id]}, position ${pos+1}`:`Card ${L[id]}, position ${pos+1}${sel?", selected":""}`;
+    const lab=S.done?`Item ${L[id]}, value ${VALS[id]}, position ${pos+1}`:`Item ${L[id]}, position ${pos+1}${sel?", selected":""}`;
     return `<div class="srt-cell"><span class="srt-pos">${pos+1}</span>
       <button class="srt-card${S.done?" up":""}" data-id="${id}" aria-pressed="${sel}" aria-label="${lab}"${S.done?" disabled":""}>${face}</button>
       <span class="srt-tag${t?" hi":""}">${sel&&t?t:""}</span></div>`;}).join("");
@@ -29,7 +29,7 @@ function srtDraw(focusId){
 function srtPress(id){
   if(S.done) return;
   $("#srtVerdict").hidden=true;
-  if(S.sel.length===1 && S.sel[0]===id){ S.sel=[]; S.tag={}; S.line="No cards selected."; }
+  if(S.sel.length===1 && S.sel[0]===id){ S.sel=[]; S.tag={}; S.line="No items selected."; }
   else{
     if(S.sel.length===2){ S.sel=[]; S.tag={}; }
     S.sel.push(id);
@@ -37,8 +37,8 @@ function srtPress(id){
       const [a,b]=S.sel; S.cmp++;
       const big=VALS[a]>VALS[b]?a:b, small=big===a?b:a;
       S.tag={}; S.tag[big]="larger"; S.tag[small]="smaller";
-      S.line=`Card ${L[big]} is larger than card ${L[small]}.`;
-    } else { S.tag={}; S.line=`Card ${L[id]} is selected. Press a second card.`; }
+      S.line=`Item ${L[big]} has a larger value than item ${L[small]}.`;
+    } else { S.tag={}; S.line=`Item ${L[id]} is selected. Press a second item.`; }
   }
   srtDraw(id);
 }
@@ -47,7 +47,7 @@ $("#srtSwap").onclick=()=>{
   $("#srtVerdict").hidden=true;
   const [a,b]=S.sel, i=S.order.indexOf(a), j=S.order.indexOf(b);
   S.order[i]=b; S.order[j]=a;
-  S.line=`Cards ${L[a]} and ${L[b]} swapped places.`;
+  S.line=`Items ${L[a]} and ${L[b]} swapped places.`;
   srtDraw();
   $("#srtSwap").focus();
 };
@@ -55,18 +55,18 @@ $("#srtCheck").onclick=()=>{
   const ok=S.order.every((id,k)=>k===0||VALS[S.order[k-1]]<VALS[id]);
   const v=$("#srtVerdict"); v.hidden=false;
   if(ok){
-    S.done=true; S.sel=[]; S.tag={}; S.line="The cards are face up and in order.";
+    S.done=true; S.sel=[]; S.tag={}; S.line="The values are shown and the items are in order.";
     const n=S.cmp;
     v.className="verdict ok";
     v.innerHTML = n<16
-      ? `<b>Sorted in ${n} comparisons.</b>That is fewer than the 16 that always work for eight cards, so luck helped. Comparing every pair takes 28.`
+      ? `<b>Sorted in ${n} comparisons.</b>That is fewer than the 16 that always work for eight items, so luck helped. Comparing every pair takes 28.`
       : n>28
-      ? `<b>Sorted in ${n} comparisons.</b>That is more than the 28 it takes to compare every pair. The fewest that always work for eight cards is 16.`
-      : `<b>Sorted in ${n} comparisons.</b>Comparing every pair takes 28. The fewest that always work for eight cards is 16.`;
+      ? `<b>Sorted in ${n} comparisons.</b>That is more than the 28 it takes to compare every pair. The fewest that always work for eight items is 16.`
+      : `<b>Sorted in ${n} comparisons.</b>Comparing every pair takes 28. The fewest that always work for eight items is 16.`;
     srtDraw();
   } else {
     v.className="verdict warn";
-    v.innerHTML=`<b>Not in order yet.</b>Compare more cards and swap the ones that are out of place.`;
+    v.innerHTML=`<b>Not in order yet.</b>Compare more items and swap the ones that are out of place.`;
   }
 };
 $("#srtReset").onclick=()=>{ srtReset(); $("#srtReset").focus(); };
@@ -87,7 +87,7 @@ function hvStart(){
 }
 function hvDraw(){
   $("#hvTarget").textContent=val(H.t);
-  $("#hvSizes").innerHTML=SIZES.map(n=>`<button aria-pressed="${n===H.n}" data-n="${n}">${n} cards</button>`).join("");
+  $("#hvSizes").innerHTML=SIZES.map(n=>`<button aria-pressed="${n===H.n}" data-n="${n}">${n} entries</button>`).join("");
   $$("#hvSizes button").forEach(b=>b.onclick=()=>{ H.n=+b.dataset.n; if(b.getAttribute("aria-pressed")==="true") H.round[H.n]++; hvStart(); });
   let html="";
   for(let k=0;k<H.n;k++){
@@ -121,8 +121,8 @@ function hvPress(k){
     const g=H.guesses, mx=maxGuesses(H.n), vd=$("#hvVerdict"); vd.hidden=false;
     vd.className="verdict "+(g<=mx?"ok":"warn");
     vd.innerHTML = g<=mx
-      ? `<b>Found in ${g} ${g===1?"guess":"guesses"}.</b>Checking from the left would have taken ${H.t+1}. Halving needs at most ${mx} for ${H.n} cards.`
-      : `<b>Found in ${g} guesses.</b>Guessing the middle of the open cells every time needs at most ${mx} for ${H.n} cards.`;
+      ? `<b>Found in ${g} ${g===1?"guess":"guesses"}.</b>Checking from the left would have taken ${H.t+1}. Halving needs at most ${mx} for ${H.n} entries.`
+      : `<b>Found in ${g} guesses.</b>Guessing the middle of the open cells every time needs at most ${mx} for ${H.n} entries.`;
   } else if(v<t){ H.lo=k+1; H.line=`ID ${v} is lower than ${t}. Every cell to its left is ruled out.`; }
   else { H.hi=k-1; H.line=`ID ${v} is higher than ${t}. Every cell to its right is ruled out.`; }
   hvDraw();

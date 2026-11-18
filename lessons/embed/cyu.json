@@ -5,7 +5,7 @@
    "id": "embed-1",
    "sec": null,
    "type": "mc",
-   "stem": "A program moves words in the same sentence closer together. King and queen share several sentences, and king and hospital never appear together. What will the map show at the end?",
+   "stem": "A program moves words in the same sentence closer together. King and queen share several sentences, and king and hospital never appear together. What will the plot show at the end?",
    "options": [
     {
      "text": "King and queen end up close together, and king and hospital end up far apart.",
@@ -15,7 +15,7 @@
     {
      "text": "All the words end up in the same place after enough sentences.",
      "correct": false,
-     "feedback": "Every sentence pulls its own words together, and all words also push each other apart a little. The map spreads into groups."
+     "feedback": "Every sentence pulls its own words together, and all words also push each other apart a little. The plot spreads into groups."
     },
     {
      "text": "King and hospital end up close together, because both are common words.",
@@ -38,7 +38,7 @@
     {
      "text": "The only input was fourteen sentences, so the clusters come from words appearing together.",
      "correct": true,
-     "feedback": "The colors on the map are added afterward to show the groups. The training never uses them."
+     "feedback": "The colors on the plot are added afterward to show the groups. The training never uses them."
     },
     {
      "text": "The program contains a dictionary of word meanings that says which words are about royalty.",

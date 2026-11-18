@@ -4,12 +4,12 @@
         <p>Some methods take twice as long when a list doubles. Others take four times as long, and some barely slow down. This lesson shows how to tell which is which.</p>
       </div>
 
-      <div class="sec" data-sec="registrar" data-title="Start with a registrar line">
-        <p>At the registrar, a clerk checks each of 50 students against the class list. With 100 students the line takes twice as long. Now suppose every student must also compare notes with every other student. Then 100 students need about four times as many comparisons as 50. How the work gets bigger as the job gets bigger is called <dfn title="How the number of steps changes as the list gets longer">growth</dfn>.</p>
-        <div class="scene" role="group" aria-label="The students in line are the items, the clerk is the method, the checks are the steps" data-art="registrar-line-clerk" data-art-desc="A clerk with a clipboard checks one student at a desk while two more students wait in line behind.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>Students in line</b><span>Items in the list</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>The clerk</b><span>The method</span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-checks"/></svg></div><figcaption><b>Checks made</b><span>Steps</span></figcaption></figure>
+      <div class="sec" data-sec="registrar" data-title="Start with a slow page">
+        <p>A page of results opens at once with 10 items. With 5,000 items the same page loads slowly. The code did not change. The number of steps it takes grew with the list, and some methods grow much faster than others. How the work gets bigger as the job gets bigger is called <dfn title="How the number of steps changes as the list gets longer">growth</dfn>.</p>
+        <div class="scene" role="group" aria-label="The page, its list of items and the time it takes to load" data-art="slow-page-many-items" data-art-desc="A student at a desk looks at a laptop that shows a plain list of bars and a loading bar that is half filled.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg></div><figcaption><b>The page</b><span>Shows the list</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>The list</b><span>10 items or 5,000</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hourglass"/></svg></div><figcaption><b>Load time</b><span>Steps taken</span></figcaption></figure>
         </div>
         <div class="ask"><b>Think first.</b> A job takes 10 minutes for 100 items. How long for 200 items if it checks each item once? How long if it compares every pair?</div>
         <div class="instructor">The usual answers are 20 and 20, or 20 and 40. Checking each item once gives 20 minutes. Comparing every pair gives 40 minutes, four times as many comparisons. Collect the guesses before anyone opens the next step.</div>
@@ -68,7 +68,7 @@
       </div>
 
       <div class="sec" data-sec="estimate" data-title="Estimating growth">
-        <p>Double the list and watch the steps. Twice as many means the job looks at each item once. Four times as many means it compares every pair. One more step means it halves the list. Comparing every customer with every customer in a list of 100,000 takes 10 billion comparisons.</p>
+        <p>When the list doubles, twice as many steps means the job looks at each item once. Four times as many steps means it compares every pair. One more step means it halves the list. Comparing every record with every record in a list of 100,000 takes 10 billion comparisons.</p>
         <p class="outcome">You can now count a method's steps, say what happens when the list doubles and judge whether the method will finish in reasonable time.</p>
         <details class="more">
           <summary>More detail</summary>

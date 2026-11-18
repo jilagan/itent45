@@ -1,5 +1,5 @@
 /* Lesson norm. Widget code for the markup in lesson.html. */
-/* ================= 17 NORMALISATION ================= */
+/* ================= NORMALIZATION ================= */
 const NM={n:40, renamed:false, partial:false, wroteFlat:0, wroteNorm:0};
 const NM_OLD="Operations Management", NM_NEW="Operations and Quality Management";
 const nmTitle=i=>{
@@ -26,19 +26,19 @@ function nmRender(){
   const er=[];
   for(let i=0;i<Math.min(NM.n,3);i++) er.push(`<tr><td class="k">20-${1000+i}</td><td>MGT45</td></tr>`);
   if(NM.n>3) er.push(`<tr><td class="k" style="color:var(--faint)">…</td><td style="color:var(--faint)">${NM.n-3} more, all pointing at the same row</td></tr>`);
-  $("#normTbl2").innerHTML=`<thead><tr><th>enrollments.student</th><th>course_id</th></tr></thead><tbody>${er.join("")}</tbody>`;
+  $("#normTbl2").innerHTML=`<thead><tr><th>enlistments.student</th><th>course_id</th></tr></thead><tbody>${er.join("")}</tbody>`;
 
   $("#flatVerdict").className="verdict "+(NM.renamed&&NM.partial?"bad":NM.renamed?"warn":"");
   $("#flatVerdict").innerHTML = !NM.renamed
-    ? `<b>The title is stored ${NM.n} times</b>Every enrollment row carries its own copy.`
+    ? `<b>The title is stored ${NM.n} times</b>Every enlistment row carries its own copy.`
     : NM.partial
       ? `<b>Two rows disagree with the other ${NM.n-2}</b>Both titles look valid to the database, so it raises no error.`
       : `<b>${NM.n} rows rewritten</b>It worked this time, and it has to work every time.`;
 
   $("#normVerdict").className="verdict "+(NM.renamed?"ok":"");
   $("#normVerdict").innerHTML = NM.renamed
-    ? `<b>One row rewritten</b>The enrollments never stored the title, so they needed no change.`
-    : `<b>The title is stored once</b>Each enrollment holds only the course id.`;
+    ? `<b>One row rewritten</b>The enlistments never stored the title, so they needed no change.`
+    : `<b>The title is stored once</b>Each enlistment holds only the course id.`;
 
   const set=(id,v,hot,good)=>{const g=$(id);g.querySelector(".gv").firstChild.nodeValue=v;
     g.classList.toggle("hot",!!hot);g.classList.toggle("good",!!good)};

@@ -92,7 +92,7 @@
    "stem": "Select all that apply. Which of these stop a home laptop from serving a public website reliably?",
    "options": [
     {
-     "text": "Its address is private and sits behind a router shared with the building.",
+     "text": "Its address is private and sits behind a router, and every device on that network shares the same public address.",
      "correct": true,
      "feedback": "The internet cannot route to a private address, so outside visitors cannot reach the laptop."
     },

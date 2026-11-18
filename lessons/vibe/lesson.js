@@ -41,7 +41,7 @@ const SNIP=[
   cat:"Fails when two requests overlap (race condition)",
   why:`Line 3 reads the seat count and line 6 writes it back, and another request can read the same number in between. On enlistment morning two students can both see one free seat and both get enrolled.`,
   full:`Line 3 reads the seat count, and line 6 writes it back. Between those two lines, another request can read the same number.<br><br>On a quiet afternoon this works. On enlistment morning, two students both see one free seat, both pass the check, and both are enrolled. This is the problem in <a data-lesson="txn">Transactions</a>.<br><br>The code is <b class="i">only correct when nobody else is using it</b>, and you cannot see that by reading it.`},
- {id:"hall", label:"Fetch one course", task:"Asked for: return a course, or 404 if there is no such code.",
+ {id:"invented", label:"Fetch one course", task:"Asked for: return a course, or 404 if there is no such code.",
   lines:["def course_detail(request, code):",
          "    course = Course.objects.get_or_none(code=code)",
          "    if course is None:",

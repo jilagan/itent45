@@ -19,7 +19,7 @@ const PRC=[
   c:'n = Course.objects.filter(pk=pk, slots__gt=0).update(slots=F("slots")-1)\nif not n: raise CourseFull\nEnrollment.objects.create(student=s, course_id=pk)'}
 ];
 const PRT=[
- {id:"django",     lb:"Use Django, not raw SQL",                     line:'Use the Django ORM.'},
+ {id:"django",     lb:"Name the framework (Django)",                     line:'Use the Django ORM.'},
  {id:"concurrent", lb:"Two students may click at the same moment",   line:'Two requests can arrive at the same instant. It must still sell one seat.'},
  {id:"schema",     lb:"Include the table definitions",                line:'Course has a slots integer. Enrollment has unique(student, course).'}
 ];

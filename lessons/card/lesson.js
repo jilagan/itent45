@@ -2,10 +2,10 @@
 /* ================= RELATIONSHIPS & CARDINALITY ================= */
 const CARDS=[
  {id:"o2o", n:"One to one", sym:"1 to 1",
-  q:"One student has one locker, and one locker belongs to one student.",
-  tables:[{n:"students",c:["<b>id</b> pk","name","<i>locker_id</i> fk unique"]},
-          {n:"lockers",c:["<b>id</b> pk","location"]}],
-  note:"A foreign key (fk) is a column that holds the primary key (pk), the identifying id, of a row in another table. In a one-to-one relationship the foreign key can sit on either side. A <code>unique</code> rule on it makes each id appear only once, and that rule enforces the <em>one</em>. Without it you have built a one-to-many relationship and labeled it 1:1.<br><br>Also ask whether you need two tables. If the locker has no data of its own, make it a column in students.",
+  q:"One student has one login account, and one login account belongs to one student.",
+  tables:[{n:"students",c:["<b>id</b> pk","name","<i>account_id</i> fk unique"]},
+          {n:"accounts",c:["<b>id</b> pk","email"]}],
+  note:"A foreign key (fk) is a column that holds the primary key (pk), the identifying id, of a row in another table. In a one-to-one relationship the foreign key can sit on either side. A <code>unique</code> rule on it makes each id appear only once, and that rule enforces the <em>one</em>. Without it you have built a one-to-many relationship and labeled it 1:1.<br><br>Also ask whether you need two tables. If the account has no data of its own, make it a column in students.",
   v:`<b>Two tables with a unique foreign key</b>Put the key on either side and add the unique rule. This is the rarest type, and it often means the two entities could be one.`},
  {id:"o2m", n:"One to many", sym:"1 to many",
   q:"One course has many sections, and each section belongs to one course.",
@@ -17,9 +17,9 @@ const CARDS=[
   q:"A student takes many courses, and a course has many students.",
   tables:[{n:"students",c:["<b>id</b> pk","name"]},
           {n:"courses",c:["<b>id</b> pk","code","title"]},
-          {n:"enrollments",c:["<b>id</b> pk","<i>student_id</i> fk","<i>course_id</i> fk","enrolled_on","status","grade"],new:true}],
-  note:"Neither table can hold the foreign key, because each row would have to point at many rows in the other table. A third table is needed, with one row for each pairing of a student and a course.<br><br>Look at the last three columns. A date, a status and a grade describe the pairing, so they cannot be stored in the student or the course. Enrollment counts as an entity for this reason, as in <a data-lesson='entity'>Entities and attributes</a>.",
-  v:`<b>A third table appears</b>Each pairing gets its own row in <b class="i">enrollments</b>. That table holds enrolled_on, status and grade, because those facts describe the pairing.`}
+          {n:"enlistments",c:["<b>id</b> pk","<i>student_id</i> fk","<i>course_id</i> fk","enlisted_on","status","grade"],new:true}],
+  note:"Neither table can hold the foreign key, because each row would have to point at many rows in the other table. A third table is needed, with one row for each pairing of a student and a course.<br><br>Look at the last three columns. A date, a status and a grade describe the pairing, so they cannot be stored in the student or the course. Enlistment counts as an entity for this reason, as in <a data-lesson='entity'>Entities and attributes</a>.",
+  v:`<b>A third table appears</b>Each pairing gets its own row in <b class="i">enlistments</b>. That table holds enlisted_on, status and grade, because those facts describe the pairing.`}
 ];
 let cardSel="o2m";
 function renderCard(){

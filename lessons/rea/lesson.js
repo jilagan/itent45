@@ -3,19 +3,19 @@
 /* ---- crow's feet up and left, and what that sorts ---- */
 const ERD_E={
  payment   :{n:"Payment",    vol:"high",  rows:"~40k a term"},
- enrollment:{n:"Enrollment",  vol:"high",  rows:"~30k a term"},
+ enlistment:{n:"Enlistment",  vol:"high",  rows:"~30k a term"},
  section   :{n:"Section",    vol:"mid",   rows:"~600 a term"},
  student   :{n:"Student",    vol:"low",   rows:"~9,000, slowly"},
  course    :{n:"Course",     vol:"low",   rows:"~1,200, rarely"},
  room      :{n:"Room",       vol:"low",   rows:"~200, almost never"}
 };
 // child -> parent. The crow's foot is drawn at the child, the many side.
-const ERD_R=[["enrollment","student"],["enrollment","section"],
+const ERD_R=[["enlistment","student"],["enlistment","section"],
              ["payment","student"],["section","course"],["section","room"]];
 const ERD_POS={
-  tidy:{payment:[30,30],enrollment:[250,110],section:[470,190],
+  tidy:{payment:[30,30],enlistment:[250,110],section:[470,190],
         student:[470,326],course:[680,262],room:[680,350]},
-  messy:{payment:[473,330],enrollment:[77,198],section:[671,66],
+  messy:{payment:[473,330],enlistment:[77,198],section:[671,66],
          student:[275,44],course:[484,154],room:[88,352]}
 };
 Object.values(ERD_POS).forEach(m=>Object.values(m).forEach(q=>{q[0]=Math.round(q[0]*0.83);}));   // fit a 760 px column
@@ -76,21 +76,21 @@ function renderErd(){
     v.innerHTML=`<b>Same diagram, harder to read</b>Every box is correct, but the lines cross and where a box sits tells you nothing. Switch to "Crow's feet up and left" to compare.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>The busy tables moved to the top left</b>Payment and Enrollment have tens of thousands of rows a term and sit at the top left. Student, Course and Room change slowly and sit at the bottom right.`;
+    v.innerHTML=`<b>The busy tables moved to the top left</b>Payment and Enlistment have tens of thousands of rows a term and sit at the top left. Student, Course and Room change slowly and sit at the bottom right.`;
   }
 }
 renderErd();
 
 
 const REA=[
- {id:"enroll", n:"Enrollment",
-  give:{res:"Class seat", resS:"one of 40 in a section", evt:"Enrollment", evtS:"a row per student per course",
+ {id:"enlist", n:"Enlistment",
+  give:{res:"Class seat", resS:"one of 40 in a section", evt:"Enlistment", evtS:"a row per student per course",
         agtIn:"Registrar", agtOut:"Student"},
   take:{res:"Tuition", resS:"cash, or a promise of it", evt:"Payment", evtS:"a row per amount received",
-        agtIn:"Cashier", agtOut:"Student"},
+        agtIn:"Finance office", agtOut:"Student"},
   gap:"The gap to look for is a seat with no matching payment."},
  {id:"shop", n:"Online store",
-  give:{res:"Stock item", resS:"what is on the shelf", evt:"Sale", evtS:"a row per line of an order",
+  give:{res:"Stock item", resS:"goods available to sell", evt:"Sale", evtS:"a row per line of an order",
         agtIn:"Merchant", agtOut:"Customer"},
   take:{res:"Cash", resS:"what the gateway settles", evt:"Payment", evtS:"a row per charge",
         agtIn:"Merchant", agtOut:"Customer"},
@@ -108,7 +108,7 @@ const REA=[
         agtIn:"Clinic", agtOut:"Patient or insurer"},
   gap:"The gap to look for is a consultation that was given and never billed."}
 ];
-let reaSel="enroll";
+let reaSel="enlist";
 const RB_W=240, RB_H=60;
 function reaBox(x,y,kind,label,val,sub){
   const col=kind==="res"?"var(--res)":kind==="evt"?"var(--req)":"var(--line3)";

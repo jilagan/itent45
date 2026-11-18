@@ -5,10 +5,10 @@
    "id": "shape-1",
    "sec": "questions",
    "type": "mc",
-   "stem": "A document database stores each student's enrollments, with the course titles copied inside each student's document. Which question is hardest for it to answer?",
+   "stem": "A document database stores each student's enlistments, with the course titles copied inside each student's document. Which question is hardest for it to answer?",
    "options": [
     {
-     "text": "Which students are enrolled in MGT 45?",
+     "text": "Which students are enlisted in MGT 45?",
      "correct": true,
      "feedback": "The data is organized by student, so the database must scan every student's document or maintain a second index by course."
     },

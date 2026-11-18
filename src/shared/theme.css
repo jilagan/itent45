@@ -287,3 +287,5 @@ html.embed-sec .panel.embed-sec.embed-first .head{margin-bottom:14px}
   #worldMap{max-width:760px}
   #inRings,#bpNet,#nnDiag,#nnPlot,#lnPlot,#trPlot,#mtDot,#mtSlope,#emMap,#vcMap,#simMap,#reaDia,#erdDia,#worldMap{margin-left:auto;margin-right:auto}
 }
+
+.nav button.seen{padding-right:40px}

@@ -1,0 +1,25 @@
+{
+ "id": "entity",
+ "title": "Entities, attributes and instances",
+ "label": "Entities and attributes",
+ "desc": "How to describe things and their details as tables.",
+ "outcomes": [
+  "Tell entity, attribute and instance apart",
+  "Decide when an attribute should become an entity (Room)",
+  "Recognize a pairing as an entity (Enrollment)"
+ ],
+ "tags": [
+  "entity",
+  "attribute",
+  "instance",
+  "tables"
+ ],
+ "area": "data",
+ "needs": [],
+ "video": {
+  "sec": null,
+  "youtube": "",
+  "title": "From a list of nouns to tables",
+  "about": "Someone draws the enlistment model live: picks entities, gets one wrong, and redraws it. Shows the decisions that the finished widgets skip."
+ }
+}

@@ -1,0 +1,20 @@
+{
+ "id": "tiers",
+ "title": "The three tiers of a web application",
+ "label": "Three tiers",
+ "desc": "How a request travels from browser to server to database.",
+ "outcomes": [
+  "Name the three tiers and where each runs",
+  "Say why the browser cannot talk to the database directly",
+  "Follow a click through the 12 steps and name the tier doing each"
+ ],
+ "tags": [
+  "three tiers",
+  "browser",
+  "application server",
+  "database"
+ ],
+ "area": "web",
+ "needs": [],
+ "video": null
+}

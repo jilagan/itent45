@@ -1,0 +1,19 @@
+{
+ "id": "prompt",
+ "title": "Writing better prompts",
+ "label": "Writing prompts",
+ "desc": "How to write a request the model can answer well.",
+ "outcomes": [
+  "Say a prompt narrows the range of likely answers",
+  "Name constraints that remove unwanted answers",
+  "Pick the variant that survives two simultaneous clicks"
+ ],
+ "tags": [
+  "prompts",
+  "constraints",
+  "prompt engineering"
+ ],
+ "area": "ai",
+ "needs": [],
+ "video": null
+}

@@ -1,0 +1,89 @@
+{
+ "lesson": "norm",
+ "items": [
+  {
+   "id": "norm-1",
+   "sec": "rename",
+   "type": "mc",
+   "stem": "40 students are enrolled in ITENT 45 and the course title changes. How many rows are written in the flat table, and how many in the split design?",
+   "options": [
+    {
+     "text": "40 in the flat table and 1 in the split design.",
+     "correct": true,
+     "feedback": "The flat table stores the title in every enrollment row. The split design stores it once in the courses table."
+    },
+    {
+     "text": "1 in both, because only one title changed.",
+     "correct": false,
+     "feedback": "The flat table has a copy of the title in each of its 40 rows, so all 40 rows must change."
+    },
+    {
+     "text": "40 in both, because the database rewrites every table.",
+     "correct": false,
+     "feedback": "The split design changes one row in the courses table. The enrollments hold only the course id, which did not change."
+    },
+    {
+     "text": "1 in the flat table and 40 in the split design.",
+     "correct": false,
+     "feedback": "The copies are in the flat table, so the flat table needs the 40 writes."
+    }
+   ]
+  },
+  {
+   "id": "norm-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "A developer renames a course in the flat table but misses 2 of the 40 rows. What does the database do?",
+   "options": [
+    {
+     "text": "It accepts the change and leaves two titles.",
+     "correct": true,
+     "feedback": "Each row is valid on its own, so no rule is broken. The disagreement stays unnoticed until someone sees it."
+    },
+    {
+     "text": "It reports an error naming the 2 rows that were missed.",
+     "correct": false,
+     "feedback": "The database cannot know that two rows should have changed. Nothing is wrong with them individually."
+    },
+    {
+     "text": "It updates the 2 missed rows automatically to match.",
+     "correct": false,
+     "feedback": "A database changes only the rows named in the command."
+    },
+    {
+     "text": "It rejects the whole change and keeps the old title.",
+     "correct": false,
+     "feedback": "The 38 updated rows are valid, so they are saved."
+    }
+   ]
+  },
+  {
+   "id": "norm-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "A teammate says the flat table is the better design, because the schedule page then needs no join. What is the best response?",
+   "options": [
+    {
+     "text": "That is true for reads, but each title change needs one write per enrollment.",
+     "correct": true,
+     "feedback": "The flat design saves a join when reading and costs more when changing. A split design stores each fact once."
+    },
+    {
+     "text": "The flat table is always wrong, so the team should never use it.",
+     "correct": false,
+     "feedback": "The flat table is valid and does answer the schedule question without a join. The cost appears when facts change."
+    },
+    {
+     "text": "Joins cost nothing, so the split design has no downside at all.",
+     "correct": false,
+     "feedback": "A join does cost something. The cost is usually small compared with the risk of inconsistent copies."
+    },
+    {
+     "text": "The split design takes longer to write, so it matters only for large projects.",
+     "correct": false,
+     "feedback": "The risk of inconsistent copies appears at any size of project."
+    }
+   ]
+  }
+ ]
+}

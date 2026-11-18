@@ -1,0 +1,89 @@
+{
+ "lesson": "intro",
+ "items": [
+  {
+   "id": "intro-1",
+   "sec": "rings",
+   "type": "mc",
+   "stem": "A hospital's scheduling program searches through possible shift assignments and picks the one that breaks the fewest rules that staff wrote down. It was never trained on past schedules. How should you describe this program?",
+   "options": [
+    {
+     "text": "Artificial intelligence, with no machine learning",
+     "correct": true,
+     "feedback": "Searching for the best arrangement under rules is a task that normally needs human judgment, so it counts as AI. People wrote every rule and nothing was learned from examples."
+    },
+    {
+     "text": "Machine learning, because it improves the schedules it makes",
+     "correct": false,
+     "feedback": "Producing good schedules does not make a program machine learning. Machine learning means the program worked out its own rule from examples, and here people wrote the rules."
+    },
+    {
+     "text": "Deep learning, because it compares many possible schedules",
+     "correct": false,
+     "feedback": "Deep learning means stacked layers that work out their own features from raw input. Comparing many possibilities says nothing about how the program was built."
+    },
+    {
+     "text": "Generative AI, because it produces a new schedule",
+     "correct": false,
+     "feedback": "Generative AI writes new content such as text, images or code. This program picks among arrangements that its rules allow."
+    }
+   ]
+  },
+  {
+   "id": "intro-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "A bank has two loan-screening systems. System A applies rules written by the bank's staff. System B was trained on past loan records. Both wrongly reject a valid applicant. Which statement about fixing the problem is most likely true?",
+   "options": [
+    {
+     "text": "Edit the faulty rule in System A. For System B, change the training examples and retrain.",
+     "correct": true,
+     "feedback": "Hand-written rules can be read and changed one at a time. A trained model has no single rule to point at, because its behavior comes from patterns in its training examples."
+    },
+    {
+     "text": "Find the one line of code that caused the rejection and edit it, in both systems.",
+     "correct": false,
+     "feedback": "A trained model has no such line. What it does depends on the examples it was shown."
+    },
+    {
+     "text": "System A makes different mistakes each time it sees the same applicant, because rules vary.",
+     "correct": false,
+     "feedback": "Hand-written rules give the same answer for the same input, so System A is wrong in the same way every time."
+    },
+    {
+     "text": "System B cannot wrongly reject anyone, because it learned from real loan records.",
+     "correct": false,
+     "feedback": "Learning from real data does not guarantee correct answers. A model can be wrong when an applicant looks different from the examples it saw."
+    }
+   ]
+  },
+  {
+   "id": "intro-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "A team builds a spam filter. Version 1 uses three measurements chosen by an analyst: the number of links, whether the sender is a known contact, and how often the word \"free\" appears. Version 2 is given the raw text of the emails and works out for itself what to measure. Which version is deep learning?",
+   "options": [
+    {
+     "text": "Version 2",
+     "correct": true,
+     "feedback": "Deep learning removes the step where a person chooses the features. Version 2 finds its own features from raw input."
+    },
+    {
+     "text": "Version 1",
+     "correct": false,
+     "feedback": "Version 1 is machine learning, but a person chose the features. Deep learning removes that step."
+    },
+    {
+     "text": "Both versions",
+     "correct": false,
+     "feedback": "Both versions learn from labeled emails, so both are machine learning. Only the one that works out its own features counts as deep learning."
+    },
+    {
+     "text": "Neither version",
+     "correct": false,
+     "feedback": "A yes or no output can still come from a deep learning model. What matters is that Version 2 finds its own features from raw input."
+    }
+   ]
+  }
+ ]
+}

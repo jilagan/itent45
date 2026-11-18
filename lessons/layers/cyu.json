@@ -1,0 +1,117 @@
+{
+ "lesson": "layers",
+ "items": [
+  {
+   "id": "layers-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "A request passes through five routers on its way to the server. What does each router do with the message?",
+   "options": [
+    {
+     "text": "It reads the IP header to pick the next hop and writes a new Ethernet header.",
+     "correct": true,
+     "feedback": "Routers work at the IP layer and below. The Ethernet header is replaced at every hop, and the contents are never opened."
+    },
+    {
+     "text": "It opens the HTTP message and rewrites the request for the next router.",
+     "correct": false,
+     "feedback": "Routers do not read HTTP. They need only the IP header to forward the packet."
+    },
+    {
+     "text": "It replaces every header, including the IP addresses, with its own.",
+     "correct": false,
+     "feedback": "The source and destination IP addresses stay the same for the whole trip. Only the link-level header changes."
+    },
+    {
+     "text": "It forwards the message to the next router without reading any header.",
+     "correct": false,
+     "feedback": "A router has to read the destination IP address to know where to send the packet next."
+    }
+   ]
+  },
+  {
+   "id": "layers-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "The owner of a café's wifi can see every packet you send. Which layer's header stops the owner from reading your HTTP request?",
+   "options": [
+    {
+     "text": "TLS, which encrypts the message it wraps.",
+     "correct": true,
+     "feedback": "TLS scrambles the HTTP message so only the two ends can read it. The owner can still see the IP addresses and ports on the outside."
+    },
+    {
+     "text": "TCP, which numbers every byte.",
+     "correct": false,
+     "feedback": "TCP numbers and resends data, and the contents stay readable."
+    },
+    {
+     "text": "IP, which carries the addresses.",
+     "correct": false,
+     "feedback": "IP addresses must stay readable so that routers can forward the packet."
+    },
+    {
+     "text": "Ethernet, which handles the wifi hop.",
+     "correct": false,
+     "feedback": "The Ethernet or wifi header labels one hop and leaves the contents readable."
+    }
+   ]
+  },
+  {
+   "id": "layers-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "A reply is 45 KB and the round trip is 38 ms. TCP sends about ten packets, then doubles each time. Roughly how long does the browser spend waiting on round trips?",
+   "options": [
+    {
+     "text": "About 114 ms, because the reply needs three round trips.",
+     "correct": true,
+     "feedback": "The reply needs about 32 packets, sent as 10, then 20, then 2. Three round trips at 38 ms is 114 ms."
+    },
+    {
+     "text": "About 38 ms, because the reply needs only one round trip.",
+     "correct": false,
+     "feedback": "One round trip carries only about ten packets, and this reply is larger than that."
+    },
+    {
+     "text": "About 1,200 ms, with one round trip for every packet.",
+     "correct": false,
+     "feedback": "TCP sends many packets per round trip and doubles the number each time, so the count of round trips grows slowly."
+    },
+    {
+     "text": "Almost nothing, because the data travels so fast.",
+     "correct": false,
+     "feedback": "Each wave of packets must be confirmed before the next one, and each confirmation costs a full round trip."
+    }
+   ]
+  },
+  {
+   "id": "layers-4",
+   "sec": "packets",
+   "type": "mc",
+   "stem": "A developer shrinks a page's reply from 280 KB to 60 KB. The user's bandwidth does not change. Why can the page still load faster?",
+   "options": [
+    {
+     "text": "A smaller reply needs fewer packets, so fewer round trips of waiting.",
+     "correct": true,
+     "feedback": "Each wave of packets must be confirmed before the next wave is sent. Fewer packets means fewer waves, and each wave costs a round trip."
+    },
+    {
+     "text": "The browser can unpack a smaller reply more quickly once it arrives.",
+     "correct": false,
+     "feedback": "Unpacking time is small. The main saving is the waiting between waves of packets."
+    },
+    {
+     "text": "Routers forward smaller messages at a higher speed than large ones.",
+     "correct": false,
+     "feedback": "Routers forward packets at the same speed whatever the message size."
+    },
+    {
+     "text": "TLS encryption is skipped for small replies to save time.",
+     "correct": false,
+     "feedback": "Encryption is used for every HTTPS reply, whatever its size."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,117 @@
+{
+ "lesson": "vm",
+ "items": [
+  {
+   "id": "vm-1",
+   "sec": "slices",
+   "type": "mc",
+   "stem": "A provider's host machine has 256 GB of RAM, and 8 GB is kept for the hypervisor. The provider sells 40 guests with 8 GB each. What is the likely result?",
+   "options": [
+    {
+     "text": "The guests share 248 GB and slow down whenever many are busy together.",
+     "correct": true,
+     "feedback": "The provider has promised 320 GB and has 248 GB. This works while guests are rarely all busy together. When they are, every guest slows down, which is the noisy-neighbor problem."
+    },
+    {
+     "text": "Each guest crashes as soon as it starts, because there is not enough memory for all of them.",
+     "correct": false,
+     "feedback": "Overselling does not stop guests from starting. The memory is promised without being reserved, so the guests run and then compete for it."
+    },
+    {
+     "text": "Nothing changes, because every guest has its own separate hardware.",
+     "correct": false,
+     "feedback": "The hardware is shared. The hypervisor divides one physical machine between the guests, so they do compete for it."
+    },
+    {
+     "text": "The hypervisor buys more RAM automatically.",
+     "correct": false,
+     "feedback": "A hypervisor only divides the hardware that exists. It cannot add memory."
+    }
+   ]
+  },
+  {
+   "id": "vm-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "In the cloud setup you provision three servers and then delete two of them. What happens to the bill after that?",
+   "options": [
+    {
+     "text": "It keeps growing, but only for the one server that is still running.",
+     "correct": true,
+     "feedback": "The cloud bills by the hour for servers that exist. Deleted servers stop costing money, and the remaining one keeps costing ₱3 per hour."
+    },
+    {
+     "text": "It stops growing for all three servers, because the setup fee was already paid.",
+     "correct": false,
+     "feedback": "There is no setup fee in the cloud setup. The meter runs for as long as a server exists."
+    },
+    {
+     "text": "It keeps growing for all three servers until the end of the month.",
+     "correct": false,
+     "feedback": "That describes a fixed purchase or contract. In this setup the meter stops when you delete a server."
+    },
+    {
+     "text": "It drops back to zero, because you released most of your capacity.",
+     "correct": false,
+     "feedback": "The bill never goes down, because you pay for hours already used. It only stops growing for the deleted servers."
+    }
+   ]
+  },
+  {
+   "id": "vm-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "Your {{project}} team forgets a test server over the holidays and receives a bill for it. Which NIST characteristic explains the bill?",
+   "options": [
+    {
+     "text": "Measured service: usage is metered and billed while the resource exists.",
+     "correct": true,
+     "feedback": "Metering is the reason cloud costs are operational expenses, and the reason a forgotten resource keeps charging you."
+    },
+    {
+     "text": "Resource pooling: the provider shares hardware between customers.",
+     "correct": false,
+     "feedback": "Pooling explains why prices are low and why neighbors can slow you down. It does not explain a bill for an idle server."
+    },
+    {
+     "text": "On-demand self-service: you create servers yourself.",
+     "correct": false,
+     "feedback": "Self-service explains how the server was created. The charge comes from metering."
+    },
+    {
+     "text": "Broad network access: the server can be reached from many devices.",
+     "correct": false,
+     "feedback": "This describes how you connect to the server. It has no effect on billing."
+    }
+   ]
+  },
+  {
+   "id": "vm-5",
+   "sec": null,
+   "type": "mc",
+   "stem": "Your team first rents a bare cloud server (IaaS) and later moves the same app to a platform such as Railway (PaaS). Who is responsible for installing operating system updates in each case?",
+   "options": [
+    {
+     "text": "Your team on IaaS, and the provider on PaaS.",
+     "correct": true,
+     "feedback": "On IaaS you receive a virtual machine and run everything above it, including the operating system. On PaaS the provider runs the layers under your code."
+    },
+    {
+     "text": "The provider on both, because the servers are in the provider's data center.",
+     "correct": false,
+     "feedback": "The building and hardware belong to the provider on both. On IaaS the operating system is yours to maintain."
+    },
+    {
+     "text": "Your team on both, because the app is yours.",
+     "correct": false,
+     "feedback": "On PaaS you push code and the provider runs the operating system and runtime."
+    },
+    {
+     "text": "The provider on IaaS, and your team on PaaS.",
+     "correct": false,
+     "feedback": "This reverses the models. The more of the stack the provider runs, the further right you are in the table: IaaS, then PaaS, then SaaS."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,40 @@
+    <section class="panel" id="p-card">
+      <div class="head">
+        <h2>Relationships: one-to-one, one-to-many, many-to-many</h2>
+        <p>A relationship links two entities, such as students and courses. Its <dfn title="How many items can sit on each side of a link between two entities">cardinality</dfn> decides which tables you need.</p>
+      </div>
+
+      <div class="sec" data-sec="class-list" data-title="Start with a class list">
+        <p>On a class list, each student has one ID card, a course has several sections, and many students take many courses. Counting how many sit on each side of a link gives its type: one-to-one, one-to-many or many-to-many.</p>
+        <div class="scene" role="group" aria-label="A student and an ID card is one-to-one, a course and its sections is one-to-many, students and courses is many-to-many" data-art="id-cards-and-class-lists" data-art-desc="A student holds up one ID card at a registrar's desk, with three class lists pinned on the wall behind.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-ticket"/></svg></div><figcaption><b>Student and ID card</b><span>One-to-one</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Course and its sections</b><span>One-to-many</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Students and courses</b><span>Many-to-many</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> If each student has one ID card and each course has many students, how would you store those two facts in tables?</div>
+        <div class="instructor">Ask students to sketch the tables on paper before they open the next step. Most put a list of student ids in the course row, which a table column cannot hold.</div>
+      </div>
+
+      <div class="sec" data-sec="types" data-title="See the three types">
+        <p>Open each tab to see the tables that type needs. A <dfn title="A grid of rows and columns that holds one entity">table</dfn> holds one entity. A <dfn title="The column that identifies each row of a table">primary key</dfn> (pk) identifies each row, and a <dfn title="A column that holds the id of a row in another table">foreign key</dfn> (fk) points to a row in another table.</p>
+        <div class="ctab" id="cardTab"></div>
+        <div class="art" id="cardDia" style="text-align:center;padding:22px 12px"></div>
+        <div class="cards2" id="cardTables" style="margin-top:13px"></div>
+        <div class="verdict" id="cardVerdict" style="margin-top:13px"></div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>What this type means for your tables</h4>
+          <div class="rtt-note" id="cardNote"></div>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="third-table" data-title="Why many-to-many needs a third table">
+        <p>Neither the students table nor the courses table can hold the other's key, because each row would have to point at many rows. The extra table has one row for each pairing of a student and a course. It is also the only place for a date, a status or a grade, because those facts describe the pairing.</p>
+        <p class="outcome">You can now choose the tables and keys for any relationship.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <p><a data-lesson="entity">Entities and attributes</a> treats Enrollment as an entity for the same reason. A many-to-many link on a diagram is a sign that a table is missing.</p>
+          <p>If you choose the wrong type on the diagram, you find out later, when somebody needs a second value in a place that allows only one.</p>
+        </details>
+      </div>
+    </section>

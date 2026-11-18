@@ -1,8 +1,0 @@
-[
-  {"panel":"journey","sec":null,"youtube":"","title":"One click, for real: the Network tab","about":"A real site's request waterfall in the browser's Network tab: dozens of requests, third-party calls, real header values and real timings, next to the five idealised round trips on this page."},
-  {"panel":"bytes","sec":"run-it","youtube":"","title":"Run the teaching server on your laptop","about":"Windows and Mac, no prior terminal use. Where to open a terminal, installing Python, what the output looks like, and the first curl command."},
-  {"panel":"entity","sec":null,"youtube":"","title":"From a list of nouns to tables","about":"Someone draws the enlistment model live: picks entities, gets one wrong, and redraws it. Shows the decisions that the finished widgets skip."},
-  {"panel":"sql","sec":null,"youtube":"","title":"The same four statements on a real database","about":"The four statements run in a real database tool, then the Django debug toolbar counting queries on a real page."},
-  {"panel":"vm","sec":"provisioning","youtube":"","title":"Launch a cloud server, then open the bill","about":"A real cloud console: choosing an instance type and region, the pricing page, how long the server takes to boot, and the first line of the bill."},
-  {"panel":"split","sec":"costs","youtube":"","title":"Following one request across three services","about":"A real distributed trace view for one request, about 60 seconds. Optional."}
-]

@@ -1,0 +1,22 @@
+{
+ "id": "server",
+ "title": "Server capacity: workers, queues and requests per second",
+ "label": "Server capacity",
+ "desc": "How workers and queues decide how many requests a server handles.",
+ "outcomes": [
+  "Compute maximum throughput from workers and handler time",
+  "Explain why past saturation latency climbs while throughput stays flat",
+  "Predict how RAM per request limits workers"
+ ],
+ "tags": [
+  "capacity",
+  "queue",
+  "throughput",
+  "utilization"
+ ],
+ "area": "capacity-cloud",
+ "needs": [
+  "memmodel"
+ ],
+ "video": null
+}

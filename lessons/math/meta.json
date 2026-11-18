@@ -1,0 +1,20 @@
+{
+ "id": "math",
+ "title": "The math behind it: vectors, slopes and probabilities",
+ "label": "The math behind it",
+ "desc": "The weighted sums, slopes and probabilities behind it all.",
+ "outcomes": [
+  "Read a dot product as an angle",
+  "Read a derivative as a slope",
+  "Read a distribution and a loss as \"how sure\" and \"how wrong\""
+ ],
+ "tags": [
+  "dot product",
+  "slope",
+  "probability",
+  "loss"
+ ],
+ "area": "ai",
+ "needs": [],
+ "video": null
+}

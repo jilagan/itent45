@@ -1,0 +1,19 @@
+{
+ "id": "attn",
+ "title": "Attention and the transformer",
+ "label": "Attention and transformers",
+ "desc": "How a model decides which earlier words matter next.",
+ "outcomes": [
+  "Describe how each word looks at all the other words",
+  "Say that cost grows with the square of the prompt length",
+  "Say why attention fixed the single-note problem"
+ ],
+ "tags": [
+  "attention",
+  "transformer",
+  "context"
+ ],
+ "area": "ai",
+ "needs": [],
+ "video": null
+}

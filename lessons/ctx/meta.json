@@ -1,0 +1,19 @@
+{
+ "id": "ctx",
+ "title": "The context window",
+ "label": "The context window",
+ "desc": "How much text a model can keep in view at once.",
+ "outcomes": [
+  "Say that the model has no memory outside the window",
+  "Predict when early instructions fall out",
+  "Estimate how files and turns eat the budget"
+ ],
+ "tags": [
+  "context window",
+  "tokens",
+  "memory"
+ ],
+ "area": "ai",
+ "needs": [],
+ "video": null
+}

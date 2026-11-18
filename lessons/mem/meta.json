@@ -1,0 +1,22 @@
+{
+ "id": "mem",
+ "title": "How a server's memory is used",
+ "label": "Server memory",
+ "desc": "What uses a server's memory before any user arrives.",
+ "outcomes": [
+  "Work out how many workers fit in RAM after the operating system, web server and database",
+  "Explain process-per-worker and threads",
+  "Predict what moving the database to its own machine changes"
+ ],
+ "tags": [
+  "memory",
+  "RAM",
+  "workers",
+  "capacity"
+ ],
+ "area": "capacity-cloud",
+ "needs": [
+  "memmodel"
+ ],
+ "video": null
+}

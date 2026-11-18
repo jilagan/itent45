@@ -1,0 +1,20 @@
+{
+ "id": "card",
+ "title": "Relationships: one-to-one, one-to-many, many-to-many",
+ "label": "Relationships",
+ "desc": "How rows in one table connect to rows in another.",
+ "outcomes": [
+  "Classify a relationship as 1:1, 1:M or M:N",
+  "Say which tables each needs (foreign key, or a third table)",
+  "Name facts that belong to the pairing"
+ ],
+ "tags": [
+  "relationships",
+  "cardinality",
+  "foreign key",
+  "many-to-many"
+ ],
+ "area": "data",
+ "needs": [],
+ "video": null
+}

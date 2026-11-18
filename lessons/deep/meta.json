@@ -1,0 +1,19 @@
+{
+ "id": "deep",
+ "title": "Neural networks: combining several lines",
+ "label": "Neural networks",
+ "desc": "How several simple rules combine to make a neural network.",
+ "outcomes": [
+  "Say why one line cannot separate a case that rises and then falls",
+  "Say what hidden units add and why the nonlinearity matters",
+  "State the trade: no hand-picked features, and no explanation of results"
+ ],
+ "tags": [
+  "neural network",
+  "hidden units",
+  "nonlinearity"
+ ],
+ "area": "ai",
+ "needs": [],
+ "video": null
+}

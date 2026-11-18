@@ -1,0 +1,117 @@
+{
+ "lesson": "math",
+ "items": [
+  {
+   "id": "math-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "A course grade is 0.5 × exam + 0.3 × project + 0.2 × quiz. Which operation from this panel is that?",
+   "options": [
+    {
+     "text": "A dot product: multiply each pair of numbers and add them.",
+     "correct": true,
+     "feedback": "The scores and the weights are two vectors. Pairing them, multiplying and adding gives one number."
+    },
+    {
+     "text": "A slope: how fast the grade changes with a score.",
+     "correct": false,
+     "feedback": "A slope would tell you how much the grade changes when one score changes. This formula gives the grade itself."
+    },
+    {
+     "text": "A distribution: outcomes with probabilities that add to 1.",
+     "correct": false,
+     "feedback": "The weights do add to 1 here, but a distribution describes the chance of outcomes. These weights describe how much each score counts."
+    },
+    {
+     "text": "A loss: how wrong a prediction is, compared with the truth.",
+     "correct": false,
+     "feedback": "A loss compares a prediction with the truth. This formula involves no prediction."
+    }
+   ]
+  },
+  {
+   "id": "math-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "Vector a points right. Vector b points straight up, at a right angle to a. What is a · b?",
+   "options": [
+    {
+     "text": "Zero.",
+     "correct": true,
+     "feedback": "Vector b has no part along a, so the two vectors share nothing."
+    },
+    {
+     "text": "A large positive number.",
+     "correct": false,
+     "feedback": "A large positive number needs the arrows to point the same way."
+    },
+    {
+     "text": "A negative number.",
+     "correct": false,
+     "feedback": "A negative number needs the arrows to point apart, at more than a right angle."
+    },
+    {
+     "text": "It depends on how long b is.",
+     "correct": false,
+     "feedback": "Length changes the size of the dot product when the arrows are partly aligned. At a right angle the answer is zero for any length."
+    }
+   ]
+  },
+  {
+   "id": "math-3",
+   "sec": "slope",
+   "type": "mc",
+   "stem": "On the loss curve, the slope at your current weight is +3. To make the model less wrong, which way should you move the weight?",
+   "options": [
+    {
+     "text": "Left, to a smaller weight.",
+     "correct": true,
+     "feedback": "A positive slope means the curve rises as you go right. Moving the opposite way from the slope lowers the loss."
+    },
+    {
+     "text": "Right, to a larger weight.",
+     "correct": false,
+     "feedback": "This follows the slope, so the loss would rise. Training moves against the slope."
+    },
+    {
+     "text": "Stay where you are.",
+     "correct": false,
+     "feedback": "You stop only where the slope is zero. A slope of +3 means the loss can still go down."
+    },
+    {
+     "text": "It depends on the learning rate.",
+     "correct": false,
+     "feedback": "The learning rate sets how far you move. The direction comes from the sign of the slope."
+    }
+   ]
+  },
+  {
+   "id": "math-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "A model reports next-word probabilities of 0.5, 0.3 and 0.4 for three words and nothing for any others. What is wrong?",
+   "options": [
+    {
+     "text": "They add up to 1.2. A distribution must add up to 1.",
+     "correct": true,
+     "feedback": "The probabilities of all possible outcomes together cover everything that can happen, so they must add up to 1, or 100%."
+    },
+    {
+     "text": "Nothing. Each number is between 0 and 1.",
+     "correct": false,
+     "feedback": "Each number is valid alone. The whole set must also add up to 1."
+    },
+    {
+     "text": "The numbers are too large for probabilities.",
+     "correct": false,
+     "feedback": "A single word can have a large probability. The problem is the total."
+    },
+    {
+     "text": "A model can only give two probabilities at a time.",
+     "correct": false,
+     "feedback": "A model gives a probability for every word it can choose."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,96 @@
+    <section class="panel" id="p-txn">
+      <div class="head">
+        <h2>Transactions and two users changing the same data</h2>
+        <p>A <dfn title="A group of statements that the database treats as one unit">transaction</dfn> groups database statements into one unit. Two users changing the same row at the same moment can still leave wrong data.</p>
+      </div>
+
+      <div class="sec" data-sec="last-seat" data-title="Start with the last seat">
+        <p>Picture the last seat in a class and two cashiers selling it at the same moment. Each cashier looks at the seat map, sees one free seat and sells it. Both customers are told the seat is theirs. A database has the same problem when two users change one row.</p>
+        <div class="scene" role="group" aria-label="The cashiers are sessions and the seat map is a row in the courses table" data-art="last-seat-two-cashiers" data-art-desc="Two cashiers at side-by-side counters both point at the same seat map showing one free seat, and each hands a ticket to a different customer.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Two cashiers</b><span>Two <dfn title="One user's connection to the database">sessions</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Seat map</b><span>Course row</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> Two students both see one free seat and both enroll. What would the database have to do to stop the second enrollment? Write down one idea.</div>
+        <div class="instructor">Typical answers are "check again", "lock it" and "do it in one step". The next step tests each of them. Collect a few answers before anyone presses Run it. Ask what the second student should see when the seat is gone.</div>
+      </div>
+
+      <div class="sec" data-sec="attempts" data-title="Try four ways to sell the seat">
+        <p>Each tab is a different way to sell the last seat. Press Play on each tab, from left to right, and watch the Seats left column.</p>
+        <div class="ctab" id="txnTab"></div>
+        <div class="srv">
+          <div>
+            <div class="ctrls" style="margin:0 0 13px">
+              <button class="btn primary" id="txnPlay">Play</button>
+              <button class="btn" id="txnStep">Step</button>
+              <button class="btn" id="txnReset">Reset</button>
+            </div>
+            <div class="tln" id="txnLine"></div>
+            <div class="verdict" id="txnVerdict" style="margin-top:13px"></div>
+          </div>
+          <div class="card">
+            <div class="card-t">What this attempt does</div>
+            <div class="rtt-note" id="txnNote"></div>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The statements behind each tab</h4>
+          <p>Here <code>slots</code> is the number of free seats. <code>BEGIN</code> starts a transaction and <code>COMMIT</code> saves it.</p>
+          <div class="art">-- No transaction: each session reads, decides, then writes
+SELECT slots FROM courses WHERE code = 'ITENT 45';
+UPDATE courses SET slots = 0 WHERE code = 'ITENT 45';
+
+-- Transaction only: the same statements between BEGIN and COMMIT
+BEGIN;  SELECT ...;  UPDATE ...;  INSERT ...;  COMMIT;
+
+-- Lock the row: the second session waits at the SELECT
+BEGIN;
+SELECT slots FROM courses WHERE code = 'ITENT 45' FOR UPDATE;
+UPDATE ...;  INSERT ...;  COMMIT;
+
+-- One statement: the check is part of the change
+UPDATE courses SET slots = slots - 1
+ WHERE code = 'ITENT 45' AND slots > 0;</div>
+          <h4>Lost update</h4>
+          <p>In the first tab, session B wrote a value based on a seat count that was already out of date. This bug is called a <b>lost update</b>, and it is common in student projects.</p>
+          <h4>What the fixes cost</h4>
+          <p>The lock makes the second session wait, so on enlistment morning a line of nine thousand users would wait on one row. The single statement needs no waiting, and the row count it reports tells you the result: 1 means you got the seat, 0 means somebody else did. It works whenever the decision can be written as a condition.</p>
+          <p>Enlistment morning is covered in <a data-lesson="enlist">Case study: enlistment</a>. The idempotency key in <a data-lesson="pay">Payments and gateways</a> solves a similar problem for repeated requests that arrive over HTTP.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="gap" data-title="Why a transaction is not enough">
+        <p>A transaction makes a group of statements succeed together or fail together. It does not hold the seat while you decide. To protect the seat, <dfn title="A hold that makes other sessions wait for a row">lock</dfn> the row during the decision, or write the check and the change as one statement.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>Isolation is the setting that controls how much two sessions can see of each other's work. At the default level in Postgres, called <code>READ COMMITTED</code>, session B can still read the old seat count while session A is deciding. Many people assume the defaults protect them fully, and they do not.</p>
+          <p>The fix is to tell the database what you need. A lock holds the row, and a single statement lets the database order the two requests itself.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="acid" data-title="The four guarantees">
+        <p>A transaction can promise four things, known together as <dfn title="Four guarantees of a database transaction, named by their initials">ACID</dfn>.</p>
+        <div class="acid">
+          <div class="ac"><div class="k">A</div><h5>Atomicity</h5>
+            <p>All of a transaction's statements happen, or none do.</p></div>
+          <div class="ac"><div class="k">C</div><h5>Consistency</h5>
+            <p>Rules you declared stay true after every write.</p></div>
+          <div class="ac"><div class="k">I</div><h5>Isolation</h5>
+            <p>How much two sessions running together can see of each other's work.</p></div>
+          <div class="ac"><div class="k">D</div><h5>Durability</h5>
+            <p>After a save, the change survives a power failure.</p></div>
+        </div>
+        <p class="outcome">You can now say why two users need a transaction and what it guarantees.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Atomicity</h4>
+          <p>If the INSERT works and the UPDATE fails, the database undoes the INSERT. BEGIN and COMMIT give you this guarantee.</p>
+          <h4>Consistency</h4>
+          <p>A rule such as <code>CHECK (slots &gt;= 0)</code>, or a unique key, makes the database refuse any write that breaks it, whichever session sent the write and whatever the timing.</p>
+          <h4>Isolation</h4>
+          <p>This is the guarantee that failed in the first two tabs.</p>
+          <h4>Durability</h4>
+          <p>After COMMIT returns, the change has been written to disk. Of the four guarantees, this is the easiest to trust and the most expensive for the database to provide.</p>
+        </details>
+      </div>
+    </section>

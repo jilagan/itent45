@@ -1,0 +1,20 @@
+{
+ "id": "txn",
+ "title": "Transactions and two users changing the same data",
+ "label": "Transactions",
+ "desc": "What goes wrong when two users change the same data.",
+ "outcomes": [
+  "Explain how two sessions both book the last seat",
+  "Say which fix works (a lock or one statement) and why checking first fails",
+  "Say what atomicity, consistency, isolation and durability each guarantee"
+ ],
+ "tags": [
+  "transactions",
+  "ACID",
+  "locks",
+  "concurrency"
+ ],
+ "area": "data",
+ "needs": [],
+ "video": null
+}

@@ -10,8 +10,8 @@
    python3 tools/make_art.py --pick a:2                     promote art-src/a-2.png to the final picture for a (no API call)
    python3 tools/make_art.py --force                        regenerate even where a picture exists
 
-   Reads data-art="slug" and data-art-desc="sentence" from src/*/panels/*.html.
-   Originals (PNG) go to art-src/<slug>.png (git-ignored). Web versions go to src/shared/art/<slug>.webp, 1200 px wide, quality 80."""
+   Reads data-art="slug" and data-art-desc="sentence" from lessons/*/lesson.html.
+   Originals (PNG) go to art-src/<slug>.png (git-ignored). Web versions go to shared/art/<slug>.webp, 1200 px wide, quality 80."""
 import argparse, html, io, json, os, pathlib, re, shutil, subprocess, sys, time, urllib.error, urllib.request, uuid
 
 ROOT = pathlib.Path(__file__).resolve().parent.parent
@@ -51,7 +51,7 @@ def build_prompt(desc, with_ref):
 # ---- reading the scenes from the panels ----
 def find_scenes(src):
     scenes, warns = {}, []
-    for f in sorted(src.glob("*/panels/*.html")):
+    for f in sorted(src.glob("*/lesson.html")):
         for tag in re.findall(r"<[a-zA-Z][^>]*\bdata-art=[^>]*>", f.read_text(encoding="utf-8")):
             a = {k: html.unescape(v) for k, v in re.findall(r'([\w-]+)="([^"]*)"', tag)}
             slug, desc = a.get("data-art", "").strip(), " ".join(a.get("data-art-desc", "").split())
@@ -138,10 +138,10 @@ def main():
     ap.add_argument("--force", action="store_true", help="regenerate scenes that already have a picture")
     ap.add_argument("--dry-run", action="store_true", help="print prompts and planned cost; no API calls, no token needed")
     ap.add_argument("--resolution", choices=list(PRICE), default="1K", help="1K is enough for a 1200 px picture (default)")
-    ap.add_argument("--src", default=str(ROOT / "src"), help="folder holding */panels/*.html (default src)")
+    ap.add_argument("--src", default=str(ROOT / "lessons"), help="folder holding */lesson.html (default lessons)")
     ap.add_argument("--print-template", action="store_true")
     a = ap.parse_args()
-    out_png, out_web = ROOT / "art-src", ROOT / "src" / "shared" / "art"
+    out_png, out_web = ROOT / "art-src", ROOT / "shared" / "art"
     if a.print_template:
         print(build_prompt("<one sentence describing the everyday scene>", False)); return 0
     for pk in a.pick:

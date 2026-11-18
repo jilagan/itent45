@@ -1,0 +1,20 @@
+{
+ "id": "query",
+ "title": "The N+1 query problem",
+ "label": "The N+1 query problem",
+ "desc": "Why asking for 50 records one by one is slow.",
+ "outcomes": [
+  "Define N+1",
+  "Estimate the query count for N rows under three approaches",
+  "Name the fix (join, select_related, caching)"
+ ],
+ "tags": [
+  "N+1",
+  "queries",
+  "join",
+  "ORM"
+ ],
+ "area": "data",
+ "needs": [],
+ "video": null
+}

@@ -1,0 +1,105 @@
+    <section class="panel" id="p-shape">
+      <div class="head">
+        <h2>Choosing a relational or a document database</h2>
+        <p>A <dfn title="Stores data in tables with fixed columns, such as Postgres">relational</dfn> database keeps data in tables, and a <dfn title="Stores each record as one self-contained document, such as Firebase">document</dfn> database keeps each record as one document. The right choice depends on which questions your app asks.</p>
+      </div>
+
+      <div class="sec" data-sec="filing" data-title="Start with two ways to file records">
+        <p>Think of two ways to keep student records. One is a set of spreadsheets with fixed columns, where the student sheet points to a course sheet. The other is a folder for each student, with everything about that student written on one page, including the course titles.</p>
+        <div class="scene" role="group" aria-label="Linked sheets are a relational database, a folder for each student is a document database" data-art="student-folders" data-art-desc="A registrar's shelf holds one thick folder per student, and beside it two thin sheets lie on a table, one for students and one for courses.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Linked sheets</b><span>Relational</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>A folder for each student</b><span>Document</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> Name a question your app asks on every page, and a question it asks once a semester. Which shape would you choose for each, and why?</div>
+        <div class="instructor">Students tend to name only the questions that suit the shape they already know. Ask for a question that would be hard in each shape. The next step has three such questions.</div>
+      </div>
+
+      <div class="sec" data-sec="questions" data-title="Ask three questions">
+        <p>The same enrollments are shown in two shapes. Pick a shape, then pick a question and read what it costs.</p>
+        <div class="srv">
+          <div class="card">
+            <div class="card-t">The same data, two shapes</div>
+            <div class="fmtpick" id="shPick"></div>
+            <div class="art" id="shBody"></div>
+          </div>
+          <div class="card">
+            <div class="card-t">Ask three questions</div>
+            <div class="toggles" id="shQ"></div>
+            <div class="verdict" id="shVerdict" style="margin-top:13px"></div>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Where to read more</h4>
+          <p>A join takes one query when written well. Without that, a page of 50 rows takes 51 queries, as shown in <a data-lesson="query">The N+1 query problem</a>. The missed-rows problem in the document shape is the one from <a data-lesson="norm">Normalization</a>, with no single table to check your work against.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="schema" data-title="Where the schema is enforced">
+        <p>A <dfn title="A description of which fields a record has and what type each field is">schema</dfn> describes the fields of a record. In a relational database, the database enforces the schema and rejects data that does not fit. In a document database, your own code enforces it, so a misspelled field name creates a new field and raises no error.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The four families, and what "schema" means in each</h4>
+          <p>The common split between SQL and NoSQL databases is a split in where the schema is enforced. Both families have a schema. In a relational database, the database enforces it. In the others, your code does.</p>
+          <div class="dbfamgrid">
+            <div class="dbfam s">
+              <div class="ft">Structured: the database enforces the schema</div>
+              <h5>Relational</h5>
+              <p>Tables with fixed columns and declared types. The schema is written down once, and the database rejects any data that does not fit it. Joins let you ask questions you did not plan for.</p>
+              <span class="eg">Postgres &middot; MySQL &middot; SQL Server &middot; Supabase</span>
+            </div>
+            <div class="dbfam u">
+              <div class="ft">Unstructured: your code enforces the schema</div>
+              <h5>Document</h5>
+              <p>Each record is a self-describing document. Two documents in the same collection can have different fields, so a typo creates a new field and no error is raised. The schema still exists, and it lives in your application code.</p>
+              <span class="eg">MongoDB &middot; Firebase &middot; DynamoDB</span>
+            </div>
+            <div class="dbfam u">
+              <div class="ft">Unstructured: almost no schema</div>
+              <h5>Key-value</h5>
+              <p>A key, a value and nothing else. It is very fast and has no structure for asking questions. It is used more often as a cache in front of another database than as the main store of the data.</p>
+              <span class="eg">Redis &middot; Memcached</span>
+            </div>
+            <div class="dbfam u">
+              <div class="ft">Unstructured: built for connections</div>
+              <h5>Graph</h5>
+              <p>Stores relationships as records in their own right and does not use foreign keys. Use it when the main question is how one thing is connected to another across several steps, such as friends of friends.</p>
+              <span class="eg">Neo4j &middot; Neptune</span>
+            </div>
+          </div>
+          <h4>Document databases still need a data model</h4>
+          <p>The entities, attributes and relationships from <a data-lesson="entity">Entities and attributes</a> and <a data-lesson="card">Relationships</a> still apply. A document database does not remove them. It moves the job of enforcing them from the database to your code, where every client has to remember the rules and nobody can see them in one place. This is sometimes a good trade. You still have to design the data.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="choose" data-title="Choosing for your {{project}}">
+        <p>Start relational. At your data volumes nothing will be slow, and a relational design is easier to fix when you get the schema wrong, as you will at first. Asking a question you had not planned for, without rewriting the storage, is worth more in a semester project than any speed difference.</p>
+        <p class="outcome">You can now choose between a relational and a document database.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>What each shape does well</h4>
+          <div class="bill">
+            <div class="bl">
+              <h5>Rows suit questions you did not plan for</h5>
+              <p>Any column can be filtered, joined or grouped later. You do not need to know the questions when you design the schema, and early in a project you do not.</p>
+              <span class="ref">&rarr; the cost is a join, measured in <a data-lesson="query">The N+1 query problem</a></span>
+            </div>
+            <div class="bl">
+              <h5>Documents suit one known question</h5>
+              <p>The whole page comes back in one read, with no join and no assembly. This works well when the access pattern is fixed and known. It becomes painful the first time somebody asks a question the documents were not organized for.</p>
+              <span class="ref">&rarr; the copied titles bring back the problem in <a data-lesson="norm">Normalization</a></span>
+            </div>
+            <div class="bl">
+              <h5>Rules about correctness</h5>
+              <p>If the database itself refuses to sell the last seat twice, two students cannot both get it. Enforcing that rule in application code across several documents allows two requests to pass the check at the same time.</p>
+              <span class="ref">&rarr; the problem itself is shown in <a data-lesson="txn">Transactions</a></span>
+            </div>
+            <div class="bl">
+              <h5>Many systems use both</h5>
+              <p>A common setup uses Postgres for data that must be correct and a faster store for data that must load quickly. This is a normal design.</p>
+              <span class="ref">&rarr; it also means running two systems, as covered later in <a data-lesson="split">Monolith or services</a></span>
+            </div>
+          </div>
+        </details>
+      </div>
+    </section>

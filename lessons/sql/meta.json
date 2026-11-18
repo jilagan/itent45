@@ -1,0 +1,25 @@
+{
+ "id": "sql",
+ "title": "Reading and changing data with SQL",
+ "label": "SQL basics",
+ "desc": "Read, add, change and delete rows with four short commands.",
+ "outcomes": [
+  "Read the four statements and map them to HTTP verbs",
+  "Predict what UPDATE or DELETE does without WHERE",
+  "Say which statements are safe to repeat"
+ ],
+ "tags": [
+  "SQL",
+  "SELECT",
+  "UPDATE",
+  "WHERE"
+ ],
+ "area": "data",
+ "needs": [],
+ "video": {
+  "sec": null,
+  "youtube": "",
+  "title": "The same four statements on a real database",
+  "about": "The four statements run in a real database tool, then the Django debug toolbar counting queries on a real page."
+ }
+}

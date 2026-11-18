@@ -1,0 +1,21 @@
+{
+ "id": "rea",
+ "title": "The REA pattern: resources, events and agents",
+ "label": "The REA pattern",
+ "desc": "A standard way to record sales, payments and who took part.",
+ "outcomes": [
+  "Find resource, event and agents in a transaction of your own",
+  "Explain why payment and enrollment are many-to-many",
+  "Say why a standard pattern shortens schema design"
+ ],
+ "tags": [
+  "REA",
+  "resources",
+  "events",
+  "agents",
+  "schema"
+ ],
+ "area": "data",
+ "needs": [],
+ "video": null
+}

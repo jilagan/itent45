@@ -1,0 +1,20 @@
+{
+ "id": "enlist",
+ "title": "Case study: enlistment day",
+ "label": "Case study: enlistment",
+ "desc": "One busy day that tests everything in this module.",
+ "outcomes": [
+  "Separate read-heavy browsing from reserving, where every write must be correct",
+  "Explain why adding web servers does not fix one database",
+  "Name a fix that costs no hardware"
+ ],
+ "tags": [
+  "case study",
+  "peak load",
+  "caching",
+  "database"
+ ],
+ "area": "capacity-cloud",
+ "needs": [],
+ "video": null
+}

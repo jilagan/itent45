@@ -1,0 +1,19 @@
+{
+ "id": "vibe",
+ "title": "Reviewing AI-written code",
+ "label": "Reviewing AI-written code",
+ "desc": "How to spot mistakes in code that looks correct.",
+ "outcomes": [
+  "Separate vibe coding from agentic coding",
+  "Find the flaw in plausible code",
+  "Name what to watch for in the next session"
+ ],
+ "tags": [
+  "vibe coding",
+  "code review",
+  "AI-written code"
+ ],
+ "area": "ai",
+ "needs": [],
+ "video": null
+}

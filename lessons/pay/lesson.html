@@ -1,0 +1,144 @@
+    <section class="panel" id="p-pay">
+      <div class="head">
+        <h2>Online payments and payment gateways</h2>
+        <p>A <dfn title="A company such as PayMongo, Stripe or Xendit that handles card payments for shops">payment gateway</dfn> handles card payments for shops. This lesson follows one payment from the shopper's browser to the bank.</p>
+      </div>
+
+      <div class="sec" data-sec="cashier" data-title="Start with a cashier">
+        <p>At a store counter you pay the cashier and get a claim stub. The shop does not process your card itself, because the cashier's terminal talks to the bank. Online, the shop's server hands the payment to a payment gateway and gets back a token, which works like the claim stub.</p>
+        <div class="scene" role="group" aria-label="The shopper is the browser, the shop is your server, the cashier and claim stub are the gateway and the token" data-art="cashier-claim-stub" data-art-desc="A shopper hands payment to a cashier at a store counter and receives a small claim stub, while the shop owner stands to one side.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Shopper</b><span>Browser</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-storefront"/></svg></div><figcaption><b>Shop</b><span>Your server</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-ticket"/></svg></div><figcaption><b>Cashier and claim stub</b><span>Gateway and token</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> When you type your card number into a checkout page, which machines does the number pass through on its way to the bank? List them.</div>
+        <div class="instructor">Most students include the shop's server in their list. The correct list leaves it out. Ask them to say why that matters for the shop.</div>
+      </div>
+
+      <div class="sec" data-sec="checkout-flow" data-title="Follow one payment">
+        <p>Four parties take part in a checkout: the shopper's browser, your server, the gateway and the bank. Press Play and watch where the card number goes. Your server receives only a <dfn title="A code that stands in for the card number">token</dfn>.</p>
+
+        <div class="ctrls">
+          <button class="btn primary" id="pyPlay">▶ Play</button>
+          <button class="btn" id="pyPrev">Previous</button>
+          <button class="btn" id="pyNext">Next</button>
+          <button class="btn" id="pyRst">Reset</button>
+        </div>
+
+        <div class="pflow" id="pflow">
+          <div class="pty" data-k="browser" id="pBrowser"></div>
+          <div class="plane" data-lane="A">
+            <div class="pcap" id="pcapA"></div>
+            <div><div class="prail fwd" id="prailAf"></div><div class="ptag">request</div></div>
+            <div><div class="prail back" id="prailAb"></div><div class="ptag">response</div></div>
+          </div>
+          <div class="pty" data-k="server" id="pApi"></div>
+          <div class="plane" data-lane="B">
+            <div class="pcap" id="pcapB"></div>
+            <div><div class="prail fwd" id="prailBf"></div><div class="ptag">charge</div></div>
+            <div><div class="prail back" id="prailBb"></div><div class="ptag">result</div></div>
+          </div>
+          <div class="pty" data-k="gateway" id="pGw"></div>
+          <div class="plane" data-lane="C">
+            <div class="pcap" id="pcapC"></div>
+            <div><div class="prail fwd" id="prailCf"></div><div class="ptag">settle</div></div>
+            <div><div class="prail back" id="prailCb"></div><div class="ptag">confirm</div></div>
+          </div>
+          <div class="pty remote" data-k="bank" id="pBank"></div>
+
+          <div class="bypass" id="bypass">
+            <span class="tick a"></span><span class="tick b"></span>
+            <i class="l"></i><i class="r"></i>
+            <span class="bl">The card goes straight to the gateway</span>
+          </div>
+          <div class="ball" id="payBall"></div>
+        </div>
+
+        <div class="card">
+          <div class="tstep" id="pyStep">Step 1</div>
+          <span class="hop" id="pyHop"></span>
+          <h3 style="margin:0 0 8px;font-size:1.05em;font-weight:600" id="pyTitle"></h3>
+          <p style="margin:0;font-size:.95em;color:var(--dim);line-height:1.6" id="pyText"></p>
+        </div>
+
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The message in this part</h4>
+          <div class="artlbl" id="pyLbl"></div>
+          <div class="art" id="pyArt"></div>
+          <h4>Why the card skips your server</h4>
+          <p>The browser sends the card directly to the gateway and gets back a token, which is an opaque code that stands for the card. Your server only handles the token. If card numbers passed through a machine you own, that machine would fall under PCI DSS (the card industry's security rules), and so would every system it talks to. With a token, that burden stays with the gateway, which is set up to meet those rules.</p>
+          <h4>Step 9 reverses the roles</h4>
+          <p>The gateway calls your server, so your API is the server in that exchange. The signature header is the only check that stops anyone on the internet from marking their own order paid.</p>
+          <h4>Why every message is JSON</h4>
+          <p>No person reads these messages. Two programs at two companies are exchanging facts, and JSON was designed for that. SOAP is an older message standard that is written in XML. The same charge request is shown here in three formats so you can compare them.</p>
+          <div class="fmtpick" id="whyPick"></div>
+          <div class="art" id="whyBody"></div>
+          <div class="sizebars" id="whyBars"></div>
+          <div class="verdict" id="whyVerdict"></div>
+          <h4>When XML is still the right choice</h4>
+          <p>JSON carries values and no rules. It cannot state that <code>amount</code> must be a positive integer or that <code>currency</code> must be a real ISO code (a standard currency code such as PHP), so each check is written in application code on both sides. An XML schema states the rules once, and a parser enforces them before your code runs. XML-DSig, a standard for digital signatures, can sign the whole document. When the thing being exchanged is money between institutions, that is worth six times the payload. Several Philippine banks still offer exactly this. If your <span data-var="project">project</span> connects to a real bank and not a modern gateway, expect SOAP and plan about a week for the integration.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="double-charge" data-title="A double charge">
+        <p>When a connection stalls, shoppers press Pay again. Press Pay three times and read the total. Then switch on the <dfn title="A unique code sent with a request so repeats are recognized">idempotency key</dfn>, press New checkout and try again.</p>
+
+        <div class="srv">
+          <div class="card">
+            <div class="card-t">Checkout, one pair of shoes, ₱1,299</div>
+            <button class="paybtn" id="payGo">Pay ₱1,299</button>
+            <div class="charges" id="chgList"></div>
+            <div class="total" id="chgTotal">
+              <span style="font-size:.85em;color:var(--faint)">Total charged</span>
+              <span class="tn" id="chgAmt">₱0</span>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-t">The idempotency key</div>
+            <div class="toggles">
+              <button class="tg" id="tgIdem" aria-pressed="false"><span class="dot"></span><span>Send an Idempotency-Key<small>One code is made per checkout and reused on every retry</small></span></button>
+            </div>
+            <div class="ctrls" style="margin-top:14px">
+              <button class="btn" id="payReset">New checkout</button>
+            </div>
+            <div class="rtt-note" style="margin-top:14px" id="idemNote"></div>
+          </div>
+        </div>
+
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Why a double charge happens</h4>
+          <p>A POST is not idempotent, so each press can create a separate charge. <a data-lesson="rest">HTTP verbs and status codes</a> explains the term. The key is a UUID, which is a random unique code.</p>
+          <h4>What the request looks like</h4>
+          <div class="art" style="min-height:0" id="idemArt"></div>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="slow-gateway" data-title="A slow gateway">
+        <p>Your server has a fixed number of <dfn title="A process on your server that handles one request at a time">workers</dfn>. Capacity is the number of workers divided by the seconds each request takes. Compare a request that waits for a slow gateway with one that puts the call on a <dfn title="A waiting list of jobs that a separate process works through">queue</dfn>.</p>
+
+        <div class="card">
+          <div class="card-t">How a slow gateway affects server capacity</div>
+          <div class="cmp">
+            <div>
+              <div class="artlbl" style="margin-top:0">Charging inside the request</div>
+              <div class="art" style="min-height:0">handler 40 ms + gateway 800 ms = <span class="kw">840 ms</span>
+4 workers ÷ 0.840 s = <span class="kw">4.8 rps</span></div>
+            </div>
+            <div>
+              <div class="artlbl" style="margin-top:0">Charging on a queue, confirming by webhook</div>
+              <div class="art" style="min-height:0">handler 40 ms, gateway call moved off the path
+4 workers ÷ 0.040 s = <span class="s">100 rps</span></div>
+            </div>
+          </div>
+          <p style="margin:14px 0 0">If your server waits for the payment gateway, your site is as slow as the gateway. Moving the call out of the request gives twenty times the capacity here.</p>
+        </div>
+
+        <p class="outcome">You can now explain how a payment stays safe, charged once and fast.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>Here rps means requests per second. In the second case the gateway reports the result later by webhook, which is a request the gateway sends to your server. The same change solves Card C in <a data-lesson="break">Group exercises</a>. <a data-lesson="server">Server capacity</a> shows how to measure capacity.</p>
+        </details>
+      </div>
+    </section>

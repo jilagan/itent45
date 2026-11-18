@@ -1,0 +1,111 @@
+    <section class="panel" id="p-basics">
+      <div class="head">
+        <h2>What is a server?</h2>
+        <p>A <dfn title="A program that waits for requests from other computers and answers them">server</dfn> is a program that waits for requests and answers them. Any computer can run one, including the laptop in front of you.</p>
+      </div>
+
+      <div class="sec" data-sec="store" data-title="Start with a sari-sari store">
+        <p>A sari-sari store is a store only while it is open and someone is behind the counter. With the shutter down, it is a room with shelves. A server works the same way. The computer is the room, and the server program is the shopkeeper who answers customers.</p>
+        <div class="scene" role="group" aria-label="The neighbor is the client, the open store is the server program, the room with shelves is the machine" data-art="sari-sari-store-hours" data-art-desc="A neighbor asks the shopkeeper at a small sari-sari store counter for an item, and the shopkeeper reaches back to a shelf with the shutter rolled up.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Neighbor</b><span><dfn title="The program that sends requests, such as your web browser">Client</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-storefront"/></svg></div><figcaption><b>Open store</b><span>Server program</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>Room with shelves</b><span>The machine</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> Is the laptop in front of you a server at this moment? Decide, then write down one thing you could check to find out.</div>
+        <div class="instructor">Let students commit to an answer before they click anything in the next step. The answer depends on whether a program on the laptop is waiting for connections right now.</div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Where this page came from</h4>
+          <div id="ctxLine" style="font-size:.95em;color:var(--dim);line-height:1.55"></div>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="server-is-a-job" data-title="What a server is">
+        <p>The word "server" names both a machine and a program. When someone says "the server is down", the program has stopped and the machine is usually fine. Click each device to see whether it can be a server.</p>
+        <div class="guess" id="guessRow"></div>
+        <div class="verdict" id="guessVerdict"></div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The machine</h4>
+          <p>A physical computer. It has a processor (the chip that runs programs), memory and a network connection. <a data-lesson="mem">Server memory</a> covers how a server's memory is divided up.</p>
+          <h4>The program</h4>
+          <p>Software that runs on that machine and waits in a loop for someone to connect. Real examples are nginx and gunicorn (two widely used web server programs) and Node.js. A twenty-line program, <code>teaching_server.py</code>, is another example.</p>
+          <h4>Back to your laptop</h4>
+          <p id="ctxClose"></p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="address" data-title="Read a web address">
+        <p>To reach a server, a client needs to know which machine to contact and which program on that machine to talk to. The address you type holds both. Click each colored part of the address below.</p>
+        <div class="urlbar" id="urlBar"></div>
+        <div class="explain" id="urlOut" style="margin-top:0">
+          <div class="et">Select a part</div>
+          <p class="hint">Click any colored part of the address.</p>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Names and numbers</h4>
+          <p>The host is a name because a number such as <code>18.141.62.7</code> is hard to remember and hard to change. Before anything else happens, the name has to be turned into an IP address, which is the number that identifies a machine on the network. That lookup is called DNS (the Domain Name System), and the first lookup costs a round trip of its own. <a data-lesson="journey">Round trips and latency</a> covers the cost.</p>
+          <h4>Ports and encryption</h4>
+          <p>By convention port <code>443</code> is for HTTPS and <code>80</code> is for HTTP, so browsers add them for you and hide them. A typical starter project uses <code>8000</code>, which has no special meaning. <code>https</code> means HTTP with the conversation encrypted (scrambled so only the two ends can read it).</p>
+          <h4>Paths and query strings</h4>
+          <p>The developers of the server decide the path. <a data-lesson="rest">HTTP verbs and status codes</a> covers how to design it well. The query string is part of the address, so it appears in server logs and browser history. Never put a password in it.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="reach" data-title="Who can reach your laptop">
+        <p>An IP address picks the machine, like a building. A <dfn title="A number that picks one program on a machine">port</dfn> picks the program, like a unit number in it. The name <dfn title="A name that always means the computer you type it on">localhost</dfn> always means your own computer. Choose who is trying to open a tool on your laptop at port 8080.</p>
+        <div class="srv">
+          <div class="card">
+            <div class="reach" id="reachRows"></div>
+            <div class="verdict" id="reachVerdict" style="margin-top:12px"></div>
+          </div>
+          <div class="card">
+            <div class="card-t">Who is asking?</div>
+            <div class="toggles" id="whoList"></div>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Your laptop's several addresses</h4>
+          <p>A laptop has one IP address for each network connection, and each address means something different. None of them is the address of your laptop on the internet. Data on a network travels in small pieces called packets. Click each address to see how far a packet sent to it travels.</p>
+          <div class="srv">
+            <div>
+              <div class="ifaces" id="ifaceList"></div>
+              <div class="hops" id="hopTrack"></div>
+              <div class="turn" id="hopTurn"></div>
+              <div class="verdict" id="ifaceVerdict" style="margin-top:13px"></div>
+            </div>
+            <div>
+              <p><b>127.0.0.1</b> is a real address, and nothing sent to it leaves the machine. The packet goes down into the operating system's network code and turns straight back up to another program on the same computer. It still works with the wifi unplugged.</p>
+              <p><b>192.168.x.x</b> is a private range. Millions of homes use the same numbers at the same time, so the number alone cannot identify anything on the wider internet. Your router assigns these addresses and keeps track of which device asked for what.</p>
+              <p>The <b>public address</b> belongs to your router, and everyone in the building shares it. Many private addresses sit behind that one public address, so nothing on the internet can start a conversation with your laptop.</p>
+            </div>
+          </div>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="hosting" data-title="Hosting on your laptop">
+        <p>A laptop meets the definition of a server. Serving the public internet needs six things, and your laptop has one of them. Each missing row is something a hosting company sells.</p>
+        <div class="card" style="padding:12px 16px;overflow-x:auto;margin-top:12px">
+          <table class="hostreq"><thead><tr>
+            <th>Public hosting needs</th><th>Your laptop</th><th>A rented server</th>
+          </tr></thead><tbody>
+            <tr><td>A program listening</td><td class="y">yes</td><td class="y">yes</td></tr>
+            <tr><td>An address the internet can reach</td><td class="n">no</td><td class="y">yes</td></tr>
+            <tr><td>An address that stays the same</td><td class="n">no</td><td class="y">yes</td></tr>
+            <tr><td>Ports 80 and 443 open</td><td class="n">no</td><td class="y">yes</td></tr>
+            <tr><td>Always awake</td><td class="n">no</td><td class="y">yes</td></tr>
+            <tr><td>Fast upload</td><td class="n">no</td><td class="y">yes</td></tr>
+          </tbody></table>
+        </div>
+        <p class="outcome">You can now say what makes a computer a server and why a laptop is a poor one.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Why each row fails on a laptop</h4>
+          <p>Your laptop's address is private, sits behind your router and is shared with the whole building. A home connection can be given a new address at any time. Most home internet providers block ports 80 and 443 on purpose, and these are the standard ports for HTTP and HTTPS. You close the lid, go to campus or change wifi, so the laptop is not always awake. Home plans are fast to download and slow to upload, and serving a website is all upload.</p>
+          <h4>What a rented server adds</h4>
+          <p>A hosting company sells a public address that does not change, an always-on machine with real upload capacity, and a network that leaves the needed ports open. <a data-lesson="vm">Virtual machines and the cloud</a> covers how one physical machine is divided into many rented servers, and <a data-lesson="cost">CapEx and OpEx</a> covers the cost.</p>
+        </details>
+      </div>
+    </section>

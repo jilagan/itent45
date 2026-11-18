@@ -1,0 +1,89 @@
+{
+ "lesson": "deep",
+ "items": [
+  {
+   "id": "deep-1",
+   "sec": "stack",
+   "type": "mc",
+   "stem": "Students drop a course when they study very little and when they take on far too many other commitments. The students in the middle stay. Why can a single straight line not separate the stayers from the dropouts?",
+   "options": [
+    {
+     "text": "A line makes only two sides, and the stayers have dropouts on both sides of them.",
+     "correct": true,
+     "feedback": "Whichever way you angle one line, some stayers end up on the same side as dropouts."
+    },
+    {
+     "text": "There are too few students in the data to place a line between the groups.",
+     "correct": false,
+     "feedback": "The number of students is not the issue. The shape of the groups is."
+    },
+    {
+     "text": "The line has not been trained for long enough to find the right angle.",
+     "correct": false,
+     "feedback": "More training cannot fix a limit in the shape of a straight line."
+    },
+    {
+     "text": "Attendance matters more than hours studied, so one line cannot weigh both.",
+     "correct": false,
+     "feedback": "Which measurement matters more does not change the fact that the stayers are surrounded."
+    }
+   ]
+  },
+  {
+   "id": "deep-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "A network has its nonlinearity switched off, and the number of units goes from 2 to 8. What happens to the accuracy?",
+   "options": [
+    {
+     "text": "It stays flat. Adding straight lines together gives another straight line.",
+     "correct": true,
+     "feedback": "Without the nonlinearity, the layer can only add its units, and the sum of straight lines is a straight line. More units give no new shape."
+    },
+    {
+     "text": "It rises to 100 percent as units are added, because more lines fit better.",
+     "correct": false,
+     "feedback": "That happens only when the nonlinearity is on. Switched off, the units cannot combine into a curve."
+    },
+    {
+     "text": "It rises a little with each unit, because each line cuts off a few more students.",
+     "correct": false,
+     "feedback": "Each extra unit adds nothing new when the nonlinearity is off."
+    },
+    {
+     "text": "It falls to zero, because the lines cancel each other out completely.",
+     "correct": false,
+     "feedback": "The network still draws a straight line, so some students are classified correctly."
+    }
+   ]
+  },
+  {
+   "id": "deep-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "A bank uses a deep learning model to score loan applications. The model is very accurate, but a regulator asks which measurements drove a particular rejection. Why is that hard to answer?",
+   "options": [
+    {
+     "text": "It builds its own features inside hidden layers, and no single number there has a plain meaning.",
+     "correct": true,
+     "feedback": "With hand-picked features you could point at the one that was wrong. In a deep network, billions of numbers combine and none of them means anything alone."
+    },
+    {
+     "text": "Deep learning models are always less accurate than simple ones, so the question has no good answer.",
+     "correct": false,
+     "feedback": "Deep models are often more accurate. The difficulty is explaining them."
+    },
+    {
+     "text": "The bank did not keep the applicant's data, so there is nothing to examine.",
+     "correct": false,
+     "feedback": "Having the data does not explain what the hidden layers did with it."
+    },
+    {
+     "text": "The output unit does not produce an answer for rejected applications.",
+     "correct": false,
+     "feedback": "The output unit does produce an answer. The hidden units that fed it are hard to interpret."
+    }
+   ]
+  }
+ ]
+}

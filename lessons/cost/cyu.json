@@ -1,0 +1,117 @@
+{
+ "lesson": "cost",
+ "items": [
+  {
+   "id": "cost-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "A department buys a server for ₱180,000 and uses it for four years. A second department rents equivalent capacity and pays ₱3,000 each month. How does accounting record each?",
+   "options": [
+    {
+     "text": "The purchase is CapEx, an asset depreciated over years. The rental is OpEx, an expense each month.",
+     "correct": true,
+     "feedback": "Owning creates an asset whose cost is spread over its useful life. Renting creates a monthly expense for what was used."
+    },
+    {
+     "text": "Both are operational expenditure, because both pay for the same kind of equipment.",
+     "correct": false,
+     "feedback": "The classification depends on whether you own an asset. The type of asset does not matter."
+    },
+    {
+     "text": "The purchase is expensed in full in year one, and the rental is depreciated over four years.",
+     "correct": false,
+     "feedback": "This reverses the treatment. Purchases are capitalized, and rental payments are expensed."
+    },
+    {
+     "text": "Both are capital expenditure, because both give the department the same computing power.",
+     "correct": false,
+     "feedback": "Rented capacity is not an asset the department owns, so it is an operating expense."
+    }
+   ]
+  },
+  {
+   "id": "cost-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "You buy capacity above the highest peak of the year, at 320 units. What do the idle-capacity and turned-away figures show?",
+   "options": [
+    {
+     "text": "Almost nobody is turned away, but most of the capacity you paid for sits unused.",
+     "correct": true,
+     "feedback": "Capacity sized for a brief peak is idle for the rest of the year. The widget shows about 87% unused and nothing turned away."
+    },
+    {
+     "text": "Nobody is turned away and almost none of the capacity is wasted.",
+     "correct": false,
+     "feedback": "Demand is quiet for most of the year, so capacity sized for the peak is mostly idle."
+    },
+    {
+     "text": "Some demand is still turned away, because demand varies from year to year.",
+     "correct": false,
+     "feedback": "In this chart the demand curve is fixed, and 320 units is above its highest point."
+    },
+    {
+     "text": "The year costs less than renting, because buying is cheaper per unit.",
+     "correct": false,
+     "feedback": "Buying for the peak costs several times more than renting the same shape of demand."
+    }
+   ]
+  },
+  {
+   "id": "cost-3",
+   "sec": "capacity",
+   "type": "mc",
+   "stem": "At 120 units the chart shows both idle capacity and demand turned away in the same year. Why can no single fixed capacity avoid both?",
+   "options": [
+    {
+     "text": "Demand spikes briefly, so capacity sized for the spikes sits idle for the rest of the year.",
+     "correct": true,
+     "feedback": "A flat line cannot match a spiky curve. Raising the line removes the lost demand and increases the idle capacity."
+    },
+    {
+     "text": "The slider range is too small to reach a setting where both problems disappear.",
+     "correct": false,
+     "feedback": "The slider reaches the highest peak, and at that setting nothing is turned away but most capacity is idle."
+    },
+    {
+     "text": "Idle capacity means the servers were configured incorrectly for this demand.",
+     "correct": false,
+     "feedback": "The servers work correctly. The idle capacity comes from the shape of demand."
+    },
+    {
+     "text": "Rented servers are always cheaper per unit, so buying is a mistake at any setting.",
+     "correct": false,
+     "feedback": "Renting costs more per unit. It wins because you pay only for what you use."
+    }
+   ]
+  },
+  {
+   "id": "cost-4",
+   "sec": null,
+   "type": "multi",
+   "stem": "A server costs ₱180,000 to buy. Select all that apply: which of these belong in its total cost of ownership?",
+   "options": [
+    {
+     "text": "Electricity and cooling for as long as it runs.",
+     "correct": true,
+     "feedback": "Operating costs run every hour whether or not anyone uses the system."
+    },
+    {
+     "text": "The cost of the system being unavailable during an outage.",
+     "correct": true,
+     "feedback": "Downtime is part of the total cost, and for enlistment morning it can be the largest item."
+    },
+    {
+     "text": "Safe disposal of the hardware and its data at the end of its life.",
+     "correct": true,
+     "feedback": "Disposal is a real cost that is usually left out of the original business case."
+    },
+    {
+     "text": "The monthly bill for a cloud server you decided not to use.",
+     "correct": false,
+     "feedback": "This is the price of the alternative. It is used for comparison and is not a cost of owning this server."
+    }
+   ]
+  }
+ ]
+}

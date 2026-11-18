@@ -1,0 +1,21 @@
+{
+ "id": "embed",
+ "title": "Word embeddings: how words get positions",
+ "label": "Word embeddings",
+ "desc": "How words get positions so similar words sit close together.",
+ "outcomes": [
+  "Describe how co-occurrence moves word positions",
+  "Predict neighbors (king and queen, king and hospital)",
+  "Say that no one labels the words"
+ ],
+ "tags": [
+  "embeddings",
+  "word positions",
+  "co-occurrence"
+ ],
+ "area": "ai",
+ "needs": [
+  "placelabels"
+ ],
+ "video": null
+}

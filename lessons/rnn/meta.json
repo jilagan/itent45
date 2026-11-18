@@ -1,0 +1,19 @@
+{
+ "id": "rnn",
+ "title": "Recurrent networks: the approach before transformers",
+ "label": "Recurrent networks",
+ "desc": "The older way of reading text one word at a time.",
+ "outcomes": [
+  "Describe reading one word at a time with one fixed note",
+  "Predict what gets forgotten across a long gap",
+  "Say why that limits long inputs"
+ ],
+ "tags": [
+  "recurrent network",
+  "hidden state",
+  "long inputs"
+ ],
+ "area": "ai",
+ "needs": [],
+ "video": null
+}

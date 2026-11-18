@@ -1,19 +1,14 @@
 #!/usr/bin/env python3
-"""Print the panel tables for README.md from the nav in each shell.html and the h2 of each panel.
+"""Print a table of every lesson, grouped by library area: id, rail label and the heading the lesson opens with.
    python3 tools/panels.py"""
-import re,json,html,pathlib
-root=pathlib.Path(__file__).resolve().parent.parent
-text=lambda h:html.unescape(re.sub(r"\s+"," ",re.sub(r"<[^>]+>","",h))).strip()
-for page,title in (("index","Module 1 and related modules (index.html)"),("machine","Module 2 (machine.html)")):
-    d=root/"src"/page
-    shell=(d/"shell.html").read_text(encoding="utf-8")
-    h2={}
-    for f in json.loads((d/"order.json").read_text(encoding="utf-8")):
-        s=(d/"panels"/f).read_text(encoding="utf-8")
-        m=re.search(r'id="p-(\w+)"',s); t=re.search(r"<h2[^>]*>(.*?)</h2>",s,re.S)
-        if m and t: h2[m.group(1)]=text(t.group(1))
-    print(f"\n### {title}\n\n| Group | Panel | Opens with the heading |\n|---|---|---|")
-    grp=""
-    for m in re.finditer(r'<div class="navgrp">(.*?)</div>|<button[^>]*data-p="(\w+)"[^>]*>.*?<span class="lbl">(.*?)</span>',shell,re.S):
-        if m.group(1): grp=text(m.group(1)); continue
-        print(f"| {grp} | {text(m.group(3))} | {h2.get(m.group(2),'')} |")
+import re, json, html, pathlib
+root = pathlib.Path(__file__).resolve().parent.parent
+text = lambda h: html.unescape(re.sub(r"\s+", " ", re.sub(r"<[^>]+>", "", h))).strip()
+lib = json.loads((root / "courses" / "library.json").read_text(encoding="utf-8"))
+for a in lib["areas"]:
+    print(f"\n### {a['label']}\n\n| Lesson | Label | Opens with the heading |\n|---|---|---|")
+    for i in a["lessons"]:
+        d = root / "lessons" / i
+        m = json.loads((d / "meta.json").read_text(encoding="utf-8"))
+        t = re.search(r"<h2[^>]*>(.*?)</h2>", (d / "lesson.html").read_text(encoding="utf-8"), re.S)
+        print(f"| {i} | {m['label']} | {text(t.group(1)) if t else ''} |")

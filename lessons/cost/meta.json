@@ -1,0 +1,20 @@
+{
+ "id": "cost",
+ "title": "Cloud cost: capital expenditure and operating expenditure",
+ "label": "CapEx and OpEx",
+ "desc": "Buying servers or renting them: what each costs and when.",
+ "outcomes": [
+  "Separate CapEx from OpEx",
+  "Explain the two ways to guess capacity wrong",
+  "List TCO items beyond price"
+ ],
+ "tags": [
+  "CapEx",
+  "OpEx",
+  "TCO",
+  "capacity planning"
+ ],
+ "area": "capacity-cloud",
+ "needs": [],
+ "video": null
+}

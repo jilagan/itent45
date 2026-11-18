@@ -1,0 +1,117 @@
+{
+ "lesson": "region",
+ "items": [
+  {
+   "id": "region-1",
+   "sec": "distance",
+   "type": "mc",
+   "stem": "Your users are in Metro Manila and your servers are in Sydney, 6,250 km away. Light in fiber travels about 200,000 km per second. What is the shortest possible round-trip time on a perfect network?",
+   "options": [
+    {
+     "text": "About 63 ms.",
+     "correct": true,
+     "feedback": "The round trip covers 2 × 6,250 km = 12,500 km. Dividing by 200,000 km per second gives about 0.0625 seconds."
+    },
+    {
+     "text": "About 31 ms.",
+     "correct": false,
+     "feedback": "This is the one-way time. A response needs the request to travel there and the reply to travel back."
+    },
+    {
+     "text": "About 625 ms.",
+     "correct": false,
+     "feedback": "This is ten times too large. 12,500 km divided by 200,000 km per second is about 0.0625 seconds."
+    },
+    {
+     "text": "About 0 ms, because the server is fast.",
+     "correct": false,
+     "feedback": "Server speed does not change how long the signal takes to travel. Distance sets a minimum that no code can go below."
+    }
+   ]
+  },
+  {
+   "id": "region-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "Your app runs on three machines behind a load balancer, all in one data center. The data center loses power. What happens?",
+   "options": [
+    {
+     "text": "The site goes down, because all three machines were in the same building.",
+     "correct": true,
+     "feedback": "A load balancer sends traffic away from a failed machine. When the whole building fails, there is no healthy machine to send traffic to."
+    },
+    {
+     "text": "The load balancer moves traffic to the two remaining machines.",
+     "correct": false,
+     "feedback": "All three machines lost power together, so none remain."
+    },
+    {
+     "text": "The site stays up, because a load balancer protects against every kind of failure.",
+     "correct": false,
+     "feedback": "A load balancer protects against a machine failing. It cannot move work to a building that is also down."
+    },
+    {
+     "text": "The site slows down but keeps serving users from the backup copy.",
+     "correct": false,
+     "feedback": "There is no backup copy in this setup. Everything is in one data center."
+    }
+   ]
+  },
+  {
+   "id": "region-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "Your app uses the multi-region option with a standby in Tokyo, and the primary region fails. Which statement is correct?",
+   "options": [
+    {
+     "text": "The site returns after 10 to 30 minutes, and up to 30 seconds of writes may be lost.",
+     "correct": true,
+     "feedback": "Tokyo is thousands of kilometers from the primary, so its copy is updated after each write is confirmed. A failure can lose the newest writes, and switching over takes time."
+    },
+    {
+     "text": "The site never goes down, and no data is lost because Tokyo has a full copy.",
+     "correct": false,
+     "feedback": "Switching to the standby takes minutes. Asynchronous copying also means the newest writes may not have reached Tokyo."
+    },
+    {
+     "text": "The site returns in under a minute with no data lost, as in the multi-AZ option.",
+     "correct": false,
+     "feedback": "These figures belong to the multi-AZ option, where the two buildings are milliseconds apart."
+    },
+    {
+     "text": "The site is down until the primary region is repaired, however long that takes.",
+     "correct": false,
+     "feedback": "The standby in Tokyo exists so that the site can run while the primary region is down."
+    }
+   ]
+  },
+  {
+   "id": "region-5",
+   "sec": null,
+   "type": "mc",
+   "stem": "Every user of your {{project}} is in Metro Manila, and your budget is small. Which setup does this panel recommend?",
+   "options": [
+    {
+     "text": "A Singapore region, with multi-AZ if offered by default.",
+     "correct": true,
+     "feedback": "Singapore gives a comfortable time to first byte, and multi-AZ protects against a data center failure at little extra cost."
+    },
+    {
+     "text": "Multi-region with a standby in Tokyo, to be safe.",
+     "correct": false,
+     "feedback": "Multi-region doubles the cost, needs code for conflicting writes and accepts a data-loss window. It suits cases where a region outage costs more than running two of everything."
+    },
+    {
+     "text": "Virginia, because it is the most widely used region.",
+     "correct": false,
+     "feedback": "Virginia is 13,700 km from your users and gives more than a second to first byte."
+    },
+    {
+     "text": "One machine in one data center, with a nightly backup.",
+     "correct": false,
+     "feedback": "This is the cheapest option, but a single data center failure takes the site down for hours."
+    }
+   ]
+  }
+ ]
+}

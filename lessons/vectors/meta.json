@@ -1,0 +1,21 @@
+{
+ "id": "vectors",
+ "title": "Vectors and similarity of meaning",
+ "label": "Vectors and similarity",
+ "desc": "How closeness between words stands for closeness in meaning.",
+ "outcomes": [
+  "Say a word or sentence is a position and similarity is an angle",
+  "Read an analogy result and say where it stops working",
+  "Explain why search finds different words with the same meaning"
+ ],
+ "tags": [
+  "vectors",
+  "similarity",
+  "semantic search"
+ ],
+ "area": "ai",
+ "needs": [
+  "placelabels"
+ ],
+ "video": null
+}

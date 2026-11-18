@@ -1,0 +1,112 @@
+{
+ "lesson": "learn",
+ "items": [
+  {
+   "id": "learn-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "A team fits a model to 1,000 customer records and reports 99 percent accuracy, measured on those same 1,000 records. What does this score tell you?",
+   "options": [
+    {
+     "text": "Little: it was scored on the records it was fitted to, so it may have memorized them.",
+     "correct": true,
+     "feedback": "A score on the training examples is expected to be high. Only a score on examples the model has not seen shows how it will behave on new customers."
+    },
+    {
+     "text": "That the model will be 99 percent accurate on new customers who were not in the data.",
+     "correct": false,
+     "feedback": "New customers were not in the data, so this score cannot predict how the model treats them."
+    },
+    {
+     "text": "That the model is overfitted, because 99 percent is too high to be real.",
+     "correct": false,
+     "feedback": "You cannot tell from this score alone. You need the score on a test set to see a gap."
+    },
+    {
+     "text": "Nothing, because accuracy is not a useful measure for customer records.",
+     "correct": false,
+     "feedback": "Accuracy is a fine measure. The problem is that it was measured on the training examples."
+    }
+   ]
+  },
+  {
+   "id": "learn-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "A line is bent so that it scores 100 percent on twelve training students. How will its score on five new students compare with a straight line's score?",
+   "options": [
+    {
+     "text": "Higher than the straight line, because it fits the twelve perfectly.",
+     "correct": false,
+     "feedback": "Fitting the twelve perfectly does not mean the line will fit new students. A line that bends around individual students can get new students wrong."
+    },
+    {
+     "text": "Lower than the straight line, because it follows the quirks of the twelve.",
+     "correct": true,
+     "feedback": "The bent line follows the quirks of the twelve students, so it does worse on the five it never saw. This is overfitting."
+    },
+    {
+     "text": "The same as the straight line, because both were fitted to the same students.",
+     "correct": false,
+     "feedback": "The two lines treat the test students differently, and the bent line has a visibly larger gap between its training and test scores."
+    }
+   ]
+  },
+  {
+   "id": "learn-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "An analyst fits a model, checks the test set score, changes some settings, and checks the test set score again. She repeats this ten times and reports the best test score. What is wrong with this?",
+   "options": [
+    {
+     "text": "The test set guided her choices, so information leaked and the score is too optimistic.",
+     "correct": true,
+     "feedback": "Once the test set influences decisions, it works as extra training data. The score no longer shows how the model will treat new data."
+    },
+    {
+     "text": "Nothing is wrong. Testing ten times and taking the best makes the result more reliable.",
+     "correct": false,
+     "feedback": "Each look at the test set lets it influence the next change. More looks make the score less honest."
+    },
+    {
+     "text": "The test set is too small, so ten checks are not enough to judge the model.",
+     "correct": false,
+     "feedback": "The size of the test set is not the problem. The problem is that it was used to make decisions."
+    },
+    {
+     "text": "She should have reported the training score, because it is always higher.",
+     "correct": false,
+     "feedback": "The training score is expected to be high and says little about new data."
+    }
+   ]
+  },
+  {
+   "id": "learn-4",
+   "sec": "train-vs-test",
+   "type": "mc",
+   "stem": "Two models both score 90 percent on the training set. Model X scores 88 percent on the test set. Model Y scores 61 percent. Which statement is most accurate?",
+   "options": [
+    {
+     "text": "Model Y probably memorized its training data. Model X found the pattern.",
+     "correct": true,
+     "feedback": "A small gap between training and test scores suggests the model found the general shape. A large gap suggests memorizing."
+    },
+    {
+     "text": "The two models are equally good, because their training scores match.",
+     "correct": false,
+     "feedback": "Equal training scores say little. The test scores show how each model treats new data."
+    },
+    {
+     "text": "Model X must be overfitted, because its two scores are different.",
+     "correct": false,
+     "feedback": "A small gap is normal. A large gap is the warning sign."
+    },
+    {
+     "text": "Model Y is better, because it did well on harder data.",
+     "correct": false,
+     "feedback": "The test set is not harder. It is data the model did not see, and Model Y did much worse on it."
+    }
+   ]
+  }
+ ]
+}

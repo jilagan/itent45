@@ -1,0 +1,89 @@
+{
+ "lesson": "card",
+ "items": [
+  {
+   "id": "card-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "In an online store, one order can contain many products, and one product appears in many orders. What type of relationship is this?",
+   "options": [
+    {
+     "text": "Many-to-many.",
+     "correct": true,
+     "feedback": "Each side can pair with many rows on the other side, so the database needs a third table with one row for each order and product pairing."
+    },
+    {
+     "text": "One-to-many, because one order holds many products.",
+     "correct": false,
+     "feedback": "This is true from the order's side only. The same question asked from the product's side also gives many, so the relationship is many-to-many."
+    },
+    {
+     "text": "One-to-one, because each line of an order is one product.",
+     "correct": false,
+     "feedback": "A line of an order pairs one order with one product, but the relationship between the two entities is still many on both sides."
+    },
+    {
+     "text": "It depends on the database software.",
+     "correct": false,
+     "feedback": "Cardinality comes from the business rules, not from the software. Here the rules allow many on both sides."
+    }
+   ]
+  },
+  {
+   "id": "card-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "One course has many sections, and each section belongs to one course. In which table does the foreign key go?",
+   "options": [
+    {
+     "text": "In the sections table, as a column holding the course id.",
+     "correct": true,
+     "feedback": "The foreign key goes on the many side, so each section stores the id of its one course."
+    },
+    {
+     "text": "In the courses table, as a column holding the section ids.",
+     "correct": false,
+     "feedback": "A column cannot hold a list of ids. The course would need a different number of columns for each course."
+    },
+    {
+     "text": "In both tables, so each can find the other.",
+     "correct": false,
+     "feedback": "One foreign key is enough. Storing the link twice lets the two copies disagree."
+    },
+    {
+     "text": "In a third table that links courses and sections.",
+     "correct": false,
+     "feedback": "A third table is needed only for many-to-many relationships. A one-to-many relationship needs only the foreign key."
+    }
+   ]
+  },
+  {
+   "id": "card-3",
+   "sec": "third-table",
+   "type": "mc",
+   "stem": "A student takes many courses, and a course has many students. A grade is recorded for each student in each course. Where should the grade be stored?",
+   "options": [
+    {
+     "text": "In the enrollments table, in the row for that student and that course.",
+     "correct": true,
+     "feedback": "The grade describes the pairing, so it lives in the table that has one row for each pairing."
+    },
+    {
+     "text": "In the students table, as a column called grade on each student.",
+     "correct": false,
+     "feedback": "A student has many courses and so would need many grades. One column cannot hold them."
+    },
+    {
+     "text": "In the courses table, as a column called grade on each course.",
+     "correct": false,
+     "feedback": "A course has many students, each with a different grade. One column cannot hold them."
+    },
+    {
+     "text": "In both the students table and the courses table, so either can be read.",
+     "correct": false,
+     "feedback": "Storing it in both places gives two copies that can disagree, and neither one says which pairing the grade belongs to."
+    }
+   ]
+  }
+ ]
+}

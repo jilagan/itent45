@@ -6,18 +6,14 @@ Every agent follows this file. Audits are in docs/audit-copy.md, docs/audit-desi
 Business undergraduates. Not CS, not MIS. Many have never opened a terminal. They read this on Canvas (laptop or phone) and the instructor also projects it.
 
 ## Source layout
-    src/<page>/shell.html          rail + page frame        (page = index | machine)
-    src/<page>/style.css           page styles
-    src/<page>/panels/NN-id.html   one panel each           (order.json = body order)
-    src/<page>/js/NN-id.js         widget code and its copy (js-order.json = load order)
-    src/<page>/cyu/<id>.json       Check Your Understanding items for panel <id>
-    src/<page>/videos.json         video slots
-    src/shared/theme.css           shared look, loaded after style.css
-    src/shared/platform.css|js     routing, sections, embed mode, CYU, video
-    python3 build.py               writes index.html, machine.html
-    python3 build.py --out DIR     writes to DIR (use this while working, DIR = /tmp/<your-name>)
-    python3 tools/check.py DIR [panel ids...]   clicks through the built pages, prints console errors
-Never edit index.html or machine.html directly. Edit only the files you own. Do not run git.
+The library layout replaced the page layout. See README.md and docs/AUTHORING.md.
+    lessons/<id>/lesson.html, lesson.js, cyu.json, meta.json     one folder per lesson
+    lib/<name>.js                                                shared code a lesson names in meta "needs"
+    courses/<course>.json, courses/library.json                  courses and the library page
+    shared/                                                      theme.css, platform.css|js, course.js, analytics, icons, art
+    python3 build.py [--out DIR]                                 writes lessons/<id>.html, courses/<course>.js, the home pages, library.html, embed.html
+    python3 tools/check.py DIR [lesson ids...]                   clicks through every lesson page
+Never edit the built pages. Do not run git.
 
 ## Writing rules (all on-screen text, in HTML and in JS strings)
 1. Short declarative sentences. Ordinary spoken English. Would a lecturer say it out loud to a class?
@@ -47,7 +43,7 @@ Never edit index.html or machine.html directly. Edit only the files you own. Do 
   directly inside the `<section class="panel">`, after the `.head` block. Everything after `.head` must be inside some `.sec`. Slugs are lowercase words joined by hyphens, unique in the panel. Section titles follow the heading rules. Short panels get no `.sec` wrappers. The platform script turns `.sec` blocks into a tab strip with Previous/Next and shows one at a time. Do not write any tab or pager markup yourself. Each section should make sense on its own in a Canvas page: give it a one or two sentence opening.
 
 ## Check Your Understanding
-One file per panel: src/<page>/cyu/<panelId>.json (panelId is the part after "p-", e.g. "rest").
+One file per panel: lessons/<id>/cyu.json (id is the lesson id, e.g. "rest").
     {"panel":"rest","items":[
       {"id":"rest-1","sec":"verbs","type":"mc",
        "stem":"A student presses Submit twice on a payment form. Which request type makes the second press harmless?",
@@ -72,7 +68,7 @@ Build to /tmp/<your-name>, run tools/check.py on it for your panels, and fix any
 Final report: under 20 lines. Files changed, anything you could not do, facts you doubted, and any change to ids/classes.
 
 ## Videos
-Videos go on the Ateneo BUILD YouTube channel and are embedded through src/<page>/videos.json. The BUILD logo must be prominent in every video: on the opening card, as a persistent corner mark through the video, and on the end card. Videos are scripted from the final panel copy, so they are made after the rewrite is merged.
+Videos go on the Ateneo BUILD YouTube channel and are embedded through the "video" field of lessons/<id>/meta.json. The BUILD logo must be prominent in every video: on the opening card, as a persistent corner mark through the video, and on the end card. Videos are scripted from the final panel copy, so they are made after the rewrite is merged.
 
 ## Simplicity rules (round 2, overrides anything above that conflicts)
 The owner's verdict on round 1: "still too complex and intimidating. Too many things going on in each page." A first screen held three paragraphs, a question, a framework switch, three dense cards, a trace and a 26-item rail. The rule now is one idea and one thing to do per screen.

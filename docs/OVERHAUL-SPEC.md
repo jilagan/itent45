@@ -1,0 +1,72 @@
+# ITENT 45 site overhaul: shared spec
+
+Every agent follows this file. Audits are in docs/audit-copy.md, docs/audit-design.md, docs/audit-structure.md.
+
+## Audience
+Business undergraduates. Not CS, not MIS. Many have never opened a terminal. They read this on Canvas (laptop or phone) and the instructor also projects it.
+
+## Source layout
+    src/<page>/shell.html          rail + page frame        (page = index | machine)
+    src/<page>/style.css           page styles
+    src/<page>/panels/NN-id.html   one panel each           (order.json = body order)
+    src/<page>/js/NN-id.js         widget code and its copy (js-order.json = load order)
+    src/<page>/cyu/<id>.json       Check Your Understanding items for panel <id>
+    src/<page>/videos.json         video slots
+    src/shared/theme.css           shared look, loaded after style.css
+    src/shared/platform.css|js     routing, sections, embed mode, CYU, video
+    python3 build.py               writes index.html, machine.html
+    python3 build.py --out DIR     writes to DIR (use this while working, DIR = /tmp/<your-name>)
+    python3 tools/check.py DIR [panel ids...]   clicks through the built pages, prints console errors
+Never edit index.html or machine.html directly. Edit only the files you own. Do not run git.
+
+## Writing rules (all on-screen text, in HTML and in JS strings)
+1. Short declarative sentences. Ordinary spoken English. Would a lecturer say it out loud to a class?
+2. Headings name the topic like a textbook section: "How a web app is divided", "HTTP verbs". No verdicts, no jokes, no full-sentence claims. Proposed replacements are in docs/audit-copy.md section 3. Use them or improve them.
+3. Banned: contrast framing ("not X but Y", "rather than", "instead of", "X is not the same as Y"); two-sentence antithesis ("The verb says X. The URL says Y."); cleft sentences ("What X does is", "That is why", "That is what"); rhetorical setups ("Here is the thing"); quotable closing lines; em dashes and en dashes used as asides; triads for rhythm; metaphor verbs where a plain verb exists ("earns an afternoon", "ruin your afternoon", "physics gets a vote", "wearing different words"); personifying machines for drama; "land/lands/landed"; "actually", "just", "simply", "honestly".
+4. Bold lead-in verdict lines become plain sentences or plain labels ("What changed", "Why it matters").
+5. Explain every technical term at first use in the panel, in one plain clause. Do not assume Django, SQL, terminal, or any programming experience. Where code appears, say in one line what the reader is looking at.
+6. Analogy first. Each panel's intro starts with an everyday situation (1 to 3 sentences), then names the technical term. Write it as ordinary prose in the intro paragraph. No "Analogy:" label, no special box. Philippine settings are welcome where natural. Use these anchors so panels agree with each other:
+   - Module 1 anatomy (basics, tiers, layers, journey, bytes, rest, clients, render, pay): a restaurant. Customer = browser, waiter = application server, kitchen = database. The customer never walks into the kitchen. Envelopes/LBC parcels for layers. Order slip for HTTP. Paying at a cashier and getting a claim stub for payments.
+   - Module 4 capacity and cloud (mem, server, scale, enlist, vm, cost, region): a fast-food branch. Cashiers = workers, the line = queue, opening more branches = scaling out, the guard directing people to counters = load balancer. Condo units for virtual machines. Buying a jeepney versus booking a Grab for CapEx versus OpEx. Bank branches in Manila and Cebu for regions.
+   - Module 5 data (entity, card, rea, sql, txn, norm, query, shape): a class list in a spreadsheet and enlistment. Sari-sari store sale for REA. Last seat with two cashiers for transactions.
+   - Module 6 (split): one cook versus a food court.
+   - Module 2 (machine): use the per-panel suggestions in docs/audit-copy.md section 4.
+   An analogy must be true to the mechanism. Say where it stops matching if that matters. One analogy per idea, reused, is better than many.
+7. "Ask the room" becomes a `.ask` block labelled "Think first". It must be a question the student can attempt alone. It must not answer itself. Notes meant for the instructor ("Push them past...", "say this out loud", "what to listen for") go in an element with class `instructor`, which is hidden from students.
+8. No panel numbers anywhere in text. Refer to other panels by name: 'see "HTTP verbs"'. Fix every wrong cross-reference listed in the copy audit. Module 2 referring to Module 1: 'the Module 1 site, "What a server holds"'.
+9. Labels and captions: sentence case, no ALL CAPS typed in source, no cute voice. US spelling throughout.
+10. Fix the bugs listed in docs/audit-copy.md section 5 that fall in your files (broken "the enlistment system" replacements, lowercase sentence starts, typos).
+11. Keep the facts. Do not change numbers, technical claims, widget behaviour or data unless they are wrong. Do not add new widgets. Cut text that only adds tone. Shorter is fine.
+
+## Markup rules for panel files
+- Keep every id, class, data-* attribute and element that JS uses. If unsure, grep the js/ files before changing an element.
+- Delete the `.eyebrow` line in each panel head.
+- Remove `font-family:var(--mono)`, `letter-spacing` and `text-transform` from inline styles on labels (HTML and JS-generated). Monospace is for code, URLs, bytes and data values only. Do not add new inline styles.
+- Sections. Long panels (list in docs/audit-structure.md A2, "firm" and "optional") are divided into sections. Wrap each section's content in
+      <div class="sec" data-sec="short-slug" data-title="Section title">...</div>
+  directly inside the `<section class="panel">`, after the `.head` block. Everything after `.head` must be inside some `.sec`. Slugs are lowercase words joined by hyphens, unique in the panel. Section titles follow the heading rules. Short panels get no `.sec` wrappers. The platform script turns `.sec` blocks into a tab strip with Previous/Next and shows one at a time. Do not write any tab or pager markup yourself. Each section should make sense on its own in a Canvas page: give it a one or two sentence opening.
+
+## Check Your Understanding
+One file per panel: src/<page>/cyu/<panelId>.json (panelId is the part after "p-", e.g. "rest").
+    {"panel":"rest","items":[
+      {"id":"rest-1","sec":"verbs","type":"mc",
+       "stem":"A student presses Submit twice on a payment form. Which request type makes the second press harmless?",
+       "options":[
+         {"text":"...", "correct":true,  "feedback":"Why this is right, in one or two sentences."},
+         {"text":"...", "correct":false, "feedback":"Why this is wrong, and what idea it confuses."}]},
+      {"id":"rest-2","sec":null,"type":"predict",
+       "stem":"Before you try it: ... what will the table show?",
+       "options":[...],
+       "try":"Now do X in the widget above and compare."}]}
+- `type`: "mc" (one correct), "multi" (several correct, say "Select all that apply" in the stem), "predict" (mc plus a `try` line pointing at a widget in that panel).
+- `sec`: the data-sec slug the item belongs to, or null for the whole panel.
+- 3 to 5 items per panel, at least one per section in sectioned panels. 3 or 4 options each. Every option has feedback. Wrong options are mistakes a business student would plausibly make. Test the outcomes in docs/audit-structure.md D2. Ask about situations and consequences, not definitions to recite. No trick wording, no "all of the above". Plain text only (no HTML) except `code` in backticks.
+- Follow the writing rules. Breakouts panel gets no items.
+
+## Look (owned by the design agent; others just avoid fighting it)
+System fonts only. White page, one blue, orange only for request/change/warning. No uppercase letter-spaced labels. Monospace only for code. One hairline frame per widget, no boxes inside boxes. Body 17px, nothing under 14px. Prose lines at most about 70 characters.
+
+## Verify before you report
+Build to /tmp/<your-name>, run tools/check.py on it for your panels, and fix any console error. Open at least two of your panels with Playwright (executable_path='/usr/bin/google-chrome', args=['--no-sandbox']), screenshot, and look at them with the Read tool. Then grep your files for the banned patterns in rule 3.
+
+Final report: under 20 lines. Files changed, anything you could not do, facts you doubted, and any change to ids/classes.

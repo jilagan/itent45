@@ -9,8 +9,17 @@ for page in ("index","machine"):
     d=root/"src"/page
     rd=lambda p:(d/p).read_text(encoding="utf-8")
     panels="".join(rd("panels/"+f) for f in json.loads(rd("order.json")))
-    out=(rd("shell.html").replace("/*@@STYLE@@*/\n",rd("style.css"),1)
+    sh=root/"src"/"shared"
+    opt=lambda p:p.read_text(encoding="utf-8") if p.exists() else ""
+    cyu={}
+    for f in sorted((d/"cyu").glob("*.json")):
+        j=json.loads(f.read_text(encoding="utf-8")); cyu[j["panel"]]=j["items"]
+    vids=json.loads(opt(d/"videos.json") or "[]")
+    data="window.COURSE="+json.dumps({"page":page,"cyu":cyu,"videos":vids},ensure_ascii=False).replace("</","<\\/")+";\n"
+    css=rd("style.css")+opt(sh/"theme.css")+opt(sh/"platform.css")
+    js=data+"".join(rd("js/"+f) for f in json.loads(rd("js-order.json")))+opt(sh/"platform.js")
+    out=(rd("shell.html").replace("/*@@STYLE@@*/\n",css,1)
          .replace("<!--@@PANELS@@-->\n",panels,1)
-         .replace("/*@@SCRIPT@@*/\n","".join(rd("js/"+f) for f in json.loads(rd("js-order.json"))),1))
+         .replace("/*@@SCRIPT@@*/\n",js,1))
     (out_dir/f"{page}.html").write_text(out,encoding="utf-8")
     print(f"built {page}.html  {len(out):,} bytes")

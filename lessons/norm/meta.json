@@ -1,0 +1,19 @@
+{
+ "id": "norm",
+ "title": "Normalization: storing each fact once",
+ "label": "Normalization",
+ "desc": "Why each fact should be stored in only one place.",
+ "outcomes": [
+  "Explain redundancy: one fact stored in many rows",
+  "Predict how many rows change on a rename",
+  "Say what goes wrong if you miss some"
+ ],
+ "tags": [
+  "normalization",
+  "redundancy",
+  "tables"
+ ],
+ "area": "data",
+ "needs": [],
+ "video": null
+}

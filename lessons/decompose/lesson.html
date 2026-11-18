@@ -1,0 +1,45 @@
+    <section class="panel" id="p-decompose">
+      <div class="head">
+        <h2>Breaking a task into parts</h2>
+        <p>A large task becomes manageable when it is split into pieces that one person can own. Some pieces must wait for others, and that waiting sets the shortest time.</p>
+      </div>
+
+      <div class="sec" data-sec="project" data-title="Start with a group project">
+        <p>Your group of four has a project due in two weeks. Everyone opens the same document and waits for someone else to start. A list of small jobs, such as survey, results, slides and rehearsal, gives each person something to do today. Splitting a big task into smaller tasks is called <dfn title="Splitting a large task into smaller tasks">decomposition</dfn>.</p>
+        <div class="scene" role="group" aria-label="The project is the large task, the list of small jobs is the set of pieces, each student is the owner of one piece" data-art="poster-in-pieces" data-art-desc="Four students at one table each work on a different section of a large poster cut into pieces.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-calendar-blank"/></svg></div><figcaption><b>Project due in two weeks</b><span>Large task</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-checks"/></svg></div><figcaption><b>List of small jobs</b><span>Pieces</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>One student per job</b><span>Owner</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> List the jobs for a class survey project. Which two jobs could two people do at the same time?</div>
+        <div class="instructor">Typical jobs are writing questions, finding respondents, collecting answers and making charts. Writing questions and finding respondents can run together. Collecting answers needs both. Collect a few lists before anyone moves on.</div>
+      </div>
+
+      <div class="sec" data-sec="split" data-title="Split the job">
+        <p>A good piece has one owner and a clear point where it is done. In this plan, a piece of more than 4 hours is too big for one sitting. Press Split on any piece that is too big, until every piece is 4 hours or less.</p>
+        <div class="card wg" id="dcSplit"></div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Why 4 hours</h4>
+          <p>The limit is a choice made for this lesson. In the next step each day is a 2-hour work session, so the same pieces take 1 or 2 days. Real teams pick a size that fits how often they meet. Each piece should be something one person can start, finish and check.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="order" data-title="Find the order">
+        <p>Some jobs need another job first. A <dfn title="A job that must finish before another job can start">dependency</dfn> is a job that must finish before another job can start. Three people can work at the same time. One day is a 2-hour work session, so a 4-hour piece takes 2 days. Each day, press the jobs you can start, then press End day. Finish in as few days as you can.</p>
+        <div class="card wg" id="dcPlan"></div>
+      </div>
+
+      <div class="sec" data-sec="time" data-title="The shortest time">
+        <p>The shortest time for the whole job is set by the longest chain of jobs that wait for each other. Extra people shorten the work only when jobs can run at the same time. A job outside that chain has days to spare, and a delay in the chain moves the finish date.</p>
+        <p class="outcome">You can now split a large task into pieces one person can own, find which pieces must wait, and tell the shortest time from the longest chain.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The longest chain</h4>
+          <p>In the booth plan the longest chain is Design layout (1 day), Buy materials (2), Run the morning shift (1) and Record sign-ups (1). That adds up to 5 days, or 10 hours of sessions. Project managers call it the <dfn title="The longest chain of dependent jobs, which sets the minimum time">critical path</dfn>. A job outside it, such as Design sign-up sheet, can start late without moving the finish.</p>
+          <h4>Parts of a software system</h4>
+          <p>A web application splits into a browser part, a server part and a database part. Each part can be built and tested by a different person. Splitting an application into services is the same idea at a larger size, as in <a data-lesson="split">One application or many services?</a></p>
+          <p>Jobs that do not depend on each other can run at the same time. This is how <a data-lesson="scale">Scaling out with a load balancer</a> adds capacity. An AI agent also splits a goal into steps before it acts, as in <a data-lesson="loop">AI agents: the think, act and observe loop</a>.</p>
+        </details>
+      </div>
+    </section>

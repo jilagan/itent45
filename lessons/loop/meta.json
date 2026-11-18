@@ -1,0 +1,25 @@
+{
+ "id": "loop",
+ "title": "AI agents: the think, act and observe loop",
+ "label": "AI agents",
+ "desc": "How an AI agent plans, acts and checks its own work.",
+ "outcomes": [
+  "Distinguish chat from agent (action plus observation)",
+  "Name four ways a loop drifts",
+  "Say which lines the model could not have written (observations)"
+ ],
+ "tags": [
+  "agents",
+  "tools",
+  "observations",
+  "loop"
+ ],
+ "area": "ai",
+ "needs": [],
+ "video": {
+  "sec": null,
+  "youtube": "",
+  "title": "A coding agent session in 90 seconds",
+  "about": "A real coding agent reading files, editing, running tests, failing, retrying, and stopping to ask permission."
+ }
+}

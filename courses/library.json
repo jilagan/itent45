@@ -1,0 +1,109 @@
+{
+ "id": "library",
+ "title": "Lesson library",
+ "intro": "Short interactive lessons on computational thinking, software, data, the cloud and AI. Each lesson stands alone, so a course can use any of them in any order.",
+ "areas": [
+  {
+   "id": "web",
+   "label": "Web applications",
+   "about": "How a request travels from a browser to a server and back, and what the messages contain.",
+   "lessons": [
+    "basics",
+    "tiers",
+    "layers",
+    "journey",
+    "bytes",
+    "rest",
+    "clients",
+    "render",
+    "pay"
+   ]
+  },
+  {
+   "id": "data",
+   "label": "Data and databases",
+   "about": "How to describe data as tables, change it safely and choose a database.",
+   "lessons": [
+    "entity",
+    "card",
+    "rea",
+    "sql",
+    "txn",
+    "norm",
+    "query",
+    "shape"
+   ]
+  },
+  {
+   "id": "capacity-cloud",
+   "label": "Capacity and cloud",
+   "about": "How much a server can handle, how to add machines and what the cloud costs.",
+   "lessons": [
+    "mem",
+    "server",
+    "scale",
+    "enlist",
+    "vm",
+    "cost",
+    "region"
+   ]
+  },
+  {
+   "id": "architecture",
+   "label": "Architecture",
+   "about": "How to divide an application into parts and what each division costs.",
+   "lessons": [
+    "split"
+   ]
+  },
+  {
+   "id": "ai",
+   "label": "Language models and AI",
+   "about": "How a language model learns, reads and writes, and how to use one with care.",
+   "lessons": [
+    "intro",
+    "next",
+    "learn",
+    "train",
+    "deep",
+    "backprop",
+    "tokens",
+    "embed",
+    "vectors",
+    "rnn",
+    "attn",
+    "ctx",
+    "prompt",
+    "loop",
+    "tools",
+    "vibe",
+    "math"
+   ]
+  },
+  {
+   "id": "practice",
+   "label": "Practice",
+   "about": "Group work that uses what the other lessons teach.",
+   "lessons": [
+    "break"
+   ]
+  },
+  {
+   "id": "computational-thinking",
+   "label": "Computational thinking",
+   "about": "How to frame a problem, break it into parts, find patterns, and write steps that someone else or a computer can follow.",
+   "lessons": [
+    "frame",
+    "decompose",
+    "patterns",
+    "abstract",
+    "algorithm",
+    "rules",
+    "sorting",
+    "routes",
+    "growth",
+    "debug"
+   ]
+  }
+ ]
+}

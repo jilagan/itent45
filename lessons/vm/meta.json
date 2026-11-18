@@ -1,0 +1,26 @@
+{
+ "id": "vm",
+ "title": "Virtualization and what the cloud means",
+ "label": "Virtual machines and the cloud",
+ "desc": "How one physical machine is split into many virtual ones.",
+ "outcomes": [
+  "Explain a VM as a slice of a host",
+  "Name the five NIST characteristics and tie three to things you did",
+  "Place IaaS, PaaS and SaaS by who runs what"
+ ],
+ "tags": [
+  "virtual machines",
+  "cloud",
+  "IaaS",
+  "PaaS",
+  "SaaS"
+ ],
+ "area": "capacity-cloud",
+ "needs": [],
+ "video": {
+  "sec": "provisioning",
+  "youtube": "",
+  "title": "Launch a cloud server, then open the bill",
+  "about": "A real cloud console: choosing an instance type and region, the pricing page, how long the server takes to boot, and the first line of the bill."
+ }
+}

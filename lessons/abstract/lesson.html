@@ -1,0 +1,76 @@
+<section class="panel" id="p-abstract">
+  <div class="head">
+    <h2>Abstraction and models</h2>
+    <p>An <dfn title="Keeping the details a question needs and hiding the rest">abstraction</dfn> keeps the details that matter for a question and hides the rest. A model built this way is easier to use than the real thing.</p>
+  </div>
+
+  <div class="sec" data-sec="route-map" data-title="Start with a route map">
+    <p>A jeepney route map shows stops and lines. It leaves out building shapes, traffic lights and the color of each jeepney. A commuter needs the order of stops and where lines cross. A picture that keeps only what a decision needs is an abstraction.</p>
+    <div class="scene" role="group" aria-label="The street is the real system, the line map is the model, the commuter's question decides what the map keeps" data-art="jeepney-route-map" data-art-desc="A commuter at a roadside stop holds up a card of plain dots joined by lines while a jeepney drives past.">
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bus"/></svg></div><figcaption><b>Streets and jeepneys</b><span>The real system</span></figcaption></figure>
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-map-trifold"/></svg></div><figcaption><b>Line map of stops</b><span>Model</span></figcaption></figure>
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Commuter's question</b><span>What the model must answer</span></figcaption></figure>
+    </div>
+    <div class="ask"><b>Think first.</b> You are building an app that tells commuters which jeepney to ride. Name two details of a route to keep and two to leave out.</div>
+    <div class="instructor">Typical keeps are stop names, the order of stops and the fare. Typical drops are the jeepney color and the buildings. Ask what the app would need if commuters also asked how long a ride takes.</div>
+  </div>
+
+  <div class="sec" data-sec="keep" data-title="Choose what to keep">
+    <p>A <dfn title="A simplified copy that answers one question">model</dfn> is a simplified copy of something real. This one describes a jeepney trip from Katipunan to Cubao and starts with every detail switched on. Pick a question, then switch off each detail it does not need.</p>
+    <div class="card wg" id="abKeep">
+      <div class="abt">Question</div>
+      <div class="abq" id="abQs" role="group" aria-label="Question"></div>
+      <div class="abt">Details in the model</div>
+      <div class="abd" id="abDs" role="group" aria-label="Details in the model"></div>
+      <div class="meter">
+        <div class="g"><div class="gl">Details kept</div><div class="gv" id="abKept">7 of 7</div></div>
+        <div class="g"><div class="gl">Questions solved</div><div class="gv" id="abSolved">0 of 3</div></div>
+      </div>
+      <div class="verdict" id="abV1" aria-live="polite"></div>
+      <div class="ctrls"><button class="btn" id="abReset1">Reset</button></div>
+    </div>
+    <details class="more">
+      <summary>More detail</summary>
+      <h4>A model fits one question</h4>
+      <p>Every model leaves something out, and it fails when the question changes. A route map has no distances, so it cannot say which route is faster.</p>
+      <h4>Data representation</h4>
+      <p>The same facts can be stored as a list, a table or a map. The choice decides which questions are easy to answer. A fare table answers cost questions at a glance and says nothing about the order of stops.</p>
+    </details>
+  </div>
+
+  <div class="sec" data-sec="zoom" data-title="Zoom in and out">
+    <p>The same action can be described at different <dfn title="How much of the inner workings a description shows">levels of detail</dfn>. A level hides the steps below it, and each person needs the level that fits their job. Zoom in one level at a time, then press the person who works at the level shown.</p>
+    <div class="card wg" id="abZoom">
+      <div class="abt">Order a milk tea in an app</div>
+      <div class="abzc">
+        <button class="btn" id="abOut">Zoom out</button>
+        <button class="btn primary" id="abIn">Zoom in</button>
+      </div>
+      <div class="abstack" id="abStack"></div>
+      <p class="abhid" id="abHid"></p>
+      <div class="abt">Who works at this level?</div>
+      <div class="abpl" id="abPeople" role="group" aria-label="People"></div>
+      <div class="meter">
+        <div class="g"><div class="gl">Level shown</div><div class="gv" id="abLvl">1 of 4</div></div>
+        <div class="g"><div class="gl">People matched</div><div class="gv" id="abMatched">0 of 3</div></div>
+      </div>
+      <div class="verdict" id="abV2" aria-live="polite"></div>
+      <div class="ctrls"><button class="btn" id="abReset2">Reset</button></div>
+    </div>
+    <details class="more">
+      <summary>More detail</summary>
+      <h4>Abstraction in software</h4>
+      <p>A function name, a table design and an API are abstractions. A user of the API can ignore how the server stores data, as long as the interface stays the same.</p>
+    </details>
+  </div>
+
+  <div class="sec" data-sec="summary" data-title="Using abstraction">
+    <p>A model works for the question it was built for. When the question changes, check whether the model still holds the details the new question needs.</p>
+    <p class="outcome">You can now choose the details a model needs, check that it still answers the question and describe an action at the right level of detail.</p>
+    <details class="more">
+      <summary>More detail</summary>
+      <h4>Abstraction in other lessons</h4>
+      <p>Each layer hides the layer below it in <a data-lesson="layers">How network messages are layered (protocol layers)</a>. Each tier shows the next tier a small interface in <a data-lesson="tiers">The three tiers of a web application</a>. A table of entities and attributes is a model of a business in <a data-lesson="entity">Entities, attributes and instances</a>.</p>
+    </details>
+  </div>
+</section>

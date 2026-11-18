@@ -1,0 +1,25 @@
+{
+ "id": "split",
+ "title": "One application or many services?",
+ "label": "Monolith or services",
+ "desc": "One application or many small services, and the cost of each.",
+ "outcomes": [
+  "Separate scaling out from splitting up",
+  "Compute memory with and without splitting",
+  "List what splitting costs (network calls, versioning, retries, tracing)"
+ ],
+ "tags": [
+  "monolith",
+  "microservices",
+  "services",
+  "network calls"
+ ],
+ "area": "architecture",
+ "needs": [],
+ "video": {
+  "sec": "costs",
+  "youtube": "",
+  "title": "Following one request across three services",
+  "about": "A real distributed trace view for one request, about 60 seconds. Optional."
+ }
+}

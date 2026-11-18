@@ -1,0 +1,97 @@
+{
+ "lesson": "routes",
+ "items": [
+  {
+   "id": "routes-1",
+   "sec": "build",
+   "type": "mc",
+   "stem": "A route uses rides of 8, 12 and 23 minutes. Each ride costs 13 pesos. What are the total minutes and fare?",
+   "options": [
+    {
+     "text": "43 minutes and 13 pesos",
+     "correct": false,
+     "feedback": "The fare is charged for each ride. Three rides cost 3 times 13 pesos."
+    },
+    {
+     "text": "43 minutes and 39 pesos",
+     "correct": true,
+     "feedback": "8 + 12 + 23 is 43 minutes. Three rides at 13 pesos each cost 39 pesos."
+    },
+    {
+     "text": "39 minutes and 43 pesos",
+     "correct": false,
+     "feedback": "The two totals are swapped. Minutes add up the ride times, and the fare counts rides."
+    }
+   ]
+  },
+  {
+   "id": "routes-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "A flood closes the line from Marikina to Ortigas. An app that stored the old best route keeps sending riders into the flood. What would have avoided this?",
+   "options": [
+    {
+     "text": "Storing a second best route in advance for each trip.",
+     "correct": false,
+     "feedback": "A stored route fails the same way when one of its own lines closes."
+    },
+    {
+     "text": "Telling riders to check the news before they travel.",
+     "correct": false,
+     "feedback": "That hands the work to riders, and the app still gives wrong answers."
+    },
+    {
+     "text": "Searching the current map each time and skipping closed lines.",
+     "correct": true,
+     "feedback": "A method that works on whatever map is open finds a new route when a line closes."
+    }
+   ]
+  },
+  {
+   "id": "routes-3",
+   "sec": "choose",
+   "type": "mc",
+   "stem": "A commuter picks the route with the fewest rides. It takes 43 minutes. Another route takes 38 minutes and has one more ride. Which statement fits?",
+   "options": [
+    {
+     "text": "Each route wins on one measure, so the commuter chooses which counts more.",
+     "correct": true,
+     "feedback": "Shortest time and fewest rides give different winners, and only the commuter knows the priority."
+    },
+    {
+     "text": "The 38 minute route is better, because time always matters most.",
+     "correct": false,
+     "feedback": "It saves 5 minutes and adds a ride and a 13 peso fare. Some commuters would not accept that."
+    },
+    {
+     "text": "The fewest-rides route is a mistake and should be dropped.",
+     "correct": false,
+     "feedback": "It is the best route for the measure it uses, which is the number of rides."
+    }
+   ]
+  },
+  {
+   "id": "routes-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "A startup builds a delivery app. Which question is a routing problem?",
+   "options": [
+    {
+     "text": "Which color should the delivery button be?",
+     "correct": false,
+     "feedback": "Color is a design choice. It has nothing to do with paths."
+    },
+    {
+     "text": "Which order of stops delivers six parcels fastest?",
+     "correct": true,
+     "feedback": "It asks for the best path through places joined by roads."
+    },
+    {
+     "text": "How many riders should the startup hire?",
+     "correct": false,
+     "feedback": "That is a staffing question. A route does not answer it."
+    }
+   ]
+  }
+ ]
+}

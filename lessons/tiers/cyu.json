@@ -1,0 +1,117 @@
+{
+ "lesson": "tiers",
+ "items": [
+  {
+   "id": "tiers-1",
+   "sec": "why",
+   "type": "mc",
+   "stem": "A developer wants to skip the application tier and let the browser send SQL straight to the database. What is the main problem?",
+   "options": [
+    {
+     "text": "The database password would have to sit in code on the user's device.",
+     "correct": true,
+     "feedback": "The browser runs on a device the user controls. Anything stored there can be read, so the middle tier must hold the password."
+    },
+    {
+     "text": "Browsers are too slow to send SQL queries across the internet to a database.",
+     "correct": false,
+     "feedback": "Speed is not the issue. The issue is who holds the credentials and who decides which queries are allowed."
+    },
+    {
+     "text": "A database can only accept connections from a single computer at a time.",
+     "correct": false,
+     "feedback": "Databases accept many connections. The application tier is needed for security and rules, not for connection limits."
+    },
+    {
+     "text": "Without the middle tier, the page could no longer show HTML to the user.",
+     "correct": false,
+     "feedback": "The browser would still show HTML. The change would remove the one tier that enforces permissions."
+    }
+   ]
+  },
+  {
+   "id": "tiers-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "A student edits the student number in the address bar and sees another student's grades. Which tier should have refused the request?",
+   "options": [
+    {
+     "text": "The application tier, which checks who is logged in before querying.",
+     "correct": true,
+     "feedback": "The application tier knows who is logged in and decides which rows that person may see."
+    },
+    {
+     "text": "The browser, because it already knows which student is logged in.",
+     "correct": false,
+     "feedback": "The browser runs on the user's device and the user can change anything in it. It cannot be trusted to enforce rules."
+    },
+    {
+     "text": "The database, because it holds the grades and knows who owns them.",
+     "correct": false,
+     "feedback": "The database answers any query it is given by a trusted caller. It does not know which student is logged in."
+    },
+    {
+     "text": "None of them, because anything in the address bar is public.",
+     "correct": false,
+     "feedback": "The address bar is visible, but access to the data still has to be checked on the server."
+    }
+   ]
+  },
+  {
+   "id": "tiers-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "The database has just returned two rows. What happens next, before the browser receives anything?",
+   "options": [
+    {
+     "text": "The application tier turns the rows into objects, then JSON.",
+     "correct": true,
+     "feedback": "Rows go back to the application tier, which builds objects and converts them to JSON text for the response."
+    },
+    {
+     "text": "The database sends the rows directly to the browser.",
+     "correct": false,
+     "feedback": "The database only talks to the application tier. The browser never connects to it."
+    },
+    {
+     "text": "The browser turns the rows into page elements.",
+     "correct": false,
+     "feedback": "That happens later, after the browser has received the JSON response."
+    },
+    {
+     "text": "The rows are sent to the browser as SQL text.",
+     "correct": false,
+     "feedback": "SQL goes from the application tier to the database. The browser receives JSON."
+    }
+   ]
+  },
+  {
+   "id": "tiers-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "A student opens the enlistment page on a phone. Which tier is running on the phone itself?",
+   "options": [
+    {
+     "text": "The browser tier, which shows the page.",
+     "correct": true,
+     "feedback": "The browser runs on the user's own device. The other two tiers run on servers you manage."
+    },
+    {
+     "text": "The application tier, because it handles the student's request.",
+     "correct": false,
+     "feedback": "The application tier runs on your server. The phone only sends the request and receives the response."
+    },
+    {
+     "text": "The database tier, because the grades are saved there.",
+     "correct": false,
+     "feedback": "The database runs on your server or its own machine. The phone never connects to it."
+    },
+    {
+     "text": "All three tiers, because the page needs all of them.",
+     "correct": false,
+     "feedback": "The page needs all three tiers, but only the browser tier runs on the phone."
+    }
+   ]
+  }
+ ]
+}

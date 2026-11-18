@@ -1,0 +1,19 @@
+#p-decompose .dcok .ico,#p-decompose .dcst .ico{width:1.25em;height:1.25em}
+#p-decompose .dcbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}
+#p-decompose .dcday{font-size:1.15em;font-weight:600}
+#p-decompose .dcday b{font-family:var(--mono)}
+#p-decompose .dctop{margin:14px 0 8px;font-weight:600;max-width:none}
+#p-decompose .wlist .wrow.d1{padding-left:24px}
+#p-decompose .wlist .wrow.d2{padding-left:44px}
+#p-decompose .wlist .dcgroup{min-height:36px;color:var(--dim)}
+#p-decompose .wlist .wrow .btn{min-height:44px}
+#p-decompose .dcend{display:flex;align-items:center;gap:12px;flex:none}
+#p-decompose .dch{font-family:var(--mono);color:var(--dim);white-space:nowrap}
+#p-decompose .dcok{color:var(--res);display:inline-flex}
+#p-decompose .dcjobs{grid-template-columns:repeat(2,minmax(0,1fr))}
+#p-decompose .dcjob b,#p-decompose .wopt b{display:block;font-weight:600}
+#p-decompose .dcm{display:block;color:var(--dim);font-size:max(14px,.88em);line-height:1.35}
+#p-decompose .dcst{flex:none;font-weight:600;display:flex;align-items:center;gap:6px}
+#p-decompose .wopt.ready .dcst{color:var(--req-deep)}
+#p-decompose .wopt.right .dcm{color:inherit}
+@media(max-width:700px){#p-decompose .dcjobs{grid-template-columns:minmax(0,1fr)}}

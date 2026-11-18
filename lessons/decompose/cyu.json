@@ -1,0 +1,102 @@
+{
+ "lesson": "decompose",
+ "items": [
+  {
+   "id": "decompose-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "A teammate is assigned \"Do the research\" with no other detail. After a week she says she is not sure what is left. What would have helped most?",
+   "options": [
+    {
+     "text": "Giving her one more week to finish all the research.",
+     "correct": false,
+     "feedback": "More time does not tell her what finished means. She would still be unsure after another week."
+    },
+    {
+     "text": "Splitting it into pieces, each with a clear end point.",
+     "correct": true,
+     "feedback": "Small pieces with clear ends let her say what is done and what is left."
+    },
+    {
+     "text": "Asking two more people to also do the same research.",
+     "correct": false,
+     "feedback": "Two more people on an unclear job make it more confusing. Each of them would pick a different meaning of finished."
+    }
+   ]
+  },
+  {
+   "id": "decompose-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "In the booth plan, Buy materials needs the layout first. The layout is finished two days late. Which jobs slip?",
+   "options": [
+    {
+     "text": "Only Buy materials, because it is the only job that names the layout.",
+     "correct": false,
+     "feedback": "Run the morning shift needs the materials, and Record sign-ups needs the shift. Both move too."
+    },
+    {
+     "text": "Every job, including the shift schedule and the sign-up sheet.",
+     "correct": false,
+     "feedback": "The schedule and the sign-up sheet need no layout, so they keep their dates."
+    },
+    {
+     "text": "Buy materials, Run the morning shift and Record sign-ups.",
+     "correct": true,
+     "feedback": "Each of these waits for the layout, directly or through another job. Delays travel along the chain of dependencies."
+    }
+   ]
+  },
+  {
+   "id": "decompose-3",
+   "sec": "time",
+   "type": "mc",
+   "stem": "The booth plan needs 5 days with 3 people. A fourth person joins. How many days does the plan need now?",
+   "options": [
+    {
+     "text": "Still 5 days, since the longest chain stays the same.",
+     "correct": true,
+     "feedback": "Design layout, Buy materials, Run the morning shift and Record sign-ups take 5 days one after another, however many people help."
+    },
+    {
+     "text": "4 days, since a fourth person finishes more of the work.",
+     "correct": false,
+     "feedback": "An extra person helps only with jobs that can run at the same time. The jobs in the chain run one after another."
+    },
+    {
+     "text": "3 days, since the work is shared among four people.",
+     "correct": false,
+     "feedback": "A job cannot start before the jobs it needs are done, so the plan cannot shrink below its longest chain."
+    }
+   ]
+  },
+  {
+   "id": "decompose-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "A one-day delay hits one job. Which delay makes the whole project finish a day late?",
+   "options": [
+    {
+     "text": "Make signs, because it takes two days like Buy materials.",
+     "correct": false,
+     "feedback": "Make signs has a day to spare. It can run a day late and still be done before the morning shift starts."
+    },
+    {
+     "text": "Brief volunteers, because the morning shift cannot start without it.",
+     "correct": false,
+     "feedback": "The briefing ends on day 2 and the morning shift starts on day 4, so one more day still fits."
+    },
+    {
+     "text": "Design sign-up sheet, because the last job needs it.",
+     "correct": false,
+     "feedback": "The sheet can finish days before the last job starts, so a late day costs nothing."
+    },
+    {
+     "text": "Buy materials, because it sits on the longest chain.",
+     "correct": true,
+     "feedback": "Every job after it waits, and no other job can cover the gap."
+    }
+   ]
+  }
+ ]
+}

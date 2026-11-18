@@ -1,0 +1,22 @@
+{
+ "id": "train",
+ "title": "Training: adjusting a model to reduce its errors",
+ "label": "How training works",
+ "desc": "How a model improves by reducing its errors step by step.",
+ "outcomes": [
+  "Describe training as repeated nudges downhill",
+  "Predict what a learning rate too high or too low does",
+  "Say that nobody writes the rule"
+ ],
+ "tags": [
+  "training",
+  "loss",
+  "gradient descent",
+  "learning rate"
+ ],
+ "area": "ai",
+ "needs": [
+  "students"
+ ],
+ "video": null
+}

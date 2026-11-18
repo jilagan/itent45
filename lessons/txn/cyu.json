@@ -1,0 +1,117 @@
+{
+ "lesson": "txn",
+ "items": [
+  {
+   "id": "txn-1",
+   "sec": "attempts",
+   "type": "mc",
+   "stem": "Two sessions both read one free seat, with no transaction. Both pass the check and both write. How many enrollments exist at the end?",
+   "options": [
+    {
+     "text": "Two, so the seat is sold twice.",
+     "correct": true,
+     "feedback": "Both sessions read 1 before either one wrote, so both believed a seat was free."
+    },
+    {
+     "text": "One, because the database stops the second session.",
+     "correct": false,
+     "feedback": "Nothing stops the second session. The database does not know that the two sessions are competing for the same seat."
+    },
+    {
+     "text": "One, because the second write fails when no seat is left.",
+     "correct": false,
+     "feedback": "The write sets the seat count to 0 whatever the current value is, so it does not fail."
+    },
+    {
+     "text": "Zero, because the two sessions cancel each other.",
+     "correct": false,
+     "feedback": "Neither session is undone. Both record an enrollment."
+    }
+   ]
+  },
+  {
+   "id": "txn-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "A developer wraps the same statements in a transaction and expects the problem to disappear. What happens?",
+   "options": [
+    {
+     "text": "Both sessions can still read 1 and enroll twice.",
+     "correct": true,
+     "feedback": "A transaction groups statements into one unit, but at the default isolation level it does not lock the row."
+    },
+    {
+     "text": "The database stops the second session from enrolling.",
+     "correct": false,
+     "feedback": "Both sessions already read 1 before either one wrote, so both go ahead. Holding the row for the whole decision takes a lock."
+    },
+    {
+     "text": "The database undoes the second enrollment automatically.",
+     "correct": false,
+     "feedback": "The database undoes work only after an error. Nothing is wrong with the second session's statements."
+    },
+    {
+     "text": "Only one session can open a transaction on a table at a time.",
+     "correct": false,
+     "feedback": "Many sessions can have transactions open at once."
+    }
+   ]
+  },
+  {
+   "id": "txn-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "Which fix lets the second student find out that the seat is gone, without a separate lock?",
+   "options": [
+    {
+     "text": "Put the check inside the change, then read the rows changed.",
+     "correct": true,
+     "feedback": "The check and the change happen together, so there is no gap. A row count of 0 tells the second student that the seat is gone."
+    },
+    {
+     "text": "Lock the row before deciding, so the other session waits for you.",
+     "correct": false,
+     "feedback": "This also works, but the second session waits for the first to finish. The question asks for a fix without a lock."
+    },
+    {
+     "text": "Read the seat count twice before writing the new value.",
+     "correct": false,
+     "feedback": "A second read still leaves a gap between reading and writing. Another session can write in that gap."
+    },
+    {
+     "text": "Add more web servers so each session has its own copy.",
+     "correct": false,
+     "feedback": "More web servers add more sessions that read the same row. The seat is contested in the database."
+    }
+   ]
+  },
+  {
+   "id": "txn-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "A save returns successfully and then the server loses power. After the restart, the enrollment is still in the table. Which guarantee made that happen?",
+   "options": [
+    {
+     "text": "Durability.",
+     "correct": true,
+     "feedback": "Durability means a saved change has been written to disk and survives a power failure."
+    },
+    {
+     "text": "Atomicity.",
+     "correct": false,
+     "feedback": "Atomicity means all of a transaction's statements happen or none do. It does not cover power failures after the save."
+    },
+    {
+     "text": "Consistency.",
+     "correct": false,
+     "feedback": "Consistency means declared rules stay true. It does not decide whether a change survives a restart."
+    },
+    {
+     "text": "Isolation.",
+     "correct": false,
+     "feedback": "Isolation controls what sessions see of each other's work while they run. It has nothing to do with restarts."
+    }
+   ]
+  }
+ ]
+}

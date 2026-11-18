@@ -1,0 +1,20 @@
+{
+ "id": "region",
+ "title": "Regions, availability zones and failover",
+ "label": "Regions and failover",
+ "desc": "What happens to your site when a data center fails.",
+ "outcomes": [
+  "Compute the minimum latency that physics allows for a distance",
+  "Match each failure type (machine, data center, region) to the setup that survives it",
+  "Choose a region for users and say why"
+ ],
+ "tags": [
+  "regions",
+  "availability zones",
+  "failover",
+  "latency"
+ ],
+ "area": "capacity-cloud",
+ "needs": [],
+ "video": null
+}

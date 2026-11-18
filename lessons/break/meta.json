@@ -1,0 +1,20 @@
+{
+ "id": "break",
+ "title": "Group exercises",
+ "label": "Group exercises",
+ "desc": "Group exercises that use a real server running on your laptop.",
+ "outcomes": [
+  "Read the wire on a real request",
+  "Size and defend an architecture with numbers",
+  "Report back with evidence"
+ ],
+ "tags": [
+  "exercises",
+  "group work",
+  "HTTP",
+  "capacity"
+ ],
+ "area": "practice",
+ "needs": [],
+ "video": null
+}

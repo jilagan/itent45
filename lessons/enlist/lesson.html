@@ -1,0 +1,115 @@
+    <section class="panel" id="p-enlist">
+      <div class="head">
+        <h2>Case study: enlistment day</h2>
+        <p>On enlistment morning thousands of students use the same system within minutes. This case study tests which part of the system runs out of capacity first.</p>
+      </div>
+
+      <div class="sec" data-sec="registrar" data-title="Start with a registrar's office">
+        <p>On enlistment day thousands of students crowd around the schedule board, and each needs only a few seconds to read it. Only one window can reserve seats, and it must give the last seat in a section to exactly one student.</p>
+        <div class="scene" role="group" aria-label="Students are requests, the schedule board is the web tier, the reservation window is the primary database" data-art="registrar-window" data-art-desc="Two students read a schedule board on the wall while a clerk at a single registrar window serves a third student.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg></div><figcaption><b>Students</b><span>Requests</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Schedule board</b><span><dfn title="The servers that receive requests and build the pages">Web tier</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Reservation window</b><span><dfn title="The one database that accepts changes, such as seat reservations">Primary database</dfn></span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> A university can add web servers in minutes, yet enlistment is still slow at 8:00 AM, so where is the slowdown?</div>
+        <div class="instructor">Ask for a show of hands: who has seen the enlistment system slow down on enlistment morning? Listen for students who blame the web servers, and steer them toward seat reservation.</div>
+      </div>
+
+      <div class="sec" data-sec="two-jobs" data-title="Browsing and reserving">
+        <p>Enlistment morning has two kinds of work. Read the two cards.</p>
+        <div class="split">
+          <div class="wl read">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg>
+            <div class="wh">Browsing the catalog</div>
+            <p>Reading class schedules and open slots. Everyone wants the same few pages.</p>
+            <span class="tag">mostly reads</span><span class="tag">can be cached</span>
+          </div>
+          <div class="wl write">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg>
+            <div class="wh">Reserving a seat</div>
+            <p>Taking one of 40 slots in a popular section. The result must be correct.</p>
+            <span class="tag">a write</span><span class="tag">one at a time per seat</span>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>A cache is a fast store of recent answers, so the database is asked less often. Replicas are read-only copies of the database. Both can serve browsing, which is mostly reads. Seat reservations cannot be cached and cannot be spread across replicas, because two students must never get the same last slot.</p>
+          <p>The model assumes 15 requests per enlistment session, 3 of them reservations.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="test" data-title="Test the system">
+        <p>Compare the <dfn title="Servers that the university owns and runs itself">on-premise</dfn> setup with the <dfn title="Servers rented from a provider, which can be added in minutes">cloud</dfn> setup. Switch on each change and watch which bar goes over its maximum.</p>
+        <div class="era">
+          <button class="ec on" id="ecOn">
+            <div class="eh">Before: on-premise</div>
+            <h4>7 web servers, 1 relational database</h4>
+            <div class="esub">The university owns the servers, so nobody can add more on the morning.</div>
+          </button>
+          <button class="ec" id="ecCloud">
+            <div class="eh">Now: cloud</div>
+            <h4>Autoscaling web tier, 1 primary database</h4>
+            <div class="esub">The web tier adds servers automatically. The database is still one primary.</div>
+          </button>
+        </div>
+
+        <div class="srv">
+          <div>
+            <div class="card">
+              <div class="card-t">Where the load goes</div>
+
+              <div class="capbar">
+                <div class="cl"><span>Peak arrival rate</span><b id="aPeak">— rps</b></div>
+                <div class="cbar"><i class="db" id="aPeakBar" style="width:0%"></i></div>
+              </div>
+              <div class="capbar">
+                <div class="cl"><span>Web tier maximum <span id="aWebNote"></span></span><b id="aWeb">— rps</b></div>
+                <div class="cbar"><i class="web" id="aWebBar" style="width:0%"></i></div>
+              </div>
+              <div class="capbar">
+                <div class="cl"><span>Load reaching the primary database</span><b id="aDbLoad">— ops/s</b></div>
+                <div class="cbar"><i class="db" id="aDbLoadBar" style="width:0%"></i></div>
+              </div>
+              <div class="capbar">
+                <div class="cl"><span>Primary database maximum</span><b id="aDb">400 ops/s</b></div>
+                <div class="cbar"><i class="db" id="aDbBar" style="width:100%"></i></div>
+              </div>
+            </div>
+            <div class="verdict" id="aVerdict"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-t">Changes</div>
+            <div class="toggles">
+              <button class="tg" id="tgStag" aria-pressed="false"><span class="dot"></span><span>Stagger by year level<small>Each year level gets its own time slot.</small></span></button>
+              <button class="tg" id="tgSplit" aria-pressed="false"><span class="dot"></span><span>Separate browsing from reserving<small>Only reservations reach the primary.</small></span></button>
+            </div>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>Change the size of the crowd. Rates are in requests per second (rps) for the web tier and database operations per second (ops/s) for the database. Without staggering, the start bursts at about 6 times the average rate, because everyone clicks at 8:00:00.</p>
+          <div class="sliders">
+            <div class="field">
+              <label>Students in the window <span class="val" id="vStu">4,000</span></label>
+              <input type="range" id="sStu" min="500" max="8000" step="250" value="4000">
+            </div>
+            <div class="field">
+              <label>Window length <span class="val" id="vWin">10 min</span></label>
+              <input type="range" id="sWin" min="2" max="60" value="10">
+            </div>
+          </div>
+          <p>The shape is typical of student enlistment systems. Every number here is made up for teaching.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="lesson" data-title="What the case shows">
+        <p>Autoscaling fixed the web tier. The database is still one primary, because every seat reservation must be exactly right. Two changes help without buying hardware. Staggering flattens the peak, and sending browsing to read-only copies leaves the primary with only reservations.</p>
+        <p class="outcome">You can now say which tier fails first on a busy day and how to relieve it.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>Such systems have often run on a handful of application servers with a single relational database behind them. Many have since moved to cloud hosting, where web tier capacity can be bought in minutes. <a data-lesson="scale">Load balancers and scaling</a> showed that once the web tier is fixed, the database is the next bottleneck.</p>
+          <p>On-premise means the servers are owned and run by the university. The hardware was fixed, so adding capacity meant buying and installing a machine. Autoscaling means the web tier grows automatically when the load rises.</p>
+        </details>
+      </div>
+    </section>

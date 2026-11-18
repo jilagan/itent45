@@ -1,0 +1,20 @@
+{
+ "id": "render",
+ "title": "Building the page: on the server or in the browser",
+ "label": "Server or browser rendering",
+ "desc": "Whether the server or the browser builds the page.",
+ "outcomes": [
+  "Compare server-rendered pages with single-page apps",
+  "Compare the size of JSON, XML and HTML for the same data",
+  "Choose one for a project and give a reason"
+ ],
+ "tags": [
+  "server rendering",
+  "single-page app",
+  "JSON",
+  "XML"
+ ],
+ "area": "web",
+ "needs": [],
+ "video": null
+}

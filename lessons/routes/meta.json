@@ -1,0 +1,15 @@
+{
+ "id": "routes",
+ "title": "Finding the shortest route",
+ "label": "Shortest routes",
+ "desc": "Compare routes on a small map and choose the best one.",
+ "outcomes": [
+  "Read a map of stops and rides as a network of links with costs",
+  "Build a route and total its minutes and fare",
+  "Find a new best route when a line closes"
+ ],
+ "tags": ["routing", "network", "shortest path", "trade-off"],
+ "area": "computational-thinking",
+ "needs": [],
+ "video": null
+}

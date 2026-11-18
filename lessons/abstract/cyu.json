@@ -1,0 +1,107 @@
+{
+ "lesson": "abstract",
+ "items": [
+  {
+   "id": "abstract-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "A founder builds a route app. Her first model lists stop names and the order of stops. A user asks how long a trip takes at 5 PM. What should she conclude?",
+   "options": [
+    {
+     "text": "The model is wrong and should be thrown out.",
+     "correct": false,
+     "feedback": "It answers route questions correctly. It is incomplete for timing."
+    },
+    {
+     "text": "The model lacks distance and traffic, so it cannot answer.",
+     "correct": true,
+     "feedback": "A model answers only the questions its details cover. Timing needs two more details."
+    },
+    {
+     "text": "The answer is in the stop names if users read closely.",
+     "correct": false,
+     "feedback": "Stop names say nothing about time."
+    },
+    {
+     "text": "The model has too many details and needs trimming.",
+     "correct": false,
+     "feedback": "The model has only two details. This question needs two more."
+    }
+   ]
+  },
+  {
+   "id": "abstract-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "A map team adds the color of every jeepney to the model. What is the effect on the question \"Which jeepney do I ride?\"",
+   "options": [
+    {
+     "text": "The model answers the question more accurately.",
+     "correct": false,
+     "feedback": "The answer depends on stop names and the order of stops. Color adds neither."
+    },
+    {
+     "text": "The model grows and the question is answered no better.",
+     "correct": true,
+     "feedback": "Color does not help choose a route, so the extra detail adds work and no value."
+    },
+    {
+     "text": "The model can no longer answer the question.",
+     "correct": false,
+     "feedback": "Extra details do not break the answer. They add clutter."
+    }
+   ]
+  },
+  {
+   "id": "abstract-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "An app developer checks that the app sends the order to the server when a customer taps Order. Which level is she working at?",
+   "options": [
+    {
+     "text": "Level 1, where the customer taps Order.",
+     "correct": false,
+     "feedback": "The tap is what the customer sees. The developer checks what the app does with it."
+    },
+    {
+     "text": "Level 3, where the server saves the order.",
+     "correct": false,
+     "feedback": "Saving happens after the server receives the order. The developer checks what leaves the app."
+    },
+    {
+     "text": "Level 4, where the disk stores the row.",
+     "correct": false,
+     "feedback": "Disk writes sit far below the app. They are the database administrator's level."
+    },
+    {
+     "text": "Level 2, where the app sends the order.",
+     "correct": true,
+     "feedback": "Checking what leaves the app is the app developer's level."
+    }
+   ]
+  },
+  {
+   "id": "abstract-4",
+   "sec": "summary",
+   "type": "mc",
+   "stem": "A new team member wants to understand how payments work before touching any code. Which description helps most at the start?",
+   "options": [
+    {
+     "text": "The complete database design with every table and column.",
+     "correct": false,
+     "feedback": "A full design holds more detail than a beginner can use."
+    },
+    {
+     "text": "A list of every network message with its byte count.",
+     "correct": false,
+     "feedback": "Byte counts are the lowest level. They help later."
+    },
+    {
+     "text": "A short story of the whole flow, with detail added step by step.",
+     "correct": true,
+     "feedback": "A top-level view shows the whole flow and lets her zoom in on one step at a time."
+    }
+   ]
+  }
+ ]
+}

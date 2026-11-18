@@ -1,0 +1,19 @@
+{
+ "id": "decompose",
+ "title": "Breaking a task into parts",
+ "label": "Breaking down",
+ "desc": "Split a big job into pieces and find the order.",
+ "outcomes": [
+  "Explain when a piece is small enough for one person to own",
+  "Say which jobs must wait for others",
+  "Predict the shortest time a team needs from the longest chain"
+ ],
+ "tags": [
+  "decomposition",
+  "dependencies",
+  "critical path"
+ ],
+ "area": "computational-thinking",
+ "needs": [],
+ "video": null
+}

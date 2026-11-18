@@ -1,0 +1,89 @@
+{
+ "lesson": "entity",
+ "items": [
+  {
+   "id": "entity-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "A registrar's sheet has one row per student, with the columns ID number, name and program. How does a data model describe this sheet?",
+   "options": [
+    {
+     "text": "Student is the entity, the columns are attributes, and each row is an instance.",
+     "correct": true,
+     "feedback": "The entity is the kind of thing the school keeps data about. Attributes describe it, and each row is one example."
+    },
+    {
+     "text": "The ID number is the entity, because it is what identifies each row.",
+     "correct": false,
+     "feedback": "The ID number is a fact about a student, so it is an attribute. It helps tell instances apart, but the thing being described is the student."
+    },
+    {
+     "text": "Each row is an entity and each column is an instance of that entity.",
+     "correct": false,
+     "feedback": "The roles are reversed. A column is an attribute, and a row is one instance of the entity."
+    },
+    {
+     "text": "Maria Santos is an entity, because she is a real person in the school.",
+     "correct": false,
+     "feedback": "Maria Santos is one student, which makes her an instance. The entity is the kind of thing, Student."
+    }
+   ]
+  },
+  {
+   "id": "entity-2",
+   "sec": null,
+   "type": "mc",
+   "stem": "A scheduling system records the room where each class meets, such as SOM 407. The registrar also wants each room's capacity and whether it has a projector, and wants to list everything scheduled in one room. Should Room be an attribute of Class or an entity?",
+   "options": [
+    {
+     "text": "An entity, because a room has facts of its own and is shared.",
+     "correct": true,
+     "feedback": "Capacity and projector describe the room, and one room hosts many classes. Both are signs that Room needs its own table."
+    },
+    {
+     "text": "An attribute, because a room is only a name such as SOM 407.",
+     "correct": false,
+     "feedback": "A name is enough only if nothing else is recorded about the room. Here the room has its own facts, so it needs to be an entity."
+    },
+    {
+     "text": "An attribute, because rooms rarely change.",
+     "correct": false,
+     "feedback": "How often something changes does not decide this. What matters is whether the thing has facts of its own and is shared by many records."
+    },
+    {
+     "text": "An entity only if the school has more than 100 rooms.",
+     "correct": false,
+     "feedback": "The number of rooms does not decide it. One room with its own facts is already an entity."
+    }
+   ]
+  },
+  {
+   "id": "entity-3",
+   "sec": "pairing",
+   "type": "mc",
+   "stem": "A student enrolls in MGT 45 on 12 August and later receives a grade. Where should the enrollment date and the grade be stored?",
+   "options": [
+    {
+     "text": "In an Enrollment entity that links the student and the course.",
+     "correct": true,
+     "feedback": "The date and the grade describe the pairing of one student with one course, so the pairing is an entity."
+    },
+    {
+     "text": "As attributes of Student, because the student receives the grade.",
+     "correct": false,
+     "feedback": "A student has many courses and would then need many grades. The grade belongs to one student in one course."
+    },
+    {
+     "text": "As attributes of Course, because the course gives the grade.",
+     "correct": false,
+     "feedback": "A course has many students, each with a different grade. The grade cannot be a single value on the course."
+    },
+    {
+     "text": "In both Student and Course so either one can be looked up.",
+     "correct": false,
+     "feedback": "Storing the same fact in two places lets the copies disagree. A separate Enrollment entity stores it once."
+    }
+   ]
+  }
+ ]
+}

@@ -1,0 +1,60 @@
+    <section class="panel" id="p-loop">
+      <div class="head">
+        <h2>AI agents: the think, act and observe loop</h2>
+        <p>An <dfn title="A language model connected to tools, so it can act and see the result">agent</dfn> is a language model connected to tools. It thinks, acts and checks the result, then repeats.</p>
+      </div>
+
+      <div class="sec" data-sec="intern" data-title="Start with an intern at the registrar">
+        <p>Suppose you send an intern to the registrar's office to fix a student's record. The intern decides what to do, does it, looks at what happened, and decides what to do next. A chat model can only produce text. An agent is a model that can also act and see the result.</p>
+        <div class="scene" role="group" aria-label="Deciding is a thought, doing is an action, looking at the result is an observation" data-art="registrar-file-check" data-art-desc="A clerk at a registrar window writes a correction on a student's file with a pen while a student waits outside the window.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Decides what to do</b><span><dfn title="A line where the model reasons about what to do next">Thought</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Does it</b><span><dfn title="A request to a tool, such as reading a file or running tests">Action</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bowl-food"/></svg></div><figcaption><b>Looks at what happened</b><span><dfn title="The result a tool sends back to the model">Observation</dfn></span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> Of thinking, acting and looking at the result, which could a model that only produces text never do by itself, and why?</div>
+        <div class="instructor">Students usually say the model cannot act. Push for the second half: it also cannot know what happened without a result from outside itself.</div>
+      </div>
+
+      <div class="sec" data-sec="trace" data-title="Watch an agent fix a bug">
+        <p>The agent is asked to fix a bug: some students are enrolled in the same course twice. Press Step to add one line at a time. Thought and Action lines come from the model. Observation lines come from a tool, such as a <dfn title="A program that checks whether code still works">test runner</dfn>. The task is done at step 15, so watch what happens next.</p>
+        <div class="ctrls">
+          <button class="btn primary" id="lpPlay">Play</button>
+          <button class="btn" id="lpStep">Step</button>
+          <button class="btn" id="lpReset">Reset</button>
+        </div>
+        <div class="verdict" id="lpVerdict" style="margin-top:13px;margin-bottom:13px"></div>
+        <div class="trace" id="lpTrace"></div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>What the loop is costing</h4>
+          <div class="meter" style="grid-template-columns:repeat(3,1fr)">
+            <div class="g" id="lpIter"><div class="gl">Iteration</div><div class="gv">—</div></div>
+            <div class="g" id="lpCtx"><div class="gl">Context in use</div><div class="gv">—</div></div>
+            <div class="g" id="lpCost"><div class="gl">Spent so far</div><div class="gv">—</div></div>
+          </div>
+          <p>Context in use is how much of the model's context window the conversation has filled. The context grows with every step, and the cost per step grows faster than the step count.</p>
+          <h4>Tools an agent typically has</h4>
+          <p>A shell is a window where you type commands. A file system is the folders and files on a computer. A test runner checks whether code still works. Observation lines can also come from an API, which is a way for one program to request something from another.</p>
+          <h4>The name of the pattern</h4>
+          <p>This pattern is called ReAct, short for reason and act. Observation lines are the only lines that can contradict the model.</p>
+          <p>See <a data-lesson="ctx">The context window</a> for how the window fills.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="wrong" data-title="Where agent loops go wrong">
+        <p>Four things go wrong in long loops. The model may not stop when the task is done. The <dfn title="The amount of text the model can see at once">context window</dfn> fills up and pushes out your first instruction. A wrong observation is treated as fact in every later step. Each step costs more than the one before.</p>
+        <p class="outcome">You can now name four ways an agent goes wrong and what a person should watch.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>It does not know when to stop</h4>
+          <p>The model stops when it predicts a special end-of-output token, the same way it predicts any other token. That can happen too early, or not at all.</p>
+          <h4>The context window fills</h4>
+          <p>Every thought, action and observation is added to it. After twenty steps your original instruction may no longer be in what the model can see.</p>
+          <h4>Errors compound</h4>
+          <p>A wrong observation at step three is treated as fact in every step after it. The model's confidence does not fade on its own.</p>
+          <h4>Cost grows with each step</h4>
+          <p>You pay per step, the context grows each time, and attention cost rises with the square of the context length. The twentieth step costs more than the first for the same work.</p>
+          <p>The task in the trace ends at step 15. At which step would you have stepped in?</p>
+        </details>
+      </div>
+    </section>

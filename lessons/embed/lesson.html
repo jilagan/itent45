@@ -1,0 +1,57 @@
+    <section class="panel" id="p-embed">
+      <div class="head">
+        <h2>Word embeddings: how words get positions</h2>
+        <p>A word's <dfn title="The position a word gets on a map, written as a list of numbers">embedding</dfn> is its position on a map, found by reading sentences. Words that appear together end up close together.</p>
+      </div>
+
+      <div class="sec" data-sec="party" data-title="Start with a party">
+        <p>At a barkada party, nobody hands out seat numbers, yet people who keep talking to each other end up sitting together. Words find their positions in a similar way. Words that appear in the same sentences end up close together on a map.</p>
+        <div class="scene" role="group" aria-label="Guests are words, conversations are sentences, seats are positions" data-art="barkada-party-seating" data-art-desc="Two friends chat closely at one table while a third friend sits alone at a table across the room.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg></div><figcaption><b>Guests</b><span>Words</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Conversations</b><span>Sentences in the <dfn title="The set of sentences a program learns from">corpus</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-table"/></svg></div><figcaption><b>Where each guest sits</b><span>Position</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> Suppose words in the same sentence move closer together. Where would you expect <em>king</em> and <em>queen</em> to end up, and where <em>king</em> and <em>hospital</em>?</div>
+        <div class="instructor">Collect guesses before anyone presses Run the training. Most students expect king and queen to be close and king and hospital to be far apart.</div>
+      </div>
+
+      <div class="sec" data-sec="train" data-title="Run the training">
+        <p>Every word starts at a random spot. Each sentence moves its words a little closer together and pushes all other words slightly apart. Press Run the training and watch the groups form.</p>
+        <div>
+          <div class="wordmap" id="emMap"></div>
+          <div class="art" id="emFeed" style="margin-top:12px;min-height:54px"></div>
+          <div class="ctrls" style="margin-top:12px">
+            <button class="btn primary" id="emRun">Run the training</button>
+            <button class="btn" id="emStep">One sentence</button>
+            <button class="btn" id="emReset">Scatter again</button>
+          </div>
+          <div class="verdict" id="emVerdict" style="margin-top:13px"></div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The two gauges</h4>
+          <p>Sentences read counts the sentences used so far. Groups apart by compares two averages: the distance between words from different groups, and the distance between words in the same group.</p>
+          <div class="meter" style="grid-template-columns:1fr 1fr;margin-top:12px">
+            <div class="g" id="emSeen"><div class="gl">Sentences read</div><div class="gv">0</div></div>
+            <div class="g" id="emSep"><div class="gl">Groups apart by</div><div class="gv">&mdash;</div></div>
+          </div>
+          <h4>Each step is small and fixed</h4>
+          <p>Each sentence moves the words by the same small step, so no word chooses where it goes. The map has two directions, called dimensions, so each embedding is two numbers. Real models use hundreds of numbers per word.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="corpus" data-title="Read the corpus">
+        <p>Look at the list. These fourteen sentences were the only input. It holds no dictionary and no labels, and nobody marked which words are about royalty. The colors on the map were added afterward to show the groups.</p>
+        <div class="card">
+          <div class="card-t">The whole corpus</div>
+          <div class="art" id="emCorpus"></div>
+        </div>
+        <p class="outcome">You can now explain where word positions come from.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>How this differs from real training</h4>
+          <p>This is the idea behind a method called word2vec, run small enough to watch. Real training uses billions of words and hundreds of dimensions, where this demo uses fourteen sentences and two. In real text each word also appears in far more varied sentences.</p>
+          <p>A corpus this small produces the clusters. It cannot produce the finer structure behind the word arithmetic in <a data-lesson="vectors">Vectors and similarity</a>, because that needs the same word in thousands of different contexts.</p>
+        </details>
+      </div>
+    </section>

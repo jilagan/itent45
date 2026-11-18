@@ -3,3 +3,6 @@ starter/itent45.sqlite3
 __pycache__/
 *.pyc
 .DS_Store
+
+# original scene pictures from the image model (web versions live in src/shared/art)
+art-src/

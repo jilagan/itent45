@@ -1,0 +1,20 @@
+{
+ "id": "rules",
+ "title": "Decision rules and tables",
+ "label": "Decision rules",
+ "desc": "Write a rule as a table and test every case.",
+ "outcomes": [
+  "List every combination of conditions in a decision table",
+  "Find a case where two rules clash",
+  "Test a rule on boundary values such as exactly 1,000 pesos"
+ ],
+ "tags": [
+  "conditions",
+  "decision table",
+  "boundary value",
+  "computational thinking"
+ ],
+ "area": "computational-thinking",
+ "needs": [],
+ "video": null
+}

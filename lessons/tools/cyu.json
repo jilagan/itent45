@@ -1,0 +1,117 @@
+{
+ "lesson": "tools",
+ "items": [
+  {
+   "id": "tools-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "An AI assistant tells you, \"I deleted the rows.\" What did the model itself do?",
+   "options": [
+    {
+     "text": "It wrote a text request for a tool call. The client then ran it.",
+     "correct": true,
+     "feedback": "The model only produces text. A separate program, the client, decides whether to run the request and then does it."
+    },
+    {
+     "text": "It ran the SQL statement directly against the database.",
+     "correct": false,
+     "feedback": "The model has no connection to your database. It has only the tool description."
+    },
+    {
+     "text": "It asked the database for permission, and the database ran the statement.",
+     "correct": false,
+     "feedback": "The database does not take requests from the model. The client sits between them."
+    },
+    {
+     "text": "It logged in to your server and typed the command.",
+     "correct": false,
+     "feedback": "The model cannot log in anywhere. It can only produce the request."
+    }
+   ]
+  },
+  {
+   "id": "tools-2",
+   "sec": "who-runs",
+   "type": "mc",
+   "stem": "On the risky tool, where can a person stop the deletion?",
+   "options": [
+    {
+     "text": "After the model writes the request and before the client runs it.",
+     "correct": true,
+     "feedback": "This is the only point where the request exists as text and nothing has changed yet."
+    },
+    {
+     "text": "After the client runs it, by pressing undo to restore the rows.",
+     "correct": false,
+     "feedback": "Once the client runs a delete, the rows are gone. There is no undo in this setup."
+    },
+    {
+     "text": "While the model is still writing the request, by interrupting it.",
+     "correct": false,
+     "feedback": "The request is not complete until the model finishes it, so there is nothing yet to approve or refuse."
+    },
+    {
+     "text": "Nowhere, because the model decides and cannot be stopped.",
+     "correct": false,
+     "feedback": "The client decides whether to run each request, so a person can place a check there."
+    }
+   ]
+  },
+  {
+   "id": "tools-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "A company has 6 AI applications and 8 internal systems. How many adapters does it write without a shared standard, and how many pieces does it write with MCP?",
+   "options": [
+    {
+     "text": "48 adapters without a standard and 14 pieces with MCP.",
+     "correct": true,
+     "feedback": "Without a standard, every pairing needs its own adapter: 6 × 8 = 48. With MCP, each side is written once: 6 + 8 = 14."
+    },
+    {
+     "text": "14 adapters without a standard and 48 pieces with MCP.",
+     "correct": false,
+     "feedback": "These are reversed. Multiplying gives the larger number, and that is the case without a standard."
+    },
+    {
+     "text": "48 adapters in both cases, with or without MCP.",
+     "correct": false,
+     "feedback": "A shared standard lets each application and each system be written once, so the count is the sum of the two sides."
+    },
+    {
+     "text": "8 adapters without a standard and 6 pieces with MCP.",
+     "correct": false,
+     "feedback": "These count one side only. Every application needs a connection to every system."
+    }
+   ]
+  },
+  {
+   "id": "tools-5",
+   "sec": null,
+   "type": "mc",
+   "stem": "Which of these stays your responsibility even when you use MCP?",
+   "options": [
+    {
+     "text": "Deciding whether a request to delete data should be made.",
+     "correct": true,
+     "feedback": "MCP delivers requests. Judging whether a request is a good idea stays with you."
+    },
+    {
+     "text": "Connecting one AI application to many systems without writing a new adapter for each.",
+     "correct": false,
+     "feedback": "This is what MCP is for. Each client and each server is written once."
+    },
+    {
+     "text": "Deciding how the model and the tool server format their messages.",
+     "correct": false,
+     "feedback": "MCP defines the message format, so you do not design one."
+    },
+    {
+     "text": "Using the same server in a different editor later.",
+     "correct": false,
+     "feedback": "Portability is one of the benefits. Any client that follows the protocol can use the server."
+    }
+   ]
+  }
+ ]
+}

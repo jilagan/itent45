@@ -1,0 +1,26 @@
+{
+ "id": "bytes",
+ "title": "What an HTTP request and response look like",
+ "label": "HTTP messages",
+ "desc": "What an HTTP request and response look like, line by line.",
+ "outcomes": [
+  "Name the parts of an HTTP message (start line, headers, blank line, body)",
+  "Say what Host, 200, 201, 404 tell you",
+  "Send a request by hand to a local server"
+ ],
+ "tags": [
+  "HTTP",
+  "request",
+  "response",
+  "headers",
+  "curl"
+ ],
+ "area": "web",
+ "needs": [],
+ "video": {
+  "sec": "run-it",
+  "youtube": "",
+  "title": "Run the teaching server on your laptop",
+  "about": "Windows and Mac, no prior terminal use. Where to open a terminal, installing Python, what the output looks like, and the first curl command."
+ }
+}

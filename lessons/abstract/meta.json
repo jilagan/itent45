@@ -1,0 +1,19 @@
+{
+ "id": "abstract",
+ "title": "Abstraction and models",
+ "label": "Abstraction",
+ "desc": "Keep the details that matter and drop the rest.",
+ "outcomes": [
+  "Say which details a model needs to answer a given question",
+  "Predict whether a model still answers a question after a detail is removed",
+  "Explain how the same action looks at different levels of detail and who needs each level"
+ ],
+ "tags": [
+  "abstraction",
+  "models",
+  "levels of detail"
+ ],
+ "area": "computational-thinking",
+ "needs": [],
+ "video": null
+}

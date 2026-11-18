@@ -1,0 +1,112 @@
+{
+ "lesson": "loop",
+ "items": [
+  {
+   "id": "loop-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "An agent's trace contains these four lines. Which one could the model not have written by itself?",
+   "options": [
+    {
+     "text": "All 14 tests passed.",
+     "correct": true,
+     "feedback": "This is an Observation. It comes from the test runner. The model can write a guess about the tests, but it cannot know the result without running them."
+    },
+    {
+     "text": "I should confirm the tests still pass.",
+     "correct": false,
+     "feedback": "This is a Thought. The model writes its own thoughts."
+    },
+    {
+     "text": "Run the tests",
+     "correct": false,
+     "feedback": "This is an Action. The model writes the request. A separate program carries it out."
+    },
+    {
+     "text": "Done. I will also tidy the imports.",
+     "correct": false,
+     "feedback": "This is a Thought. The model decides what to do next, even when the decision is unwise."
+    }
+   ]
+  },
+  {
+   "id": "loop-3",
+   "sec": "trace",
+   "type": "mc",
+   "stem": "The tests pass at step 15 and the task is done. What do you expect the agent to do next?",
+   "options": [
+    {
+     "text": "Keep going and make a change nobody asked for.",
+     "correct": true,
+     "feedback": "The model stops only when it predicts an end signal. Here it decides to tidy the imports, which adds work for you to review."
+    },
+    {
+     "text": "Stop, because the tests passed.",
+     "correct": false,
+     "feedback": "Nothing forces it to stop. Stopping is a prediction like any other output."
+    },
+    {
+     "text": "Ask you for permission before making more changes.",
+     "correct": false,
+     "feedback": "The agent in this trace does not ask. Approval only happens if the client is set up to require it."
+    }
+   ]
+  },
+  {
+   "id": "loop-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "An agent has worked for 25 steps. It now ignores the formatting rule you gave in your first message. What is the most likely cause?",
+   "options": [
+    {
+     "text": "The first message left the context window, so the rule is no longer visible.",
+     "correct": true,
+     "feedback": "Every thought, action and observation is added to the context. When it fills, the oldest text, which includes your first instruction, is no longer visible."
+    },
+    {
+     "text": "The model got tired after so many steps and stopped paying attention.",
+     "correct": false,
+     "feedback": "A model does not tire. Its behavior changes only because of what is in its context."
+    },
+    {
+     "text": "The tests failed once, so the agent stopped following instructions.",
+     "correct": false,
+     "feedback": "A failed test is one more Observation. It does not cancel your instructions."
+    },
+    {
+     "text": "The model did not read the first message when the task began.",
+     "correct": false,
+     "feedback": "It read it at the start. The problem is that the message is no longer in view."
+    }
+   ]
+  },
+  {
+   "id": "loop-5",
+   "sec": null,
+   "type": "mc",
+   "stem": "At step 3 an agent reads a file and misunderstands what it does. What is most likely to happen over steps 4 to 20?",
+   "options": [
+    {
+     "text": "It treats the mistake as fact and builds on it until a result contradicts it.",
+     "correct": true,
+     "feedback": "Errors compound. The model's confidence does not fade, and only a result from outside the model can correct it."
+    },
+    {
+     "text": "It notices the mistake by itself within a step or two and corrects it.",
+     "correct": false,
+     "feedback": "Nothing in the loop checks the reading. The model has no outside source for that check."
+    },
+    {
+     "text": "Only step 4 is affected, because each later step starts from a clean slate.",
+     "correct": false,
+     "feedback": "Each later step uses everything before it, so one wrong belief can shape many steps."
+    },
+    {
+     "text": "It stops as soon as it makes any error, because errors end the loop at once.",
+     "correct": false,
+     "feedback": "The loop has no rule that stops on errors. It stops when the model predicts an end signal."
+    }
+   ]
+  }
+ ]
+}

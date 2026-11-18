@@ -1,0 +1,90 @@
+<section class="panel" id="p-patterns">
+  <div class="head">
+    <h2>Spotting patterns</h2>
+    <p>A <dfn title="Something that repeats in data or events">pattern</dfn> is something that repeats in data. Finding patterns lets you describe many records at once and spot the one that does not fit.</p>
+  </div>
+
+  <div class="sec" data-sec="receipts" data-title="Start with a week of receipts">
+    <p>A sari-sari store owner reads a week of receipts. On payday Friday, cooking oil and soy sauce sell out. Before a typhoon, candles and canned goods sell out. Noticing what repeats lets her stock the shelf before customers ask. Finding what repeats in data is called pattern recognition.</p>
+    <div class="scene" role="group" aria-label="The receipts are data, what repeats on them is the pattern, stocking the shelf early is the decision" data-art="receipt-string-store" data-art-desc="A store owner behind a counter studies a row of blank receipts hanging on a string, and one receipt has a circle drawn around it.">
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></div><figcaption><b>A week of receipts</b><span>Data</span></figcaption></figure>
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-repeat"/></svg></div><figcaption><b>What sells together</b><span>Pattern</span></figcaption></figure>
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-storefront"/></svg></div><figcaption><b>Stocking ahead</b><span>Decision</span></figcaption></figure>
+    </div>
+    <div class="ask"><b>Think first.</b> Here are five days of milk tea sales: 20, 22, 21, 60, 20 cups. Which day is unusual, and what might explain it?</div>
+    <div class="instructor">Most students pick the fourth day. Ask for two or three possible reasons, such as a holiday, a school event or a counting error, and ask what they would check first.</div>
+  </div>
+
+  <div class="sec" data-sec="together" data-title="Find items bought together">
+    <p>Twelve receipts from one week are shown. Press two items, and the widget highlights the receipts that hold both and counts them. Find the pair that appears together most often.</p>
+    <div class="card wg" id="ptRc">
+      <div class="ctab" id="ptItems" role="group" aria-label="Items"></div>
+      <p class="wline strong" id="ptLine" aria-live="polite"></p>
+      <div class="ptrec" id="ptRec"></div>
+      <div class="meter">
+        <div class="g"><div class="gl">Pairs tried</div><div class="gv" id="ptTried">0</div></div>
+        <div class="g"><div class="gl">Highest count so far</div><div class="gv" id="ptBest">0 of 12</div></div>
+      </div>
+      <div class="ctrls">
+        <button class="btn primary" id="ptCheck" disabled>Check</button>
+        <button class="btn" id="ptReset">Reset</button>
+      </div>
+      <div class="verdict" id="ptVerdict" aria-live="polite"></div>
+    </div>
+    <details class="more">
+      <summary>More detail</summary>
+      <h4>Counting pairs</h4>
+      <p>Stores call this market basket analysis. It counts how often items share a receipt. A pair on half the receipts is a strong pattern. A pair on two receipts may be chance.</p>
+    </details>
+  </div>
+
+  <div class="sec" data-sec="shrink" data-title="Describe the repeat once">
+    <p>A rider gets directions as letters. S means go straight and L means turn left. When a block of letters repeats, send the block once and say how many times to repeat it. This is called <dfn title="Storing a repeated block once to make data shorter">compression</dfn>. Use the plus and minus buttons to choose a block length that rebuilds the whole message.</p>
+    <div class="card wg" id="ptSh">
+      <div class="ctab" id="ptMsgs" role="group" aria-label="Message"></div>
+      <div class="ptmsg" id="ptMsg" role="img"></div>
+      <div class="ptstep">
+        <button class="btn" id="ptLess" aria-label="Shorter block">&minus;</button>
+        <output id="ptLen" aria-live="polite"></output>
+        <button class="btn" id="ptMore" aria-label="Longer block">+</button>
+      </div>
+      <div class="meter">
+        <div class="g"><div class="gl">Original length</div><div class="gv" id="ptOrig">0</div></div>
+        <div class="g"><div class="gl">Shortened length</div><div class="gv" id="ptShort">0</div></div>
+        <div class="g"><div class="gl">Lengths tried</div><div class="gv" id="ptTry">0 of 9</div></div>
+      </div>
+      <div class="verdict" id="ptV2" aria-live="polite"></div>
+      <div class="ctrls"><button class="btn" id="ptReset2">Reset</button></div>
+    </div>
+    <details class="more">
+      <summary>More detail</summary>
+      <h4>How the length is counted</h4>
+      <p>The shortened message is the block plus one symbol for the repeat count. A block of 4 letters repeated 3 times costs 4 + 1 = 5 symbols.</p>
+      <h4>Compression in practice</h4>
+      <p>Zip files and image formats find repeated pieces and store each piece once. Data with many repeats shrinks a lot. Data with few repeats shrinks little. Storing a repeated fact once is also the idea in <a data-lesson="norm">Normalization: storing each fact once</a>.</p>
+    </details>
+  </div>
+
+  <div class="sec" data-sec="exception" data-title="Spot the exception">
+    <p>A milk tea shop sells about the same each week. Each row shows one week of cups sold. A value that does not follow the pattern is an <dfn title="A value that does not follow the pattern of the others">outlier</dfn>. Look down each day's column and press the bar that breaks the pattern.</p>
+    <div class="card wg" id="ptBar">
+      <div class="ptdays" aria-hidden="true" id="ptDays"></div>
+      <div id="ptWeeks" role="group" aria-label="Cups sold, by week and day"></div>
+      <div class="meter">
+        <div class="g"><div class="gl">Bars pressed</div><div class="gv" id="ptPress">0</div></div>
+      </div>
+      <div class="verdict" id="ptV3" aria-live="polite"></div>
+      <div class="ctrls"><button class="btn" id="ptReset3">Reset</button></div>
+    </div>
+  </div>
+
+  <div class="sec" data-sec="meaning" data-title="What a pattern tells you">
+    <p>A pattern shows what happened. To find out why, the owner asks her customers or checks the calendar before she changes an order.</p>
+    <p class="outcome">You can now find items that appear together, write a repeat once and spot the record that breaks a pattern.</p>
+    <details class="more">
+      <summary>More detail</summary>
+      <h4>Patterns in other lessons</h4>
+      <p>Each sale in a store is an event that a data model can record, as in <a data-lesson="rea">The REA pattern: resources, events and agents</a>. Words that appear in similar contexts get nearby positions in <a data-lesson="embed">Word embeddings: how words get positions</a>.</p>
+    </details>
+  </div>
+</section>

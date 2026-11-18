@@ -1,0 +1,171 @@
+    <section class="panel" id="p-scale">
+      <div class="head">
+        <h2>Scaling out with a load balancer</h2>
+        <p>When one machine cannot handle all the requests, you can use a bigger machine or several machines. Several machines need a <dfn title="A program that receives every request and passes each one to one of the machines">load balancer</dfn>.</p>
+      </div>
+
+      <div class="sec" data-sec="branch" data-title="Start with a fast-food branch">
+        <p>When the line at a fast-food branch gets too long, the owner can rebuild it with more counters or open more branches. With several branches, a guard at the entrance sends each customer to a counter that is open and not too busy.</p>
+        <div class="scene" role="group" aria-label="Customers are requests, the guard is the load balancer, the counters are servers" data-art="branch-guard-counters" data-art-desc="A guard at the entrance of a fast-food branch points one customer toward the open counter of two, where a cashier is waiting.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg></div><figcaption><b>Customers</b><span>Requests</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-traffic-signal"/></svg></div><figcaption><b>Guard</b><span>Load balancer</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Counters</b><span>Servers</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> Your site runs on two machines, and users type one web address. What must happen so that every request reaches one of the two machines?</div>
+        <div class="instructor">Students should arrive at one address that answers for all the machines, which is the load balancer. The browser never learns how many machines there are. Ask what happens if that single address itself fails.</div>
+      </div>
+
+      <div class="sec" data-sec="options" data-title="Two ways to add capacity">
+        <p>There are two ways to get more capacity. Read the two cards side by side.</p>
+        <div class="scale2">
+          <div class="sc2 vert">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg>
+            <h4><dfn title="Make one machine bigger, with more memory and processor cores">Scale up</dfn></h4>
+            <p>Buy a bigger machine. It has a size limit, and one failure takes the whole site down.</p>
+          </div>
+          <div class="sc2 horiz">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-arrows-split"/></svg>
+            <h4><dfn title="Run several identical machines side by side">Scale out</dfn></h4>
+            <p>Run several copies behind a load balancer. Each copy must be able to answer any request.</p>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Scaling up (vertical scaling)</h4>
+          <p>Add more RAM and more processor cores to the single machine. <a data-lesson="mem">Server memory</a> covers the memory side. This needs no code changes, so it is the first thing to try. The largest machine you can rent has a fixed size, and the price rises faster than the capacity. One machine is also a single point of failure: if it breaks, the whole site is down.</p>
+          <h4>Scaling out (horizontal scaling)</h4>
+          <p>These are identical copies of the machine from <a data-lesson="server">Server capacity</a>, with a load balancer in front deciding which copy gets each request. There is no fixed upper limit, and one machine failing no longer takes the site down. The application has to meet one condition: every copy must be able to answer any request, because you no longer control which copy receives it.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="balancer" data-title="Share the traffic">
+        <p>A load balancer has one public address and passes each request to one machine behind it. Press Play. Machine E is four times slower than the others, so watch its in-progress count, then switch to Least connections.</p>
+        <div class="srv">
+          <div class="lbwrap">
+            <div class="lbbox">
+              <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-arrows-split"/></svg>
+              <div class="ln">Load balancer</div>
+              <div class="ld">accepts every request and forwards each one to one machine</div>
+            </div>
+            <div class="fanlines"><svg viewBox="0 0 500 22" preserveAspectRatio="none">
+              <path d="M250 0 L50 22 M250 0 L150 22 M250 0 L250 22 M250 0 L350 22 M250 0 L450 22"
+                    stroke="var(--line2)" stroke-width="1" fill="none"/></svg></div>
+            <div class="insts" id="lbInsts"></div>
+            <div class="verdict" id="lbVerdict" style="margin-top:13px"></div>
+          </div>
+
+          <div class="card">
+            <div class="card-t">How it chooses a machine</div>
+            <div class="toggles">
+              <button class="tg" data-algo="rr" aria-pressed="true"><span class="dot"></span><span>Round robin<small>The next machine in turn, busy or not.</small></span></button>
+              <button class="tg" data-algo="lc" aria-pressed="false"><span class="dot"></span><span>Least connections<small>The machine with the fewest requests in progress.</small></span></button>
+            </div>
+            <div class="ctrls" style="margin-top:16px">
+              <button class="btn primary" id="lbRun">Play</button>
+              <button class="btn" id="lbKill">Take E down</button>
+              <button class="btn" id="lbReset">Reset</button>
+            </div>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>A load balancer is a reverse proxy. It has one public address, accepts each connection from a client and opens a second connection to one of the backends, which are the machines behind it. Clients never see the backends. Every few seconds it sends each backend a health check, which is a small request to see whether the backend answers. It stops sending work to any backend that does not answer.</p>
+          <p>A session is the record that keeps a user logged in. Sticky sessions send the same client to the same machine every time, which is needed if a machine keeps that record in its own memory. Switch it on, send traffic, then take E down.</p>
+          <div class="toggles">
+            <button class="tg danger" data-algo="sticky" aria-pressed="false"><span class="dot"></span><span>Sticky sessions<small>The same client always goes to the same machine.</small></span></button>
+          </div>
+          <div class="lbstats">
+            <div class="g" id="lbG1"><div class="gl">Requests sent</div><div class="gv">0</div></div>
+            <div class="g" id="lbG2"><div class="gl">Difference in counts</div><div class="gv">—</div></div>
+            <div class="g" id="lbG3"><div class="gl">Sessions lost</div><div class="gv">0</div></div>
+          </div>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="bottleneck" data-title="Find the next bottleneck">
+        <p>A <dfn title="The part of a system with the lowest capacity, which sets the limit for the whole system">bottleneck</dfn> limits everything else. The load is 400 requests per second. Add machines, then a <dfn title="A fast store of recent answers, so the database is asked less often">cache</dfn> and <dfn title="A copy of the database that answers read-only queries">read replicas</dfn>, and watch the bottleneck move.</p>
+        <div class="topo" id="topo">
+          <div class="tier">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg><div class="tier-l">Clients</div>
+            <div class="nodebox" id="tClient"><span class="big" id="tClientN">400</span>rps</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="tier">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-arrows-split"/></svg><div class="tier-l">Load balancer</div>
+            <div class="nodebox off" id="tLB"><span class="big">LB</span>round robin</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="tier">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg><div class="tier-l">Application machines</div>
+            <div class="stackn" id="tApp"></div>
+            <div class="nodebox" id="tAppCap" style="margin-top:4px"><span class="big" id="tAppN">80</span>rps maximum</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="tier">
+            <div class="tier-l">Cache</div>
+            <div class="nodebox off" id="tCache"><span class="big" id="tCacheN">—</span>hit rate</div>
+          </div>
+          <div class="arrow">→</div>
+          <div class="tier">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-database"/></svg><div class="tier-l">Database</div>
+            <div class="nodebox" id="tDB"><span class="big" id="tDBN">300</span>qps maximum</div>
+            <div class="nodebox off" id="tRep" style="margin-top:4px"><span class="big" id="tRepN">0</span>read replicas</div>
+          </div>
+        </div>
+
+        <div class="srv">
+          <div>
+            <div class="gauges">
+              <div class="g" id="sgServe"><div class="gl">Served</div><div class="gv">0<span class="gu">rps</span></div></div>
+              <div class="g" id="sgCeil"><div class="gl">System maximum</div><div class="gv">0<span class="gu">rps</span></div></div>
+              <div class="g" id="sgShed"><div class="gl">Turned away</div><div class="gv">0<span class="gu">rps</span></div></div>
+            </div>
+            <div class="verdict" id="sVerdict"></div>
+          </div>
+
+          <div class="card">
+            <div class="sliders">
+              <div class="field">
+                <label>Application machines <span class="val" id="vInst">1</span></label>
+                <input type="range" id="sInst" min="1" max="12" value="1">
+              </div>
+              <div class="field">
+                <label>Read replicas <span class="val" id="vRep">0</span></label>
+                <input type="range" id="sRep" min="0" max="5" value="0">
+              </div>
+            </div>
+            <div class="toggles">
+              <button class="tg" id="tgLB" aria-pressed="false"><span class="dot"></span><span>Load balancer<small>Needed before more than one machine gets traffic</small></span></button>
+              <button class="tg" id="tgCache" aria-pressed="false"><span class="dot"></span><span>Cache layer<small>Answers 70% of reads without the database</small></span></button>
+            </div>
+          </div>
+        </div>
+        <p class="outcome">You can now find the part that limits a system and say what to add.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>The system starts at 400 requests per second (rps). Each application machine is a copy of the machine in <a data-lesson="server">Server capacity</a>. The database is measured in queries per second (qps). A queue of background jobs lets a request finish before slow work, such as sending an email, is done. An application that keeps no user data in the machine is called stateless, and scaling out depends on that. Turn on the last switch with several machines and see what happens.</p>
+          <div class="gauges">
+            <div class="g" id="sgDb"><div class="gl">Database load</div><div class="gv">0<span class="gu">qps</span></div></div>
+          </div>
+          <div class="sliders">
+            <div class="field">
+              <label>Incoming load <span class="val" id="vLoad">400 rps</span></label>
+              <input type="range" id="sLoad" min="20" max="2000" step="20" value="400">
+            </div>
+            <div class="field">
+              <label>Handler time <span class="val" id="vH">50 ms</span></label>
+              <input type="range" id="sH" min="5" max="2000" step="5" value="50">
+            </div>
+            <div class="field">
+              <label>Queries per request <span class="val" id="vQ">3</span></label>
+              <input type="range" id="sQ" min="1" max="60" value="3">
+            </div>
+          </div>
+          <div class="toggles">
+            <button class="tg" id="tgQueue" aria-pressed="false"><span class="dot"></span><span>Background job queue<small>Moves slow work out of the request, so the handler is 35% faster</small></span></button>
+            <button class="tg danger" id="tgSess" aria-pressed="false"><span class="dot"></span><span>Sessions stored in machine memory<small>Convenient on one machine. Turn it on with several machines and see what happens.</small></span></button>
+          </div>
+          <div class="rtt-note" id="sMath"></div>
+        </details>
+      </div>
+    </section>

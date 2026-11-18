@@ -1,0 +1,74 @@
+    <section class="panel" id="p-debug">
+      <div class="head">
+        <h2>Finding and fixing mistakes</h2>
+        <p>A program can run without an error and still give a wrong answer. Debugging means finding the first step that went wrong, fixing it and testing other cases.</p>
+      </div>
+
+      <div class="sec" data-sec="soup" data-title="Start with a sour soup">
+        <p>Your sinigang comes out too sour. You go back through the recipe card one step at a time and compare each step with what you did. At step 3 you find that the tamarind went in twice. Finding the step that went wrong is called <dfn title="Finding and fixing a mistake in a list of steps">debugging</dfn>.</p>
+        <div class="scene" role="group" aria-label="The recipe card is the steps, the sour soup is a wrong result, checking each step is tracing" data-art="sour-soup-recipe" data-art-desc="A student cook tastes soup from a ladle beside a pot while a recipe card lies open on the counter.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-numbers"/></svg></div><figcaption><b>Recipe card</b><span>The steps of a program</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bowl-food"/></svg></div><figcaption><b>Sour soup</b><span>A wrong result</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-magnifying-glass"/></svg></div><figcaption><b>Checking each step</b><span>Tracing</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> A recipe uses 2 cups of rice and 3 cups of water. A friend triples the rice and keeps the water. The rice comes out dry. Which step went wrong?</div>
+        <div class="instructor">The water step went wrong. The rice amount was scaled and the water amount was left alone. The wrong result shows up at the end, and the cause sits in an earlier step.</div>
+      </div>
+
+      <div class="sec" data-sec="trace" data-title="Trace the steps">
+        <p>A shop program should charge 120 pesos for each milk tea and take 10 percent off orders of 300 pesos or more. A <dfn title="A mistake in the steps of a program">bug</dfn> hides in it. To <dfn title="Run a program one step at a time and watch each result">trace</dfn> the program, run it one step at a time for an order of 3 milk teas. Press Run next step, then press Wrong on the first step that gives a wrong result.</p>
+        <div class="card wg" id="dbTr">
+          <div class="card-t">Order: 3 milk teas</div>
+          <ol class="dbsteps" id="dbSteps"></ol>
+          <div class="ctrls">
+            <button class="btn primary" id="dbRun" type="button">Run next step</button>
+            <button class="btn" id="dbTrReset" type="button">Reset</button>
+            <span class="dbcount" id="dbCount">Steps run: 0 of 5</span>
+          </div>
+          <div class="verdict" id="dbTrV" role="status"></div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Find the first wrong step</h4>
+          <p>Work from the start and check each result. The first wrong value points to the cause. A wrong value near the end can come from a mistake much earlier, so the last step is rarely the place to look. Checking each step in turn, as in <a data-lesson="algorithm">Writing steps for a robot</a>, is how you find the first wrong one.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="test" data-title="Test other cases">
+        <p>A fix that works for one order can fail for another. The rule is 10 percent off orders of 300 pesos or more. A <dfn title="An order paired with the total it should give">test case</dfn> is an order with its expected total. Pick a fix for step 3 and for step 4, then press Run tests to try six test cases.</p>
+        <div class="card wg" id="dbTe">
+          <div class="dbgrp" role="group" aria-labelledby="dbOpL">
+            <div class="dbgl" id="dbOpL">Step 3: set subtotal to price ... quantity</div>
+            <div class="ctab" id="dbOp"></div>
+          </div>
+          <div class="dbgrp" role="group" aria-labelledby="dbCmpL">
+            <div class="dbgl" id="dbCmpL">Step 4: give the discount if the subtotal is ...</div>
+            <div class="ctab" id="dbCmp"></div>
+          </div>
+          <div class="ctrls">
+            <button class="btn primary" id="dbRunT" type="button">Run tests</button>
+            <button class="btn" id="dbTeReset" type="button">Reset</button>
+          </div>
+          <table class="dbtab">
+            <thead><tr><th scope="col">Price</th><th scope="col">Teas</th><th scope="col">Expected</th><th scope="col">Got</th><th scope="col">Result</th></tr></thead>
+            <tbody id="dbRows"></tbody>
+          </table>
+          <div class="verdict" id="dbTeV" role="status"></div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Good test cases</h4>
+          <p>Test a typical case, an empty case, a case at each boundary and a very large case. A boundary is a value where the rule changes, such as exactly 300 pesos. Mistakes often sit there. Rule tables, like those in <a data-lesson="rules">Decision rules and tables</a>, have many boundaries to test.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="habits" data-title="Debugging habits">
+        <p>Work from the start and stop at the first wrong value. Fix the step that caused it. Then test a typical order, an empty order and an order on each boundary, such as exactly 300 pesos. That order found a second bug that 3 teas missed.</p>
+        <p class="outcome">You can now trace a program to its first wrong result, choose a fix for the cause and test the fix on boundary cases.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Debugging AI-written code</h4>
+          <p>An AI assistant can write steps that look right and fail on a boundary. Ask for tests and read them before you trust the code. See <a data-lesson="vibe">Reviewing AI-written code</a>.</p>
+        </details>
+      </div>
+    </section>

@@ -1,0 +1,22 @@
+{
+ "id": "learn",
+ "title": "Training data and test data",
+ "label": "Training and test data",
+ "desc": "Why a model is tested on data it has never seen.",
+ "outcomes": [
+  "Say a model is a boundary fitted to examples",
+  "Explain the train and test split and why training score means little",
+  "Spot leakage (splitting the data after fitting)"
+ ],
+ "tags": [
+  "training data",
+  "test data",
+  "overfitting",
+  "classifier"
+ ],
+ "area": "ai",
+ "needs": [
+  "students"
+ ],
+ "video": null
+}

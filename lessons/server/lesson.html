@@ -1,0 +1,100 @@
+    <section class="panel" id="p-server">
+      <div class="head">
+        <h2>Server capacity: workers, queues and requests per second</h2>
+        <p>A server can finish only so many requests per second. The limit depends on the number of workers and on the time each request takes.</p>
+      </div>
+
+      <div class="sec" data-sec="cashiers" data-title="Start with a row of cashiers">
+        <p>A fast-food branch has a few cashiers and one line. Customers arrive whether or not a cashier is free, and each cashier serves one customer at a time. If customers arrive faster than the cashiers can serve them, the line keeps growing.</p>
+        <div class="scene" role="group" aria-label="Customers are requests, the line is the queue, the cashiers are workers" data-art="fast-food-counters" data-art-desc="Two cashiers stand ready at their fast-food counters while a single line of two customers waits to be called forward.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Customers</b><span><dfn title="A message from a browser asking for a page or for data">Requests</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-users-three"/></svg></div><figcaption><b>The line</b><span>Queue</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cash-register"/></svg></div><figcaption><b>Cashiers</b><span>Workers</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> If four cashiers each need 200 milliseconds per customer, how many customers can they serve in one second?</div>
+        <div class="instructor">The answer is 4 workers divided by 0.2 seconds, which is 20 requests per second. Watch for students who multiply the two numbers. Ask what they expect p95 latency to do when arrivals reach 30 per second.</div>
+      </div>
+
+      <div class="sec" data-sec="limit" data-title="Find the maximum rate">
+        <p><dfn title="The number of requests finished per second">Throughput</dfn> cannot pass the maximum rate under Machine and load. Press Play, then raise the arrival rate above that maximum. Watch the queue and the <dfn title="The time that 95 out of 100 requests stay under">p95 latency</dfn>.</p>
+        <div class="srv">
+          <div>
+            <canvas id="simCanvas"></canvas>
+            <div class="legend">
+              <span><i style="background:var(--req)"></i>Waiting in queue</span>
+              <span><i style="background:var(--res)"></i>Completed</span>
+              <span><i style="background:var(--warn)"></i>Rejected</span>
+            </div>
+            <div class="gauges">
+              <div class="g" id="gThr"><div class="gl">Throughput</div><div class="gv">0<span class="gu">rps</span></div></div>
+              <div class="g" id="gQ"><div class="gl">Queue depth</div><div class="gv">0</div></div>
+              <div class="g" id="gP95"><div class="gl">p95 latency</div><div class="gv">0<span class="gu">ms</span></div></div>
+              <div class="g" id="gCpu"><div class="gl">Worker utilization</div><div class="gv">0<span class="gu">%</span></div></div>
+            </div>
+            <div class="verdict" id="verdict"><b>Idle</b>Press Play to send requests to the server.</div>
+          </div>
+
+          <div class="card">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg>
+            <div class="card-t">Machine and load</div>
+            <div class="sliders">
+              <div class="field">
+                <label>Arrival rate <span class="val" id="vLam">20 rps</span></label>
+                <input type="range" id="sLam" min="1" max="200" value="20">
+              </div>
+              <div class="field">
+                <label>Handler time <span class="val" id="vSvc">50 ms</span></label>
+                <input type="range" id="sSvc" min="5" max="500" value="50">
+              </div>
+              <div class="field">
+                <label>Workers on this machine <span class="val" id="vW">4</span></label>
+                <input type="range" id="sW" min="1" max="32" value="4">
+              </div>
+            </div>
+            <div class="ctrls" style="margin-top:18px">
+              <button class="btn primary" id="simRun">Play</button>
+              <button class="btn" id="simReset">Reset</button>
+            </div>
+            <div class="rtt-note" style="margin-top:14px">
+              Maximum rate = workers ÷ handler time.<br>
+              <b id="capLine">4 ÷ 0.05 s = 80 rps</b>
+            </div>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Add a memory limit</h4>
+          <p>Each request being handled or waiting uses RAM. Lower Total RAM or raise RAM per request, then press Play. The Memory gauge shows when the limit is reached.</p>
+          <div class="sliders">
+            <div class="field">
+              <label>RAM per request <span class="val" id="vMem">12 MB</span></label>
+              <input type="range" id="sMem" min="1" max="80" value="12">
+            </div>
+            <div class="field">
+              <label>Total RAM <span class="val" id="vRam">4096 MB</span></label>
+              <input type="range" id="sRam" min="128" max="4096" step="128" value="4096">
+            </div>
+          </div>
+          <div class="gauges">
+            <div class="g" id="gMem"><div class="gl">Memory</div><div class="gv">0<span class="gu">MB</span></div></div>
+            <div class="g" id="gDrop"><div class="gl">Rejected</div><div class="gv">0</div></div>
+          </div>
+          <p><b id="memLink" style="color:var(--res)"></b></p>
+          <h4>Definitions</h4>
+          <p>Latency is the time from a request arriving to its answer being finished. Utilization is the arrival rate divided by the most the workers can finish per second. When arrivals exceed that maximum, the queue grows, latency keeps rising and throughput stops increasing. The workers here are the same separate processes as in <a data-lesson="mem">Server memory</a>. Several machines are covered in <a data-lesson="scale">Load balancers and scaling</a>.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="memory" data-title="Memory sets a second limit">
+        <p>Every request that is being handled or waiting also uses RAM. When the machine runs out of RAM, the operating system stops processes. Extra workers then make things worse, because each one needs RAM too.</p>
+        <p class="outcome">You can now find a server's maximum rate and name what limits it.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Test the memory limit</h4>
+          <p>Go back to "Find the maximum rate", open its More detail and lower Total RAM.</p>
+          <h4>The smallest web server</h4>
+          <p>Below is the smallest possible web server, written in Python with no framework. It waits for a connection, prints the request it receives and sends back a short answer. To try it, save it as a file, run it, then run the <code>curl</code> command from the first comment in a second terminal window.</p>
+          <div class="srv-code" id="srvCode"></div>
+        </details>
+      </div>
+    </section>

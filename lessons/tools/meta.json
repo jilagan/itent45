@@ -1,0 +1,19 @@
+{
+ "id": "tools",
+ "title": "Tool calls and the Model Context Protocol (MCP)",
+ "label": "Tool calls and MCP",
+ "desc": "How a model asks other programs to do things for it.",
+ "outcomes": [
+  "Say that the model only emits a request and another program runs it",
+  "Say where a human can refuse",
+  "Say what MCP standardizes (N x M adapters become N + M)"
+ ],
+ "tags": [
+  "tool calls",
+  "MCP",
+  "permissions"
+ ],
+ "area": "ai",
+ "needs": [],
+ "video": null
+}

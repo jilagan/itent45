@@ -1,0 +1,25 @@
+{
+ "id": "journey",
+ "title": "Why loading a page takes several round trips",
+ "label": "Round trips and latency",
+ "desc": "Why distance and the number of round trips make pages slow.",
+ "outcomes": [
+  "List what happens before your code runs (lookup, connect, encrypt, request)",
+  "Predict wait time from distance and number of round trips",
+  "Say why more server capacity does not fix distance"
+ ],
+ "tags": [
+  "latency",
+  "round trip",
+  "DNS",
+  "TLS"
+ ],
+ "area": "web",
+ "needs": [],
+ "video": {
+  "sec": null,
+  "youtube": "",
+  "title": "One click, for real: the Network tab",
+  "about": "A real site's request waterfall in the browser's Network tab: dozens of requests, third-party calls, real header values and real timings, next to the five idealized round trips on this page."
+ }
+}

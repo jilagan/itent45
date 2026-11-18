@@ -1,0 +1,26 @@
+#p-patterns .ptrec{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin:12px 0 14px}
+#p-patterns .ptr{border:1px solid var(--line2);border-radius:4px;padding:6px 8px;font-size:14px;line-height:1.4;background:var(--panel);color:var(--dim)}
+#p-patterns .ptr.hit{border-color:var(--res);background:color-mix(in srgb,var(--res) 9%,var(--panel));color:var(--ink)}
+#p-patterns .ptr b{font-weight:700;color:var(--res)}
+#p-patterns .ptmsg{display:flex;flex-wrap:wrap;gap:8px 10px;margin:6px 0 14px}
+#p-patterns .ptch{display:inline-flex;gap:2px;padding:3px;border:1px solid transparent;border-radius:4px}
+#p-patterns .ptch.same{border-color:var(--res);background:color-mix(in srgb,var(--res) 9%,transparent)}
+#p-patterns .ptch.diff{border-color:var(--warn);border-style:dashed}
+#p-patterns .ptt{display:inline-flex;align-items:center;justify-content:center;width:22px;height:30px;border:1px solid var(--line2);border-radius:3px;font-family:var(--mono);font-size:15px;font-weight:700;color:var(--ink);background:var(--panel)}
+#p-patterns .ptt.L{background:var(--ink);border-color:var(--ink);color:var(--bg)}
+#p-patterns .ptstep{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 14px}
+#p-patterns .ptstep .btn{min-width:48px;min-height:44px;font-size:1.2em;line-height:1}
+#p-patterns .ptstep output{font-weight:600;min-width:9em;text-align:center}
+#p-patterns .ptdays,#p-patterns .ptgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:3px;max-width:640px}
+#p-patterns .ptdays{margin:0 0 4px;text-align:center;font-size:14px;font-weight:600;color:var(--dim)}
+#p-patterns .ptwk{margin:0 0 12px}
+#p-patterns .ptwl{margin:0 0 4px;font-size:14px;font-weight:600;color:var(--dim)}
+#p-patterns .ptb{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;height:88px;min-width:0;padding:4px 2px;border:1px solid var(--line);border-radius:4px;background:var(--panel)}
+#p-patterns .ptb i{display:block;width:70%;max-width:34px;background:var(--line2);border-radius:2px 2px 0 0}
+#p-patterns .ptb span{font-size:14px;line-height:1;color:var(--ink)}
+#p-patterns .ptb:hover{border-color:var(--res)}
+#p-patterns .ptb.twin{border-color:var(--res)}
+#p-patterns .ptb.pick{border:2px solid var(--req)}
+#p-patterns .ptb.right{border:2px solid var(--res);background:color-mix(in srgb,var(--res) 9%,var(--panel))}
+#p-patterns .ptb.right i{background:var(--res)}
+@media(max-width:480px){#p-patterns .ptt{width:19px}#p-patterns .ptstep output{min-width:7em}}

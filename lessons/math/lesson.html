@@ -1,0 +1,114 @@
+    <section class="panel" id="p-math">
+      <div class="head">
+        <h2>The math behind it: vectors, slopes and probabilities</h2>
+        <p>Three ideas from school arithmetic appear in every lecture on language models: a weighted sum, a slope and a probability distribution. Each connects to a screen you have already seen.</p>
+      </div>
+
+      <div class="sec" data-sec="grade" data-title="Start with a weighted grade">
+        <p>Your grade in a course is a weighted sum. Exams count 0.6 and projects count 0.4. You score 80 on exams and 90 on projects, so your grade is 80 &times; 0.6 + 90 &times; 0.4 = 84. You multiplied each score by its weight and added the results.</p>
+        <div class="scene" role="group" aria-label="Your scores and the weights are two vectors, and your grade is their dot product" data-art="weighted-grade" data-art-desc="A teacher at a desk watches a two-pan balance scale tilt: a thick blue folder sits on the lower pan and a thin dark orange folder on the higher pan.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Your scores</b><span><dfn title="A list of numbers, such as 80 and 90">Vector</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>The weights</b><span>Vector</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>Your grade</b><span><dfn title="Multiply each pair of numbers, then add the results">Dot product</dfn></span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> A course weights exams at 0.7 and projects at 0.3. You score 60 on exams and 100 on projects. What is your grade?</div>
+        <div class="instructor">The answer is 72. Students who answer 80 averaged the two scores and ignored the weights. Ask why 72 is closer to the exam score.</div>
+      </div>
+
+      <div class="sec" data-sec="dot" data-title="Weighted sums as arrows">
+        <p>Any list of numbers can be drawn as an arrow. Arrow a stays fixed and you swing arrow b. The dot product is a weighted sum of the two lists. Drag the slider and watch it change.</p>
+        <div class="srv">
+          <div>
+            <div class="scatter" id="mtDot"></div>
+            <div class="art" id="mtDotSum" style="margin-top:12px"></div>
+          </div>
+          <div class="card">
+            <div class="sliders">
+              <div class="field"><label>Angle of <b>b</b> <span class="val" id="vMtAng">40&deg;</span></label>
+                <input type="range" id="sMtAng" min="0" max="180" value="40"></div>
+            </div>
+            <div class="meter" style="grid-template-columns:1fr;margin-top:12px">
+              <div class="g" id="mtDotVal"><div class="gl">Dot product</div><div class="gv">&mdash;</div></div>
+            </div>
+            <div class="rtt-note" style="margin-top:12px" id="mtDotNote"></div>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Hundreds of numbers</h4>
+          <p>Two numbers can mark a position on a page. Three hundred numbers mark a position in a space you cannot draw, which is where words are placed in <a data-lesson="vectors">Vectors and similarity</a>.</p>
+          <h4>Where you have met it</h4>
+          <p>The attention weight in <a data-lesson="attn">Attention and transformers</a> is a dot product between what one word is asking for and what another word offers. The similarity score in <a data-lesson="vectors">Vectors and similarity</a> is the same operation with the lengths divided out, which is called cosine similarity. A unit in <a data-lesson="deep">Neural networks</a> multiplies each input by a weight and adds the results, then adds a fixed number called a bias.</p>
+          <h4>Matrices and the notation Wx</h4>
+          <p>A matrix is a grid of numbers, which you can read as a stack of vectors. Multiplying by a matrix performs many dot products at once. This is the meaning of <code>Wx</code>: <code>W</code> is the matrix of weights and <code>x</code> is the input vector.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="slope" data-title="Slopes tell you which way to adjust">
+        <p>A <dfn title="A number inside the model that training can adjust">weight</dfn> is a number the model can adjust. The curve shows how wrong the model is at each weight. The <dfn title="How fast the answer changes when you nudge the input">slope</dfn> at your position says which way is downhill. Drag the slider along the curve and watch the slope.</p>
+        <div class="srv">
+          <div>
+            <div class="scatter" id="mtSlope"></div>
+            <div class="meter" style="grid-template-columns:1fr 1fr;margin-top:13px">
+              <div class="g" id="mtL"><div class="gl">How wrong it is</div><div class="gv">&mdash;</div></div>
+              <div class="g" id="mtS"><div class="gl">Slope</div><div class="gv">&mdash;</div></div>
+            </div>
+            <div class="verdict" id="mtSlopeV" style="margin-top:13px"></div>
+          </div>
+          <div class="card">
+            <div class="sliders">
+              <div class="field"><label>Weight <span class="val" id="vMtW">0.0</span></label>
+                <input type="range" id="sMtW" min="-10" max="70" value="0"></div>
+            </div>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The weight</h4>
+          <div class="meter" style="grid-template-columns:1fr">
+            <div class="g" id="mtW"><div class="gl">The weight</div><div class="gv">&mdash;</div></div>
+          </div>
+          <h4>Slope and derivative</h4>
+          <p>A car's speedometer tells you how fast your position is changing right now. A slope is the same idea for any curve. A derivative is the formal name for the slope at one point. The slope is negative on the left of the dip, positive on the right and zero at the bottom. To get downhill, move in the direction opposite to the slope.</p>
+          <h4>Gradient</h4>
+          <p>A gradient is the slope worked out for every number at once. With three numbers it is three slopes. With a billion numbers it is a billion slopes, and the arithmetic for each one is the same.</p>
+          <h4>Where you have met it</h4>
+          <p>The Step button in <a data-lesson="train">How training works</a> does exactly this. It works out the slope for each of the three numbers, moves each one against its slope and repeats. The learning-rate slider sets how far each move goes.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="distribution" data-title="Probabilities add up to 1">
+        <p>A weather forecast might say 60% rain, 30% cloudy and 10% clear. Those percentages are a <dfn title="A set of outcomes whose probabilities add up to 100%">probability distribution</dfn>. A model's choice of next word is one too. Raise the probability of Paris and watch the other words shrink.</p>
+        <div class="srv">
+          <div>
+            <div class="probs" id="mtDist"></div>
+            <div class="meter" style="grid-template-columns:1fr;margin-top:13px">
+              <div class="g" id="mtSum"><div class="gl">Adds up to</div><div class="gv">&mdash;</div></div>
+            </div>
+            <div class="verdict" id="mtDistV" style="margin-top:13px"></div>
+          </div>
+          <div class="card">
+            <div class="sliders">
+              <div class="field"><label>How sure it is about <b>Paris</b> <span class="val" id="vMtP">40%</span></label>
+                <input type="range" id="sMtP" min="5" max="95" value="40"></div>
+            </div>
+          </div>
+        </div>
+        <p class="outcome">You can now read a weighted sum, a slope and a probability distribution.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Loss</h4>
+          <p>A loss is one number that says how wrong the model was, given what turned out to be true. The true answer here is Paris. The loss is small when the model put most of its probability on Paris and large when it put little there.</p>
+          <div class="meter" style="grid-template-columns:1fr">
+            <div class="g" id="mtLoss"><div class="gl">Loss</div><div class="gv">&mdash;</div></div>
+          </div>
+          <div class="verdict" id="mtLossV" style="margin-top:13px"></div>
+          <h4>The formula</h4>
+          <p>The formula is <code>-log(p)</code>, where <code>p</code> is the probability given to the right answer and log is the logarithm function on a calculator. This loss is called cross-entropy. It rises steeply as the probability approaches zero.</p>
+          <h4>Where you have met it</h4>
+          <p>This is the number that falls in <a data-lesson="train">How training works</a>. Temperature, in <a data-lesson="next">Predicting the next word</a>, changes the shape of the distribution the model samples from. The loss measures how much probability sits on the right answer.</p>
+          <h4>What you can skip for now</h4>
+          <p>This lesson leaves out matrix decompositions, the mechanics of the chain rule (how slopes combine through a chain of steps), probability theory beyond distributions, and proofs. The three ideas here are enough to read a diagram in a lecture and recognize which symbol is doing the work.</p>
+        </details>
+      </div>
+    </section>

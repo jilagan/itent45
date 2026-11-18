@@ -1,0 +1,21 @@
+{
+ "id": "rest",
+ "title": "HTTP verbs, URLs and status codes (REST)",
+ "label": "HTTP verbs and status codes",
+ "desc": "Which request type to use, and how to read status codes.",
+ "outcomes": [
+  "Choose a verb for a task and say whether it is safe and idempotent",
+  "Read a status code by its first digit; separate 401 from 403 and 404 from 500",
+  "Judge endpoint design: noun URLs, one request or fifty, when fetching everything is waste"
+ ],
+ "tags": [
+  "REST",
+  "HTTP verbs",
+  "status codes",
+  "idempotent",
+  "API"
+ ],
+ "area": "web",
+ "needs": [],
+ "video": null
+}

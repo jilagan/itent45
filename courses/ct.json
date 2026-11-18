@@ -1,0 +1,61 @@
+{
+ "id": "ct",
+ "code": "CT",
+ "title": "Computational Thinking",
+ "org": "Short interactive lessons",
+ "homes": [
+  {
+   "file": "ct.html",
+   "title": "Computational Thinking",
+   "subtitle": "Solve a problem step by step",
+   "kicker": "CT",
+   "intro": "These ten lessons show how to turn a vague problem into steps that a person or a computer can follow, and how to check that the steps work. Each lesson is a few short steps: read the step, try the one thing it asks, then answer the check at the end.",
+   "groups": [
+    {
+     "label": "Understand the problem",
+     "lessons": [
+      "frame",
+      "decompose"
+     ]
+    },
+    {
+     "label": "Find structure",
+     "lessons": [
+      "patterns",
+      "abstract"
+     ]
+    },
+    {
+     "label": "Write the steps",
+     "lessons": [
+      "algorithm",
+      "rules"
+     ]
+    },
+    {
+     "label": "Choose a good method",
+     "lessons": [
+      "sorting",
+      "routes",
+      "growth"
+     ]
+    },
+    {
+     "label": "Check your work",
+     "lessons": [
+      "debug"
+     ]
+    }
+   ],
+   "links": [
+    {
+     "label": "All lessons",
+     "home": "library.html"
+    }
+   ]
+  }
+ ],
+ "vars": {
+  "project": "project"
+ }
+}

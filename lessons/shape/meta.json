@@ -1,0 +1,19 @@
+{
+ "id": "shape",
+ "title": "Choosing a relational or a document database",
+ "label": "Relational or document",
+ "desc": "When to keep data in tables and when in documents.",
+ "outcomes": [
+  "Say that choosing relational or document depends on which questions you ask",
+  "Say where the schema is enforced in each",
+  "Choose one for a project and justify the choice"
+ ],
+ "tags": [
+  "relational",
+  "document database",
+  "schema"
+ ],
+ "area": "data",
+ "needs": [],
+ "video": null
+}

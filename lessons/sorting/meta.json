@@ -1,0 +1,15 @@
+{
+ "id": "sorting",
+ "title": "Sorting and searching",
+ "label": "Sorting and searching",
+ "desc": "Order a list with few comparisons and find items fast.",
+ "outcomes": [
+  "Sort a list by comparing two items at a time",
+  "Find an item in a sorted list by halving the search range",
+  "Say how many guesses a list of a given size needs"
+ ],
+ "tags": ["sorting", "binary search", "comparison", "index"],
+ "area": "computational-thinking",
+ "needs": [],
+ "video": null
+}

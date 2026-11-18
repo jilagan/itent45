@@ -1,0 +1,20 @@
+{
+ "id": "layers",
+ "title": "How network messages are layered (protocol layers)",
+ "label": "Protocol layers",
+ "desc": "How a message is wrapped in layers to cross the internet.",
+ "outcomes": [
+  "Explain encapsulation: each layer wraps the message and talks only to its twin",
+  "Estimate how much packaging a small message carries",
+  "Explain why a big reply becomes many packets and arrives whole"
+ ],
+ "tags": [
+  "protocol layers",
+  "packets",
+  "TCP",
+  "headers"
+ ],
+ "area": "web",
+ "needs": [],
+ "video": null
+}

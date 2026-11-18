@@ -1,0 +1,51 @@
+    <section class="panel" id="p-tokens">
+      <div class="head">
+        <h2>Tokens: how text is fed to a model</h2>
+        <p>A language model reads text as short pieces called <dfn title="One piece of text a model reads: a whole word, part of a word or punctuation">tokens</dfn>. This lesson shows how sentences are cut up and what that means for accuracy and cost.</p>
+      </div>
+
+      <div class="sec" data-sec="pieces" data-title="Start with a word in pieces">
+        <p>A child sounding out a long word reads it in pieces, such as con-ver-sa-tion. The pieces vary in length, and the child does not look at each letter inside a piece. A language model reads text in pieces too: a whole word, part of a word or a punctuation mark.</p>
+        <div class="scene" role="group" aria-label="The child is the model, the pieces of the word are tokens" data-art="child-sounding-out-word" data-art-desc="A child at a desk points at one piece of a long word that has been broken into separate paper tiles.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>The child reading in pieces</b><span>The model</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>Pieces such as con-ver-sa-tion</b><span>Tokens, cut by a <dfn title="A program that cuts text into tokens before the model sees it">tokenizer</dfn></span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> Count the r's in <em>strawberry</em>. Now suppose the word reached you as three chunks and you could not see inside any chunk. How well could you count?</div>
+      </div>
+
+      <div class="sec" data-sec="cut" data-title="See how text is cut">
+        <p>Select each example and compare the colored pieces with the text you typed. Then compare the Tokens count for English and Tagalog.</p>
+        <div class="ctab" id="tkPick"></div>
+        <div>
+          <div class="card">
+            <div class="card-t">As you typed it</div>
+            <div class="art" id="tkRaw" style="margin-bottom:12px"></div>
+            <div class="card-t">As the model receives it</div>
+            <div class="chips" id="tkChips"></div>
+          </div>
+          <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
+            <div class="g" id="tkChars"><div class="gl">Characters</div><div class="gv">—</div></div>
+            <div class="g" id="tkToks"><div class="gl">Tokens</div><div class="gv">—</div></div>
+            <div class="g" id="tkRatio"><div class="gl">Characters per token</div><div class="gv">—</div></div>
+          </div>
+          <div class="verdict" id="tkVerdict" style="margin-top:13px"></div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>How the pieces are chosen</h4>
+          <p>The tokenizer chooses its pieces from text that turned up often in the material it was built from. Each token is then replaced by a number, and the model works with those numbers. It does not see the individual letters inside a token.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="explain" data-title="What tokens explain">
+        <p>The model cannot see inside a token, so counting letters is unreliable. The <dfn title="The most text a model can handle at once, measured in tokens">context window</dfn> is measured in tokens. Providers charge per token, so the same sentence costs more in a language that the tokenizer splits into more pieces, such as Filipino.</p>
+        <p class="outcome">You can now explain why a model miscounts letters and why some languages cost more.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Why it miscounts letters</h4>
+          <p>The model receives <em>strawberry</em> as three chunks, and the letters inside each chunk are not separate pieces of input. It has to work out the spelling indirectly, which makes counting unreliable.</p>
+          <h4>Cost differs by language</h4>
+          <p>English averages about four characters per token because most of the text used to build the tokenizer was English. Filipino and Tagalog are split into more pieces, so the same meaning takes more tokens. It costs more to send and fills the context window sooner.</p>
+        </details>
+      </div>
+    </section>

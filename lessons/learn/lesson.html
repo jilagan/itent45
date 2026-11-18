@@ -1,0 +1,79 @@
+    <section class="panel" id="p-learn">
+      <div class="head">
+        <h2>Training data and test data</h2>
+        <p>A <dfn title="A rule a program works out from examples so it can make predictions">model</dfn> is built from examples and then judged on examples it has not seen. This lesson fits a line to some students and tests it on others.</p>
+      </div>
+
+      <div class="sec" data-sec="exam" data-title="Start with an exam seen early">
+        <p>Suppose you are given the exam paper a week early and memorize every answer. A model faces the same problem. It is built from examples, and it still has to be judged on how well it works.</p>
+        <div class="scene" role="group" aria-label="The exam you saw early is the training set, the exam on the day is the test set" data-art="exam-paper-early" data-art-desc="A student at a desk reads a printed exam paper with the answers already filled in, a week before the exam, with a wall calendar behind.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Questions you saw early</b><span>Training set</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>You, memorizing the answers</b><span>The fitted model</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>New questions on the day</b><span>Test set</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> You see the exam a week early and score 100 percent. What does that score tell anyone about your understanding? How would you test it fairly?</div>
+        <div class="instructor">Let students propose a fairer test before they open the widget. Most will suggest new questions or a separate exam. Name that idea as a held-out test set and connect it to the five dashed students in the widget.</div>
+      </div>
+
+      <div class="sec" data-sec="fit-and-test" data-title="Fit a line and test it">
+        <p>The widget follows 17 students who either finished a course or did not. Press Next to set five aside, fit a line to the other twelve and test it on the five. Then switch between the straight line and the bent line and compare the scores. A line that fits its examples too closely shows <dfn title="Fitting the training examples so closely that new examples are handled badly">overfitting</dfn>.</p>
+        <div class="srv">
+          <div>
+            <div class="scatter" id="lnPlot"></div>
+            <div class="meter" style="grid-template-columns:repeat(3,1fr);margin-top:13px">
+              <div class="g" id="lnTrain"><div class="gl">Training set, the twelve</div><div class="gv">&mdash;</div></div>
+              <div class="g" id="lnTest"><div class="gl">Test set, the five</div><div class="gv">&mdash;</div></div>
+              <div class="g" id="lnGap"><div class="gl">Gap</div><div class="gv">&mdash;</div></div>
+            </div>
+            <div class="verdict" id="lnVerdict" style="margin-top:13px"></div>
+          </div>
+          <div class="card">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-student"/></svg>
+            <div class="card-t" id="lnSideT">What is happening</div>
+            <div class="rtt-note" id="lnSide"></div>
+            <div class="ctrls" style="margin-top:14px">
+              <button class="btn primary" id="lnNext">Next</button>
+              <button class="btn" id="lnBack">Back</button>
+            </div>
+            <div class="toggles" id="lnPickWrap" style="margin-top:14px;display:none">
+              <button class="tg" id="lnPickA" aria-pressed="true"><span class="dot"></span>One straight line</button>
+              <button class="tg" id="lnPickB" aria-pressed="false"><span class="dot"></span>A line bent to fit</button>
+            </div>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Jump to a stage</h4>
+          <div class="ctab" id="lnStage"></div>
+          <h4>What this kind of model is called</h4>
+          <p>A straight boundary fitted to labeled examples is called logistic regression. The name confuses many people, because regression usually means predicting a number, and this model predicts a category.</p>
+          <p>Linear regression draws a line through the points to predict a value, such as the mark a student will get from the hours studied. Logistic regression draws a line between the points to predict a group, such as pass or fail. On screen both are a line. The first answers "how much?" and the second answers "which group?". The later lessons use the second kind.</p>
+          <h4>How a model becomes a boundary</h4>
+          <p>Nobody writes the line down. It starts in a poor position and is adjusted until it makes fewer mistakes. Adjusting a model to match examples is called fitting it, and the final line is the model.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="train-vs-test" data-title="Training set and test set">
+        <p>Split the data before fitting, and only once. If you look at the test set, adjust something and test again, you have trained on it. That mistake is called <dfn title="Information from the test set getting into the model">leakage</dfn>.</p>
+        <div class="cmp">
+          <div class="card">
+            <div class="card-t">Training set</div>
+            <p>Data the model sees while it is fitted. A good score here means little.</p>
+          </div>
+          <div class="card">
+            <div class="card-t">Test set</div>
+            <p>Data set aside first and never looked at. Report this score.</p>
+          </div>
+        </div>
+        <p class="outcome">You can now say why a score on training data proves little.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Why a good training score means little</h4>
+          <p>A model that has seen every answer can remember them, and from the inside remembering looks the same as learning. Every adjustment is made to reduce mistakes on the training examples, so a good score there is expected.</p>
+          <h4>Why leakage is easy to miss</h4>
+          <p>People make this mistake often without noticing, and results that looked strong during development then fall apart in front of real users. Information from the test set leaks into the model, which is where the name comes from.</p>
+          <h4>Reading the gap</h4>
+          <p>A small gap between the two scores means the model found the general shape of the data. A large gap means it memorized its examples. The bent line in "Fit a line and test it" shows this directly. A test set is commonly 20 to 30 percent of the data.</p>
+        </details>
+      </div>
+    </section>

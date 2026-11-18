@@ -1,0 +1,25 @@
+{
+ "id": "next",
+ "title": "How a language model writes: predicting the next word",
+ "label": "Predicting the next word",
+ "desc": "How a language model writes, one word at a time.",
+ "outcomes": [
+  "Describe generation as repeated next-word choice",
+  "Explain that temperature changes how spread out the choices are",
+  "Say there is no lookup, plan or check step"
+ ],
+ "tags": [
+  "language model",
+  "next word",
+  "probability",
+  "temperature"
+ ],
+ "area": "ai",
+ "needs": [],
+ "video": {
+  "sec": "one-word",
+  "youtube": "",
+  "title": "A real model's probabilities at temperature 0 and 1",
+  "about": "The same prompt run at temperature 0 and temperature 1 in a real model playground, with the probabilities shown, so students see output that varies."
+ }
+}

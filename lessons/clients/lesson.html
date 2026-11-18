@@ -1,0 +1,153 @@
+    <section class="panel" id="p-clients">
+      <div class="head">
+        <h2>One API for the web, iOS and Android</h2>
+        <p>A website, an iPhone app and an Android app can all use one <dfn title="The server and database that hold the data">backend</dfn>. They reach it through an <dfn title="A set of URLs that return data for other programs to use">API</dfn>. The server does not care which one is calling.</p>
+      </div>
+
+      <div class="sec" data-sec="kitchen" data-title="Start with a shared kitchen">
+        <p>A restaurant kitchen can serve dine-in customers, the drive-thru window and a delivery app. It prepares the same order for all three, and each channel presents it in its own way. A website, an iPhone app and an Android app can share one backend in the same way.</p>
+        <div class="scene" role="group" aria-label="The kitchen is the backend, the dish is the data, and the dining channels are the web, iOS and Android clients" data-art="kitchen-three-channels" data-art-desc="A cook at a kitchen hatch hands a paper bag to a delivery rider in a helmet, while a customer sits at a table beside the hatch eating from a bowl.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cooking-pot"/></svg></div><figcaption><b>Kitchen</b><span>Backend</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bowl-food"/></svg></div><figcaption><b>The same dish</b><span><dfn title="A plain-text format for data">JSON</dfn> data</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg></div><figcaption><b>Dine-in, drive-thru, delivery</b><span>Web, iOS, Android</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> A university has a web API that returns course data. It now wants an Android app. Which parts of the backend must be rewritten?</div>
+        <div class="instructor">For the web API the answer is that the whole backend is reused. The real enlistment system returns finished web pages, so the answer there is much less. Ask students to explain the difference after the step "A system with no API".</div>
+      </div>
+
+      <div class="sec" data-sec="one-api" data-title="One API, three clients">
+        <p>Select each client and compare the two boxes. The request changes with the client, and the reply from the server stays the same.</p>
+
+        <div class="fan">
+          <div class="cl3" id="clientPick"></div>
+          <div class="fanArrow">→</div>
+          <div class="apibox">
+            <div class="an"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg> One API</div>
+            <div class="ad">GET /api/courses<br>It works the same way for every client.</div>
+          </div>
+          <div class="fanArrow">→</div>
+          <div class="apibox" style="border-color:var(--line2);background:var(--panel2)">
+            <div class="an" style="color:var(--dim)"><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-database"/></svg> One database</div>
+            <div class="ad">One set of tables and one copy of the data</div>
+          </div>
+        </div>
+
+        <div class="cmp">
+          <div class="card">
+            <div class="card-t">What this client sends <span class="diff">Differs</span></div>
+            <p id="clReqPlain"></p>
+          </div>
+          <div class="card">
+            <div class="card-t">What the server sends back <span class="same">Same</span></div>
+            <p>The course list as JSON, a plain text format for data. Every client receives the same reply.</p>
+          </div>
+        </div>
+
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The two messages as text</h4>
+          <div class="cmp">
+            <div>
+              <div class="card-t">What this client sends</div>
+              <div class="art" id="clReq"></div>
+            </div>
+            <div>
+              <div class="card-t">What the server sends back</div>
+              <div class="art" id="clRes"></div>
+            </div>
+          </div>
+          <h4>The code each client uses</h4>
+          <div class="cmp">
+            <div>
+              <div class="artlbl">The code this client uses to ask</div>
+              <div class="art" id="clCode"></div>
+            </div>
+            <div>
+              <div class="artlbl">The code this client uses to show the result</div>
+              <div class="art" id="clRender"></div>
+            </div>
+          </div>
+          <h4>What is different about this client</h4>
+          <p style="margin:0;font-size:.85em;color:var(--dim);line-height:1.6" id="clNote"></p>
+          <div class="cons" id="clCons"></div>
+          <h4>What REST stands for</h4>
+          <p>REST stands for <em>Representational State Transfer</em>. The server holds the data. When a client asks for it, the server sends a <em>representation</em> of that data, which here is JSON text. What the client does with it is up to the client: a table, a list, a scrolling view in a phone app, or a printout. The server never needs to know.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="no-api" data-title="A system with no API">
+        <p>Older systems, such as the enlistment system, are <dfn title="Build each page on the server and send it as finished HTML">server-rendered</dfn>. They return finished web pages, with the data mixed into the layout. A phone app cannot use that page directly. Compare what each kind of system returns.</p>
+
+        <div class="cmp">
+          <div class="card">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-browser"/></svg>
+            <div class="card-t">Server-rendered system <span class="diff">HTML</span></div>
+            <p>Returns a finished web page. The data is mixed into the layout.</p>
+          </div>
+          <div class="card">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-table"/></svg>
+            <div class="card-t">API <span class="same">JSON</span></div>
+            <p>Returns only the data. Each app decides how it looks.</p>
+          </div>
+        </div>
+
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The two replies</h4>
+          <div class="cmp">
+            <div>
+              <div class="card-t">What a server-rendered system returns <span class="diff">HTML</span></div>
+              <div class="art" id="enlistHtml"></div>
+            </div>
+            <div>
+              <div class="card-t">What an API would return <span class="same">JSON</span></div>
+              <div class="art" id="enlistJson"></div>
+            </div>
+          </div>
+          <h4>The same data in two forms</h4>
+          <p>All the data a mobile app needs is in the HTML reply, mixed with table widths, CSS class names (labels that control appearance) and a decision about column order. An iOS app cannot use that reply directly. It would have to scrape it, which means reading HTML written for a browser and hoping the layout never changes. The layout changes often.</p>
+          <h4>Why teams build it this way</h4>
+          <p>With one kind of client, browsers only, server-rendered HTML was the fastest correct design. The cost shows up years later, when a second kind of client arrives and there is nothing for it to call. Adding an API later means going into the page-generating code and pulling the business logic (the rules for what the system does) out of the markup. Teams often keep the old design because it still works.</p>
+        </details>
+        <div class="instructor">The answer to the Think first question for the enlistment system is much less. There is no separate layer that a mobile app could call, because the data and the layout are mixed in one reply. Ask students how much of the backend a new mobile app could reuse before they open the comparison.</div>
+      </div>
+
+      <div class="sec" data-sec="version-drift" data-title="Change an API">
+        <p>Phone users update their apps when they choose to, and some never do. An <dfn title="A change that adds a field and removes nothing">additive</dfn> change adds a field. A <dfn title="A change that renames or removes a field that clients use">breaking</dfn> change renames or removes one. Choose Breaking and drag the slider to see who fails.</p>
+
+        <div class="srv">
+          <div>
+            <div class="card">
+              <div class="card-t">Who is on which version</div>
+              <div class="legend" style="margin:0 0 14px">
+                <span><i style="background:var(--res)"></i>updated to the new version</span>
+                <span><i style="background:var(--warn)"></i>still running the old one</span>
+              </div>
+              <div class="drift" id="driftBars"></div>
+            </div>
+            <div class="verdict" id="driftVerdict"></div>
+          </div>
+          <div class="card">
+            <div class="card-t">What kind of change did you ship?</div>
+            <div class="toggles">
+              <button class="tg" id="tgAdd" aria-pressed="true"><span class="dot"></span><span>Additive<small>You added a field. Nothing was renamed or removed.</small></span></button>
+              <button class="tg danger" id="tgBreak" aria-pressed="false"><span class="dot"></span><span>Breaking<small>You renamed or deleted a field. Old clients expected the old shape.</small></span></button>
+            </div>
+            <div class="sliders" style="margin-top:16px">
+              <div class="field">
+                <label>Days since you shipped it <span class="val" id="vDays">7 days</span></label>
+                <input type="range" id="sDays" min="0" max="180" value="7">
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <p class="outcome">You can now decide whether an API change is safe for old apps.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Rule for changing an API</h4>
+          <p>If you cannot update the clients, add freely and remove almost never. When you must break something, publish the new version at a new path (<code>/api/v2/courses</code>) and keep the old one running until few users remain on old versions. Another option is to keep the old field next to the new one and stop documenting it.</p>
+          <p>The adoption curves are illustrations of typical patterns. They do not come from measurements of a specific app.</p>
+        </details>
+      </div>
+    </section>

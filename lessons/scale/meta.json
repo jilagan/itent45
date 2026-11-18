@@ -1,0 +1,20 @@
+{
+ "id": "scale",
+ "title": "Scaling out with a load balancer",
+ "label": "Load balancers and scaling",
+ "desc": "How a load balancer lets several machines share the traffic.",
+ "outcomes": [
+  "Distinguish scaling up from scaling out",
+  "Say what a load balancer does and what it needs from your code",
+  "Name the next bottleneck after a fix"
+ ],
+ "tags": [
+  "scaling",
+  "load balancer",
+  "availability",
+  "bottleneck"
+ ],
+ "area": "capacity-cloud",
+ "needs": [],
+ "video": null
+}

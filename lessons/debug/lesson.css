@@ -1,0 +1,23 @@
+#p-debug .dbsteps{list-style:none;margin:0 0 16px;padding:0}
+#p-debug .dbs{display:grid;grid-template-columns:28px 1fr auto;gap:2px 12px;align-items:center;padding:10px 0 10px 3px;border-top:1px solid var(--line)}
+#p-debug .dbs:first-child{border-top:0}
+#p-debug .dbn{font-family:var(--mono);color:var(--dim)}
+#p-debug .dbt{color:var(--ink)}
+#p-debug .dbs.todo .dbt{color:var(--dim)}
+#p-debug .dbr{grid-column:2;font-family:var(--mono);font-size:15px;color:var(--ink)}
+#p-debug .dbw{grid-column:3;grid-row:1/3;min-width:72px}
+#p-debug .dbs.todo{min-height:44px}
+#p-debug .dbs.cause{border-left:3px solid var(--req);padding-left:0}
+#p-debug .dbs.cause .dbr{color:var(--req-deep);font-weight:600}
+#p-debug .dbcount{margin-left:auto;font-size:15px;color:var(--dim)}
+#p-debug .dbgrp{margin:0 0 18px}
+#p-debug .dbgl{font-weight:600;margin:0 0 8px}
+#p-debug .dbgrp .ctab{margin:0}
+#p-debug .dbtab{width:100%;margin-top:16px;border-collapse:collapse;font-size:15px}
+#p-debug .dbtab th{padding:6px 8px 6px 0;text-align:left;font-weight:600;color:var(--dim);border-bottom:1px solid var(--line2)}
+#p-debug .dbtab td{padding:7px 8px 7px 0;border-bottom:1px solid var(--line);font-family:var(--mono)}
+#p-debug .dbtab tr.fail{outline:2px solid var(--req);outline-offset:-2px}
+#p-debug .dbtab tr.fail td{background:color-mix(in srgb,var(--req) 10%,transparent)}
+#p-debug .dbtab tr.fail td:last-child{color:var(--req-deep);font-weight:600}
+#p-debug .dbtab tr.pass td:last-child{color:var(--res);font-weight:600}
+#p-debug .dbtab th:first-child,#p-debug .dbtab td:first-child{padding-left:8px}

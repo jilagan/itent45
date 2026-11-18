@@ -1,0 +1,69 @@
+    <section class="panel" id="p-sql">
+      <div class="head">
+        <h2>Reading and changing data with SQL</h2>
+        <p>A database table works like one Excel sheet, and you can do four things to it. Each one has a command in a language called <dfn title="Structured Query Language, the standard language for asking a database questions">SQL</dfn>.</p>
+      </div>
+
+      <div class="sec" data-sec="excel" data-title="Start with an Excel sheet">
+        <p>In Excel you can filter rows, add a row, change a cell and delete a row. A database table does the same four things, and a command in SQL does each one.</p>
+        <div class="scene" role="group" aria-label="The Excel sheet is a table, a row is one record, the four actions are SQL commands" data-art="class-list" data-art-desc="A teacher at a desk points a finger at one row of a printed class list laid out as a table, with a student standing beside the desk.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-list-bullets"/></svg></div><figcaption><b>Excel sheet</b><span>Table</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg></div><figcaption><b>One row</b><span>One record</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Filter, add, change, delete</b><span><code>SELECT</code>, <code>INSERT</code>, <code>UPDATE</code>, <code>DELETE</code></span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> Which of the four commands never changes the table, and which leave it in the same state when you run them twice?</div>
+        <div class="instructor">Collect guesses before anyone opens the next step. Most students pick SELECT for the first question and are unsure about UPDATE and DELETE for the second.</div>
+      </div>
+
+      <div class="sec" data-sec="run" data-title="Run a statement">
+        <p>Pick a statement and press Run. Then press Run a second time. A command that leaves the same end state when repeated is called <dfn title="Running it ten times leaves the same result as running it once">idempotent</dfn>. Try the two statements marked "no WHERE clause" last.</p>
+        <div class="srv">
+          <div class="card">
+            <div class="card-t">courses <span style="float:right;color:var(--res)" id="sqlCount">3 rows</span></div>
+            <table class="db"><thead><tr>
+              <th>code</th><th>title</th><th>units</th><th>slots</th>
+            </tr></thead><tbody id="sqlBody"></tbody></table>
+            <div class="art" id="sqlOut" style="margin-top:12px"></div>
+            <div class="verdict" id="sqlVerdict" style="margin-top:12px"></div>
+          </div>
+          <div class="card">
+            <div class="card-t">Pick a statement</div>
+            <div class="ctrls" style="margin:0 0 12px">
+              <button class="btn primary" id="sqlRun">Run</button>
+              <button class="btn" id="sqlReset">Reset</button>
+            </div>
+            <div class="reqlist" id="sqlList"></div>
+            <div class="rtt-note" style="margin-top:14px" id="sqlNote"></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="sec" data-sec="where" data-title="Always use WHERE">
+        <p>A <dfn title="The part of a command that says which rows to affect">WHERE clause</dfn> says which rows a command affects. Without it, UPDATE and DELETE apply to every row. The database does not ask for confirmation, and there is no undo. Write a SELECT with the same WHERE first, check the rows it returns, and then change the command.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <p><code>UPDATE courses SET slots = 0</code> is valid SQL. It runs without error and sets every course in the school to zero slots, because the database cannot know you were thinking about one row.</p>
+          <p>Follow the same habit on production, the live system that real users depend on, for any data you cannot restore, even when you are sure.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="http" data-title="SQL and HTTP methods">
+        <p>Each SQL command matches an HTTP method, because REST was designed around the same four operations. The last column shows what happens when you run the command twice.</p>
+        <div class="card" style="padding:12px 16px;overflow-x:auto">
+          <table class="hostreq"><thead><tr>
+            <th>What you want</th><th>SQL</th><th>HTTP method</th><th>If you run it twice</th>
+          </tr></thead><tbody>
+            <tr><td>Read some rows</td><td><code>SELECT</code></td><td><code>GET</code></td><td class="y">changes nothing, ever</td></tr>
+            <tr><td>Add a row</td><td><code>INSERT</code></td><td><code>POST</code></td><td class="n">adds another row</td></tr>
+            <tr><td>Change a row</td><td><code>UPDATE</code></td><td><code>PUT</code> / <code>PATCH</code></td><td class="y">same end state</td></tr>
+            <tr><td>Remove a row</td><td><code>DELETE</code></td><td><code>DELETE</code></td><td class="y">already gone, still gone</td></tr>
+          </tbody></table>
+        </div>
+        <p class="outcome">You can now read a simple SQL command and say what it does when run twice.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>The table in this step is the same one used in <a data-lesson="rest">HTTP verbs and status codes</a>, this time with no API in front of it. An API that exposes resources is easy to build on top of a relational database.</p>
+          <p>Your Django code, a Python web framework, eventually turns into one of these four commands. A tool called an ORM (object-relational mapper) writes them for you, so you rarely type them. You should still be able to read them, because when something is slow or wrong, the logs show SQL.</p>
+        </details>
+      </div>
+    </section>

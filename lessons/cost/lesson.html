@@ -1,0 +1,100 @@
+    <section class="panel" id="p-cost">
+      <div class="head">
+        <h2>Cloud cost: capital expenditure and operating expenditure</h2>
+        <p>Owning servers is <dfn title="Money spent up front on assets you own, written off over several years">capital expenditure</dfn> (CapEx). Renting them is <dfn title="Money spent on what you use, recorded as an expense when you incur it">operational expenditure</dfn> (OpEx).</p>
+      </div>
+
+      <div class="sec" data-sec="grab" data-title="Start with a jeepney and a Grab">
+        <p>To get around Metro Manila every day, you can buy a jeepney or book a Grab. The jeepney costs a large sum at the start and loses value every year, whether you drive it or not. Each Grab trip costs more than driving your own vehicle, but you pay only for the trips you take.</p>
+        <div class="scene" role="group" aria-label="Buying a jeepney is CapEx, booking a Grab is OpEx" data-art="own-or-hail-ride" data-art-desc="A person on a city street stands between a jeepney they own and keep parked and a taxi they wave down only when needed.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bus"/></svg></div><figcaption><b>Buying a jeepney</b><span>CapEx</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-taxi"/></svg></div><figcaption><b>Booking a Grab</b><span>OpEx</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> Seven servers were needed for about twenty minutes on enlistment morning, so what share of the year were they busy?</div>
+        <div class="instructor">Twenty minutes is about 0.004% of a year, so the servers were idle almost all the time. Ask for guesses before moving on. The capacity chart in the third step shows the same shape.</div>
+      </div>
+
+      <div class="sec" data-sec="compare" data-title="Own or rent">
+        <p>Read the two cards. Finance usually approves cloud spending because of how each choice is recorded in the accounts.</p>
+        <div class="scale2">
+          <div class="sc2 vert">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-bus"/></svg>
+            <div class="sh">CapEx</div>
+            <h4>You own the servers</h4>
+            <p>A large sum is spent up front and written off over several years.</p>
+          </div>
+          <div class="sc2 horiz">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-taxi"/></svg>
+            <div class="sh">OpEx</div>
+            <h4>You rent by the hour</h4>
+            <p>The cost is a monthly expense, traced to the project that used it.</p>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>What CapEx buys</h4>
+          <p>Servers, a data center and enterprise licenses. The cost is predictable, but you cannot adjust it. You must guess your peak demand years ahead, and a wrong guess is expensive in either direction.</p>
+          <h4>What OpEx buys</h4>
+          <p>Computing time, storage and software subscriptions (SaaS). The starting cost is low and capacity can change, but the meter keeps running. A forgotten test environment is billed every month until someone notices.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="capacity" data-title="Guess the capacity">
+        <p>The thin line is a year of enlistment demand. Drag the capacity slider and watch the two mistakes: capacity you paid for and did not use, and demand that was turned away. Then switch to renting and compare.</p>
+        <div class="srv">
+          <div>
+            <div class="curve"><svg id="curveSvg" viewBox="0 0 720 230" preserveAspectRatio="none"></svg></div>
+            <div class="money">
+              <div class="g" id="cgSpend"><div class="gl">Yearly spend compared with renting</div><div class="gv">—</div></div>
+              <div class="g" id="cgWaste"><div class="gl">Paid for, unused</div><div class="gv">—</div></div>
+              <div class="g" id="cgLost"><div class="gl">Demand turned away</div><div class="gv">—</div></div>
+            </div>
+            <div class="verdict" id="costVerdict"></div>
+          </div>
+          <div class="card">
+            <div class="card-t">How do you buy capacity?</div>
+            <div class="toggles">
+              <button class="tg" id="tgCapex" aria-pressed="true"><span class="dot"></span><span><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-bus"/></svg> Buy servers up front<small>Fixed capacity all year. You set the level.</small></span></button>
+              <button class="tg" id="tgOpex" aria-pressed="false"><span class="dot"></span><span><svg class="ico" aria-hidden="true" focusable="false"><use href="#i-taxi"/></svg> Rent, and scale with demand<small>Capacity follows demand, with a delay.</small></span></button>
+            </div>
+            <div class="sliders" style="margin-top:16px">
+              <div class="field">
+                <label>Capacity you bought <span class="val" id="vCap">120 units</span></label>
+                <input type="range" id="sCap" min="20" max="320" step="10" value="120">
+              </div>
+            </div>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>Reading the chart</h4>
+          <p>The area between the demand line and the capacity line is either capacity you paid for and did not use, or demand that was turned away. A low capacity setting turns demand away, and a high setting pays for capacity that sits idle.</p>
+          <p>Renting costs more per unit, but you pay only for what you use. The units in the chart are illustrative.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="tco" data-title="Total cost of ownership">
+        <p><dfn title="The full cost of a system over its whole life, beyond the purchase price">Total cost of ownership</dfn> (TCO) includes much more than the purchase price. The price is the item most comparisons use. Here are three of the six items.</p>
+        <div class="tco">
+          <div class="tc"><h5>Acquisition</h5><p>Purchase price, taxes, shipping and installation.</p></div>
+          <div class="tc"><h5>Operating</h5><p>Power, cooling, bandwidth and licenses. These costs run every hour, whether or not anyone uses the system.</p></div>
+          <div class="tc hidden"><h5>Downtime</h5><p>The cost of the system being unavailable, planned or not. For enlistment morning this is the largest item.</p></div>
+        </div>
+        <p class="outcome">You can now compare buying and renting with more than the purchase price.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <h4>The other three items</h4>
+          <div class="tco">
+            <div class="tc"><h5>Maintenance &amp; support</h5><p>Servicing, repairs, vendor support contracts, and the software updates (patches) that someone must install, often on a weekend.</p></div>
+            <div class="tc hidden"><h5>Training</h5><p>Teaching staff to operate it. The cost returns each time someone leaves and a replacement is hired.</p></div>
+            <div class="tc hidden"><h5>Disposal</h5><p>Retiring the system, destroying data and recycling hardware. It is a real cost that is usually missing from the original business case.</p></div>
+          </div>
+          <h4>Discussion question</h4>
+          <p>How might a startup benefit differently from OpEx than a large enterprise would?</p>
+        </details>
+        <div class="instructor">
+          <b>Instructor notes</b>
+          Allow about five minutes for the discussion question. Push students past "it is cheaper", because for a large enterprise with steady load, renting is often more expensive. Useful angles: who can afford to be wrong about their capacity guess, who already owns a data center they have not finished depreciating, and who needs to survive long enough to have a capacity problem at all.
+        </div>
+      </div>
+    </section>

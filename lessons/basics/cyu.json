@@ -1,0 +1,117 @@
+{
+ "lesson": "basics",
+ "items": [
+  {
+   "id": "basics-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "A student's laptop is on wifi and showing a web page from another website. No course software is running on it. Is the laptop acting as a server at this moment?",
+   "options": [
+    {
+     "text": "No. It is a client, because no program on it is waiting for requests.",
+     "correct": true,
+     "feedback": "A computer is a server only while a program on it is waiting for connections. Here the laptop sends requests and receives pages, which makes it a client."
+    },
+    {
+     "text": "Yes. Any computer connected to a network is a server.",
+     "correct": false,
+     "feedback": "Being on a network does not make a computer a server. A server is a program that waits for requests, and nothing is waiting on this laptop."
+    },
+    {
+     "text": "Yes. It has a processor and memory, which is all a server needs.",
+     "correct": false,
+     "feedback": "Every computer has a processor and memory. A computer becomes a server through the program running on it."
+    },
+    {
+     "text": "No. Only machines in a data center can be servers.",
+     "correct": false,
+     "feedback": "Any computer can be a server, including a laptop or a Raspberry Pi, while a program is waiting for connections."
+    }
+   ]
+  },
+  {
+   "id": "basics-2",
+   "sec": "address",
+   "type": "mc",
+   "stem": "In the address `https://enlist.edu:443/api/courses`, which part tells the client which program on the machine to talk to?",
+   "options": [
+    {
+     "text": "`:443`, the port",
+     "correct": true,
+     "feedback": "A port number identifies one program among the many that may be listening on the same machine."
+    },
+    {
+     "text": "`enlist.edu`, the host",
+     "correct": false,
+     "feedback": "The host says which machine to contact. The machine may run many programs."
+    },
+    {
+     "text": "`/api/courses`, the path",
+     "correct": false,
+     "feedback": "The path names a resource inside the program that is already chosen."
+    },
+    {
+     "text": "`https`, the scheme",
+     "correct": false,
+     "feedback": "The scheme says which rules to use for the conversation, such as encrypted HTTP. It does not pick the program."
+    }
+   ]
+  },
+  {
+   "id": "basics-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "Your laptop runs the course tool on port 8080. A classmate on the same wifi types `localhost:8080` in their browser. What do they see?",
+   "options": [
+    {
+     "text": "Nothing from your laptop. Localhost points to their own computer.",
+     "correct": true,
+     "feedback": "Localhost always means the computer you type it on. They need your local network address, such as `192.168.1.7:8080`."
+    },
+    {
+     "text": "Your course tool, because you are on the same wifi.",
+     "correct": false,
+     "feedback": "Sharing wifi helps when they use your network address. Localhost never leaves their own machine."
+    },
+    {
+     "text": "Your course tool, but only if you turn off your router.",
+     "correct": false,
+     "feedback": "Switching off the router changes nothing about what localhost means."
+    },
+    {
+     "text": "An error from the university's public server.",
+     "correct": false,
+     "feedback": "Localhost points to the computer that is typing it, so no public server is involved."
+    }
+   ]
+  },
+  {
+   "id": "basics-4",
+   "sec": null,
+   "type": "multi",
+   "stem": "Select all that apply. Which of these stop a home laptop from serving a public website reliably?",
+   "options": [
+    {
+     "text": "Its address is private and sits behind a router shared with the building.",
+     "correct": true,
+     "feedback": "The internet cannot route to a private address, so outside visitors cannot reach the laptop."
+    },
+    {
+     "text": "Its address can change at any time.",
+     "correct": true,
+     "feedback": "Home connections are often given a new address, so a site that depends on one fixed address stops working."
+    },
+    {
+     "text": "Home plans are slow to upload, and serving a site is mostly upload.",
+     "correct": true,
+     "feedback": "Every page sent to a visitor is upload traffic, and home plans give much less upload speed than download speed."
+    },
+    {
+     "text": "A laptop cannot run a program that listens for connections.",
+     "correct": false,
+     "feedback": "A laptop can run such a program, so it meets the definition of a server."
+    }
+   ]
+  }
+ ]
+}

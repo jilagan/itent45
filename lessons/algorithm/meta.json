@@ -1,0 +1,20 @@
+{
+ "id": "algorithm",
+ "title": "Writing steps for a robot",
+ "label": "Writing steps",
+ "desc": "Write exact steps from a tiny set of instructions.",
+ "outcomes": [
+  "Write steps in an exact order, using a small set of instructions",
+  "Explain how a repeat rule serves a line of any length",
+  "Predict what a program does by running it step by step"
+ ],
+ "tags": [
+  "algorithm",
+  "program",
+  "loop",
+  "computational thinking"
+ ],
+ "area": "computational-thinking",
+ "needs": [],
+ "video": null
+}

@@ -1,0 +1,64 @@
+    <section class="panel" id="p-bytes">
+      <div class="head">
+        <h2>What an HTTP request and response look like</h2>
+        <p><dfn title="The rules that browsers and servers use to talk to each other">HTTP</dfn> messages are plain text. Each has a first line, headers, a blank line and an optional body.</p>
+      </div>
+
+      <div class="sec" data-sec="slip" data-title="Start with an order slip">
+        <p>At a restaurant, the waiter writes your order on a slip that always has the same fields, such as table number, items and notes. The kitchen knows where to look because every slip has the same layout. An HTTP message is a slip like that, written in text.</p>
+        <div class="scene" role="group" aria-label="The customer is the browser, the order slip is the request, the food is the response" data-art="order-slip" data-art-desc="A waiter at a restaurant table writes the customer's order on a small slip while the customer waits.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Customer</b><span>Browser</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></div><figcaption><b>Order slip</b><span>HTTP request</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bowl-food"/></svg></div><figcaption><b>The food</b><span>HTTP response</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> A browser is a program that writes these text messages for you. Could you write one yourself without a browser? Write down what you would need.</div>
+        <div class="instructor">Nothing stops anyone from typing a request by hand. We do this live with <code>nc</code> in the last step of "Send a request yourself".</div>
+      </div>
+
+      <div class="sec" data-sec="anatomy" data-title="Read a request and a response">
+        <p>A message starts with a first line, then <dfn title="Lines of name and value pairs that describe the message">headers</dfn>, then a blank line, then an optional <dfn title="The data that the message carries">body</dfn>. Choose a case, then click any line to see what it does.</p>
+        <div class="ctrls">
+          <button class="btn" data-scn="get" aria-pressed="true">GET · 200 OK</button>
+          <button class="btn" data-scn="post" aria-pressed="false">POST · 201 Created</button>
+          <button class="btn" data-scn="miss" aria-pressed="false">GET · 404 Not Found</button>
+        </div>
+
+        <div class="bytes">
+          <div>
+            <div class="card-t">Request, browser to server</div>
+            <div class="raw" id="rawReq"></div>
+          </div>
+          <div>
+            <div class="card-t">Response, server to browser</div>
+            <div class="raw resp" id="rawRes"></div>
+          </div>
+        </div>
+        <div class="explain" id="explain">
+          <div class="et">Select a line</div>
+          <p class="hint">Click any highlighted part of the request or response.</p>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>Real browsers send more headers than the samples in this lesson. These are common ones.</p>
+          <h4>In requests</h4>
+          <p><code>User-Agent: Mozilla/5.0</code> is a free-text description of the client program. Servers use it for statistics and to decide which files to send, and anyone can fake it.</p>
+          <p><code>Accept-Encoding: gzip, br</code> says the client can unpack a compressed reply. If the server agrees, the body is sent 60 to 80 percent smaller, and compressing takes processing time on both ends.</p>
+          <p><code>Connection: keep-alive</code> asks the server to keep the connection open because more requests are coming. This avoids paying the setup cost again.</p>
+          <p><code>Authorization: Bearer eyJhbGciOi...</code> is proof of who you are. The text after Bearer is a token, a long random string that the server issued at login. Anyone who holds it can act as you, so it must only travel over TLS (encrypted connections).</p>
+          <h4>In responses</h4>
+          <p><code>Cache-Control: max-age=60</code> gives permission to reuse this answer for 60 seconds without asking again. A reused answer saves a whole round trip.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="run-it" data-title="Send a request yourself">
+        <p>An HTTP message is plain text, so you can send a real one yourself. Start a small course server, send it requests with <dfn title="A program that sends web requests from a terminal">curl</dfn>, and read the messages it prints. A <dfn title="A text window for typing commands">terminal</dfn> and Python 3.8 or newer are all you need.</p>
+        <p>Your instructor can also run these in class.</p>
+        <p class="outcome">You can now read a request and a response and send one yourself.</p>
+        <details class="more">
+          <summary>Show the commands</summary>
+          <p>These steps are also the setup for the exercises in <a data-lesson="break">Group exercises</a>. On macOS, open the Terminal app. On Windows, open PowerShell.</p>
+          <div class="fmtpick" id="shellPick" style="margin-top:12px"></div>
+          <div class="steps3" id="runSteps"></div>
+        </details>
+      </div>
+    </section>

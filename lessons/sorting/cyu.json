@@ -1,0 +1,97 @@
+{
+ "lesson": "sorting",
+ "items": [
+  {
+   "id": "sorting-1",
+   "sec": null,
+   "type": "mc",
+   "stem": "A clerk has 1,000 cards in no order and must find one ID. A second clerk has 1,000 cards in ID order and must find one ID. Which clerk is faster, and by how much?",
+   "options": [
+    {
+     "text": "The second clerk, who needs about 10 checks. The first may need all 1,000.",
+     "correct": true,
+     "feedback": "Halving 1,000 cards takes at most 10 guesses, because 1,000 is below 1,024. The unsorted pile may need every card."
+    },
+    {
+     "text": "The first clerk, because sorting is not needed for one search.",
+     "correct": false,
+     "feedback": "The second pile is already sorted, so nobody has to sort it. That pile gives the shorter search."
+    },
+    {
+     "text": "They take the same time, because both piles hold 1,000 cards.",
+     "correct": false,
+     "feedback": "The piles have the same size, but only the sorted pile lets the clerk rule out half the cards per guess."
+    }
+   ]
+  },
+  {
+   "id": "sorting-2",
+   "sec": "sort",
+   "type": "mc",
+   "stem": "You have learned that card C is larger than card F, and that card F is larger than card B. Do you need to compare C and B?",
+   "options": [
+    {
+     "text": "Yes, a comparison is the only way to know.",
+     "correct": false,
+     "feedback": "The first two results already settle it. Each result can be reused."
+    },
+    {
+     "text": "No, C must be larger than B.",
+     "correct": true,
+     "feedback": "If C is larger than F and F is larger than B, then C is larger than B. Sorting methods use this to skip comparisons."
+    },
+    {
+     "text": "Only if C and B end up next to each other.",
+     "correct": false,
+     "feedback": "The order of C and B follows from the first two results, wherever the cards sit."
+    }
+   ]
+  },
+  {
+   "id": "sorting-3",
+   "sec": "halve",
+   "type": "mc",
+   "stem": "A sorted list has 63 cells. Your first guess is the middle cell, and its ID is too high. How many cells are still open?",
+   "options": [
+    {
+     "text": "62 cells, because only the guessed cell is ruled out.",
+     "correct": false,
+     "feedback": "Sorted order also rules out every cell on the high side of the guess."
+    },
+    {
+     "text": "15 cells, because one guess halves the list twice.",
+     "correct": false,
+     "feedback": "One guess halves the list once."
+    },
+    {
+     "text": "31 cells, because the guess and the whole high side are gone.",
+     "correct": true,
+     "feedback": "The middle cell leaves 31 cells on each side. The high side is gone, so 31 remain."
+    }
+   ]
+  },
+  {
+   "id": "sorting-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "A records app slows down badly when its student table grows from 10,000 to 1,000,000 rows. Searches by student ID read every row. Which change helps most?",
+   "options": [
+    {
+     "text": "Tell the users to search much less often than now.",
+     "correct": false,
+     "feedback": "Each search still reads every row, so fewer searches only hide the cost."
+    },
+    {
+     "text": "Add an index on the ID column, so searches halve.",
+     "correct": true,
+     "feedback": "An index keeps the IDs in order. A search then takes about 20 guesses for 1,000,000 rows."
+    },
+    {
+     "text": "Give the developer a faster laptop to run it on.",
+     "correct": false,
+     "feedback": "A faster machine reads each row sooner, but the work still grows with every row added."
+    }
+   ]
+  }
+ ]
+}

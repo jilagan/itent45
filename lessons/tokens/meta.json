@@ -1,0 +1,25 @@
+{
+ "id": "tokens",
+ "title": "Tokens: how text is fed to a model",
+ "label": "Tokens",
+ "desc": "How text is cut into pieces a model can read.",
+ "outcomes": [
+  "Say that the model reads token IDs",
+  "Explain why a model miscounts the letters in a word",
+  "Predict that language and code change token count and cost"
+ ],
+ "tags": [
+  "tokens",
+  "tokenizer",
+  "cost",
+  "language"
+ ],
+ "area": "ai",
+ "needs": [],
+ "video": {
+  "sec": null,
+  "youtube": "",
+  "title": "Paste your own text into a real tokenizer",
+  "about": "A student's own name, a Tagalog sentence and a line of code pasted into a real tokenizer, with live token counts."
+ }
+}

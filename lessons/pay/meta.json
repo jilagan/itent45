@@ -1,0 +1,20 @@
+{
+ "id": "pay",
+ "title": "Online payments and payment gateways",
+ "label": "Payments and gateways",
+ "desc": "How a card payment reaches a gateway without being charged twice.",
+ "outcomes": [
+  "Say which machines touch the card number and why the token exists",
+  "Explain a double charge and what the idempotency key does",
+  "Explain why a slow third-party call becomes your capacity problem"
+ ],
+ "tags": [
+  "payments",
+  "gateway",
+  "idempotency key",
+  "tokens"
+ ],
+ "area": "web",
+ "needs": [],
+ "video": null
+}

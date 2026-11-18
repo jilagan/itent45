@@ -1,0 +1,85 @@
+    <section class="panel" id="p-journey">
+      <div class="head">
+        <h2>Why loading a page takes several round trips</h2>
+        <p>A <dfn title="A message out and the reply back">round trip</dfn> is a message out and the reply back. A page load needs several of them before the server runs any of your code.</p>
+      </div>
+
+      <div class="sec" data-sec="calls" data-title="Start with a phone call">
+        <p>Before you order from a restaurant, you may call to ask whether it is open, wait for the answer, then call again to reserve a table. Each call has to go out and come back before the next one can start. A browser makes calls like these first.</p>
+        <div class="scene" role="group" aria-label="The caller is the browser, each phone call is a round trip, the restaurant is the server" data-art="restaurant-phone-calls" data-art-desc="A hungry customer sits at home holding a phone to their ear, waiting for a restaurant to answer, with a plain wall clock beside them.">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Caller</b><span>Browser</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-device-mobile"/></svg></div><figcaption><b>One phone call</b><span>One round trip</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-fork-knife"/></svg></div><figcaption><b>Restaurant</b><span>Server</span></figcaption></figure>
+        </div>
+        <div class="ask"><b>Think first.</b> Your code takes 40 ms whether the user is in Katipunan or in Berlin. Why does the page still load more slowly in Berlin?</div>
+        <div class="instructor">Expected answer: every setup step needs at least one round trip, and each round trip takes longer over a greater distance. Server speed does not change that. Ask students to commit to a reason before they move the slider in the next steps.</div>
+      </div>
+
+      <div class="sec" data-sec="setup" data-title="What happens before your code runs">
+        <p>The browser completes these steps in order. Each of the first three needs at least one round trip.</p>
+        <ol>
+          <li><dfn title="The Domain Name System, which turns a name into a numeric address">DNS lookup</dfn>: find the server's address from its name.</li>
+          <li><dfn title="The steps that open a connection between two computers">TCP handshake</dfn>: open a connection.</li>
+          <li><dfn title="The steps that agree on encryption keys">TLS handshake</dfn>: agree on encryption.</li>
+          <li>Request: send <code>GET /courses</code>.</li>
+          <li>Server handler: your code runs.</li>
+          <li>First byte: the reply starts to arrive.</li>
+        </ol>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>The server handler is the function in your code that handles this request, and it may query the database. DNS finds the server's numeric address from its name. The TCP handshake is a short exchange of three messages. The TLS handshake takes two round trips in this model.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="distance" data-title="Distance and waiting">
+        <p>Press Play to watch the steps in order. Then drag the slider to the right to move the server farther away, and see which bars grow.</p>
+        <div class="ctrls">
+          <button class="btn primary" id="playJ">Play</button>
+          <button class="btn" id="stepJ">Step</button>
+          <button class="btn" id="resetJ">Reset</button>
+        </div>
+        <div class="wire">
+          <div class="wire-lbl" id="wireLbl">Idle</div>
+          <div class="node" id="nBrowser"><div class="box"><svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-browser"/></svg></div>Browser</div>
+          <div class="node" id="nServer"><div class="box"><svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div>Server</div>
+          <div class="track"></div>
+          <div class="pulse" id="pulse"></div>
+        </div>
+
+        <div class="jrn">
+          <div class="card">
+            <div class="card-t">Time spent in each step</div>
+            <div class="fall" id="fall"></div>
+            <div class="total">
+              <span class="lbl">Time to first byte</span>
+              <span class="num" id="ttfb">—</span>
+              <span class="note" id="totNote"></span>
+            </div>
+          </div>
+          <div>
+            <div class="card">
+              <div class="card-t">Network distance</div>
+              <div class="field">
+                <label>One-way <dfn title="The time a message takes to travel one way">latency</dfn> <span class="val" id="rttVal">5 ms</span></label>
+                <input type="range" id="rtt" min="1" max="180" value="5">
+              </div>
+              <div class="rtt-note" id="rttNote"></div>
+            </div>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>The numbers are illustrative. Besides your code's 40 ms and the time on the wire, each step has a small fixed processing time in the DNS server and in the handshakes.</p>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="bigger" data-title="A bigger server">
+        <p>Suppose a bigger server cuts the handler from 40 ms to 10 ms. A user in Berlin saves 30 ms. The setup steps still need about five round trips over a long distance, so most of the wait remains.</p>
+        <p>More capacity speeds up the handler step. Distance depends on where the server sits.</p>
+        <p class="outcome">You can now say when a faster server helps and when only a closer one does.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <p><a data-lesson="region">Regions and failover</a> covers choosing a location close to your users. <a data-lesson="server">Server capacity</a> covers what a bigger server changes.</p>
+        </details>
+      </div>
+    </section>

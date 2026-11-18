@@ -1,0 +1,102 @@
+{
+ "id": "itent21",
+ "code": "ITENT 21",
+ "title": "Introduction to Computing for Technology Startups",
+ "org": "Ateneo de Manila University",
+ "homes": [
+  {
+   "file": "itent21.html",
+   "title": "Introduction to Computing for Technology Startups",
+   "subtitle": "Short lessons on how software, data, the cloud and AI work",
+   "kicker": "ITENT 21",
+   "intro": "Each lesson starts with an everyday picture and takes about ten minutes. Work through a group in order, then use the lessons under Going further when you want more.",
+   "groups": [
+    {
+     "label": "Thinking about problems",
+     "lessons": [
+      "frame",
+      "decompose",
+      "patterns",
+      "abstract"
+     ]
+    },
+    {
+     "label": "Writing and judging solutions",
+     "lessons": [
+      "algorithm",
+      "rules",
+      "sorting",
+      "routes",
+      "growth",
+      "debug"
+     ]
+    },
+    {
+     "label": "How a web app works",
+     "lessons": [
+      "basics",
+      "tiers",
+      "clients",
+      "render",
+      "rest",
+      "pay"
+     ]
+    },
+    {
+     "label": "Data and databases",
+     "lessons": [
+      "entity",
+      "card",
+      "rea",
+      "sql",
+      "norm",
+      "shape"
+     ]
+    },
+    {
+     "label": "Cloud computing",
+     "lessons": [
+      "mem",
+      "server",
+      "scale",
+      "vm",
+      "cost",
+      "region"
+     ]
+    },
+    {
+     "label": "AI for founders",
+     "lessons": [
+      "intro",
+      "next",
+      "learn",
+      "prompt",
+      "ctx"
+     ]
+    },
+    {
+     "label": "Going further",
+     "lessons": [
+      "layers",
+      "journey",
+      "bytes",
+      "txn",
+      "query",
+      "enlist",
+      "split",
+      "tokens"
+     ]
+    }
+   ],
+   "links": [
+    {
+     "label": "All lessons",
+     "home": "library.html"
+    }
+   ]
+  }
+ ],
+ "vars": {
+  "project": "project"
+ }
+}

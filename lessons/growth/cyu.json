@@ -1,0 +1,102 @@
+{
+ "lesson": "growth",
+ "items": [
+  {
+   "id": "growth-1",
+   "sec": "count",
+   "type": "mc",
+   "stem": "A job takes 2 minutes for 1,000 items. It compares every item with every other item. How long does it take for 2,000 items?",
+   "options": [
+    {
+     "text": "About 4 minutes, because twice the items takes twice the time.",
+     "correct": false,
+     "feedback": "That rule fits a job that looks at each item once. This job compares pairs."
+    },
+    {
+     "text": "About 2 minutes, because the method is the same.",
+     "correct": false,
+     "feedback": "The method is the same, and the number of steps still grows with the list."
+    },
+    {
+     "text": "About 8 minutes, because doubling the list quadruples the steps.",
+     "correct": true,
+     "feedback": "Comparing every pair takes n times n steps. Twice the items makes four times the comparisons, and 4 times 2 minutes is 8 minutes."
+    }
+   ]
+  },
+  {
+   "id": "growth-2",
+   "sec": "page",
+   "type": "mc",
+   "stem": "A page asks one question for the course list and one more for each course, at 0.4 milliseconds a question. With 40 courses it loads in about 16 milliseconds. What should the developer expect with 4,000 courses?",
+   "options": [
+    {
+     "text": "About 1.6 seconds, because the questions grow in step with the courses.",
+     "correct": true,
+     "feedback": "4,001 questions at 0.4 milliseconds each take about 1,600 milliseconds. That is 100 times the courses and about 100 times the time."
+    },
+    {
+     "text": "About 16 milliseconds, because the page code does not change.",
+     "correct": false,
+     "feedback": "The code is the same, and the number of questions follows the number of courses."
+    },
+    {
+     "text": "The page stops working, because the list is too long.",
+     "correct": false,
+     "feedback": "The page keeps working. It gets slower in step with the courses."
+    }
+   ]
+  },
+  {
+   "id": "growth-3",
+   "sec": null,
+   "type": "mc",
+   "stem": "A startup's report takes 1 second for 1,000 customers. It compares every customer with every other customer. The company expects 100,000 customers next year. What is the sensible reaction?",
+   "options": [
+    {
+     "text": "Relax. A hundred times more customers means about 100 seconds.",
+     "correct": false,
+     "feedback": "That estimate fits a job that looks at each customer once. This job compares pairs."
+    },
+    {
+     "text": "Change the method. The time grows 10,000 times, to about 3 hours.",
+     "correct": true,
+     "feedback": "A hundred times more customers makes about 100 times 100, or 10,000 times, more comparisons. 10,000 seconds is about 2.8 hours."
+    },
+    {
+     "text": "Buy a server twice as fast and keep the same method.",
+     "correct": false,
+     "feedback": "A server twice as fast cuts a 10,000-fold increase to 5,000-fold. The report still takes over an hour."
+    }
+   ]
+  },
+  {
+   "id": "growth-4",
+   "sec": null,
+   "type": "mc",
+   "stem": "Finding a number in a sorted list of 1,000,000 numbers by halving takes about 20 steps. The list grows to 2,000,000 numbers. About how many steps does it take?",
+   "options": [
+    {
+     "text": "About 40, because the list doubled.",
+     "correct": false,
+     "feedback": "That rule fits a job that looks at each number once. Halving does not double its steps."
+    },
+    {
+     "text": "About 400, because pairs are involved.",
+     "correct": false,
+     "feedback": "A search by halving does not compare pairs, so this estimate is far too high."
+    },
+    {
+     "text": "About 2,000,000, because the search must look at every number.",
+     "correct": false,
+     "feedback": "Halving throws away half of the remaining numbers at each step, so it never looks at them all."
+    },
+    {
+     "text": "About 21, because each doubling adds one step.",
+     "correct": true,
+     "feedback": "One extra halving covers a list twice as long, so the steps go from 20 to 21."
+    }
+   ]
+  }
+ ]
+}

@@ -9,7 +9,7 @@ For the instructor. Built from the final state of the `overhaul` branch.
 3. Each later step has at most 70 words of prose, one widget and one instruction. Depth sits in closed "More detail" blocks. Code sits in "Show the code" blocks, except in HTTP messages, SQL basics and Reviewing AI-written code, which show a short sample by default.
 4. Controls use one wording: Play, Step, Reset, Next, and sit above the list, trace or map they drive. Each role keeps one icon across lessons.
 5. Rail labels, headings, `data-desc` lines and the README tables agree, and cross-references use the current rail labels and sit inside More detail.
-6. Every lesson except Group exercises has a `data-art` slug and a one-sentence scene description for the picture pipeline (`tools/make_art.py`). The pictures are not generated yet, so step 1 shows the icon row.
+6. Every lesson except Group exercises has a `data-art` slug and a one-sentence scene description for the picture pipeline (`tools/make_art.py`). 39 pictures are generated (Google Nano Banana 2.1 through Replicate) and reviewed against the reject list in docs/ART-STYLE.md. Each sits above a one-line legend in step 1.
 7. Questions: 152 items in `src/<page>/cyu/`, 3 to 4 per lesson, at most one per step. Each key can be worked out without opening More detail.
 8. Diagram and canvas text is at least 14px on desktop and 12px on phones, and the page does not overflow at 390px.
 9. `?embed=1` hides the rail, `?instructor=1` shows instructor notes, and `embed.html` lists every lesson and step.

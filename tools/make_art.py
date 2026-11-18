@@ -40,7 +40,8 @@ NEGATIVE = (
     "crowds, busy backgrounds, stereotyped or exaggerated faces."
 )
 REF_NOTE = ("The first reference image is the style anchor. Match its line weight, palette, figure style, scale, horizon height and level of detail exactly. "
-            "Do not copy its subject or composition.")
+            "Do not copy its subject, composition or props: no wall fan, no pitcher, no pencil cup unless the scene below names them. "
+            "Keep the background plain and nearly empty.")
 
 def build_prompt(desc, with_ref):
     parts = [STYLE, "Scene: " + desc.strip().rstrip(".") + ".", NEGATIVE]
@@ -79,7 +80,7 @@ def _req(method, url, token, data=None, headers=None, tries=6):
                 time.sleep(wait + 1); continue
             if e.code >= 500 and i < tries - 1: time.sleep(3 * (i + 1)); continue
             raise ApiError(f"HTTP {e.code} from {method} {url.split('?')[0]}: {body}")
-        except (urllib.error.URLError, TimeoutError) as e:
+        except (urllib.error.URLError, TimeoutError, ConnectionError, OSError) as e:
             if i < tries - 1: time.sleep(3 * (i + 1)); continue
             raise ApiError(f"network error on {url.split('?')[0]}: {e}")
 
@@ -103,8 +104,13 @@ def generate(prompt, ref_urls, token, resolution, log):
     if p.get("status") != "succeeded": raise ApiError(f"prediction {p.get('id')} {p.get('status')}: {str(p.get('error'))[:300]}")
     out = p["output"]; url = out[0] if isinstance(out, list) else out
     log(f"  prediction {p.get('id')} done in {time.time()-t0:.0f}s")
-    with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "itent45-make-art"}), timeout=120) as r:
-        return r.read()
+    for i in range(5):
+        try:
+            with urllib.request.urlopen(urllib.request.Request(url, headers={"User-Agent": "itent45-make-art"}), timeout=120) as r:
+                return r.read()
+        except (urllib.error.URLError, TimeoutError, ConnectionError, OSError) as e:
+            if i == 4: raise ApiError(f"download failed: {e}")
+            time.sleep(3 * (i + 1))
 
 # ---- web version ----
 def to_web(png, dest):

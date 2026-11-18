@@ -41,10 +41,13 @@ The style block and negative list are identical for every scene; only the scene 
 
 ```
 <STYLE>   Flat vector spot illustration for a university textbook ... (palette, line, view, horizon, figures, white space, 3:2, no text)
-<REF_NOTE, only when a reference image is passed>   The first reference image is the style anchor. Match its line weight, palette, figure style, scale, horizon height and level of detail exactly. Do not copy its subject or composition.
+<REF_NOTE, only when a reference image is passed>   The first reference image is the style anchor. Match its line weight, palette, figure style, scale, horizon height and level of detail exactly. Do not copy its subject, composition or props: no wall fan, no pitcher, no pencil cup unless the scene below names them. Keep the background plain and nearly empty.
 Scene: <data-art-desc>.
 <NEGATIVE>   Avoid: text, letters, numbers, logos, watermarks, gibberish signage, gradients, glow, ... extra or fused fingers, ... symmetrical stock-photo composition, crowds, ...
 ```
+
+## Anchor record (2026-11-18)
+Six candidates for `restaurant-three-tiers` with the unchanged style block; candidate 1 is the anchor. It has the plainest drawing: two people and a cook in a hatch, one uniform outline, blue apron and orange shirt as the only colour, normal hands, no text, nothing melted. Candidates 2 and 5 added a window, utensil rack and sauce bottles (clutter). Candidate 3 had an unrelated shelf and a broken chair behind the waiter. Candidate 4 used orange for the whole furniture set, which pulls attention from the figures. Candidate 6 had the waiter walking away from the kitchen and a fused fridge shape in the hatch. The first batch with the anchor as reference copied the anchor's wall fan into every scene, so the reference note now forbids copying props.
 
 ## Consistency plan
 

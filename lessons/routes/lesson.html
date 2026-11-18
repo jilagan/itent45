@@ -6,7 +6,7 @@
 
   <div class="sec" data-sec="commute" data-title="Start with a commute">
     <p>To get from home to school, you can ride one long jeepney route or change jeepneys. The long ride needs one fare. Changing needs two fares and a wait. Picking the best way through connected places is a routing problem.</p>
-    <div class="scene" role="group" aria-label="The commuter is the route finder, a jeepney line is a link with a cost, the route map is a network" data-art="commuter-route-map" data-art-desc="A commuter at a jeepney stop studies a hand-drawn map of lines.">
+    <div class="scene" role="group" aria-label="The commuter is the route finder, a jeepney line is a link with a cost, the route map is a network" data-art="commuter-route-map" data-art-desc="A commuter at a jeepney stop looks at a plain board of dots joined by lines while one jeepney waits at the curb.">
       <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Commuter</b><span>Route finder</span></figcaption></figure>
       <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bus"/></svg></div><figcaption><b>Jeepney line</b><span>Link with a cost</span></figcaption></figure>
       <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-map-trifold"/></svg></div><figcaption><b>Route map</b><span>Network</span></figcaption></figure>
@@ -18,10 +18,10 @@
   <div class="sec" data-sec="build" data-title="Build a route">
     <p>A map of stops joined by rides is a <dfn title="Places joined by links, such as stops joined by rides">network</dfn>. Each number is the minutes for that ride, and every ride costs 13 pesos. Try to reach School in under 40 minutes.</p>
     <p>Press the stops in order, starting next to Home. Press Compare when you reach School.</p>
-    <div class="card" id="rtBuildBox">
+    <div class="card wg" id="rtBuildBox">
       <div class="rt-map" id="rtMapA"></div>
-      <p class="rt-line" id="rtALine" aria-live="polite">Press a stop that has a ride from Home.</p>
-      <div class="rt-meter">
+      <p class="wline" id="rtALine" aria-live="polite">Press a stop that has a ride from Home.</p>
+      <div class="meter">
         <div class="g"><div class="gl">Minutes</div><div class="gv" id="rtAMin">0</div></div>
         <div class="g"><div class="gl">Rides</div><div class="gv" id="rtARides">0</div></div>
         <div class="g"><div class="gl">Fare in pesos</div><div class="gv" id="rtAFare">0</div></div>
@@ -38,9 +38,9 @@
   <div class="sec" data-sec="close" data-title="Plan again">
     <p>Floods and parades close roads. When a line closes, a method that searches the current map still finds a way.</p>
     <p>Press a number to close that line. Close Marikina to Ortigas first, then a line on the new best route.</p>
-    <div class="card" id="rtCloseBox">
+    <div class="card wg" id="rtCloseBox">
       <div class="rt-map" id="rtMapB"></div>
-      <div class="rt-meter">
+      <div class="meter">
         <div class="g"><div class="gl">Best route, minutes</div><div class="gv" id="rtBMin">0</div></div>
         <div class="g"><div class="gl">Extra minutes</div><div class="gv" id="rtBExtra">0</div></div>
       </div>

@@ -76,7 +76,27 @@ A lesson is one folder, `lessons/<id>/`. It builds into one page, `lessons/<id>.
 - The same role keeps the same icon in every lesson (see the table in `docs/CONVERSION-RECIPE.md`).
 - Blue (`--res`) and orange (`--req`) mean response and request only. Do not use them as decoration.
 - Pictures: `python3 tools/make_art.py --dry-run` lists scenes. A scene without a picture keeps its icon row. The same slug in two lessons carries the same description.
+- `tools/new_lesson.py` also edits `courses/library.json` to add the new lesson to its area. Two authors must not run it at the same time, because the second write can drop the first one's entry. Run it one at a time and check `library.json` afterwards.
 - No font-family, letter-spacing or text-transform in inline styles. No new inline styles.
+
+## Shared widget components
+
+`shared/widgets.css` defines the pieces that interactive steps share. A widget root carries `class="card wg"`. The panel itself must stay `<section class="panel" id="p-ID">`, so put `wg` on the widget, not the panel.
+
+| Class | Use |
+|---|---|
+| `card wg` | the widget box, with 44 px controls inside |
+| `.meter` with `.g`, `.gl`, `.gv` | the row of counters (label above, number below); show "None yet" before there is a value |
+| `.verdict` with `.ok`, `.warn`, `.bad` | the result box; the first `<b>` gets a check, warning or cross icon, so right and wrong never rely on colour |
+| `.is-right`, `.is-wrong` | a short inline result such as Pass or Fail, with icon and text |
+| `.wline`, `.wline.strong` | the one status line above or below a widget |
+| `.wopts` with `.wopt` | full-width choices; states `sel`, `right`, `tried`, `wait` |
+| `.wchips` with `.wchip` | small draggable or selectable cards; same states |
+| `.wlist` with `.wrow` | a bordered list of rows or steps; states `on`, `right`, `wrong` |
+| `.wno` | the shake for a refused move (off under reduced motion) |
+| `.ctrls`, `.btn`, `.btn.primary` | buttons: Reset, Check, Run, Next |
+
+A lesson that needs more CSS puts it in `lessons/<id>/lesson.css`. `build.py` adds it to the page after the shared styles. Do not write `<style>` blocks in `lesson.html` and do not inject styles from `lesson.js`.
 
 ## Courses
 

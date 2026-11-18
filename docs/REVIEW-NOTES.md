@@ -9,8 +9,8 @@ For the instructor. Built from the final state of the `overhaul` branch.
 3. Each later step has at most 70 words of prose, one widget and one instruction. Depth sits in closed "More detail" blocks. Code sits in "Show the code" blocks, except in HTTP messages, SQL basics and Reviewing AI-written code, which show a short sample by default.
 4. Controls use one wording: Play, Step, Reset, Next, and sit above the list, trace or map they drive. Each role keeps one icon across lessons.
 5. Rail labels, headings, `data-desc` lines and the README tables agree, and cross-references use the current rail labels and sit inside More detail.
-6. Every lesson except Group exercises has a `data-art` slug and a one-sentence scene description for the picture pipeline (`tools/make_art.py`). 39 pictures are generated (Google Nano Banana 2.1 through Replicate) and reviewed against the reject list in docs/ART-STYLE.md. Each sits above a one-line legend in step 1.
-7. Questions: 152 items in `lessons/<id>/cyu.json`, 3 to 4 per lesson, at most one per step. Each key can be worked out without opening More detail.
+6. Every lesson except Group exercises has a `data-art` slug and a one-sentence scene description for the picture pipeline (`tools/make_art.py`). 49 pictures are generated (Google Nano Banana 2.1 through Replicate) and reviewed against the reject list in docs/ART-STYLE.md. Each sits above a one-line legend in step 1.
+7. Questions: 192 items in `lessons/<id>/cyu.json`, 3 to 4 per lesson, at most one per step. Each key can be worked out without opening More detail.
 8. Diagram and canvas text is at least 14px on desktop and 12px on phones, and the page does not overflow at 390px.
 9. `?embed=1` hides the rail, `?instructor=1` shows instructor notes, and `embed.html` lists every lesson and step.
 10. Analytics (GA4) reports one `page_view` per lesson step, `select_content` on a step or rail click and `cyu_answer` on a checked question. It was tested with stubbed Google requests. The measurement ID in `shared/analytics.json` is the real one.
@@ -161,3 +161,41 @@ For the instructor. Built from the final state of the `overhaul` branch.
 4. Test in Canvas: the frame loads at the page width; a section address (for example `#rest/status-codes`) shows one section with no tabs; the sliders and buttons work; the wide diagrams scroll sideways on a phone; Check buttons give feedback; the page height does not cut off the bottom; the dark theme (`?theme=dark`) is readable if you use it.
 
 Checked against the widgets and found already correct: 24 workers at 400 MB is 9,600 MB (split), six weights with two into the output (backprop), sixteen words (embed), 87 percent idle at 320 units (cost).
+
+## 6. The ten computational thinking lessons
+
+They are in the area "Computational thinking" (teaching order below), need no programming and are used by the CT and ITENT 21 courses. Each widget was played to its solved and failed states by script at 1440 and 390 px wide, in both themes and by keyboard only.
+
+| Lesson | Title | What the widget does |
+|---|---|---|
+| frame | Framing a problem | Sort facts into inputs, outputs and limits, then test a framing against sample requests |
+| decompose | Breaking a task into parts | Split a poster job into parts, then plan five days for three people along the critical chain |
+| patterns | Spotting patterns | Pick the repeating block in receipts, find the best-selling pair, and spot the outlier day on a bar chart |
+| abstract | Abstraction and models | Keep or drop details for a route model, then zoom between map levels |
+| algorithm | Writing steps for a robot | Build a step list from a small instruction set, run it, and see which step fails |
+| rules | Decision rules and tables | Fill a discount table, order the rules, and test the edge values |
+| sorting | Sorting and searching | Sort eight cards with as few comparisons as you can, and halve a list to find a value |
+| routes | Finding the shortest route | Compare routes on a small commuter map and close a link to see the change |
+| growth | How work grows with the list | Double a list and watch steps for three jobs, then see one query per row against one query |
+| debug | Finding and fixing mistakes | Trace a calculation to the first wrong value, fix it, and run six test cases |
+
+Plan figures checked and corrected during the build: fastest route 38 minutes with 4 rides, fewest rides 43 minutes with 3 rides, closing Marikina to Ortigas gives 39, 17 routes in all; 8 cards have 40,320 orders, so 16 comparisons are the least that always work, and 15 comparisons separate at most 32,768 orders; the sorting text no longer says "fifteen halvings"; the growth text says comparing every customer with every customer takes 10 billion comparisons at 100,000 (every distinct pair would be about 5 billion); rules: 1,080 against 1,020 and three problems in the tester; debug: 123 against 324. Nineteen questions were reworded so that the correct option is at most 1.3 times the mean wrong option, and every option now has an explicit `correct` value.
+
+Two things to know. In decompose, the task list shows hours for the tree and days for the plan, so Buy materials is 3 hours of work in one and 2 calendar days in the other. The established lessons use the sample course code "ITENT 45" in their example records. Those records are sample data, but ITENT 21 students will see them. Replacing the code with a neutral one would touch 18 lessons, so it is left for a later pass.
+
+## 7. ITENT 21: draft course and lessons still needed
+
+`courses/itent21.json` is a draft built from the approved course proposal, which has no weekly outline. It lists only lessons that exist: the ten computational thinking lessons first, then the core web, data, cloud and AI lessons, then a group "Going further" (layers, journey, bytes, txn, query, enlist, split, tokens). Replace the order with the real syllabus when you have it.
+
+Lessons ITENT 21 still needs, from the outcomes in the proposal:
+
+1. What a computer is: processor, memory, storage, operating system (so that "memory" and "worker" are known words in the cloud lessons).
+2. Bits and data: how text, numbers and pictures become ones and zeros.
+3. MVPs and prototypes: mockup, prototype and MVP, and the cheapest test for a question.
+4. No-code tools: building an app from blocks and what the tool decides for you.
+5. Digital assets with design tools: raster and vector, resolution, formats.
+6. Data visualization: choosing a chart and removing what misleads.
+7. Spreadsheets: a small model with inputs, formulas and a result.
+
+The outlines are in the planning notes (itent21-map.md).
+

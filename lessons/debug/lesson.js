@@ -87,12 +87,12 @@ function dbTeRender(){
   grp("#dbOp",DB_OPT_OP,"op"); grp("#dbCmp",DB_OPT_CMP,"cmp");
   const res=DB_TESTS.map(([p,q,e])=>{const g=dbOrder(p,q,DBX.op,DBX.cmp); return {p,q,e,g,ok:g===e};});
   $("#dbRows").innerHTML=res.map(r=>
-    `<tr class="${DBX.ran?(r.ok?"pass":"fail"):""}"><td>${r.p}</td><td>${r.q}</td><td>${r.e}</td><td>${DBX.ran?r.g:"-"}</td><td>${DBX.ran?(r.ok?"Pass":"Fail"):"-"}</td></tr>`).join("");
+    `<tr class="${DBX.ran?(r.ok?"pass":"fail"):""}"><td>${r.p}</td><td>${r.q}</td><td>${r.e}</td><td>${DBX.ran?r.g:"-"}</td><td>${DBX.ran?(r.ok?'<span class="is-right">Pass</span>':'<span class="is-wrong">Fail</span>'):"-"}</td></tr>`).join("");
   const v=$("#dbTeV");
-  if(!DBX.ran){ v.className=DBX_START.cls+" dbv"; v.innerHTML=DBX_START.html; return; }
+  if(!DBX.ran){ v.className=DBX_START.cls; v.innerHTML=DBX_START.html; return; }
   const bad=res.filter(r=>!r.ok), n=res.length-bad.length;
   if(!bad.length){
-    v.className="verdict ok dbv";
+    v.className="verdict ok";
     v.innerHTML="<b>6 of 6 tests pass</b>Every order gives the expected total, including the order of exactly 300 pesos.";
     return;
   }
@@ -100,7 +100,7 @@ function dbTeRender(){
   let why = DBX.op!=="times" ? "Step 3 gives the wrong subtotal."
           : DBX.cmp==="over" ? "The subtotal is exactly 300, so the comparison in step 4 decides the result."
           : "Step 4 gives the discount only when the subtotal is exactly 300.";
-  v.className="verdict warn dbv";
+  v.className="verdict warn";
   v.innerHTML="<b>"+n+" of 6 tests pass</b>The order of "+f.q+(f.q===1?" tea":" teas")+" at "+f.p+" pesos fails: expected "+f.e+", got "+f.g+". "+why;
 }
 $("#dbRunT").onclick=()=>{DBX.ran=true; dbTeRender();};

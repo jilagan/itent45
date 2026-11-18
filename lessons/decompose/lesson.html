@@ -1,35 +1,4 @@
     <section class="panel" id="p-decompose">
-      <style>
-        #p-decompose .btn{min-height:44px}
-        #p-decompose .dcok .ico,#p-decompose .dcst .ico{width:1.25em;height:1.25em}
-        #p-decompose .dcstat{display:flex;flex-wrap:wrap;gap:2px 20px;margin:0 0 12px;max-width:none;color:var(--dim)}
-        #p-decompose .dcstat b{color:var(--ink);font-family:var(--mono)}
-        #p-decompose .verdict{margin:0 0 14px}
-        #p-decompose .ctrls{margin:14px 0 0}
-        #p-decompose .dcbar{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 6px}
-        #p-decompose .dcday{font-size:1.15em;font-weight:600}
-        #p-decompose .dcday b{font-family:var(--mono)}
-        #p-decompose .dctop{margin:0 0 6px;font-weight:600;max-width:none}
-        #p-decompose .dctree{list-style:none;margin:0;padding:0;border-top:1px solid var(--line)}
-        #p-decompose .dcrow{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:52px;padding:4px 0;border-bottom:1px solid var(--line);line-height:1.35}
-        #p-decompose .dcrow.d1{padding-left:20px}
-        #p-decompose .dcrow.d2{padding-left:40px}
-        #p-decompose .dcgroup{color:var(--dim)}
-        #p-decompose .dcend{display:flex;align-items:center;gap:12px;flex:none}
-        #p-decompose .dch{font-family:var(--mono);color:var(--dim);white-space:nowrap}
-        #p-decompose .dcok{color:var(--res);display:inline-flex}
-        #p-decompose .dcjobs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
-        #p-decompose .dcjob{font:inherit;text-align:left;display:flex;justify-content:space-between;align-items:center;gap:10px;width:100%;min-width:0;min-height:56px;padding:8px 12px;border:1px solid var(--line2);border-radius:6px;background:var(--bg);color:var(--ink);cursor:pointer}
-        #p-decompose .dcjob:hover{border-color:var(--ink)}
-        #p-decompose .dcjob b{display:block;font-weight:600}
-        #p-decompose .dcm{display:block;color:var(--dim);font-size:max(14px,.88em);line-height:1.35}
-        #p-decompose .dcst{flex:none;font-weight:600;display:flex;align-items:center;gap:6px}
-        #p-decompose .dcjob.wait{background:var(--bg2);border-color:var(--line);color:var(--dim)}
-        #p-decompose .dcjob.ready .dcst{color:var(--req-deep)}
-        #p-decompose .dcjob.run{border-color:var(--req);box-shadow:inset 0 0 0 1px var(--req)}
-        #p-decompose .dcjob.done{border-color:var(--res);color:var(--res)}
-        @media(max-width:700px){#p-decompose .dcjobs{grid-template-columns:minmax(0,1fr)}}
-      </style>
       <div class="head">
         <h2>Breaking a task into parts</h2>
         <p>A large task becomes manageable when it is split into pieces that one person can own. Some pieces must wait for others, and that waiting sets the shortest time.</p>
@@ -48,7 +17,7 @@
 
       <div class="sec" data-sec="split" data-title="Split the job">
         <p>A good piece has one owner and a clear point where it is done. In this plan, a piece of more than 4 hours is too big for one sitting. Press Split on any piece that is too big, until every piece is 4 hours or less.</p>
-        <div id="dcSplit"></div>
+        <div class="card wg" id="dcSplit"></div>
         <details class="more">
           <summary>More detail</summary>
           <h4>Why 4 hours</h4>
@@ -58,7 +27,7 @@
 
       <div class="sec" data-sec="order" data-title="Find the order">
         <p>Some jobs need another job first. A <dfn title="A job that must finish before another job can start">dependency</dfn> is a job that must finish before another job can start. Three people can work at the same time, and each job takes one or more days. Each day, press the jobs you can start, then press End day. Finish in as few days as you can.</p>
-        <div id="dcPlan"></div>
+        <div class="card wg" id="dcPlan"></div>
       </div>
 
       <div class="sec" data-sec="time" data-title="The shortest time">

@@ -16,31 +16,8 @@
       </div>
 
       <div class="sec" data-sec="count" data-title="Count the steps">
-        <style>
-          #p-growth .ctrls .btn,#p-growth .ctab button{min-height:44px}
-          #p-growth input[type=range]{height:44px;background:transparent;margin:0}
-          #p-growth input[type=range]::-webkit-slider-runnable-track{height:4px;background:var(--line2);border-radius:2px}
-          #p-growth input[type=range]::-moz-range-track{height:4px;background:var(--line2);border-radius:2px}
-          #p-growth input[type=range]::-webkit-slider-thumb{margin-top:-9px}
-          #p-growth .gbars{display:grid;gap:18px;margin:6px 0 18px}
-          #p-growth .gb-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
-          #p-growth .gb-h span{display:block;color:var(--dim);font-size:15px}
-          #p-growth .gb-n{font-family:var(--mono);font-weight:600;white-space:nowrap}
-          #p-growth .gb-t{height:14px;margin-top:6px;background:var(--bg2);border-radius:2px}
-          #p-growth .gb-f{height:100%;min-width:4px;background:var(--dim);border-radius:2px}
-          #p-growth .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
-          #p-growth .pgrid .g{padding-top:10px}
-          #p-growth .pgrid .g.slow{border-top:3px solid var(--req);padding-top:8px}
-          #p-growth .gt{font-weight:600;margin-bottom:8px}
-          #p-growth .gr{display:flex;justify-content:space-between;gap:10px;font-size:15px;color:var(--dim)}
-          #p-growth .gr b{font-family:var(--mono);color:var(--ink)}
-          #p-growth .gf{min-height:22px;margin-top:6px;font-size:15px;font-weight:600;color:var(--req-deep)}
-          #p-growth #gcBox .ctrls{margin:6px 0 18px}
-          #p-growth #gpBox .ctrls{margin:14px 0 0}
-          @media(max-width:520px){#p-growth .pgrid{grid-template-columns:1fr}}
-        </style>
         <p>Three jobs run on a list of <dfn title="The number of items in the list">n</dfn> items. Job A looks at each item once. Job B compares every item with every item. Job C cuts the list in half until one item is left, as in a search of a sorted list. Press Double the list a few times and compare the three bars.</p>
-        <div class="card" id="gcBox">
+        <div class="card wg" id="gcBox">
           <div class="field">
             <label for="gcN">List size <span class="val" id="gcNv">4 items</span></label>
             <input type="range" id="gcN" min="1" max="64" step="1" value="4">
@@ -67,7 +44,7 @@
 
       <div class="sec" data-sec="page" data-title="Apply it to a web page">
         <p>A page lists courses with their teachers. One method asks the database one question for the course list, then one more for each course. This is the <dfn title="One question for the list, then one more question for each item">N+1 problem</dfn>. The other method asks one question for everything. Each question takes 5 milliseconds (thousandths of a second). Move the slider to change the number of courses and compare the load times.</p>
-        <div class="card" id="gpBox">
+        <div class="card wg" id="gpBox">
           <div class="field">
             <label for="gpN">Courses on the page <span class="val" id="gpNv">40</span></label>
             <input type="range" id="gpN" min="0" max="8" step="1" value="2">
@@ -86,12 +63,12 @@
           <h4>Where the times come from</h4>
           <p>One question per course takes (1 + courses) times 5 milliseconds. One question for everything takes 5 milliseconds plus 0.01 milliseconds for each course sent back. At 2,000 courses that is 10,005 milliseconds against 25. These are teaching figures. Real times depend on the network and the database.</p>
           <h4>Why small numbers can hide the problem</h4>
-          <p>A job that does 100 steps for each item is slower than one that does 3, even though both double when the list doubles. Growth shows what happens at large sizes. Measure to compare small ones. <a data-lesson="query">The N+1 query problem</a> follows this case in detail.</p>
+          <p>A job that does 100 steps for each item is slower than one that does 3, even though both double when the list doubles. Growth shows what happens at large sizes. Measure to compare small ones. <a data-lesson="sorting">Sorting and searching</a> shows two methods whose steps grow at very different rates. <a data-lesson="query">The N+1 query problem</a> follows this case in detail.</p>
         </details>
       </div>
 
       <div class="sec" data-sec="estimate" data-title="Estimating growth">
-        <p>Double the list and watch the steps. Twice as many means the job looks at each item once. Four times as many means it compares every pair. One more step means it halves the list. Comparing every pair of 100,000 customers takes 10 billion comparisons.</p>
+        <p>Double the list and watch the steps. Twice as many means the job looks at each item once. Four times as many means it compares every pair. One more step means it halves the list. Comparing every customer with every customer in a list of 100,000 takes 10 billion comparisons.</p>
         <p class="outcome">You can now count a method's steps, say what happens when the list doubles and judge whether the method will finish in reasonable time.</p>
         <details class="more">
           <summary>More detail</summary>

@@ -1,7 +1,14 @@
-# Lesson library and the ITENT 45 course
+# Lesson library and its courses
 
-Short interactive lessons on how software works, built so that any course can use them. The first course is **ITENT 45: Application Development and Emerging Technologies**
-(Ateneo de Manila University, John Gokongwei School of Management). Open `library.html` to see every lesson.
+Short interactive lessons on computational thinking and on how software works, built so that any course can use them. Three courses use them now:
+
+| Course | Home page | Lessons |
+|---|---|---|
+| **ITENT 45**: Application Development and Emerging Technologies (Ateneo de Manila University) | `index.html`, `machine.html` | 43 established lessons |
+| **ITENT 21**: Introduction to Computing for Technology Startups | `itent21.html` | 31 established lessons and the 10 computational thinking lessons |
+| **CT**: Computational Thinking | `ct.html` | the 10 computational thinking lessons |
+
+Open `library.html` to see every lesson by area.
 
 **Live tool: https://jilagan.github.io/itent45/**
 
@@ -30,7 +37,7 @@ can and uses your system fonts when it cannot.
 
 ## The lessons
 
-There are 43 lessons. Each one is a page of its own, `lessons/<id>.html`, and works with no course around it. The tables below come from `python3 tools/panels.py`. Titles, descriptions, outcomes and topics are in `lessons/<id>/meta.json`, and `library.html` shows them by area.
+There are 53 lessons in seven areas. Each one is a page of its own, `lessons/<id>.html`, and works with no course around it. The tables below come from `python3 tools/panels.py`. Titles, descriptions, outcomes and topics are in `lessons/<id>/meta.json`, and `library.html` shows them by area.
 
 ### How a lesson is laid out
 
@@ -111,6 +118,21 @@ Icons are inline SVG from `shared/icons/*.svg`, written as `<use href="#i-name"/
 | vibe | Reviewing AI-written code | Reviewing AI-written code |
 | math | The math behind it | The math behind it: vectors, slopes and probabilities |
 
+### Computational thinking
+
+| Lesson | Label | Opens with the heading |
+|---|---|---|
+| frame | Framing | Framing a problem |
+| decompose | Breaking down | Breaking a task into parts |
+| patterns | Spotting patterns | Spotting patterns |
+| abstract | Abstraction | Abstraction and models |
+| algorithm | Writing steps | Writing steps for a robot |
+| rules | Decision rules | Decision rules and tables |
+| sorting | Sorting and searching | Sorting and searching |
+| routes | Shortest routes | Finding the shortest route |
+| growth | How work grows | How work grows with the list |
+| debug | Finding mistakes | Finding and fixing mistakes |
+
 ### Practice
 
 | Lesson | Label | Opens with the heading |
@@ -125,12 +147,13 @@ The pages are generated. Edit the sources, never the built pages.
 |---|---|
 | `lessons/<id>/lesson.html` | the lesson's markup: one `<section class="panel" id="p-ID">` |
 | `lessons/<id>/lesson.js` | the lesson's widget code |
+| `lessons/<id>/lesson.css` | optional: styles only this lesson uses, added to the page by `build.py` |
 | `lessons/<id>/cyu.json` | check-your-understanding questions |
 | `lessons/<id>/meta.json` | id, title, label, desc, 3 outcomes, tags, area, needs (libs), video |
 | `lib/<name>.js` | code that two or more lessons share; `core.js` is on every page |
 | `courses/<course>.json` | a course: title, code, vars, homes and their groups of lesson ids |
 | `courses/library.json` | the areas of the library page and the order of lessons in each |
-| `shared/` | `theme.css`, `lessons.css`, `platform.css`, `platform.js`, `course.js`, `analytics.js`, `analytics.json`, `icons/`, `art/` |
+| `shared/` | `theme.css`, `lessons.css`, `widgets.css`, `platform.css`, `platform.js`, `course.js`, `analytics.js`, `analytics.json`, `icons/`, `art/` |
 | `tools/` | `check.py`, `new_lesson.py`, `panels.py`, `make_art.py`, `equiv.py`, `shots.py`, `migrate_to_library.py` |
 
 What `python3 build.py` writes:
@@ -155,7 +178,7 @@ Build and check:
 `check.py` needs Playwright and Chrome. Run `python3 build.py` before publishing, because GitHub Pages serves the built files. Each lesson page is about 180 to 220 KB. `build.py` stops if one passes 300 KB.
 
 To add a lesson, run `tools/new_lesson.py`, write the four files (`docs/AUTHORING.md`), build and check.
-To add a course, copy `courses/itent45.json` to `courses/<name>.json`, change the title, code, vars and groups, and build. The course gets home pages, a lesson list on every lesson page that uses `?c=<name>`, visited ticks and a Next lesson button. Its home page file names must differ from every other course's.
+To add a course, copy `courses/ct.json` (one home page) or `courses/itent45.json` (two) to `courses/<name>.json`, change the title, code, vars and groups, and build. The course gets home pages, a lesson list on every lesson page that uses `?c=<name>`, visited ticks and a Next lesson button. Its home page file names must differ from every other course's.
 
 ## Addresses
 
@@ -164,7 +187,7 @@ To add a course, copy `courses/itent45.json` to `courses/<name>.json`, change th
     lessons/rest.html?c=itent45            with that course's lesson list, home link, visited ticks and Next lesson
     lessons/rest.html?instructor=1         shows the instructor notes
     lessons/rest.html?theme=dark           starts in the dark theme
-    index.html                             the course home page
+    index.html, itent21.html, ct.html      course home pages
 
 `instructor`, `theme`, `cyu`, `video`, `notrack` and `gadebug` follow the student from page to page. Old addresses such as `index.html#tiers`, `index.html#tiers/trace` and `machine.html#next` still work. They send the browser to the lesson page, keep every option and add `?c=itent45`.
 
@@ -236,7 +259,7 @@ Step 1 of every lesson except Group exercises has a picture, set on the `.scene`
     python3 tools/make_art.py --anchor <slug> --candidates 4    # pick the style anchor first
     python3 tools/make_art.py                # generates the rest with Nano Banana 2.1 on Replicate
 
-It needs a `REPLICATE_API_TOKEN`. Originals go to `art-src/` (not committed) and the 1200 px web files to `shared/art/<slug>.webp`. `build.py` copies them to `art/` and lists them in each lesson page's `LESSON.art`. A scene with no file keeps the icon row, so the site works before any picture exists. The pictures are not generated yet.
+It needs a `REPLICATE_API_TOKEN`. Originals go to `art-src/` (not committed) and the 1200 px web files to `shared/art/<slug>.webp`. `build.py` copies them to `art/` and lists them in each lesson page's `LESSON.art`. A scene with no file keeps the icon row, so the site works before any picture exists. The 49 pictures are generated.
 
 ## Questions
 

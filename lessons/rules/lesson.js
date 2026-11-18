@@ -3,49 +3,6 @@
    Styles are added here and scoped to #p-rules. */
 
 (() => {
-const css = `
-#p-rules .rtw{margin:0 0 4px}
-#p-rules .rtgrid{border:1px solid var(--line2);border-radius:6px;margin:0 0 14px}
-#p-rules .rtrow{display:grid;grid-template-columns:40px minmax(0,1fr) minmax(0,1.2fr) minmax(0,1.5fr);gap:8px;align-items:center;padding:8px 12px;border-top:1px solid var(--line);font-size:15px;color:var(--ink)}
-#p-rules .rtrow:first-child{border-top:0}
-#p-rules .rtrow.hd{background:var(--bg2);font-weight:600;font-size:14px;color:var(--dim)}
-#p-rules .rtrow.on{background:color-mix(in srgb,var(--req) 10%,var(--panel));box-shadow:inset 3px 0 0 var(--req)}
-#p-rules .rtrow.ok .rtmark{color:var(--res)}
-#p-rules .rtrow.no{background:color-mix(in srgb,var(--warn) 7%,var(--panel))}
-#p-rules .rtrow.no .rtmark{color:var(--warn)}
-#p-rules .rtrow select{width:100%;min-height:44px}
-#p-rules .rtnote{grid-column:2 / -1;font-size:14px;color:var(--dim)}
-#p-rules .rtnote .ico{width:14px;height:14px;vertical-align:-2px;margin-right:4px}
-#p-rules .rtw .meter{grid-template-columns:repeat(2,minmax(0,1fr));margin:4px 0 14px}
-#p-rules #rtTester .meter{grid-template-columns:repeat(3,minmax(0,1fr))}
-#p-rules .rttry{margin-top:16px;padding-top:14px;border-top:1px solid var(--line)}
-#p-rules .rtform{display:flex;flex-wrap:wrap;gap:12px 18px;align-items:center;margin:0 0 12px}
-#p-rules .rtform label{display:flex;align-items:center;gap:8px;font-size:15px;color:var(--ink)}
-#p-rules .rtform input[type=checkbox]{width:22px;height:22px}
-#p-rules .rtform input[type=number]{width:120px}
-#p-rules .rtcheck{min-height:44px}
-#p-rules .rtrules{border:1px solid var(--line2);border-radius:6px;margin:0 0 12px}
-#p-rules .rtrule{display:flex;justify-content:space-between;gap:10px;align-items:center;padding:8px 12px;border-top:1px solid var(--line);font-size:15px;color:var(--ink)}
-#p-rules .rtrule:first-child{border-top:0}
-#p-rules .rtrule .f{flex:0 0 auto;font-size:14px;color:var(--dim)}
-#p-rules .rtrule.fire{background:color-mix(in srgb,var(--req) 10%,var(--panel));box-shadow:inset 3px 0 0 var(--req)}
-#p-rules .rtrule.fire .f{color:var(--req-deep);font-weight:600}
-#p-rules .rtresult{margin:0 0 12px;font-size:15px;color:var(--ink);min-height:24px}
-#p-rules .rtorders{border:1px solid var(--line2);border-radius:6px;margin:0 0 14px}
-#p-rules .rtord{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:8px;align-items:center;padding:4px 8px 4px 0;border-top:1px solid var(--line)}
-#p-rules .rtord:first-child{border-top:0}
-#p-rules .rtord .pick{text-align:left;min-height:44px;padding:6px 12px;font-size:15px;color:var(--ink);border-radius:0;background:none}
-#p-rules .rtord .pick:hover{color:var(--res)}
-#p-rules .rtord.sel{background:var(--bg2);box-shadow:inset 3px 0 0 var(--ink)}
-#p-rules .rtord .flag{display:inline-flex;align-items:center;gap:6px;min-width:84px;justify-content:center}
-#p-rules .rtord .flag .ico{width:16px;height:16px}
-#p-rules .rtord .why{grid-column:1 / -1;padding:0 12px 6px;font-size:14px;color:var(--dim)}
-#p-rules .rtord.right .why{color:var(--res)}
-#p-rules .rtord.wrong{background:color-mix(in srgb,var(--warn) 7%,var(--panel))}
-#p-rules .rtord.wrong .why{color:var(--warn)}
-@media(max-width:480px){#p-rules .rtrow{grid-template-columns:34px minmax(0,.8fr) minmax(0,1fr) minmax(0,1.5fr);gap:6px;padding:8px}}
-`;
-const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
 const peso = n => (Math.round(n * 100) / 100).toLocaleString("en-US", {maximumFractionDigits: 2});
 const EDGE = 1000, STUDENT_PCT = 10, LARGE_PCT = 5;
@@ -89,7 +46,7 @@ function rtRender() {
     note.hidden = false;
     note.innerHTML = good ? `${ICO("check")}${ROWS[i].why}` : `Not yet. ${ROWS[i].why}`;
   });
-  $("#rtRight .gv").textContent = T.checked ? right + " of " + ROWS.length : "—";
+  $("#rtRight .gv").textContent = T.checked ? right + " of " + ROWS.length : "None yet";
   $("#rtRight").classList.toggle("good", T.checked && right === ROWS.length);
   T.solved = T.checked && right === ROWS.length;
   $("#rtTry").hidden = !T.solved;
@@ -169,7 +126,7 @@ function ftRender() {
   const o = ORDERS[F.sel];
   $("#rtRulesBox").innerHTML = RULES.map(r => {
     const f = o && r.fires(o);
-    return `<div class="rtrule${f ? " fire" : ""}"><span>${r.text}</span><span class="f">${o ? (f ? "Fires" : "Does not fire") : ""}</span></div>`;
+    return `<div class="wrow rtrule${f ? " on" : ""}"><span>${r.text}</span><span class="f">${o ? (f ? "Fires" : "Does not fire") : ""}</span></div>`;
   }).join("");
   if (o) {
     const d = RULES.filter(r => r.kind === "discount" && r.fires(o));
@@ -195,7 +152,7 @@ function ftRender() {
   const extra = [...F.flags].filter(i => !need.includes(i)).length;
   $("#rtTested .gv").textContent = F.tested.size + " of " + ORDERS.length;
   $("#rtFlagged .gv").textContent = F.flags.size;
-  $("#rtFound .gv").textContent = F.checked ? found + " of " + need.length : "—";
+  $("#rtFound .gv").textContent = F.checked ? found + " of " + need.length : "None yet";
   $("#rtFound").classList.toggle("good", F.checked && found === need.length && !extra);
   const v = $("#rtFlagVerdict");
   if (!F.checked) { v.className = "verdict"; v.innerHTML = "<b>Test the orders</b>Press each order, flag the ones with a problem, then press Check my flags."; return; }

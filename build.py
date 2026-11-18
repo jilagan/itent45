@@ -5,7 +5,8 @@
     python3 build.py --out /tmp/x    write it somewhere else
 
 Sources
-    lessons/<id>/{lesson.html, lesson.js, cyu.json, meta.json}   one folder per lesson
+    lessons/<id>/{lesson.html, lesson.js, cyu.json, meta.json}   one folder per lesson (optional lesson.css: styles only this lesson needs)
+    shared/widgets.css                                           components that several lessons use (class wg)
     lib/<name>.js                                                shared code, named in a lesson's meta "needs"
     courses/<course>.json                                        a course: homes, groups, vars
     courses/library.json                                         the library page: areas and their lessons
@@ -129,7 +130,7 @@ HEAD_JS = ('(function(){var d=document.documentElement,q=location.search;'
 
 def css_all():
     sh = ROOT / "shared"
-    return rd(sh / "lessons.css") + rd(sh / "theme.css") + rd(sh / "platform.css")
+    return rd(sh / "lessons.css") + rd(sh / "widgets.css") + rd(sh / "theme.css") + rd(sh / "platform.css")
 def css_basic():
     sh = ROOT / "shared"
     return rd(sh / "theme.css") + rd(sh / "platform.css")
@@ -148,6 +149,10 @@ def copy_art():
             if dst.resolve() != src.resolve(): shutil.copyfile(f, dst / f.name)
     print(f"art: {len(files)} picture(s)")
     return [f.stem for f in files]
+
+def lesson_css(i):
+    f = ROOT / "lessons" / i / "lesson.css"
+    return ("/* lessons/%s/lesson.css */\n" % i + rd(f)) if f.exists() else ""
 
 def lesson_page(m, lib, L, ctx):
     i = m["id"]
@@ -170,7 +175,7 @@ def lesson_page(m, lib, L, ctx):
 <meta name="description" content="{esc(m['desc'])}">
 <script>{HEAD_JS}</script>
 <style>
-{ctx['css']}</style>
+{ctx['css']}{lesson_css(i)}</style>
 </head>
 <body>
 {ctx['sprite']}
@@ -262,7 +267,7 @@ def library_page(lib, L, C):
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{esc(lib['title'])}</title>
+<title>{esc(lib['title'])} · all lessons</title>
 <script>{HEAD_JS}</script>
 <style>
 {css_basic()}</style>
@@ -314,10 +319,10 @@ def embed_page(lib, L, C):
                 px = hts.get(i); ht = int(math.ceil((px + 80) / 50.0) * 50) if px else 900
                 row(m["title"], base, ht, "panel")
         rows.append("</tbody></table>")
-    opts = '<option value="">No course (the lesson alone)</option>' + "".join(f'<option value="{esc(cid)}">{esc(c["code"])}</option>' for cid, c in C.items())
+    opts = '<option value="">No course (the lesson alone)</option>' + "".join(f'<option value="{esc(cid)}">{esc(c["title"])} ({esc(c["code"])})</option>' for cid, c in C.items())
     return f"""<!DOCTYPE html>
 <html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Embed index</title>
+<title>Embed codes · Lesson library</title>
 <style>
 body{{font:16px/1.5 system-ui,-apple-system,"Segoe UI",sans-serif;color:#1a1d23;margin:0;padding:24px;max-width:1200px}}
 h1{{font-size:1.5em;margin:0 0 8px}} h2{{font-size:1.2em;margin:32px 0 8px}}
@@ -329,7 +334,7 @@ button{{font:inherit;font-size:15px;min-height:36px;padding:4px 14px;margin-top:
 input,select{{font:inherit;width:100%;max-width:520px;padding:6px 8px;border:1px solid #c4cad4;border-radius:4px}}
 a{{color:#1f5fbf}} small{{color:#5b6270}} code{{font:14px ui-monospace,Menlo,Consolas,monospace}}
 </style></head><body>
-<h1>Embed index</h1>
+<h1>Embed codes for the lesson library</h1>
 <p><label for="base"><b>Base URL of the published site</b></label><br><input id="base" type="url" value="{SITE}" spellcheck="false"></p>
 <p><label for="course"><b>Course</b></label><br><select id="course">{opts}</select><br><small>With a course chosen, the page that opens from "Open full lesson" shows that course's lesson list. The embedded view itself looks the same.</small></p>
 <p>The snippets and links below use these settings and change as you edit them. The links work after the site is published.</p>

@@ -16,35 +16,8 @@
       </div>
 
       <div class="sec" data-sec="trace" data-title="Trace the steps">
-        <style>
-          #p-debug .ctrls .btn,#p-debug .ctab button{min-height:44px}
-          #p-debug .dbsteps{list-style:none;margin:0 0 16px;padding:0}
-          #p-debug .dbs{display:grid;grid-template-columns:28px 1fr auto;gap:2px 12px;align-items:center;padding:10px 0 10px 3px;border-top:1px solid var(--line)}
-          #p-debug .dbs:first-child{border-top:0}
-          #p-debug .dbn{font-family:var(--mono);color:var(--dim)}
-          #p-debug .dbt{color:var(--ink)}
-          #p-debug .dbs.todo .dbt{color:var(--dim)}
-          #p-debug .dbr{grid-column:2;font-family:var(--mono);font-size:15px;color:var(--ink)}
-          #p-debug .dbw{grid-column:3;grid-row:1/3;min-width:72px}
-          #p-debug .dbs.todo{min-height:44px}
-          #p-debug .dbs.cause{border-left:3px solid var(--req);padding-left:0}
-          #p-debug .dbs.cause .dbr{color:var(--req-deep);font-weight:600}
-          #p-debug .dbcount{margin-left:auto;font-size:15px;color:var(--dim)}
-          #p-debug .dbgrp{margin:0 0 18px}
-          #p-debug .dbgl{font-weight:600;margin:0 0 8px}
-          #p-debug .dbgrp .ctab{margin:0}
-          #p-debug .dbtab{width:100%;margin-top:16px;border-collapse:collapse;font-size:15px}
-          #p-debug .dbtab th{padding:6px 8px 6px 0;text-align:left;font-weight:600;color:var(--dim);border-bottom:1px solid var(--line2)}
-          #p-debug .dbtab td{padding:7px 8px 7px 0;border-bottom:1px solid var(--line);font-family:var(--mono)}
-          #p-debug .dbtab tr.fail{outline:2px solid var(--req);outline-offset:-2px}
-          #p-debug .dbtab tr.fail td{background:color-mix(in srgb,var(--req) 10%,transparent)}
-          #p-debug .dbtab tr.fail td:last-child{color:var(--req-deep);font-weight:600}
-          #p-debug .dbtab tr.pass td:last-child{color:var(--res);font-weight:600}
-          #p-debug .dbtab th:first-child,#p-debug .dbtab td:first-child{padding-left:8px}
-          #p-debug .dbv{margin-top:16px}
-        </style>
         <p>A shop program should charge 120 pesos for each milk tea and take 10 percent off orders of 300 pesos or more. A <dfn title="A mistake in the steps of a program">bug</dfn> hides in it. To <dfn title="Run a program one step at a time and watch each result">trace</dfn> the program, run it one step at a time for an order of 3 milk teas. Press Run next step, then press Wrong on the first step that gives a wrong result.</p>
-        <div class="card" id="dbTr">
+        <div class="card wg" id="dbTr">
           <div class="card-t">Order: 3 milk teas</div>
           <ol class="dbsteps" id="dbSteps"></ol>
           <div class="ctrls">
@@ -57,13 +30,13 @@
         <details class="more">
           <summary>More detail</summary>
           <h4>Find the first wrong step</h4>
-          <p>Work from the start and check each result. The first wrong value points to the cause. A wrong value near the end can come from a mistake much earlier, so the last step is rarely the place to look.</p>
+          <p>Work from the start and check each result. The first wrong value points to the cause. A wrong value near the end can come from a mistake much earlier, so the last step is rarely the place to look. Checking each step of a <a data-lesson="algorithm">written procedure</a> is how you find the first wrong one.</p>
         </details>
       </div>
 
       <div class="sec" data-sec="test" data-title="Test other cases">
         <p>A fix that works for one order can fail for another. The rule is 10 percent off orders of 300 pesos or more. A <dfn title="An order paired with the total it should give">test case</dfn> is an order with its expected total. Pick a fix for step 3 and for step 4, then press Run tests to try six test cases.</p>
-        <div class="card" id="dbTe">
+        <div class="card wg" id="dbTe">
           <div class="dbgrp" role="group" aria-labelledby="dbOpL">
             <div class="dbgl" id="dbOpL">Step 3: set subtotal to price ... quantity</div>
             <div class="ctab" id="dbOp"></div>
@@ -80,12 +53,12 @@
             <thead><tr><th scope="col">Price</th><th scope="col">Teas</th><th scope="col">Expected</th><th scope="col">Got</th><th scope="col">Result</th></tr></thead>
             <tbody id="dbRows"></tbody>
           </table>
-          <div class="verdict dbv" id="dbTeV" role="status"></div>
+          <div class="verdict" id="dbTeV" role="status"></div>
         </div>
         <details class="more">
           <summary>More detail</summary>
           <h4>Good test cases</h4>
-          <p>Test a typical case, an empty case, a case at each boundary and a very large case. A boundary is a value where the rule changes, such as exactly 300 pesos. Mistakes often sit there.</p>
+          <p>Test a typical case, an empty case, a case at each boundary and a very large case. A boundary is a value where the rule changes, such as exactly 300 pesos. Mistakes often sit there. Rule tables, like those in <a data-lesson="rules">Decision rules and tables</a>, have many boundaries to test.</p>
         </details>
       </div>
 

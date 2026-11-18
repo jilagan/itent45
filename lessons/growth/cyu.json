@@ -59,12 +59,12 @@
      "feedback": "That estimate fits a job that looks at each customer once. This job compares pairs."
     },
     {
-     "text": "Plan a different method. The time grows about ten thousand times, to nearly 3 hours.",
+     "text": "Change the method. The time grows 10,000 times, to about 3 hours.",
      "correct": true,
      "feedback": "A hundred times more customers makes about 100 times 100, or 10,000 times, more comparisons. 10,000 seconds is about 2.8 hours."
     },
     {
-     "text": "Buy a server twice as fast and keep the method.",
+     "text": "Buy a server twice as fast and keep the same method.",
      "correct": false,
      "feedback": "A server twice as fast cuts a 10,000-fold increase to 5,000-fold. The report still takes over an hour."
     }

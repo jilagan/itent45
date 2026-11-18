@@ -26,6 +26,6 @@ separately by IBM under the SIL Open Font License. They are not covered by any
 licence granted here. The tool falls back to system fonts when they are
 unavailable.
 
-Icons are from Phosphor Icons (https://phosphoricons.com), MIT licence, copyright Phosphor Icons. The regular-weight SVG files in shared/icons are copied unchanged and inlined into each page as a sprite.
+Icons are from Phosphor Icons (https://phosphoricons.com), MIT licence, copyright Phosphor Icons. The regular-weight SVG files in shared/icons are copied unchanged and inlined into each page as a sprite. The computational thinking lessons add the icons map-trifold, waves, magnifying-glass, list-numbers, list-checks, check-circle, calendar-blank, clipboard-text, tent, check, flag, coffee and repeat. The right, wrong and warning marks in shared/widgets.css use the Phosphor check-circle, x-circle and warning-circle shapes.
 
-Scene pictures in shared/art (when present) are generated with Google's Nano Banana 2.1 model through Replicate, from the prompts in tools/make_art.py and docs/ART-STYLE.md, and are reviewed by the course team. They are not covered by any licence granted here until the terms of the image service's output have been checked.
+The 49 scene pictures in shared/art are generated with Google's Nano Banana 2.1 model through Replicate, from the prompts in tools/make_art.py and docs/ART-STYLE.md, and are reviewed by the course team. They are not covered by any licence granted here until the terms of the image service's output have been checked.

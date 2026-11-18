@@ -3,22 +3,22 @@
  "items": [
   {
    "id": "decompose-1",
-   "sec": "split",
+   "sec": null,
    "type": "mc",
    "stem": "A teammate is assigned \"Do the research\" with no other detail. After a week she says she is not sure what is left. What would have helped most?",
    "options": [
     {
-     "text": "Giving her another week to finish the research.",
+     "text": "Giving her one more week to finish all the research.",
      "correct": false,
      "feedback": "More time does not tell her what finished means. She would still be unsure after another week."
     },
     {
-     "text": "Splitting the job into pieces with clear points where each is done.",
+     "text": "Splitting it into pieces, each with a clear end point.",
      "correct": true,
      "feedback": "Small pieces with clear ends let her say what is done and what is left."
     },
     {
-     "text": "Asking two more people to do the same research.",
+     "text": "Asking two more people to also do the same research.",
      "correct": false,
      "feedback": "Two more people on an unclear job make it more confusing. Each of them would pick a different meaning of finished."
     }
@@ -49,7 +49,7 @@
   },
   {
    "id": "decompose-3",
-   "sec": null,
+   "sec": "time",
    "type": "mc",
    "stem": "The booth plan needs 5 days with 3 people. A fourth person joins. How many days does the plan need now?",
    "options": [

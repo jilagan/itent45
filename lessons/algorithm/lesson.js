@@ -3,48 +3,6 @@
    Styles for these widgets are added here and scoped to #p-algorithm. */
 
 (() => {
-const css = `
-#p-algorithm .algw{margin:0 0 4px}
-#p-algorithm .algw .ctab{margin-bottom:12px}
-#p-algorithm .algw .ctab button{display:inline-flex;align-items:center;gap:6px;min-height:44px}
-#p-algorithm .algw .ctab .ico{width:16px;height:16px}
-#p-algorithm .algorder{margin:0 0 14px;color:var(--ink)}
-#p-algorithm .abot{display:grid;grid-template-columns:minmax(0,1fr) 240px;gap:20px;align-items:start}
-@media(max-width:820px){#p-algorithm .abot{grid-template-columns:minmax(0,1fr)}}
-#p-algorithm .akeys{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
-#p-algorithm .akeys .btn{min-height:44px}
-#p-algorithm .asteps{list-style:none;margin:0 0 14px;padding:0;border:1px solid var(--line2);border-radius:6px;min-height:46px}
-#p-algorithm .asteps li{display:flex;align-items:center;gap:10px;min-height:42px;padding:6px 12px;border-top:1px solid var(--line);font-size:15px;color:var(--ink)}
-#p-algorithm .asteps li:first-child{border-top:0}
-#p-algorithm .asteps .n{flex:0 0 1.8em;color:var(--dim);font-variant-numeric:tabular-nums}
-#p-algorithm .asteps .t{flex:1 1 auto;min-width:0}
-#p-algorithm .asteps .m{flex:0 0 auto;display:inline-flex;align-items:center;gap:4px;font-size:14px;color:var(--dim)}
-#p-algorithm .asteps .m .ico{width:16px;height:16px}
-#p-algorithm .asteps li.empty{color:var(--dim)}
-#p-algorithm .asteps li.run{background:color-mix(in srgb,var(--req) 10%,var(--panel));box-shadow:inset 3px 0 0 var(--req)}
-#p-algorithm .asteps li.done .m{color:var(--res)}
-#p-algorithm .asteps li.fail{background:color-mix(in srgb,var(--warn) 8%,var(--panel));box-shadow:inset 3px 0 0 var(--warn)}
-#p-algorithm .asteps li.fail .m{color:var(--warn);font-weight:600}
-#p-algorithm .acup{text-align:left}
-#p-algorithm .acupic{margin:0 0 8px}
-#p-algorithm .acupic .ico{width:44px;height:44px}
-#p-algorithm .acuptext{font-size:15px;line-height:1.5;color:var(--ink)}
-#p-algorithm .acuptext span{display:block;color:var(--dim)}
-#p-algorithm .algw .meter{grid-template-columns:repeat(2,minmax(0,1fr));margin:4px 0 14px}
-#p-algorithm #algLoop .meter{grid-template-columns:repeat(3,minmax(0,1fr))}
-#p-algorithm .rpblock{border:1px solid var(--line2);border-radius:6px;padding:12px 14px;margin:0 0 16px}
-#p-algorithm .rphead{font-size:15px;color:var(--ink);margin:0 0 8px}
-#p-algorithm .rpsteps{display:flex;flex-wrap:wrap;gap:6px;list-style:none;margin:0;padding:0}
-#p-algorithm .rpsteps li{padding:4px 10px;border:1px solid var(--line);border-radius:4px;font-size:15px;color:var(--ink);background:var(--bg2)}
-#p-algorithm .rpline{display:flex;flex-wrap:wrap;gap:6px 8px;min-height:72px;margin:0 0 16px}
-#p-algorithm .rpc{display:flex;flex-direction:column;align-items:center;gap:2px;width:44px;color:var(--ink)}
-#p-algorithm .rpc .ico{width:30px;height:30px}
-#p-algorithm .rpc .tick{height:18px;display:flex;align-items:center;color:var(--res)}
-#p-algorithm .rpc .tick .ico{width:16px;height:16px}
-#p-algorithm .rpc.wait{color:var(--req)}
-#p-algorithm .rplinenote{align-self:center;font-size:15px;color:var(--dim)}
-`;
-const st = document.createElement("style"); st.textContent = css; document.head.appendChild(st);
 
 const join = a => a.length < 2 ? a.join("") : a.slice(0, -1).join(", ") + " and " + a[a.length - 1];
 const plural = (n, w) => n + " " + w + (n === 1 ? "" : "s");
@@ -143,14 +101,14 @@ function algRender() {
       else { cls = "done"; mark = ICO("check"); }
     }
     if (A.timer && i === n) cls = "run";
-    return `<li class="${cls}"><span class="n">${i + 1}</span><span class="t">${INSTR[p].label}</span><span class="m">${mark}</span></li>`;
-  }).join("") : `<li class="empty"><span class="t">No steps yet. Press an instruction.</span></li>`;
+    return `<li class="wrow ${cls==="run"?"on":cls==="fail"?"wrong":cls}"><span class="n">${i + 1}</span><span class="t">${INSTR[p].label}</span><span class="m">${mark}</span></li>`;
+  }).join("") : `<li class="wrow empty"><span class="t">No steps yet. Press an instruction.</span></li>`;
   const cupNow = sim && n > 0 ? sim.snaps[Math.min(n, sim.snaps.length) - 1] : null;
   $("#algCup").innerHTML = algCupText(cupNow);
   const set = (id, v, good) => { const g = $(id); g.querySelector(".gv").textContent = v; g.classList.toggle("good", !!good); };
   set("#algWritten", prog.length);
   const finished = !!(res && res.finished);
-  set("#algDone", finished ? (sim.fail ? sim.fail.at : prog.length) + " of " + prog.length : "—", finished && sim.ok);
+  set("#algDone", finished ? (sim.fail ? sim.fail.at : prog.length) + " of " + prog.length : "None yet", finished && sim.ok);
   if (finished) {
     if (sim.ok) {
       const all = A.solved.every(Boolean);
@@ -230,8 +188,8 @@ function rpRender() {
   $("#rpLine").setAttribute("role", "img");
   $("#rpLine").setAttribute("aria-label", plural(R.n, "customer") + " in line" + (res ? ", " + res.served + " served and " + res.waiting + " waiting" : ""));
   const set = (id, v, cls) => { const g = $(id); g.querySelector(".gv").textContent = v; g.classList.toggle("good", cls === "good"); g.classList.toggle("hot", cls === "hot"); };
-  set("#rpRan", res ? res.ran : "—");
-  set("#rpWaiting", res ? res.waiting : "—", res ? (res.waiting ? "hot" : "good") : "");
+  set("#rpRan", res ? res.ran : "None yet");
+  set("#rpWaiting", res ? res.waiting : "None yet", res ? (res.waiting ? "hot" : "good") : "");
   if (!res) {
     rpVerdict("", `Line of ${R.n}`, R.n ? "Press Run line to serve the line with this rule." : "The line is empty. Press Add customer.");
     return;

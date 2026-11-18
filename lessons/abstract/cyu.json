@@ -3,7 +3,7 @@
  "items": [
   {
    "id": "abstract-1",
-   "sec": "keep",
+   "sec": null,
    "type": "mc",
    "stem": "A founder builds a route app. Her first model lists stop names and the order of stops. A user asks how long a trip takes at 5 PM. What should she conclude?",
    "options": [
@@ -13,7 +13,7 @@
      "feedback": "It answers route questions correctly. It is incomplete for timing."
     },
     {
-     "text": "The model lacks road distance and traffic, so it cannot answer that question.",
+     "text": "The model lacks distance and traffic, so it cannot answer.",
      "correct": true,
      "feedback": "A model answers only the questions its details cover. Timing needs two more details."
     },
@@ -41,7 +41,7 @@
      "feedback": "The answer depends on stop names and the order of stops. Color adds neither."
     },
     {
-     "text": "The model gets larger and the question is answered no better.",
+     "text": "The model grows and the question is answered no better.",
      "correct": true,
      "feedback": "Color does not help choose a route, so the extra detail adds work and no value."
     },
@@ -74,7 +74,7 @@
      "feedback": "Disk writes sit far below the app. They are the database administrator's level."
     },
     {
-     "text": "Level 2, where the app sends the order to the server.",
+     "text": "Level 2, where the app sends the order.",
      "correct": true,
      "feedback": "Checking what leaves the app is the app developer's level."
     }
@@ -82,7 +82,7 @@
   },
   {
    "id": "abstract-4",
-   "sec": null,
+   "sec": "summary",
    "type": "mc",
    "stem": "A new team member wants to understand how payments work before touching any code. Which description helps most at the start?",
    "options": [
@@ -97,7 +97,7 @@
      "feedback": "Byte counts are the lowest level. They help later."
     },
     {
-     "text": "A short top-level story of the flow, with detail added when a step matters.",
+     "text": "A short story of the whole flow, with detail added step by step.",
      "correct": true,
      "feedback": "A top-level view shows the whole flow and lets her zoom in on one step at a time."
     }

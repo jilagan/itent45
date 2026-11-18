@@ -65,7 +65,7 @@ function abZDraw(){
   $("#abMatched").textContent=abZ.done.size+" of "+AB_PEOPLE.length;
   $$("#abPeople button").forEach((el,i)=>{
     const d=abZ.done.has(i);
-    el.classList.toggle("done",d); el.setAttribute("aria-pressed",String(d));
+    el.classList.toggle("right",d); el.setAttribute("aria-pressed",String(d));
     el.querySelector("small.lv").textContent = d ? "Level "+AB_PEOPLE[i].level : "";
   });
 }
@@ -90,7 +90,7 @@ function abZPress(i){
   }
 }
 $("#abPeople").innerHTML=AB_PEOPLE.map(p=>
-  `<button type="button" class="abp" aria-pressed="false">${ICO(p.icon)}<span><b>${p.name}</b><small>${p.job}</small><small class="lv"></small></span></button>`).join("");
+  `<button type="button" class="wopt abp" aria-pressed="false">${ICO(p.icon)}<span><b>${p.name}</b><small>${p.job}</small><small class="lv"></small></span></button>`).join("");
 $$("#abPeople button").forEach((el,i)=>el.onclick=()=>abZPress(i));
 $("#abIn").onclick=()=>{ if(abZ.lvl<AB_LEVELS.length){ abZ.lvl++; $("#abV2").className="verdict"; $("#abV2").innerHTML=""; abZDraw(); } };
 $("#abOut").onclick=()=>{ if(abZ.lvl>1){ abZ.lvl--; $("#abV2").className="verdict"; $("#abV2").innerHTML=""; abZDraw(); } };

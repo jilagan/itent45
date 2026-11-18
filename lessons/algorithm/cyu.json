@@ -3,22 +3,24 @@
  "items": [
   {
    "id": "algorithm-1",
-   "sec": "write",
+   "sec": null,
    "type": "mc",
    "stem": "A student writes: take cup, add tea, add milk, seal, add pearls, serve. The robot stops at step 5. Why?",
    "options": [
     {
      "text": "The robot has no instruction for adding pearls.",
-     "feedback": "Add pearls is one of the seven instructions. The order of the steps caused the stop."
+     "feedback": "Add pearls is one of the seven instructions. The order of the steps caused the stop.",
+     "correct": false
     },
     {
-     "text": "The cup was sealed at step 4, so nothing more can be added.",
+     "text": "The cup was sealed at step 4, so nothing can be added.",
      "correct": true,
      "feedback": "Order matters. The pearls had to go in before the seal."
     },
     {
      "text": "The list has too many steps for the robot.",
-     "feedback": "The robot can follow a list of this length. Step 4 closed the cup too early."
+     "feedback": "The robot can follow a list of this length. Step 4 closed the cup too early.",
+     "correct": false
     }
    ]
   },
@@ -30,14 +32,16 @@
    "options": [
     {
      "text": "The robot serves all 9, because it checks the line.",
-     "feedback": "The count is fixed at 6, so the robot stops after six drinks whatever the line holds."
+     "feedback": "The count is fixed at 6, so the robot stops after six drinks whatever the line holds.",
+     "correct": false
     },
     {
      "text": "The robot makes 6 drinks and 3 half-made drinks.",
-     "feedback": "Each pass makes a complete drink. The robot stops after pass 6."
+     "feedback": "Each pass makes a complete drink. The robot stops after pass 6.",
+     "correct": false
     },
     {
-     "text": "Three customers wait with no drink, because the program stops after 6.",
+     "text": "Three customers wait, because the program stops after 6.",
      "correct": true,
      "feedback": "A fixed count ignores the real line. 9 minus 6 leaves 3 customers waiting."
     }
@@ -57,23 +61,26 @@
     },
     {
      "text": "Repeat 10 times every time the shift runs.",
-     "feedback": "A line of 12 leaves two customers waiting, and a line of 5 makes five cups for nobody."
+     "feedback": "A line of 12 leaves two customers waiting, and a line of 5 makes five cups for nobody.",
+     "correct": false
     },
     {
      "text": "Repeat forever, with no stopping rule.",
-     "feedback": "A loop with no stopping rule keeps making drinks after the last customer leaves."
+     "feedback": "A loop with no stopping rule keeps making drinks after the last customer leaves.",
+     "correct": false
     }
    ]
   },
   {
    "id": "algorithm-4",
-   "sec": null,
+   "sec": "exact",
    "type": "mc",
    "stem": "An AI assistant is asked to \"make the form better.\" It changes the colors, and the team wanted fewer fields. What would have prevented this?",
    "options": [
     {
      "text": "A longer chat that thanks the assistant after each answer.",
-     "feedback": "Polite words do not make an instruction exact."
+     "feedback": "Polite words do not make an instruction exact.",
+     "correct": false
     },
     {
      "text": "An exact instruction, such as \"keep only name, email and phone.\"",
@@ -82,7 +89,8 @@
     },
     {
      "text": "Asking the same request three times in a row.",
-     "feedback": "Repeating a vague request gives three vague answers."
+     "feedback": "Repeating a vague request gives three vague answers.",
+     "correct": false
     }
    ]
   }

@@ -8,22 +8,22 @@
    "stem": "An owner sees that noodles and sardines share 6 of 12 receipts. She puts them on the same shelf. What does the pattern tell her?",
    "options": [
     {
-     "text": "Buying noodles makes people want sardines.",
+     "text": "Buying noodles makes shoppers want sardines as well.",
      "correct": false,
      "feedback": "Receipts show what was bought together. They do not show that one purchase causes the other."
     },
     {
-     "text": "Half the receipts is too few to act on.",
+     "text": "Half the receipts is too few to act on at all.",
      "correct": false,
      "feedback": "Half of all receipts is a large share. A pair on 3 of 12 receipts would be a weaker case."
     },
     {
-     "text": "Shoppers often buy the two together, so a shared shelf suits them.",
+     "text": "Shoppers often buy the two together, so a shared shelf fits.",
      "correct": true,
      "feedback": "A pair on half the receipts is common enough to act on."
     },
     {
-     "text": "Both items sell out every day.",
+     "text": "Both items sell out on the same day every week.",
      "correct": false,
      "feedback": "The count covers pairs on one receipt. It says nothing about daily totals."
     }
@@ -51,7 +51,7 @@
      "feedback": "The short version has 5 symbols and the original has 12."
     },
     {
-     "text": "The rider dropped one S from the block, so the block became SSL.",
+     "text": "The rider dropped an S, so the block became SSL.",
      "correct": true,
      "feedback": "SSSL means straight three times, then left. Two straights and a left is a different block."
     }
@@ -97,17 +97,17 @@
      "feedback": "This is the same move as shortening a repeating message. The repeat is stored once."
     },
     {
-     "text": "Sorting the rows by course title.",
+     "text": "Sorting all the rows by course title, A to Z.",
      "correct": false,
      "feedback": "Sorting changes the order of rows. The title is still stored 10,000 times."
     },
     {
-     "text": "Deleting rows that look alike.",
+     "text": "Deleting the rows that look alike to save space.",
      "correct": false,
      "feedback": "Deleting would lose students. The rows differ even though the title repeats."
     },
     {
-     "text": "Finding an outlier among the rows.",
+     "text": "Finding an outlier among the 10,000 rows.",
      "correct": false,
      "feedback": "An outlier is one value that differs from the rest. Here every row holds the same title."
     }

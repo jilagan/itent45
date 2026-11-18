@@ -31,18 +31,18 @@ function frFocus(root,k){ if(!k) return; const el=root.querySelector(`[data-k="$
 function frSortRender(focusKey){
   const left=FR_ORDER.filter(id=>!(id in frS.placed));
   const n=FR_FACTS.length;
-  let h=`<p class="frstat"><span><b>${n-left.length}</b> of ${n} placed</span><span><b>${frS.wrong}</b> wrong ${frS.wrong===1?"try":"tries"}</span></p>`
+  let h=`<div class="meter"><div class="g"><div class="gl">Facts placed</div><div class="gv">${n-left.length} of ${n}</div></div><div class="g"><div class="gl">Wrong tries</div><div class="gv">${frS.wrong}</div></div></div>`
        +`<div class="verdict ${frS.v.cls}" role="status">${frS.v.h}</div>`;
   if(left.length){
-    h+=`<div class="frcards" role="group" aria-label="Fact cards">`
-      +left.map(id=>`<button type="button" class="frcard${frS.fx===id?" frno":""}" data-k="c:${id}" data-card="${id}" aria-pressed="${frS.sel===id}">${frEsc(frFact(id).t)}</button>`).join("")
+    h+=`<div class="wchips" role="group" aria-label="Fact cards">`
+      +left.map(id=>`<button type="button" class="wchip${frS.fx===id?" wno":""}" data-k="c:${id}" data-card="${id}" aria-pressed="${frS.sel===id}">${frEsc(frFact(id).t)}</button>`).join("")
       +`</div>`;
   }
   h+=`<div class="frboxes">`+FR_BOXES.map(([bid,bn])=>{
     const inb=FR_ORDER.filter(id=>frS.placed[id]===bid);
     return `<div class="frbox${frS.sel?" armed":""}">`
       +`<button type="button" class="frbox-h" data-k="b:${bid}" data-box="${bid}" aria-label="${bn}, ${inb.length} placed. ${frS.sel?"Press to put the selected card here.":"Select a card first."}">${bn}<span class="frn">${inb.length}</span></button>`
-      +`<div class="frchips">`+inb.map(id=>`<button type="button" class="frchip" data-k="p:${id}" data-chip="${id}" aria-label="${frEsc(frFact(id).t)}, in ${bn}. Press to send it back.">${frEsc(frFact(id).t)}</button>`).join("")+`</div></div>`;
+      +`<div class="frchips">`+inb.map(id=>`<button type="button" class="wchip right" data-k="p:${id}" data-chip="${id}" aria-label="${frEsc(frFact(id).t)}, in ${bn}. Press to send it back.">${frEsc(frFact(id).t)}</button>`).join("")+`</div></div>`;
   }).join("")+`</div>`
     +`<div class="ctrls"><button type="button" class="btn" data-reset>Reset</button></div>`;
   frSortRoot.innerHTML=h;
@@ -110,12 +110,12 @@ const frTStart=()=>({cls:"",h:`<b>Round ${frT.r+1} of ${FR_TESTS.length}</b>Pres
 function frTestRender(focusKey){
   const t=FR_TESTS[frT.r], last=frT.r===FR_TESTS.length-1;
   if(!frT.v) frT.v=frTStart();
-  let h=`<p class="frstat"><span>Round <b>${frT.r+1}</b> of ${FR_TESTS.length}</span><span><b>${frT.wrong}</b> wrong ${frT.wrong===1?"try":"tries"}</span></p>`
-       +`<p class="frgoal">Goal: ${frEsc(t.goal)}</p>`
-       +`<div class="fropts" role="group" aria-label="Candidate tests">`
+  let h=`<div class="meter"><div class="g"><div class="gl">Round</div><div class="gv">${frT.r+1} of ${FR_TESTS.length}</div></div><div class="g"><div class="gl">Wrong tries</div><div class="gv">${frT.wrong}</div></div></div>`
+       +`<p class="wline strong">Goal: ${frEsc(t.goal)}</p>`
+       +`<div class="wopts" role="group" aria-label="Candidate tests">`
        +t.o.map((o,i)=>{
-          const cls=(frT.right===i?" right":"")+(frT.tried.includes(i)?" tried":"");
-          return `<button type="button" class="fropt${cls}" data-k="o:${i}" data-opt="${i}" aria-disabled="${frT.solved}">${frEsc(o[0])}</button>`;
+          const cls=(frT.right===i?" right is-right":"")+(frT.tried.includes(i)?" tried":"");
+          return `<button type="button" class="wopt${cls}" data-k="o:${i}" data-opt="${i}" aria-disabled="${frT.solved}">${frEsc(o[0])}</button>`;
         }).join("")+`</div>`
        +`<div class="verdict ${frT.v.cls}" role="status">${frT.v.h}</div>`
        +`<div class="ctrls">`+(frT.solved&&!last?`<button type="button" class="btn primary" data-k="next" data-next>Next round</button>`:"")

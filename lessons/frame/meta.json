@@ -1,7 +1,7 @@
 {
  "id": "frame",
  "title": "Framing a problem",
- "label": "Framing a problem",
+ "label": "Framing",
  "desc": "Turn a vague request into inputs, outputs and limits.",
  "outcomes": [
   "Name the inputs, outputs and limits of a problem",

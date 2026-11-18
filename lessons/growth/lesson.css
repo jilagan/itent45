@@ -1,0 +1,14 @@
+#p-growth .gbars{display:grid;gap:18px;margin:6px 0 18px}
+#p-growth .gb-h{display:flex;justify-content:space-between;align-items:baseline;gap:12px}
+#p-growth .gb-h span{display:block;color:var(--dim);font-size:15px}
+#p-growth .gb-n{font-family:var(--mono);font-weight:600;white-space:nowrap}
+#p-growth .gb-t{height:14px;margin-top:6px;background:var(--bg2);border-radius:2px}
+#p-growth .gb-f{height:100%;min-width:4px;background:var(--dim);border-radius:2px}
+#p-growth .pgrid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:18px 0}
+#p-growth .pgrid .g{padding-top:10px}
+#p-growth .pgrid .g.slow{border-top:3px solid var(--req);padding-top:8px}
+#p-growth .gt{font-weight:600;margin-bottom:8px}
+#p-growth .gr{display:flex;justify-content:space-between;gap:10px;font-size:15px;color:var(--dim)}
+#p-growth .gr b{font-family:var(--mono);color:var(--ink)}
+#p-growth .gf{min-height:22px;margin-top:6px;font-size:15px;font-weight:600;color:var(--req-deep)}
+@media(max-width:520px){#p-growth .pgrid{grid-template-columns:1fr}}

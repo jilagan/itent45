@@ -1,7 +1,7 @@
 {
  "id": "decompose",
  "title": "Breaking a task into parts",
- "label": "Breaking a task into parts",
+ "label": "Breaking down",
  "desc": "Split a big job into pieces and find the order.",
  "outcomes": [
   "Explain when a piece is small enough for one person to own",

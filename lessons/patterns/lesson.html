@@ -1,44 +1,10 @@
 <section class="panel" id="p-patterns">
-  <style>
-    #p-patterns .ptrec{display:grid;grid-template-columns:repeat(auto-fill,minmax(96px,1fr));gap:8px;margin:12px 0 14px}
-    #p-patterns .ptr{border:1px solid var(--line2);border-radius:4px;padding:6px 8px;font-size:14px;line-height:1.4;background:var(--panel);color:var(--dim)}
-    #p-patterns .ptr.hit{border-color:var(--res);background:color-mix(in srgb,var(--res) 9%,var(--panel));color:var(--ink)}
-    #p-patterns .ptr b{font-weight:700;color:var(--res)}
-    #p-patterns .ptline{margin:0 0 4px;font-weight:600;min-height:1.6em}
-    #p-patterns .ptmsg{display:flex;flex-wrap:wrap;gap:8px 10px;margin:6px 0 14px}
-    #p-patterns .ptch{display:inline-flex;gap:2px;padding:3px;border:1px solid transparent;border-radius:4px}
-    #p-patterns .ptch.same{border-color:var(--res);background:color-mix(in srgb,var(--res) 9%,transparent)}
-    #p-patterns .ptch.diff{border-color:var(--warn);border-style:dashed}
-    #p-patterns .ptt{display:inline-flex;align-items:center;justify-content:center;width:22px;height:30px;border:1px solid var(--line2);border-radius:3px;font-family:var(--mono);font-size:15px;font-weight:700;color:var(--ink);background:var(--panel)}
-    #p-patterns .ptt.L{background:var(--ink);border-color:var(--ink);color:var(--bg)}
-    #p-patterns .ptstep{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:0 0 14px}
-    #p-patterns .ptstep .btn{min-width:48px;min-height:44px;font-size:1.2em;line-height:1}
-    #p-patterns .ptstep output{font-weight:600;min-width:9em;text-align:center}
-    #p-patterns .ptdays,#p-patterns .ptgrid{display:grid;grid-template-columns:repeat(7,minmax(0,1fr));gap:4px;max-width:640px}
-    #p-patterns .ptdays{margin:0 0 4px;text-align:center;font-size:14px;font-weight:600;color:var(--dim)}
-    #p-patterns .ptwk{margin:0 0 12px}
-    #p-patterns .ptwl{margin:0 0 4px;font-size:14px;font-weight:600;color:var(--dim)}
-    #p-patterns .ptb{display:flex;flex-direction:column;justify-content:flex-end;align-items:center;gap:3px;height:88px;min-width:0;padding:4px 2px;border:1px solid var(--line);border-radius:4px;background:var(--panel)}
-    #p-patterns .ptb i{display:block;width:70%;max-width:34px;background:var(--line2);border-radius:2px 2px 0 0}
-    #p-patterns .ptb span{font-size:14px;line-height:1;color:var(--ink)}
-    #p-patterns .ptb:hover{border-color:var(--res)}
-    #p-patterns .ptb.twin{border-color:var(--res)}
-    #p-patterns .ptb.pick{border:2px solid var(--req)}
-    #p-patterns .ptb.right{border:2px solid var(--res);background:color-mix(in srgb,var(--res) 9%,var(--panel))}
-    #p-patterns .ptb.right i{background:var(--res)}
-    #p-patterns .meter{grid-template-columns:repeat(auto-fit,minmax(130px,1fr));max-width:640px}
-    #p-patterns .ctrls{margin:14px 0 0}
-    #p-patterns .verdict{margin:14px 0 0}
-    #p-patterns .verdict:empty{display:none}
-    #p-patterns .btn:disabled{opacity:.45;cursor:default}
-    @media(max-width:480px){#p-patterns .ptt{width:19px}#p-patterns .ptstep output{min-width:7em}}
-  </style>
   <div class="head">
     <h2>Spotting patterns</h2>
     <p>A <dfn title="Something that repeats in data or events">pattern</dfn> is something that repeats in data. Finding patterns lets you describe many records at once and spot the one that does not fit.</p>
   </div>
 
-  <div class="sec" data-sec="receipts" data-title="Start with the receipts">
+  <div class="sec" data-sec="receipts" data-title="Start with a week of receipts">
     <p>A sari-sari store owner reads a week of receipts. On payday Friday, cooking oil and soy sauce sell out. Before a typhoon, candles and canned goods sell out. Noticing what repeats lets her stock the shelf before customers ask. Finding what repeats in data is called pattern recognition.</p>
     <div class="scene" role="group" aria-label="The receipts are data, what repeats on them is the pattern, stocking the shelf early is the decision" data-art="receipt-string-store" data-art-desc="A store owner behind a counter studies a row of blank receipts hanging on a string, and one receipt has a circle drawn around it.">
       <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></div><figcaption><b>A week of receipts</b><span>Data</span></figcaption></figure>
@@ -51,9 +17,9 @@
 
   <div class="sec" data-sec="together" data-title="Find items bought together">
     <p>Twelve receipts from one week are shown. Press two items, and the widget highlights the receipts that hold both and counts them. Find the pair that appears together most often.</p>
-    <div class="card" id="ptRc">
+    <div class="card wg" id="ptRc">
       <div class="ctab" id="ptItems" role="group" aria-label="Items"></div>
-      <p class="ptline" id="ptLine" aria-live="polite"></p>
+      <p class="wline strong" id="ptLine" aria-live="polite"></p>
       <div class="ptrec" id="ptRec"></div>
       <div class="meter">
         <div class="g"><div class="gl">Pairs tried</div><div class="gv" id="ptTried">0</div></div>
@@ -74,7 +40,7 @@
 
   <div class="sec" data-sec="shrink" data-title="Describe the repeat once">
     <p>A rider gets directions as letters. S means go straight and L means turn left. When a block of letters repeats, send the block once and say how many times to repeat it. This is called <dfn title="Storing a repeated block once to make data shorter">compression</dfn>. Use the plus and minus buttons to choose a block length that rebuilds the whole message.</p>
-    <div class="card" id="ptSh">
+    <div class="card wg" id="ptSh">
       <div class="ctab" id="ptMsgs" role="group" aria-label="Message"></div>
       <div class="ptmsg" id="ptMsg" role="img"></div>
       <div class="ptstep">
@@ -101,7 +67,7 @@
 
   <div class="sec" data-sec="exception" data-title="Spot the exception">
     <p>A milk tea shop sells about the same each week. Each row shows one week of cups sold. A value that does not follow the pattern is an <dfn title="A value that does not follow the pattern of the others">outlier</dfn>. Look down each day's column and press the bar that breaks the pattern.</p>
-    <div class="card" id="ptBar">
+    <div class="card wg" id="ptBar">
       <div class="ptdays" aria-hidden="true" id="ptDays"></div>
       <div id="ptWeeks" role="group" aria-label="Cups sold, by week and day"></div>
       <div class="meter">

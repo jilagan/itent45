@@ -1,37 +1,4 @@
     <section class="panel" id="p-frame">
-      <style>
-        #p-frame .frstat{display:flex;flex-wrap:wrap;gap:2px 20px;margin:0 0 12px;max-width:none;color:var(--dim)}
-        #p-frame .frstat b{color:var(--ink);font-family:var(--mono)}
-        #p-frame .verdict{margin:0 0 14px}
-        #p-frame .ctrls{margin:14px 0 0}
-        #p-frame .btn{min-height:44px}
-        #p-frame .frcards{display:flex;flex-wrap:wrap;gap:8px;margin:0 0 16px}
-        #p-frame .frcard,#p-frame .frchip,#p-frame .fropt,#p-frame .frbox-h{font:inherit;text-align:left;cursor:pointer;color:var(--ink)}
-        #p-frame .frcard,#p-frame .frchip{font-size:max(14px,.9em);line-height:1.35;min-height:44px;padding:8px 12px;border:1px solid var(--line2);border-radius:6px;background:var(--bg)}
-        #p-frame .frcard:hover{border-color:var(--ink)}
-        #p-frame .frcard[aria-pressed="true"]{border-color:var(--req);box-shadow:inset 0 0 0 1px var(--req);background:color-mix(in srgb,var(--req) 10%,transparent)}
-        #p-frame .frcard.frno{animation:frshake .3s}
-        @keyframes frshake{0%,100%{transform:none}25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
-        @media (prefers-reduced-motion:reduce){#p-frame .frcard.frno{animation:none}}
-        #p-frame .frboxes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 4px}
-        #p-frame .frbox{border:1px solid var(--line2);border-radius:6px;background:var(--panel);min-width:0;display:flex;flex-direction:column}
-        #p-frame .frbox.armed{border-color:var(--req)}
-        #p-frame .frbox-h{display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;min-height:48px;padding:8px 12px;border:0;border-bottom:1px solid var(--line);border-radius:5px 5px 0 0;background:var(--bg2);font-weight:600}
-        #p-frame .frbox-h:hover{background:var(--panel2)}
-        #p-frame .frbox.armed .frbox-h{background:color-mix(in srgb,var(--req) 10%,transparent)}
-        #p-frame .frn{font-family:var(--mono);color:var(--dim)}
-        #p-frame .frchips{display:flex;flex-direction:column;gap:6px;padding:8px;min-height:60px}
-        #p-frame .frchip{border-color:var(--res);color:var(--res)}
-        #p-frame .frgoal{margin:0 0 12px;font-weight:600;max-width:none}
-        #p-frame .fropts{display:grid;gap:8px;margin:0 0 12px}
-        #p-frame .fropt{line-height:1.4;min-height:48px;padding:10px 14px;border:1px solid var(--line2);border-radius:6px;background:var(--bg)}
-        #p-frame .fropt:hover{border-color:var(--ink)}
-        #p-frame .fropt.tried{color:var(--dim);border-style:dashed}
-        #p-frame .fropt.right{border-color:var(--res);color:var(--res);font-weight:600;background:color-mix(in srgb,var(--res) 8%,transparent)}
-        #p-frame .fropt[aria-disabled="true"]{cursor:default}
-        @media(max-width:860px){#p-frame .frboxes{grid-template-columns:repeat(2,minmax(0,1fr))}}
-        @media(max-width:560px){#p-frame .frcards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}
-      </style>
       <div class="head">
         <h2>Framing a problem</h2>
         <p>A request such as "get us a booth" needs answers before work starts: what the team has, what it must deliver and what limits apply. A success test says when the work is done.</p>
@@ -50,12 +17,12 @@
 
       <div class="sec" data-sec="sort" data-title="Sort the facts">
         <p>A problem has <dfn title="Information or material you start with">inputs</dfn>, <dfn title="The result the work must produce">outputs</dfn> and <dfn title="A rule the plan must respect, such as a budget or deadline">limits</dfn>. Inputs are what the team starts with. Outputs are what it must deliver. Limits are rules it cannot break. Some facts are still unknown. Press a fact card, then press the box where it belongs.</p>
-        <div id="frSort"></div>
+        <div class="card wg" id="frSort"></div>
       </div>
 
       <div class="sec" data-sec="test" data-title="Write a success test">
         <p>A <dfn title="A check that gives every person the same answer">success test</dfn> is a check that gives every person the same answer. It uses a count, a time or a yes or no, as in "at least 100 names on the sheet by 5 PM." In each round, press the test that anyone could check the same way.</p>
-        <div id="frTest"></div>
+        <div class="card wg" id="frTest"></div>
       </div>
 
       <div class="sec" data-sec="before" data-title="Before work starts">

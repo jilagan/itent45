@@ -26,7 +26,7 @@
   },
   {
    "id": "routes-2",
-   "sec": "close",
+   "sec": null,
    "type": "mc",
    "stem": "A flood closes the line from Marikina to Ortigas. An app that stored the old best route keeps sending riders into the flood. What would have avoided this?",
    "options": [
@@ -49,7 +49,7 @@
   },
   {
    "id": "routes-3",
-   "sec": null,
+   "sec": "choose",
    "type": "mc",
    "stem": "A commuter picks the route with the fewest rides. It takes 43 minutes. Another route takes 38 minutes and has one more ride. Which statement fits?",
    "options": [

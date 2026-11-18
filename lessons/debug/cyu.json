@@ -18,7 +18,7 @@
      "feedback": "Last steps can be wrong. In this program an earlier step caused the error."
     },
     {
-     "text": "Rewriting any step breaks the program.",
+     "text": "Rewriting any step always breaks the whole program.",
      "correct": false,
      "feedback": "Rewriting is fine when it changes the step that caused the error."
     }
@@ -26,7 +26,7 @@
   },
   {
    "id": "debug-2",
-   "sec": "test",
+   "sec": null,
    "type": "mc",
    "stem": "A fix makes 3 teas at 120 pesos total 324, as expected, and the developer ships it. Later a customer buys 2 teas at 150 pesos, pays exactly 300 and gets no discount. Which test would have caught this?",
    "options": [
@@ -64,7 +64,7 @@
      "feedback": "The test passes every time. The trouble is every other order."
     },
     {
-     "text": "Every other order still gets a wrong total, so the bug is still there.",
+     "text": "Other orders still get a wrong total, so the bug remains.",
      "correct": true,
      "feedback": "Typing in one answer satisfies one test and leaves the steps wrong."
     }
@@ -72,7 +72,7 @@
   },
   {
    "id": "debug-4",
-   "sec": null,
+   "sec": "habits",
    "type": "mc",
    "stem": "An AI assistant writes a discount function and says it works. You have 30 seconds before it goes live. What is the best use of the time?",
    "options": [

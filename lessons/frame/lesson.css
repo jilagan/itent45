@@ -1,0 +1,12 @@
+#p-frame .meter{margin:0 0 14px}
+#p-frame .wchips{margin:14px 0 16px}
+#p-frame .frboxes{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 4px}
+#p-frame .frbox{border:1px solid var(--line2);border-radius:4px;background:var(--panel);min-width:0;display:flex;flex-direction:column}
+#p-frame .frbox.armed{border-color:var(--req)}
+#p-frame .frbox-h{font:inherit;color:var(--ink);cursor:pointer;display:flex;justify-content:space-between;align-items:center;gap:8px;width:100%;min-height:48px;padding:8px 12px;border:0;border-bottom:1px solid var(--line);border-radius:3px 3px 0 0;background:var(--bg2);font-weight:600;text-align:left}
+#p-frame .frbox-h:hover{background:var(--panel2)}
+#p-frame .frbox.armed .frbox-h{background:color-mix(in srgb,var(--req) 10%,var(--panel))}
+#p-frame .frn{font-family:var(--mono);color:var(--dim)}
+#p-frame .frchips{display:flex;flex-direction:column;gap:6px;padding:8px;min-height:60px}
+@media(max-width:860px){#p-frame .frboxes{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){#p-frame .wchips{display:grid;grid-template-columns:repeat(2,minmax(0,1fr))}}

@@ -18,10 +18,10 @@
   <div class="sec" data-sec="sort" data-title="Sort by comparing">
     <p>These cards are face down. When you compare two cards, you learn which one is larger. That check is a <dfn title="One check of two items to see which is larger">comparison</dfn>. Put the cards in order, smallest on the left, with as few comparisons as you can.</p>
     <p>Press two cards to compare them. Swap them if they are in the wrong order, then press Check order.</p>
-    <div class="card" id="srtBox">
+    <div class="card wg" id="srtBox">
       <div class="srt-row" id="srtRow"></div>
-      <p class="srt-line" id="srtLine" aria-live="polite">Press two cards to compare them.</p>
-      <div class="srt-meter"><div class="g"><div class="gl">Comparisons so far</div><div class="gv" id="srtCount">0</div></div></div>
+      <p class="wline" id="srtLine" aria-live="polite">No cards selected.</p>
+      <div class="meter"><div class="g"><div class="gl">Comparisons so far</div><div class="gv" id="srtCount">0</div></div></div>
       <div class="ctrls">
         <button class="btn" id="srtSwap" disabled>Swap the two cards</button>
         <button class="btn primary" id="srtCheck">Check order</button>
@@ -32,21 +32,21 @@
     <details class="more">
       <summary>More detail</summary>
       <h4>How few comparisons are enough?</h4>
-      <p>Eight cards can be arranged in 40,320 ways. Each comparison can at best cut the ways in half. Fifteen halvings leave 32,768 ways, which is too few, so 16 comparisons are the least that always works. Comparing every pair of cards takes 28.</p>
+      <p>Eight cards can be arranged in 40,320 ways. Each comparison has two possible results, so 15 comparisons can separate at most 32,768 orders. That is fewer than 40,320, so 16 comparisons are the least that always works. Comparing every pair of cards takes 28.</p>
     </details>
   </div>
 
   <div class="sec" data-sec="halve" data-title="Find by halving">
     <p>In a sorted list, one guess can rule out half of the cells. Finding an item this way is called <dfn title="Finding an item in a sorted list by guessing the middle and halving">binary search</dfn>. IDs rise from left to right.</p>
     <p>Press a cell to see its ID. Keep going until you reach the ID you want.</p>
-    <div class="card" id="hvBox">
+    <div class="card wg" id="hvBox">
       <div class="hv-top">
         <div class="hv-goal">Find ID <b id="hvTarget">0</b></div>
         <div class="viewtog" id="hvSizes" role="group" aria-label="Number of cards"></div>
       </div>
       <div class="hv-grid" id="hvGrid" role="group" aria-label="Cells in ID order"></div>
-      <p class="srt-line" id="hvLine" aria-live="polite">Press any cell to start. The middle cell is a good first guess.</p>
-      <div class="srt-meter">
+      <p class="wline" id="hvLine" aria-live="polite">Press any cell to start. The middle cell is a good first guess.</p>
+      <div class="meter">
         <div class="g"><div class="gl">Guesses</div><div class="gv" id="hvGuesses">0</div></div>
         <div class="g"><div class="gl">Cells still open</div><div class="gv" id="hvOpen">0</div></div>
       </div>

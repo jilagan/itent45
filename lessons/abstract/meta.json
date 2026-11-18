@@ -1,7 +1,7 @@
 {
  "id": "abstract",
  "title": "Abstraction and models",
- "label": "Abstraction and models",
+ "label": "Abstraction",
  "desc": "Keep the details that matter and drop the rest.",
  "outcomes": [
   "Say which details a model needs to answer a given question",

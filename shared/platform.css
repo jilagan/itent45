@@ -1,4 +1,4 @@
-/* ITENT 45 platform styles: section tabs, pager, Check Your Understanding, video facade,
+/* Platform styles: section tabs, pager, Check Your Understanding, video facade,
    mobile contents button, embed mode. Loaded after style.css and theme.css.
    Rules wrapped in :where() are fallbacks that any rule in theme.css overrides. */
 

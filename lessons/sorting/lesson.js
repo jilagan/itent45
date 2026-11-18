@@ -1,36 +1,12 @@
 /* Lesson sorting. Two widgets: the card sorter (step "sort") and the halving search (step "halve"). */
 (()=>{
-const css=document.createElement("style");
-css.textContent=`
-#p-sorting .srt-row{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin:0 0 12px}
-@media(min-width:640px){#p-sorting .srt-row{grid-template-columns:repeat(8,minmax(0,1fr))}}
-#p-sorting .srt-cell{display:flex;flex-direction:column;gap:4px;text-align:center;min-width:0}
-#p-sorting .srt-pos{font-size:14px;color:var(--dim)}
-#p-sorting .srt-card{min-height:64px;min-width:44px;border:1px solid var(--line2);border-radius:6px;background:var(--bg2);color:var(--ink);font-size:1.15em;font-weight:600;cursor:pointer}
-#p-sorting .srt-card[aria-pressed="true"]{border:2px solid var(--req);background:color-mix(in srgb,var(--req) 10%,var(--panel))}
-#p-sorting .srt-card.up{background:var(--panel);color:var(--res);border-color:var(--res);cursor:default}
-#p-sorting .srt-tag{font-size:14px;min-height:20px;color:var(--dim)}
-#p-sorting .srt-tag.hi{color:var(--req);font-weight:600}
-#p-sorting .srt-line{min-height:3em;margin:0 0 12px;color:var(--ink)}
-#p-sorting .srt-meter{display:flex;flex-wrap:wrap;gap:8px 28px;margin:0 0 14px}
-#p-sorting .srt-meter .g{min-width:120px}
-#p-sorting .hv-top{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:10px 16px;margin:0 0 12px}
-#p-sorting .hv-goal{font-size:1.1em}
-#p-sorting .hv-goal b{font-family:var(--mono);color:var(--res)}
-#p-sorting .hv-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(44px,1fr));gap:6px;margin:0 0 12px}
-#p-sorting .hv-cell{min-height:44px;padding:0 2px;border:1px solid var(--line2);border-radius:6px;background:var(--bg2);color:var(--dim);font-size:14px;font-weight:600;cursor:pointer}
-#p-sorting .hv-cell.seen{background:var(--panel);color:var(--ink);border-color:var(--ink);cursor:default}
-#p-sorting .hv-cell.off{background:var(--bg);border:1px dashed var(--line);color:var(--faint);cursor:default;font-weight:400}
-#p-sorting .hv-cell.hit{background:var(--res);border-color:var(--res);color:var(--bg);cursor:default}
-`;
-document.head.appendChild(css);
 
 /* ---------- card sorter ---------- */
 const VALS=[47,12,89,33,65,5,71,24];          /* fixed deck, so the text stays true */
 const L="ABCDEFGH";
 let S;
 function srtReset(){
-  S={order:VALS.map((_,i)=>i), sel:[], cmp:0, done:false, line:"Press two cards to compare them.", tag:{}};
+  S={order:VALS.map((_,i)=>i), sel:[], cmp:0, done:false, line:"No cards selected.", tag:{}};
   srtDraw();
   const v=$("#srtVerdict"); v.hidden=true; v.textContent="";
 }
@@ -53,7 +29,7 @@ function srtDraw(focusId){
 function srtPress(id){
   if(S.done) return;
   $("#srtVerdict").hidden=true;
-  if(S.sel.length===1 && S.sel[0]===id){ S.sel=[]; S.tag={}; S.line="Press two cards to compare them."; }
+  if(S.sel.length===1 && S.sel[0]===id){ S.sel=[]; S.tag={}; S.line="No cards selected."; }
   else{
     if(S.sel.length===2){ S.sel=[]; S.tag={}; }
     S.sel.push(id);
@@ -83,10 +59,10 @@ $("#srtCheck").onclick=()=>{
     const n=S.cmp;
     v.className="verdict ok";
     v.innerHTML = n<16
-      ? `<b>Sorted in ${n} comparisons.</b>That beats the 16 that a careful method needs on any deck, so luck helped. Comparing every pair takes 28.`
+      ? `<b>Sorted in ${n} comparisons.</b>That is fewer than the 16 that always work for eight cards, so luck helped. Comparing every pair takes 28.`
       : n>28
-      ? `<b>Sorted in ${n} comparisons.</b>That is more than the 28 it takes to compare every pair. Good methods need about 16 for eight cards.`
-      : `<b>Sorted in ${n} comparisons.</b>Comparing every pair takes 28. Good methods need about 16 for eight cards.`;
+      ? `<b>Sorted in ${n} comparisons.</b>That is more than the 28 it takes to compare every pair. The fewest that always work for eight cards is 16.`
+      : `<b>Sorted in ${n} comparisons.</b>Comparing every pair takes 28. The fewest that always work for eight cards is 16.`;
     srtDraw();
   } else {
     v.className="verdict warn";

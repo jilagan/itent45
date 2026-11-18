@@ -1,7 +1,7 @@
 {
  "id": "library",
  "title": "Lesson library",
- "intro": "Short interactive lessons on how software works. Each lesson stands alone, so a course can use any of them in any order.",
+ "intro": "Short interactive lessons on computational thinking, software, data, the cloud and AI. Each lesson stands alone, so a course can use any of them in any order.",
  "areas": [
   {
    "id": "web",

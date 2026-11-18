@@ -6,7 +6,7 @@
 
       <div class="sec" data-sec="recipe-card" data-title="Start with a recipe card">
         <p>A new crew member at a milk tea shop follows the recipe card word for word. If the card says "add sugar," the crew member has to ask how much. A card that works for someone who cannot guess lists exact steps, in order, and ends. Such a list is an <dfn title="A list of exact steps, in order, that ends">algorithm</dfn>.</p>
-        <div class="scene" role="group" aria-label="The recipe card is the algorithm, the crew member is the computer, the milk tea is the result" data-art="recipe-card-crew" data-art-desc="A crew member in an apron holds a cup under a tea dispenser while a customer waits at the counter and a blank recipe card hangs on the wall.">
+        <div class="scene" role="group" aria-label="The recipe card is the algorithm, the crew member is the computer, the milk tea is the result" data-art="recipe-card-crew" data-art-desc="A crew member in an apron fills a cup at a tea dispenser while a customer waits at the counter.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-note-pencil"/></svg></div><figcaption><b>Recipe card</b><span>Algorithm</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Crew member</b><span>Computer</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-coffee"/></svg></div><figcaption><b>Milk tea</b><span>Result</span></figcaption></figure>
@@ -17,15 +17,15 @@
 
       <div class="sec" data-sec="write" data-title="Write the steps">
         <p>The robot barista knows seven instructions and does exactly what the list says. A <dfn title="An algorithm written so that a machine can run it">program</dfn> is an algorithm that a machine can run. Press instructions to build the list for the order, then press Run.</p>
-        <div class="algw" id="algBot">
+        <div class="card wg" id="algBot">
           <div class="ctab" id="algOrders" role="group" aria-label="Choose an order"></div>
-          <p class="algorder" id="algOrderText"></p>
+          <p class="wline algorder" id="algOrderText"></p>
           <div class="abot">
             <div>
               <div class="card-t">Instructions</div>
               <div class="akeys" id="algKeys"></div>
               <div class="card-t">Your steps</div>
-              <ol class="asteps" id="algSteps" aria-label="Your steps"></ol>
+              <ol class="wlist asteps" id="algSteps" aria-label="Your steps"></ol>
               <div class="ctrls">
                 <button type="button" class="btn primary" id="algRun">Run</button>
                 <button type="button" class="btn" id="algUndo">Undo</button>
@@ -40,7 +40,7 @@
           </div>
           <div class="meter">
             <div class="g" id="algWritten"><div class="gl">Steps written</div><div class="gv">0</div></div>
-            <div class="g" id="algDone"><div class="gl">Steps completed</div><div class="gv">—</div></div>
+            <div class="g" id="algDone"><div class="gl">Steps completed</div><div class="gv">None yet</div></div>
           </div>
           <div class="verdict" id="algVerdict" role="status" aria-live="polite"></div>
         </div>
@@ -61,7 +61,7 @@
 
       <div class="sec" data-sec="repeat" data-title="Repeat for the whole line">
         <p>Six customers wait, and each needs the same five steps. A <dfn title="A group of steps repeated until a stopping rule is met">loop</dfn> repeats a group of steps, and a rule says when to stop. Choose a rule and press Run line. Then add a customer and run again.</p>
-        <div class="algw" id="algLoop">
+        <div class="card wg" id="algLoop">
           <div class="ctab" id="rpRules" role="group" aria-label="Repeat rule"></div>
           <div class="rpblock">
             <div class="rphead">Repeat <b id="rpRuleText"></b></div>
@@ -77,8 +77,8 @@
           </div>
           <div class="meter">
             <div class="g" id="rpWritten"><div class="gl">Steps written</div><div class="gv">5</div></div>
-            <div class="g" id="rpRan"><div class="gl">Steps the robot ran</div><div class="gv">—</div></div>
-            <div class="g" id="rpWaiting"><div class="gl">Customers waiting</div><div class="gv">—</div></div>
+            <div class="g" id="rpRan"><div class="gl">Steps the robot ran</div><div class="gv">None yet</div></div>
+            <div class="g" id="rpWaiting"><div class="gl">Customers waiting</div><div class="gv">None yet</div></div>
           </div>
           <div class="verdict" id="rpVerdict" role="status" aria-live="polite"></div>
         </div>

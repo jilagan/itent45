@@ -37,11 +37,11 @@ const dcA={open:new Set(["top"]), v:null};
 function dcPieces(n,out=[]){ if(dcA.open.has(n.id)) n.k.forEach(c=>dcPieces(c,out)); else out.push(n); return out; }
 function dcRows(n,d,out){
   if(dcA.open.has(n.id)){
-    if(n.id!=="top") out.push(`<li class="dcrow dcgroup d${d}"><span>${dcEsc(n.n)}</span><span class="dch">${dcHours(n)} h</span></li>`);
+    if(n.id!=="top") out.push(`<li class="wrow dcgroup d${d}"><span>${dcEsc(n.n)}</span><span class="dch">${dcHours(n)} h</span></li>`);
     n.k.forEach(c=>dcRows(c,n.id==="top"?d:d+1,out));
   } else {
     const h=dcHours(n);
-    out.push(`<li class="dcrow d${d}"><span>${dcEsc(n.n)}</span><span class="dcend"><span class="dch">${h} h</span>`
+    out.push(`<li class="wrow d${d}"><span>${dcEsc(n.n)}</span><span class="dcend"><span class="dch">${h} h</span>`
       +(h>DC_LIMIT
         ? `<button type="button" class="btn" data-k="s:${n.id}" data-split="${n.id}" aria-label="Split ${dcEsc(n.n)}, ${h} hours">Split</button>`
         : `<span class="dcok" role="img" aria-label="${h} hours, small enough">${ICO("check-circle")}</span>`)
@@ -57,10 +57,10 @@ function dcSplitRender(focusKey){
   if(!dcA.v) dcA.v=dcSplitStart();
   const rows=[]; dcRows(DC_TREE,0,rows);
   dcSplitRoot.innerHTML=
-    `<p class="dcstat"><span><b>${p.length}</b> pieces</span><span>Largest piece <b>${mx} h</b></span></p>`
+    `<div class="meter"><div class="g"><div class="gl">Pieces</div><div class="gv">${p.length}</div></div><div class="g"><div class="gl">Largest piece</div><div class="gv">${mx} h</div></div></div>`
    +`<div class="verdict ${dcA.v.cls}" role="status">${dcA.v.h}</div>`
    +`<p class="dctop">${dcEsc(DC_TREE.n)}: ${dcHours(DC_TREE)} hours</p>`
-   +`<ul class="dctree">${rows.join("")}</ul>`
+   +`<ul class="wlist">${rows.join("")}</ul>`
    +`<div class="ctrls"><button type="button" class="btn" data-k="reset" data-reset>Reset</button></div>`;
   const nxt=dcSplitRoot.querySelector("[data-split]");
   dcFocus(dcSplitRoot, focusKey==="next" ? (nxt?nxt.dataset.k:"reset") : focusKey);
@@ -122,16 +122,16 @@ function dcPlanRender(focusKey){
   const free=dcFreePeople().map(i=>DC_PEOPLE[i]);
   let h=`<div class="dcbar"><span class="dcday">${dcP.finished?"Days used":"Day"} <b>${dcP.day}</b></span>`
        +`<button type="button" class="btn primary" data-k="end" data-end${(!running||dcP.finished)?" disabled":""}>End day</button></div>`
-       +`<p class="dcstat"><span>Free: ${free.length?dcEsc(free.join(", ")):"nobody"}</span><span><b>${dcP.done.length}</b> of ${DC_JOBS.length} jobs done</span></p>`
+       +`<div class="meter"><div class="g"><div class="gl">Free people</div><div class="gv">${free.length?dcEsc(free.join(", ")):"Nobody"}</div></div><div class="g"><div class="gl">Jobs done</div><div class="gv">${dcP.done.length} of ${DC_JOBS.length}</div></div></div>`
        +`<div class="verdict ${dcP.v.cls}" role="status">${dcP.v.h}</div>`;
-  h+=`<div class="dcjobs">`+DC_JOBS.map(j=>{
+  h+=`<div class="wopts dcjobs">`+DC_JOBS.map(j=>{
       const dur=dcPlural(j.d,"day");
       let cls,meta,st,dis=false;
       if(dcP.done.includes(j.id)){ cls="done"; meta=dur; st=ICO("check-circle")+"Done"; dis=true; }
       else if(j.id in dcP.run){ const r=dcP.run[j.id]; cls="run"; meta=dur+" · "+dcPlural(r.left,"day")+" left"; st=DC_PEOPLE[r.p]; }
       else if(dcIsReady(j)){ cls="ready"; meta=dur+" · ready"; st="Start"; }
       else { cls="wait"; meta=dur+" · waits for "+dcList(dcUnmet(j)); st="Waiting"; dis=true; }
-      return `<button type="button" class="dcjob ${cls}" data-k="j:${j.id}" data-job="${j.id}" aria-disabled="${dis}"><span><b>${dcEsc(j.n)}</b><span class="dcm">${dcEsc(meta)}</span></span><span class="dcst">${st}</span></button>`;
+      return `<button type="button" class="wopt ${cls==="run"?"sel":cls==="done"?"right":cls}" data-k="j:${j.id}" data-job="${j.id}" aria-disabled="${dis}"><span><b>${dcEsc(j.n)}</b><span class="dcm">${dcEsc(meta)}</span></span><span class="dcst">${st}</span></button>`;
     }).join("")+`</div>`
     +`<div class="ctrls"><button type="button" class="btn" data-k="reset" data-reset>Reset</button></div>`;
   dcPlanRoot.innerHTML=h;

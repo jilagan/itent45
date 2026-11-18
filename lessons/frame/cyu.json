@@ -8,17 +8,17 @@
    "stem": "The treasurer says, \"Keep the booth cheap.\" The team spends 4,200 pesos on a banner and then cannot afford tables. Which part of the framing was missing?",
    "options": [
     {
-     "text": "A limit written as a number, such as a total of 5,000 pesos.",
+     "text": "A budget limit written as a number, such as 5,000 pesos.",
      "correct": true,
      "feedback": "\"Cheap\" gave no number, so each person picked a different ceiling. With a total of 5,000 pesos, a 4,200-peso banner would have raised a flag at once."
     },
     {
-     "text": "A longer list of volunteers to share the work.",
+     "text": "A longer list of volunteers to share out the work.",
      "correct": false,
      "feedback": "More volunteers do not say how much money each item may use. The overspending came from the missing number."
     },
     {
-     "text": "A larger booth with room for more tables.",
+     "text": "A larger booth with room for more of the tables.",
      "correct": false,
      "feedback": "A larger booth costs more, and the team would still not know its ceiling."
     }
@@ -54,17 +54,17 @@
    "stem": "A developer is asked to \"build a sign-up page.\" The page works, but the org wanted every name copied into a shared spreadsheet. Which part of the problem was left out?",
    "options": [
     {
-     "text": "The input: which fields visitors fill in.",
+     "text": "The input: which fields the visitors fill in.",
      "correct": false,
      "feedback": "The page collected names, so the input was clear. The gap came after the form was submitted."
     },
     {
-     "text": "The limit: how fast the page loads.",
+     "text": "The limit: how quickly the page has to load.",
      "correct": false,
      "feedback": "Nobody asked about speed. The missing piece is what happens to the names."
     },
     {
-     "text": "The output: what must be produced and where it ends up.",
+     "text": "The output: what is produced and where it goes.",
      "correct": true,
      "feedback": "The spreadsheet was the real output, and nobody wrote it down. The page produced a result nobody wanted."
     }

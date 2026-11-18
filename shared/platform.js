@@ -72,17 +72,18 @@ function setupCourse(){
   UI.linkLessons(document,{base:"",embed:EMBED});
   UI.watch({base:"",embed:EMBED},COURSE);
 }
-/* the minimal header shown when there is no rail */
+/* the minimal header shown when there is no rail: library link, area, Display */
 function setupHeader(){
   const bar=q("#lbar"); if(!bar || EMBED) return;
   bar.textContent="";
   const a=el("a","lbar-lib","Lesson library"); a.href=L.library+UI.keepQuery({c:null}); bar.appendChild(a);
   bar.appendChild(el("span","lbar-area",L.areaLabel||""));
-  bar.appendChild(el("span","lbar-title",L.title));
   const d=el("details","lbar-display"); d.appendChild(el("summary",null,"Display"));
   d.insertAdjacentHTML("beforeend",UI.displayHtml());
   bar.appendChild(d);
   if(window.Display) window.Display.bind(bar);
+  document.addEventListener("click",e=>{ if(d.open && !d.contains(e.target)) d.open=false; });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape" && d.open){ d.open=false; q("summary",d).focus(); } });
 }
 function markSeen(){
   if(EMBED) return;
@@ -278,8 +279,7 @@ function showStep(sec, o){
     }
   }
   /* mobile contents list closes when a step is chosen */
-  HTML.classList.remove("nav-open");
-  const tg=q(".navtoggle"); if(tg) tg.setAttribute("aria-expanded","false");
+  UI.closeNav();
   /* relayout hooks need the lesson and step to be visible already */
   runShowHook();
   if(changed && !o.keepScroll){

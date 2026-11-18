@@ -81,8 +81,8 @@ function lessonInfo(course, id){ return (course.lessons&&course.lessons[id]) || 
 
 /* ---------- display (text size, theme) ---------- */
 function displayHtml(cls){
-  return '<div class="zoom'+(cls?" "+cls:"")+'"><button type="button" data-display="zout" title="Smaller text">A&minus;</button>'+
-         '<button type="button" data-display="zin" title="Bigger text">A+</button>'+
+  return '<div class="zoom'+(cls?" "+cls:"")+'" role="group" aria-label="Display"><button type="button" data-display="zout" title="Smaller text" aria-label="Smaller text">A&minus;</button>'+
+         '<button type="button" data-display="zin" title="Bigger text" aria-label="Bigger text">A+</button>'+
          '<button type="button" data-display="theme" title="Switch theme">Dark</button></div>';
 }
 
@@ -92,17 +92,46 @@ function paintSeen(rail, cid){
   qa(".navitem[data-p]",rail).forEach(a=>a.classList.toggle("seen",!!m[a.dataset.p]));
   qa(".home-group li[data-p]").forEach(li=>li.classList.toggle("seen",!!m[li.dataset.p]));
 }
-function setupNavToggle(rail){
-  const tg=q(".navtoggle",rail); if(!tg) return;
-  tg.addEventListener("click",()=>{
-    const open=!HTML.classList.contains("nav-open");
-    HTML.classList.toggle("nav-open",open); tg.setAttribute("aria-expanded",String(open));
-  });
-  document.addEventListener("keydown",e=>{
-    if(e.key==="Escape" && HTML.classList.contains("nav-open")){
-      HTML.classList.remove("nav-open"); tg.setAttribute("aria-expanded","false"); tg.focus();
+/* The contents list is part of the rail on wide screens. On a phone it is a full-screen panel that the Contents button opens
+   (the button reads Close while it is open). Opening closes every group except the one with the current lesson and scrolls to it. */
+const PHONE = window.matchMedia ? window.matchMedia("(max-width:820px)") : {matches:false};
+function scrollToCurrent(panel){
+  const cur=q(".navitem[aria-current=page]",panel); if(!cur) return;
+  const sum=cur.parentNode.querySelector("summary");
+  const pr=panel.getBoundingClientRect(), pad=parseFloat(getComputedStyle(panel).paddingTop)||0;
+  if(sum) panel.scrollTop += sum.getBoundingClientRect().top-(pr.top+pad);
+  const ir=cur.getBoundingClientRect();
+  if(ir.bottom>pr.bottom-24) panel.scrollTop += ir.bottom-(pr.bottom-24);
+}
+function navIsOpen(){ return HTML.classList.contains("nav-open"); }
+function setNavOpen(open, focus){
+  const tg=q(".navtoggle"), panel=q("#navpanel"); if(!tg||!panel) return;
+  if(open===navIsOpen()) return;
+  HTML.classList.toggle("nav-open",open);
+  tg.setAttribute("aria-expanded",String(open)); tg.textContent=open?"Close":"Contents";
+  if(open){
+    qa("details.navset",panel).forEach(d=>{ d.open=d.classList.contains("cur"); });
+    scrollToCurrent(panel);
+    if(focus!==false){
+      const cur=q(".navitem[aria-current=page]",panel)||q("summary",panel);
+      if(cur) try{ cur.focus({preventScroll:true}); }catch(e){}
     }
-  });
+  } else if(focus!==false) tg.focus();
+}
+function setupNavToggle(rail){
+  const tg=q(".navtoggle",rail), panel=q("#navpanel",rail); if(!tg||!panel) return;
+  tg.addEventListener("click",()=>setNavOpen(!navIsOpen()));
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape" && navIsOpen()) setNavOpen(false); });
+  /* choosing a lesson leaves the page, but a link to this same lesson or step only changes the address */
+  panel.addEventListener("click",e=>{ const a=e.target.closest&&e.target.closest("a.navitem"); if(a && a.getAttribute("aria-current")==="page") setNavOpen(false,false); });
+  const leave=()=>{ if(navIsOpen() && !PHONE.matches) setNavOpen(false,false); };
+  if(PHONE.addEventListener) PHONE.addEventListener("change",leave);
+  /* the page behind does not scroll: touches outside the panel, or in a panel with nothing to scroll, do nothing */
+  document.addEventListener("touchmove",e=>{
+    if(!navIsOpen()) return;
+    if(!panel.contains(e.target) || panel.scrollHeight<=panel.clientHeight+1) e.preventDefault();
+  },{passive:false});
+  window.addEventListener("pageshow",()=>setNavOpen(false,false));
 }
 /* opts: course, home, current (lesson id or null), lessonBase (path to the lesson pages), homeBase (path to the home pages) */
 function buildRail(rail, opts){
@@ -110,40 +139,49 @@ function buildRail(rail, opts){
   rail.textContent="";
   const brand=el("div","brand");
   brand.appendChild(el("div","kicker",H.kicker||C.code));
-  const h1=el("h1"), a=el("a","homelink",H.title); a.href=opts.homeBase+H.file+keepQuery(); h1.appendChild(a); brand.appendChild(h1);
-  const tg=el("button","navtoggle","Contents"); tg.type="button"; tg.setAttribute("aria-expanded","false"); tg.setAttribute("aria-controls","nav"); brand.appendChild(tg);
+  const h1=el("h1"), a=el("a","homelink"); a.href=opts.homeBase+H.file+keepQuery();
+  a.appendChild(el("span","t-full",H.title));
+  if(H.short){ a.appendChild(el("span","t-short",H.short)); a.classList.add("has-short"); }
+  h1.appendChild(a); brand.appendChild(h1);
+  const tg=el("button","navtoggle","Contents"); tg.type="button"; tg.setAttribute("aria-expanded","false"); tg.setAttribute("aria-controls","navpanel"); brand.appendChild(tg);
   if(H.subtitle) brand.appendChild(el("div","sub",H.subtitle));
   if(C.org) brand.appendChild(el("div","org",C.org));
   rail.appendChild(brand);
+  const panel=el("div","navpanel"); panel.id="navpanel";
   const nav=el("nav","nav"); nav.id="nav"; nav.setAttribute("aria-label","Lessons");
   H.groups.forEach(g=>{
     const d=el("details","navset"), s=el("summary","navgrp");
     s.appendChild(el("span","gname",g.label));
     s.appendChild(el("span","gcount",g.lessons.length+(g.lessons.length===1?" lesson":" lessons")));
     d.appendChild(s);
-    g.lessons.forEach(id=>{
-      const info=lessonInfo(C,id);
+    (g.items||g.lessons).forEach(item=>{
+      if(typeof item!=="string"){ d.appendChild(el("div","navsub",item.heading)); return; }
+      const id=item, info=lessonInfo(C,id);
       const b=el("a","navitem"); b.href=lessonUrl(opts.lessonBase,id); b.dataset.p=id;
       b.appendChild(el("span","lbl",info.label));
       b.appendChild(el("span","tick")).setAttribute("aria-hidden","true");
       b.appendChild(el("span","sr",", visited"));
-      if(id===cur){ b.setAttribute("aria-current","page"); d.open=true; }
+      if(id===cur){ b.setAttribute("aria-current","page"); d.open=true; d.classList.add("cur"); }
       d.appendChild(b);
     });
     nav.appendChild(d);
   });
-  rail.appendChild(nav);
+  panel.appendChild(nav);
+  const foot=el("div","navfoot");
+  const links=el("div","navlinks");
   (H.links||[]).forEach(l=>{
-    const r=el("a","repolink",l.label);
+    const r=el("a",null,l.label);
     if(l.home){ r.href=opts.homeBase+l.home+keepQuery(); } else { r.href=l.href; r.target="_blank"; r.rel="noopener"; }
-    rail.appendChild(r);
+    links.appendChild(r);
   });
-  const foot=el("details","rail-foot"); foot.appendChild(el("summary",null,"Display"));
+  if(links.children.length) foot.appendChild(links);
   foot.insertAdjacentHTML("beforeend",displayHtml());
-  rail.appendChild(foot);
+  panel.appendChild(foot);
+  rail.appendChild(panel);
   setupNavToggle(rail);
   if(window.Display) window.Display.bind(rail);
   paintSeen(rail, C.id);
+  if(!PHONE.matches) scrollToCurrent(nav);
 }
 
 /* ---------- course home pages (index.html, machine.html) ---------- */
@@ -158,5 +196,5 @@ function initHome(){
 }
 
 window.CourseUI = {COURSES, el, qa, q, idOK, seenMap, markSeen, T, fillVars, varsOf, keepQuery, lessonUrl, linkLessons, watch,
-                   homeOf, orderOf, lessonInfo, buildRail, paintSeen, displayHtml, initHome, EMBED};
+                   homeOf, orderOf, lessonInfo, buildRail, paintSeen, displayHtml, initHome, closeNav:()=>setNavOpen(false,false), EMBED};
 })();

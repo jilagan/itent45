@@ -29,19 +29,20 @@
      ]
     },
     {
-     "label": "Module 2 · Introduction to AI: how models learn",
+     "label": "Module 2 · Introduction to AI",
      "lessons": [
+      {
+       "heading": "How models learn"
+      },
       "intro",
       "next",
       "learn",
       "train",
       "deep",
-      "backprop"
-     ]
-    },
-    {
-     "label": "Module 2 · Introduction to AI: language models",
-     "lessons": [
+      "backprop",
+      {
+       "heading": "Language models"
+      },
       "tokens",
       "embed",
       "vectors",
@@ -107,7 +108,8 @@
      "label": "Course code on GitHub",
      "href": "https://github.com/jilagan/itent45"
     }
-   ]
+   ],
+   "short": "App Dev and Emerging Tech"
   }
  ],
  "vars": {

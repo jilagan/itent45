@@ -100,7 +100,7 @@ A lesson that needs more CSS puts it in `lessons/<id>/lesson.css`. `build.py` ad
 
 ## Courses
 
-`courses/<course>.json` holds `id` (the file name), `code`, `title`, `org`, `vars` (for example `{"project":"capstone project"}`) and `homes`. Each home is a page: `file`, `title`, `subtitle`, `kicker`, `intro`, `links` (to another home with `home`, or an outside page with `href`) and `groups` (a `label` and a list of lesson ids). A lesson can sit in one home of a course only. Home file names must be unique across courses. The course's lesson list, Next lesson button and visited ticks follow the order of the groups.
+`courses/<course>.json` holds `id` (the file name), `code`, `title`, `org`, `vars` (for example `{"project":"capstone project"}`) and `homes`. Each home is a page: `file`, `title`, `subtitle`, `kicker`, `intro`, an optional `short` (a shorter course title that the phone header shows in place of the full title; set it only when the full title cannot fit on one line), `links` (to another home with `home`, or an outside page with `href`) and `groups` (a `label` and a list of lesson ids; the list may also hold `{"heading": "text"}` entries, which show as small sub-headings inside the group on the home page and in the contents menu). A lesson can sit in one home of a course only. Home file names must be unique across courses. The course's lesson list, Next lesson button and visited ticks follow the order of the groups.
 
 `courses/library.json` lists the areas of the library page and the order of lessons in each. Without a course, "Next lesson" follows that order inside the area.
 

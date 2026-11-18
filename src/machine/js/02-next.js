@@ -2,16 +2,16 @@
 const NX=[
  {id:"fr", pre:"The capital of France is",
   d:[["Paris",.89],["the",.04],["a",.02],["located",.02],["home",.01],["known",.01],["one",.01]],
-  v:`<b>One word has almost all the probability</b>Paris has a probability of 0.89 because almost every sentence in the training data that began this way ended that way. The model has no separate fact about French geography to consult. The other six words are what English grammar allows next, in order of likelihood.`},
+  v:`<b>One word has almost all the probability</b>Paris has a probability of 0.89 because almost every sentence in the training data that began this way ended that way. The model has no separate fact about French geography to consult.`},
  {id:"mito", pre:"The mitochondrion is the",
   d:[["powerhouse",.71],["site",.09],["organelle",.06],["main",.04],["only",.03],["primary",.03],["structure",.02]],
-  v:`<b>The most common phrasing has the highest probability</b>Powerhouse comes first because that phrasing appears everywhere in text. The model did not compare it with other descriptions of how cells produce energy. You probably chose the same word for the same reason.`},
+  v:`<b>The most common phrasing has the highest probability</b>Powerhouse comes first because that phrasing appears everywhere in text. You probably chose the same word for the same reason.`},
  {id:"code", pre:"def get_user(request):\n    user = User.objects.",
   d:[["get",.42],["filter",.31],["all",.09],["create",.06],["exclude",.04],["first",.04],["none",.02]],
-  v:`<b>Two plausible words that behave differently</b>Both <code>get</code> and <code>filter</code> are plausible. They behave differently: <code>get</code> raises an error when there is no match, and <code>filter</code> returns an empty result. The model picks whichever word usually comes next. It does not know what your program needs.`},
+  v:`<b>Two plausible words that behave differently</b>Both <code>get</code> and <code>filter</code> are plausible, but <code>get</code> raises an error when there is no match and <code>filter</code> returns an empty result. The model picks whichever word usually comes next and does not know what your program needs.`},
  {id:"risky", pre:"To stop the double enrollment, add an",
   d:[["idempotency",.22],["index",.19],["if",.17],["assert",.14],["extra",.12],["email",.09],["alert",.07]],
-  v:`<b>A flat list means the model is unsure</b>No word is above 0.25. When the top word is barely ahead, the model is closer to guessing than deciding. The sentence it writes will still read as confidently as the France one did, so you cannot tell the difference from the output.`}
+  v:`<b>A flat list means the model is unsure</b>No word is above 0.25, so the model is closer to guessing than deciding. The sentence it writes will still read as confidently as the France one did.`}
 ];
 const NXS={sel:"fr", temp:1, tally:{}, last:null};
 function softmax(d,T){
@@ -40,7 +40,7 @@ function nxRender(){
   const v=$("#nxVerdict");
   if(NXS.temp<0.05){
     v.className="verdict warn";
-    v.innerHTML=`<b>At temperature 0 the model always takes the top word</b>The top word gets all of the probability and the others get none. The same prompt gives the same answer every time. ${q.v.replace(/^<b>.*?<\/b>/,"")}`;
+    v.innerHTML=`<b>At temperature 0 the model always takes the top word</b>The same prompt gives the same answer every time, even when that top word is wrong.`;
   } else { v.className="verdict ok"; v.innerHTML=q.v; }
 }
 function nxSample(k=1){
@@ -136,13 +136,13 @@ function gnRender(){
   const v=$("#gnVerdict");
   if(!GN.toks.length){
     v.className="verdict";
-    v.innerHTML=`<b>The sentence so far has seven words</b>Press <em>Next word</em>. Each press runs the same step as in "Choosing one word", on a prompt that is one word longer than the last time.`;
+    v.innerHTML=`<b>The sentence so far has seven words</b>Press <em>Next word</em>. Each press runs the same step on a prompt that is one word longer.`;
   } else if(!GN.done && d){
     v.className="verdict warn";
-    v.innerHTML=`<b>${GN.toks.length} word${GN.toks.length>1?"s":""} added</b>Look at the list underneath. It is a different list from last time, because the sentence the model is reading is different now. <b class="i">The word you added is part of the prompt.</b>`;
+    v.innerHTML=`<b>${GN.toks.length} word${GN.toks.length>1?"s":""} added</b>The list is different from last time, because the word you added is now part of the prompt.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>The sentence is finished</b>Nobody chose that ending before the words leading up to it existed. Each word was picked as a likely continuation of a sentence the model had written, and none of them could be taken back.<br><br>Press <em>Start again</em> a few times, and change the temperature. At 0 you get the same sentence every time. Above 1, the second or third word can differ from run to run, and everything after it follows from that one random pick.`;
+    v.innerHTML=`<b>The sentence is finished</b>Each word was picked as a likely continuation of the words before it, and none could be taken back. Press <em>Start again</em> for a different sentence.`;
   }
 }
 $("#gnStep").onclick=()=>{

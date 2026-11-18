@@ -31,9 +31,9 @@
   },
   {
    "id": "next-2",
-   "sec": "one-word",
-   "type": "predict",
-   "stem": "Before you try it: you ask a model the same question ten times at temperature 0. What do you expect to see?",
+   "sec": null,
+   "type": "mc",
+   "stem": "You ask a model the same question ten times at temperature 0. What do you expect to see?",
    "options": [
     {
      "text": "Ten identical answers",
@@ -55,12 +55,11 @@
      "correct": false,
      "feedback": "At temperature 0 there is no random choice, so there are no variations."
     }
-   ],
-   "try": "Select \"Do it ten times\" at temperature 0 in the widget above, then again at 1.2, and compare the two tallies."
+   ]
   },
   {
    "id": "next-3",
-   "sec": "one-word",
+   "sec": null,
    "type": "mc",
    "stem": "A company sets the temperature of its chatbot to 0 so that it gives the same answer every time. A customer asks a question, and the most likely word at one point is wrong. What happens?",
    "options": [
@@ -88,7 +87,7 @@
   },
   {
    "id": "next-4",
-   "sec": "the-loop",
+   "sec": null,
    "type": "mc",
    "stem": "A model is writing a long answer, and its third word is slightly wrong. What is most likely to happen to the rest of the answer?",
    "options": [
@@ -111,34 +110,6 @@
      "text": "The model stops at the wrong word and reports an error to the user.",
      "correct": false,
      "feedback": "Nothing in the process detects a wrong word, so no error is reported."
-    }
-   ]
-  },
-  {
-   "id": "next-5",
-   "sec": "the-loop",
-   "type": "mc",
-   "stem": "A program reads each incoming email and labels it either \"spam\" or \"not spam\". What kind of program is this?",
-   "options": [
-    {
-     "text": "A classifier",
-     "correct": true,
-     "feedback": "It chooses from a fixed set of answers that existed before the program ran. A program that works this way is a classifier."
-    },
-    {
-     "text": "A generative model",
-     "correct": false,
-     "feedback": "A generative model produces new text from an open set of possible answers. This program only picks one of two labels."
-    },
-    {
-     "text": "A language model, because emails are text",
-     "correct": false,
-     "feedback": "The type of input does not decide the type of program. What matters is whether the output is a fixed label or new text."
-    },
-    {
-     "text": "A set of hand-written rules",
-     "correct": false,
-     "feedback": "It could be built from hand-written rules, but a spam filter is often trained on examples. Either way, the kind of answer it gives is a classification."
     }
    ]
   }

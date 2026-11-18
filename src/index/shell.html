@@ -21,36 +21,36 @@
     </div>
     <nav class="nav" role="tablist" id="nav">
       <div class="navgrp">Module 1 · Anatomy</div>
-      <button role="tab" data-p="basics"  aria-selected="false"><span class="num">00</span><span class="lbl">What a server is</span></button>
-      <button role="tab" data-p="tiers"   aria-selected="true"><span class="num">01</span><span class="lbl">Three tiers</span></button>
-      <button role="tab" data-p="layers"  aria-selected="false"><span class="num">02</span><span class="lbl">Protocol layers</span></button>
-      <button role="tab" data-p="journey" aria-selected="false"><span class="num">03</span><span class="lbl">Round trips and latency</span></button>
-      <button role="tab" data-p="bytes"   aria-selected="false"><span class="num">04</span><span class="lbl">HTTP messages</span></button>
-      <button role="tab" data-p="rest"    aria-selected="false"><span class="num">05</span><span class="lbl">HTTP verbs and status codes</span></button>
-      <button role="tab" data-p="clients" aria-selected="false"><span class="num">06</span><span class="lbl">One API, many clients</span></button>
-      <button role="tab" data-p="render"  aria-selected="false"><span class="num">07</span><span class="lbl">Server or browser rendering</span></button>
-      <button role="tab" data-p="pay"     aria-selected="false"><span class="num">08</span><span class="lbl">Payments and gateways</span></button>
+      <button role="tab" data-p="basics" data-desc="What a server is, and how to read a web address."  aria-selected="false"><span class="num">00</span><span class="lbl">What a server is</span></button>
+      <button role="tab" data-p="tiers" data-desc="How a request travels from browser to server to database."   aria-selected="true"><span class="num">01</span><span class="lbl">Three tiers</span></button>
+      <button role="tab" data-p="layers" data-desc="How a message is wrapped in layers to cross the internet."  aria-selected="false"><span class="num">02</span><span class="lbl">Protocol layers</span></button>
+      <button role="tab" data-p="journey" data-desc="Why distance and the number of round trips make pages slow." aria-selected="false"><span class="num">03</span><span class="lbl">Round trips and latency</span></button>
+      <button role="tab" data-p="bytes" data-desc="What an HTTP request and response look like, line by line."   aria-selected="false"><span class="num">04</span><span class="lbl">HTTP messages</span></button>
+      <button role="tab" data-p="rest" data-desc="Which request type to use, and how to read status codes."    aria-selected="false"><span class="num">05</span><span class="lbl">HTTP verbs and status codes</span></button>
+      <button role="tab" data-p="clients" data-desc="How one API serves a website, an iPhone app and Android." aria-selected="false"><span class="num">06</span><span class="lbl">One API, many clients</span></button>
+      <button role="tab" data-p="render" data-desc="Whether the server or the browser builds the page."  aria-selected="false"><span class="num">07</span><span class="lbl">Server or browser rendering</span></button>
+      <button role="tab" data-p="pay" data-desc="How a card payment reaches a gateway without being charged twice."     aria-selected="false"><span class="num">08</span><span class="lbl">Payments and gateways</span></button>
       <div class="navgrp">Module 5 · Data</div>
-      <button role="tab" data-p="entity"  aria-selected="false"><span class="num">09</span><span class="lbl">Entities and attributes</span></button>
-      <button role="tab" data-p="card"    aria-selected="false"><span class="num">10</span><span class="lbl">Relationships</span></button>
-      <button role="tab" data-p="rea"     aria-selected="false"><span class="num">11</span><span class="lbl">The REA pattern</span></button>
-      <button role="tab" data-p="sql"     aria-selected="false"><span class="num">12</span><span class="lbl">SQL basics</span></button>
-      <button role="tab" data-p="txn"     aria-selected="false"><span class="num">13</span><span class="lbl">Transactions</span></button>
-      <button role="tab" data-p="norm" aria-selected="false"><span class="num">14</span><span class="lbl">Normalization</span></button>
-      <button role="tab" data-p="query" aria-selected="false"><span class="num">15</span><span class="lbl">The N+1 query problem</span></button>
-      <button role="tab" data-p="shape" aria-selected="false"><span class="num">16</span><span class="lbl">Relational or document</span></button>
+      <button role="tab" data-p="entity" data-desc="How to describe things and their details as tables."  aria-selected="false"><span class="num">09</span><span class="lbl">Entities and attributes</span></button>
+      <button role="tab" data-p="card" data-desc="How rows in one table connect to rows in another."    aria-selected="false"><span class="num">10</span><span class="lbl">Relationships</span></button>
+      <button role="tab" data-p="rea" data-desc="A standard way to record sales, payments and who took part."     aria-selected="false"><span class="num">11</span><span class="lbl">The REA pattern</span></button>
+      <button role="tab" data-p="sql" data-desc="Read, add, change and delete rows with four short commands."     aria-selected="false"><span class="num">12</span><span class="lbl">SQL basics</span></button>
+      <button role="tab" data-p="txn" data-desc="What goes wrong when two users change the same data."     aria-selected="false"><span class="num">13</span><span class="lbl">Transactions</span></button>
+      <button role="tab" data-p="norm" data-desc="Why each fact should be stored in only one place." aria-selected="false"><span class="num">14</span><span class="lbl">Normalization</span></button>
+      <button role="tab" data-p="query" data-desc="Why asking for 50 records one by one is slow." aria-selected="false"><span class="num">15</span><span class="lbl">The N+1 query problem</span></button>
+      <button role="tab" data-p="shape" data-desc="When to keep data in tables and when in documents." aria-selected="false"><span class="num">16</span><span class="lbl">Relational or document</span></button>
       <div class="navgrp">Module 4 · Capacity &amp; cloud</div>
-      <button role="tab" data-p="mem"     aria-selected="false"><span class="num">17</span><span class="lbl">Server memory</span></button>
-      <button role="tab" data-p="server"  aria-selected="false"><span class="num">18</span><span class="lbl">Server capacity</span></button>
-      <button role="tab" data-p="scale"   aria-selected="false"><span class="num">19</span><span class="lbl">Load balancers and scaling</span></button>
-      <button role="tab" data-p="enlist"   aria-selected="false"><span class="num">20</span><span class="lbl">Case study: enlistment</span></button>
-      <button role="tab" data-p="vm"      aria-selected="false"><span class="num">21</span><span class="lbl">Virtual machines and the cloud</span></button>
-      <button role="tab" data-p="cost"    aria-selected="false"><span class="num">22</span><span class="lbl">CapEx and OpEx</span></button>
-      <button role="tab" data-p="region"  aria-selected="false"><span class="num">23</span><span class="lbl">Regions and failover</span></button>
+      <button role="tab" data-p="mem" data-desc="What uses a server's memory before any user arrives."     aria-selected="false"><span class="num">17</span><span class="lbl">Server memory</span></button>
+      <button role="tab" data-p="server" data-desc="How workers and queues decide how many requests a server handles."  aria-selected="false"><span class="num">18</span><span class="lbl">Server capacity</span></button>
+      <button role="tab" data-p="scale" data-desc="How a load balancer lets several machines share the traffic."   aria-selected="false"><span class="num">19</span><span class="lbl">Load balancers and scaling</span></button>
+      <button role="tab" data-p="enlist" data-desc="One busy day that tests everything in this module."   aria-selected="false"><span class="num">20</span><span class="lbl">Case study: enlistment</span></button>
+      <button role="tab" data-p="vm" data-desc="How one physical machine is split into many virtual ones."      aria-selected="false"><span class="num">21</span><span class="lbl">Virtual machines and the cloud</span></button>
+      <button role="tab" data-p="cost" data-desc="Buying servers or renting them: what each costs and when."    aria-selected="false"><span class="num">22</span><span class="lbl">CapEx and OpEx</span></button>
+      <button role="tab" data-p="region" data-desc="What happens to your site when a data center fails."  aria-selected="false"><span class="num">23</span><span class="lbl">Regions and failover</span></button>
       <div class="navgrp">Module 6 · Architecture</div>
-      <button role="tab" data-p="split"   aria-selected="false"><span class="num">24</span><span class="lbl">Monolith or services</span></button>
+      <button role="tab" data-p="split" data-desc="One application or many small services, and the cost of each."   aria-selected="false"><span class="num">24</span><span class="lbl">Monolith or services</span></button>
       <div class="navgrp">Work</div>
-      <button role="tab" data-p="break"   aria-selected="false"><span class="num">25</span><span class="lbl">Group exercises</span></button>
+      <button role="tab" data-p="break" data-desc="Group exercises that use a real server running on your laptop."   aria-selected="false"><span class="num">25</span><span class="lbl">Group exercises</span></button>
     </nav>
     <a class="repolink" href="machine.html">
       Next: Module 2
@@ -58,20 +58,22 @@
     <a class="repolink" href="https://github.com/jilagan/itent45" target="_blank" rel="noopener">
       Course code on GitHub
     </a>
-    <div class="rail-foot">
-      <span>Size</span>
+    <details class="rail-foot">
+      <summary>Display</summary>
       <div class="zoom">
-        <button id="zOut" title="Smaller">A−</button>
-        <button id="zIn" title="Bigger">A+</button>
+        <button id="zOut" title="Smaller text">A&minus;</button>
+        <button id="zIn" title="Bigger text">A+</button>
         <button id="thBtn" title="Switch theme">Dark</button>
       </div>
-    </div>
+    </details>
   </aside>
 
   <main class="stage">
 
-    <!-- ================= 01 TIERS ================= -->
-    <!-- ================= 00 BASICS ================= -->
+<section class="home" id="home" aria-label="Lessons">
+      <h2>Under the Hood</h2>
+      <p class="lede">This module follows one web request from your browser to a database, then shows how servers store data, handle crowds and run in the cloud. Each lesson is a few short steps: read the step, try the one thing it asks, then answer the check at the end.</p>
+    </section>
 <!--@@PANELS@@-->
   </main>
 </div>

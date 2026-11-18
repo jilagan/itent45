@@ -1,27 +1,21 @@
 /* ================= 01 TIERS ================= */
 const TIERS=[
  {n:"Tier 1",h:"Presentation, the browser",
-  p:"The page the user sees, built from HTML (content), CSS (appearance) and JavaScript (behavior). It is downloaded and runs on the user's own device, which you do not control. You cannot trust what it sends back.",
   m:[["Runs on","the user's laptop"],["You write","templates, JavaScript"],["In practice","templates and static files"]],
   mv:{django:[["Runs on","the user's laptop"],["You write","templates, JavaScript"],["In practice","templates and static files"]],
       express:[["Runs on","the user's laptop"],["You write","JSX, CSS, JavaScript"],["In practice","the React code"]],
       laravel:[["Runs on","the user's laptop"],["You write","Blade, CSS, JavaScript"],["In practice","Blade views and public files"]]}},
  {n:"Tier 2",h:"Application, your server process",
-  p:"Routing (matching a URL to the code that handles it), permission checks, business rules, and turning data into a response. This tier holds the database password and decides which requests the database may answer.",
   m:[["Runs on","your server"],["You write","routes, handlers, models"],["In practice","the project itself"]],
   mv:{django:[["Runs on","your server"],["You write","urls.py, views, models"],["Stack","Django + gunicorn"]],
       express:[["Runs on","your server"],["You write","routes, controllers, models"],["Stack","Express + Node"]],
       laravel:[["Runs on","your server"],["You write","routes, controllers, models"],["Stack","Laravel + PHP-FPM"]]}},
  {n:"Tier 3",h:"Data, the database",
-  p:"A separate program that stores data in tables of rows and answers questions written in SQL, the language databases use. It receives text, works out how to answer it, and returns a grid of values.",
-  pv:{django:"A separate program that stores data in tables of rows and answers questions written in SQL, the language databases use. It knows nothing about Python or Django. It receives text, works out how to answer it, and returns a grid of values.",
-      express:"A separate program that stores data in tables of rows and answers questions written in SQL, the language databases use. It knows nothing about JavaScript or Prisma. It receives text, works out how to answer it, and returns a grid of values.",
-      laravel:"A separate program that stores data in tables of rows and answers questions written in SQL, the language databases use. It knows nothing about PHP or Eloquent. It receives text, works out how to answer it, and returns a grid of values."},
   m:[["Runs on","your server, or its own"],["You write","table design, queries"],["In practice","Postgres, a widely used database"]]}
 ];
 const TRACE=[
  {t:1,h:"You click a button on a page you already have",
-  x:"The page at <code>/my-courses</code> is already open. Clicking the button does not load a new page. JavaScript on the page requests data from the server, so the address bar stays the same. The browser is a program on your own laptop, and nothing has left your machine yet.",
+  x:"The page is already open, so the click only runs JavaScript that asks the server for data. Nothing has left your laptop yet.",
   l:"The page's button and the function it runs (tier 1)",
   a:`<span class="d">&lt;button onclick=</span><span class="s">"loadCourses()"</span><span class="d">&gt;</span>My Courses<span class="d">&lt;/button&gt;</span>
 
@@ -30,62 +24,62 @@ const TRACE=[
   render(<span class="kw">await</span> r.json());   <span class="c">// address bar stays on /my-courses</span>
 }`},
  {t:1,h:"The browser builds a request",
-  x:"The browser turns that URL into the plain text message described later in \"HTTP messages\". Your application code has not run yet, and the server does not know you exist.",
+  x:"The browser turns the address into a plain text message. The server has not heard from you yet.",
   l:"The HTTP request text (tier 1)",
   a:`<span class="kw">GET</span> /api/enrollments?student=20-1234 HTTP/1.1\nHost: enlist.university.edu\nAccept: application/json\nCookie: sessionid=8f2a...`},
  {t:0,h:"The request crosses the network",
-  x:"The request is wrapped in the layers described later in \"Protocol layers\" and passes through the routers between you and the server. This takes milliseconds that no amount of code can remove. Its cost is covered later in \"Round trips and latency\".",
+  x:"The request passes through the routers between you and the server. This takes milliseconds that no code can remove.",
   l:"The path across the network",
   a:`<span class="c">laptop → wifi → internet provider → ... → data center → server</span>\n<span class="c">each router replaces the outer frame and leaves everything inside unchanged</span>`},
  {t:2,h:"The framework matches the URL",
-  x:"The server process reads the path and checks a list of URL patterns from top to bottom. It uses the first pattern that matches. Every framework has this list, and only the syntax differs.",
+  x:"The server reads the path and checks a list of URL patterns from top to bottom. It uses the first pattern that matches.",
   lv:{django:"urls.py, the list of URL patterns (tier 2)", express:"routes/index.js, the list of URL patterns (tier 2)", laravel:"routes/api.php, the list of URL patterns (tier 2)"},
   av:{
    django:`urlpatterns = [\n    path(<span class="s">"my-courses"</span>, views.my_courses_page),  <span class="c"># the page you are on</span>\n    path(<span class="s">"api/enrollments"</span>, views.enrollment_list),\n    path(<span class="s">"api/courses/&lt;str:code&gt;"</span>, views.course_detail),\n]`,
    express:`router.get(<span class="s">"/api/enrollments"</span>, enrollmentList);\nrouter.get(<span class="s">"/api/courses/:code"</span>, courseDetail);`,
    laravel:`Route::get(<span class="s">'/api/enrollments'</span>, [EnrollmentController::<span class="kw">class</span>, <span class="s">'index'</span>]);\nRoute::get(<span class="s">'/api/courses/{code}'</span>, [CourseController::<span class="kw">class</span>, <span class="s">'show'</span>]);`}},
  {t:2,h:"Your handler runs",
-  x:"Now your own code runs. The handler is the function that deals with this request. It runs on the server, in a process you control, and it can use secrets such as the database password that the browser must never see. The code below first checks that the user is logged in, then reads the student number from the URL.",
+  x:"Your own code now runs on a server you control. It checks that the user is logged in, then reads the student number from the URL.",
   lv:{django:"views.py, the handler (tier 2)", express:"The controller, the handler (tier 2)", laravel:"The controller, the handler (tier 2)"},
   av:{
    django:`<span class="kw">def</span> enrollment_list(request):\n    <span class="kw">if</span> <span class="kw">not</span> request.user.is_authenticated:\n        <span class="kw">return</span> JsonResponse({...}, status=<span class="s">401</span>)\n    sid = request.GET.get(<span class="s">"student"</span>)`,
    express:`<span class="kw">async function</span> enrollmentList(req, res) {\n  <span class="kw">if</span> (!req.user) <span class="kw">return</span> res.status(<span class="s">401</span>).json({...});\n  <span class="kw">const</span> sid = req.query.student;`,
    laravel:`<span class="kw">public function</span> index(Request $request) {\n    <span class="kw">if</span> (! $request->user()) {\n        <span class="kw">return</span> response()->json([...], <span class="s">401</span>);\n    }\n    $sid = $request->query(<span class="s">'student'</span>);`}},
  {t:2,h:"The ORM writes SQL for you",
-  x:"An ORM (object-relational mapper) is a library that turns objects in your code into SQL text, and rows back into objects. The lines below describe the data you want. The ORM turns them into a SQL string and hands that string to the database. Anything you can do here, you could do by writing the SQL yourself.",
+  x:"An ORM (object-relational mapper) is a library that turns your code's objects into SQL text and rows back into objects. The lines below describe the data you want, and the ORM writes the SQL.",
   lv:{django:"The Django ORM (tier 2)", express:"The Prisma ORM (tier 2)", laravel:"The Eloquent ORM (tier 2)"},
   av:{
-   django:`qs = (Enrollment.objects\n        .filter(student_id=sid)\n        .select_related(<span class="s">"course"</span>))\n\n<span class="c"># select_related fetches each course in the same query,</span>\n<span class="c"># so the total stays at one query (covered later in "The N+1 query problem")</span>`,
-   express:`<span class="kw">const</span> rows = <span class="kw">await</span> prisma.enrollment.findMany({\n  where:   { studentId: sid },\n  include: { course: <span class="kw">true</span> }\n});\n\n<span class="c">// include fetches each course in the same query,</span>\n<span class="c">// so the total stays at one query (covered later in "The N+1 query problem")</span>`,
-   laravel:`$rows = Enrollment::where(<span class="s">'student_id'</span>, $sid)\n        ->with(<span class="s">'course'</span>)\n        ->get();\n\n<span class="c">// with() fetches each course in the same query,</span>\n<span class="c">// so the total stays at one query (covered later in "The N+1 query problem")</span>`}},
+   django:`qs = (Enrollment.objects\n        .filter(student_id=sid)\n        .select_related(<span class="s">"course"</span>))\n\n<span class="c"># select_related fetches each course in the same query,</span>\n<span class="c"># so the total stays at one query</span>`,
+   express:`<span class="kw">const</span> rows = <span class="kw">await</span> prisma.enrollment.findMany({\n  where:   { studentId: sid },\n  include: { course: <span class="kw">true</span> }\n});\n\n<span class="c">// include fetches each course in the same query,</span>\n<span class="c">// so the total stays at one query</span>`,
+   laravel:`$rows = Enrollment::where(<span class="s">'student_id'</span>, $sid)\n        ->with(<span class="s">'course'</span>)\n        ->get();\n\n<span class="c">// with() fetches each course in the same query,</span>\n<span class="c">// so the total stays at one query</span>`}},
  {t:3,h:"The database receives SQL",
-  x:"The database is a separate program, often on a separate machine. It reads the SQL text, works out how to answer it, and reads the data from disk or memory. It knows nothing about your framework. The query below asks for this student's enrollments, with the details of each course.",
+  x:"The database is a separate program. It reads the SQL text and finds the data, and it knows nothing about your framework.",
   l:"The SQL query (tier 3)",
   a:`<span class="kw">SELECT</span> e.id, e.student_id, c.code, c.title, c.units\n<span class="kw">FROM</span> enrollment e\n<span class="kw">JOIN</span> course c <span class="kw">ON</span> c.id = e.course_id\n<span class="kw">WHERE</span> e.student_id = <span class="s">'20-1234'</span>;`},
  {t:3,h:"Rows come back",
-  x:"The database returns rows, not objects. A row is one line of values in a table, with no behavior attached. The database knows nothing about your programming language's classes.",
+  x:"The database returns rows, which are lines of values with no behavior attached. It knows nothing about your programming language's classes.",
   l:"The result: two rows (tier 3)",
   a:`<span class="d"> id  | student_id | code     | title              | units</span>\n<span class="d">-----+------------+----------+--------------------+------</span>\n 881 | 20-1234    | ITENT 45 | Application Dev... |     3\n 882 | 20-1234    | CSCI 21  | Data Structures    |     3`},
  {t:2,h:"Rows become objects",
-  x:"The ORM turns each row into an object, so your code can read its fields with dot notation, such as <code>enrollment.course.code</code>. This is the \"O\" in ORM. It uses processor time and memory in proportion to the number of rows you asked for.",
+  x:"The ORM turns each row into an object, so your code can read fields such as <code>enrollment.course.code</code>. This uses processor time and memory in proportion to the number of rows.",
   lv:{django:"The objects the ORM created (tier 2)", express:"The objects the ORM created (tier 2)", laravel:"The objects the ORM created (tier 2)"},
   av:{
    django:`[&lt;Enrollment: 20-1234 → ITENT 45&gt;,\n &lt;Enrollment: 20-1234 → CSCI 21&gt;]`,
    express:`[ { id: 881, course: { code: <span class="s">'ITENT 45'</span>, units: 3 } },\n  { id: 882, course: { code: <span class="s">'CSCI 21'</span>,  units: 3 } } ]`,
    laravel:`Illuminate\\Support\\Collection {\n  <span class="d">#items:</span> [ App\\Models\\Enrollment {...},\n            App\\Models\\Enrollment {...} ]\n}`}},
  {t:2,h:"Objects become text",
-  x:"Objects cannot travel over the network, so the server converts them to JSON, a plain text format for structured data. This step is called serialization. The result is the body of a response like the ones shown later in \"HTTP messages\".",
+  x:"Objects cannot travel over the network, so the server converts them to JSON, a plain text format for data. This step is called serialization.",
   lv:{django:"Converting the objects to JSON (tier 2)", express:"Converting the objects to JSON (tier 2)", laravel:"Converting the objects to JSON (tier 2)"},
   av:{
    django:`<span class="kw">return</span> JsonResponse({\n  <span class="s">"enrollments"</span>: [\n    {<span class="s">"code"</span>: <span class="s">"ITENT 45"</span>, <span class="s">"units"</span>: 3},\n    {<span class="s">"code"</span>: <span class="s">"CSCI 21"</span>,  <span class="s">"units"</span>: 3}\n  ]\n})`,
    express:`res.json({\n  enrollments: [\n    { code: <span class="s">"ITENT 45"</span>, units: 3 },\n    { code: <span class="s">"CSCI 21"</span>,  units: 3 }\n  ]\n});`,
    laravel:`<span class="kw">return</span> response()->json([\n  <span class="s">'enrollments'</span> => [\n    [<span class="s">'code'</span> => <span class="s">'ITENT 45'</span>, <span class="s">'units'</span> => 3],\n    [<span class="s">'code'</span> => <span class="s">'CSCI 21'</span>,  <span class="s">'units'</span> => 3]\n  ]\n]);`}},
  {t:0,h:"The response crosses back",
-  x:"The server sends a status line, headers, a blank line and the body, the same layout as every response shown later in \"HTTP messages\". The trip home costs the same network time as the trip out.",
+  x:"The server sends a status line, headers, a blank line and the body. The trip back costs the same network time as the trip out.",
   l:"The HTTP response text",
   a:`<span class="kw">HTTP/1.1 200 OK</span>\nContent-Type: application/json\nContent-Length: 94\n\n{<span class="s">"enrollments"</span>: [ ... ]}`},
  {t:1,h:"The browser renders it",
-  x:"JavaScript on the user's laptop reads the JSON and builds the page's elements from it. The browser keeps these elements in a structure called the DOM (Document Object Model). This code runs on a device you do not control, and a user can change it. Any check made only here can be skipped, so the server must repeat every check that matters.",
+  x:"JavaScript on the user's laptop reads the JSON and builds the page's elements. A user can change this code, so the server must repeat every check that matters.",
   l:"The page code that builds the list (tier 1)",
   a:`<span class="kw">const</span> r = <span class="kw">await</span> fetch(<span class="s">"/api/enrollments?student=20-1234"</span>);\n<span class="kw">const</span> data = <span class="kw">await</span> r.json();\nlist.innerHTML = data.enrollments\n  .map(e =&gt; <span class="s">\`&lt;li&gt;\${e.code}&lt;/li&gt;\`</span>).join(<span class="s">""</span>);`}
 ];
@@ -121,7 +115,7 @@ const VIEWS={
  loading:{ html:`${PAGE_CSS}<h1>My Courses</h1><div class="sub">&nbsp;</div>
    <div class="mid"><div class="spin"></div><div class="wait">Waiting for the server</div></div>`,
    spin:true, url:"https://enlist.university.edu/my-courses",
-   cap:`Ten of the twelve steps happen while the user sees this spinner. The user cannot tell where the time goes. They only see how long the wait is.` },
+   cap:`Ten of the twelve parts happen while the user sees this spinner. The user cannot tell where the time goes. They only see how long the wait is.` },
  done:{ html:`${PAGE_CSS}<h1>My Courses</h1><div class="sub">First Semester, 2026&ndash;2027</div>
    <ul>
      <li data-src="json"><span class="code">ITENT 45</span><span class="units">3 units</span></li>
@@ -187,7 +181,6 @@ function setView(mode){
   $("#vWire").setAttribute("aria-pressed",mode==="wire");
   $("#vDom").setAttribute("aria-pressed",mode==="dom");
   $("#vRender").setAttribute("aria-pressed",mode==="render");
-  $("#trArt").style.display  = mode==="wire"   ? "" : "none";
   $("#trDom").style.display  = mode==="dom"    ? "" : "none";
   $("#domCap").style.display = mode==="dom"    ? "" : "none";
   $("#trBrow").style.display = mode==="render" ? "" : "none";
@@ -206,16 +199,21 @@ let STACK="django";
 const STACK_NAME={django:"Django process",express:"Node process",laravel:"PHP-FPM process"};
 function renderTiers(){
   TIERS.forEach((t,i)=>{
-    const meta = (t.mv && t.mv[STACK]) ? t.mv[STACK] : t.m;
     let name = (t.h.split(", ")[1]||t.h).replace(/^./,c=>c.toUpperCase());
     if(i===1) name = "Your " + STACK_NAME[STACK];
     $("#tb"+(i+1)).innerHTML=`
+      ${ICO(["user","bell-simple","cooking-pot"][i],"big")}
       <div class="tn">${t.n}</div>
       <h4>${name}</h4>
-      <div class="trole">${t.h.split(", ")[0]} tier</div>
-      <p>${(t.pv && t.pv[STACK]) ? t.pv[STACK] : t.p}</p>
-      <div class="meta">${meta.map(([k,v])=>`<span>${k}: <b>${v}</b></span>`).join("")}</div>`;
+      <div class="trole">${t.h.split(", ")[0]} tier</div>`;
   });
+  /* the rows that depend on the framework live under More detail */
+  const rows = TIERS.map((t,i)=>{
+    const meta = (t.mv && t.mv[STACK]) ? t.mv[STACK] : t.m;
+    return `<tr><th scope="row">${t.n}, ${(t.h.split(", ")[1]||t.h)}</th>` +
+      meta.map(([k,v])=>`<td><span class="mk">${k}</span> ${v}</td>`).join("") + `</tr>`;
+  }).join("");
+  const el=$("#tierMeta"); if(el) el.innerHTML = `<tbody>${rows}</tbody>`;
 }
 renderTiers();
 
@@ -254,6 +252,8 @@ function placeBall(i){
     return;
   }
   ball.style.display="";
+  const bic = i>=10 ? "bowl-food" : i>=7 ? "table" : "receipt";
+  if(ball.dataset.ic!==bic){ ball.dataset.ic=bic; ball.innerHTML=ICO(bic); }
   // outbound rides the upper rail (request / query); the return leg rides the lower one (response / rows)
   const rail = $(returning ? "#railAb" : "#railAf");
   const fb=flow.getBoundingClientRect(), tb=el.getBoundingClientRect();
@@ -280,7 +280,7 @@ addEventListener("resize",()=>{ if($(".panel.on")?.id==="p-tiers") placeBall(trI
 
 function renderTrace(){
   const s=TRACE[trI];
-  $("#trStep").textContent=`Step ${trI+1} of ${TRACE.length}`;
+  $("#trStep").textContent=`Part ${trI+1} of ${TRACE.length}`;
   $("#trTitle").textContent=s.h;
   $("#trText").innerHTML=s.x;
   $("#trLbl").textContent = (s.lv && s.lv[STACK]) ? s.lv[STACK] : s.l;
@@ -291,13 +291,13 @@ function renderTrace(){
 }
 $("#trNext").onclick=()=>{clearInterval(trTimer);trI=Math.min(TRACE.length-1,trI+1);renderTrace()};
 $("#trPrev").onclick=()=>{clearInterval(trTimer);trI=Math.max(0,trI-1);renderTrace()};
-$("#trRst").onclick=()=>{clearInterval(trTimer);trI=0;renderTrace();$("#trPlay").textContent="▶ Play trace"};
+$("#trRst").onclick=()=>{clearInterval(trTimer);trI=0;renderTrace();$("#trPlay").textContent="▶ Play"};
 $("#trPlay").onclick=e=>{
   clearInterval(trTimer);
-  if(e.target.dataset.on==="1"){e.target.dataset.on="";e.target.textContent="▶ Play trace";return}
+  if(e.target.dataset.on==="1"){e.target.dataset.on="";e.target.textContent="▶ Play";return}
   e.target.dataset.on="1"; e.target.textContent="❚❚ Pause";
   trTimer=setInterval(()=>{
-    if(trI>=TRACE.length-1){clearInterval(trTimer);$("#trPlay").dataset.on="";$("#trPlay").textContent="▶ Play trace";return}
+    if(trI>=TRACE.length-1){clearInterval(trTimer);$("#trPlay").dataset.on="";$("#trPlay").textContent="▶ Play";return}
     trI++; renderTrace();
   }, REDUCED?900:2600);
 };

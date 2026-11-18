@@ -1,5 +1,6 @@
 const $=(q,r=document)=>r.querySelector(q);
 const $$=(q,r=document)=>[...r.querySelectorAll(q)];
+const ICO=(n,c)=>`<svg class="ico ${c||""}" aria-hidden="true" focusable="false"><use href="#i-${n}"/></svg>`;
 const REDUCED=matchMedia("(prefers-reduced-motion: reduce)").matches;
 const CSSV=(()=>{const c={};const f=n=>{if(!(n in c))c[n]=getComputedStyle(document.documentElement).getPropertyValue(n).trim();return c[n]||"#888";};f.cache=c;return f;})();
 /* Routing, sections, embed mode and the nav click handler live in shared/platform.js.

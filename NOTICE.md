@@ -25,3 +25,5 @@ IBM Plex Sans and IBM Plex Mono are loaded from Google Fonts and are licensed
 separately by IBM under the SIL Open Font License. They are not covered by any
 licence granted here. The tool falls back to system fonts when they are
 unavailable.
+
+Icons are from Phosphor Icons (https://phosphoricons.com), MIT licence, copyright Phosphor Icons. The regular-weight SVG files in src/shared/icons are copied unchanged and inlined into each page as a sprite.

@@ -1,6 +1,8 @@
-/* ITENT 45 platform: routing, sections, embed mode, mobile nav, Check Your Understanding, video slots.
+/* ITENT 45 platform: routing, lesson steps, home view, rail, terms, embed mode, Check Your Understanding, video slots.
    Runs last on both pages. Page-specific hooks come from window.PAGE_HOOKS (see js/00-shell.js).
-   URL forms: #rest  #rest/status-codes  ?embed=1  &cyu=0  &video=0  ?instructor=1  ?theme=dark */
+   A lesson is a panel. Its .sec blocks are steps shown one at a time. A generated last step (slug "check")
+   holds the key terms (<dfn title>) and the Check Your Understanding items.
+   URL forms: #home  #rest  #rest/status-codes  #rest/check  ?embed=1  &cyu=0  &video=0  ?instructor=1  ?theme=dark */
 (function(){
 "use strict";
 const C = window.COURSE || {page:"index", cyu:{}, videos:[]};
@@ -42,68 +44,212 @@ qa(".panel").forEach(p=>{
   const o={el:p, id, secs:[], tabs:null, head:q(":scope > .head",p)};
   panels[id]=o; panelList.push(o);
 });
+navButtons.forEach(b=>{ const o=panels[b.dataset.p]; if(o){ const l=q(".lbl",b); o.label=(l?l.textContent:b.textContent).trim(); o.btn=b; } });
+const homeEl = q("#home");
 const firstId = navButtons.length ? navButtons[0].dataset.p : (panelList[0] ? panelList[0].id : "");
 const fullBase = location.href.split("#")[0].split("?")[0];
 
-/* ---------- sections ---------- */
-function setupSections(){
+/* ---------- rail: collapsible groups, visited marks ---------- */
+const SEEN_KEY="itent45-seen-"+(C.page||"index");
+let seen={};
+try{ seen=JSON.parse(sessionStorage.getItem(SEEN_KEY)||"{}")||{}; }catch(e){ seen={}; }
+let railGroups=[];
+function setupRail(){
+  if(!nav) return;
+  const groups=[]; let cur=null;
+  Array.from(nav.children).forEach(k=>{
+    if(k.classList.contains("navgrp")){ cur={name:k.textContent.trim(), btns:[], title:k}; groups.push(cur); }
+    else if(cur && k.matches("button[data-p]")) cur.btns.push(k);
+  });
+  groups.forEach(g=>{
+    const d=el("details","navset"), s=el("summary","navgrp");
+    s.appendChild(el("span","gname",g.name));
+    s.appendChild(el("span","gcount",g.btns.length+(g.btns.length===1?" lesson":" lessons")));
+    d.appendChild(s);
+    g.title.replaceWith(d);
+    g.btns.forEach(b=>d.appendChild(b));
+    g.el=d;
+  });
+  railGroups=groups;
+  navButtons.forEach(b=>{
+    b.appendChild(el("span","tick")).setAttribute("aria-hidden","true");
+    b.appendChild(el("span","sr",", visited"));
+  });
+  const h1=q(".brand h1");
+  if(h1 && homeEl){ const a=el("a","homelink",h1.textContent); a.href="#home"; h1.textContent=""; h1.appendChild(a); }
+  paintSeen();
+}
+function paintSeen(){
+  navButtons.forEach(b=>b.classList.toggle("seen",!!seen[b.dataset.p]));
+  qa(".home-group li").forEach(li=>li.classList.toggle("seen",!!seen[li.dataset.p]));
+}
+function markSeen(id){
+  if(EMBED || seen[id]) return;
+  seen[id]=1;
+  try{ sessionStorage.setItem(SEEN_KEY,JSON.stringify(seen)); }catch(e){}
+  paintSeen();
+}
+function syncRail(id){
+  railGroups.forEach(g=>{ g.el.open = !!id && g.btns.some(b=>b.dataset.p===id); });
+}
+function nextLessonOf(id){
+  const i=navButtons.findIndex(b=>b.dataset.p===id);
+  return i>=0 && navButtons[i+1] ? panels[navButtons[i+1].dataset.p] : null;
+}
+
+/* ---------- home view ---------- */
+function setupHome(){
+  if(!homeEl || EMBED) return;
+  const first = navButtons[0] && panels[navButtons[0].dataset.p];
+  if(first){
+    const p=el("p","home-start"), a=el("a","startbtn","Start: "+first.label);
+    a.href="#"+first.id; p.appendChild(a);
+    const lede=q(".lede",homeEl);
+    if(lede) lede.after(p); else homeEl.appendChild(p);
+  }
+  const wrap=el("div","home-groups");
+  railGroups.forEach(g=>{
+    const sec=el("section","home-group");
+    sec.appendChild(el("h3",null,g.name));
+    const ul=el("ul");
+    g.btns.forEach(b=>{
+      const P=panels[b.dataset.p]; if(!P) return;
+      const li=el("li"); li.dataset.p=P.id;
+      const a=el("a",null,P.label); a.href="#"+P.id;
+      li.appendChild(a);
+      const d=b.dataset.desc; if(d) li.appendChild(el("span","d",d));
+      ul.appendChild(li);
+    });
+    sec.appendChild(ul); wrap.appendChild(sec);
+  });
+  homeEl.appendChild(wrap);
+  paintSeen();
+}
+
+/* ---------- terms: <dfn title="definition"> ---------- */
+let pop=null, popFor=null;
+function dfnReady(d){
+  if(d.hasAttribute("title")){ d.dataset.def=d.getAttribute("title"); d.removeAttribute("title"); }
+  if(d.dataset.def && !d.hasAttribute("tabindex")) d.tabIndex=0;
+  return !!d.dataset.def;
+}
+function showPop(d){
+  if(!dfnReady(d)) return;
+  if(!pop){ pop=el("div","dfnpop"); pop.id="dfnpop"; pop.setAttribute("role","tooltip"); pop.hidden=true; document.body.appendChild(pop); }
+  pop.textContent=d.dataset.def; pop.hidden=false;
+  const r=d.getBoundingClientRect(), pw=pop.offsetWidth, ph=pop.offsetHeight;
+  let top=r.bottom+8; if(top+ph>window.innerHeight-8 && r.top-ph-8>8) top=r.top-ph-8;
+  const left=Math.max(8,Math.min(window.innerWidth-pw-8, r.left+r.width/2-pw/2));
+  pop.style.left=left+"px"; pop.style.top=top+"px";
+  d.setAttribute("aria-describedby","dfnpop"); popFor=d;
+}
+function hidePop(){ if(pop) pop.hidden=true; if(popFor) popFor.removeAttribute("aria-describedby"); popFor=null; }
+function setupDfn(){
+  qa("dfn[title]").forEach(dfnReady);
+  const of=e=>{ const d=e.target && e.target.closest ? e.target.closest("dfn") : null; return d; };
+  document.addEventListener("mouseover",e=>{ const d=of(e); if(d && d!==popFor) showPop(d); });
+  document.addEventListener("mouseout",e=>{ const d=of(e); if(d && d===popFor && !(e.relatedTarget && d.contains(e.relatedTarget))) hidePop(); });
+  document.addEventListener("focusin",e=>{ const d=of(e); if(d) showPop(d); });
+  document.addEventListener("focusout",e=>{ const d=of(e); if(d && d===popFor) hidePop(); });
+  document.addEventListener("click",e=>{ const d=of(e); if(d) showPop(d); else hidePop(); });
+  document.addEventListener("keydown",e=>{ if(e.key==="Escape") hidePop(); });
+  window.addEventListener("scroll",hidePop,true);
+  window.addEventListener("resize",hidePop);
+}
+function termsOf(P){
+  const out=[], seenT={};
+  qa("dfn",P.el).forEach(d=>{
+    dfnReady(d);
+    const t=d.textContent.trim(), k=t.toLowerCase();
+    if(!d.dataset.def || seenT[k]) return;
+    seenT[k]=1; out.push({term:t, def:d.dataset.def});
+  });
+  return out;
+}
+function buildTerms(list){
+  const box=el("section","keyterms");
+  box.appendChild(el("h4",null,"Key terms"));
+  const dl=el("dl");
+  list.forEach(t=>{ dl.appendChild(el("dt",null,t.term)); dl.appendChild(el("dd",null,t.def)); });
+  box.appendChild(dl);
+  return box;
+}
+
+/* ---------- steps ---------- */
+function collectSections(){
   panelList.forEach(P=>{
     const found = Array.from(P.el.children).filter(c=>c.classList.contains("sec"));
-    if(found.length<2) return;                     // zero or one .sec: panel untouched
-    const seen={};
+    if(found.length<2) return;                     // zero or one .sec: the lesson is a single step
+    const seenSlug={};
     P.secs = found.map((s,i)=>{
       let slug = slugOK(s.dataset.sec) || "s"+(i+1);
-      while(seen[slug]) slug += "-"+(i+1);
-      seen[slug]=1;
-      const title = s.dataset.title || slug;
-      return {el:s, slug, title, tab:null};
+      while(seenSlug[slug]) slug += "-"+(i+1);
+      seenSlug[slug]=1;
+      return {el:s, slug, title:s.dataset.title || slug, tab:null};
     });
     P.el.classList.add("hassecs");
-    const strip = el("div","sectabs"); strip.setAttribute("role","tablist"); strip.setAttribute("aria-label","Sections of this topic");
+  });
+}
+function addCheckStep(P, children){
+  const S={el:el("div","sec check-step"), slug:"check", title:"Check your understanding", tab:null};
+  S.el.dataset.sec="check"; S.el.dataset.title=S.title;
+  children.forEach(c=>S.el.appendChild(c));
+  P.el.appendChild(S.el);
+  P.secs.push(S);
+}
+function buildSteps(){
+  panelList.forEach(P=>{
+    const N=P.secs.length;
+    const nextL = EMBED ? null : nextLessonOf(P.id);
+    if(!N){                                         // unsectioned lesson: one step, only the next-lesson button
+      if(nextL && !EMBED){
+        const pg=el("nav","secpager lessononly"); pg.setAttribute("aria-label","Lesson navigation");
+        const b=el("button","secbtn secnext primary"); b.type="button";
+        b.appendChild(el("span","secbtn-t","Next lesson: "+nextL.label));
+        b.addEventListener("click",()=>showPanel(nextL.id,null));
+        pg.appendChild(b); P.el.appendChild(pg);
+      }
+      return;
+    }
+    const strip=el("div","sectabs"); strip.setAttribute("aria-label","Steps in this lesson");
+    const meta=el("p","stepmeta"); meta.setAttribute("aria-live","polite");
+    P.numEl=el("span","stepnum"); P.nameEl=el("span","stepname");
+    meta.appendChild(P.numEl); meta.appendChild(P.nameEl);
+    const dots=el("div","stepdots");
     P.secs.forEach((S,i)=>{
-      const base = "sec-"+P.id+"-"+S.slug;
-      const b = el("button","sectab",S.title);
-      b.type="button"; b.id="tab-"+base; b.dataset.sectab=S.slug;
-      b.setAttribute("role","tab"); b.setAttribute("aria-selected","false"); b.setAttribute("aria-controls",base); b.tabIndex=-1;
+      const base="sec-"+P.id+"-"+S.slug;
+      const b=el("button","sectab",String(i+1));
+      b.type="button"; b.id="tab-"+base; b.dataset.sectab=S.slug; b.dataset.title=S.title;
+      b.title=S.title; b.setAttribute("aria-label","Step "+(i+1)+" of "+N+": "+S.title);
       b.addEventListener("click",()=>userShow(P.id,S.slug,true));
-      strip.appendChild(b); S.tab=b;
+      dots.appendChild(b); S.tab=b;
       S.el.id = S.el.id || base;
-      S.el.setAttribute("role","tabpanel"); S.el.setAttribute("aria-labelledby",b.id);
-      const t = el("h3","sec-title",S.title); S.el.insertBefore(t,S.el.firstChild);
+      S.el.setAttribute("role","group"); S.el.setAttribute("aria-label","Step "+(i+1)+": "+S.title);
+      const t=el("h3","sec-title",S.title); t.tabIndex=-1; S.el.insertBefore(t,S.el.firstChild);
+      /* back and next buttons */
+      const pg=el("nav","secpager"); pg.setAttribute("aria-label","Lesson navigation");
+      if(i>0){
+        const bb=el("button","secbtn secprev"); bb.type="button"; bb.appendChild(el("span","secbtn-t","Back"));
+        bb.addEventListener("click",()=>userShow(P.id,P.secs[i-1].slug,false,true));
+        pg.appendChild(bb);
+      } else pg.appendChild(el("span","secgap"));
+      if(i<N-1){
+        const nb=el("button","secbtn secnext primary"); nb.type="button";
+        nb.appendChild(el("span","secbtn-t","Next: "+P.secs[i+1].title));
+        nb.addEventListener("click",()=>userShow(P.id,P.secs[i+1].slug,false,true));
+        pg.appendChild(nb);
+      } else if(nextL){
+        const nb=el("button","secbtn secnext primary"); nb.type="button";
+        nb.appendChild(el("span","secbtn-t","Next lesson: "+nextL.label));
+        nb.addEventListener("click",()=>showPanel(nextL.id,null));
+        pg.appendChild(nb);
+      }
+      S.el.appendChild(pg);
     });
-    strip.addEventListener("keydown",e=>{
-      const k=e.key; if(k!=="ArrowRight"&&k!=="ArrowLeft"&&k!=="Home"&&k!=="End") return;
-      const i = P.secs.findIndex(S=>S.tab===document.activeElement); if(i<0) return;
-      let n = k==="ArrowRight"?i+1 : k==="ArrowLeft"?i-1 : k==="Home"?0 : P.secs.length-1;
-      n=(n+P.secs.length)%P.secs.length;
-      e.preventDefault(); e.stopPropagation();
-      userShow(P.id,P.secs[n].slug,false); P.secs[n].tab.focus();
-    });
+    strip.appendChild(meta); strip.appendChild(dots);
     P.tabs=strip;
     if(P.head) P.head.after(strip); else P.el.insertBefore(strip,P.el.firstChild);
   });
-}
-function addPagers(){
-  panelList.forEach(P=>{
-    P.secs.forEach((S,i)=>{
-      const pg=el("nav","secpager"); pg.setAttribute("aria-label","Sections");
-      const mk=(cls,label,title,slug)=>{
-        const b=el("button","secbtn "+cls); b.type="button";
-        b.appendChild(el("span","secbtn-k",label));
-        b.appendChild(el("span","secbtn-t",title));
-        b.addEventListener("click",()=>userShow(P.id,slug,false,true));
-        return b;
-      };
-      if(i>0) pg.appendChild(mk("secprev","Previous",P.secs[i-1].title,P.secs[i-1].slug));
-      else pg.appendChild(el("span","secgap"));
-      if(i<P.secs.length-1) pg.appendChild(mk("secnext","Next",P.secs[i+1].title,P.secs[i+1].slug));
-      S.el.appendChild(pg);
-    });
-  });
-}
-function appendInSec(container, node){
-  const pg = q(":scope > .secpager", container);
-  if(pg) container.insertBefore(node,pg); else container.appendChild(node);
 }
 
 /* ---------- routing ---------- */
@@ -119,9 +265,27 @@ function parseHash(){
   const i=h.indexOf("/");
   return i<0 ? {id:h, sec:null} : {id:h.slice(0,i), sec:h.slice(i+1)||null};
 }
+function showHome(o){
+  o=o||{};
+  if(!homeEl || EMBED){ showPanel(firstId,null,o); return; }
+  panelList.forEach(p=>p.el.classList.remove("on","embed-sec","embed-first","later"));
+  navButtons.forEach(b=>b.setAttribute("aria-selected","false"));
+  HTML.classList.remove("embed-sec"); HTML.classList.add("is-home");
+  syncRail(null);
+  const changed = state.id!=="home";
+  state.id="home"; state.idx=0; state.sec=null;
+  if(!o.nohash && location.hash!=="#home"){
+    try{ (changed ? history.pushState : history.replaceState).call(history,null,"","#home"); }catch(e){}
+  }
+  HTML.classList.remove("nav-open");
+  const tg=q(".navtoggle"); if(tg) tg.setAttribute("aria-expanded","false");
+  if(stage) stage.scrollTop=0;
+  window.scrollTo(0,0);
+}
 function showPanel(id, sec, o){
   o=o||{};
-  if(!panels[id]) { id=firstId; sec=null; }
+  if(!panels[id]) { if(!EMBED && homeEl){ showHome(o); return; } id=firstId; sec=null; }
+  HTML.classList.remove("is-home");
   const P=panels[id];
   const multi=P.secs.length>=2;
   let idx=0;
@@ -131,19 +295,20 @@ function showPanel(id, sec, o){
   const changedPanel = id!==state.id, changedSec = !changedPanel && idx!==(state.idx||0);
   panelList.forEach(p=>{
     p.el.classList.toggle("on", p===P);
-    if(p!==P) p.el.classList.remove("embed-sec","embed-first");
+    if(p!==P) p.el.classList.remove("embed-sec","embed-first","later");
   });
   navButtons.forEach(b=>b.setAttribute("aria-selected", String(b.dataset.p===id)));
   P.secs.forEach((S,i)=>{
     const on=i===idx;
     S.el.classList.toggle("on",on);
-    if(S.tab){ S.tab.setAttribute("aria-selected",String(on)); S.tab.tabIndex = on?0:-1; }
+    if(S.tab){ if(on) S.tab.setAttribute("aria-current","step"); else S.tab.removeAttribute("aria-current"); }
   });
-  if(P.tabs && P.secs[idx] && P.secs[idx].tab){
-    const st=P.tabs, tb=P.secs[idx].tab;
-    const fit=()=>{ if(st.scrollWidth>st.clientWidth) st.scrollLeft=Math.max(0,tb.offsetLeft-(st.clientWidth-tb.offsetWidth)/2); };
-    fit(); requestAnimationFrame(fit);
+  if(multi && P.numEl){
+    P.numEl.textContent="Step "+(idx+1)+" of "+P.secs.length;
+    P.nameEl.textContent=P.secs[idx].title;
   }
+  P.el.classList.toggle("later", multi && idx>0);
+  syncRail(id); markSeen(id);
   HTML.classList.toggle("embed-sec", embedSec);
   P.el.classList.toggle("embed-sec", embedSec);
   P.el.classList.toggle("embed-first", embedSec && idx===0);
@@ -180,15 +345,17 @@ function showPanel(id, sec, o){
     postHeight();
   });
 }
-function userShow(id, sec, fromTab, focusTab){
+function userShow(id, sec, fromTab, focusHead){
   showPanel(id, sec);
-  if(focusTab){ const P=panels[id], S=P.secs.find(s=>s.slug===sec); if(S&&S.tab) try{ S.tab.focus({preventScroll:true}); }catch(e){} }
+  if(focusHead){ const P=panels[id], S=P.secs.find(s=>s.slug===sec); const t=S&&q(":scope > .sec-title",S.el); if(t) try{ t.focus({preventScroll:true}); }catch(e){} }
 }
 function routeFromHash(){
   const h=parseHash();
+  if(!EMBED && homeEl && (!h.id || h.id==="home")){ showHome({nohash:true}); return; }
   showPanel(h.id||firstId, h.sec, {nohash:true});
 }
 window.showPanel = showPanel;
+window.showHome = showHome;
 
 navButtons.forEach(b=>{
   b.onclick=null;                                // older page handlers are replaced by showPanel
@@ -203,6 +370,7 @@ document.addEventListener("click",e=>{
   let t=a.getAttribute("data-goto") || (a.getAttribute("href")||"").slice(1);
   try{ t=decodeURIComponent(t); }catch(x){}
   const i=t.indexOf("/"), pid = i<0?t:t.slice(0,i), ps = i<0?null:t.slice(i+1);
+  if(pid==="home" && homeEl && !EMBED){ e.preventDefault(); showHome(); return; }
   if(!panels[pid]) return;
   e.preventDefault();
   if(EMBED){
@@ -316,31 +484,38 @@ function buildItem(item, onChange){
   card.isRight=()=>correct;
   return card;
 }
-function buildBlock(items, panelId){
-  const blk=el("section","cyu");
+function buildBlock(items, panelId, title){
+  const blk=el("section","cyu"+(title?"":" cyu-final"));
   const tid="cyu-t-"+slugOK(panelId)+"-"+Math.random().toString(36).slice(2,7);
-  const h=el("h3","cyu-title","Check your understanding"); h.id=tid; blk.setAttribute("aria-labelledby",tid);
-  blk.appendChild(h);
+  if(title){ const h=el("h4","cyu-title",title); h.id=tid; blk.setAttribute("aria-labelledby",tid); blk.appendChild(h); }
   const score=el("p","cyu-score");
   const cards=[];
   const upd=()=>{ const n=cards.filter(c=>c.isRight()).length; score.textContent=n+" of "+cards.length+" answered correctly"; };
   items.forEach(it=>{ const c=buildItem(it,upd); cards.push(c); blk.appendChild(c); });
-  upd(); blk.appendChild(score);
+  upd(); if(items.length>1) blk.appendChild(score);
   return blk;
 }
+/* Items with a sec go at the end of that step, one per step. The rest form the last step, "Check your understanding". */
 function setupCyu(){
-  if(!SHOW_CYU) return;
   panelList.forEach(P=>{
-    const items=(C.cyu||{})[P.id]; if(!items||!items.length) return;
+    const items=SHOW_CYU ? ((C.cyu||{})[P.id]||[]) : [];
+    const terms=termsOf(P);
     const bySec={}, rest=[];
     items.forEach(it=>{
-      if(it.sec && P.secs.some(S=>S.slug===it.sec)) (bySec[it.sec]=bySec[it.sec]||[]).push(it);
+      if(P.secs.length && it.sec && it.sec!=="check" && P.secs.some(S=>S.slug===it.sec) && !bySec[it.sec]) bySec[it.sec]=it;
       else rest.push(it);
     });
-    P.secs.forEach(S=>{ if(bySec[S.slug]) appendInSec(S.el, buildBlock(bySec[S.slug],P.id)); });
-    if(rest.length){
-      const blk=buildBlock(rest,P.id);
-      if(P.secs.length) appendInSec(P.secs[P.secs.length-1].el, blk); else P.el.appendChild(blk);
+    P.secs.forEach(S=>{ if(bySec[S.slug]) S.el.appendChild(buildBlock([bySec[S.slug]],P.id,"Quick check")); });
+    if(P.secs.length){
+      if(rest.length || terms.length){
+        const kids=[];
+        if(terms.length) kids.push(buildTerms(terms));
+        if(rest.length) kids.push(buildBlock(rest,P.id));
+        addCheckStep(P,kids);
+      }
+    } else {
+      if(terms.length) P.el.appendChild(buildTerms(terms));
+      if(rest.length) P.el.appendChild(buildBlock(rest,P.id,"Check your understanding"));
     }
   });
 }
@@ -408,12 +583,28 @@ function setupEmbed(){
   window.addEventListener("load",()=>postHeight(true));
 }
 
+/* ---------- details.more: opening one changes the layout, so run the relayout hooks ---------- */
+function setupDetails(){
+  document.addEventListener("toggle",e=>{
+    const d=e.target;
+    if(!d || !d.matches || !d.matches("details")) return;
+    const pn=d.closest(".panel"); if(!pn) return;
+    const id=pn.id.replace(/^p-/,"");
+    hooksFor(id);
+    requestAnimationFrame(()=>{ hooksFor(id); window.dispatchEvent(new Event("resize")); postHeight(); });
+  },true);
+}
+
 /* ---------- start ---------- */
 setupNavToggle();
-setupSections();
-setupVideos();
+setupRail();
+setupHome();
+setupDfn();
+collectSections();
 setupCyu();
-addPagers();
+buildSteps();
+setupVideos();
+setupDetails();
 setupEmbed();
 routeFromHash();
 postHeight(true);

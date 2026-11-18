@@ -3,7 +3,7 @@
  "items": [
   {
    "id": "tiers-1",
-   "sec": null,
+   "sec": "why",
    "type": "mc",
    "stem": "A developer wants to skip the application tier and let the browser send SQL straight to the database. What is the main problem?",
    "options": [
@@ -60,8 +60,8 @@
   {
    "id": "tiers-3",
    "sec": null,
-   "type": "predict",
-   "stem": "Before you play the trace: the database has returned two rows. What happens next, before the browser receives anything?",
+   "type": "mc",
+   "stem": "The database has just returned two rows. What happens next, before the browser receives anything?",
    "options": [
     {
      "text": "The application tier turns the rows into objects, then JSON.",
@@ -83,34 +83,33 @@
      "correct": false,
      "feedback": "SQL goes from the application tier to the database. The browser receives JSON."
     }
-   ],
-   "try": "Press Play trace above and watch steps 8 to 11."
+   ]
   },
   {
    "id": "tiers-4",
    "sec": null,
    "type": "mc",
-   "stem": "A team rewrites its application tier from Django to Express. What changes in the twelve steps?",
+   "stem": "A student opens the enlistment page on a phone. Which tier is running on the phone itself?",
    "options": [
     {
-     "text": "Only the application tier's code changes. The browser, database and step order stay the same.",
+     "text": "The browser tier, which shows the page.",
      "correct": true,
-     "feedback": "A framework is a toolkit for the application tier. The three tiers and the path of a request are the same for every framework."
+     "feedback": "The browser runs on the user's own device. The other two tiers run on servers you manage."
     },
     {
-     "text": "The database must be replaced with a different kind, because Express cannot use it.",
+     "text": "The application tier, because it handles the student's request.",
      "correct": false,
-     "feedback": "The database is a separate program. It does not know which framework calls it."
+     "feedback": "The application tier runs on your server. The phone only sends the request and receives the response."
     },
     {
-     "text": "The browser must be rewritten, because it has to talk to the new framework.",
+     "text": "The database tier, because the grades are saved there.",
      "correct": false,
-     "feedback": "The browser only sends requests and reads responses. It does not know which framework answers."
+     "feedback": "The database runs on your server or its own machine. The phone never connects to it."
     },
     {
-     "text": "The request no longer has to cross the network, because the framework is faster.",
+     "text": "All three tiers, because the page needs all of them.",
      "correct": false,
-     "feedback": "The request still travels from the browser to the server, whatever the framework."
+     "feedback": "The page needs all three tiers, but only the browser tier runs on the phone."
     }
    ]
   }

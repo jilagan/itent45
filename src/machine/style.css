@@ -483,3 +483,4 @@ html[data-theme="light"] .wd:hover{background:rgba(0,0,0,.05)}
 .tr.ob{border-color:var(--res)}
 .tr.lost{opacity:.3;text-decoration:line-through}
 
+#nxTally{white-space:pre-wrap}

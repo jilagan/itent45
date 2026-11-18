@@ -65,7 +65,7 @@ const panelOf = n => n && n.closest ? n.closest(".panel") : null;
 const pid = P => P ? P.id.replace(/^p-/,"") : "";
 function secOf(P){
   if(!P) return "";
-  const t = q('.sectab[aria-selected="true"]', P);
+  const t = q('.sectab[aria-current="step"]', P);
   return t ? (t.dataset.sectab||"") : "";
 }
 function here(){ const P=q(".panel.on"); return {panel_id:pid(P), section_id:secOf(P)}; }
@@ -94,8 +94,8 @@ function viewNow(){
   cur = h;
   const P = q(".panel.on");
   const heading = squash((q(".head h2",P)||q("h2",P)||{}).textContent, 60);
-  const st = q('.sectab[aria-selected="true"]', P);
-  const secTitle = st ? squash(st.textContent, 60) : "";
+  const st = q('.sectab[aria-current="step"]', P);
+  const secTitle = st ? squash(st.dataset.title||"", 60) : "";
   send("page_view", {
     page_title: squash(siteTitle()+": "+heading+(secTitle?" / "+secTitle:""), 100),
     page_location: location.origin+location.pathname+(HTML.classList.contains("embed")?"?embed=1":"")+
@@ -143,7 +143,7 @@ function label(e){
 }
 function widgetEvent(el, type){
   const P = panelOf(el);
-  if(!P || el.closest(".cyu,.sectabs,.secpager,.vid,.embed-foot")) return;
+  if(!P || el.closest(".cyu,.sectabs,.secpager,.vid,.embed-foot,.keyterms")) return;
   send("widget_click", {panel_id:pid(P), section_id:secOf(P), control:label(el), control_type:type});
 }
 function outbound(a, P){

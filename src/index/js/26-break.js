@@ -141,7 +141,7 @@ addEventListener("keydown",e=>{
   }
   if(on==="p-server" && e.key===" "){e.preventDefault();$("#simRun").click()}
   if(on==="p-break" && e.key===" "){e.preventDefault();$("#tRun").click()}
-  if(on==="p-tiers"){
+  if(on==="p-tiers" && document.querySelector("#p-tiers .sec.on[data-sec=\"trace\"]")){
     if(e.key==="ArrowRight"){e.preventDefault();$("#trNext").click()}
     if(e.key==="ArrowLeft"){e.preventDefault();$("#trPrev").click()}
     if(e.key===" "){e.preventDefault();$("#trPlay").click()}

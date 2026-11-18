@@ -1,6 +1,6 @@
 #!/usr/bin/env python3
 """Click through built pages and report console/page errors.
-   python3 tools/check.py DIR [panel ids...]            click through every panel and section
+   python3 tools/check.py DIR [panel ids...]            click through every panel and every step (opening each More detail)
    python3 tools/check.py DIR --embed [panel ids...]    also load every panel and section in embed mode
                                                         at 700 px wide (zero-size canvases, overflow, errors)"""
 import sys,pathlib
@@ -27,6 +27,8 @@ with sync_playwright() as p:
             if not pg.evaluate(f"document.getElementById('p-{pid}').classList.contains('on')"): errs.append((pid,"check","panel did not open"))
             k=pg.evaluate(f"""async()=>{{const P=document.getElementById('p-{pid}');let k=0;
               for(const s of [null,...P.querySelectorAll('.sectab,[data-sectab]')]){{ if(s) s.click();
+                P.querySelectorAll('details').forEach(d=>{{ d.open=true; }});
+                await new Promise(r=>setTimeout(r,30));
                 for(const e of P.querySelectorAll('button,input[type=range],input[type=checkbox],select')){{
                   if(e.closest('a[href]')||e.offsetParent===null) continue;
                   try{{ if(e.tagName==='BUTTON') e.click(); else {{ if(e.type==='range') e.value=e.max; e.dispatchEvent(new Event('input',{{bubbles:true}})); e.dispatchEvent(new Event('change',{{bubbles:true}})); }} k++; }}catch(x){{}}

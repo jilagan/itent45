@@ -97,7 +97,9 @@ for page in ("index","machine"):
     data="window.COURSE="+json.dumps({"page":page,"cyu":cyu,"videos":vids,"analytics":ga},ensure_ascii=False).replace("</","<\\/")+";\n"
     css=rd("style.css")+opt(sh/"theme.css")+opt(sh/"platform.css")
     js=data+"".join(rd("js/"+f) for f in json.loads(rd("js-order.json")))+opt(sh/"platform.js")+opt(sh/"analytics.js")
-    out=(rd("shell.html").replace("/*@@STYLE@@*/\n",css,1)
+    sprite="".join('<symbol id="i-%s" viewBox="0 0 256 256">%s</symbol>'%(f.stem,re.search(r"<svg[^>]*>(.*)</svg>",f.read_text(encoding="utf-8"),re.S).group(1)) for f in sorted((sh/"icons").glob("*.svg")))
+    sprite='<svg xmlns="http://www.w3.org/2000/svg" width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false">'+sprite+'</svg>'
+    out=(rd("shell.html").replace("<body>","<body>\n"+sprite,1).replace("/*@@STYLE@@*/\n",css,1)
          .replace("<!--@@PANELS@@-->\n",panels,1)
          .replace("/*@@SCRIPT@@*/\n",js,1))
     (out_dir/f"{page}.html").write_text(out,encoding="utf-8")

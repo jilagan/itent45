@@ -1,55 +1,107 @@
-    <section class="panel on" id="p-tiers">
+    <section class="panel" id="p-tiers">
       <div class="head">
         <h2>The three tiers of a web application</h2>
-        <p>In a restaurant, the customer never walks into the kitchen. The customer tells a waiter what they want, the waiter goes to the kitchen, collects the food and brings it back.</p>
-        <p>A web application is divided in the same way. The customer is the browser, the waiter is the application server, and the kitchen is the database. Each of these three parts is called a tier.</p>
-        <p>This panel traces one request through the three tiers. Two tiers run on servers you manage. The third runs on your user's own device, which you do not control. AI tools can write much of this code for you, but you still need to know where each tier runs and what passes between them.</p>
-        <div class="ask"><b>Think first.</b> Pick any part of a page you use every day, such as the list of courses you enrolled in. Which tier produced it: the browser, the application server or the database? Write down your answer, then check it against the steps below.</div>
-        <div class="instructor">Most students cannot say which tier produced a given part of a page. The trace below fills that gap. Ask a few students for their answers before anyone presses Play.</div>
+        <p>A web application is split into three parts, called <dfn title="One part of an application, with its own job and its own place to run">tiers</dfn>. Each tier has one job and runs in a different place.</p>
       </div>
 
-      <div style="display:flex;align-items:center;gap:10px;margin-bottom:12px">
-        <span style="color:var(--faint)">Framework</span>
-        <div class="viewtog" style="margin:0" id="stackTog">
-          <button data-st="django" aria-pressed="true">Django (Python)</button>
-          <button data-st="express" aria-pressed="false">Express (Node)</button>
-          <button data-st="laravel" aria-pressed="false">Laravel (PHP)</button>
+      <div class="sec" data-sec="restaurant" data-title="Start with a restaurant">
+        <p>In a restaurant, the customer never walks into the kitchen. The customer tells a waiter what they want. The waiter fetches it from the kitchen and brings it back.</p>
+        <div class="scene" role="group" aria-label="Customer is the browser, waiter is the application server, kitchen is the database">
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Customer</b><span>Browser</span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-bell-simple"/></svg></div><figcaption><b>Waiter</b><span><dfn title="The program on your server that applies the rules and talks to the database">Application server</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-cooking-pot"/></svg></div><figcaption><b>Kitchen</b><span><dfn title="A separate program that stores data in tables and answers questions about it">Database</dfn></span></figcaption></figure>
         </div>
-        <span style="color:var(--faint);margin-left:auto">A framework is a ready-made toolkit for building the application tier. The twelve steps are the same in each one.</span>
-      </div>
-      <div class="flow">
-        <div class="tbox" data-t="1" id="tb1"></div>
-        <div class="lane" data-lane="A">
-          <div class="lcap" id="capA"></div>
-          <div><div class="arail fwd" id="railAf"></div>
-               <div class="aratag">request</div></div>
-          <div><div class="arail back" id="railAb"></div>
-               <div class="aratag">response</div></div>
-        </div>
-        <div class="tbox" data-t="2" id="tb2"></div>
-        <div class="lane" data-lane="B">
-          <div class="lcap" id="capB"></div>
-          <div><div class="arail fwd" id="railBf"></div>
-               <div class="aratag">query</div></div>
-          <div><div class="arail back" id="railBb"></div>
-               <div class="aratag">rows</div></div>
-        </div>
-        <div class="tbox" data-t="3" id="tb3"></div>
-        <div class="ball" id="flowBall"></div>
+        <div class="ask"><b>Think first.</b> Take the list of courses you are enrolled in. Which part produced it: the browser, the application server or the database? Write down your guess.</div>
+        <div class="instructor">Most students cannot say which tier produced a given part of a page. The trace in "Follow one request" fills that gap. Ask a few students for their answers before anyone presses Play.</div>
       </div>
 
-      <div class="trace">
+      <div class="sec" data-sec="tiers" data-title="See the three tiers">
+        <p>Every web application has these three tiers. Read the cards from left to right: the user's device, your server, then the database.</p>
+        <div class="tcards">
+          <div class="tcard">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-user"/></svg>
+            <div class="tn">Tier 1</div>
+            <h4>The browser</h4>
+            <div class="trole">Presentation tier</div>
+            <p>Shows the page. Runs on the user's device, which you do not control.</p>
+          </div>
+          <div class="tcard">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-bell-simple"/></svg>
+            <div class="tn">Tier 2</div>
+            <h4>The application server</h4>
+            <div class="trole">Application tier</div>
+            <p>Applies the rules and holds the database password. Runs on your server.</p>
+          </div>
+          <div class="tcard">
+            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-cooking-pot"/></svg>
+            <div class="tn">Tier 3</div>
+            <h4>The database</h4>
+            <div class="trole">Data tier</div>
+            <p>Stores the data in tables. Only the application server may ask it questions.</p>
+          </div>
+        </div>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>Each tier is built with different tools. A framework is a ready-made toolkit for building the application tier. Pick one to see what you would write and where each tier runs. The steps in "Follow one request" are the same in every framework.</p>
+          <div class="fwpick">
+            <span>Framework</span>
+            <div class="viewtog" id="stackTog">
+              <button data-st="django" aria-pressed="true">Django (Python)</button>
+              <button data-st="express" aria-pressed="false">Express (Node)</button>
+              <button data-st="laravel" aria-pressed="false">Laravel (PHP)</button>
+            </div>
+          </div>
+          <table class="meta-table" id="tierMeta"></table>
+          <div id="stackNote"></div>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="trace" data-title="Follow one request">
+        <p>Press Play and watch one click travel through the three tiers and back.</p>
+        <div class="ctrls">
+          <button class="btn primary" id="trPlay">▶ Play</button>
+          <button class="btn" id="trPrev">Previous part</button>
+          <button class="btn" id="trNext">Next part</button>
+          <button class="btn" id="trRst">Reset</button>
+        </div>
+
+        <div class="flow">
+          <div class="tbox" data-t="1" id="tb1"></div>
+          <div class="lane" data-lane="A">
+            <div class="lcap" id="capA"></div>
+            <div><div class="arail fwd" id="railAf"></div>
+                 <div class="aratag">request</div></div>
+            <div><div class="arail back" id="railAb"></div>
+                 <div class="aratag">response</div></div>
+          </div>
+          <div class="tbox" data-t="2" id="tb2"></div>
+          <div class="lane" data-lane="B">
+            <div class="lcap" id="capB"></div>
+            <div><div class="arail fwd" id="railBf"></div>
+                 <div class="aratag">query</div></div>
+            <div><div class="arail back" id="railBb"></div>
+                 <div class="aratag">rows</div></div>
+          </div>
+          <div class="tbox" data-t="3" id="tb3"></div>
+          <div class="ball" id="flowBall"></div>
+        </div>
+
         <div class="card">
-          <div class="tstep" id="trStep">Step 1 of 12</div>
+          <div class="tstep" id="trStep">Part 1 of 12</div>
           <h3 style="margin:0 0 8px;font-size:1.05em;font-weight:600" id="trTitle"></h3>
-          <p style="margin:0;font-size:.86em;color:var(--dim);line-height:1.6" id="trText"></p>
+          <p style="margin:0;font-size:.95em;color:var(--dim);line-height:1.6" id="trText"></p>
           <div class="artlbl" id="trLbl"></div>
+          <div class="art" id="trArt"></div>
+        </div>
+
+        <details class="more">
+          <summary>More detail</summary>
+          <p>Look at the same part in two other ways: as the page's tree of elements, or as the user sees it.</p>
           <div class="viewtog">
-            <button id="vWire" aria-pressed="true">Message text</button>
+            <button id="vWire" aria-pressed="true">Message text only</button>
             <button id="vDom" aria-pressed="false">Element tree (DOM)</button>
             <button id="vRender" aria-pressed="false">What the user sees</button>
           </div>
-          <div class="art" id="trArt"></div>
           <div class="art" id="trDom" style="display:none"></div>
           <div class="brow-cap" id="domCap" style="display:none;border:1px solid var(--line);border-top:none;border-radius:0 0 7px 7px;margin-top:-1px"></div>
           <div class="brow" id="trBrow" style="display:none">
@@ -61,22 +113,15 @@
             <iframe id="browFrame" sandbox="allow-same-origin" title="Rendered page"></iframe>
             <div class="brow-cap" id="browCap"></div>
           </div>
-        </div>
-        <div>
-          <div class="ctrls">
-            <button class="btn primary" id="trPlay">▶ Play trace</button>
-            <button class="btn" id="trPrev">←</button>
-            <button class="btn" id="trNext">→</button>
-            <button class="btn" id="trRst">Reset</button>
-          </div>
-          <div class="whynot">
-            <b>Why the browser cannot talk to the database directly</b>
-            Suppose it could. The database password would then have to be stored in code running on the user's laptop. Anyone could read it and run any query they liked. In the restaurant, that would be a customer walking into the kitchen and helping themselves. The application tier is the only part that holds the database password, and it decides which requests are allowed.
-          </div>
-          <div class="rtt-note" style="margin-top:14px">
-            <div id="stackNote"></div>
-          </div>
-        </div>
+        </details>
+      </div>
+
+      <div class="sec" data-sec="why" data-title="Why the browser cannot reach the database">
+        <p>Suppose the browser could talk to the database directly. The database password would then sit in code on the user's laptop, where anyone can read it and run any query. In the restaurant, a customer would be helping themselves in the kitchen. So only the application tier holds the password, and it decides which requests the database may answer.</p>
+        <details class="more">
+          <summary>More detail</summary>
+          <p>AI tools can write much of this code for you. You still need to know where each tier runs and what passes between them, because that tells you where a check must happen. The browser is on a device the user controls, so a check made only there can be skipped.</p>
+        </details>
       </div>
     </section>
 

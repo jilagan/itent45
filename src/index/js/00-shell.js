@@ -5,6 +5,7 @@ const CSSV=(()=>{ const c={};
 "use strict";
 const $  = (s,r=document)=>r.querySelector(s);
 const $$ = (s,r=document)=>[...r.querySelectorAll(s)];
+const ICO=(n,c)=>`<svg class="ico ${c||""}" aria-hidden="true" focusable="false"><use href="#i-${n}"/></svg>`;
 const REDUCED = matchMedia("(prefers-reduced-motion:reduce)").matches;
 
 /* ================= shell ================= */

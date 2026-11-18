@@ -54,7 +54,7 @@ A lesson is one folder, `lessons/<id>/`. It builds into one page, `lessons/<id>.
 ## Shape of a lesson
 
 - Head: the h2 and one lede of at most 2 sentences and 35 words.
-- Step 1 is the analogy. Open with an everyday situation in 1 to 3 sentences (at most 60 words), then name the technical idea. Add a `.scene` that maps roles to terms, with `data-art="slug"` and `data-art-desc="one sentence"` for the picture. End with a `.ask` "Think first" question of at most 30 words that the student can try alone and that does not answer itself. No widget in step 1.
+- Step 1 is a real moment. Describe what a user sees and does in software the students already use, in plain words (at most 60 words, title starts "Start with"), with no comparison and no brand names. Add a `.scene` that shows the real parts involved, with `data-art="slug"` and `data-art-desc="one sentence"` for the picture. End with a `.ask` "Think first" question of at most 30 words that the student can try alone and that does not answer itself. No widget in step 1.
 - Each later step: at most 70 words, at most one widget, and one sentence that says what to do with the widget, placed before it. 3 to 5 authored steps.
 - Depth goes in `<details class="more"><summary>More detail</summary>...</details>`, closed. Controls that the script reaches by id may sit inside it, and the widget must start with it closed.
 - The platform adds the last step, "Check your understanding" (slug `check`), with the key terms and the questions. Do not write it.
@@ -73,7 +73,7 @@ A lesson is one folder, `lessons/<id>/`. It builds into one page, `lessons/<id>.
 ## Icons and pictures
 
 - Icons are Phosphor regular, in `shared/icons/<name>.svg`. Write `<svg class="ico big" aria-hidden="true"><use href="#i-NAME"/></svg>` in HTML or `ICO("name","big")` in JS. To add one, copy it from `@phosphor-icons/core/assets/regular/` into `shared/icons/`.
-- The same role keeps the same icon in every lesson (see the table in `docs/CONVERSION-RECIPE.md`).
+- Icons are literal: each one shows the real part it labels. The same part keeps the same icon in every lesson (see the table in `docs/CONVERSION-RECIPE.md`).
 - Blue (`--res`) and orange (`--req`) mean response and request only. Do not use them as decoration.
 - Pictures: `python3 tools/make_art.py --dry-run` lists scenes. A scene without a picture keeps its icon row. The same slug in two lessons carries the same description.
 - `tools/new_lesson.py` also edits `courses/library.json` to add the new lesson to its area. Two authors must not run it at the same time, because the second write can drop the first one's entry. Run it one at a time and check `library.json` afterwards.

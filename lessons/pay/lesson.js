@@ -26,7 +26,7 @@ const PAYFLOW=[
 Cookie: sessionid=8f2a...
 
 <span class="kw">200 OK</span>
-{<span class="s">"id"</span>: 5512, <span class="s">"items"</span>: [{<span class="s">"name"</span>:<span class="s">"Meal set"</span>, <span class="s">"price"</span>: 129900}], <span class="s">"total"</span>: 129900}`},
+{<span class="s">"id"</span>: 8891, <span class="s">"items"</span>: [{<span class="s">"name"</span>:<span class="s">"Chicken rice"</span>, <span class="s">"qty"</span>: 2}, {<span class="s">"name"</span>:<span class="s">"Beef noodles"</span>, <span class="s">"qty"</span>: 1}], <span class="s">"total"</span>: 58000}`},
 
  {k:"gateway", hop:"Browser → gateway (your server is not involved)", dir:"out", h:"The card goes straight to the gateway",
   x:"The card number never travels to your server. The browser sends it directly to the gateway, using a publishable key that is safe to include in your page's JavaScript.",
@@ -50,7 +50,7 @@ Authorization: Bearer <span class="s">pk_live_...</span>   <span class="c">// pu
 <span class="kw">Idempotency-Key</span>: 7c3f9e1a-4b8d-42f6-9c11-a2d5e8b7f014
 Content-Type: application/json
 
-{<span class="s">"token"</span>: <span class="s">"tok_1a2b3c"</span>, <span class="s">"checkout_id"</span>: 5512}`},
+{<span class="s">"token"</span>: <span class="s">"tok_1a2b3c"</span>, <span class="s">"checkout_id"</span>: 8891}`},
 
  {k:"gateway", hop:"Your API → gateway", dir:"out", h:"Your server becomes the client",
   x:"Your server now builds a request, sets headers and waits for a reply, as the browser does. The secret key never leaves your server.",
@@ -59,13 +59,13 @@ Content-Type: application/json
 Authorization: Bearer <span class="s">sk_live_...</span>   <span class="c">// secret key, server only</span>
 <span class="kw">Idempotency-Key</span>: 7c3f9e1a-4b8d-42f6-9c11-a2d5e8b7f014
 
-{<span class="s">"amount"</span>: 129900, <span class="s">"currency"</span>: <span class="s">"PHP"</span>, <span class="s">"source"</span>: <span class="s">"tok_1a2b3c"</span>}`},
+{<span class="s">"amount"</span>: 58000, <span class="s">"currency"</span>: <span class="s">"PHP"</span>, <span class="s">"source"</span>: <span class="s">"tok_1a2b3c"</span>}`},
 
  {k:"gateway", hop:"Gateway → your API", dir:"in", h:"Pending, not paid",
   x:"Cards are authorized in about a second, and e-wallet and other payment methods can take minutes or hours. Treating this reply as final is a common bug in student projects.",
   l:"Read the status field.",
   a:`<span class="kw">200 OK</span>
-{<span class="s">"id"</span>: <span class="s">"ch_9f8e7d"</span>, <span class="s">"status"</span>: <span class="s">"pending"</span>, <span class="s">"amount"</span>: 129900}`},
+{<span class="s">"id"</span>: <span class="s">"ch_9f8e7d"</span>, <span class="s">"status"</span>: <span class="s">"pending"</span>, <span class="s">"amount"</span>: 58000}`},
 
  {k:"browser", hop:"Your API → browser", dir:"in", h:"You answer the app",
   x:"You created an order, so you reply 201 with the order's URL in a Location header. The status says awaiting payment, which is accurate.",
@@ -202,13 +202,13 @@ $("#pyPlay").onclick=e=>{
 renderPay();
 
 /* ---- the same charge request, three ways ---- */
-const CHG_DATA=36;
+const CHG_DATA=35;
 const WHYF=[
- {id:"json", n:"JSON", bytes:90,
-  body:`{<span class="s">"amount"</span>:129900,<span class="s">"currency"</span>:<span class="s">"PHP"</span>,<span class="s">"source"</span>:<span class="s">"tok_1a2b3c"</span>,<span class="s">"description"</span>:<span class="s">"Dinner order 8891"</span>}`,
+ {id:"json", n:"JSON", bytes:89,
+  body:`{<span class="s">"amount"</span>:58000,<span class="s">"currency"</span>:<span class="s">"PHP"</span>,<span class="s">"source"</span>:<span class="s">"tok_1a2b3c"</span>,<span class="s">"description"</span>:<span class="s">"Dinner order 8891"</span>}`,
   cls:"ok",
-  v:`<b>90 bytes, and it already matches the data structures that programs use</b>Python code reads <code>data["amount"]</code> and Node code reads <code>data.amount</code>, with no conversion first. About 121 bytes of headers (HTTP, TLS, TCP, IP and Ethernet) already surround a short message like this, so making it six times larger would be a real cost.`},
- {id:"soap", n:"SOAP / XML", bytes:556,
+  v:`<b>89 bytes, and it already matches the data structures that programs use</b>Python code reads <code>data["amount"]</code> and Node code reads <code>data.amount</code>, with no conversion first. About 121 bytes of headers (HTTP, TLS, TCP, IP and Ethernet) already surround a short message like this, so making it six times larger would be a real cost.`},
+ {id:"soap", n:"SOAP / XML", bytes:555,
   body:`<span class="d">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="d">&lt;soap:Envelope xmlns:soap=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span>
 <span class="d">               xmlns:pay=</span><span class="s">"https://gateway.example.com/schema/payments/v2"</span><span class="d">&gt;</span>
@@ -217,23 +217,23 @@ const WHYF=[
   <span class="d">&lt;/soap:Header&gt;</span>
   <span class="d">&lt;soap:Body&gt;</span>
     <span class="d">&lt;pay:CreateChargeRequest&gt;</span>
-      <span class="d">&lt;pay:Amount currency=</span><span class="s">"PHP"</span><span class="d">&gt;</span>129900<span class="d">&lt;/pay:Amount&gt;</span>
+      <span class="d">&lt;pay:Amount currency=</span><span class="s">"PHP"</span><span class="d">&gt;</span>58000<span class="d">&lt;/pay:Amount&gt;</span>
       <span class="d">&lt;pay:Source&gt;</span>tok_1a2b3c<span class="d">&lt;/pay:Source&gt;</span>
       <span class="d">&lt;pay:Description&gt;</span>Dinner order 8891<span class="d">&lt;/pay:Description&gt;</span>
     <span class="d">&lt;/pay:CreateChargeRequest&gt;</span>
   <span class="d">&lt;/soap:Body&gt;</span>
 <span class="d">&lt;/soap:Envelope&gt;</span>`,
   cls:"warn",
-  v:`<b>556 bytes, six times the size of JSON</b>Only 6% of it is the four values you meant to send, and the rest is namespaces, an envelope and a header block. In return, a schema can reject a negative amount or an invalid currency before your code runs, which is a fair trade between two banks.`},
- {id:"html", n:"HTML", bytes:248,
+  v:`<b>555 bytes, six times the size of JSON</b>Only 6% of it is the four values you meant to send, and the rest is namespaces, an envelope and a header block. In return, a schema can reject a negative amount or an invalid currency before your code runs, which is a fair trade between two banks.`},
+ {id:"html", n:"HTML", bytes:247,
   body:`<span class="d">&lt;form method=</span><span class="s">"post"</span><span class="d"> action=</span><span class="s">"/charges"</span><span class="d">&gt;</span>
-  <span class="d">&lt;input type=</span><span class="s">"hidden"</span><span class="d"> name=</span><span class="s">"amount"</span><span class="d"> value=</span><span class="s">"129900"</span><span class="d">&gt;</span>
+  <span class="d">&lt;input type=</span><span class="s">"hidden"</span><span class="d"> name=</span><span class="s">"amount"</span><span class="d"> value=</span><span class="s">"58000"</span><span class="d">&gt;</span>
   <span class="d">&lt;input type=</span><span class="s">"hidden"</span><span class="d"> name=</span><span class="s">"currency"</span><span class="d"> value=</span><span class="s">"PHP"</span><span class="d">&gt;</span>
   <span class="d">&lt;input type=</span><span class="s">"hidden"</span><span class="d"> name=</span><span class="s">"source"</span><span class="d"> value=</span><span class="s">"tok_1a2b3c"</span><span class="d">&gt;</span>
   <span class="d">&lt;button type=</span><span class="s">"submit"</span><span class="d">&gt;</span>Charge<span class="d">&lt;/button&gt;</span>
 <span class="d">&lt;/form&gt;</span>`,
   cls:"bad",
-  v:`<b>248 bytes, and the wrong kind of message</b>HTML describes a form that a person could click, so the gateway would have to guess which fields matter. A gateway that sends you a webhook has no interface to display, so it can send only data.`}
+  v:`<b>247 bytes, and the wrong kind of message</b>HTML describes a form that a person could click, so the gateway would have to guess which fields matter. A gateway that sends you a webhook has no interface to display, so it can send only data.`}
 ];
 let whySel="json";
 function renderWhy(){
@@ -258,7 +258,7 @@ function renderWhy(){
 renderWhy();
 
 /* ---- double-charge demo ---- */
-const PRICE=1299;
+const PRICE=580;
 let attempts=[], idemOn=false, idemKey="7c3f9e1a", firstCharge=null, chgSeq=0;
 function renderCharges(){
   $("#chgList").innerHTML = attempts.length ? attempts.map((a,i)=>`

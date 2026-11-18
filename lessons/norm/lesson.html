@@ -5,7 +5,7 @@
       </div>
 
       <div class="sec" data-sec="course-title" data-title="Start with a course title">
-        <p>You open your class schedule in the university's online enlistment system. Each course appears with its title, such as Operations Management for MGT 45. A department renames the course, and every student's schedule shows the new title. Behind the page, the database holds one row for each enlistment.</p>
+        <p>Your class schedule in the university's online enlistment system lists each course with its title, such as Operations Management for MGT 45. When a department renames the course, every student's schedule shows the new title. Behind the page, the database holds one row for each enlistment.</p>
         <div class="scene" role="group" aria-label="The parts involved: the schedule page, the enlistments table and the courses table" data-art="class-schedule-on-laptop" data-art-desc="A student sits at a desk with a laptop that shows a plain list of rows made of short and long bars, and a phone lies next to the laptop.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg></div><figcaption><b>Schedule page</b><span>What you see</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-table"/></svg></div><figcaption><b>Enlistments</b><span>A <dfn title="A grid of rows and columns that holds one kind of record">table</dfn> with one row per enlistment</span></figcaption></figure>
@@ -31,13 +31,11 @@
         </div>
         <div class="srv srv2">
           <div class="card">
-            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-table"/></svg>
             <div class="card-t">One flat table &nbsp;<span style="color:var(--faint)">enlistments</span></div>
             <div style="overflow-x:auto"><table class="db" id="flatTbl"></table></div>
             <div class="verdict" id="flatVerdict" style="margin-top:12px"></div>
           </div>
           <div class="card">
-            <span style="display:flex;gap:6px"><svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-table"/></svg><svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-table"/></svg></span>
             <div class="card-t">Split in two &nbsp;<span style="color:var(--faint)">courses + enlistments</span></div>
             <div style="overflow-x:auto"><table class="db" id="normTbl"></table></div>
             <div style="overflow-x:auto;margin-top:9px"><table class="db" id="normTbl2"></table></div>

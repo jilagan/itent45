@@ -5,18 +5,18 @@
       </div>
 
       <div class="sec" data-sec="vague-request" data-title="Start with a vague request">
-        <p>You type "Write a function that enrolls a student in a course" into an AI chatbot. Code comes back in seconds. It is written for a different Python toolkit than your project uses. You add one sentence naming your toolkit and ask again, and the new answer is different.</p>
+        <p>Typing "Write a function that enlists a student in a course" into an AI chatbot returns code in seconds. It is written for a different Python toolkit than your project uses. You add one sentence naming your toolkit and ask again, and the new answer is different.</p>
         <div class="scene" role="group" aria-label="Your request goes to the chatbot, which returns code" data-art="chatbot-vague-request" data-art-desc="A student at a laptop in a plain room looks at a chat window on the screen, drawn as a short message and a longer reply made of plain bars.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-keyboard"/></svg></div><figcaption><b>Your request</b><span><dfn title="The text you give a language model to continue">Prompt</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-chat-text"/></svg></div><figcaption><b>The AI chatbot</b><span>Model</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-code"/></svg></div><figcaption><b>The code it returns</b><span>Answer</span></figcaption></figure>
         </div>
         <div class="ask"><b>Think first.</b> The model did not ask which toolkit you meant. For this request, which kind of answer will it give most often, and why?</div>
-        <div class="instructor">Let students commit to a guess before they open the widget. Most guess the careful-looking answer that checks the seat count first. Ask them what happens when two students click at the same moment.</div>
+        <div class="instructor">Let students commit to a guess before they open the widget. Most guess the careful-looking answer that checks the slot count first. Ask them what happens when two students click at the same moment.</div>
       </div>
 
       <div class="sec" data-sec="narrow" data-title="Add facts and watch the answers narrow">
-        <p>You ask a model for <dfn title="A toolkit for building web applications in Python">Django</dfn> code that enrolls a student in a course. Each bar is one kind of answer, and its length is how likely the model is to give it. Blue bars keep working when two students click at once. Turn on the three facts one at a time and watch the bars.</p>
+        <p>You ask a model for <dfn title="A toolkit for building web applications in Python">Django</dfn> code that enlists a student in a course. Each bar is one kind of answer, and its length is how likely the model is to give it. Blue bars keep working when two students click at once. Turn on the three facts one at a time and watch the bars.</p>
         <div class="srv" style="grid-template-columns:clamp(220px,27%,300px) minmax(0,1fr)">
           <div class="card">
             <div class="card-t">Add to the prompt</div>
@@ -54,7 +54,7 @@
           <h4>System prompts and context</h4>
           <p>A system prompt is text placed ahead of every conversation. It holds rules that are true every time, such as the framework you use, your house style and what the model must never do without asking. Context is what applies to one task: the table definitions, the file, an example. Both narrow the range of answers.</p>
           <h4>Why the most likely answer is wrong</h4>
-          <p>With nothing specified, the most likely answer reads the seat count, checks it and then creates the row. Both of two simultaneous requests can read the same count before either one writes. The model gives this answer because it is the most common pattern in the text it learned from, and nothing in the prompt ruled it out.</p>
+          <p>With nothing specified, the most likely answer reads the slot count, checks it and then creates the row. Both of two simultaneous requests can read the same count before either one writes. The model gives this answer because it is the most common pattern in the text it learned from, and nothing in the prompt ruled it out.</p>
           <p>See <a data-lesson="txn">Transactions</a> and <a data-lesson="vibe">Reviewing AI-written code</a>.</p>
           <h4>Lock or conditional update</h4>
           <p>Two answers survive every fact. One locks the course row, which makes other requests wait. The other runs one conditional update and checks how many rows changed. The second holds no lock, which helps on enlistment morning.</p>

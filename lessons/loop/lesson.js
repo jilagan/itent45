@@ -1,15 +1,15 @@
 /* Lesson loop. Widget code for the markup in lesson.html. */
 /* ================= 06 THE LOOP ================= */
 const STEPS=[
- ["th","Thought","Some students are enrolled twice. I should look at the code that handles enrollment."],
+ ["th","Thought","Some students are enlisted twice. I should look at the code that handles enlistment."],
  ["ac","Action","Open the file views.py"],
- ["ob","Observation","The file opens. The enroll function is 38 lines long."],
+ ["ob","Observation","The file opens. The enlist function is 38 lines long."],
  ["th","Thought","It calls save() without checking for an existing row."],
  ["ac","Action","Edit views.py: look for an existing row before saving"],
  ["ob","Observation","The edit is applied to 1 file."],
  ["th","Thought","I should confirm the tests still pass."],
  ["ac","Action","Run the tests"],
- ["ob","Observation","The double-enrollment test failed: 2 rows, expected 1."],
+ ["ob","Observation","The double-enlistment test failed: 2 rows, expected 1."],
  ["th","Thought","The check runs, but two requests can still pass it at the same time."],
  ["ac","Action","Edit views.py: add a rule that blocks duplicate rows"],
  ["ob","Observation","The edit is applied."],

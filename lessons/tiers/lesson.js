@@ -21,13 +21,13 @@ const TRACE=[
   a:`<span class="d">&lt;button onclick=</span><span class="s">"loadOrder()"</span><span class="d">&gt;</span>View order<span class="d">&lt;/button&gt;</span>
 
 <span class="kw">async function</span> loadOrder(){
-  <span class="kw">const</span> r = <span class="kw">await</span> fetch(<span class="s">"/api/order-items?order=5521"</span>);
+  <span class="kw">const</span> r = <span class="kw">await</span> fetch(<span class="s">"/api/order-items?order=8891"</span>);
   render(<span class="kw">await</span> r.json());   <span class="c">// address bar stays on /order-confirmed</span>
 }`},
  {t:1,h:"The browser builds a request",
   x:"The browser turns the address into a plain text message. The server has not heard from you yet.",
   l:"The HTTP request text (tier 1)",
-  a:`<span class="kw">GET</span> /api/order-items?order=5521 HTTP/1.1\nHost: app.example.com\nAccept: application/json\nCookie: sessionid=8f2a...`},
+  a:`<span class="kw">GET</span> /api/order-items?order=8891 HTTP/1.1\nHost: app.example.com\nAccept: application/json\nCookie: sessionid=8f2a...`},
  {t:0,h:"The request crosses the network",
   x:"The request passes through the routers between you and the server. This takes milliseconds that no code can remove.",
   l:"The path across the network",
@@ -56,33 +56,33 @@ const TRACE=[
  {t:3,h:"The database receives SQL",
   x:"The database is a separate program. It reads the SQL text and finds the data, and it knows nothing about your framework.",
   l:"The SQL query (tier 3)",
-  a:`<span class="kw">SELECT</span> oi.id, oi.order_id, i.name, oi.qty\n<span class="kw">FROM</span> order_item oi\n<span class="kw">JOIN</span> item i <span class="kw">ON</span> i.id = oi.item_id\n<span class="kw">WHERE</span> oi.order_id = <span class="s">5521</span>;`},
+  a:`<span class="kw">SELECT</span> oi.id, oi.order_id, i.name, oi.qty\n<span class="kw">FROM</span> order_item oi\n<span class="kw">JOIN</span> item i <span class="kw">ON</span> i.id = oi.item_id\n<span class="kw">WHERE</span> oi.order_id = <span class="s">8891</span>;`},
  {t:3,h:"Rows come back",
   x:"The database returns rows, which are lines of values with no behavior attached. It knows nothing about your programming language's classes.",
   l:"The result: two rows (tier 3)",
-  a:`<span class="d">  id  | order_id | name      | qty</span>\n<span class="d">------+----------+-----------+-----</span>\n 9101 | 5521     | Rice meal |   1\n 9102 | 5521     | Iced tea  |   2`},
+  a:`<span class="d">  id  | order_id | name         | qty</span>\n<span class="d">------+----------+--------------+-----</span>\n 9101 | 8891     | Chicken rice |   2\n 9102 | 8891     | Beef noodles |   1`},
  {t:2,h:"Rows become objects",
   x:"The ORM turns each row into an object, so your code can read fields such as <code>order_item.item.name</code>. This uses processor time and memory in proportion to the number of rows.",
   lv:{django:"The objects the ORM created (tier 2)", express:"The objects the ORM created (tier 2)", laravel:"The objects the ORM created (tier 2)"},
   av:{
-   django:`[&lt;OrderItem: 5521 → Rice meal&gt;,\n &lt;OrderItem: 5521 → Iced tea&gt;]`,
-   express:`[ { id: 9101, item: { name: <span class="s">'Rice meal'</span> }, qty: 1 },\n  { id: 9102, item: { name: <span class="s">'Iced tea'</span> },  qty: 2 } ]`,
+   django:`[&lt;OrderItem: 8891 → Chicken rice&gt;,\n &lt;OrderItem: 8891 → Beef noodles&gt;]`,
+   express:`[ { id: 9101, item: { name: <span class="s">'Chicken rice'</span> }, qty: 2 },\n  { id: 9102, item: { name: <span class="s">'Beef noodles'</span> }, qty: 1 } ]`,
    laravel:`Illuminate\\Support\\Collection {\n  <span class="d">#items:</span> [ App\\Models\\OrderItem {...},\n            App\\Models\\OrderItem {...} ]\n}`}},
  {t:2,h:"Objects become text",
   x:"Objects cannot travel over the network, so the server converts them to JSON, a plain text format for data. This step is called serialization.",
   lv:{django:"Converting the objects to JSON (tier 2)", express:"Converting the objects to JSON (tier 2)", laravel:"Converting the objects to JSON (tier 2)"},
   av:{
-   django:`<span class="kw">return</span> JsonResponse({\n  <span class="s">"items"</span>: [\n    {<span class="s">"name"</span>: <span class="s">"Rice meal"</span>, <span class="s">"qty"</span>: 1},\n    {<span class="s">"name"</span>: <span class="s">"Iced tea"</span>,  <span class="s">"qty"</span>: 2}\n  ]\n})`,
-   express:`res.json({\n  items: [\n    { name: <span class="s">"Rice meal"</span>, qty: 1 },\n    { name: <span class="s">"Iced tea"</span>,  qty: 2 }\n  ]\n});`,
-   laravel:`<span class="kw">return</span> response()->json([\n  <span class="s">'items'</span> => [\n    [<span class="s">'name'</span> => <span class="s">'Rice meal'</span>, <span class="s">'qty'</span> => 1],\n    [<span class="s">'name'</span> => <span class="s">'Iced tea'</span>,  <span class="s">'qty'</span> => 2]\n  ]\n]);`}},
+   django:`<span class="kw">return</span> JsonResponse({\n  <span class="s">"items"</span>: [\n    {<span class="s">"name"</span>: <span class="s">"Chicken rice"</span>, <span class="s">"qty"</span>: 2},\n    {<span class="s">"name"</span>: <span class="s">"Beef noodles"</span>, <span class="s">"qty"</span>: 1}\n  ]\n})`,
+   express:`res.json({\n  items: [\n    { name: <span class="s">"Chicken rice"</span>, qty: 2 },\n    { name: <span class="s">"Beef noodles"</span>, qty: 1 }\n  ]\n});`,
+   laravel:`<span class="kw">return</span> response()->json([\n  <span class="s">'items'</span> => [\n    [<span class="s">'name'</span> => <span class="s">'Chicken rice'</span>, <span class="s">'qty'</span> => 2],\n    [<span class="s">'name'</span> => <span class="s">'Beef noodles'</span>, <span class="s">'qty'</span> => 1]\n  ]\n]);`}},
  {t:0,h:"The response crosses back",
   x:"The server sends a status line, headers, a blank line and the body. The trip back costs the same network time as the trip out.",
   l:"The HTTP response text",
-  a:`<span class="kw">HTTP/1.1 200 OK</span>\nContent-Type: application/json\nContent-Length: 76\n\n{<span class="s">"items"</span>: [{<span class="s">"name"</span>: <span class="s">"Rice meal"</span>, <span class="s">"qty"</span>: 1}, {<span class="s">"name"</span>: <span class="s">"Iced tea"</span>, <span class="s">"qty"</span>: 2}]}`},
+  a:`<span class="kw">HTTP/1.1 200 OK</span>\nContent-Type: application/json\nContent-Length: 83\n\n{<span class="s">"items"</span>: [{<span class="s">"name"</span>: <span class="s">"Chicken rice"</span>, <span class="s">"qty"</span>: 2}, {<span class="s">"name"</span>: <span class="s">"Beef noodles"</span>, <span class="s">"qty"</span>: 1}]}`},
  {t:1,h:"The browser renders it",
   x:"JavaScript on the user's device reads the JSON and builds the page's elements. A user can change this code, so the server must repeat every check that matters.",
   l:"The page code that builds the list (tier 1)",
-  a:`<span class="kw">const</span> r = <span class="kw">await</span> fetch(<span class="s">"/api/order-items?order=5521"</span>);\n<span class="kw">const</span> data = <span class="kw">await</span> r.json();\nlist.innerHTML = data.items\n  .map(i =&gt; <span class="s">\`&lt;li&gt;\${i.name}&lt;/li&gt;\`</span>).join(<span class="s">""</span>);`}
+  a:`<span class="kw">const</span> r = <span class="kw">await</span> fetch(<span class="s">"/api/order-items?order=8891"</span>);\n<span class="kw">const</span> data = <span class="kw">await</span> r.json();\nlist.innerHTML = data.items\n  .map(i =&gt; <span class="s">\`&lt;li&gt;\${i.name}&lt;/li&gt;\`</span>).join(<span class="s">""</span>);`}
 ];
 let trI=0, trTimer=null, trView="wire";
 
@@ -109,20 +109,20 @@ li{display:flex;justify-content:space-between;align-items:center;
 </style>`;
 
 const VIEWS={
- start:{ html:`${PAGE_CSS}<h1>Order confirmed</h1><div class="sub">Order 5521</div>
+ start:{ html:`${PAGE_CSS}<h1>Order confirmed</h1><div class="sub">Order 8891</div>
    <div class="mid" style="justify-content:flex-start;align-items:flex-start"><a href="#">View order &rsaquo;</a></div>`,
    spin:false, url:"https://app.example.com/order-confirmed",
    cap:`This is the page the user sees now. Nothing has been requested yet.` },
- loading:{ html:`${PAGE_CSS}<h1>Your order</h1><div class="sub">Order 5521</div>
+ loading:{ html:`${PAGE_CSS}<h1>Your order</h1><div class="sub">Order 8891</div>
    <div class="mid"><div class="spin"></div><div class="wait">Waiting for the server</div></div>`,
-   spin:true, url:"https://app.example.com/orders/5521",
+   spin:true, url:"https://app.example.com/orders/8891",
    cap:`Ten of the twelve parts happen while the user sees this spinner. The user cannot tell where the time goes. They only see how long the wait is.` },
- done:{ html:`${PAGE_CSS}<h1>Your order</h1><div class="sub">Order 5521</div>
+ done:{ html:`${PAGE_CSS}<h1>Your order</h1><div class="sub">Order 8891</div>
    <ul>
-     <li data-src="json"><span class="code">Rice meal</span><span class="units">Quantity 1</span></li>
-     <li data-src="json"><span class="code">Iced tea</span><span class="units">Quantity 2</span></li>
+     <li data-src="json"><span class="code">Chicken rice</span><span class="units">Quantity 2</span></li>
+     <li data-src="json"><span class="code">Beef noodles</span><span class="units">Quantity 1</span></li>
    </ul>`,
-   spin:false, url:"https://app.example.com/orders/5521",
+   spin:false, url:"https://app.example.com/orders/8891",
    cap:`The list is now on screen. Rows from the database became page elements (DOM nodes) on a device you do not control.` }
 };
 function stepView(i){

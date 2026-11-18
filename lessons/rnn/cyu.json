@@ -92,7 +92,7 @@
    "stem": "An older recurrent model reads a 50-page contract. Which problems should you expect?",
    "options": [
     {
-     "text": "Early details are weak in the hidden state, and training is slow because words are read in order.",
+     "text": "Early details fade in the hidden state, and training is slow because words are read in order.",
      "correct": true,
      "feedback": "These are the two problems of distance and order."
     },

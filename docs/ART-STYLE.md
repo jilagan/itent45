@@ -26,22 +26,22 @@ The set should read as spot illustration commissioned for a textbook. Rules:
 1. Flat shapes in solid fills. One dark ink outline (#1A1D21) at the same medium weight on everything. No gradient, glow, 3D, gloss, bokeh, lens effect, paper or painterly texture, or cast shadow other than one flat grey ground line.
 2. Palette: ink #1A1D21, blue #0B4A8F (the site blue, for the thing the lesson is about), orange #B4491B (the secondary object), light grey #E6E9ED and mid grey #B7BEC8, on white. Skin and clothing use these colours only. Tying the picture to the site palette makes it look designed with the page.
 3. No text, letters, numbers, logos or brand marks in the image. Signs, menus, receipts, lists and ID cards are drawn as blank shapes or plain bars. Labels are HTML.
-4. Simple figures: natural proportions, plain faces (at most a dot for each eye) or none, normal hands. Filipino everyday settings (sari-sari store, jeepney, canteen, registrar window) drawn respectfully, without caricature.
-5. One clear action. At most four figures. Side-on or three-quarter view at eye level. The horizon sits two thirds down in every scene and figures are about a third of the picture height, so the pictures share a scale. Plenty of white space around a compact scene.
+4. Simple figures: natural proportions, plain faces (at most a dot for each eye) or none, normal hands. University students in a plain modern setting (a desk, a library table, a campus bench, a sofa), casual clothes, a phone or a laptop. Screens show only plain shapes (bars, boxes, one button, a spinner, a check mark), never text. No food stalls, shops, vehicles or street scenes unless the scene is about a map or route, and then only an abstract map on a screen.
+5. One clear action. At most three figures. Side-on or three-quarter view at eye level. The horizon sits two thirds down in every scene and figures are about a third of the picture height, so the pictures share a scale. Plenty of white space around a compact scene.
 6. 3:2 landscape, 1200 x 800 on the site.
 
-Writing the scene sentence (`data-art-desc`): one scene, one action, at most four people, nothing that has to carry readable text or numbers. Avoid "a second picture shows..." (one image, one moment) and avoid describing writing on objects. The sentence is also the alt text, so it should describe what a person sees.
+Writing the scene sentence (`data-art-desc`): one scene, one action, at most three people, nothing that has to carry readable text or numbers. Avoid "a second picture shows..." (one image, one moment) and avoid describing writing on objects. The sentence is also the alt text, so it should describe what a person sees.
 
 ### AI tells: reject on sight
 Extra, fused or missing fingers. Objects that melt into each other or have impossible joins. Signage with gibberish letters. Over-rendered lighting, rim light, soft glow. Symmetrical, centred stock-photo composition. Line weight that changes within the picture. Plastic or airbrushed skin. Decorative swirls, sparkles, borders. Background crowds with blurred faces. Colours outside the palette, especially teal-and-orange or pastel gradients. Two scenes that differ in line weight, scale or horizon from the anchor. Regenerate rather than retouch.
 
 ## Prompt template
 
-The style block and negative list are identical for every scene; only the scene sentence changes. The source of truth is `STYLE`, `NEGATIVE` and `REF_NOTE` in `tools/make_art.py` (`--print-template` prints it). The model has no negative-prompt input, so the list is appended as an "Avoid:" paragraph.
+The style block and negative list are identical for every scene; only the scene sentence changes. `shared/art-prompts.json` ({slug: sentence}) overrides the scene sentence for a slug when the lesson's alt text is too generic to give a distinct picture; the alt text in the lesson stays as written. The source of truth is `STYLE`, `NEGATIVE` and `REF_NOTE` in `tools/make_art.py` (`--print-template` prints it). The model has no negative-prompt input, so the list is appended as an "Avoid:" paragraph.
 
 ```
 <STYLE>   Flat vector spot illustration for a university textbook ... (palette, line, view, horizon, figures, white space, 3:2, no text)
-<REF_NOTE, only when a reference image is passed>   The first reference image is the style anchor. Match its line weight, palette, figure style, scale, horizon height and level of detail exactly. Do not copy its subject, composition or props: no wall fan, no pitcher, no pencil cup unless the scene below names them. Keep the background plain and nearly empty.
+<REF_NOTE, only when a reference image is passed>   The first reference image is the style anchor. Match its line weight, palette, figure style, scale, horizon height and level of detail exactly. Do not copy its subject, setting, composition or props: no restaurant, hatch, apron, table settings, fan or kitchen items. Keep the background plain and nearly empty.
 Scene: <data-art-desc>.
 <NEGATIVE>   Avoid: text, letters, numbers, logos, watermarks, gibberish signage, gradients, glow, ... extra or fused fingers, ... symmetrical stock-photo composition, crowds, ...
 ```

@@ -5,9 +5,9 @@ For the instructor. Built from the final state of the `overhaul` branch.
 ## 1. What changed
 
 1. Every panel is a lesson of three to five steps shown one at a time, with a numbered step strip, Back and Next. The platform adds a last step, "Check your understanding", holding three or four questions and a collapsed "Key terms" list.
-2. Step 1 of each lesson is an everyday picture (analogy of at most 60 words, an icon row, a "Think first" question). Its title starts "Start with a ...". The last authored step ends "You can now ..." and says what a student can say or decide.
+2. Step 1 of each lesson is a real moment seen on a screen (at most 60 words, an icon row of the real parts, a "Think first" question about what happens behind the screen). Its title starts "Start with ...". No lesson uses an analogy or metaphor (section 9). The last authored step ends "You can now ..." and says what a student can say or decide.
 3. Each later step has at most 70 words of prose, one widget and one instruction. Depth sits in closed "More detail" blocks. Code sits in "Show the code" blocks, except in HTTP messages, SQL basics and Reviewing AI-written code, which show a short sample by default.
-4. Controls use one wording: Play, Step, Reset, Next, and sit above the list, trace or map they drive. Each role keeps one icon across lessons.
+4. Controls use one wording: Play, Step, Reset, Next, and sit above the list, trace or map they drive. Icons are literal, and each part keeps one icon across lessons.
 5. Rail labels, headings, `data-desc` lines and the README tables agree, and cross-references use the current rail labels and sit inside More detail.
 6. Every lesson except Group exercises has a `data-art` slug and a one-sentence scene description for the picture pipeline (`tools/make_art.py`). 49 pictures are generated (Google Nano Banana 2.1 through Replicate) and reviewed against the reject list in docs/ART-STYLE.md. Each sits above a one-line legend in step 1.
 7. Questions: 192 items in `lessons/<id>/cyu.json`, 3 to 4 per lesson, at most one per step. Each key can be worked out without opening More detail.
@@ -74,52 +74,9 @@ For the instructor. Built from the final state of the `overhaul` branch.
 | Using AI well | Reviewing AI-written code | Reviewing AI-written code |
 | Using AI well | The math behind it | The math behind it: vectors, slopes and probabilities |
 
-### Analogy per panel
+### Step 1 openings
 
-| Panel | Analogy used |
-|---|---|
-| basics | sari-sari store: a store only while open and staffed |
-| tiers | restaurant: customer, waiter, kitchen |
-| layers | LBC parcel with waybills and hub labels |
-| journey | phone calls to a restaurant before ordering |
-| bytes | order slip with fixed fields |
-| rest | order slip at a counter: what to do and to which order |
-| clients | one kitchen serving dine-in, drive-thru and delivery app |
-| render | printing a fresh menu versus a menu board |
-| pay | cashier terminal that talks to the bank, receipt as proof |
-| entity | class list spreadsheet |
-| card | students and courses on class lists |
-| rea | sari-sari sale: goods out, 20 pesos in, or the utang notebook |
-| sql | Excel filter, add, change, delete |
-| txn | last seat sold by two cashiers |
-| norm | course title typed on every row of a class list |
-| query | clerk fetching 50 files one by one or with a cart |
-| shape | spreadsheets with fixed columns versus a folder per student |
-| mem | fast-food branch floor area |
-| server | fast-food cashiers and one line |
-| scale | more counters versus more branches with a guard |
-| enlist | registrar's office on enlistment day |
-| vm | condominium units in one building |
-| cost | jeepney versus Grab |
-| region | bank with Manila and Cebu branches |
-| split | carinderia cooks versus food court stalls |
-| intro (machine) | calculator rules versus a cashier learning fake bills |
-| next | phone keyboard suggesting the next word |
-| learn | memorizing the exam paper |
-| train | walking down a foggy hillside |
-| deep | scholarship committee with several cut-offs |
-| backprop | a salty dish sent back through the kitchen |
-| tokens | child sounding out a word in pieces |
-| embed | barkada party where people end up seated together |
-| vectors | pins on a map |
-| rnn | one sticky note rewritten after each sentence |
-| attn | group chat reply that needs earlier messages |
-| ctx | whiteboard that erases the oldest line |
-| prompt | telling a tricycle driver where to stop |
-| loop | intern sent to fix a record |
-| tools | request slip at the barangay hall front desk |
-| vibe | receipt with correct spelling and a wrong total |
-| math | grade as a weighted sum |
+The table of analogies that stood here is withdrawn. Every lesson opens with a real moment from software the students use, and the running cases are one food order (web lessons), enlistment day (capacity, cloud and data lessons) and one AI assistant session (AI lessons). The rule is the last section of docs/OVERHAUL-SPEC.md.
 
 ## 3. Facts corrected from the old text
 
@@ -136,13 +93,12 @@ For the instructor. Built from the final state of the `overhaul` branch.
 | [lessons/txn.html](../lessons/txn.html) | "default isolation level of common databases such as Postgres" | "of Postgres". MySQL defaults differently. |
 | [lessons/next.html](../lessons/next.html) | "no plan, no draft"; default temperature showed 97.5 percent against text quoting 0.89 | Overclaim removed; the default temperature is 1 and the text matches the widget. |
 | [lessons/deep.html](../lessons/deep.html) | 1-unit result (69 percent) mixed with 2 to 8 units (42 percent) | Question and verdict start at 2 units. Eight units still build one straight line. |
-| [lessons/tokens.html](../lessons/tokens.html) | Scrabble analogy (tiles are single letters) | Child sounding out a word in pieces. |
+| [lessons/tokens.html](../lessons/tokens.html) | Scrabble analogy (tiles are single letters) | Removed. The lesson shows how a tokenizer splits real words. |
 | index and machine, check questions | 28 feedbacks began "Correct." under a "Correct" label; a few began "No" | Lead-in words removed. |
 
 
 ## 4. Needs the instructor's judgement
 
-- [lessons/vm.html](../lessons/vm.html): the condo analogy covers pooling but not "furnished" versus "serviced" (IaaS, PaaS, SaaS). Keep it as is?
 - [lessons/txn.html](../lessons/txn.html): the text names Postgres only. Do you also teach MySQL's default?
 - [lessons/intro.html](../lessons/intro.html): is a fixed rule for flagging transfers acceptable as an example of "not machine learning"?
 - [lessons/tools.html](../lessons/tools.html): the text says the client, not MCP itself, provides approval. Does this match what you teach?
@@ -218,3 +174,19 @@ Wording: nine step-1 titles now start "Start with a ..."; the Play and Pause but
 
 Found and not changed: Entities and attributes and its questions use "SOM 407" as a sample room (a campus building name). Pages built for the CT and ITENT 21 courses show the repository name itent45 only in the git clone command in HTTP messages, which is the real repository.
 
+## 9. Round 3: openings without analogies
+
+What changed
+- All 53 lessons open with a real moment and carry no analogy, metaphor or comparison in step text, widgets, questions, feedback, key terms, More detail or meta.json. A scan of source and rendered text for the withdrawn settings (restaurant as a comparison, waiter, kitchen, cashier, counter, order slip, claim stub, sari-sari, jeepney, taxi, bus, condo, guard, branch, barangay, clerk, folders, cart, parcel, courier, LBC, food court, utang, party, hill, fog, sticky note, whiteboard, committee, recipe, soup, speedometer, weather forecast, Scrabble, phone charger) found them in step slugs, a few data labels and the unused icons. Real subjects stay (a food delivery app in split, trains in routes).
+- Step slugs and question "sec" values that carried withdrawn words now match their step titles. The video slot in vm/meta.json follows the new slug.
+- Enlistment vocabulary everywhere: enlist, the table `enlistments`, "slot" for a place in a course. The starter APIs and the teaching server use the same words.
+- One food order: order 8891 with Chicken rice (P180) and Beef noodles (P220), menu, item, checkout. The sample course is MGT 45 Operations Management in the code samples of shape as well.
+- 15 icons that no lesson references were deleted from shared/icons. The icon table in CONVERSION-RECIPE lists literal icons only.
+- Fixes: the Take E down verdict in scale shows under Least connections; the deep trade step is under 70 words; the rea diagram fits 390 px without a 760 px minimum; step-1 text no longer repeats the title; brand names were removed from lesson text outside the AI tools' sample data.
+
+Numbers recomputed from the strings (old to new)
+- clients lesson Content-Length 109 to 119 (body with line breaks, counted again after the menu items changed).
+- tiers lesson Content-Length now 83 for the order body `{"items": [{"name": "Chicken rice", "qty": 2}, {"name": "Beef noodles", "qty": 1}]}`; the earlier value belonged to the old body and was not recorded.
+- pay lesson sizes 248, 90 and 556 bytes to 247, 89 and 555 bytes; data 36 to 35 characters; the payment amount is P580 (58000 centavos) for the new order.
+- render lesson sizes 101, 193 and 310 bytes and 32 data characters were checked against the shown text with line breaks and indentation removed, as the lesson says. They did not change.
+- split lesson memory figures (monolith 1,600 MB at 40 rps and 14,400 MB at 400 rps; services 2,760 MB and 7,160 MB) were recomputed from the widget data. They did not change.

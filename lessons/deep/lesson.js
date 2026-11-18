@@ -115,7 +115,7 @@ function nnRender(){
     v.innerHTML=`<b>${pct}% with ${k} units, and the boundary is straight again</b>With the nonlinearity off, a layer can only add its units together, and adding straight lines gives one more straight line. Move the slider from 2 to 8 and nothing changes.`;
   } else if(k===1){
     v.className="verdict bad";
-    v.innerHTML=`<b>${pct}%, and no straight line does better</b>One unit is one line, and the students who stay are surrounded, so some always land on the dropouts' side. Add a second unit.`;
+    v.innerHTML=`<b>${pct}%, and no straight line does better</b>One unit is one line, and the students who stay are surrounded, so some always end up on the dropouts' side. Add a second unit.`;
   } else if(pct<100){
     v.className="verdict warn";
     v.innerHTML=`<b>${pct}% with ${k} lines</b>A second layer takes all ${k} answers and says <em>stays</em> only when they all agree. The overlap is a shape none of the lines could draw alone.`;

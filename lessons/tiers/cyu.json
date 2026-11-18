@@ -36,7 +36,7 @@
    "stem": "A user edits the order number in the address bar and sees someone else's order. Which tier should have refused the request?",
    "options": [
     {
-     "text": "The application tier, which checks who is logged in and who owns the order before querying.",
+     "text": "The application tier, which checks who is logged in and who owns the order.",
      "correct": true,
      "feedback": "The application tier knows who is logged in and decides which orders that person may see."
     },

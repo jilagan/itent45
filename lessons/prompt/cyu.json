@@ -5,7 +5,7 @@
    "id": "prompt-1",
    "sec": null,
    "type": "mc",
-   "stem": "You ask a model for \"a function to enroll a student.\" Then you add the sentence \"Be careful and think hard.\" Why does this sentence change so little?",
+   "stem": "You ask a model for \"a function to enlist a student.\" Then you add the sentence \"Be careful and think hard.\" Why does this sentence change so little?",
    "options": [
     {
      "text": "It adds no fact that rules out answers, so the range stays the same.",
@@ -33,15 +33,15 @@
    "id": "prompt-2",
    "sec": null,
    "type": "mc",
-   "stem": "With every fact switched off, which kind of answer will the model most likely give for the enrollment function?",
+   "stem": "With every fact switched off, which kind of answer will the model most likely give for the enlistment function?",
    "options": [
     {
-     "text": "One that reads the seat count, checks it, and then creates the row.",
+     "text": "One that reads the slot count, checks it, and then creates the row.",
      "correct": true,
      "feedback": "This is the most common pattern in tutorials, so it gets the largest share of the range. It fails when two students click at the same moment."
     },
     {
-     "text": "One that locks the course row first, then creates the enrollment.",
+     "text": "One that locks the course row first, then creates the enlistment.",
      "correct": false,
      "feedback": "This answer is correct but rare in the range, around 7%. Most examples the model learned from do not use it."
     },

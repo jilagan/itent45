@@ -31,20 +31,20 @@ function shRender(){
   $("#shBody").innerHTML = SH.shape==="rows"
    ? `<span class="c">-- courses</span>
 id         title                    units
-<span class="s">MGT45</span>      Operations Management    3
-<span class="s">CSCI21</span>     Data Structures          3
+<span class="s">MGT 45</span>     Operations Management    3
+<span class="s">CSCI 21</span>    Data Structures          3
 
 <span class="c">-- enlistments</span>
 student    course_id
-<span class="s">20-1000</span>    <span class="s">MGT45</span>
-<span class="s">20-1000</span>    <span class="s">CSCI21</span>
-<span class="s">20-1001</span>    <span class="s">MGT45</span>`
+<span class="s">20-1000</span>    <span class="s">MGT 45</span>
+<span class="s">20-1000</span>    <span class="s">CSCI 21</span>
+<span class="s">20-1001</span>    <span class="s">MGT 45</span>`
    : `<span class="c">// students/20-1000</span>
 {
   <span class="s">"student"</span>: <span class="s">"20-1000"</span>,
   <span class="s">"enlistments"</span>: [
-    {<span class="s">"code"</span>:<span class="s">"MGT45"</span>,  <span class="s">"title"</span>:<span class="s">"Operations Management"</span>, <span class="s">"units"</span>:3},
-    {<span class="s">"code"</span>:<span class="s">"CSCI21"</span>, <span class="s">"title"</span>:<span class="s">"Data Structures"</span>,       <span class="s">"units"</span>:3}
+    {<span class="s">"code"</span>:<span class="s">"MGT 45"</span>, <span class="s">"title"</span>:<span class="s">"Operations Management"</span>, <span class="s">"units"</span>:3},
+    {<span class="s">"code"</span>:<span class="s">"CSCI 21"</span>, <span class="s">"title"</span>:<span class="s">"Data Structures"</span>,       <span class="s">"units"</span>:3}
   ]
 }
 <span class="c">// the title is copied into the document of every student who takes it</span>`;

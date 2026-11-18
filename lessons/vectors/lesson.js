@@ -92,7 +92,7 @@ vecRender();
 /* ---- sentence similarity, as an angle ---- */
 const SIMS=[
  {id:"a", t:"How do I sign up for a class?",              deg:8},
- {id:"b", t:"What is the process for course enrollment?",  deg:22},
+ {id:"b", t:"What is the process for course enlistment?",  deg:22},
  {id:"c", t:"How do I drop a class?",                     deg:80},
  {id:"d", t:"How do I withdraw from a subject?",          deg:92}
 ];

@@ -8,7 +8,7 @@
    "stem": "A network names the wrong person in a photo. Which way of deciding how to change its weights matches backpropagation?",
    "options": [
     {
-     "text": "Start at the loss and work backward through the layers, finding how much each weight affected the result.",
+     "text": "Start at the loss and work backward, finding how much each weight affected the result.",
      "correct": true,
      "feedback": "Backpropagation passes the error backward from the loss, layer by layer, using what each step handed to the next."
     },

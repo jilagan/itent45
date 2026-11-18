@@ -10,7 +10,7 @@ const TERMS=[
  {t:"Enlistment",        k:"E", why:"An <b class=\"i\">event</b>: a student signing up for a course. It has a date, a status and a grade, and none of those belong to the student or to the course alone."},
  {t:"Enlisted on 12 Aug",k:"I", why:"One enlistment. It is one example of the Enlistment entity."},
  {t:"Grade",             k:"A", why:"A property of an enlistment. It belongs to neither the student nor the course alone."},
- {t:"Section",           k:"E", why:"Debatable. It is an attribute if it only names a letter, and an entity if it also has a room, a schedule and a seat limit."}
+ {t:"Section",           k:"E", why:"Debatable. It is an attribute if it only names a letter, and an entity if it also has a room, a schedule and a slot limit."}
 ];
 const KIND={E:"entity",A:"attribute",I:"instance"};
 const ENT={ans:{}};

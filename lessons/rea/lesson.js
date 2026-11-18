@@ -84,11 +84,11 @@ renderErd();
 
 const REA=[
  {id:"enlist", n:"Enlistment",
-  give:{res:"Class seat", resS:"one of 40 in a section", evt:"Enlistment", evtS:"a row per student per course",
+  give:{res:"Class slot", resS:"one of 40 in a section", evt:"Enlistment", evtS:"a row per student per course",
         agtIn:"Registrar", agtOut:"Student"},
   take:{res:"Tuition", resS:"cash, or a promise of it", evt:"Payment", evtS:"a row per amount received",
         agtIn:"Finance office", agtOut:"Student"},
-  gap:"The gap to look for is a seat with no matching payment."},
+  gap:"The gap to look for is a slot with no matching payment."},
  {id:"shop", n:"Online store",
   give:{res:"Stock item", resS:"goods available to sell", evt:"Sale", evtS:"a row per line of an order",
         agtIn:"Merchant", agtOut:"Customer"},
@@ -108,7 +108,7 @@ const REA=[
         agtIn:"Clinic", agtOut:"Patient or insurer"},
   gap:"The gap to look for is a consultation that was given and never billed."}
 ];
-let reaSel="enlist";
+let reaSel="enlist", reaNarrow=false;
 const RB_W=240, RB_H=60;
 function reaBox(x,y,kind,label,val,sub){
   const col=kind==="res"?"var(--res)":kind==="evt"?"var(--req)":"var(--line3)";
@@ -120,8 +120,9 @@ function reaBox(x,y,kind,label,val,sub){
     <text x="12" y="54" fill="var(--faint)" font-family="var(--sans)" font-size="14">${sub}</text>
   </g>`;
 }
-function reaSide(d, dir, ox){
-  const yR=8, yE=118, yA=228;
+function reaSide(d, dir, ox, oy){
+  oy=oy||0;
+  const yR=8+oy, yE=118+oy, yA=228+oy;
   const cE=[ox+RB_W/2, yE+RB_H/2];
   let g=reaBox(ox,yR,"res","Resource",d.res,d.resS)
       + reaBox(ox,yE,"evt","Event ("+dir+")",d.evt,d.evtS)
@@ -145,8 +146,22 @@ function renderRea(){
     `<button data-r="${x.id}" aria-pressed="${x.id===reaSel}">${x.n}</button>`).join("");
   $$("#reaTab button").forEach(el=>el.onclick=()=>{reaSel=el.dataset.r;renderRea()});
 
+  const narrow = $("#reaDia").clientWidth>0 && $("#reaDia").clientWidth<770;
+  reaNarrow = narrow;
+  let svg;
+  if(narrow){
+    /* one column: the give side, the duality line, then the take side, so nothing scrolls sideways */
+    const X=30, T=296+44;
+    svg=`<svg viewBox="0 0 300 ${T+296+8}" style="width:100%;min-width:0;max-width:100%;height:auto" xmlns="http://www.w3.org/2000/svg">
+    ${reaSide(r.give,"give",X,0)}
+    ${reaSide(r.take,"take",X,T)}
+    <line x1="${X+RB_W/2}" y1="${8+228+RB_H+4}" x2="${X+RB_W/2}" y2="${T+8-4}" stroke="var(--req)" stroke-width="1.6" stroke-dasharray="5 4"/>
+    <text x="${X+RB_W/2+10}" y="${T-26}" fill="var(--req)" font-family="var(--sans)" font-size="14" font-weight="600">Duality</text>
+    <text x="${X+RB_W/2+10}" y="${T-9}" fill="var(--faint)" font-family="var(--sans)" font-size="14">one pays for the other</text>
+  </svg>`;
+  } else {
   const L=10, R=510, yE=118;
-  const svg=`<svg viewBox="0 0 760 300" style="min-width:760px" xmlns="http://www.w3.org/2000/svg">
+  svg=`<svg viewBox="0 0 760 300" style="min-width:760px" xmlns="http://www.w3.org/2000/svg">
     ${reaSide(r.give,"give",L)}
     ${reaSide(r.take,"take",R)}
     <line x1="${L+RB_W}" y1="${yE+RB_H/2}" x2="${R}" y2="${yE+RB_H/2}"
@@ -156,6 +171,7 @@ function renderRea(){
     <text x="${(L+RB_W+R)/2}" y="${yE+RB_H/2+20}" fill="var(--faint)" text-anchor="middle"
           font-family="var(--sans)" font-size="14">one pays for the other</text>
   </svg>`;
+  }
   $("#reaDia").innerHTML=svg;
 
   const v=$("#reaVerdict");
@@ -163,3 +179,4 @@ function renderRea(){
   v.innerHTML=`<b>The same structure in every case</b>The labels change and the six boxes stay the same. ${r.gap}`;
 }
 renderRea();
+PAGE_HOOKS.show=()=>{ const w=$("#reaDia").clientWidth; if(w>0 && (w<770)!==reaNarrow) renderRea(); };

@@ -23,13 +23,13 @@
      "feedback": "Servers reject duplicates only if you build that rule (for example a unique constraint or an idempotency key). Nothing in POST itself prevents them."
     }
    ],
-   "try": "In the step \"Send a request\", press Send with POST selected, then Send the same one again, and count the rows."
+   "try": "In the step \"Send a request\", press Send with POST selected, then Send again, and count the rows."
   },
   {
    "id": "rest-2",
    "sec": null,
    "type": "mc",
-   "stem": "An edit screen sends `PATCH /orders/1041` with the body `{\"qty\": 2}`. Because of network problems the same request reaches the server three times. What is the order's `qty` value afterward?",
+   "stem": "An edit screen sends `PATCH /orders/8888` with the body `{\"qty\": 2}`. Because of network problems the same request reaches the server three times. What is the order's `qty` value afterward?",
    "options": [
     {
      "text": "2, because every request writes the same value and leaves other fields alone",

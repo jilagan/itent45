@@ -4,7 +4,7 @@
         <p>Some methods take twice as long when a list doubles. Others take four times as long, and some barely slow down. This lesson shows how to tell which is which.</p>
       </div>
 
-      <div class="sec" data-sec="registrar" data-title="Start with a slow page">
+      <div class="sec" data-sec="slow-page" data-title="Start with a slow page">
         <p>A page of results opens at once with 10 items. With 5,000 items the same page loads slowly. The code did not change. The number of steps it takes grew with the list, and some methods grow much faster than others. How the work gets bigger as the job gets bigger is called <dfn title="How the number of steps changes as the list gets longer">growth</dfn>.</p>
         <div class="scene" role="group" aria-label="The page, its list of items and the time it takes to load" data-art="slow-page-many-items" data-art-desc="A student at a desk looks at a laptop that shows a plain list of bars and a loading bar that is half filled.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-browser"/></svg></div><figcaption><b>The page</b><span>Shows the list</span></figcaption></figure>
@@ -68,8 +68,8 @@
       </div>
 
       <div class="sec" data-sec="estimate" data-title="Estimating growth">
-        <p>When the list doubles, twice as many steps means the job looks at each item once. Four times as many steps means it compares every pair. One more step means it halves the list. Comparing every record with every record in a list of 100,000 takes 10 billion comparisons.</p>
-        <p class="outcome">You can now count a method's steps, say what happens when the list doubles and judge whether the method will finish in reasonable time.</p>
+        <p>If the list doubles, twice as many steps means each item is looked at once. Four times as many means every pair is compared. One more step means the list is halved. Comparing every record with every record in a list of 100,000 takes 10 billion comparisons.</p>
+        <p class="outcome">You can now say what a method's steps do when the list doubles and judge whether it will finish in reasonable time.</p>
         <details class="more">
           <summary>More detail</summary>
           <h4>Growth and money</h4>

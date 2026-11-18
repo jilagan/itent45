@@ -2,9 +2,9 @@
 /* ================= 05 VERBS & REST ================= */
 /* ---- live table: what each verb does to real rows ---- */
 const SEED=[
- {id:"1041", item:"Chicken rice", qty:2, tip:20},
- {id:"1042", item:"Beef noodles", qty:1, tip:0},
- {id:"1043", item:"Veggie wrap",  qty:3, tip:50}
+ {id:"8888", item:"Chicken rice", qty:2, tip:20},
+ {id:"8889", item:"Beef noodles", qty:1, tip:0},
+ {id:"8890", item:"Veggie wrap",  qty:3, tip:50}
 ];
 const REQS=[
  {id:"getall", v:"GET",    d:"list every order"},
@@ -14,7 +14,7 @@ const REQS=[
  {id:"patch",  v:"PATCH",  item:true, body:true, d:"change only what the body contains"},
  {id:"del",    v:"DELETE", item:true, d:"remove it"}
 ];
-const DB={rows:JSON.parse(JSON.stringify(SEED)), sel:"post", row:"1041", log:[], mark:null, sent:0, lastId:null, nextId:1044};
+const DB={rows:JSON.parse(JSON.stringify(SEED)), sel:"post", row:"8888", log:[], mark:null, sent:0, lastId:null, nextId:8891};
 const key=r=>r.id;                       // identity: the server assigns it
 // the row a single-item request will act on
 const selRow=()=>DB.rows.find(r=>key(r)===DB.row) || null;
@@ -192,7 +192,7 @@ function dbVerdict(q){
       v.innerHTML=`<b>${n} clicks, ${n} new orders for ${b.item}</b>The server created an order each time, and nothing stopped the duplicates. This is what <b class="i">not idempotent</b> means.`;
     } else {
       v.className="verdict warn";
-      v.innerHTML=`<b>201 Created, and the order for ${b.item} is in the table</b>Press <em>Send the same one again</em> without changing anything, and count the rows.`;
+      v.innerHTML=`<b>201 Created, and the order for ${b.item} is in the table</b>Press <em>Send again</em> without changing anything, and count the rows.`;
     }
   } else if(q.v==="PUT"||q.v==="PATCH"){
     const missing=["item","qty","tip"].filter(k=>!(k in reqBody()));
@@ -212,14 +212,14 @@ function dbVerdict(q){
     v.className = twice ? "verdict ok" : "verdict warn";
     v.innerHTML = twice
       ? `<b>The second send returned 404</b>The reply changed and the end state is the same: the order is gone. So DELETE is <b class="i">idempotent</b>.`
-      : `<b>204 No Content, row removed</b>Press <em>Send the same one again</em> and read the reply.`;
+      : `<b>204 No Content, row removed</b>Press <em>Send again</em> and read the reply.`;
   }
 }
 $("#reqSend").onclick=()=>{ DB.lastId=null; send(); };
 $("#reqAgain").onclick=send;
 $("#reqReset").onclick=()=>{
-  DB.rows=JSON.parse(JSON.stringify(SEED)); DB.log=[]; DB.mark=null; DB.row="1041"; DB.goneRow=null;
-  DB.sent=0; DB.lastId=null; DB.nextId=1044; $("#reqAgain").disabled=true;
+  DB.rows=JSON.parse(JSON.stringify(SEED)); DB.log=[]; DB.mark=null; DB.row="8888"; DB.goneRow=null;
+  DB.sent=0; DB.lastId=null; DB.nextId=8891; $("#reqAgain").disabled=true;
   $("#dbVerdict").className="verdict"; $("#dbVerdict").innerHTML="<b>Reset</b>Three rows, as they started.";
   dbRender();
 };
@@ -229,7 +229,7 @@ $("#dbVerdict").innerHTML="<b>Ready</b>Pick a request and press Send.";
 
 const VERBS=[
  {v:"GET",d:"Fetch something. Change nothing.",safe:true,idem:true,body:false,
-  ex:`GET /orders/1041`,
+  ex:`GET /orders/8888`,
   twice:"The answer is the same both times, because nothing changed.",
   note:"Search engines send GET to every link they find, so a GET must never delete anything."},
  {v:"POST",d:"Create something new, or submit work.",safe:false,idem:false,body:true,
@@ -237,15 +237,15 @@ const VERBS=[
   twice:"Two orders are created. This is the double-order bug after a page refresh.",
   note:"POST is the only common verb that is neither safe nor idempotent. Anything that must not happen twice needs protection that you build."},
  {v:"PUT",d:"Replace an item completely.",safe:false,idem:true,body:true,
-  ex:`PUT /orders/1041`,
+  ex:`PUT /orders/8888`,
   twice:"The result is the same. The second request replaces the order with the same values.",
   note:"PUT means the whole order, so any field you leave out is cleared."},
  {v:"PATCH",d:"Change part of an item.",safe:false,idem:true,body:true,
-  ex:`PATCH /orders/1041`,
+  ex:`PATCH /orders/8888`,
   twice:"The result is the same for a plain value like qty: 2. A patch that says 'add 1 to qty' would not be idempotent.",
   note:"The usual verb for edit forms. Send only what changed."},
  {v:"DELETE",d:"Remove an item.",safe:false,idem:true,body:false,
-  ex:`DELETE /orders/1041`,
+  ex:`DELETE /orders/8888`,
   twice:"The first call removes the item and returns 204. The second returns 404, and the end state is the same.",
   note:"Most real systems keep the row and mark it inactive, so the history survives."}
 ];
@@ -274,7 +274,7 @@ const MTX=[
  ["GET",  ["List them all","200 + a list",0,"Returns every order, usually one page at a time."],
           ["Fetch that one","200, or 404",0,"The standard way to read one item. If the id does not exist, the server returns 404."]],
  ["POST", ["Create a new one","201 + Location",0,"The server assigns the id and returns the new item's URL in the Location header. Sending this twice creates two."],
-          ["Rarely meaningful","405",1,"The item already exists, so there is nothing to create. Some APIs use this form for actions such as /orders/1041/repeat."]],
+          ["Rarely meaningful","405",1,"The item already exists, so there is nothing to create. Some APIs use this form for actions such as /orders/8888/repeat."]],
  ["PUT",  ["Replace the whole set","405 in practice",1,"This would mean discard every order and use these instead. Almost no API allows it."],
           ["Replace that one","200 or 204",0,"Overwrites every field, and any field you leave out is cleared. People make this mistake first."]],
  ["PATCH",["Not meaningful","405",1,"There is no single item to update part of."],
@@ -291,7 +291,7 @@ $$("#mtxBody .mc").forEach(el=>el.onclick=()=>{
   $$("#mtxBody .mc").forEach(x=>x.classList.remove("pick"));
   el.classList.add("pick");
   const row=MTX[+el.dataset.r], cell=[row[1],row[2]][+el.dataset.c];
-  const url=+el.dataset.c===0?"/orders":"/orders/1041";
+  const url=+el.dataset.c===0?"/orders":"/orders/8888";
   $("#mtxOut").innerHTML=`<div class="et">${row[0]} ${url}</div><p>${cell[3]}</p>`;
 });
 

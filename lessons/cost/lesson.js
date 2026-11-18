@@ -1,7 +1,7 @@
 /* Lesson cost. Widget code for the markup in lesson.html. */
 /* ================= 14 CLOUD ECONOMICS ================= */
 const COST={capex:true, cap:120};
-// a year of demand: quiet baseline with two enrolment spikes and a graduation bump
+// a year of demand: quiet baseline with two enlistment spikes and a graduation bump
 function demandAt(t){
   const base=28+10*Math.sin(t*Math.PI*2);
   const spike=(c,w,h)=>h*Math.exp(-Math.pow((t-c)/w,2));

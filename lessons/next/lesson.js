@@ -10,7 +10,7 @@ const NX=[
  {id:"code", pre:"def get_user(request):\n    user = User.objects.",
   d:[["get",.42],["filter",.31],["all",.09],["create",.06],["exclude",.04],["first",.04],["none",.02]],
   v:`<b>Two plausible words that behave differently</b>Both <code>get</code> and <code>filter</code> are plausible, but <code>get</code> raises an error when there is no match and <code>filter</code> returns an empty result. The model picks whichever word usually comes next and does not know what your program needs.`},
- {id:"risky", pre:"To stop the double enrollment, add an",
+ {id:"risky", pre:"To stop the double enlistment, add an",
   d:[["idempotency",.22],["index",.19],["if",.17],["assert",.14],["extra",.12],["email",.09],["alert",.07]],
   v:`<b>A flat list means no word is clearly best</b>No word is above 0.25, so the choice is close to a guess. The sentence it writes will still read as fluently as the France one did.`}
 ];
@@ -61,7 +61,7 @@ $("#sTemp").dispatchEvent(new Event("input"));
 
 
 /* ---- generation is the same step, run on its own output ---- */
-const GEN_SEED="The enrollment ran twice because the request";
+const GEN_SEED="The enlistment ran twice because the request";
 /* Two fully written paths. The fork is at the first word, and every path
    below runs to a complete clause, so nothing ends mid-phrase. */
 const GEN_TREE={

@@ -5,7 +5,7 @@
       </div>
 
       <div class="sec" data-sec="pick-region" data-title="Start with choosing a region">
-        <p>A student team creating a cloud server for its project app has to pick a region from a list: Singapore, Tokyo, Sydney, Oregon or Virginia. The console then asks for an availability zone. The team's users are in Metro Manila. The team picks a region and presses Create.</p>
+        <p>The cloud console's form for a new server asks for a region first: Singapore, Tokyo, Sydney, Oregon or Virginia. A student team building a project app for users in Metro Manila picks one. The console then asks for an availability zone, and the team presses Create.</p>
         <div class="scene" role="group" aria-label="A region is a location such as Singapore, an availability zone is one data center in it, and a standby copy of the data allows failover" data-art="pick-region-on-laptop" data-art-desc="Two students sit at a laptop whose screen shows a plain list on the left and a map of continents with a few dots on the right, and one student points at a dot.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-map-trifold"/></svg></div><figcaption><b>Singapore, Tokyo, Oregon</b><span>Regions</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>One data center in a region</b><span><dfn title="One data center inside a region">Availability zone</dfn></span></figcaption></figure>
@@ -17,15 +17,13 @@
 
       <div class="sec" data-sec="distance" data-title="What distance costs">
         <p>Distance sets the <dfn title="The delay before a response arrives, which grows with distance">latency</dfn> your users feel. Move the slider or click a region on the map, then read the <dfn title="The wait before the first part of the page arrives">time to first byte</dfn>.</p>
-        <div class="card">
-            <div class="sliders">
-              <div class="field">
-                <label>Region <span class="val" id="vRegion">Singapore</span></label>
-                <input type="range" id="sRegion" min="0" max="7" value="1">
-              </div>
+        <div class="worldwrap">
+          <div class="sliders">
+            <div class="field">
+              <label>Region <span class="val" id="vRegion">Singapore</span></label>
+              <input type="range" id="sRegion" min="0" max="7" value="1">
             </div>
           </div>
-        <div class="worldwrap">
           <svg id="worldMap" viewBox="0 0 960 470" preserveAspectRatio="xMidYMid meet"></svg>
           <div class="maplegend">
             <span><i style="background:var(--res)"></i>your users</span>
@@ -36,7 +34,6 @@
         </div>
 
         <div class="card">
-            <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-map-trifold"/></svg>
             <div class="card-t">What the distance costs</div>
             <div class="legend2" id="latStats"></div>
             <div class="verdict" id="latVerdict"></div>

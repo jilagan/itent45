@@ -8,7 +8,7 @@ const nmTitle=i=>{
   return NM_NEW;
 };
 function nmRender(){
-  const show=Math.min(NM.n,5), rows=[];
+  const show=Math.min(NM.n,2), rows=[];
   for(let i=0;i<show;i++){
     const t=nmTitle(i), stale=NM.renamed&&t===NM_OLD;
     rows.push(`<tr><td class="k">20-${1000+i}</td><td class="${stale?"hlnull":(NM.renamed?"hl":"")}">${t}</td><td>3</td></tr>`);
@@ -22,10 +22,10 @@ function nmRender(){
 
   const t=nmTitle(0);
   $("#normTbl").innerHTML=`<thead><tr><th>courses.id</th><th>title</th><th>units</th></tr></thead><tbody>
-    <tr><td class="k">MGT45</td><td class="${NM.renamed?"hl":""}">${NM.renamed?NM_NEW:NM_OLD}</td><td>3</td></tr></tbody>`;
+    <tr><td class="k">MGT 45</td><td class="${NM.renamed?"hl":""}">${NM.renamed?NM_NEW:NM_OLD}</td><td>3</td></tr></tbody>`;
   const er=[];
-  for(let i=0;i<Math.min(NM.n,3);i++) er.push(`<tr><td class="k">20-${1000+i}</td><td>MGT45</td></tr>`);
-  if(NM.n>3) er.push(`<tr><td class="k" style="color:var(--faint)">…</td><td style="color:var(--faint)">${NM.n-3} more, all pointing at the same row</td></tr>`);
+  for(let i=0;i<Math.min(NM.n,2);i++) er.push(`<tr><td class="k">20-${1000+i}</td><td>MGT 45</td></tr>`);
+  if(NM.n>2) er.push(`<tr><td class="k" style="color:var(--faint)">…</td><td style="color:var(--faint)">${NM.n-2} more, all pointing at the same row</td></tr>`);
   $("#normTbl2").innerHTML=`<thead><tr><th>enlistments.student</th><th>course_id</th></tr></thead><tbody>${er.join("")}</tbody>`;
 
   $("#flatVerdict").className="verdict "+(NM.renamed&&NM.partial?"bad":NM.renamed?"warn":"");

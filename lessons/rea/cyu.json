@@ -23,9 +23,9 @@
      "feedback": "The payment is the event, because it records something that happened. The amount is what changed hands."
     },
     {
-     "text": "Resource: a seat in a course. Event: the payment. Agents: the university only.",
+     "text": "Resource: a slot in a course. Event: the payment. Agents: the university only.",
      "correct": false,
-     "feedback": "The seat is the resource in the enlistment half of the pair. In the payment half the resource is the money, and the student is an agent too."
+     "feedback": "The slot is the resource in the enlistment half of the pair. In the payment half the resource is the money, and the student is an agent too."
     }
    ]
   },
@@ -64,14 +64,14 @@
    "stem": "A school records each enlistment and each payment as separate events. Which question needs both kinds of event to answer?",
    "options": [
     {
-     "text": "Which students hold a seat and have not paid?",
+     "text": "Which students hold a slot and have not paid?",
      "correct": true,
      "feedback": "This question looks for a gap between two events that should pair up, an enlistment with no matching payment."
     },
     {
-     "text": "How many seats does MGT 45 have in total?",
+     "text": "How many slots does MGT 45 have in total?",
      "correct": false,
-     "feedback": "This needs only the resource, the seats. No event is involved."
+     "feedback": "This needs only the resource, the slots. No event is involved."
     },
     {
      "text": "Which room is MGT 45 held in this term?",

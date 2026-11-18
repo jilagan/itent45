@@ -33,7 +33,7 @@ function renderVm(){
 }
 const NIST=[
  ["On-demand self-service","You create capacity yourself, through an API (a way for programs to send commands to the provider) or a web console, with no purchase order. A cloud server needs a credit card and about a minute, so a wrong decision is cheap to fix."],
- ["Broad network access","Capabilities are reachable over the network by standard methods, from phones, laptops and other devices. The same HTTP endpoint can serve a browser, an iPhone and an Android app."],
+ ["Broad network access","Capabilities are reachable over the network by standard methods, from phones, laptops and other devices. The same HTTP endpoint can serve a browser, an iOS app and an Android app."],
  ["Resource pooling","Physical resources are pooled and assigned to many customers as needed, and you generally cannot tell where yours run. Pooling keeps cloud prices low and sometimes slows your server for reasons you cannot see."],
  ["Rapid elasticity","Capacity can be added and released quickly, and to the customer it looks unlimited. A new machine still takes time to boot."],
  ["Measured service","Usage is metered and billed by the unit, such as CPU-hours, gigabytes or requests. Metering makes cloud costs an ongoing expense, and a resource you forgot about keeps charging you."]

@@ -1363,3 +1363,7 @@ html[data-theme="light"] .wd:hover{background:rgba(0,0,0,.05)}
 :where(#p-intro,#p-learn,#p-deep,#p-tools,#p-vibe) .cmp{display:grid;grid-template-columns:1fr 1fr;gap:12px}
 @media(max-width:860px){:where(#p-intro,#p-learn,#p-deep,#p-tools,#p-vibe) .cmp{grid-template-columns:1fr}}
 :where(#p-backprop,#p-loop,#p-tools) .trace{display:flex;flex-direction:column;gap:5px}
+
+/* hint under a diagram that scrolls sideways inside its own frame on narrow screens */
+.scrollhint{display:none;margin:6px 0 0;font-size:14px;color:var(--dim)}
+@media(max-width:820px){.scrollhint{display:block}}

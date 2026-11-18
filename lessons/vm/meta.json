@@ -18,7 +18,7 @@
  "area": "capacity-cloud",
  "needs": [],
  "video": {
-  "sec": "provisioning",
+  "sec": "provision",
   "youtube": "",
   "title": "Launch a cloud server, then open the bill",
   "about": "A real cloud console: choosing an instance type and region, the pricing page, how long the server takes to boot, and the first line of the bill."

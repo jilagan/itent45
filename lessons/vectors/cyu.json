@@ -89,7 +89,7 @@
    "id": "vectors-4",
    "sec": null,
    "type": "mc",
-   "stem": "A student asks how to avoid being charged twice for an enrollment. The best help page is titled \"Idempotency keys\". Why might a search by meaning still find it?",
+   "stem": "A student asks how to avoid being charged twice for an enlistment. The best help page is titled \"Idempotency keys\". Why might a search by meaning still find it?",
    "options": [
     {
      "text": "The question and the page sit at similar positions, though they share no words.",

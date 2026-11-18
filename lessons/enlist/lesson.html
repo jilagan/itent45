@@ -9,10 +9,10 @@
         <div class="scene" role="group" aria-label="A browser sends requests to the web tier, and reservations go on to the primary database" data-art="enlistment-day-laptops" data-art-desc="Three students sit in a row at a library table, each with a laptop, and every screen shows a plain grid of empty rows with one small spinning circle.">
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-laptop"/></svg></div><figcaption><b>Student's browser</b><span>Sends requests</span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-hard-drives"/></svg></div><figcaption><b>Enlistment web servers</b><span><dfn title="The servers that receive requests and build the pages">Web tier</dfn></span></figcaption></figure>
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-database"/></svg></div><figcaption><b>Seat records</b><span><dfn title="The one database that accepts changes, such as seat reservations">Primary database</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-database"/></svg></div><figcaption><b>Slot records</b><span><dfn title="The one database that accepts changes, such as slot reservations">Primary database</dfn></span></figcaption></figure>
         </div>
         <div class="ask"><b>Think first.</b> A university can add web servers in minutes, yet enlistment can still be slow at 8:00 AM, so which part of the system is the limit?</div>
-        <div class="instructor">Ask for a show of hands: who has seen the enlistment system slow down on enlistment morning? Listen for students who blame the web servers, and steer them toward seat reservation.</div>
+        <div class="instructor">Ask for a show of hands: who has seen the enlistment system slow down on enlistment morning? Listen for students who blame the web servers, and steer them toward slot reservation.</div>
       </div>
 
       <div class="sec" data-sec="two-jobs" data-title="Browsing and reserving">
@@ -26,14 +26,14 @@
           </div>
           <div class="wl write">
             <svg class="ico big" aria-hidden="true" focusable="false"><use href="#i-clipboard-text"/></svg>
-            <div class="wh">Reserving a seat</div>
+            <div class="wh">Reserving a slot</div>
             <p>Taking one of 40 slots in a popular section. The result must be correct.</p>
-            <span class="tag">a write</span><span class="tag">one at a time per seat</span>
+            <span class="tag">a write</span><span class="tag">one at a time per slot</span>
           </div>
         </div>
         <details class="more">
           <summary>More detail</summary>
-          <p>A cache is a fast store of recent answers, so the database is asked less often. Replicas are read-only copies of the database. Both can serve browsing, which is mostly reads. Seat reservations cannot be cached and cannot be spread across replicas, because two students must never get the same last slot.</p>
+          <p>A cache is a fast store of recent answers, so the database is asked less often. Replicas are read-only copies of the database. Both can serve browsing, which is mostly reads. Slot reservations cannot be cached and cannot be spread across replicas, because two students must never get the same last slot.</p>
           <p>The model assumes 15 requests per enlistment session, 3 of them reservations.</p>
         </details>
       </div>
@@ -104,7 +104,7 @@
       </div>
 
       <div class="sec" data-sec="lesson" data-title="What the case shows">
-        <p>Autoscaling fixed the web tier. The database is still one primary, because every seat reservation must be exactly right. Two changes help without buying hardware. Staggering flattens the peak, and sending browsing to read-only copies leaves the primary with only reservations.</p>
+        <p>Autoscaling fixed the web tier. The database is still one primary, because every slot reservation must be exactly right. Two changes help without buying hardware. Staggering flattens the peak, and sending browsing to read-only copies leaves the primary with only reservations.</p>
         <p class="outcome">You can now say which tier fails first on a busy day and how to relieve it.</p>
         <details class="more">
           <summary>More detail</summary>

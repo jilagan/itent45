@@ -27,9 +27,11 @@ STYLE = (
     "Palette limited to: ink #1A1D21 for outlines, blue #0B4A8F, orange #B4491B, a light grey tint #E6E9ED, a mid grey tint #B7BEC8, and a plain white background. "
     "No gradients, no shading, no shadows except a single flat grey ground line, no glow, no texture, no 3D, no depth of field. "
     "Side-on or three-quarter view, eye-level camera, the same horizon line two thirds of the way down the picture, "
-    "figures about one third of the picture height. One clear action. At most four people. "
+    "figures about one third of the picture height. One clear action. At most three figures. "
     "People are simple and natural in proportion, with plain faces (a dot for each eye at most) and normal hands. "
-    "Filipino everyday setting, drawn respectfully and without caricature. "
+    "University students in a plain modern setting (a desk, a library table, a campus bench, a sofa), in casual clothes, with a phone or a laptop; "
+    "screens show only plain shapes (bars, boxes, one button, a spinner, a check mark), never text. "
+    "No food stalls, shops, vehicles or street scenes unless the scene is about a map or route, and then only an abstract map on a screen. "
     "Generous empty white space around a compact scene. Landscape 3:2. "
     "The picture contains no text of any kind: no letters, numbers, logos, brand marks, signs or labels."
 )
@@ -40,8 +42,12 @@ NEGATIVE = (
     "crowds, busy backgrounds, stereotyped or exaggerated faces."
 )
 REF_NOTE = ("The first reference image is the style anchor. Match its line weight, palette, figure style, scale, horizon height and level of detail exactly. "
-            "Do not copy its subject, composition or props: no wall fan, no pitcher, no pencil cup unless the scene below names them. "
+            "Do not copy its subject, setting, composition or props: no restaurant, hatch, apron, table settings, fan or kitchen items. "
             "Keep the background plain and nearly empty.")
+
+def load_overrides():
+    f = ROOT / "shared" / "art-prompts.json"
+    return json.loads(f.read_text(encoding="utf-8")) if f.exists() else {}
 
 def build_prompt(desc, with_ref):
     parts = [STYLE, "Scene: " + desc.strip().rstrip(".") + ".", NEGATIVE]
@@ -133,6 +139,7 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__.split("\n")[0], formatter_class=argparse.RawDescriptionHelpFormatter, epilog=__doc__)
     ap.add_argument("--only", help="comma-separated slugs")
     ap.add_argument("--anchor", metavar="SLUG", help="style anchor: made first, then used as the reference for the other scenes")
+    ap.add_argument("--ref", metavar="PNG", help="use this existing image as the style reference for every scene (instead of generating an anchor scene)")
     ap.add_argument("--candidates", type=int, default=1, metavar="N", help="N options per scene, saved as art-src/<slug>-1.png ...")
     ap.add_argument("--pick", action="append", default=[], metavar="SLUG:N", help="promote art-src/<slug>-N.png to the final picture (no API call)")
     ap.add_argument("--force", action="store_true", help="regenerate scenes that already have a picture")
@@ -143,7 +150,7 @@ def main():
     a = ap.parse_args()
     out_png, out_web = ROOT / "art-src", ROOT / "shared" / "art"
     if a.print_template:
-        print(build_prompt("<one sentence describing the everyday scene>", False)); return 0
+        print(build_prompt("<one sentence describing the scene>", False)); return 0
     for pk in a.pick:
         slug, _, n = pk.partition(":"); cand = out_png / f"{slug}-{n}.png"
         if not cand.exists(): print(f"no such candidate: {cand}"); return 2
@@ -151,6 +158,8 @@ def main():
     if a.pick and not (a.only or a.anchor or a.dry_run): return 0
 
     scenes, warns = find_scenes(pathlib.Path(a.src))
+    for k, v in load_overrides().items():       # per-scene prompt overrides; the lesson's alt text stays as written
+        if k in scenes: scenes[k]["desc"] = v
     for w in warns: print("WARNING:", w, file=sys.stderr)
     only = [s for s in (a.only or "").split(",") if s]
     for s in only + ([a.anchor] if a.anchor else []):
@@ -160,7 +169,7 @@ def main():
     n = max(1, a.candidates)
 
     def have(s): return (out_web / (s + ".webp")).exists()
-    anchor_png = out_png / f"{a.anchor}.png" if a.anchor else None
+    anchor_png = (pathlib.Path(a.ref) if a.ref else out_png / f"{a.anchor}.png") if (a.anchor or a.ref) else None
     anchor_new = bool(a.anchor) and (a.force or not anchor_png.exists())
     todo = [s for s in todo if a.force or not have(s)]
     order = ([a.anchor] if a.anchor in todo else []) + [s for s in todo if s != a.anchor]
@@ -179,9 +188,9 @@ def main():
         print("anchor mode: the anchor is made first and the run then stops so you can review it.")
     if a.dry_run:
         for i, s in enumerate(gen):
-            ref = bool(a.anchor) and s != a.anchor
-            print(f"\n=== {s}{'  [ANCHOR, no reference image]' if s == a.anchor else ''}{'  [reference: ' + str(anchor_png.relative_to(ROOT)) + ']' if ref else ''}\n{build_prompt(scenes[s]['desc'], ref)}")
-        if not gen: print("\n(sample prompt; no scenes need generating)\n" + build_prompt("<one sentence describing the everyday scene>", False))
+            ref = bool(anchor_png) and s != a.anchor
+            print(f"\n=== {s}{'  [ANCHOR, no reference image]' if s == a.anchor else ''}{'  [reference: ' + str(anchor_png) + ']' if ref else ''}\n{build_prompt(scenes[s]['desc'], ref)}")
+        if not gen: print("\n(sample prompt; no scenes need generating)\n" + build_prompt("<one sentence describing the scene>", False))
         return 0
 
     token = os.environ.get("REPLICATE_API_TOKEN", "").strip()
@@ -192,7 +201,7 @@ def main():
     ref_urls, fails = [], []
     for s in gen:
         is_anchor = s == a.anchor
-        if not is_anchor and a.anchor and not ref_urls:
+        if not is_anchor and anchor_png and not ref_urls:
             if not anchor_png.exists(): print("ERROR: anchor picture missing"); return 2
             print(f"uploading reference {anchor_png.name}"); ref_urls = [upload_file(anchor_png, token)]
         prompt = build_prompt(scenes[s]["desc"], bool(ref_urls) and not is_anchor)

@@ -15,7 +15,7 @@
         <div class="instructor">The answer is 24 times 400 MB, which is 9,600 MB or about 9.4 GB. Most of that memory sits unused, because few workers ever do the heavy task. The next step shows the same effect.</div>
         <details class="more">
           <summary>More detail</summary>
-          <p>The identical machines in <a data-lesson="scale">Load balancers and scaling</a> were a monolith running as several copies. Most systems should be a monolith. <a data-lesson="enlist">Case study: enlistment</a> showed one candidate for splitting: browsing the catalog and reserving a seat need opposite things from the same machine.</p>
+          <p>The identical machines in <a data-lesson="scale">Load balancers and scaling</a> were a monolith running as several copies. Most systems should be a monolith. <a data-lesson="enlist">Case study: enlistment</a> showed one candidate for splitting: browsing the catalog and reserving a slot need opposite things from the same machine.</p>
           <p>Calls between services cross the network, and each call has a cost.</p>
         </details>
       </div>
@@ -69,7 +69,7 @@
       </div>
 
       <div class="sec" data-sec="costs" data-title="What splitting costs">
-        <p>Splitting can save memory at high load. It also adds four costs that start on the first day you split.</p>
+        <p>Splitting can save memory at high load. It adds four costs from the first day.</p>
         <div class="bill">
           <div class="bl">
             <h5>Calls cross the network</h5>
@@ -77,7 +77,7 @@
           </div>
           <div class="bl">
             <h5>Services change at different times</h5>
-            <p>Services deploy at different times, so a message change must add fields and remove none.</p>
+            <p>Services deploy separately, so a changed message must add fields and remove none.</p>
           </div>
           <div class="bl">
             <h5>Every call needs retry rules</h5>
@@ -132,7 +132,7 @@
         </details>
       </div>
 
-      <div class="sec" data-sec="capstone" data-title="What to do in your {{project}}">
+      <div class="sec" data-sec="your-project" data-title="What to do in your {{project}}">
         <p>Build the monolith, with its parts in separate modules and no code that reads another module's tables. Then a boundary exists if you ever need to split. Split a part only when its needs differ and you can say why. If two services call each other on every request, treat them as one service.</p>
         <p class="outcome">You can now decide whether a part of a project should be its own service.</p>
         <details class="more">

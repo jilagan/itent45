@@ -36,7 +36,7 @@
    "stem": "The owner of a public wifi network can see every packet you send. Which layer's header stops the owner from reading your HTTP request?",
    "options": [
     {
-     "text": "TLS, which encrypts the message it carries.",
+     "text": "TLS, which encrypts the message.",
      "correct": true,
      "feedback": "TLS scrambles the HTTP message so only the two ends can read it. The owner can still see the IP addresses and ports on the outside."
     },

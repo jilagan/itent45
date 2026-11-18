@@ -5,9 +5,9 @@
       </div>
 
       <div class="sec" data-sec="tuition-payment" data-title="Start with paying tuition">
-        <p>You open the payment page of the university's online enlistment system. It lists your enlisted courses and the amount due for each. You pay, and the page shows a payment reference number. The seats you hold and the money you paid are two separate records.</p>
+        <p>After you enlist, the payment page of the university's online enlistment system lists your enlisted courses and the amount due for each. You pay, and the page shows a payment reference number. The slots you hold and the money you paid are two separate records.</p>
         <div class="scene" role="group" aria-label="The amount paid is the resource, the payment is the event, the student and the university are the agents" data-art="tuition-payment-phone" data-art-desc="A student stands in a hallway holding a phone that shows a short list of plain bars and one wide button, and taps the screen with a thumb.">
-          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-money"/></svg></div><figcaption><b>The amount paid</b><span><dfn title="Something of value, such as stock, cash or a seat">Resource</dfn></span></figcaption></figure>
+          <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-money"/></svg></div><figcaption><b>The amount paid</b><span><dfn title="Something of value, such as stock, cash or a slot">Resource</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-receipt"/></svg></div><figcaption><b>The payment</b><span><dfn title="A record that a resource changed hands at a moment in time">Event</dfn></span></figcaption></figure>
           <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-student"/></svg><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>The student and the university</b><span><dfn title="A person or organization taking part in an event">Agents</dfn></span></figcaption></figure>
         </div>
@@ -23,13 +23,13 @@
         <details class="more">
           <summary>More detail</summary>
           <h4>The three parts of REA</h4>
-          <p><b>Resource:</b> the thing of value, such as a seat, a book, an item of stock or cash. The event moves it.</p>
+          <p><b>Resource:</b> the thing of value, such as a slot, a book, an item of stock or cash. The event moves it.</p>
           <p><b>Event:</b> a record of something that happened at a moment and changed who holds the resource. Events are usually the tables with the most rows.</p>
           <p><b>Agent:</b> a person or organization on one side of an event. Usually one is inside your organization and one is outside it, and you need to record both.</p>
           <h4>Where the foreign keys sit</h4>
           <p>One resource appears in many events, and one agent takes part in many events. So the event table holds both foreign keys, following the rule from <a data-lesson="card">Relationships</a> that the foreign key goes on the many side.</p>
           <h4>Why there are two events</h4>
-          <p>A seat is given and money is taken. A book goes out and comes back. If you model only the half you were asked about, the system cannot answer where the money went.</p>
+          <p>A slot is given and money is taken. A book goes out and comes back. If you model only the half you were asked about, the system cannot answer where the money went.</p>
           <p>The hardest business questions are gaps between two events that should have paired: unpaid enlistments, overdue books, orders delivered but not billed. <a data-lesson="pay">Payments and gateways</a> shows the same problem on the network side.</p>
         </details>
       </div>
@@ -66,6 +66,7 @@
           <p>A diagram of tables can be laid out in many ways, and most people place the boxes wherever there is room. One convention costs nothing: draw every crow's foot pointing up and to the left. A crow's foot is the three-pronged symbol on the many side of a relationship. The many side is almost always the entity that records what happens, so the tables that grow fastest end up in the top left, and every foreign key points down and to the right.</p>
           <div class="ctab" id="erdTab"></div>
           <div class="art" id="erdDia" style="padding:0"></div>
+          <p class="scrollhint">On a narrow screen, scroll this diagram sideways to see all of it.</p>
           <div class="verdict" id="erdVerdict" style="margin-top:13px"></div>
         </details>
       </div>

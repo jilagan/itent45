@@ -11,11 +11,11 @@ const TLC=[
   }
 }`,
   steps:[
-   ["th","You","How many students are enrolled in MGT 45?"],
-   ["ac","Model writes",'{"tool":"query_courses","sql":"SELECT COUNT(*) FROM enrollments WHERE course=\'MGT45\'"}'],
+   ["th","You","How many students are enlisted in MGT 45?"],
+   ["ac","Model writes",'{"tool":"query_courses","sql":"SELECT COUNT(*) FROM enlistments WHERE course=\'MGT 45\'"}'],
    ["gap","Nothing has run yet","The request is only text at this point. The client decides whether to run it."],
    ["ob","Client runs it and returns",'{"rows":[{"count":38}]}'],
-   ["th","Model answers","38 students are enrolled in MGT 45."]],
+   ["th","Model answers","38 students are enlisted in MGT 45."]],
   ok:`<b>The model asked and the client acted</b>Step 2 is only text. Between that request and the result, <b class="i">a program can log it, ask you first or refuse it</b>.`},
  {id:"drop", label:"A risky one", danger:true,
   def:`<span class="c">// a second tool, offered by the same MCP server</span>
@@ -28,7 +28,7 @@ const TLC=[
 }`,
   steps:[
    ["th","You","The test data is out of date. Clean it up before the demo."],
-   ["ac","Model writes",'{"tool":"run_sql","sql":"DELETE FROM enrollments"}'],
+   ["ac","Model writes",'{"tool":"run_sql","sql":"DELETE FROM enlistments"}'],
    ["gap","Nothing has run yet","This statement has no filter, so it applies to every row. You have four seconds to notice."],
    ["ob","Client runs it and returns",'{"rows_affected":11482}'],
    ["th","Model answers","Cleaned up the stale test data."]],

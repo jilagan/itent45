@@ -13,7 +13,7 @@ models and views, and nothing else changes.
 Then:
 
     curl localhost:8000/api/courses
-    curl -X POST localhost:8000/api/enrollments \
+    curl -X POST localhost:8000/api/enlistments \
          -H 'Content-Type: application/json' \
          -H 'Idempotency-Key: abc-123' \
          -d '{"student":"20-1234","code":"ITENT 45"}'
@@ -68,10 +68,10 @@ class Course(models.Model):
                 "units": self.units, "slots": self.slots}
 
 
-class Enrollment(models.Model):
+class Enlistment(models.Model):
     student = models.CharField(max_length=16)
     course = models.ForeignKey(Course, on_delete=models.CASCADE,
-                               related_name="enrollments")
+                               related_name="enlistments")
     # One student cannot hold two seats in the same course. The database
     # enforces this, not your view. Panel 11's seat race is decided here.
     class Meta:
@@ -90,7 +90,7 @@ class IdempotencyKey(models.Model):
     """Remembers what a key already produced, so a retry replays the first
     answer instead of doing the work twice. Panel 07, made concrete."""
     key = models.CharField(max_length=80, unique=True)
-    enrollment = models.ForeignKey(Enrollment, on_delete=models.CASCADE)
+    enlistment = models.ForeignKey(Enlistment, on_delete=models.CASCADE)
 
     class Meta:
         app_label = __name__
@@ -181,13 +181,13 @@ def course_detail(request, code):
 
 
 @csrf_exempt
-def enrollments(request):
+def enlistments(request):
     if request.method == "GET":
         student = request.GET.get("student")
-        qs = Enrollment.objects.select_related("course")   # <- one query, not N+1
+        qs = Enlistment.objects.select_related("course")   # <- one query, not N+1
         if student:
             qs = qs.filter(student=student)
-        return JsonResponse({"enrollments": [e.as_dict() for e in qs]})
+        return JsonResponse({"enlistments": [e.as_dict() for e in qs]})
 
     if request.method == "POST":
         data = body_of(request)
@@ -197,10 +197,10 @@ def enrollments(request):
         idem = request.headers.get("Idempotency-Key")
         if idem:
             existing = IdempotencyKey.objects.filter(key=idem).select_related(
-                "enrollment__course").first()
+                "enlistment__course").first()
             if existing:
                 # Same key seen before: replay the original answer.
-                return JsonResponse(existing.enrollment.as_dict(), status=200)
+                return JsonResponse(existing.enlistment.as_dict(), status=200)
 
         try:
             course = Course.objects.get(code=data.get("code", ""))
@@ -212,33 +212,33 @@ def enrollments(request):
 
         try:
             with transaction.atomic():
-                e = Enrollment.objects.create(student=data.get("student", ""),
+                e = Enlistment.objects.create(student=data.get("student", ""),
                                               course=course)
                 course.slots -= 1
                 course.save()
                 if idem:
-                    IdempotencyKey.objects.create(key=idem, enrollment=e)
+                    IdempotencyKey.objects.create(key=idem, enlistment=e)
         except IntegrityError:
             # Two requests raced for the same seat. One of them lands here.
-            return JsonResponse({"error": "already enrolled in that course"},
+            return JsonResponse({"error": "already enlisted in that course"},
                                 status=409)
 
         r = JsonResponse(e.as_dict(), status=201)
-        r["Location"] = f"/api/enrollments/{e.id}"
+        r["Location"] = f"/api/enlistments/{e.id}"
         return r
 
     return not_allowed(["GET", "POST"])
 
 
 @csrf_exempt
-def enrollment_detail(request, pk):
+def enlistment_detail(request, pk):
     if request.method == "DELETE":
         try:
-            e = Enrollment.objects.select_related("course").get(pk=pk)
-        except Enrollment.DoesNotExist:
+            e = Enlistment.objects.select_related("course").get(pk=pk)
+        except Enlistment.DoesNotExist:
             # Already gone. The end state is what you wanted, so this is
             # not an error the caller has to handle - but it is a 404.
-            return JsonResponse({"error": "no such enrollment"}, status=404)
+            return JsonResponse({"error": "no such enlistment"}, status=404)
         e.course.slots += 1
         e.course.save()
         e.delete()
@@ -250,8 +250,8 @@ def enrollment_detail(request, pk):
 urlpatterns = [
     path("api/courses", courses),
     path("api/courses/<str:code>", course_detail),
-    path("api/enrollments", enrollments),
-    path("api/enrollments/<int:pk>", enrollment_detail),
+    path("api/enlistments", enlistments),
+    path("api/enlistments/<int:pk>", enlistment_detail),
 ]
 
 
@@ -276,7 +276,7 @@ if __name__ == "__main__":
         from django.db import connection
         existing = set(connection.introspection.table_names())
         with connection.schema_editor() as schema:
-            for model in (Course, Enrollment, IdempotencyKey):
+            for model in (Course, Enlistment, IdempotencyKey):
                 if model._meta.db_table not in existing:
                     schema.create_model(model)
                     print("created", model._meta.db_table)

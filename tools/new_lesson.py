@@ -33,12 +33,12 @@ I = a.id
     <p>One or two sentences that say what this lesson explains.</p>
   </div>
 
-  <!-- Step 1: the everyday picture. An analogy of at most 60 words, a .scene (icon figures), a Think first box of at most 30 words.
-       No widget. Name the technical term after the analogy. -->
-  <div class="sec" data-sec="picture" data-title="Start with an everyday picture">
-    <p>Describe an everyday situation in 1 to 3 short sentences, then name the technical idea.</p>
+  <!-- Step 1: a real moment seen on a screen, at most 60 words, a .scene of the real parts (icon figures), a Think first box of at most 30 words.
+       No widget, no comparison. Then ask what happens behind the screen. -->
+  <div class="sec" data-sec="start" data-title="Start with a real moment">
+    <p>Describe what the user sees and does in software students already use, in 1 to 3 short sentences.</p>
     <div class="scene" role="group" aria-label="What the picture shows" data-art="" data-art-desc="">
-      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Everyday role</b><span>Technical name</span></figcaption></figure>
+      <figure><div class="sic"><svg class="ico " aria-hidden="true" focusable="false"><use href="#i-user"/></svg></div><figcaption><b>Plain label</b><span>Technical name</span></figcaption></figure>
     </div>
     <div class="ask"><b>Think first.</b> One question of at most 30 words. Write down a guess.</div>
   </div>

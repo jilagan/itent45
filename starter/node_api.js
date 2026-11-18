@@ -27,15 +27,15 @@ const courses = new Map([
   ["ITMGT 25", { code: "ITMGT 25", title: "Programming Fundamentals",       units: 3, slots: 12 }],
 ]);
 
-let enrollments = [];          // { id, student, code }
+let enlistments = [];          // { id, student, code }
 let nextId = 1;
-const idempotency = new Map(); // key -> enrollment id
+const idempotency = new Map(); // key -> enlistment id
 
 // A student cannot hold two seats in the same course. In the Django file the
 // database enforces this. Here nothing does, so the check has to be yours -
 // which is exactly the kind of thing that goes wrong under load.
-const alreadyEnrolled = (student, code) =>
-  enrollments.some(e => e.student === student && e.code === code);
+const alreadyEnlisted = (student, code) =>
+  enlistments.some(e => e.student === student && e.code === code);
 
 const view = e => ({
   id: e.id, student: e.student,
@@ -107,11 +107,11 @@ async function courseItem(req, res, code) {
   return notAllowed(res, ["GET", "PUT", "PATCH", "DELETE"]);
 }
 
-async function enrollmentsCollection(req, res, url) {
+async function enlistmentsCollection(req, res, url) {
   if (req.method === "GET") {
     const student = url.searchParams.get("student");
-    const rows = enrollments.filter(e => !student || e.student === student);
-    return send(res, 200, { enrollments: rows.map(view) });
+    const rows = enlistments.filter(e => !student || e.student === student);
+    return send(res, 200, { enlistments: rows.map(view) });
   }
 
   if (req.method === "POST") {
@@ -121,32 +121,32 @@ async function enrollmentsCollection(req, res, url) {
     const key = req.headers["idempotency-key"];
     if (key && idempotency.has(key)) {
       // Seen this key already: replay the first answer, do not act again.
-      const e = enrollments.find(x => x.id === idempotency.get(key));
+      const e = enlistments.find(x => x.id === idempotency.get(key));
       if (e) return send(res, 200, view(e));
     }
 
     const c = courses.get(data.code ?? "");
     if (!c) return send(res, 404, { error: "no course with that code" });
     if (c.slots < 1) return send(res, 409, { error: "no slots left" });
-    if (alreadyEnrolled(data.student, data.code))
-      return send(res, 409, { error: "already enrolled in that course" });
+    if (alreadyEnlisted(data.student, data.code))
+      return send(res, 409, { error: "already enlisted in that course" });
 
     const e = { id: nextId++, student: data.student ?? "", code: data.code };
-    enrollments.push(e);
+    enlistments.push(e);
     c.slots -= 1;
     if (key) idempotency.set(key, e.id);
-    return send(res, 201, view(e), { Location: `/api/enrollments/${e.id}` });
+    return send(res, 201, view(e), { Location: `/api/enlistments/${e.id}` });
   }
   return notAllowed(res, ["GET", "POST"]);
 }
 
-function enrollmentItem(req, res, id) {
+function enlistmentItem(req, res, id) {
   if (req.method !== "DELETE") return notAllowed(res, ["DELETE"]);
-  const i = enrollments.findIndex(e => e.id === Number(id));
-  if (i === -1) return send(res, 404, { error: "no such enrollment" });
-  const c = courses.get(enrollments[i].code);
+  const i = enlistments.findIndex(e => e.id === Number(id));
+  if (i === -1) return send(res, 404, { error: "no such enlistment" });
+  const c = courses.get(enlistments[i].code);
   if (c) c.slots += 1;
-  enrollments.splice(i, 1);
+  enlistments.splice(i, 1);
   return send(res, 204, {});
 }
 
@@ -170,8 +170,8 @@ const server = http.createServer(async (req, res) => {
     let m;
     if (p === "/api/courses")                       return await coursesCollection(req, res);
     if ((m = p.match(/^\/api\/courses\/(.+)$/)))    return await courseItem(req, res, m[1]);
-    if (p === "/api/enrollments")                   return await enrollmentsCollection(req, res, url);
-    if ((m = p.match(/^\/api\/enrollments\/(\d+)$/))) return enrollmentItem(req, res, m[1]);
+    if (p === "/api/enlistments")                   return await enlistmentsCollection(req, res, url);
+    if ((m = p.match(/^\/api\/enlistments\/(\d+)$/))) return enlistmentItem(req, res, m[1]);
 
     send(res, 404, { error: "no route for that path" });
   } catch (err) {

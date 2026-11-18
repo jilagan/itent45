@@ -61,7 +61,7 @@
    "id": "bytes-3",
    "sec": null,
    "type": "mc",
-   "stem": "In the 201 Created response, where does the server tell the client the address of the new enrollment?",
+   "stem": "In the 201 Created response, where does the server tell the client the address of the new enlistment?",
    "options": [
     {
      "text": "In the `Location` header.",
@@ -109,7 +109,7 @@
     {
      "text": "The start of a second request sent on the same connection.",
      "correct": false,
-     "feedback": "A new request would begin with a request line such as `POST /enrollments HTTP/1.1`."
+     "feedback": "A new request would begin with a request line such as `POST /enlistments HTTP/1.1`."
     }
    ]
   }

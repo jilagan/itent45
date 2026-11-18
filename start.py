@@ -93,7 +93,7 @@ def run_demo():
     say(f"  {DIM}Every byte a client sends gets printed below. In a second terminal:{OFF}")
     say("      curl http://localhost:8080/courses")
     say("      curl -v http://localhost:8080/courses")
-    say("      curl -X POST http://localhost:8080/enrollments -d '{\"code\":\"ITENT 45\"}'")
+    say("      curl -X POST http://localhost:8080/enlistments -d '{\"code\":\"ITENT 45\"}'")
     say()
     subprocess.call([sys.executable, script])
 
@@ -149,9 +149,9 @@ def run_api(prefer):
 
 def _api_hints():
     say()
-    say(f"  {DIM}Send the same enrolment twice with one key, then twice without:{OFF}")
+    say(f"  {DIM}Send the same enlistment twice with one key, then twice without:{OFF}")
     say("      curl localhost:8000/api/courses")
-    say("      curl -X POST localhost:8000/api/enrollments \\")
+    say("      curl -X POST localhost:8000/api/enlistments \\")
     say("           -H 'Content-Type: application/json' \\")
     say("           -H 'Idempotency-Key: abc-123' \\")
     say("           -d '{\"student\":\"20-1234\",\"code\":\"ITENT 45\"}'")

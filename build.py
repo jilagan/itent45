@@ -104,7 +104,7 @@ def validate(L, C, lib):
                 for i in g["lessons"]:
                     if i not in L: err(f"course {cid}: {h['file']} lists {i}, which has no folder in lessons/")
             for lk in h.get("links", []):
-                if "home" in lk and lk["home"] not in {x["file"] for cc in C.values() for x in cc.get("homes", [])}:
+                if "home" in lk and lk["home"] not in ({x["file"] for cc in C.values() for x in cc.get("homes", [])} | {"library.html", "embed.html"}):
                     err(f"course {cid}: link to home {lk['home']}, which does not exist")
         seen = {}
         for h in c.get("homes", []):

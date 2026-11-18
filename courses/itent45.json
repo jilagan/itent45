@@ -18,6 +18,10 @@
     {
      "label": "Course code on GitHub",
      "href": "https://github.com/jilagan/itent45"
+    },
+    {
+     "label": "All lessons",
+     "home": "library.html"
     }
    ],
    "groups": [
@@ -84,6 +88,10 @@
     {
      "label": "Module 1",
      "home": "index.html"
+    },
+    {
+     "label": "All lessons",
+     "home": "library.html"
     }
    ],
    "groups": [

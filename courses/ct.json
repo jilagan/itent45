@@ -46,6 +46,12 @@
       "debug"
      ]
     }
+   ],
+   "links": [
+    {
+     "label": "All lessons",
+     "home": "library.html"
+    }
    ]
   }
  ],

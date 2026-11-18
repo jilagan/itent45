@@ -1,9 +1,10 @@
     <section class="panel" id="p-journey">
       <div class="head">
         <h2>Why loading a page takes several round trips</h2>
-        <p>Before you can order from a restaurant, you may call to ask whether it is open, wait for the answer, then call again to reserve a table. Each call has to go out and come back before the next one can start. A browser does the same before the server runs any of your code. It finds the server's address, opens a connection and agrees on encryption. Each of these steps costs at least one round trip, which is a message out and the reply back. The time a round trip takes is called latency. Drag the distance slider to see which steps take the most time.</p>
-        <p>The steps in the chart are: DNS lookup (finding the server's numeric address from its name), the TCP handshake (opening a connection), the TLS handshake (agreeing on encryption keys), the request, the server handler (the function in your code that handles this request, which may query the database), and the first byte of the reply.</p>
-        <div class="ask"><b>Think first</b> Your code takes the same 40&nbsp;ms to run whether the user is in Katipunan or in Berlin. Why does the page still load more slowly in Berlin? Write down your reason, then test it with the slider.</div>
+        <p>Before you can order from a restaurant, you may call to ask whether it is open, wait for the answer, then call again to reserve a table. Each call has to go out and come back before the next one can start.</p>
+        <p>A browser does the same before the server runs any of your code. It finds the server's address, opens a connection and agrees on encryption. Each of these steps costs at least one round trip, which is a message out and the reply back. The time a round trip takes is called latency.</p>
+        <p>The steps in the chart are: DNS lookup (finding the server's numeric address from its name), the TCP handshake (opening a connection), the TLS handshake (agreeing on encryption keys), the request, the server handler (the function in your code that handles this request, which may query the database), and the first byte of the reply. Drag the distance slider to see which steps take the most time.</p>
+        <div class="ask"><b>Think first.</b> Your code takes the same 40&nbsp;ms to run whether the user is in Katipunan or in Berlin. Why does the page still load more slowly in Berlin? Write down your reason, then test it with the slider.</div>
         <div class="instructor">Expected answer: every setup step needs at least one round trip, and each round trip takes longer over a greater distance. Server speed does not change that.</div>
       </div>
 

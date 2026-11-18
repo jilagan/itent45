@@ -1,7 +1,9 @@
     <section class="panel" id="p-tools">
       <div class="head">
         <h2>Tool calls and the Model Context Protocol (MCP)</h2>
-        <p>At a barangay hall, you do not walk into the records room yourself. You hand a request slip to the clerk at the front desk, and the clerk decides whether to fetch the record, ask for an ID or turn you down. A language model that uses tools works the same way. It does not run anything. It writes a tool call, which is a request in plain text, and a separate program decides whether to carry it out. This matters when you let an agent work on your files or database. An agent is a model that uses tools in a loop, as in "AI agents: the think, act and observe loop". In this panel, "server" has a different meaning from the Module 1 site, "What is a server?": here a server is a small program that offers tools, and a client is the part of your AI application that calls them.</p>
+        <p>At a barangay hall, you do not walk into the records room yourself. You hand a request slip to the clerk at the front desk, and the clerk decides whether to fetch the record, ask for an ID or turn you down.</p>
+        <p style="margin-top:11px">A language model that uses tools works the same way. It does not run anything. It writes a tool call, which is a request in plain text, and a separate program decides whether to carry it out. This matters when you let an agent work on your files or database. An agent is a model that uses tools in a loop, as in "AI agents".</p>
+        <p style="margin-top:11px">Two words change meaning in this panel. A server here is a small program that offers tools. The Module 1 site uses the word for a different thing, in "What a server is". A client is the part of your AI application that calls the tools.</p>
         <div class="ask"><b>Think first.</b> A model produces only text. Between your question and the database, where could a person or a program stop a harmful request?</div>
       </div>
       <div class="sec" data-sec="who-runs" data-title="Who runs a tool call">
@@ -19,7 +21,7 @@
           </div>
           <div class="card">
             <div class="card-t">What the model was given</div>
-            <div class="art" id="tlDef"></div>
+            <div class="art" id="tlDef" style="white-space:pre-wrap;overflow-wrap:anywhere"></div>
             <div class="rtt-note" style="margin-top:12px">
               The box above is a tool description written in JSON, a plain-text format for structured data. It has a name, a one-sentence description, and the shape of the input the tool accepts (its schema). SQL is the language used to read and change database tables.
               <br><br>This is everything the model knows about the tool. It has never seen your tables, your rows or your server. It chooses a tool by reading the description, so a vague description leads to the wrong tool being called. That is a bug in the description, and the model is working as designed.

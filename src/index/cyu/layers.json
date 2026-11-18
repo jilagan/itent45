@@ -8,22 +8,22 @@
    "stem": "A request passes through five routers on its way to the server. What does each router do with the message?",
    "options": [
     {
-     "text": "It reads the IP header to decide where to forward it and writes a new Ethernet header for the next link. The HTTP message inside is left alone.",
+     "text": "It reads the IP header to pick the next hop and writes a new Ethernet header.",
      "correct": true,
      "feedback": "Routers work at the IP layer and below. The Ethernet header is replaced at every hop, and the contents are never opened."
     },
     {
-     "text": "It opens the HTTP message and rewrites it for the next router.",
+     "text": "It opens the HTTP message and rewrites the request for the next router.",
      "correct": false,
      "feedback": "Routers do not read HTTP. They only need the IP header to forward the packet."
     },
     {
-     "text": "It replaces every header, including the IP addresses.",
+     "text": "It replaces every header, including the IP addresses, with its own.",
      "correct": false,
      "feedback": "The source and destination IP addresses stay the same for the whole trip. Only the link-level header changes."
     },
     {
-     "text": "It passes the message along without reading any header.",
+     "text": "It forwards the message to the next router without reading any header.",
      "correct": false,
      "feedback": "A router has to read the destination IP address to know where to send the packet next."
     }
@@ -69,17 +69,17 @@
      "feedback": "The reply needs about 32 packets, sent as 10, then 20, then 2. Three round trips at 38 ms is 114 ms."
     },
     {
-     "text": "About 38 ms, one round trip.",
+     "text": "About 38 ms, because the reply needs only one round trip.",
      "correct": false,
      "feedback": "One round trip would carry only about ten packets. The reply is larger than that."
     },
     {
-     "text": "About 1,200 ms, one round trip for every packet.",
+     "text": "About 1,200 ms, with one round trip for every packet.",
      "correct": false,
      "feedback": "TCP sends many packets per round trip and doubles the number each time, so the count of round trips grows slowly."
     },
     {
-     "text": "Almost nothing, because the data travels fast.",
+     "text": "Almost nothing, because the data travels so fast.",
      "correct": false,
      "feedback": "Speed of the data is not the issue. Each wave of packets has to be confirmed before the next, and that costs a full round trip."
     }
@@ -93,22 +93,22 @@
    "stem": "A developer shrinks a page's reply from 280 KB to 60 KB. The user's bandwidth does not change. Why can the page still load faster?",
    "options": [
     {
-     "text": "A smaller reply needs fewer packets, so it needs fewer round trips of waiting.",
+     "text": "A smaller reply needs fewer packets, so fewer round trips of waiting.",
      "correct": true,
      "feedback": "Each wave of packets must be confirmed before the next wave is sent. Fewer packets means fewer waves, and each wave costs a round trip."
     },
     {
-     "text": "The browser can unpack a smaller reply more quickly.",
+     "text": "The browser can unpack a smaller reply more quickly once it arrives.",
      "correct": false,
      "feedback": "Unpacking time is small. The main saving is the waiting between waves of packets."
     },
     {
-     "text": "Routers forward smaller messages at a higher speed.",
+     "text": "Routers forward smaller messages at a higher speed than large ones.",
      "correct": false,
      "feedback": "Routers forward packets at the same speed whatever the message size."
     },
     {
-     "text": "TLS encryption is skipped for small replies.",
+     "text": "TLS encryption is skipped for small replies to save time.",
      "correct": false,
      "feedback": "Encryption is used for every HTTPS reply, whatever its size."
     }

@@ -1,8 +1,10 @@
     <section class="panel" id="p-bytes">
       <div class="head">
         <h2>What an HTTP request and response look like</h2>
-        <p>At a restaurant, the waiter writes your order on a slip that always has the same fields, such as table number, items and notes. The kitchen knows where to look because every slip has the same layout. An HTTP message is a slip like that, written in plain text. HTTP is the set of rules that browsers and servers use to talk to each other. A message has a first line, then headers (name and value pairs), then a blank line, and optionally a body, which carries the data. Click any highlighted part to see what it does.</p>
-        <div class="ask"><b>Think first</b> A browser is a program that writes these text messages for you. Could you write one yourself without a browser? Write down what you would need.</div>
+        <p>At a restaurant, the waiter writes your order on a slip that always has the same fields, such as table number, items and notes. The kitchen knows where to look because every slip has the same layout.</p>
+        <p>An HTTP message is a slip like that, written in plain text. HTTP is the set of rules that browsers and servers use to talk to each other.</p>
+        <p>A message has a first line, then headers (name and value pairs), then a blank line, and optionally a body, which carries the data. Click any highlighted part to see what it does.</p>
+        <div class="ask"><b>Think first.</b> A browser is a program that writes these text messages for you. Could you write one yourself without a browser? Write down what you would need.</div>
         <div class="instructor">Nothing stops anyone from typing a request by hand. We do this live with <code>nc</code> in the last step of "Send a request yourself".</div>
       </div>
 
@@ -32,7 +34,7 @@
 
       <div class="sec" data-sec="run-it" data-title="Send a request yourself">
         <div class="card-t">Run this yourself</div>
-        <p style="margin:0 0 6px;font-size:.85em;color:var(--dim);line-height:1.6">Everything above is a picture of bytes. These steps show real ones on your own computer. They are also the setup for "Group exercise 1: inspect an HTTP exchange". You need Python 3.8 or newer and nothing else. Each command is typed into a terminal, which is a text window for typing commands. On macOS, open the Terminal app. On Windows, open PowerShell.</p>
+        <p style="margin:0 0 6px;font-size:.85em;color:var(--dim);line-height:1.6">An HTTP message is plain text. These steps send a real one from your own computer. They are also the setup for the exercises covered later in "Group exercises". You need Python 3.8 or newer and nothing else. Each command is typed into a terminal, which is a text window for typing commands. On macOS, open the Terminal app. On Windows, open PowerShell.</p>
         <div class="fmtpick" id="shellPick" style="margin-top:12px"></div>
         <div class="steps3" id="runSteps"></div>
       </div>

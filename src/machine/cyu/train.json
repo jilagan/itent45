@@ -8,22 +8,22 @@
    "stem": "A programmer starts with a random line, measures the loss, and changes the line's three numbers slightly in the direction that lowers the loss. She repeats this several hundred times. What decided where the final line would end up?",
    "options": [
     {
-     "text": "The repeated measuring and nudging, working from the data. Nobody wrote the final line down.",
+     "text": "Repeated measuring and nudging against the data. Nobody wrote the final line.",
      "correct": true,
      "feedback": "Training finds the line by following the slope of the loss, one small step at a time."
     },
     {
-     "text": "The programmer, who chose the final position in advance.",
+     "text": "The programmer, who chose the final position of the line in advance.",
      "correct": false,
      "feedback": "The programmer chose only the starting point and the method. The data and the loss decided where the steps went."
     },
     {
-     "text": "The loss formula, which contains the correct line.",
+     "text": "The loss formula, which already contains the correct line inside it.",
      "correct": false,
      "feedback": "The loss only scores how wrong a line is. It does not contain the answer."
     },
     {
-     "text": "Random chance, because the starting line was random.",
+     "text": "Random chance, because the starting line was picked at random.",
      "correct": false,
      "feedback": "The start was random, but each step moves in the direction that lowers the loss."
     }
@@ -70,17 +70,17 @@
      "feedback": "A very small learning rate heads in the right direction but needs a huge number of steps, and you pay for the computing time."
     },
     {
-     "text": "The model has found the best possible line.",
+     "text": "The model has already found the best possible line and cannot improve.",
      "correct": false,
      "feedback": "A model that has finished stops because the slope flattened. A tiny learning rate can look similar, but the cause is the step size."
     },
     {
-     "text": "The learning rate is too large.",
+     "text": "The learning rate is too large, so the steps overshoot the bottom.",
      "correct": false,
      "feedback": "A learning rate that is too large makes the loss rise or bounce. It does not make it barely change."
     },
     {
-     "text": "The training data must be wrong.",
+     "text": "The training data must be wrong, so the model cannot learn from it.",
      "correct": false,
      "feedback": "Bad data can cause problems, but slow progress with a tiny learning rate is explained by the step size."
     }

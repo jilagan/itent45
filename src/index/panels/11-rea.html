@@ -1,7 +1,9 @@
     <section class="panel" id="p-rea">
       <div class="head">
         <h2>The REA pattern: resources, events and agents</h2>
-        <p>Think of a sale at a sari-sari store. The owner hands over a bottle of soda and takes 20 pesos, or writes the amount in the utang notebook to be paid later. The goods going out and the payment coming back are two separate records. Most business systems follow this same pattern, called <b style="color:var(--ink)">REA</b>, for resources, events and agents. A resource is something of value, such as the soda or the cash. An event records that a resource changed hands, such as the sale. An agent is a person or organization taking part, such as the owner or the customer. The sale and the payment form a pair called duality: value moving one way is usually paid for by value moving the other way. Because the pattern repeats, you rarely design a schema, the layout of a system's tables, from nothing.</p>
+        <p>Think of a sale at a sari-sari store. The owner hands over a bottle of soda and takes 20 pesos, or writes the amount in the utang notebook to be paid later. The goods going out and the payment coming back are two separate records.</p>
+        <p>Most business systems follow this same pattern, called <b style="color:var(--ink)">REA</b>, for resources, events and agents. A resource is something of value, such as the soda or the cash. An event records that a resource changed hands, such as the sale. An agent is a person or organization taking part, such as the owner or the customer.</p>
+        <p>The sale and the payment form a pair called duality: value moving one way is usually paid for by value moving the other way. Because the pattern repeats, you rarely design a schema, the layout of a system's tables, from nothing.</p>
         <div class="ask"><b>Think first.</b> Pick a transaction you made this week, such as buying lunch or paying for a ride. Write down what was given, what came back, and who was on each side.</div>
       </div>
 
@@ -14,7 +16,7 @@
 
       <div class="sec" data-sec="duality" data-title="Duality is many-to-many">
         <div class="card-t">Payments and enrollments</div>
-        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">The dashed line in the diagram joins two events that pair up, such as an enrollment and its payment. It is tempting to read the line as meaning that every enrollment has exactly one payment, and to store that in a column. That fails when a student pays in installments, or pays for several subjects with one transfer. The pairing is many-to-many, so it needs a table of its own, as described in "Relationships: one-to-one, one-to-many, many-to-many". That table must record <b style="color:var(--ink)">how much of this payment applies to that enrollment</b>.</p>
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">In an REA diagram, the dashed line joins two events that pair up, such as an enrollment and its payment. It is tempting to read the line as meaning that every enrollment has exactly one payment, and to store that in a column. That fails when a student pays in installments, or pays for several subjects with one transfer. The pairing is many-to-many, so it needs a table of its own, as described in "Relationships". That table must record <b style="color:var(--ink)">how much of this payment applies to that enrollment</b>.</p>
         <div class="card" style="padding:12px 16px;overflow-x:auto">
           <table class="hostreq"><thead><tr>
             <th>allocations</th><th>enrollment</th><th>payment</th><th>amount</th>
@@ -25,7 +27,7 @@
             <tr><td></td><td>ITMGT 25</td><td>OR-9102</td><td class="y">&#8369;4,500</td></tr>
           </tbody></table>
         </div>
-        <p style="margin:11px 0 0;font-size:.8em;color:var(--faint);line-height:1.6">The table has four rows, three enrollments and two payments. Neither side divides evenly into the other, so the amount column cannot sit in the enrollment table or in the payment table. Accounting systems have a screen like this one, and it is usually among the most complicated in the product.</p>
+        <p style="margin:11px 0 0;color:var(--faint);line-height:1.6">The table has four rows, three enrollments and two payments. Neither side divides evenly into the other, so the amount column cannot sit in the enrollment table or in the payment table. Accounting systems have a screen like this one, and it is usually among the most complicated in the product.</p>
 
         <div class="whynot" style="margin-top:18px">
           <b>Events without a matching event</b>

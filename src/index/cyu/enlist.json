@@ -78,17 +78,17 @@
    "stem": "A student suggests sending seat reservations to read-only replicas of the database to spread the load. Why does this not work?",
    "options": [
     {
-     "text": "A reservation changes data, and two students must never get the same last seat, so one primary has to decide.",
+     "text": "A reservation changes data, so one primary must decide who gets the last seat.",
      "correct": true,
      "feedback": "Replicas only answer reads. If two copies each accepted a reservation, both students could get the same seat."
     },
     {
-     "text": "Replicas are too slow for reservations.",
+     "text": "Replicas are too slow to handle reservation requests during the enlistment peak.",
      "correct": false,
      "feedback": "Speed is not the issue. Replicas cannot accept changes."
     },
     {
-     "text": "Reservations can be cached, so replicas are not needed.",
+     "text": "Reservations can be cached at the web tier, so replicas are not needed.",
      "correct": false,
      "feedback": "A cached answer can be out of date. A reservation needs the current seat count."
     }

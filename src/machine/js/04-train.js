@@ -32,8 +32,8 @@ function trRender(){
   svg+=`</g>
     <line x1="54" y1="246" x2="470" y2="246" stroke="var(--line2)"/>
     <line x1="54" y1="28" x2="54" y2="246" stroke="var(--line2)"/>
-    <text x="262" y="272" fill="var(--faint)" font-size="10.5" text-anchor="middle">hours studied</text>
-    <text x="18" y="138" fill="var(--faint)" font-size="10.5" text-anchor="middle" transform="rotate(-90 18 138)">attendance</text>`;
+    <text x="262" y="272" fill="var(--faint)" font-size="13" text-anchor="middle">hours studied</text>
+    <text x="18" y="138" fill="var(--faint)" font-size="13" text-anchor="middle" transform="rotate(-90 18 138)">attendance</text>`;
   let ok=0;
   for(const [x1,x2,y] of TRD){
     const pred=sig(TR.w1*x1+TR.w2*x2+TR.b)>0.5, right=pred===!!y; if(right) ok++;
@@ -83,7 +83,7 @@ function trRender(){
     v.innerHTML=`<b>The loss is going up</b>The steps are too large, so each one goes past the bottom and ends higher up the other side. Training is running, the computer is busy, and the model is getting worse.<br><br>Nothing raises an error when this happens. You find out by watching the loss, and anyone who trains a model watches it.`;
   } else if(L<0.45){
     v.className="verdict ok";
-    v.innerHTML=`<b>Loss ${L.toFixed(3)} after ${TR.step} step${TR.step===1?"":"s"}, ${ok} of ${TRD.length} correct</b>The line stopped moving because the slope under it flattened out. The loss cannot go lower with a straight line.<br><br>The two students it still gets wrong are the same two as in "Training data and test data", and no straight line can catch them. To do better, see "Neural networks: combining several lines".`;
+    v.innerHTML=`<b>Loss ${L.toFixed(3)} after ${TR.step} step${TR.step===1?"":"s"}, ${ok} of ${TRD.length} correct</b>The line stopped moving because the slope under it flattened out. The loss cannot go lower with a straight line.<br><br>The two students it still gets wrong are the same two as in "Training and test data", and no straight line can catch them. The fix is covered later in "Neural networks".`;
   } else {
     v.className="verdict warn";
     v.innerHTML=`<b>Loss ${L.toFixed(3)}, ${ok} of ${TRD.length} correct after ${TR.step} step${TR.step===1?"":"s"}</b>The loss is still falling. Keep pressing <em>One step</em>, or press <em>Run 200</em>.`;

@@ -10,7 +10,7 @@
     {
      "text": "Two, so the seat is sold twice.",
      "correct": true,
-     "feedback": "Correct. Both sessions read 1 before either one wrote, so both believed a seat was free."
+     "feedback": "Both sessions read 1 before either one wrote, so both believed a seat was free."
     },
     {
      "text": "One, because the database stops the second session.",
@@ -37,9 +37,9 @@
    "stem": "A developer wraps the same statements in BEGIN and COMMIT and expects the problem to disappear. What happens?",
    "options": [
     {
-     "text": "Both sessions can still read 1 and both enroll, because a transaction does not stop another session from reading the row.",
+     "text": "Both sessions can still read 1 and both enroll, so the seat sells twice.",
      "correct": true,
-     "feedback": "Correct. A transaction groups statements into one unit, but at the default isolation level it does not lock the row."
+     "feedback": "A transaction groups statements into one unit, but at the default isolation level it does not lock the row."
     },
     {
      "text": "The second session is blocked until the first one commits.",
@@ -52,7 +52,7 @@
      "feedback": "The database rolls back only on an error. Nothing is wrong with the second session's statements."
     },
     {
-     "text": "Only one session can run BEGIN at a time.",
+     "text": "Only one session can run BEGIN at a time on the same table.",
      "correct": false,
      "feedback": "Many sessions can have transactions open at once."
     }
@@ -65,22 +65,22 @@
    "stem": "Which fix lets the second student find out that the seat is gone, without anyone waiting?",
    "options": [
     {
-     "text": "One UPDATE statement with `WHERE slots > 0`, then check how many rows it changed.",
+     "text": "One `UPDATE ... WHERE slots > 0`, then check the rows changed.",
      "correct": true,
-     "feedback": "Correct. The check and the change happen in one statement, so there is no gap, and a row count of 0 tells the second student that the seat is gone."
+     "feedback": "The check and the change happen in one statement, so there is no gap, and a row count of 0 tells the second student that the seat is gone."
     },
     {
-     "text": "Lock the row with SELECT ... FOR UPDATE before deciding.",
+     "text": "Lock the row with `SELECT ... FOR UPDATE` before deciding.",
      "correct": false,
      "feedback": "This also works, but the second session waits for the first to finish. The question asks for a fix with no waiting."
     },
     {
-     "text": "Read the seat count twice before writing.",
+     "text": "Read the seat count twice before writing the new value.",
      "correct": false,
      "feedback": "A second read still leaves a gap between reading and writing. Another session can write in that gap."
     },
     {
-     "text": "Add more web servers.",
+     "text": "Add more web servers so each session has its own copy.",
      "correct": false,
      "feedback": "More web servers add more sessions that read the same row. The seat is contested in the database."
     }
@@ -95,7 +95,7 @@
     {
      "text": "Durability.",
      "correct": true,
-     "feedback": "Correct. Durability means a committed change has been written to disk and survives a power failure."
+     "feedback": "Durability means a committed change has been written to disk and survives a power failure."
     },
     {
      "text": "Atomicity.",

@@ -14,9 +14,9 @@ function mtDotRender(){
   if(B[0]>0) g+=`<line x1="${ox}" y1="${oy}" x2="${X(B[0])}" y2="${oy}"
       stroke="var(--req)" stroke-width="7" opacity=".16"/>`;
   g+=`<line x1="${ox}" y1="${oy}" x2="${X(A[0])}" y2="${Y(A[1])}" stroke="var(--res)" stroke-width="2.8"/>
-      <text x="${X(A[0])+7}" y="${Y(A[1])+4}" font-family="monospace" font-size="12" fill="var(--res)" font-weight="600">a</text>
+      <text x="${X(A[0])+7}" y="${Y(A[1])+4}" font-family="monospace" font-size="13" fill="var(--res)" font-weight="600">a</text>
       <line x1="${ox}" y1="${oy}" x2="${X(B[0])}" y2="${Y(B[1])}" stroke="var(--req)" stroke-width="2.8"/>
-      <text x="${X(B[0])+7}" y="${Y(B[1])-4}" font-family="monospace" font-size="12" fill="var(--req)" font-weight="600">b</text>
+      <text x="${X(B[0])+7}" y="${Y(B[1])-4}" font-family="monospace" font-size="13" fill="var(--req)" font-weight="600">b</text>
       <line x1="${X(B[0])}" y1="${Y(B[1])}" x2="${X(B[0])}" y2="${oy}" stroke="var(--req)" stroke-width="1" stroke-dasharray="3 3" opacity=".6"/>`;
   $("#mtDot").innerHTML=g+`</svg>`;
   $("#mtDotSum").innerHTML=
@@ -48,9 +48,9 @@ function mtSlopeRender(){
     <line x1="${X(w-t)}" y1="${Y(Lf(w)-s*t)}" x2="${X(w+t)}" y2="${Y(Lf(w)+s*t)}"
       stroke="var(--req)" stroke-width="2.2" stroke-dasharray="${Math.abs(s)<0.2?"none":"5 4"}"/>
     <circle cx="${px}" cy="${py}" r="6" fill="var(--req)"/></g>
-    <text x="${X(3)}" y="${Y(1)-13}" font-size="11" fill="var(--res)" text-anchor="middle">Lowest point</text>
-    <text x="${ox}" y="18" font-size="11" fill="var(--faint)">How wrong the model is</text>
-    <text x="462" y="${oy+15}" font-size="11" fill="var(--faint)" text-anchor="end">The weight &rarr;</text>`;
+    <text x="${X(3)}" y="${Y(1)-13}" font-size="12.5" fill="var(--res)" text-anchor="middle">Lowest point</text>
+    <text x="${ox}" y="18" font-size="12.5" fill="var(--faint)">How wrong the model is</text>
+    <text x="462" y="${oy+15}" font-size="12.5" fill="var(--faint)" text-anchor="end">The weight &rarr;</text>`;
   $("#mtSlope").innerHTML=g+`</svg>`;
   const set=(id,v,hot,good)=>{const g2=$(id);g2.querySelector(".gv").firstChild.nodeValue=v;
     g2.classList.toggle("hot",!!hot);g2.classList.toggle("good",!!good)};

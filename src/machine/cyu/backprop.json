@@ -8,7 +8,7 @@
    "stem": "A customer sends a dish back because it is too salty. Which way of deciding who should change their work matches backpropagation?",
    "options": [
     {
-     "text": "Start at the complaint and work backward, asking at each step how much that person's work affected the result.",
+     "text": "Start at the complaint and work backward, asking how much each person's work affected the result.",
      "correct": true,
      "feedback": "Backpropagation passes blame backward from the loss, layer by layer, using what each step handed to the next."
     },
@@ -18,12 +18,12 @@
      "feedback": "That is closer to nudging each weight and running the whole network again, which is the costly approach backpropagation avoids."
     },
     {
-     "text": "Blame only the last person who handled the dish.",
+     "text": "Blame only the last person who handled the dish, because that person served it.",
      "correct": false,
      "feedback": "That ignores the earlier steps, and the earlier weights are exactly the ones that need a slope."
     },
     {
-     "text": "Ask everyone to change their work by the same amount.",
+     "text": "Ask everyone to change their work by the same amount and see what happens.",
      "correct": false,
      "feedback": "Each weight affects the result by a different amount, so each needs its own slope."
     }
@@ -65,22 +65,22 @@
    "stem": "A team needs slopes for a network with 2 billion weights. Method A nudges each weight and runs the network again to see whether the loss improved. Method B uses backpropagation. Which statement is correct?",
    "options": [
     {
-     "text": "Method A needs about 2 billion full runs for one step. Method B needs about one forward pass and one backward pass.",
+     "text": "A needs about 2 billion full runs for one step. B needs about one forward and one backward pass.",
      "correct": true,
      "feedback": "Backpropagation reuses numbers already worked out, so it gets every slope for about the cost of one forward pass."
     },
     {
-     "text": "Both methods need about the same amount of computing.",
+     "text": "Both methods need about the same amount of computing, because both find the same slopes.",
      "correct": false,
      "feedback": "They differ by a factor of billions for a network this size."
     },
     {
-     "text": "Method A is cheaper, because it avoids the backward pass.",
+     "text": "Method A is cheaper, because it avoids the backward pass that Method B needs.",
      "correct": false,
      "feedback": "Avoiding the backward pass means repeating the whole forward pass for every weight."
     },
     {
-     "text": "Method B needs 2 billion passes, but each one is cheaper.",
+     "text": "Method B needs 2 billion passes, but each pass is cheaper than a full run.",
      "correct": false,
      "feedback": "Method B needs one backward pass in total."
     }

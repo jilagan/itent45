@@ -22,7 +22,7 @@ const LNSTAGE=[
  {t:"Seventeen students", s:`Each of these students either finished the course or did not. Each student has two measurements, hours studied and attendance, which are the two things a registrar would have on record.<br><br>All 17 are treated the same for now. Nothing has been fitted and nothing has been set aside.`},
  {t:"Five set aside", s:`Five students are chosen at random and set aside, marked with a dashed ring. From here on, pretend you have never seen them. They are the <b style="color:var(--req)">test set</b>.<br><br>The other twelve are the <b style="color:var(--res)">training set</b>. The model is allowed to look only at these.`},
  {t:"A line fitted to the twelve", s:`The line is fitted using only the training set. The five students set aside took no part.<br><br>Use the two buttons below to choose the kind of line. Start with the straight line, then switch to the bent line, and watch what happens to the score on the twelve.`},
- {t:"Testing on the five", s:`Now the line is checked against the five students it never saw. Their score is the only one worth quoting. These five were not available while the line was being placed, so how the line treats them is the best estimate of how it will treat the next student who enrolls.<br><br>Compare the two scores. Then switch between the straight line and the bent line and compare the gaps.`}
+ {t:"Testing on the five", s:`Now the line is checked against the five students it never saw. Their score is the one to report. These five were not available while the line was being placed, so how the line treats them is the best estimate of how it will treat the next student who enrolls.<br><br>Compare the two scores. Then switch between the straight line and the bent line and compare the gaps.`}
 ];
 function lnRender(){
   const st=LN.stage;
@@ -51,13 +51,13 @@ function lnRender(){
         <path d="${path} L${lx(30)},${ly(0)} L${lx(0)},${ly(0)} Z" fill="var(--warn)" opacity=".07"/>
         <path d="${path}" fill="none" stroke="var(--req)" stroke-width="2.6" stroke-linejoin="round"/>
       </g>
-      <text x="${lx(1.5)}" y="52" fill="var(--res)" font-size="10" opacity=".75">predicted pass</text>
-      <text x="${lx(1.5)}" y="238" fill="var(--warn)" font-size="10" opacity=".75">predicted fail</text>`;
+      <text x="${lx(1.5)}" y="52" fill="var(--res)" font-size="12.5" opacity=".85">predicted pass</text>
+      <text x="${lx(1.5)}" y="238" fill="var(--warn)" font-size="12.5" opacity=".85">predicted fail</text>`;
   }
   svg+=`<line x1="52" y1="246" x2="470" y2="246" stroke="var(--line2)"/>
     <line x1="52" y1="34" x2="52" y2="246" stroke="var(--line2)"/>
-    <text x="261" y="272" fill="var(--faint)" font-size="10.5" text-anchor="middle">hours studied</text>
-    <text x="17" y="140" fill="var(--faint)" font-size="10.5" text-anchor="middle" transform="rotate(-90 17 140)">attendance</text>`;
+    <text x="261" y="272" fill="var(--faint)" font-size="13" text-anchor="middle">hours studied</text>
+    <text x="17" y="140" fill="var(--faint)" font-size="13" text-anchor="middle" transform="rotate(-90 17 140)">attendance</text>`;
 
   const mark=(sPt,held)=>{
     const [h,a,pass]=sPt, x=lx(h), y=ly(a);
@@ -69,7 +69,7 @@ function lnRender(){
     const ring = hiddenNow ? `<circle cx="${x}" cy="${y}" r="10.5" fill="none" stroke="${st>=3?"var(--req)":"var(--dim)"}"
         stroke-width="${st>=3?1.6:1}" stroke-dasharray="2.5 2.5" opacity="${dim}"/>` : "";
     const bad = wrong ? `<circle cx="${x}" cy="${y}" r="13" fill="none" stroke="var(--warn)" stroke-width="2"/>
-        <text x="${x+15}" y="${y-9}" fill="var(--warn)" font-size="9.5">wrong</text>` : "";
+        <text x="${x+15}" y="${y-9}" fill="var(--warn)" font-size="13">wrong</text>` : "";
     const g = pass
       ? `<circle cx="${x}" cy="${y}" r="6" fill="${held?"var(--bg)":"none"}" stroke="${col}" stroke-width="2.2" opacity="${dim}"/>`
       : `<path d="M${x-5},${y-5} L${x+5},${y+5} M${x+5},${y-5} L${x-5},${y+5}" stroke="${col}" stroke-width="2.4" opacity="${dim}"/>`;
@@ -102,7 +102,7 @@ function lnRender(){
     v.className="verdict "+(gap>25?"bad":"ok");
     v.innerHTML = LN.mode==="line"
       ? `<b>${trp}% training, ${tep}% test, a gap of ${gap} points</b>The line was not perfect on the twelve, and it did not need to be. The two scores are close. That is the result you want: the line found the general shape, and the shape holds for students it has never met.`
-      : `<b>${trp}% training, ${tep}% test, a gap of ${gap} points</b>This is the same model that looked flawless one step ago. Three of the five test students are wrong. Two of those fall inside bends that were carved around single awkward students in the training set, and they get those students' outcomes.<br><br>The model did not learn that studying helps. It memorized the twelve students, and that scored perfectly on the only test it had been given.<br><br>This is <b class="i">overfitting</b>: a model that fits its training examples too closely and does worse on new ones. You could not have seen it from the training score alone. The split made it visible.`;
+      : `<b>${trp}% training, ${tep}% test, a gap of ${gap} points</b>This is the same model that looked flawless one step ago. Three of the five test students are wrong. Two of those fall inside bends that were carved around single awkward students in the training set, and they get those students' outcomes.<br><br>The bent line memorized the twelve students, and that scored perfectly on the only test it had been given.<br><br>This is <b class="i">overfitting</b>: a model that fits its training examples too closely and does worse on new ones. You could not have seen it from the training score alone. The split made it visible.`;
   }
 }
 $("#lnNext").onclick=()=>{ if(LN.stage<3){LN.stage++;lnRender();} };

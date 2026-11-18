@@ -1,7 +1,9 @@
     <section class="panel" id="p-shape">
       <div class="head">
         <h2>Choosing a relational or a document database</h2>
-        <p>Think of two ways to keep student records. One is a set of spreadsheets with fixed columns, where the student sheet points to a course sheet. The other is a folder for each student, with everything about that student written on one page, including the course titles. Databases come in both styles. A <b style="color:var(--ink)">relational</b> database, such as Postgres, stores data in tables with fixed columns, like the spreadsheets. A <b style="color:var(--ink)">document</b> database, such as Firebase, stores each record as one self-describing document, like the folder. Both can store your capstone project. The right choice depends on which questions your app asks, so below the same enrollments are shown in both shapes and asked the same three questions.</p>
+        <p>Think of two ways to keep student records. One is a set of spreadsheets with fixed columns, where the student sheet points to a course sheet. The other is a folder for each student, with everything about that student written on one page, including the course titles. </p>
+        <p>Databases come in both styles. A <b style="color:var(--ink)">relational</b> database, such as Postgres, stores data in tables with fixed columns, like the spreadsheets. A <b style="color:var(--ink)">document</b> database, such as Firebase, stores each record as one self-describing document, like the folder.</p>
+        <p>Both can store your capstone project. The right choice depends on which questions your app asks, so below the same enrollments are shown in both shapes and asked the same three questions.</p>
         <div class="ask"><b>Think first.</b> Name a question your app asks on every page, and a question it asks once a semester. Which shape would you choose for each, and why?</div>
       </div>
 
@@ -49,7 +51,7 @@
       </div>
       <div class="whynot" style="margin-top:16px">
         <b>Document databases still need a data model</b>
-        The entities, attributes and relationships from "Entities, attributes and instances" and "Relationships: one-to-one, one-to-many, many-to-many" still apply. A document database does not remove them. It moves the job of enforcing them from the database to your code, where every client has to remember the rules and nobody can see them in one place. This is sometimes a good trade. You still have to design the data.
+        The entities, attributes and relationships from "Entities and attributes" and "Relationships" still apply. A document database does not remove them. It moves the job of enforcing them from the database to your code, where every client has to remember the rules and nobody can see them in one place. This is sometimes a good trade. You still have to design the data.
       </div>
       <div class="card-t" style="margin-top:26px">What each shape does well</div>
       <div class="bill">
@@ -61,17 +63,17 @@
         <div class="bl">
           <h5>Documents suit one known question</h5>
           <p>The whole page comes back in one read, with no join and no assembly. This works well when the access pattern is fixed and known. It becomes painful the first time somebody asks a question the documents were not organized for.</p>
-          <span class="ref">&rarr; the copied titles bring back the problem in "Normalization: storing each fact once"</span>
+          <span class="ref">&rarr; the copied titles bring back the problem in "Normalization"</span>
         </div>
         <div class="bl">
           <h5>Rules about correctness</h5>
           <p>If the database itself refuses to sell the last seat twice, two students cannot both get it. Enforcing that rule in application code across several documents allows two requests to pass the check at the same time.</p>
-          <span class="ref">&rarr; see "Case study: enlistment day"</span>
+          <span class="ref">&rarr; covered later in "Case study: enlistment"</span>
         </div>
         <div class="bl">
           <h5>Many systems use both</h5>
           <p>A common setup uses Postgres for data that must be correct and a faster store for data that must load quickly. This is a normal design.</p>
-          <span class="ref">&rarr; it also means running two systems, as in "Monolith or microservices"</span>
+          <span class="ref">&rarr; it also means running two systems, as covered later in "Monolith or services"</span>
         </div>
       </div>
 

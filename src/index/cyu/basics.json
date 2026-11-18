@@ -33,7 +33,7 @@
    "id": "basics-2",
    "sec": "address-and-reach",
    "type": "mc",
-   "stem": "In the address `https://enlist.university.edu:443/api/courses?sem=1`, which part tells the client which program on the machine to talk to?",
+   "stem": "In the address `https://enlist.edu:443/api/courses`, which part tells the client which program on the machine to talk to?",
    "options": [
     {
      "text": "`:443`, the port",
@@ -41,7 +41,7 @@
      "feedback": "A port number identifies one program among the many that may be listening on the same machine."
     },
     {
-     "text": "`enlist.university.edu`, the host",
+     "text": "`enlist.edu`, the host",
      "correct": false,
      "feedback": "The host says which machine to contact. It does not say which program on that machine."
     },
@@ -93,12 +93,12 @@
    "stem": "Your laptop's wifi address is `192.168.1.7`. A friend in another city types that number to reach your laptop. Why does it fail?",
    "options": [
     {
-     "text": "It is a private address that millions of homes use, so it means nothing on the wider internet.",
+     "text": "It is a private address used in millions of homes, so it is meaningless online.",
      "correct": true,
      "feedback": "Private ranges such as `192.168.x.x` are reused inside many networks. No router on the internet can tell which one you mean."
     },
     {
-     "text": "The address has not been registered with DNS.",
+     "text": "The address has not been registered with DNS for outside visitors.",
      "correct": false,
      "feedback": "DNS turns names into numbers. A number you type directly does not need DNS, and a private number would still be unreachable."
     },
@@ -108,7 +108,7 @@
      "feedback": "Your laptop has no public address of its own. The public address belongs to your router and is shared by everyone in the building."
     },
     {
-     "text": "The friend needs your wifi password first.",
+     "text": "The friend must first enter your wifi password on their device.",
      "correct": false,
      "feedback": "A password controls who joins your wifi. It does not make a private address reachable from outside."
     }

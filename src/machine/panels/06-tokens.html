@@ -1,7 +1,8 @@
     <section class="panel" id="p-tokens">
       <div class="head">
         <h2>Tokens: how text is fed to a model</h2>
-        <p>In Scrabble you play with tiles, and a tile is the smallest piece you can place. A language model also works with tiles, but its tiles are chunks of text: a whole word, part of a word, or a punctuation mark. These chunks are called <b>tokens</b>. A program called a <b>tokenizer</b> cuts your text into tokens before the model sees anything, and each token is replaced by a number. The model works with those numbers. It does not see the individual letters inside a token. Unlike Scrabble tiles, the chunks are not single letters. They are pieces of text that turned up often in the material the tokenizer was built from.</p>
+        <p>A child sounding out a long word reads it in pieces, such as con-ver-sa-tion. The pieces vary in length, and the child does not stop to look at each letter inside a piece. A language model reads text in pieces too: a whole word, part of a word, or a punctuation mark. These pieces are called <b>tokens</b>.</p>
+        <p style="margin-top:11px">A program called a <b>tokenizer</b> cuts your text into tokens before the model sees anything, and each token is replaced by a number. The model works with those numbers and does not see the individual letters inside a token. The tokenizer chooses its pieces from text that turned up often in the material it was built from.</p>
         <div class="ask"><b>Think first.</b> Count the r's in <em>strawberry</em>. Now suppose the word reached you as three chunks, and you could not see inside any chunk. How well could you count? Make a guess, then check the widget below.</div>
       </div>
       <div class="ctab" id="tkPick"></div>

@@ -1,7 +1,9 @@
     <section class="panel" id="p-query">
       <div class="head">
         <h2>The N+1 query problem</h2>
-        <p>Picture asking a clerk for 50 files. You can ask for them one at a time, and the clerk walks to the cabinet 50 times. Or you can ask for all 50 at once, and the clerk makes one trip with a cart. A web page that lists 50 enrollments with their course titles can behave either way. A <b style="color:var(--ink)">query</b> is one request to the database. In "Normalization: storing each fact once" the course title moved into its own table, so the page must fetch the title from that table for every row. The slow pattern is called the <b style="color:var(--ink)">N+1 query problem</b>: one query to fetch N rows, then N more queries, one for each row. This panel measures what it costs.</p>
+        <p>Picture asking a clerk for 50 files. You can ask for them one at a time, and the clerk walks to the cabinet 50 times. Or you can ask for all 50 at once, and the clerk makes one trip with a cart.</p>
+        <p>A web page that lists 50 enrollments with their course titles can behave either way. A <b style="color:var(--ink)">query</b> is one request to the database. In "Normalization" the course title moved into its own table, so the page must fetch the title from that table for every row.</p>
+        <p>The slow pattern is called the <b style="color:var(--ink)">N+1 query problem</b>. This panel measures what it costs as the page gets longer.</p>
         <div class="ask"><b>Think first.</b> A page shows fifty enrollments with their course titles. The template reads the course title from each enrollment, and the courses were not loaded in advance. How many times is the database queried? Write down your number before you use the slider.</div>
       </div>
 

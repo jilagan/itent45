@@ -8,7 +8,7 @@
    "stem": "You paste a large file into a long chat, and the assistant stops following the first instruction you gave. What is the most likely explanation?",
    "options": [
     {
-     "text": "The file pushed the oldest turns, including your instruction, out of the context window.",
+     "text": "The file pushed the oldest turns, including your instruction, out of the window.",
      "correct": true,
      "feedback": "The model only sees what fits in the window. Text that drops out is invisible to it, with no warning."
     },

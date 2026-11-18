@@ -15,7 +15,7 @@
     {
      "text": "It keeps every word and compares each word with all the others.",
      "correct": false,
-     "feedback": "That describes attention, which is the next panel."
+     "feedback": "That describes attention, which is covered later in \"Attention and transformers\"."
     },
     {
      "text": "It reads the whole sentence at once and picks out the keywords.",
@@ -65,22 +65,22 @@
    "stem": "You switch the sentence from \"too tired\" to \"too wide\", and the model still answers \"street\". What does this show?",
    "options": [
     {
-     "text": "The answer depends on how recently each noun was read, and the last word has no effect on it.",
+     "text": "The answer depends on how recently each noun was read, and the last word has no effect.",
      "correct": true,
      "feedback": "The note holds street more strongly in both sentences, so the answer is the same. Meaning played no part."
     },
     {
-     "text": "The model understood that streets can be wide.",
+     "text": "The model understood that streets can be wide, so it chose correctly.",
      "correct": false,
      "feedback": "The same answer was given for \"tired\", where street is wrong. A model that used meaning would change its answer."
     },
     {
-     "text": "The model ran out of memory.",
+     "text": "The model ran out of memory and fell back on the last noun it read.",
      "correct": false,
      "feedback": "The note is always the same size. It does not run out."
     },
     {
-     "text": "The model is guessing at random.",
+     "text": "The model is guessing at random between the two nouns each time.",
      "correct": false,
      "feedback": "The choice is fixed by the strengths on the note, so it is the same every time."
     }
@@ -93,22 +93,22 @@
    "stem": "An older recurrent model reads a 50-page contract. Which problem should you expect?",
    "options": [
     {
-     "text": "Details from the early pages are weak on the note by the end, and training on large amounts of text is slow because words must be read in order.",
+     "text": "Early details are weak on the note, and training is slow because words are read in order.",
      "correct": true,
      "feedback": "These are the two problems this panel describes: distance and order."
     },
     {
-     "text": "It will refuse to read more than 50 words.",
+     "text": "It will refuse to read more than 50 words, because the note has no room for more.",
      "correct": false,
      "feedback": "There is no word limit. The weakness is that old content fades."
     },
     {
-     "text": "It will remember the first page best.",
+     "text": "It will remember the first page best, because it read it first.",
      "correct": false,
      "feedback": "The note keeps the newest words strongest and older words weaker."
     },
     {
-     "text": "It will read all pages at the same time, which makes it very expensive.",
+     "text": "It will read all pages at once, which makes it very expensive.",
      "correct": false,
      "feedback": "A recurrent model reads in order. Reading everything at once is what attention does."
     }

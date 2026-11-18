@@ -196,7 +196,7 @@ function dbVerdict(q){
       v.innerHTML=`<b>422, and nothing was created</b>The body had no <code>code</code>, so the server refused it. A status code that starts with <b class="i">4</b> means the request was the problem. The table did not change. Type a code and try again.`;
     } else if(twice){
       v.className="verdict bad";
-      v.innerHTML=`<b>${n} clicks, ${n} rows called ${b.code}</b>You sent the same body ${n} times and the server created a course each time. Every request was valid, and nothing stopped the duplicates. This is what <b class="i">not idempotent</b> means. The same property causes the double enrollment after a form refresh and the double charge in "Checkout and payments".<br><br>The second course got the id <code>${slug(b.code)}-2</code>, because the id built from your code was already taken.`;
+      v.innerHTML=`<b>${n} clicks, ${n} rows called ${b.code}</b>You sent the same body ${n} times and the server created a course each time. Every request was valid, and nothing stopped the duplicates. This is what <b class="i">not idempotent</b> means. The same property causes the double enrollment after a form refresh and the double charge covered later in "Payments and gateways".<br><br>The second course got the id <code>${slug(b.code)}-2</code>, because the id built from your code was already taken.`;
     } else {
       v.className="verdict warn";
       v.innerHTML=`<b>201 Created, and ${b.code} is in the table</b>The server created a new course and returned its URL. Press <em>Send the same one again</em> without changing anything, and count the rows.`;
@@ -314,20 +314,20 @@ const CODES=[
  [201,"Created",2,"A new item now exists, and the <code>Location</code> header (a labeled line in the reply) gives its URL. Do not resend this request, because that would create a second item."],
  [204,"No Content",2,"It worked and there is nothing to send back. This is the usual answer to a successful DELETE. The body must be empty."],
  [301,"Moved Permanently",3,"This URL has moved permanently. Browsers and search engines save this answer for a long time, so it is hard to undo. Use 302 (a temporary move) unless you are certain."],
- [303,"See Other",3,"Redirect after a POST. The server accepts the POST and then sends the browser to a GET page, so reloading that page is safe. This prevents the refresh-resubmits-the-form bug. The double charge in \"Checkout and payments\" comes from the same problem and has a different fix."],
- [304,"Not Modified",3,"You already have the current version, so use the copy your browser saved earlier. The reply has no body. This saves bandwidth on large pages such as the course catalog in \"Past one box\"."],
+ [303,"See Other",3,"Redirect after a POST. The server accepts the POST and then sends the browser to a GET page, so reloading that page is safe. This prevents the refresh-resubmits-the-form bug. The double charge covered later in \"Payments and gateways\" comes from the same problem and has a different fix."],
+ [304,"Not Modified",3,"You already have the current version, so use the copy your browser saved earlier. The reply has no body. This saves bandwidth on large pages such as the course catalog covered later in \"Load balancers and scaling\"."],
  [400,"Bad Request",4,"The request is malformed, for example broken JSON or a missing required field. The server could not read what you sent."],
  [401,"Unauthorized",4,"The name is misleading: it means <b>unauthenticated</b>. The server does not know who you are. Send your login details and try again."],
  [403,"Forbidden",4,"The server knows who you are and the answer is still no. Better credentials will not help."],
  [404,"Not Found",4,"The URL names nothing. The server is working. Check your path and your ids first."],
  [405,"Method Not Allowed",4,"Right URL, wrong verb. The cells marked 405 in the table above are examples, such as <code>DELETE /courses</code>, where only <code>DELETE /courses/{code}</code> makes sense."],
- [409,"Conflict",4,"The request is valid but conflicts with the current state. Two students click for the same last seat: one gets 201 and the other gets 409. This is the enlistment problem in \"Case: enlistment\", reported as a status code."],
+ [409,"Conflict",4,"The request is valid but conflicts with the current state. Two students click for the same last seat: one gets 201 and the other gets 409. This is the enlistment problem covered later in \"Case study: enlistment\", reported as a status code."],
  [422,"Unprocessable Content",4,"The syntax is fine but the content is wrong, such as a date in the past or a unit load over the maximum. Validation errors (a value that breaks a rule) belong here."],
- [429,"Too Many Requests",4,"The client sent too many requests (rate limiting). The reply includes a <code>Retry-After</code> header that says how long to wait. The server is protecting the capacity you measured in \"Inside the server\"."],
+ [429,"Too Many Requests",4,"The client sent too many requests (rate limiting). The reply includes a <code>Retry-After</code> header that says how long to wait. The server is protecting the capacity covered later in \"Server capacity\"."],
  [500,"Internal Server Error",5,"The server code failed with an error. This is always a bug. Read the server's error report (the traceback) and ignore the page itself."],
- [502,"Bad Gateway",5,"A gateway server (nginx, a program that sits in front of your application) got an invalid reply or no reply from your application, usually because the worker process died. The out-of-memory kill in \"What a server holds\" looks like this from outside."],
+ [502,"Bad Gateway",5,"A gateway server (nginx, a program that sits in front of your application) got an invalid reply or no reply from your application, usually because the worker process died. The out-of-memory kill covered later in \"Server memory\" looks like this from outside."],
  [503,"Service Unavailable",5,"The server is running but refusing work because it is overloaded or in maintenance. A 503 is better than a very slow 200."],
- [504,"Gateway Timeout",5,"Your application did not reply in time, so nginx stopped waiting. This is the queue in \"Inside the server\" overflowing, as the user sees it. On enlistment morning this is the code you get."]
+ [504,"Gateway Timeout",5,"Your application did not reply in time, so nginx stopped waiting. This is the queue covered later in \"Server capacity\" overflowing, as the user sees it. On enlistment morning this is the code you get."]
 ];
 $("#codeChips").innerHTML=CODES.map(([c,n,f],i)=>
   `<button class="cd c${f}" data-i="${i}"><b>${c}</b>${n}</button>`).join("");
@@ -381,7 +381,7 @@ function renderGran(){
     v.innerHTML=`<b>At ${m.n} item${m.n===1?"":"s"} it makes almost no difference</b>Both versions fit in one round trip and the difference in data is small. This is how the many-request version gets written: it works fine in testing with three rows, and nobody checks it again.`;
   } else if(m.h2){
     v.className="verdict warn";
-    v.innerHTML=`<b>HTTP/2 reduced the waiting and nothing else</b>All ${m.chatty.reqs} requests now share one connection at once, so the wait drops to a single round trip. The server still runs <b class="i">${m.chatty.handlers} handlers</b> where one would do, still does ${m.n} database lookups, and still sends ${kb(m.chatty.down)} where ${kb(m.bulk.down)} would do. HTTP/2 hides the symptom, but the cause remains. This pattern is called the N+1 problem (one request for the list plus one for each of the N items), and "What one query costs" measures it.`;
+    v.innerHTML=`<b>HTTP/2 reduced the waiting and nothing else</b>All ${m.chatty.reqs} requests now share one connection at once, so the wait drops to a single round trip. The server still runs <b class="i">${m.chatty.handlers} handlers</b> where one would do, still does ${m.n} database lookups, and still sends ${kb(m.chatty.down)} where ${kb(m.bulk.down)} would do. HTTP/2 hides the symptom, but the cause remains. This pattern is called the N+1 problem (one request for the list plus one for each of the N items), and it is measured later in "The N+1 query problem".`;
   } else {
     v.className="verdict bad";
     v.innerHTML=`<b>${m.chatty.rounds} round trips and ${kb(m.chatty.up)} of headers to fetch ${kb(m.n*G_ITEM)} of data</b>A browser opens only six connections to one host, so ${m.chatty.reqs} requests wait in batches of six. The last course title appears after <b class="i">${m.chatty.wait} ms</b>, compared with ${m.bulk.wait} ms for the same information in one request. Most of the data sent was the same cookie and user-agent text, repeated ${m.n} times.`;

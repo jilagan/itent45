@@ -36,17 +36,17 @@
    "stem": "What makes an agent different from a chat with a language model?",
    "options": [
     {
-     "text": "The agent can take actions and get results back from outside the model, then act on them.",
+     "text": "It takes actions, gets results back from outside the model, and acts on them.",
      "correct": true,
      "feedback": "The loop of Thought, Action and Observation is the difference. A chat produces only text."
     },
     {
-     "text": "The agent uses a larger model.",
+     "text": "The agent uses a much larger model than the chat does.",
      "correct": false,
      "feedback": "Size is not the difference. The same model can run in a chat or inside an agent."
     },
     {
-     "text": "The agent remembers everything between sessions.",
+     "text": "The agent remembers everything between sessions, which a chat cannot.",
      "correct": false,
      "feedback": "An agent sees only what fits in its context window, the same as a chat does."
     },
@@ -88,22 +88,22 @@
    "stem": "An agent has worked for 25 steps. It now ignores the formatting rule you gave in your first message. What is the most likely cause?",
    "options": [
     {
-     "text": "The first message has dropped out of the context window, so the model can no longer see the rule.",
+     "text": "The first message has left the context window, so the rule is no longer visible.",
      "correct": true,
      "feedback": "Every thought, action and observation is added to the context. When it fills, the oldest text, which includes your first instruction, is no longer visible."
     },
     {
-     "text": "The model got tired.",
+     "text": "The model got tired after so many steps and stopped paying attention.",
      "correct": false,
      "feedback": "A model does not tire. Its behavior changes only because of what is in its context."
     },
     {
-     "text": "The tests failed, so it stopped following instructions.",
+     "text": "The tests failed, so the agent stopped following instructions.",
      "correct": false,
      "feedback": "A failed test is one more Observation. It does not cancel your instructions."
     },
     {
-     "text": "The model never read the first message.",
+     "text": "The model never read the first message in the first place.",
      "correct": false,
      "feedback": "It read it at the start. The problem is that the message is no longer in view."
     }
@@ -116,22 +116,22 @@
    "stem": "At step 3 an agent reads a file and misunderstands what it does. What is most likely to happen over steps 4 to 20?",
    "options": [
     {
-     "text": "The agent treats the mistake as fact and builds on it until a test or other Observation contradicts it.",
+     "text": "It treats the mistake as fact and builds on it until an Observation contradicts it.",
      "correct": true,
      "feedback": "Errors compound. The model's confidence does not fade, and only a result from outside the model can correct it."
     },
     {
-     "text": "The agent notices the mistake by itself within a step or two.",
+     "text": "It notices the mistake by itself within a step or two and corrects it.",
      "correct": false,
      "feedback": "Nothing in the loop checks the reading. The model has no outside source for that check."
     },
     {
-     "text": "The mistake affects step 4 only.",
+     "text": "Only step 4 is affected, because each later step starts fresh.",
      "correct": false,
      "feedback": "Each later step uses everything before it, so one wrong belief can shape many steps."
     },
     {
-     "text": "The agent stops as soon as it makes any error.",
+     "text": "It stops as soon as it makes any error, since errors end the loop.",
      "correct": false,
      "feedback": "The loop has no rule that stops on errors. It stops when the model predicts an end signal."
     }

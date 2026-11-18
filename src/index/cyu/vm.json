@@ -15,7 +15,7 @@
     {
      "text": "Each guest crashes as soon as it starts, because there is not enough memory for all of them.",
      "correct": false,
-     "feedback": "Overselling does not stop guests from starting. The memory is promised, not reserved, so the guests run and then compete for it."
+     "feedback": "Overselling does not stop guests from starting. The memory is promised without being reserved, so the guests run and then compete for it."
     },
     {
      "text": "Nothing changes, because every guest has its own separate hardware.",

@@ -1,6 +1,34 @@
 /* ================= 06 LEARNING POSITIONS ================= */
 /* A small word2vec: co-occurring words attract, everything repels. The layout
    below is computed live from the corpus, not placed. */
+/* Label placement for word maps. Each item has a dot at (cx,cy) and a text.
+   Tries positions around the dot and keeps the first one that overlaps no other label or dot. */
+function placeLabels(items, fs, W, H, lines){
+  const cw=fs*0.62, boxes=[], dots=items.map(i=>({x:i.cx-(i.r||4)-2,y:i.cy-(i.r||4)-2,w:2*(i.r||4)+4,h:2*(i.r||4)+4}));
+  const hit=(a,b)=>a.x<b.x+b.w && b.x<a.x+a.w && a.y<b.y+b.h && b.y<a.y+a.h;
+  const out=[];
+  (lines||[]).forEach(([x1,y1,x2,y2])=>{ const n=Math.max(2,Math.round(Math.hypot(x2-x1,y2-y1)/6));
+    for(let i=0;i<=n;i++) boxes.push({x:x1+(x2-x1)*i/n-3,y:y1+(y2-y1)*i/n-3,w:6,h:6}); });
+  items.forEach((it,k)=>{
+    const w=it.text.length*cw, r=(it.r||4)+5, h=fs;
+    const cand=[[r,fs*.35,"start"],[-r,fs*.35,"end"],[0,-r-2,"middle"],[0,r+fs*.8,"middle"],
+                [r,-r,"start"],[-r,-r,"end"],[r,r+fs*.6,"start"],[-r,r+fs*.6,"end"],
+                [r+14,fs*.35,"start"],[-r-14,fs*.35,"end"],[0,-r-fs-4,"middle"],[0,r+fs*1.8,"middle"]];
+    let best=null, bestScore=1e9;
+    for(const [dx,dy,an] of cand){
+      const x=it.cx+dx, y=it.cy+dy, bx=an==="start"?x:an==="end"?x-w:x-w/2;
+      const box={x:bx-1,y:y-h*.8,w:w+2,h:h};
+      let score=0;
+      if(box.x<0||box.x+box.w>W||box.y<0||box.y+box.h>H) score+=1000;
+      boxes.forEach(b=>{ if(hit(box,b)) score+=100; });
+      dots.forEach((d,j)=>{ if(j!==k && hit(box,d)) score+=100; });
+      if(score<bestScore){ bestScore=score; best={x,y,an,box}; if(score===0) break; }
+    }
+    boxes.push(best.box); out[k]=best;
+  });
+  return out;
+}
+
 const EMC=[["king","queen","palace"],["king","prince","crown"],["queen","princess","crown"],
            ["prince","princess","palace"],["king","queen","crown"],
            ["Paris","France","capital"],["Tokyo","Japan","capital"],["Paris","France","city"],
@@ -56,28 +84,17 @@ function emRender(){
     svg+=`<line x1="${X(EM.pos[EM.last[i]][0])}" y1="${Y(EM.pos[EM.last[i]][1])}"
             x2="${X(EM.pos[EM.last[j]][0])}" y2="${Y(EM.pos[EM.last[j]][1])}"
             stroke="var(--req)" stroke-width="1.5" opacity=".55" stroke-dasharray="3 3"/>`;
-  /* dots sit where the training put them; labels get nudged apart so they stay readable,
-     with a leader line back to the dot whenever one has moved */
-  const lab=EMV.map(w=>({w, cx:X(EM.pos[w][0]), cy:Y(EM.pos[w][1]),
-                         lx:X(EM.pos[w][0])+8, ly:Y(EM.pos[w][1])+4}))
-                .sort((a,b)=>a.ly-b.ly);
-  for(let i=0;i<lab.length;i++){
-    for(let j=0;j<i;j++){
-      const dy=Math.abs(lab[i].ly-lab[j].ly), dx=Math.abs(lab[i].lx-lab[j].lx);
-      if(dy<15 && dx<92){ lab[i].ly=lab[j].ly+15; }
-    }
-  }
-  EMV.forEach(w=>{
-    const g=emGroupOf(w), hot=EM.last&&EM.last.includes(w);
-    svg+=`<circle cx="${X(EM.pos[w][0])}" cy="${Y(EM.pos[w][1])}" r="${hot?5:3.5}" fill="${EMCOL[g]}"/>`;
+  const hotOf=w=>EM.last&&EM.last.includes(w);
+  const order=[...EMV].sort((p,q)=>(hotOf(q)?1:0)-(hotOf(p)?1:0));
+  const pl=placeLabels(order.map(w=>({text:w,cx:X(EM.pos[w][0]),cy:Y(EM.pos[w][1]),r:hotOf(w)?5:3.5})),13.5,640,300);
+  order.forEach(w=>{
+    const g=emGroupOf(w);
+    svg+=`<circle cx="${X(EM.pos[w][0])}" cy="${Y(EM.pos[w][1])}" r="${hotOf(w)?5:3.5}" fill="${EMCOL[g]}"/>`;
   });
-  lab.forEach(L=>{
-    const g=emGroupOf(L.w), hot=EM.last&&EM.last.includes(L.w);
-    if(Math.abs(L.ly-(L.cy+4))>3)
-      svg+=`<line x1="${L.cx+3}" y1="${L.cy}" x2="${L.lx-2}" y2="${L.ly-3.5}"
-              stroke="${EMCOL[g]}" stroke-width=".8" opacity=".4"/>`;
-    svg+=`<text x="${L.lx}" y="${L.ly}" font-family="monospace" font-size="11"
-        fill="${EMCOL[g]}" font-weight="${hot?700:400}">${L.w}</text>`;
+  order.forEach((w,k)=>{
+    const g=emGroupOf(w), L=pl[k];
+    svg+=`<text x="${L.x.toFixed(1)}" y="${L.y.toFixed(1)}" text-anchor="${L.an}" font-family="monospace" font-size="13.5"
+        fill="${EMCOL[g]}" font-weight="${hotOf(w)?700:400}">${w}</text>`;
   });
   $("#emMap").innerHTML=svg+`</svg>`;
   $("#emFeed").innerHTML = EM.last

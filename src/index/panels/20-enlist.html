@@ -1,8 +1,10 @@
     <section class="panel" id="p-enlist">
       <div class="head">
         <h2>Case study: enlistment day</h2>
-        <p>Picture the registrar's office on enlistment day. Thousands of students crowd around the schedule board, and each one only needs a few seconds to read it. Only one window can reserve seats, and it has to give the last seat in a section to exactly one student. A student enlistment system has the same two parts. The web tier is the group of servers that receive requests and build the pages. The database tier is the database that stores the seat counts. The one database that accepts changes is called the primary. Student systems like this have often run on a handful of application servers, usually Java programs, with a single relational database behind them. Many have since moved to cloud hosting, where capacity at the web tier can be bought in minutes. The slowdowns on enlistment morning have not gone away. "Scaling out with a load balancer" explained why: once the web tier is fixed, the database is the next bottleneck.</p>
-        <div class="ask"><b>Think first</b> A university can add web servers with a few clicks, yet its enlistment system is still slow at 8:00 AM. Which part of the system do you think is the limit, and why can more web servers not help it?</div>
+        <p>Picture the registrar's office on enlistment day. Thousands of students crowd around the schedule board, and each one only needs a few seconds to read it. Only one window can reserve seats, and it has to give the last seat in a section to exactly one student.</p>
+        <p>A student enlistment system has the same two parts. The web tier is the group of servers that receive requests and build the pages. The database tier is the database that stores the seat counts, and the one database that accepts changes is called the primary. Such systems have often run on a handful of application servers with a single relational database behind them. Many have since moved to cloud hosting, where web tier capacity can be bought in minutes.</p>
+        <p>The slowdowns on enlistment morning did not go away. "Load balancers and scaling" showed that once the web tier is fixed, the database is the next bottleneck. This case study lets you test which tier fails.</p>
+        <div class="ask"><b>Think first.</b> A university can add web servers with a few clicks, yet its enlistment system is still slow at 8:00 AM. Where do you think the slowdown is, and what would you change?</div>
         <div class="instructor">Ask for a show of hands: who has seen the enlistment system slow down on enlistment morning? Listen for students who blame the web servers, and steer them toward seat reservation.</div>
       </div>
 
@@ -75,7 +77,7 @@
           </div>
           <div class="rtt-note" style="margin-top:15px">
             The model assumes 15 requests per enlistment session, 3 of them reservations. Rates are in requests per second (rps) for the web tier and database operations per second (ops/s) for the database. Without staggering, the start bursts at about 6× the average rate, because everyone clicks at 8:00:00.
-            <br><br><b style="color:var(--faint)">The shape is typical of student enlistment systems. Every number here is a teaching model, not a measurement of a real system.</b>
+            <br><br><b style="color:var(--faint)">The shape is typical of student enlistment systems. Every number here is made up for teaching.</b>
           </div>
         </div>
       </div>

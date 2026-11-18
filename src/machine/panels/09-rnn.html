@@ -1,22 +1,24 @@
     <section class="panel" id="p-rnn">
       <div class="head">
         <h2>Recurrent networks: the approach before transformers</h2>
-        <p>Imagine sitting through a long lecture with a single sticky note. After each sentence you rewrite the note to summarize everything so far, and then you forget the sentence. At the end you can answer questions only from the note. Until about 2017, language models read text this way. They are called <b>recurrent neural networks</b>. The model reads left to right. After each word it updates one small note, called the <b>hidden state</b>, that summarizes everything read so far, and then it moves on without the word. The note is a fixed size, so each new word pushes something older out. The next panel, "Attention and the transformer", answers the problems shown here.</p>
+        <p>Imagine sitting through a long lecture with a single sticky note. After each sentence you rewrite the note to summarize everything so far, and then you forget the sentence. At the end you can answer questions only from the note.</p>
+        <p style="margin-top:11px">Until about 2017, language models read text this way. They are called <b>recurrent neural networks</b>. The model reads left to right. After each word it updates one small note, called the <b>hidden state</b>, that summarizes everything read so far, and then it moves on without the word. The note is a fixed size, so each new word pushes something older out.</p>
+        <p style="margin-top:11px">This panel shows the problems that causes. The fix is covered later in "Attention and transformers".</p>
         <div class="ask"><b>Think first.</b> In the sentence <em>The animal didn't cross the street because it was too tired</em>, what does <em>it</em> refer to? Now imagine you had to answer using only a short summary that you rewrote after each word. Which words would you expect that summary to keep most clearly?</div>
       </div>
       <div class="srv">
         <div>
           <div class="ctab" id="rnPick" style="margin-bottom:12px"></div>
           <div class="sent" id="rnSent"></div>
-          <p style="margin:10px 0 0;font-size:.8em;color:var(--faint)" id="rnCaption"></p>
+          <p style="margin:10px 0 0;color:var(--faint)" id="rnCaption"></p>
           <div class="card" style="margin-top:12px">
             <div class="card-t">What is left on the note</div>
-            <p style="margin:0 0 10px;font-size:.78em;color:var(--faint);line-height:1.5">Each word that was read, with the share of it that is still on the note.</p>
+            <p style="margin:0 0 10px;color:var(--faint);line-height:1.5">Each word that was read, with the share of it that is still on the note.</p>
             <div class="probs" id="rnBars"></div>
           </div>
           <div class="card" id="rnAnsBox" style="margin-top:13px;display:none">
             <div class="card-t">Two candidates for <em>it</em></div>
-            <p style="margin:0 0 10px;font-size:.78em;color:var(--faint);line-height:1.5"><code>it</code> stands for a thing, so the candidates are the two nouns, <code>animal</code> and <code>street</code>. No other word in the sentence can be what <code>it</code> refers to.</p>
+            <p style="margin:0 0 10px;color:var(--faint);line-height:1.5"><code>it</code> stands for a thing, so the candidates are the two nouns, <code>animal</code> and <code>street</code>. No other word in the sentence can be what <code>it</code> refers to.</p>
             <div class="probs" id="rnCand"></div>
             <div class="art" id="rnAnswer" style="margin-top:11px"></div>
           </div>
@@ -43,7 +45,7 @@
       <div class="whynot" style="margin-top:20px">
         <b>One fix for both problems</b>
         Stop summarizing. Keep every word, and let each word look directly at all the others, weighing them by how well they fit. Every word is then one step from every other word, and all the comparisons can happen at once.
-        <br><br>The next panel, "Attention and the transformer", describes this approach.
+        <br><br>This approach is covered later in "Attention and transformers".
       </div>
     </section>
 

@@ -1,8 +1,10 @@
     <section class="panel" id="p-vm">
       <div class="head">
         <h2>Virtualization and what the cloud means</h2>
-        <p>A condominium building is one structure that holds many separate units. Each owner has a door, a kitchen and a bathroom, and never sees how the building is divided. A rented server works the same way. The server with 2 GB of RAM (the memory its programs use while they run) that you rent is one slice of a much larger physical machine. Software creates the slice in seconds, next to slices that belong to other customers. Unlike a condo unit, a slice can be created and deleted within seconds. Dividing one machine into slices is called <b>virtualization</b>, and each slice is a <b>virtual machine</b> (VM). The properties we call "the cloud" follow from it. In "How a server's memory is used", we treated a server as one whole machine with fixed memory. That was a simplification.</p>
-        <div class="ask"><b>Think first</b> You rent a server with 2 GB of RAM from a cloud provider. Nobody delivers a computer to you. What do you think you were given?</div>
+        <p>A condominium building is one structure that holds many separate units. Each owner has a door, a kitchen and a bathroom, and never sees how the building is divided.</p>
+        <p>A rented server works the same way. The server with 2 GB of RAM that you rent is one slice of a much larger physical machine. Software creates the slice in seconds, next to slices that belong to other customers. Dividing one machine into slices is called <b>virtualization</b>, and each slice is a <b>virtual machine</b> (VM). The properties we call "the cloud" follow from it.</p>
+        <p>"Server memory" treated a server as one whole machine with fixed memory, which was a simplification. This panel shows how the slices are made, created, billed and described.</p>
+        <div class="ask"><b>Think first.</b> You rent a server with 2 GB of RAM from a cloud provider. Nobody delivers a computer to you. What do you think you were given?</div>
       </div>
 
       <div class="sec" data-sec="slicing" data-title="One machine, many slices">
@@ -16,7 +18,7 @@
               <div>Kernel</div>
               <div class="hw">Hardware</div>
             </div>
-            <p style="margin:11px 0 0;font-size:.75em;color:var(--dim);line-height:1.5">Bare metal means a physical machine with no virtualization. One operating system controls all of it. The kernel is the core of the operating system, and it controls the hardware. The shell is the program you type commands into. If you buy a bigger machine, you own all of it, including the 80% you are not using at 3 a.m.</p>
+            <p style="margin:11px 0 0;color:var(--dim);line-height:1.5">Bare metal means a physical machine with no virtualization. One operating system controls all of it. The kernel is the core of the operating system, and it controls the hardware. The shell is the program you type commands into. If you buy a bigger machine, you own all of it, including the 80% you are not using at 3 a.m.</p>
           </div>
           <div class="stk virt">
             <div class="sh">Virtualized: one machine, many guests</div>
@@ -26,7 +28,7 @@
               <div>Host operating system</div>
               <div class="hw">Hardware: <span id="hostSpec">256 GB RAM, 64 cores</span></div>
             </div>
-            <p style="margin:11px 0 0;font-size:.75em;color:var(--dim);line-height:1.5">Each <b style="color:var(--req)">guest</b> has its own kernel, disk and network card as far as it can tell, but these are simulated. The <b style="color:var(--res)">host</b> is the physical machine, and its hypervisor divides the hardware between the guests. A core is one processing unit. The hypervisor can create or delete a guest in seconds.</p>
+            <p style="margin:11px 0 0;color:var(--dim);line-height:1.5">Each <b style="color:var(--req)">guest</b> has its own kernel, disk and network card as far as it can tell, but these are simulated. The <b style="color:var(--res)">host</b> is the physical machine, and its hypervisor divides the hardware between the guests. A core is one processing unit. The hypervisor can create or delete a guest in seconds.</p>
           </div>
         </div>
 
@@ -49,7 +51,7 @@
               </div>
             </div>
             <div class="rtt-note" style="margin-top:15px">
-              The server in "How a server's memory is used" is one of these guests. The hypervisor keeps some memory for itself.
+              The server in "Server memory" is one of these guests. The hypervisor keeps some memory for itself.
               <br><br>Providers often sell more memory than the host has, because guests are rarely all busy at the same time. Move the sliders until the total passes the host's memory and read the result.
             </div>
           </div>
@@ -65,7 +67,7 @@
             <div class="ctrls" style="margin-bottom:4px">
               <button class="btn primary" id="provAdd">+ Provision a server</button>
               <button class="btn" id="provReset">Reset</button>
-              <span style="margin-left:auto;font-family:var(--mono);font-size:.68em;color:var(--faint)" id="provClock">day 0, 00:00</span>
+              <span style="margin-left:auto;color:var(--faint)" id="provClock">day 0, 00:00</span>
             </div>
             <div class="srvlist" id="srvList"></div>
             <div class="meter">
@@ -136,7 +138,7 @@
 
       <div class="sec" data-sec="characteristics" data-title="Cloud characteristics and service models">
         <div class="card-t">Five characteristics of cloud computing</div>
-        <p style="margin:0 0 14px;font-size:.85em;color:var(--dim);line-height:1.6">The US National Institute of Standards and Technology (NIST) defines cloud computing by five essential characteristics (Mell &amp; Grance, 2011). Each one follows from a machine being created by software. You demonstrated three of them in the provisioning section. Click a card to read more.</p>
+        <p style="margin:0 0 14px;font-size:.85em;color:var(--dim);line-height:1.6">The US National Institute of Standards and Technology (NIST) defines cloud computing by five essential characteristics (Mell &amp; Grance, 2011). Each one follows from a machine being created by software. You saw three of them in the provisioning and elasticity sections. Click a card to read more.</p>
         <div class="nist" id="nistCards"></div>
         <div class="explain" id="nistOut" style="margin-top:0">
           <div class="et">Select one</div>
@@ -144,7 +146,7 @@
         </div>
 
         <div class="card-t" style="margin-top:26px">Service models: IaaS, PaaS and SaaS</div>
-        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Think of getting dinner. If you cook at home, you do every step. If you order catering, someone else cooks and you serve. If you eat out, someone else does everything. Cloud service models work the same way. Every layer in the table is run by someone, and a service model decides which layers you run and which layers the provider runs. You pay the provider for the layers it runs.</p>
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Cooking at home, ordering catering and eating out hand more of the work to someone else each time. Cloud service models do the same for the layers in the table. Every layer is run by someone, and the service model decides which layers you run and which the provider runs. You pay the provider for the layers it runs.</p>
         <div class="card" style="padding:14px 16px;overflow-x:auto">
           <table class="resp"><thead><tr>
             <th>Layer</th><th>On-premise</th><th>IaaS</th><th>PaaS</th><th>SaaS</th>

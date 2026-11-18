@@ -132,7 +132,7 @@ function renderRegion(){
   REGIONS.forEach((q,i)=>{
     if(i===REG.idx || i===0 || (isMulti && q===dr)) return;
     svg+=`<circle cx="${projX(q.ll[0])}" cy="${projY(q.ll[1])}" r="3.5" fill="var(--line3)"/>
-          <text x="${projX(q.ll[0])}" y="${projY(q.ll[1])-8}" fill="var(--faint)" font-size="10" text-anchor="middle">${q.s}</text>`;
+          <text x="${projX(q.ll[0])}" y="${projY(q.ll[1])-8}" fill="var(--dim)" font-size="18" text-anchor="middle">${q.s}</text>`;
   });
 
   // replication arc to the standby, when there is one
@@ -141,7 +141,7 @@ function renderRegion(){
     const dcol=regDead?"var(--res)":"var(--faint)";
     svg+=`<circle cx="${projX(dr.ll[0])}" cy="${projY(dr.ll[1])}" r="7" fill="none" stroke="${dcol}" stroke-width="2"/>
           <circle cx="${projX(dr.ll[0])}" cy="${projY(dr.ll[1])}" r="3" fill="${dcol}"/>
-          <text x="${projX(dr.ll[0])}" y="${projY(dr.ll[1])-13}" fill="${dcol}" font-size="10.5" text-anchor="middle">${regDead?"NRT: now primary":"NRT: standby"}</text>`;
+          <text x="${projX(dr.ll[0])}" y="${projY(dr.ll[1])-13}" fill="${dcol}" font-size="18" text-anchor="middle">${regDead?"NRT now primary":"NRT standby"}</text>`;
   }
 
   // the arc that matters: users to primary
@@ -153,7 +153,7 @@ function renderRegion(){
   const px=projX(r.ll[0]), py=projY(r.ll[1]);
   svg+=`<circle cx="${px}" cy="${py}" r="11" fill="${acol}" opacity=".18"/>
         <circle cx="${px}" cy="${py}" r="5.5" fill="${acol}"/>
-        <text x="${px}" y="${py-15}" fill="${acol}" font-size="11.5" font-weight="600" text-anchor="middle">${r.s}${regDead?" ✕":""}</text>`;
+        <text x="${px}" y="${py-15}" fill="${acol}" font-size="20" font-weight="600" text-anchor="middle">${r.s}${regDead?" ✕":""}</text>`;
   // availability zones as small satellites
   for(let i=0;i<azCount;i++){
     const dead = regDead || (REG.dead.az && i===0);
@@ -166,15 +166,7 @@ function renderRegion(){
   const ux=projX(MANILA[0]), uy=projY(MANILA[1]);
   svg+=`<circle cx="${ux}" cy="${uy}" r="13" fill="var(--res)" opacity=".14"/>
         <circle cx="${ux}" cy="${uy}" r="5" fill="var(--res)"/>`;
-  if(REG.idx!==0) svg+=`<text x="${ux}" y="${uy+22}" fill="var(--res)" font-size="10.5" text-anchor="middle">MNL: your users</text>`;
-
-  // the number, on the arc
-  // fixed readout, so short hops do not stack labels on top of each other
-  svg+=`<rect x="14" y="14" width="196" height="62" rx="6" fill="var(--bg)" stroke="${acol}" stroke-width="1" opacity=".95"/>
-        <text x="26" y="33" fill="var(--faint)" font-size="9.5">Manila \u2192 ${r.s}</text>
-        <text x="26" y="53" fill="${acol}" font-size="19" font-weight="600">${Math.round(L.real)} ms</text>
-        <text x="104" y="53" fill="var(--dim)" font-size="11">round trip</text>
-        <text x="26" y="69" fill="var(--faint)" font-size="10">${r.km.toLocaleString()} km, physics floor ${L.phys.toFixed(0)} ms</text>`;
+  if(REG.idx!==0) svg+=`<text x="${ux+16}" y="${uy+6}" fill="var(--res)" font-size="18">MNL</text>`;
 
   // clickable hit areas, last so nothing is drawn over them
   REGIONS.forEach((q,i)=>{
@@ -188,7 +180,7 @@ function renderRegion(){
   const ttfb=L.real*5+40;
   $("#latStats").innerHTML=[
     ["var(--line2)","Distance, one way", r.km.toLocaleString()+" km"],
-    ["var(--res)","Physics floor, round trip", L.phys.toFixed(0)+" ms"],
+    ["var(--res)","Minimum round trip, speed of light", L.phys.toFixed(0)+" ms"],
     ["var(--req)","Realistic round trip", L.real.toFixed(0)+" ms"],
     ["var(--req)","Time to first byte: 5 round trips + 40 ms handler", Math.round(ttfb)+" ms"]
   ].map(([c,n,v])=>`<div class="lg"><i style="background:${c}"></i>${n}<b>${v}</b></div>`).join("");
@@ -202,7 +194,7 @@ function renderRegion(){
     v.innerHTML=`<b>${Math.round(ttfb)} ms to first byte</b>This is comfortable. Your handler (the code that processes the request) accounts for 40 ms, and the rest is distance, which code cannot reduce. For users in Metro Manila this is about as good as a real cloud region gets.`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>${Math.round(ttfb)} ms before anything appears</b>${r.n} is ${r.km.toLocaleString()} km away, so every round trip costs ${L.real.toFixed(0)} ms and a page needs five of them. Your code is only 40 ms of that. This is the Berlin example from "Why loading a page takes several round trips", caused here by choosing a distant region. The fix is to move the servers closer, or to serve reads from a copy that is already close.`;
+    v.innerHTML=`<b>${Math.round(ttfb)} ms before anything appears</b>${r.n} is ${r.km.toLocaleString()} km away, so every round trip costs ${L.real.toFixed(0)} ms and a page needs five of them. Your code is only 40 ms of that. This is the Berlin example from "Round trips and latency", caused here by choosing a distant region. The fix is to move the servers closer, or to serve reads from a copy that is already close.`;
   }
 
   // posture cards

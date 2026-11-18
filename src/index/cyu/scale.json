@@ -55,17 +55,17 @@
    "stem": "Machine C crashes while the load balancer is running health checks. What happens to requests after the next failed check?",
    "options": [
     {
-     "text": "The load balancer stops sending requests to C and the other machines take its share.",
+     "text": "The load balancer stops using C and the other machines take its share.",
      "correct": true,
      "feedback": "This is what a health check is for. A few requests sent before the check fails may get errors, but after that users are not affected."
     },
     {
-     "text": "Every request fails until someone restarts C.",
+     "text": "Every request fails until an engineer restarts machine C by hand.",
      "correct": false,
      "feedback": "The load balancer routes around a machine that fails its health check."
     },
     {
-     "text": "Requests wait in the load balancer until C comes back.",
+     "text": "Requests wait in the load balancer until C passes its health check again.",
      "correct": false,
      "feedback": "The load balancer sends requests to machines that are working. It does not hold requests for a failed machine."
     }
@@ -102,7 +102,7 @@
    "stem": "The database is the bottleneck: 3 queries per request and 300 queries per second allow only 100 requests per second. Which change raises the limit the most?",
    "options": [
     {
-     "text": "Add a cache that answers 70% of the queries.",
+     "text": "Add a cache for 70% of the reads.",
      "correct": true,
      "feedback": "Only 30% of the queries reach the database, which is 0.9 queries per request. The database can then serve about 333 requests per second."
     },
@@ -112,7 +112,7 @@
      "feedback": "The machines are not the limit. More of them would send more queries to the same database."
     },
     {
-     "text": "Make the handler faster.",
+     "text": "Speed up each handler by 35%.",
      "correct": false,
      "feedback": "A faster handler helps the application machines, but the limit here is the number of queries the database can answer."
     }

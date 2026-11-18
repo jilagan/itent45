@@ -8,22 +8,22 @@
    "stem": "A team fits a model to 1,000 customer records and reports 99 percent accuracy, measured on those same 1,000 records. What does this score tell you?",
    "options": [
     {
-     "text": "Little, because the model was scored on examples it was fitted to, so it may have memorized them.",
+     "text": "Little: it was scored on the records it was fitted to, so it may have memorized them.",
      "correct": true,
      "feedback": "A score on the training examples is expected to be high. Only a score on examples the model has not seen shows how it will behave on new customers."
     },
     {
-     "text": "That the model will be 99 percent accurate on new customers.",
+     "text": "That the model will be 99 percent accurate on new customers who were not in the data.",
      "correct": false,
      "feedback": "New customers were not in the data, so this score cannot predict how the model treats them."
     },
     {
-     "text": "That the model is overfitted.",
+     "text": "That the model is overfitted, because 99 percent is too high to be real.",
      "correct": false,
      "feedback": "You cannot tell from this score alone. You need the score on a test set to see a gap."
     },
     {
-     "text": "Nothing, because accuracy is not a useful measure.",
+     "text": "Nothing, because accuracy is not a useful measure for customer records.",
      "correct": false,
      "feedback": "Accuracy is a fine measure. The problem is that it was measured on the training examples."
     }
@@ -60,22 +60,22 @@
    "stem": "An analyst fits a model, checks the test set score, changes some settings, and checks the test set score again. She repeats this ten times and reports the best test score. What is wrong with this?",
    "options": [
     {
-     "text": "The test set has guided her changes, so information has leaked into the model and the reported score is too optimistic.",
+     "text": "The test set guided her changes, so information leaked into the model and the score is too optimistic.",
      "correct": true,
      "feedback": "Once the test set influences decisions, it works as extra training data. The score no longer shows how the model will treat new data."
     },
     {
-     "text": "Nothing is wrong. Testing ten times makes the result more reliable.",
+     "text": "Nothing is wrong. Testing ten times and taking the best makes the result more reliable.",
      "correct": false,
      "feedback": "Each look at the test set lets it influence the next change. More looks make the score less honest."
     },
     {
-     "text": "The test set is too small.",
+     "text": "The test set is too small, so ten checks are not enough to judge the model.",
      "correct": false,
      "feedback": "The size of the test set is not the problem. The problem is that it was used to make decisions."
     },
     {
-     "text": "She should have reported the training score.",
+     "text": "She should have reported the training score, because it is always higher.",
      "correct": false,
      "feedback": "The training score is expected to be high and says little about new data."
     }

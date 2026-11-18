@@ -57,25 +57,25 @@
    "id": "rest-3",
    "sec": "status-codes",
    "type": "multi",
-   "stem": "Select all of the statements that are correct.",
+   "stem": "Select all that apply. Which of these statements about status codes are correct?",
    "options": [
     {
      "text": "401 means the server does not know who you are.",
      "correct": true,
-     "feedback": "Correct. 401 is named Unauthorized, but it means unauthenticated. Sending login details and trying again can fix it."
+     "feedback": "401 is named Unauthorized, but it means unauthenticated. Sending login details and trying again can fix it."
     },
     {
-     "text": "403 means the server knows who you are and refuses the request.",
+     "text": "403 means the server knows who you are and still refuses.",
      "correct": true,
-     "feedback": "Correct. Better credentials will not help, because the user is not allowed to do this."
+     "feedback": "Better credentials will not help, because the user is not allowed to do this."
     },
     {
-     "text": "500 means the URL names nothing.",
+     "text": "500 means the URL names nothing, so check the path and the id.",
      "correct": false,
      "feedback": "That describes 404. A 500 means the server code failed with an error while handling the request."
     },
     {
-     "text": "404 means the server code raised an error.",
+     "text": "404 means the server code raised an error while handling the request.",
      "correct": false,
      "feedback": "That describes 500. A 404 means the URL names nothing, so check the path and the id."
     }

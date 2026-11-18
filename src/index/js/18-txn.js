@@ -40,7 +40,7 @@ const TXN=[
    ["b","&hellip; unblocked, reads  &rarr; 0",0],
    ["b","slots is 0, refuse",0,"fail"],
    ["b","ROLLBACK",0]],
-  v:`<b>One enrollment, and B was refused</b>The lock made B wait. When B finally read the row, it saw the current value, which was 0. The lock has a cost: B waited while A finished, and on enlistment morning that waiting line would be nine thousand users long.<br><br>The result is correct. It is also why adding web servers does not raise the database limit in "Case study: enlistment day".`},
+  v:`<b>One enrollment, and B was refused</b>The lock made B wait. When B finally read the row, it saw the current value, which was 0. The lock has a cost: B waited while A finished, and on enlistment morning that waiting line would be nine thousand users long.<br><br>The result is correct. It is also why adding web servers does not raise the database limit, as covered later in "Case study: enlistment".`},
  {id:"atomic", n:"One statement", ok:true,
   note:"There is no lock and no read followed by a write. The decision and the change are one statement, so the database can order the two requests itself. Look at how many rows each statement reports changing.",
   steps:[

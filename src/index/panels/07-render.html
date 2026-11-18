@@ -1,8 +1,10 @@
     <section class="panel" id="p-render">
       <div class="head">
         <h2>Building the page: on the server or in the browser</h2>
-        <p>A restaurant can print a fresh menu for every customer, or hang one menu board and change only the prices that change. A web server faces a similar choice. The panel "One API for the web, iOS and Android" ended with a response that was the same for every client. That response was data, not a page. Someone still has to assemble the page that a person looks at. Building it on the server is called server-rendering. Building it in the browser is called a single-page app. The choice changes what travels over the network, how fast the first screen appears, and how much work your server does for each visitor.</p>
-        <div class="ask"><b>Think first</b> When you click a link on a website, does the browser replace the whole page or only part of it? Open a site you use and watch the browser tab for a loading spinner. What did you see?</div>
+        <p>A restaurant can print a fresh menu for every customer, or hang one menu board and change only the prices that change.</p>
+        <p>A web server faces a similar choice. In "One API, many clients" the server sent data as JSON, and someone still has to assemble the page that a person looks at. Building it on the server is called server-rendering. Building it in the browser is called a single-page app.</p>
+        <p>The choice changes what travels over the network, how fast the first screen appears, and how much work your server does for each visitor. This panel compares the two models and what each one costs.</p>
+        <div class="ask"><b>Think first.</b> When you click a link on a website, does the browser replace the whole page or only part of it? Open a site you use and watch the browser tab for a loading spinner. What did you see?</div>
         <div class="instructor">On some sites the whole page reloads and on others it does not. Ask students to name one site of each kind and say how they could tell.</div>
       </div>
 
@@ -72,13 +74,13 @@
       <div class="bill">
         <div class="bl">
           <h5>Rendering moves to the user's device</h5>
-          <p>A single-page app has the browser build the page, so your server no longer pays for that work. That raises the ceiling you measured in "Inside the server", using hardware you did not buy.</p>
-          <span class="ref">&rarr; See "Inside the server". The user's battery pays for it.</span>
+          <p>A single-page app has the browser build the page, so your server no longer does that work. That raises the capacity ceiling covered later in "Server capacity", using hardware you did not buy.</p>
+          <span class="ref">&rarr; Covered later in "Server capacity". It uses the user's battery.</span>
         </div>
         <div class="bl">
           <h5>The first screen is slower</h5>
           <p>Server-rendered HTML is ready to draw when it arrives. A bundle has to download, load and run before anything appears, and then it fetches its data.</p>
-          <span class="ref">&rarr; See "The round trip". The cost is now on the client.</span>
+          <span class="ref">&rarr; See "Round trips and latency". The cost is now on the client.</span>
         </div>
         <div class="bl">
           <h5>You rebuild what the browser did for free</h5>
@@ -87,14 +89,14 @@
         </div>
         <div class="bl">
           <h5>XML is heavier than JSON</h5>
-          <p>XML adds rules (schemas) and labels (namespaces and attributes) that JSON does not have, so it is larger. Banks and government systems still use it. "Checkout and payments" shows an example, a SOAP message, which is an XML message format that banks use.</p>
-          <span class="ref">&rarr; See "Checkout and payments". Larger on the wire, with stricter rules.</span>
+          <p>XML adds rules (schemas) and labels (namespaces and attributes) that JSON does not have, so it is larger. Banks and government systems still use it. An example, covered later in "Payments and gateways", is a SOAP message, which is an XML message format that banks use.</p>
+          <span class="ref">&rarr; Covered later in "Payments and gateways". Larger on the wire, with stricter rules.</span>
         </div>
       </div>
 
       <div class="whynot" style="margin-top:20px">
         <b>What to pick for your capstone</b>
-        If your project is mostly pages that people read, server-rendered pages have fewer parts and a faster first screen, and Django (a Python web framework) builds them by default. If it is a tool that people use for twenty minutes, clicking around, the bundle pays for itself after several pages, about seven in the model above. Most student projects are the first kind and get built as the second kind, because tutorials show that approach. Choose based on how long users stay and how many pages they open.
+        If your project is mostly pages that people read, server-rendered pages have fewer parts and a faster first screen, and Django (a Python web framework) builds them by default. If it is a tool that people use for twenty minutes, clicking around, the bundle's download cost is made up after several pages, about seven in the model above. Most student projects are the first kind and get built as the second kind, because tutorials show that approach. Choose based on how long users stay and how many pages they open.
       </div>
       </div>
     </section>

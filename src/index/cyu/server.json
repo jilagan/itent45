@@ -78,17 +78,17 @@
    "stem": "A server runs at 95% utilization and still keeps up with every request. A manager says this is a good use of the hardware. What is the risk?",
    "options": [
     {
-     "text": "Requests spend a long time in the queue, and a small rise in load can overload the server.",
+     "text": "Waiting time is long, and a small rise in load can overload the server.",
      "correct": true,
      "feedback": "Above about 70% utilization, waiting time rises much faster than the load. At 95% a small increase in arrivals produces a long queue."
     },
     {
-     "text": "The workers will wear out from running all the time.",
+     "text": "The workers will wear out from running at full speed all day.",
      "correct": false,
      "feedback": "Software workers do not wear out. The risk is waiting time and having no spare capacity."
     },
     {
-     "text": "The remaining 5% of capacity is wasted money.",
+     "text": "The remaining 5% of capacity is wasted money that finance will question.",
      "correct": false,
      "feedback": "Some spare capacity is what keeps waiting time low. Running at 100% would make the queue grow without limit."
     }

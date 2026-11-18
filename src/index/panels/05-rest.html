@@ -1,8 +1,10 @@
     <section class="panel" id="p-rest">
       <div class="head">
         <h2>HTTP verbs, URLs and status codes (REST)</h2>
-        <p>When you order at a restaurant counter, the order slip says what you want done (place an order, change it, cancel it) and which order it applies to. A web request works the same way. It carries a verb, such as GET or POST, that says what to do, and a URL that says what to do it to. A set of conventions for using verbs, URLs and status codes together is called REST. Each verb makes two promises. A verb is safe if it changes nothing on the server. It is idempotent if doing it twice leaves things the same as doing it once. Pressing an elevator button twice is idempotent. Sending 500 pesos twice is not.</p>
-        <div class="ask"><b>Think first</b> You submit an enrollment form and the page hangs, so you press refresh. Could you now be enrolled twice? Write down your answer and what you would need to know to be sure.</div>
+        <p>When you order at a restaurant counter, the order slip says what you want done (place an order, change it, cancel it) and which order it applies to.</p>
+        <p>A web request works the same way. It carries a verb, such as GET or POST, that says what to do, and a URL that says what to do it to. A set of conventions for using verbs, URLs and status codes together is called REST.</p>
+        <p>Two terms describe what happens when a request is repeated. A verb is safe if it changes nothing on the server. It is idempotent if doing it twice leaves things the same as doing it once. GET, PUT, PATCH and DELETE make promises that POST does not. Pressing an elevator button twice is idempotent, because the second press changes nothing.</p>
+        <div class="ask"><b>Think first.</b> You submit an enrollment form and the page hangs, so you press refresh. Could you now be enrolled twice? Write down your answer and what you would need to know to be sure.</div>
         <div class="instructor">Ask students to name what the form sent when it was submitted (the verb). Listen for the idea that refreshing sends the same request again, and for whether they think the result depends on the verb.</div>
       </div>
 
@@ -26,22 +28,22 @@
           <div class="card-t">Pick a request</div>
           <div class="reqlist" id="reqList"></div>
           <div id="bodyForm" style="display:none;margin-top:13px;padding:13px;border:1px solid var(--req);border-radius:7px;background:var(--panel2)">
-            <div style="font-size:.8em;font-weight:600;color:var(--req);margin-bottom:4px">Compose the body</div>
-            <p style="margin:0 0 10px;font-size:.82em;color:var(--faint);line-height:1.5">Untick a field to leave it out of the body. PUT and PATCH differ only in how they treat the missing field.</p>
+            <div style="font-weight:600;color:var(--req);margin-bottom:4px">Compose the body</div>
+            <p style="margin:0 0 10px;color:var(--faint);line-height:1.5">Untick a field to leave it out of the body. PUT and PATCH differ only in how they treat the missing field.</p>
             <label class="bf"><input type="checkbox" id="bfOnTitle" checked><span>title</span><input type="text" id="bfTitle" value="Data Structures" maxlength="40"></label>
             <label class="bf"><input type="checkbox" id="bfOnUnits" checked><span>units</span><input type="number" id="bfUnits" value="3" min="0" max="9"></label>
             <label class="bf"><input type="checkbox" id="bfOnSlots" checked><span>slots</span><input type="number" id="bfSlots" value="3" min="0" max="99"></label>
-            <div class="art" id="bfBody" style="margin-top:11px;font-size:.68em"></div>
+            <div class="art" id="bfBody" style="margin-top:11px;white-space:pre-wrap;overflow-wrap:anywhere"></div>
           </div>
           <div id="postForm" style="display:none;margin-top:13px;padding:13px;border:1px solid var(--req);border-radius:7px;background:var(--panel2)">
-            <div style="font-size:.8em;font-weight:600;color:var(--req);margin-bottom:9px">The body you are sending</div>
+            <div style="font-weight:600;color:var(--req);margin-bottom:9px">The body you are sending</div>
             <label class="pf"><span>Course code</span><input id="pfCode" type="text" placeholder="MATH 11" maxlength="12"></label>
             <label class="pf"><span>Title</span><input id="pfTitle" type="text" placeholder="Linear Algebra" maxlength="44"></label>
             <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px">
               <label class="pf stack"><span>Units</span><input id="pfUnits" type="number" value="3" min="0" max="9"></label>
               <label class="pf stack"><span>Slots open</span><input id="pfSlots" type="number" value="12" min="0" max="99"></label>
             </div>
-            <div class="art" id="pfBody" style="margin-top:11px;font-size:.68em"></div>
+            <div class="art" id="pfBody" style="margin-top:11px;white-space:pre-wrap;overflow-wrap:anywhere"></div>
           </div>
           <div class="ctrls" style="margin-top:14px">
             <button class="btn primary" id="reqSend">Send</button>
@@ -55,7 +57,7 @@
       </div>
 
       <div class="sec" data-sec="verb-promises" data-title="What each verb promises">
-      <p>Each verb makes the two promises from the introduction: whether it is safe and whether it is idempotent. Select a verb to see what happens when you send it twice. The code line at the bottom of each card shows how a web framework (a toolkit for writing servers) such as Django checks which verb arrived. A collection is a list of items, such as <code>/courses</code>. One item is a single entry, such as <code>/courses/ITENT45</code>.</p>
+      <p>Each verb is safe or not safe, and idempotent or not idempotent. A verb is safe if it changes nothing on the server. It is idempotent if doing it twice leaves things the same as doing it once. Select a verb to see what happens when you send it twice. The code line at the bottom of each card shows how a web framework (a toolkit for writing servers) such as Django checks which verb arrived. A collection is a list of items, such as <code>/courses</code>. One item is a single entry, such as <code>/courses/ITENT45</code>.</p>
       <div class="verbs" id="verbList"></div>
       <div class="card" id="verbDetail" style="margin-bottom:22px"></div>
 
@@ -121,7 +123,7 @@
             <li>POST /updateCourseName</li>
             <li>GET /deleteStudent?id=5</li>
           </ul>
-          <p style="margin:11px 0 0;font-size:.76em;color:var(--dim);line-height:1.5">Every new action needs a new URL, so the list keeps growing. The fourth one also changes data behind a GET. A search engine crawler (a program that follows links) could delete your students.</p>
+          <p style="margin:11px 0 0;color:var(--dim);line-height:1.5">Every new action needs a new URL, so the list keeps growing. The fourth one also changes data behind a GET. A search engine crawler (a program that follows links) could delete your students.</p>
         </div>
         <div class="uc yes">
           <div class="uh">✓ Nouns in the URL, verb in the method</div>
@@ -131,13 +133,13 @@
             <li>PATCH&nbsp;&nbsp;/courses/ITENT45</li>
             <li>DELETE /students/5</li>
           </ul>
-          <p style="margin:11px 0 0;font-size:.76em;color:var(--dim);line-height:1.5">A small fixed set of verbs works with a growing set of nouns. Anyone who knows HTTP can guess your URLs without reading documentation. This predictability is most of what REST is worth.</p>
+          <p style="margin:11px 0 0;color:var(--dim);line-height:1.5">A small fixed set of verbs works with a growing set of nouns. Anyone who knows HTTP can guess your URLs without reading documentation. A predictable URL scheme is one of the main benefits of REST.</p>
         </div>
       </div>
 
 
       <div class="card-t" style="margin-top:26px">One request or fifty?</div>
-      <p>A page lists a student's enrollments and needs the course title for each one. You can fetch the list and then fetch each course in turn, or you can design an endpoint (a URL the server answers) that returns everything in one request. A round trip is one request and its reply, and "The round trip" shows what each one costs. A handler is the code on the server that answers one request.</p>
+      <p>A page lists a student's enrollments and needs the course title for each one. You can fetch the list and then fetch each course in turn, or you can design an endpoint (a URL the server answers) that returns everything in one request. A round trip is one request and its reply, and "Round trips and latency" shows what each one costs. A handler is the code on the server that answers one request.</p>
 
       <div class="srv">
         <div class="card">
@@ -169,7 +171,7 @@
 
       <div class="sec" data-sec="lazy-loading" data-title="Fetching too much">
       <div class="card-t">When fetching everything is wasteful</div>
-      <p>The last comparison assumed the page needs all fifty items. Many lists are different. A course catalog has five hundred entries and a student scrolls past a dozen. Fetching all of them in one request is efficient per item but wasteful overall, and the first screen waits for data nobody asked to see.</p>
+      <p>The previous section fetched fifty courses because the page needed all fifty. Many lists are different. A course catalog has five hundred entries and a student scrolls past a dozen. Fetching all of them in one request is efficient per item but wasteful overall, and the first screen waits for data nobody asked to see.</p>
 
       <div class="srv">
         <div class="card">
@@ -196,12 +198,12 @@
 
       <div class="whynot" style="margin-top:18px">
         <b>Choosing how much an endpoint returns</b>
-        Both designs fail for the same reason: the endpoint was designed without knowing what the page does with it. One request per item pays a round trip for each. One request for everything pays for data nobody scrolls to. In both cases the fix is to add a parameter to the endpoint. <code>GET /courses?codes=ITENT45,CSCI21</code> returns exactly the missing pieces in one trip. <code>GET /enrollments?include=course</code> lets the caller choose how much detail to receive. <code>GET /courses?limit=20&amp;offset=40</code> lets the caller ask for one slice, which is called pagination.<br><br>To decide, ask how many of the returned items will be looked at, and how soon the reader needs the first one. If every client loops over your list endpoint to fill in gaps, the endpoint returned too little. If most of what you send is never scrolled to, it returned too much.
+        Both designs fail for the same reason: the endpoint was designed without knowing what the page does with it. One request per item costs a round trip each. One request for everything moves data nobody scrolls to. In both cases the fix is to add a parameter to the endpoint. <code>GET /courses?codes=ITENT45,CSCI21</code> returns exactly the missing pieces in one trip. <code>GET /enrollments?include=course</code> lets the caller choose how much detail to receive. <code>GET /courses?limit=20&amp;offset=40</code> lets the caller ask for one slice, which is called pagination.<br><br>To decide, ask how many of the returned items will be looked at, and how soon the reader needs the first one. If every client loops over your list endpoint to fill in gaps, the endpoint returned too little. If most of what you send is never scrolled to, it returned too much.
       </div>
 
       <div class="whynot" style="margin-top:20px">
         <b>What REST asks of you</b>
-        Model your system as resources: the nouns your users talk about, such as courses, enrollments and students. Give each resource a URL. Act on resources with the standard verbs. Let the status code report the outcome. Keep each request self-contained, so the server does not need to remember the previous one. This is called being stateless. Stateless servers are easier to copy onto many machines, as "Past one box" shows.
+        Model your system as resources: the nouns your users talk about, such as courses, enrollments and students. Give each resource a URL. Act on resources with the standard verbs. Let the status code report the outcome. Keep each request self-contained, so the server does not need to remember the previous one. This is called being stateless. Stateless servers are easier to copy onto many machines, as covered later in "Load balancers and scaling".
       </div>
       </div>
     </section>

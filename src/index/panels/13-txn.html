@@ -1,8 +1,10 @@
     <section class="panel" id="p-txn">
       <div class="head">
         <h2>Transactions and two users changing the same data</h2>
-        <p>Picture the last seat in a class and two cashiers selling it at the same moment. Each cashier looks at the seat map, sees one free seat and sells it. Both customers are told the seat is theirs, and neither cashier made a mistake. A database has the same problem when two users change the same row. Everything so far assumed you were the only user. On enlistment morning you are one of nine thousand. Each user's connection to the database is called a <b style="color:var(--ink)">session</b>. Two sessions read the same row at the same moment, both decide there is room, and both write. A <b style="color:var(--ink)">transaction</b> is a group of statements that the database treats as one unit. Step through the four attempts below and watch which ones still sell the seat twice.</p>
-        <div class="ask"><b>Think first.</b> Two students both look at the seat count and both see one free seat. Both enroll. Which of them made the mistake? What would the database have to do to stop the second enrollment?</div>
+        <p>Picture the last seat in a class and two cashiers selling it at the same moment. Each cashier looks at the seat map, sees one free seat and sells it. Both customers are told the seat is theirs, and neither cashier made a mistake.</p>
+        <p>A database has the same problem when two users change the same row. Everything so far assumed you were the only user. On enlistment morning you are one of nine thousand. Each user's connection to the database is called a <b style="color:var(--ink)">session</b>. Two sessions read the same row at the same moment, both decide there is room, and both write.</p>
+        <p>A <b style="color:var(--ink)">transaction</b> is a group of statements that the database treats as one unit. Step through the four attempts below and watch which ones still sell the seat twice.</p>
+        <div class="ask"><b>Think first.</b> Two students both look at the seat count and both see one free seat. Both enroll. What would the database have to do to stop the second enrollment? Write down one idea.</div>
       </div>
 
       <div class="ctab" id="txnTab"></div>
@@ -37,8 +39,8 @@
 
       <div class="whynot" style="margin-top:20px">
         <b>A transaction does not lock the row</b>
-        Wrapping the same statements in <code>BEGIN</code> and <code>COMMIT</code> looks like a fix, and it does not fix this. Atomicity means your own statements are applied together. It does not control whether another session read the row while you were deciding. At the default isolation level of common databases such as Postgres, both sessions still see one free seat.
-        <br><br>The fix is to tell the database what you need: lock the row while you decide, or write the decision as a single statement that the database can order for you. Enlistment morning in "Case study: enlistment day" has nine thousand students doing this at once. The idempotency key in "Online payments and payment gateways" solves a similar problem for repeated requests that arrive over HTTP.
+        Wrapping the same statements in <code>BEGIN</code> and <code>COMMIT</code> looks like a fix, and it does not fix this. Atomicity means your own statements are applied together. It does not control whether another session read the row while you were deciding. At the default isolation level of Postgres, both sessions still see one free seat.
+        <br><br>The fix is to tell the database what you need: lock the row while you decide, or write the decision as a single statement that the database can order for you. Enlistment morning, covered later in "Case study: enlistment", has nine thousand students doing this at once. The idempotency key in "Payments and gateways" solves a similar problem for repeated requests that arrive over HTTP.
       </div>
     </section>
 

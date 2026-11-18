@@ -8,7 +8,7 @@
    "stem": "You ask a model for \"a function to enroll a student.\" Then you add the sentence \"Be careful and think hard.\" Why does this sentence change so little?",
    "options": [
     {
-     "text": "It adds no fact that rules out any of the likely answers, so the range of answers stays about the same.",
+     "text": "It adds no fact that rules out likely answers, so the range of answers stays the same.",
      "correct": true,
      "feedback": "A constraint helps when it removes answers. \"Be careful\" describes no answer, so every answer that was possible is still possible."
     },
@@ -65,22 +65,22 @@
    "stem": "You switch on \"Use Django, not raw SQL.\" The most likely answer is still wrong. Why?",
    "options": [
     {
-     "text": "The constraint removes only the answers written in other tools. A check-then-create answer in Django is still possible.",
+     "text": "It only removes answers written in other tools, so check-then-create code in Django remains.",
      "correct": true,
      "feedback": "Each constraint removes only what it describes. Naming the framework says nothing about two requests overlapping."
     },
     {
-     "text": "The model did not read the constraint.",
+     "text": "The model did not read the constraint, so every answer is still possible.",
      "correct": false,
      "feedback": "The constraint worked. The answers that used raw SQL and SQLAlchemy are gone from the bars."
     },
     {
-     "text": "Django cannot handle two students clicking at once.",
+     "text": "Django cannot handle two students clicking at once, so no Django answer is safe.",
      "correct": false,
      "feedback": "Django can. The unsafe pattern is in how the code is written, and safe Django answers still appear in the list."
     },
     {
-     "text": "A constraint only works when it is added last.",
+     "text": "A constraint only works when it is added last, and this one was added first.",
      "correct": false,
      "feedback": "Order does not matter. The set of constraints you have turned on decides which answers remain."
     }
@@ -93,22 +93,22 @@
    "stem": "Your capstone has a checkout page. Two customers can buy the last item at the same time. Which sentence added to your prompt most improves the chance of correct code?",
    "options": [
     {
-     "text": "Two requests can arrive at the same instant. It must still sell only one item.",
+     "text": "Two requests can arrive at once, and only one may buy the last item.",
      "correct": true,
      "feedback": "This states a fact the model could not have known. It rules out every check-then-write answer."
     },
     {
-     "text": "Make sure the code is correct.",
+     "text": "Make sure the code is correct and handles every case.",
      "correct": false,
      "feedback": "This names no fact and rules out no answer."
     },
     {
-     "text": "Write the code as fast as you can.",
+     "text": "Write the code as fast as you can and keep it simple.",
      "correct": false,
      "feedback": "Speed is not the problem. This adds no information about the situation."
     },
     {
-     "text": "Use short variable names.",
+     "text": "Use short variable names and add a comment for each step.",
      "correct": false,
      "feedback": "Style rules can help in other ways, but they do not affect whether two requests collide."
     }

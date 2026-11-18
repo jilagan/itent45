@@ -1,8 +1,10 @@
     <section class="panel" id="p-card">
       <div class="head">
         <h2>Relationships: one-to-one, one-to-many, many-to-many</h2>
-        <p>On a class list, one student can take several courses, and every course has several students on its list. The number of items that can sit on each side of a link between two entities is called <b style="color:var(--ink)">cardinality</b>. There are three kinds: one-to-one, one-to-many and many-to-many. Each kind produces a different set of tables, where a table is a grid of rows and columns that holds one entity, like one sheet of a spreadsheet. If you choose the wrong kind on the diagram, you find out later, when somebody needs a second value in a place that allows only one.</p>
-        <div class="ask"><b>Think first.</b> Answer yes or no to each question. Can one student take more than one course? Can one course have more than one student? Sketch the tables you would need, then open the tabs below and compare.</div>
+        <p>On a class list, one student can take several courses, and every course has several students on its list.</p>
+        <p>The number of items that can sit on each side of a link between two entities is called <b style="color:var(--ink)">cardinality</b>. There are three kinds: one-to-one, one-to-many and many-to-many.</p>
+        <p>Each kind produces a different set of tables, where a table is a grid of rows and columns that holds one entity, like one sheet of a spreadsheet. If you choose the wrong kind on the diagram, you find out later, when somebody needs a second value in a place that allows only one.</p>
+        <div class="ask"><b>Think first.</b> Suppose each student has exactly one student ID card, and each course has many students. How would you store these two facts in tables? Sketch your tables, then open the tabs below and compare.</div>
       </div>
 
       <div class="ctab" id="cardTab"></div>
@@ -21,7 +23,7 @@
 
       <div class="whynot" style="margin-top:20px">
         <b>Why many-to-many needs a third table</b>
-        The extra table in a many-to-many relationship can look like paperwork that the database demands. It has a real purpose. It is the only place where a date, a status or a grade can be stored, because those facts describe the pairing and belong to neither side. "Entities, attributes and instances" treats Enrollment as an entity for the same reason. A many-to-many link on a diagram is a sign that a table is missing.
+        The extra table in a many-to-many relationship is the only place where a date, a status or a grade can be stored, because those facts describe the pairing and belong to neither side. "Entities and attributes" treats Enrollment as an entity for the same reason. A many-to-many link on a diagram is a sign that a table is missing.
       </div>
     </section>
 

@@ -1,8 +1,9 @@
     <section class="panel" id="p-deep">
       <div class="head">
         <h2>Neural networks: combining several lines</h2>
-        <p>Suppose a scholarship committee has several members. Each member applies one simple cut-off, such as at least 10 hours of study a week or at least 70 percent attendance. One cut-off is crude. The committee accepts a student only when every member agrees, and together the cut-offs can describe a shape that no single cut-off can. A <b style="color:var(--ink)">neural network</b> works in a similar way. Each simple cut is called a <b style="color:var(--ink)">unit</b>, and later units combine the answers of earlier ones. In a real network, the cuts are slanted lines found by training. In this panel the combining rule is fixed: the output says "stays" only when every unit agrees.</p>
-        <p style="margin-top:11px">The previous panel found one line, and it worked because passing really does become more likely with more hours and better attendance. Not every question has that shape. This panel uses a question that does not: who drops the course. Students drop when they are barely engaged, and they also drop when they are carrying far too much. The students in the middle stay.</p>
+        <p>Suppose a scholarship committee has several members. Each member applies one simple cut-off, such as at least 10 hours of study a week or at least 70 percent attendance. One cut-off is crude. The committee accepts a student only when every member agrees, and together the cut-offs can describe a shape that no single cut-off can.</p>
+        <p style="margin-top:11px">A <b style="color:var(--ink)">neural network</b> works in a similar way. Each simple cut is called a <b style="color:var(--ink)">unit</b>, and later units combine the answers of earlier ones. In a real network the cuts are slanted lines found by training. In this panel the combining rule is fixed: the output says "stays" only when every unit agrees.</p>
+        <p style="margin-top:11px">"How training works" found one line, and it worked because passing becomes more likely with more hours and better attendance. Not every question has that shape. This panel uses one that does not: who drops the course. Students drop when they are barely engaged, and they also drop when they carry far too much. The students in the middle stay.</p>
         <div class="ask"><b>Think first.</b> Picture a plot with hours studied across the bottom and other commitments up the side. The students who stay are in the middle, and the students who drop surround them. Could one straight line put every student who stays on one side and every student who drops on the other? If you could use several straight lines and a rule for combining them, how would you place them?</div>
       </div>
 
@@ -33,7 +34,7 @@
               <button class="tg" id="tgAct" aria-pressed="true"><span class="dot"></span>Keep the nonlinearity</button>
             </div>
             <div class="rtt-note" style="margin-top:14px">
-              Each unit is one straight line, like the line in the previous panel. On its own, a unit can only split the plot into two sides.
+              Each unit is one straight line, like the line in "How training works". On its own, a unit can only split the plot into two sides.
               <br><br>The next layer takes the units' answers and combines them. Move the slider up and watch a curved shape appear from pieces that are all straight.
               <br><br>The nonlinearity is the step inside each unit that turns its number into a clear answer to the question "which side of my line is this student on?". The second button switches it off so you can see what it does.
             </div>
@@ -50,13 +51,13 @@
         <div class="whynot" style="margin-top:20px">
           <b>The diagram and the plot</b>
           Most people meet neural networks as a diagram of circles and arrows, and many never see what the network does. The diagram shows the <b style="color:var(--ink)">wiring</b>: which number is multiplied by which weight and passed on to where. A weight is a number that sets how strongly one input counts.
-          <br><br>The plot shows the <b style="color:var(--ink)">effect</b>: what that wiring does to the space of possible students. One circle in the middle row is one line on the plot. Four circles make four lines. The weights on the two arrows entering a circle set that line's angle, and its bias sets how far from the center it sits. That is three numbers for each unit, as in "Training: adjusting a model to reduce its errors".
+          <br><br>The plot shows the <b style="color:var(--ink)">effect</b>: what that wiring does to the space of possible students. One circle in the middle row is one line on the plot. Four circles make four lines. The weights on the two arrows entering a circle set that line's angle, and its bias sets how far from the center it sits. That is three numbers for each unit, as in "How training works".
           <br><br>Both pictures are correct. The diagram shows what is connected, and the plot shows what those connections produce. Seeing only the diagram can make a network look more mysterious than it is.
         </div>
 
         <div class="whynot" style="margin-top:20px">
           <b>Where the terms come from</b>
-          One line fitted to data is logistic regression, which is what the last two panels covered. Once you use several lines and combine their answers, you have <b style="color:var(--ink)">a neural network with one hidden layer</b>.
+          One line fitted to data is logistic regression, which is what "Training and test data" and "How training works" covered. Once you use several lines and combine their answers, you have <b style="color:var(--ink)">a neural network with one hidden layer</b>.
           <br><br>The vocabulary maps onto what is on screen. Each line is a <b style="color:var(--res)">unit</b>, sometimes called a neuron. The set of units is a <b style="color:var(--res)">layer</b>. The step that takes their answers and produces one verdict is the <b style="color:var(--res)">output unit</b>, and here it says <em>stays</em> only when every line agrees.
           <br><br>The layer is called hidden because you never see what its units decided. You gave the network two numbers and read one answer. Whatever the units settled on in between is not shown to you, and nobody chose it by hand.
         </div>
@@ -76,7 +77,7 @@
         <div class="whynot" style="margin-top:16px">
           <b>The cost: nobody can say what each unit means</b>
           You no longer know what the features are. The few numbers on this screen can still be read. A real model has billions of numbers, and no single one of them means anything on its own. So a model can be excellent and impossible to explain at the same time, and when it goes wrong there is often nothing to point at.
-          <br><br>Keep this in mind for the panel "Word embeddings: how words get positions", which covers where meaning comes from. The same property that lets a model find features nobody named also lets it pick up patterns nobody intended.
+          <br><br>Keep this in mind for the question of where meaning comes from, covered later in "Word embeddings". The same property that lets a model find features nobody named also lets it pick up patterns nobody intended.
         </div>
       </div>
     </section>

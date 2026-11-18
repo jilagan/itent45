@@ -2,15 +2,9 @@
    mobile contents button, embed mode. Loaded after style.css and theme.css.
    Rules wrapped in :where() are fallbacks that any rule in theme.css overrides. */
 
-/* ---------- instructor-only content ---------- */
-:where(body .instructor, body .listen){display:none}
-/* the html element carries the class too, so it must stay visible */
-html.instructor{display:block}
-:where(html.instructor body .instructor, html.instructor body .listen){display:block}
-
 /* ---------- section tabs ---------- */
 .sectabs{
-  display:flex;flex-wrap:wrap;gap:0 4px;margin:0 0 22px;
+  position:relative;display:flex;flex-wrap:wrap;gap:0 4px;margin:0 0 22px;
   border-bottom:1px solid var(--line,#d8dce3);
 }
 .sectab{
@@ -64,7 +58,7 @@ html.instructor{display:block}
 .cyu-opt:hover{border-color:var(--res,#1f5fbf)}
 .cyu-opt input{width:20px;height:20px;margin:2px 0 0;accent-color:var(--res,#1f5fbf)}
 .cyu-opt:focus-within{outline:2px solid var(--res,#1f5fbf);outline-offset:2px}
-.cyu-mark{grid-column:2;font-size:.92em;font-weight:600}
+.cyu-mark{grid-column:2;font-size:.92em;font-weight:600;overflow-wrap:anywhere}
 .cyu-mark:empty{display:none}
 .cyu-opt.right{border-color:var(--res,#1f5fbf);background:color-mix(in srgb,var(--res,#1f5fbf) 8%,transparent)}
 .cyu-opt.right .cyu-mark{color:var(--res,#1f5fbf)}
@@ -113,7 +107,6 @@ html.instructor{display:block}
 }
 @media (max-width:820px){
   :where(.navtoggle){display:inline-flex;align-items:center}
-  .sectab{flex:1 1 auto}
   .secbtn{max-width:none;flex:1}
   .secpager{flex-direction:column}
   .secbtn.secnext{text-align:left;align-items:flex-start}

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Under the Hood, What actually happens when you load a page</title>
+<title>Under the Hood, What happens when you load a page</title>
 <style>
 /*@@STYLE@@*/
 </style>
@@ -16,41 +16,41 @@
       <div class="kicker">ITENT 45 · Module 1</div>
       <h1>Under the Hood</h1>
       <button class="navtoggle" type="button" aria-expanded="false" aria-controls="nav">Contents</button>
-      <div class="sub">What actually happens when you load a page</div>
+      <div class="sub">What happens when you load a page</div>
       <div class="org">BS Information Technology Entrepreneurship · Ateneo de Manila University</div>
     </div>
     <nav class="nav" role="tablist" id="nav">
       <div class="navgrp">Module 1 · Anatomy</div>
-      <button role="tab" data-p="basics"  aria-selected="false"><span class="num">00</span><span class="lbl">What is a server?</span></button>
-      <button role="tab" data-p="tiers"   aria-selected="true"><span class="num">01</span><span class="lbl">What a web app is</span></button>
-      <button role="tab" data-p="layers"  aria-selected="false"><span class="num">02</span><span class="lbl">Layers &amp; envelopes</span></button>
-      <button role="tab" data-p="journey" aria-selected="false"><span class="num">03</span><span class="lbl">The round trip</span></button>
-      <button role="tab" data-p="bytes"   aria-selected="false"><span class="num">04</span><span class="lbl">The actual bytes</span></button>
-      <button role="tab" data-p="rest"    aria-selected="false"><span class="num">05</span><span class="lbl">Verbs &amp; REST</span></button>
+      <button role="tab" data-p="basics"  aria-selected="false"><span class="num">00</span><span class="lbl">What a server is</span></button>
+      <button role="tab" data-p="tiers"   aria-selected="true"><span class="num">01</span><span class="lbl">Three tiers</span></button>
+      <button role="tab" data-p="layers"  aria-selected="false"><span class="num">02</span><span class="lbl">Protocol layers</span></button>
+      <button role="tab" data-p="journey" aria-selected="false"><span class="num">03</span><span class="lbl">Round trips and latency</span></button>
+      <button role="tab" data-p="bytes"   aria-selected="false"><span class="num">04</span><span class="lbl">HTTP messages</span></button>
+      <button role="tab" data-p="rest"    aria-selected="false"><span class="num">05</span><span class="lbl">HTTP verbs and status codes</span></button>
       <button role="tab" data-p="clients" aria-selected="false"><span class="num">06</span><span class="lbl">One API, many clients</span></button>
-      <button role="tab" data-p="render"  aria-selected="false"><span class="num">07</span><span class="lbl">Who builds the page</span></button>
-      <button role="tab" data-p="pay"     aria-selected="false"><span class="num">08</span><span class="lbl">Checkout &amp; payments</span></button>
+      <button role="tab" data-p="render"  aria-selected="false"><span class="num">07</span><span class="lbl">Server or browser rendering</span></button>
+      <button role="tab" data-p="pay"     aria-selected="false"><span class="num">08</span><span class="lbl">Payments and gateways</span></button>
       <div class="navgrp">Module 5 · Data</div>
-      <button role="tab" data-p="entity"  aria-selected="false"><span class="num">09</span><span class="lbl">What the words mean</span></button>
+      <button role="tab" data-p="entity"  aria-selected="false"><span class="num">09</span><span class="lbl">Entities and attributes</span></button>
       <button role="tab" data-p="card"    aria-selected="false"><span class="num">10</span><span class="lbl">Relationships</span></button>
-      <button role="tab" data-p="rea"     aria-selected="false"><span class="num">11</span><span class="lbl">A pattern that repeats</span></button>
-      <button role="tab" data-p="sql"     aria-selected="false"><span class="num">12</span><span class="lbl">Talking to it directly</span></button>
-      <button role="tab" data-p="txn"     aria-selected="false"><span class="num">13</span><span class="lbl">Two at the same time</span></button>
-      <button role="tab" data-p="norm" aria-selected="false"><span class="num">14</span><span class="lbl">One table or many?</span></button>
-      <button role="tab" data-p="query" aria-selected="false"><span class="num">15</span><span class="lbl">What one query costs</span></button>
-      <button role="tab" data-p="shape" aria-selected="false"><span class="num">16</span><span class="lbl">Rows or documents?</span></button>
+      <button role="tab" data-p="rea"     aria-selected="false"><span class="num">11</span><span class="lbl">The REA pattern</span></button>
+      <button role="tab" data-p="sql"     aria-selected="false"><span class="num">12</span><span class="lbl">SQL basics</span></button>
+      <button role="tab" data-p="txn"     aria-selected="false"><span class="num">13</span><span class="lbl">Transactions</span></button>
+      <button role="tab" data-p="norm" aria-selected="false"><span class="num">14</span><span class="lbl">Normalization</span></button>
+      <button role="tab" data-p="query" aria-selected="false"><span class="num">15</span><span class="lbl">The N+1 query problem</span></button>
+      <button role="tab" data-p="shape" aria-selected="false"><span class="num">16</span><span class="lbl">Relational or document</span></button>
       <div class="navgrp">Module 4 · Capacity &amp; cloud</div>
-      <button role="tab" data-p="mem"     aria-selected="false"><span class="num">17</span><span class="lbl">What a server holds</span></button>
-      <button role="tab" data-p="server"  aria-selected="false"><span class="num">18</span><span class="lbl">Inside the server</span></button>
-      <button role="tab" data-p="scale"   aria-selected="false"><span class="num">19</span><span class="lbl">Past one box</span></button>
-      <button role="tab" data-p="enlist"   aria-selected="false"><span class="num">20</span><span class="lbl">Case: enlistment</span></button>
-      <button role="tab" data-p="vm"      aria-selected="false"><span class="num">21</span><span class="lbl">Whose computer is it?</span></button>
-      <button role="tab" data-p="cost"    aria-selected="false"><span class="num">22</span><span class="lbl">Paying for it</span></button>
-      <button role="tab" data-p="region"  aria-selected="false"><span class="num">23</span><span class="lbl">Regions &amp; failover</span></button>
+      <button role="tab" data-p="mem"     aria-selected="false"><span class="num">17</span><span class="lbl">Server memory</span></button>
+      <button role="tab" data-p="server"  aria-selected="false"><span class="num">18</span><span class="lbl">Server capacity</span></button>
+      <button role="tab" data-p="scale"   aria-selected="false"><span class="num">19</span><span class="lbl">Load balancers and scaling</span></button>
+      <button role="tab" data-p="enlist"   aria-selected="false"><span class="num">20</span><span class="lbl">Case study: enlistment</span></button>
+      <button role="tab" data-p="vm"      aria-selected="false"><span class="num">21</span><span class="lbl">Virtual machines and the cloud</span></button>
+      <button role="tab" data-p="cost"    aria-selected="false"><span class="num">22</span><span class="lbl">CapEx and OpEx</span></button>
+      <button role="tab" data-p="region"  aria-selected="false"><span class="num">23</span><span class="lbl">Regions and failover</span></button>
       <div class="navgrp">Module 6 · Architecture</div>
-      <button role="tab" data-p="split"   aria-selected="false"><span class="num">24</span><span class="lbl">One app or many?</span></button>
+      <button role="tab" data-p="split"   aria-selected="false"><span class="num">24</span><span class="lbl">Monolith or services</span></button>
       <div class="navgrp">Work</div>
-      <button role="tab" data-p="break"   aria-selected="false"><span class="num">25</span><span class="lbl">Breakouts</span></button>
+      <button role="tab" data-p="break"   aria-selected="false"><span class="num">25</span><span class="lbl">Group exercises</span></button>
     </nav>
     <a class="repolink" href="machine.html">
       Next: Module 2

@@ -5,7 +5,7 @@ const PARTIES=[
  {id:"pApi", n:"Party 2", h:"Your API", r:"your server process",
   p:"Holds your order data and your secret key.", card:"never sees the card", cls:"see-no"},
  {id:"pGw", n:"Party 3", h:"Payment gateway", r:"PayMongo, Stripe, Xendit",
-  p:"Carrying card data safely is their whole business.", card:"sees the card", cls:"see-yes"},
+  p:"The gateway is set up to handle card data safely.", card:"sees the card", cls:"see-yes"},
  {id:"pBank", n:"Party 4", h:"Bank / network", r:"outside your system",
   p:"Where money moves. Minutes to days.", card:"sees the card", cls:"see-yes"}
 ];
@@ -19,7 +19,7 @@ PARTIES.forEach(p=>{
 
 const PAYFLOW=[
  {k:"browser", hop:"Browser → your API", dir:"out", h:"The shopper loads their cart",
-  x:"This is an ordinary request, like the ones in \"The actual bytes\". Nothing about payment yet.",
+  x:"This is an ordinary request, like the ones in \"HTTP messages\". Nothing about payment yet.",
   l:"Nothing new in this step",
   a:`<span class="kw">GET</span> /api/cart HTTP/1.1
 Cookie: sessionid=8f2a...
@@ -52,7 +52,7 @@ Content-Type: application/json
 {<span class="s">"token"</span>: <span class="s">"tok_1a2b3c"</span>, <span class="s">"cart_id"</span>: 5512}`},
 
  {k:"gateway", hop:"Your API → gateway", dir:"out", h:"Your server becomes the client",
-  x:"Your API now does what the browser did in \"The actual bytes\": it builds a request, sets headers and waits for a response. The protocol and verbs are the same. The secret key never leaves your server.",
+  x:"Your API now does what the browser did in \"HTTP messages\": it builds a request, sets headers and waits for a response. The protocol and verbs are the same. The secret key never leaves your server.",
   l:"Sent from your server code",
   a:`<span class="kw">POST</span> https://api.gateway.com/v1/charges
 Authorization: Bearer <span class="s">sk_live_...</span>   <span class="c">// secret key, server only</span>
@@ -67,7 +67,7 @@ Authorization: Bearer <span class="s">sk_live_...</span>   <span class="c">// se
 {<span class="s">"id"</span>: <span class="s">"ch_9f8e7d"</span>, <span class="s">"status"</span>: <span class="s">"pending"</span>, <span class="s">"amount"</span>: 129900}`},
 
  {k:"browser", hop:"Your API → browser", dir:"in", h:"You answer the shopper",
-  x:"You created an order, so you return 201 with a Location header, as described in \"HTTP verbs, URLs and status codes (REST)\". The status says awaiting payment, which is accurate.",
+  x:"You created an order, so you return 201 with a Location header, as described in \"HTTP verbs and status codes\". The status says awaiting payment, which is accurate.",
   l:"Back to the shopper",
   a:`<span class="kw">201 Created</span>
 Location: /api/orders/8891
@@ -75,7 +75,7 @@ Location: /api/orders/8891
 {<span class="s">"id"</span>: 8891, <span class="s">"status"</span>: <span class="s">"awaiting_payment"</span>}`},
 
  {k:"bank", hop:"Gateway → bank (outside your system)", dir:"out", h:"Settlement happens out of your sight",
-  x:"The gateway now moves real money through the banking system. This is why step 6 said pending: cards are authorized in about a second, but e-wallets and over-the-counter payments can take minutes or hours, and none of it is under your control.",
+  x:"The gateway now moves real money through the banking system. Step 6 said pending because cards are authorized in about a second, while e-wallets and over-the-counter payments can take minutes or hours, and none of it is under your control.",
   l:"You cannot see this part",
   a:`<span class="c">gateway → acquiring bank → card network → issuing bank</span>\n<span class="c">Seconds for cards. Minutes to days for everything else.</span>\n\n<span class="c">Your server is not waiting for this. It already replied.</span>`},
  {k:"server", hop:"Gateway → your API (roles reversed)", dir:"out", h:"The gateway calls your server",
@@ -115,9 +115,12 @@ const PAY_SEG = [
 function layoutBypass(){
   const flow=$("#pflow"), bp=$("#bypass");
   if(!flow||!bp) return;
+  const stackedNow=pflowStacked();
+  // stacked, each lane holds two rails and two labels, so let it grow to fit them
+  $$("#pflow .plane").forEach(pl=>{ pl.style.height=stackedNow?"auto":""; pl.style.gap=stackedNow?"6px":""; pl.style.padding=stackedNow?"8px 5px":""; });
   const fb=flow.getBoundingClientRect();
   const a=$("#pBrowser").getBoundingClientRect(), b=$("#pGw").getBoundingClientRect();
-  if(pflowStacked()){ bp.style.display="none"; return; }
+  if(stackedNow){ bp.style.display="none"; return; }
   bp.style.display="block";
   const x1=a.left-fb.left+a.width/2, x2=b.left-fb.left+b.width/2;
   bp.style.left=x1+"px"; bp.style.width=(x2-x1)+"px";
@@ -134,12 +137,15 @@ function placePayBall(i){
   const fb=flow.getBoundingClientRect();
   const seg=PAY_SEG[i];
   const target=$("#"+(PAY_AT[i]||"pApi")).getBoundingClientRect();
-  ball.style.left=(target.left-fb.left+target.width/2)+"px";
   if(pflowStacked()){
-    // stacked: ride the right edge of whichever box currently holds the payload
-    ball.style.left=(target.right-fb.left-14)+"px";
-    ball.style.top =(target.top-fb.top+target.height/2)+"px";
-  } else if(seg && seg.lane==="X"){          // riding the bypass
+    // stacked layout has no horizontal rail for the ball; the lit box shows where the payload is
+    ball.style.display="none";
+    ball.classList.toggle("res", !!(seg && seg.dir==="back"));
+    return;
+  }
+  ball.style.display="";
+  ball.style.left=(target.left-fb.left+target.width/2)+"px";
+  if(seg && seg.lane==="X"){          // riding the bypass
     ball.style.top=(parseFloat($("#bypass").style.top)||0)+"px";
   } else {
     const back = seg && seg.dir==="back";
@@ -195,15 +201,15 @@ $("#pyPlay").onclick=e=>{
 renderPay();
 
 /* ---- the same charge request, three ways ---- */
-const CHG_DATA=37;
+const CHG_DATA=38;
 const WHYF=[
- {id:"json", n:"JSON", bytes:91,
+ {id:"json", n:"JSON", bytes:92,
   body:`{<span class="s">"amount"</span>:129900,<span class="s">"currency"</span>:<span class="s">"PHP"</span>,
  <span class="s">"source"</span>:<span class="s">"tok_1a2b3c"</span>,
- <span class="s">"description"</span>:<span class="s">"ITENT 45 enrolment"</span>}`,
+ <span class="s">"description"</span>:<span class="s">"ITENT 45 enrollment"</span>}`,
   cls:"ok",
-  v:`<b>91 bytes, and it already matches the data structures that programs use</b>Python code reads <code>data["amount"]</code> and Node code reads <code>data.amount</code>, and neither side has to convert it first. "Layers &amp; envelopes" showed that a reply this size travels with 54 bytes of headers, so the packaging already costs more than the message. Making the message six times larger would be a real cost.`},
- {id:"soap", n:"SOAP / XML", bytes:557,
+  v:`<b>92 bytes, and it already matches the data structures that programs use</b>Python code reads <code>data["amount"]</code> and Node code reads <code>data.amount</code>, and neither side has to convert it first. The section "The layers of a message" in "Protocol layers" showed about 121 bytes of headers (HTTP, TLS, TCP, IP and Ethernet) around a short message, so the headers already outweigh this 92-byte message. Making the message six times larger would be a real cost.`},
+ {id:"soap", n:"SOAP / XML", bytes:558,
   body:`<span class="d">&lt;?xml version="1.0" encoding="UTF-8"?&gt;</span>
 <span class="d">&lt;soap:Envelope xmlns:soap=</span><span class="s">"http://schemas.xmlsoap.org/soap/envelope/"</span>
 <span class="d">               xmlns:pay=</span><span class="s">"https://gateway.example.com/schema/payments/v2"</span><span class="d">&gt;</span>
@@ -214,13 +220,13 @@ const WHYF=[
     <span class="d">&lt;pay:CreateChargeRequest&gt;</span>
       <span class="d">&lt;pay:Amount currency=</span><span class="s">"PHP"</span><span class="d">&gt;</span>129900<span class="d">&lt;/pay:Amount&gt;</span>
       <span class="d">&lt;pay:Source&gt;</span>tok_1a2b3c<span class="d">&lt;/pay:Source&gt;</span>
-      <span class="d">&lt;pay:Description&gt;</span>ITENT 45 enrolment<span class="d">&lt;/pay:Description&gt;</span>
+      <span class="d">&lt;pay:Description&gt;</span>ITENT 45 enrollment<span class="d">&lt;/pay:Description&gt;</span>
     <span class="d">&lt;/pay:CreateChargeRequest&gt;</span>
   <span class="d">&lt;/soap:Body&gt;</span>
 <span class="d">&lt;/soap:Envelope&gt;</span>`,
   cls:"warn",
-  v:`<b>557 bytes, six times the size of JSON</b>Only 7% of it is the four values you meant to send. The rest is namespaces, an envelope and a header block. In return you get a contract that a machine can enforce: a schema can reject a negative amount or an invalid currency before your code runs, and the document can be signed as a document. Between two banks that is a fair trade. For a mobile app fetching a course list it is six times the data for no benefit.`},
- {id:"html", n:"HTML", bytes:318,
+  v:`<b>558 bytes, six times the size of JSON</b>Only 7% of it is the four values you meant to send. The rest is namespaces, an envelope and a header block. In return you get a contract that a machine can enforce: a schema can reject a negative amount or an invalid currency before your code runs, and the document can be signed as a document. Between two banks that is a fair trade. For a mobile app fetching a course list it is six times the data for no benefit.`},
+ {id:"html", n:"HTML", bytes:248,
   body:`<span class="d">&lt;form method=</span><span class="s">"post"</span><span class="d"> action=</span><span class="s">"/charges"</span><span class="d">&gt;</span>
   <span class="d">&lt;input type=</span><span class="s">"hidden"</span><span class="d"> name=</span><span class="s">"amount"</span><span class="d"> value=</span><span class="s">"129900"</span><span class="d">&gt;</span>
   <span class="d">&lt;input type=</span><span class="s">"hidden"</span><span class="d"> name=</span><span class="s">"currency"</span><span class="d"> value=</span><span class="s">"PHP"</span><span class="d">&gt;</span>
@@ -228,7 +234,7 @@ const WHYF=[
   <span class="d">&lt;button type=</span><span class="s">"submit"</span><span class="d">&gt;</span>Charge<span class="d">&lt;/button&gt;</span>
 <span class="d">&lt;/form&gt;</span>`,
   cls:"bad",
-  v:`<b>318 bytes, and the wrong kind of message</b>HTML does not state facts. It describes a form that a person could click, so the gateway would have to read the markup and guess which fields matter. Now consider step 9, where the gateway sends <em>you</em> a webhook. The gateway has never seen your interface, so it has nothing to display. The only thing it can send is data. The server-rendered example in "One API for the web, iOS and Android" is the same mistake, made by a system that worked for twenty years because it only ever had one client.`}
+  v:`<b>248 bytes, and the wrong kind of message</b>HTML does not state facts. It describes a form that a person could click, so the gateway would have to read the markup and guess which fields matter. Now consider step 9, where the gateway sends <em>you</em> a webhook. The gateway has never seen your interface, so it has nothing to display. The only thing it can send is data. The server-rendered example in "One API, many clients" is the same mistake, made by a system that worked for twenty years because it only ever had one client.`}
 ];
 let whySel="json";
 function renderWhy(){
@@ -262,7 +268,7 @@ function renderCharges(){
       <span class="cid">${a.id}</span>
       <span>${a.reused?"same charge":"₱"+PRICE.toLocaleString()+" charged"}</span>
     </div>`).join("")
-    : `<div style="font-size:.78em;color:var(--faint);padding:10px 2px">No attempts yet. Press Pay.</div>`;
+    : `<div style="color:var(--faint);padding:10px 2px">No attempts yet. Press Pay.</div>`;
   const charged = attempts.filter(a=>!a.reused).length*PRICE;
   $("#chgAmt").textContent="₱"+charged.toLocaleString();
   const t=$("#chgTotal");

@@ -139,6 +139,11 @@ function showPanel(id, sec, o){
     S.el.classList.toggle("on",on);
     if(S.tab){ S.tab.setAttribute("aria-selected",String(on)); S.tab.tabIndex = on?0:-1; }
   });
+  if(P.tabs && P.secs[idx] && P.secs[idx].tab){
+    const st=P.tabs, tb=P.secs[idx].tab;
+    const fit=()=>{ if(st.scrollWidth>st.clientWidth) st.scrollLeft=Math.max(0,tb.offsetLeft-(st.clientWidth-tb.offsetWidth)/2); };
+    fit(); requestAnimationFrame(fit);
+  }
   HTML.classList.toggle("embed-sec", embedSec);
   P.el.classList.toggle("embed-sec", embedSec);
   P.el.classList.toggle("embed-first", embedSec && idx===0);
@@ -230,6 +235,12 @@ function shuffle(a){
   for(let i=a.length-1;i>0;i--){ const j=Math.floor(Math.random()*(i+1)); const t=a[i]; a[i]=a[j]; a[j]=t; }
   return a;
 }
+/* feedback text must not repeat the verdict: drop a leading "Correct." "Wrong." and the like */
+function cleanFb(t){
+  let s=String(t==null?"":t).trim(), r=/^(?:Correct|Right|Yes|Incorrect|Wrong|No)[.!]\s+/i;
+  while(r.test(s)) s=s.replace(r,"");
+  return s.charAt(0).toUpperCase()+s.slice(1);
+}
 function buildItem(item, onChange){
   const multi=item.type==="multi";
   const uid="cyu-"+slugOK(item.id||Math.random().toString(36).slice(2));
@@ -275,12 +286,12 @@ function buildItem(item, onChange){
       x.lab.classList.remove("right","wrong");
       if(x.inp.checked){
         x.lab.classList.add(x.o.correct?"right":"wrong");
-        x.res.textContent = x.o.correct ? "✓ Correct" : "✗ Not correct";
+        x.res.textContent = x.o.correct ? "✓ Correct" : "✗ Not quite";
       }
     });
     const verdict=el("p","cyu-verdict "+(correct?"right":"wrong"));
     verdict.appendChild(el("span","cyu-ic",correct?"✓":"✗"));
-    let vt = correct ? "Correct." : "Not quite.";
+    let vt = correct ? "Correct" : "Not quite";
     if(multi && !correct){
       if(missed && !wrongPicked) vt="Not yet. "+(missed===1?"One correct option is missing.":missed+" correct options are missing.");
       else if(wrongPicked && !missed) vt="Not yet. "+(wrongPicked===1?"One selected option is wrong.":wrongPicked+" selected options are wrong.");
@@ -291,7 +302,7 @@ function buildItem(item, onChange){
     chosen.forEach(x=>{
       const p=el("p","cyu-fb "+(x.o.correct?"right":"wrong"));
       if(multi){ const b=el("strong",null); b.appendChild(frag(x.o.text)); p.appendChild(b); p.appendChild(document.createTextNode(" ")); }
-      p.appendChild(frag(x.o.feedback||""));
+      p.appendChild(frag(cleanFb(x.o.feedback)));
       out.appendChild(p);
     });
     if(item.type==="predict" && item.try){

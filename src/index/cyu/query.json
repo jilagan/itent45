@@ -10,7 +10,7 @@
     {
      "text": "51: one for the enrollments and one for each row.",
      "correct": true,
-     "feedback": "Correct. This is the N+1 pattern: one query to fetch N rows, then N more queries."
+     "feedback": "This is the N+1 pattern: one query to fetch N rows, then N more queries."
     },
     {
      "text": "1, because the page is one request.",
@@ -37,9 +37,9 @@
    "stem": "A schedule page with 3 enrollments is fast in testing. In production it lists 200 enrollments and is slow. Which explanation fits?",
    "options": [
     {
-     "text": "The number of queries grows with the number of rows: 4 queries in testing and 201 in production.",
+     "text": "Queries grow with the rows: 4 in testing and 201 in production.",
      "correct": true,
-     "feedback": "Correct. The loop runs one query for each row, so a larger table means many more queries."
+     "feedback": "The loop runs one query for each row, so a larger table means many more queries."
     },
     {
      "text": "The production database is always slower than a development database.",
@@ -47,12 +47,12 @@
      "feedback": "A slower database could add some delay. The gap here comes from 50 times more queries."
     },
     {
-     "text": "The code is different in production.",
+     "text": "The production server runs different code from the test server.",
      "correct": false,
      "feedback": "The code is the same. The data is bigger."
     },
     {
-     "text": "Pages with more text always load more slowly.",
+     "text": "Pages that list more text always load more slowly in production.",
      "correct": false,
      "feedback": "The text is short. The cost comes from the queries."
     }
@@ -65,22 +65,22 @@
    "stem": "Which change fixes the N+1 problem on the schedule page?",
    "options": [
     {
-     "text": "Fetch each enrollment together with its course in the same query, with a join or `select_related`.",
+     "text": "Fetch each enrollment with its course in one query (join or `select_related`).",
      "correct": true,
-     "feedback": "Correct. One query returns everything the template needs, so the loop makes no extra queries."
+     "feedback": "One query returns everything the template needs, so the loop makes no extra queries."
     },
     {
-     "text": "Add more workers to the server.",
+     "text": "Add more workers to the server so more pages can be built at once.",
      "correct": false,
      "feedback": "More workers raise the number of requests the server can handle at once. Each request still makes 51 queries."
     },
     {
-     "text": "Limit the page to 10 rows and keep the same code.",
+     "text": "Limit the page to 10 rows and keep the same loop and template code.",
      "correct": false,
      "feedback": "This reduces the number of queries but keeps the pattern. A page of 10 rows still makes 11 queries."
     },
     {
-     "text": "Move the template code into the view.",
+     "text": "Move the template code into the view so the loop runs earlier.",
      "correct": false,
      "feedback": "The queries come from asking for the course title row by row. They stay the same wherever the code is."
     }

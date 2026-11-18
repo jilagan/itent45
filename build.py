@@ -32,15 +32,16 @@ def embed_index(out_dir):
         rows.append(f"<h2>{html.escape(label)}</h2>")
         rows.append("<table><thead><tr><th>Panel or section</th><th>Embed URL</th><th>Snippet</th></tr></thead><tbody>")
         def row(title,url,h,kind):
+            url=url.replace(SITE,"@@BASE@@")
             snip=(f'<iframe src="{url}" width="100%" height="{h}" style="border:0" loading="lazy" title="{html.escape(title,quote=True)}"></iframe>')
-            rows.append(f'<tr class="{kind}"><td>{html.escape(title)}</td><td><a href="{html.escape(url,quote=True)}" target="_blank" rel="noopener">{html.escape(url.replace(SITE,""))}</a><br><small>height {h}</small></td>'
-                        f'<td><textarea readonly rows="3" aria-label="Snippet for {html.escape(title,quote=True)}">{html.escape(snip)}</textarea> <button type="button" class="cp">Copy</button></td></tr>')
+            rows.append(f'<tr class="{kind}"><td>{html.escape(title)}</td><td><a class="lnk" data-path="{html.escape(url.replace("@@BASE@@",""),quote=True)}" href="#" target="_blank" rel="noopener">{html.escape(url.replace("@@BASE@@",""))}</a><br><small>height {h}</small></td>'
+                        f'<td><textarea readonly rows="3" class="snip" data-tpl="{html.escape(snip,quote=True)}" aria-label="Snippet for {html.escape(title,quote=True)}"></textarea> <button type="button" class="cp">Copy</button></td></tr>')
         for pid,lbl in nav:
             h=files.get(pid)
             if h is None: continue
             m=re.search(r"<h2[^>]*>(.*?)</h2>",h,re.S); title=text(m.group(1)) if m else text(lbl)
             secs=[attrs(t) for t in re.findall(r'<div[^>]*class="sec"[^>]*>',h)]
-            base=f"{SITE}{page}.html?embed=1"
+            base=f"@@BASE@@{page}.html?embed=1"
             if len(secs)>=2:
                 row(title+" (whole panel, with section tabs)",f"{base}#{pid}",900,"panel")
                 for a in secs:
@@ -60,14 +61,22 @@ th{{border-top:0;border-bottom:1px solid #c4cad4}} tr.sec td:first-child{{paddin
 td:nth-child(2){{width:28%;word-break:break-all}} td:nth-child(3){{width:44%}}
 textarea{{width:100%;font:13px/1.4 ui-monospace,Menlo,Consolas,monospace;padding:6px;border:1px solid #c4cad4;border-radius:4px;resize:vertical}}
 button{{font:inherit;font-size:15px;min-height:36px;padding:4px 14px;margin-top:4px;border:1px solid #1f5fbf;background:#fff;color:#1f5fbf;border-radius:6px;cursor:pointer}}
+input{{font:inherit;width:100%;max-width:520px;padding:6px 8px;border:1px solid #c4cad4;border-radius:4px}}
 a{{color:#1f5fbf}} small{{color:#5b6270}} code{{font:14px ui-monospace,Menlo,Consolas,monospace}}
 </style></head><body>
 <h1>ITENT 45 embed index</h1>
+<p><label for="base"><b>Base URL of the published site</b></label><br><input id="base" type="url" value="{SITE}" spellcheck="false"></p>
+<p>The snippets and links below use this address and change as you edit it. The links work after the branch is published.</p>
 <p>For the instructor. Paste a snippet into the HTML view of a Canvas page. Add a plain link to the full site under each frame in case the frame is blocked.</p>
 <p>Options on any URL: <code>&amp;cyu=0</code> hides the questions, <code>&amp;video=0</code> hides the video, <code>&amp;theme=dark</code> uses the dark theme. <code>?instructor=1</code> on the full site shows the instructor notes.
 Heights for panels without sections come from the layout audit at 700 px wide. Check them against the live panel.</p>
 {''.join(rows)}
 <script>
+const baseEl=document.getElementById("base");
+function fill(){{let b=baseEl.value.trim();if(b&&!b.endsWith("/"))b+="/";
+ document.querySelectorAll(".snip").forEach(t=>t.value=t.dataset.tpl.split("@@BASE@@").join(b));
+ document.querySelectorAll(".lnk").forEach(a=>a.href=b+a.dataset.path);}}
+baseEl.addEventListener("input",fill);fill();
 document.querySelectorAll(".cp").forEach(b=>b.onclick=()=>{{const t=b.previousElementSibling;t.select();
  (navigator.clipboard?navigator.clipboard.writeText(t.value):Promise.reject()).catch(()=>document.execCommand("copy")).finally(()=>{{b.textContent="Copied";setTimeout(()=>b.textContent="Copy",1500)}});}});
 </script>

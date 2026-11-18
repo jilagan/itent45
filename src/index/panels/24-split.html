@@ -1,9 +1,10 @@
     <section class="panel" id="p-split">
       <div class="head">
         <h2>One application or many services?</h2>
-        <p>A small carinderia has one cook who prepares every dish. Any cook can handle any order, so when it gets busy you hire more identical cooks. A food court works differently. Each stall makes one kind of food and is staffed for how busy that food is, and runners carry orders between the stalls. Software has the same two designs. A <b>monolith</b> is one application that does everything. The six identical machines in "Scaling out with a load balancer" were a monolith running as several copies. <b>Microservices</b> are several smaller applications, each doing one job and sized for its own load. The runners in the food court are like the network calls between services, and each call has a cost.</p>
-        <p>Most systems should be a monolith. "Case study: enlistment day" showed one candidate for splitting: browsing the catalog and reserving a seat need opposite things from the same machine.</p>
-        <div class="ask"><b>Think first</b> One part of your application needs 400 MB of memory per worker, and every other part needs 90 MB or less. If every copy of the application must be able to do everything, how much memory does each worker need? Then multiply by the number of copies you run.</div>
+        <p>A small carinderia has one cook who prepares every dish. Any cook can handle any order, so when it gets busy you hire more identical cooks. A food court has a stall for each kind of food, each staffed for how busy that food is, and runners carry orders between the stalls.</p>
+        <p>Software has the same two designs. A <b>monolith</b> is one application that does everything. The identical machines in "Load balancers and scaling" were a monolith running as several copies. <b>Microservices</b> are several smaller applications, each doing one job and sized for its own load. The runners are like the network calls between services, and each call has a cost.</p>
+        <p>Most systems should be a monolith. "Case study: enlistment" showed one candidate for splitting: browsing the catalog and reserving a seat need opposite things from the same machine. This panel compares the memory each design needs and then lists what splitting costs.</p>
+        <div class="ask"><b>Think first.</b> One part of your application needs 400 MB of memory per worker, and every other part needs 90 MB or less. Every worker must be able to do everything, and you run 24 workers. How much memory do they need in total?</div>
       </div>
 
       <div class="sec" data-sec="memory" data-title="Memory: monolith or services">
@@ -40,7 +41,7 @@
               </div>
             </div>
             <div class="rtt-note" style="margin-top:16px">
-              Load is measured in requests per second (rps). Both columns use 4 workers per machine, as in "Server capacity: workers, queues and requests per second". A worker is one copy of the program handling one request at a time. The workers differ only in what each one must be able to do. Handler time is how long the code takes to process one request.
+              Load is measured in requests per second (rps). Both columns use 4 workers per machine, as in "Server capacity". A worker is one copy of the program handling one request at a time. The workers differ only in what each one must be able to do. Handler time is how long the code takes to process one request.
               <br><br>Drag the load down to 40 rps and see which column uses less memory. Then drag it above 800.
               <br><br><b style="color:var(--faint)">These profiles are illustrative.</b>
             </div>
@@ -55,22 +56,22 @@
           <div class="bl">
             <h5>A function call becomes a network call</h5>
             <p>A call inside one program is now a request across the network. It can be slow, it can time out, and it can fail after the other service has already done the work.</p>
-            <span class="ref">See "Why loading a page takes several round trips". The same delays now happen inside your own system.</span>
+            <span class="ref">See "Round trips and latency". The same delays now happen inside your own system.</span>
           </div>
           <div class="bl">
             <h5>Services get out of step</h5>
             <p>You cannot deploy all services at the same moment, so a change to a message must be additive: it adds a field and removes nothing. Your own services behave like old app versions that other services still depend on.</p>
-            <span class="ref">See "One API for the web, iOS and Android". Version drift now happens between your own services.</span>
+            <span class="ref">See "One API, many clients". Version drift now happens between your own services.</span>
           </div>
           <div class="bl">
             <h5>Every call needs retry rules</h5>
             <p>Each call needs a retry policy, a timeout, and an idempotency key (a unique ID that lets the receiver ignore a repeated request), so that a retry does not repeat the action. The payment gateway required the same.</p>
-            <span class="ref">See "Online payments and payment gateways". The same rules now apply to calls you wrote yourself.</span>
+            <span class="ref">See "Payments and gateways". The same rules now apply to calls you wrote yourself.</span>
           </div>
           <div class="bl">
             <h5>One failure appears in several logs</h5>
             <p>A single failure is spread across several services. To follow it, you need a shared trace ID: an identifier attached to every request so that logs from different services can be matched.</p>
-            <span class="ref">In "What an HTTP request and response look like", you followed one request at a time.</span>
+            <span class="ref">In "HTTP messages", you followed one request at a time.</span>
           </div>
         </div>
 

@@ -1,8 +1,10 @@
     <section class="panel" id="p-mem">
       <div class="head">
         <h2>How a server's memory is used</h2>
-        <p>Think of a fast-food branch with a fixed floor area. The kitchen, the freezer and the stockroom take up space before the first cashier starts work, and every cashier you add needs a counter of their own. A server has the same kind of budget. The space is its RAM (random access memory), the working memory a computer uses for the programs that are running right now. The operating system, which is the base software such as Linux or Windows, already uses some of it. So does nginx, a web server program that receives requests from browsers and hands them to your application. So does Postgres, a database program, when it runs on the same machine. What is left is for your workers. A worker is one running copy of your application that handles one request at a time, and each one uses more RAM than most students expect.</p>
-        <div class="ask"><b>Think first</b> A laptop with 8 GB of RAM already has part of it in use before you open any program. Estimate how much is in use on your laptop right now. Then estimate the same for a server with 2 GB. Check both estimates against the memory bar below.</div>
+        <p>Think of a fast-food branch with a fixed floor area. The kitchen, the freezer and the stockroom take up space before the first cashier starts work, and every cashier you add needs a counter of their own.</p>
+        <p>A server has the same kind of budget. The space is its RAM (random access memory), the working memory for programs that are running right now. The operating system, nginx (a program that passes browser requests to your application) and Postgres (a database program) use some of it before your application starts. What is left is for workers. A worker is one running copy of your application that handles one request at a time, and each one uses more RAM than most students expect.</p>
+        <p>This panel counts how many workers fit in a given amount of RAM, and then moves the database to its own machine.</p>
+        <div class="ask"><b>Think first.</b> A laptop with 8 GB of RAM already has part of it in use before you open any program. Estimate how much is in use on your laptop right now. Then estimate the same for a server with 2 GB. Check both estimates against the memory bar below.</div>
         <div class="instructor">Open Task Manager (Windows) or Activity Monitor (Mac) to show the real figure for the laptop. Students usually guess close to zero. Then ask them to compare their server estimate with the bar at the default setting.</div>
       </div>
 
@@ -54,7 +56,7 @@
             <b>How many workers fit</b><br>
             <span id="maxW" style="color:var(--res)">…</span>
             <br><br>Keep 15% of the RAM free. Memory that looks unused holds the disk cache, which is recently read files kept in RAM for fast access. When no RAM is left, the system starts swapping, which means using the disk as extra memory. The disk is roughly a thousand times slower.
-            <br><br><b style="color:var(--faint)">These are typical figures for a small Django deployment, not measurements of any particular system.</b>
+            <br><br><b style="color:var(--faint)">These are typical figures for a small Django deployment, and they are illustrative.</b>
           </div>
         </div>
       </div>
@@ -62,7 +64,7 @@
 
       <div class="sec" data-sec="separate-database" data-title="Moving the database to its own machine">
       <div class="card-t" style="margin-top:26px">Moving the database to its own machine</div>
-      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">The database switch above removes the database's memory from the budget without adding a machine. The comparison here charges you for it: a second machine that runs only Postgres, while the application machine keeps everything it had. Drag the RAM slider and compare the two columns.</p>
+      <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">The "Database on the same machine" switch in the first section removes the database's memory from the budget without adding a machine. The comparison here charges you for it: a second machine that runs only Postgres, while the application machine keeps everything it had. Drag the RAM slider and compare the two columns.</p>
 
       <div class="srv">
         <div class="card">

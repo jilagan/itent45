@@ -106,7 +106,7 @@ const GEN_TREE={
  "arrived twice and neither got":         [["caught",.61],["rejected",.39]],
  "was retried automatically and both were":[["saved",.73],["written",.27]],
  "was retried automatically and both got": [["saved",.68],["through",.32]],
- "was retried automatically and the second":[["succeeded",.74],["landed",.26]],
+ "was retried automatically and the second":[["succeeded",.74],["worked",.26]],
  "was retried automatically and the handler":[["ran",.67],["fired",.33]]
 };
 /* leaves, so a run always ends on something readable */
@@ -136,13 +136,13 @@ function gnRender(){
   const v=$("#gnVerdict");
   if(!GN.toks.length){
     v.className="verdict";
-    v.innerHTML=`<b>The sentence so far has seven words</b>Press <em>Next word</em>. Each press runs the same step you just watched, on a prompt that is one word longer than the last time.`;
+    v.innerHTML=`<b>The sentence so far has seven words</b>Press <em>Next word</em>. Each press runs the same step as in "Choosing one word", on a prompt that is one word longer than the last time.`;
   } else if(!GN.done && d){
     v.className="verdict warn";
-    v.innerHTML=`<b>${GN.toks.length} word${GN.toks.length>1?"s":""} added</b>Look at the list underneath. It is a different list from last time, because the sentence the model is reading is different now. <b class="i">The word you just added is part of the prompt.</b>`;
+    v.innerHTML=`<b>${GN.toks.length} word${GN.toks.length>1?"s":""} added</b>Look at the list underneath. It is a different list from last time, because the sentence the model is reading is different now. <b class="i">The word you added is part of the prompt.</b>`;
   } else {
     v.className="verdict bad";
-    v.innerHTML=`<b>The sentence is finished</b>Nobody chose that ending before the words leading up to it existed. Each word was picked as a likely continuation of a sentence the model had just written, and none of them could be taken back.<br><br>Press <em>Start again</em> a few times, and change the temperature. At 0 you get the same sentence every time. Above 1, the second or third word can differ from run to run, and everything after it follows from that one random pick.`;
+    v.innerHTML=`<b>The sentence is finished</b>Nobody chose that ending before the words leading up to it existed. Each word was picked as a likely continuation of a sentence the model had written, and none of them could be taken back.<br><br>Press <em>Start again</em> a few times, and change the temperature. At 0 you get the same sentence every time. Above 1, the second or third word can differ from run to run, and everything after it follows from that one random pick.`;
   }
 }
 $("#gnStep").onclick=()=>{

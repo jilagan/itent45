@@ -44,11 +44,11 @@ function renderCost(){
     <path d="${lostArea}" fill="rgba(255,95,95,.22)"/>
     <path d="${dPath}" fill="none" stroke="var(--dim)" stroke-width="1.6"/>
     <path d="${cPath}" fill="none" stroke="${COST.capex?"var(--req)":"var(--res)"}" stroke-width="2" stroke-dasharray="${COST.capex?"":"5 3"}"/>
-    <text x="8" y="14" fill="var(--faint)" font-size="9">demand</text>
-    <text x="${W-8}" y="14" fill="${COST.capex?"var(--req)":"var(--res)"}" font-size="9" text-anchor="end">${COST.capex?"capacity you bought":"capacity you rented"}</text>
-    <text x="8" y="${H-4}" fill="var(--faint)" font-size="9">Aug</text>
-    <text x="${W/2}" y="${H-4}" fill="var(--faint)" font-size="9" text-anchor="middle">enlistment</text>
-    <text x="${W-8}" y="${H-4}" fill="var(--faint)" font-size="9" text-anchor="end">Jul</text>`;
+    <text x="96" y="20" fill="var(--dim)" font-size="16">demand</text>
+    <text x="${W-8}" y="20" fill="${COST.capex?"var(--req)":"var(--res)"}" font-size="16" text-anchor="end">${COST.capex?"capacity you bought":"capacity you rented"}</text>
+    <text x="8" y="${H-6}" fill="var(--dim)" font-size="16">Aug</text>
+    <text x="${W/2}" y="${H-6}" fill="var(--dim)" font-size="16" text-anchor="middle">enlistment</text>
+    <text x="${W-8}" y="${H-6}" fill="var(--dim)" font-size="16" text-anchor="end">Jul</text>`;
 
   const set=(id,v,hot,good)=>{const g=$(id);g.querySelector(".gv").firstChild.nodeValue=v;
     g.classList.toggle("hot",!!hot);g.classList.toggle("good",!!good)};

@@ -1,8 +1,10 @@
     <section class="panel" id="p-scale">
       <div class="head">
         <h2>Scaling out with a load balancer</h2>
-        <p>When the line at a fast-food branch grows longer than its counters can handle, the owner can rebuild the branch with more counters or open more branches. With several branches, a guard at the entrance has to point each customer to a counter that is open and not too busy. A server system faces the same choice. In "Server capacity" one machine reached its maximum. The first option is a bigger machine, which is called scaling up or vertical scaling. The second is several identical machines, which is called scaling out or horizontal scaling. Scaling out needs a load balancer, a program that receives every request and passes each one to one of the machines. It also asks something of your code in return. Once you have several machines, removing one bottleneck shows you the next one.</p>
-        <div class="ask"><b>Think first</b> Your site runs on two machines, and each can serve 80 requests per second. Users type only one web address. What has to happen between a user's browser and the two machines so that every request reaches one of them?</div>
+        <p>When the line at a fast-food branch grows longer than its counters can handle, the owner can rebuild the branch with more counters or open more branches. With several branches, a guard at the entrance points each customer to a counter that is open and not too busy.</p>
+        <p>A server system faces the same choice. In "Server capacity" one machine reached its maximum. A bigger machine is called scaling up (vertical scaling). Several identical machines are called scaling out (horizontal scaling), and they need a load balancer, a program that receives every request and passes each one to one of the machines.</p>
+        <p>This panel compares the two options and shows how removing one bottleneck exposes the next.</p>
+        <div class="ask"><b>Think first.</b> Your site runs on two machines, and each can serve 80 requests per second. Users type only one web address. What has to happen between a user's browser and the two machines so that every request reaches one of them?</div>
         <div class="instructor">Students should arrive at one address that answers for all the machines, which is the load balancer. The browser never learns how many machines there are. Ask what happens if that single address itself fails.</div>
       </div>
 
@@ -12,7 +14,7 @@
         <div class="sc2 vert">
           <div class="sh">Option 1: scale up (vertical)</div>
           <h4>Buy a bigger machine</h4>
-          <p>Add more RAM and more processor cores to the single machine. "How a server's memory is used" covers the memory side. This needs no code changes, so it is the first thing to try.</p>
+          <p>Add more RAM and more processor cores to the single machine. "Server memory" covers the memory side. This needs no code changes, so it is the first thing to try.</p>
           <div class="lim">There is a limit. The largest machine you can rent has a fixed size, and the price rises faster than the capacity. One machine is also a single point of failure: if it breaks, the whole site is down.</div>
         </div>
         <div class="sc2 horiz">

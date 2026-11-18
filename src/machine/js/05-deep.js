@@ -24,7 +24,7 @@ function nnInside(x,y,k){
 }
 const nx=x=>54+x*416, ny=y=>250-y*216;
 function nnDiagram(){
-  const k=NN.units, W=440, H=Math.max(150, 40+k*26);
+  const k=NN.units, W=460, H=Math.max(150, 40+k*26);
   const iy=[H*0.38,H*0.62], hy=[...Array(k)].map((_,i)=>(H/(k+1))*(i+1));
   let g=`<svg viewBox="0 0 ${W} ${H}" xmlns="http://www.w3.org/2000/svg">`;
   // edges in, edges out
@@ -32,12 +32,12 @@ function nnDiagram(){
     const on = NN.pick===i;
     iy.forEach(y=>{ g+=`<line x1="86" y1="${y}" x2="${W/2}" y2="${hy[i]}"
       stroke="${on?"var(--req)":"var(--line2)"}" stroke-width="${on?1.8:0.9}" opacity="${on?1:.5}"/>`; });
-    g+=`<line x1="${W/2}" y1="${hy[i]}" x2="${W-96}" y2="${H/2}"
+    g+=`<line x1="${W/2}" y1="${hy[i]}" x2="${W-110}" y2="${H/2}"
       stroke="${on?"var(--req)":"var(--line2)"}" stroke-width="${on?1.8:0.9}" opacity="${on?1:.5}"/>`;
   }
   ["hours","attendance"].forEach((lb,i)=>{
     g+=`<circle cx="86" cy="${iy[i]}" r="9" fill="var(--panel2)" stroke="var(--res)" stroke-width="1.6"/>
-        <text x="70" y="${iy[i]+4}" text-anchor="end" font-size="10" fill="var(--dim)">${lb}</text>`;
+        <text x="70" y="${iy[i]+4}" text-anchor="end" font-size="12.5" fill="var(--dim)">${lb}</text>`;
   });
   for(let i=0;i<k;i++){
     const on=NN.pick===i;
@@ -45,11 +45,11 @@ function nnDiagram(){
         fill="${on?"var(--req)":"var(--panel2)"}" fill-opacity="${on?.25:1}"
         stroke="${on?"var(--req)":"var(--line3)"}" stroke-width="${on?2.2:1.6}" style="cursor:pointer"/>`;
   }
-  g+=`<circle cx="${W-96}" cy="${H/2}" r="10" fill="var(--panel2)" stroke="var(--res)" stroke-width="1.8"/>
-      <text x="${W-80}" y="${H/2+4}" font-size="10" fill="var(--dim)">stays or drops</text>
-      <text x="86" y="14" text-anchor="middle" font-size="9" fill="var(--faint)">Input</text>
-      <text x="${W/2}" y="14" text-anchor="middle" font-size="9" fill="var(--req)">Hidden layer</text>
-      <text x="${W-96}" y="14" text-anchor="middle" font-size="9" fill="var(--faint)">Output</text>`;
+  g+=`<circle cx="${W-110}" cy="${H/2}" r="10" fill="var(--panel2)" stroke="var(--res)" stroke-width="1.8"/>
+      <text x="${W-94}" y="${H/2+4}" font-size="12.5" fill="var(--dim)">stays or drops</text>
+      <text x="86" y="14" text-anchor="middle" font-size="12.5" fill="var(--faint)">Input</text>
+      <text x="${W/2}" y="14" text-anchor="middle" font-size="12.5" fill="var(--req)">Hidden layer</text>
+      <text x="${W-110}" y="14" text-anchor="middle" font-size="12.5" fill="var(--faint)">Output</text>`;
   $("#nnDiag").innerHTML=g+`</svg>`;
   $$("#nnDiag .hu").forEach(el=>{
     el.onclick=()=>{ NN.pick = NN.pick===+el.dataset.u ? null : +el.dataset.u; nnRender(); };
@@ -86,8 +86,8 @@ function nnRender(){
   svg+=`</g>
     <line x1="54" y1="250" x2="470" y2="250" stroke="var(--line2)"/>
     <line x1="54" y1="26" x2="54" y2="250" stroke="var(--line2)"/>
-    <text x="262" y="276" fill="var(--faint)" font-size="10.5" text-anchor="middle">hours studied</text>
-    <text x="18" y="140" fill="var(--faint)" font-size="10.5" text-anchor="middle" transform="rotate(-90 18 140)">other commitments</text>`;
+    <text x="262" y="276" fill="var(--faint)" font-size="13" text-anchor="middle">hours studied</text>
+    <text x="18" y="140" fill="var(--faint)" font-size="13" text-anchor="middle" transform="rotate(-90 18 140)">other commitments</text>`;
   let ok=0;
   for(const [x,y,p] of NND){
     const pred=nnInside(x,y,k), right=pred===!!p; if(right) ok++;
@@ -120,7 +120,7 @@ function nnRender(){
     v.innerHTML=`<b>${pct}% with ${k} lines</b>Each line is still straight. A second layer now takes all ${k} answers and says <em>stays</em> only when they all agree. The overlap of the lines is a shape that none of them could draw alone.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>100% with ${k} straight lines</b>Look at the boundary. It is a curve, and every piece of it is a straight line. A unit cuts the space once, a layer cuts it several times, and the next layer combines the cuts. This combination of cuts is the basic idea of a neural network.<br><br>Deeper networks repeat this. Each layer works on what the previous layer found, so the shapes become more elaborate while every piece is still a straight cut. A language model does this with billions of numbers in place of ${k*3}. <b class="i">Attention</b>, covered in the panel "Attention and the transformer", is one particular kind of layer.<br><br>Pushing the slider higher stops helping. Extra capacity that you do not need is how you get the bent line in "Training data and test data".`;
+    v.innerHTML=`<b>100% with ${k} straight lines</b>Look at the boundary. It is a curve, and every piece of it is a straight line. A unit cuts the space once, a layer cuts it several times, and the next layer combines the cuts. This combination of cuts is the basic idea of a neural network.<br><br>Deeper networks repeat this. Each layer works on what the previous layer found, so the shapes become more elaborate while every piece is still a straight cut. A language model does this with billions of numbers in place of ${k*3}. <b class="i">Attention</b>, covered later in "Attention and transformers", is one particular kind of layer.<br><br>Pushing the slider higher stops helping. Extra capacity that you do not need is how you get the bent line in "Training and test data".`;
   }
 }
 $("#sUnits").oninput=e=>{NN.units=+e.target.value;$("#vUnits").textContent=NN.units;nnRender()};

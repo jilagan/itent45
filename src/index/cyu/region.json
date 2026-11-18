@@ -51,9 +51,9 @@
      "feedback": "The handler is the same, but distance applies to every round trip."
     },
     {
-     "text": "About 140 ms, because the physics floor is only 137 ms.",
+     "text": "About 140 ms, because the minimum round trip is only 137 ms.",
      "correct": false,
-     "feedback": "The floor is a minimum for one round trip. A real network takes about 1.5 times that, and a page needs five round trips."
+     "feedback": "The minimum applies to one round trip on a perfect network. A real network takes about 1.5 times that, and a page needs five round trips."
     }
    ],
    "try": "Move the Region slider from Singapore to Virginia (US East) and read the time to first byte."
@@ -93,22 +93,22 @@
    "stem": "Your app uses the multi-region option with a standby in Tokyo, and the primary region fails. Which statement is correct?",
    "options": [
     {
-     "text": "The site returns after 10 to 30 minutes, and up to 30 seconds of recent writes may be lost.",
+     "text": "The site returns after 10 to 30 minutes, and up to 30 seconds of writes may be lost.",
      "correct": true,
      "feedback": "Tokyo is 3,000 km away, so its copy is updated after each write is confirmed. A failure can lose the newest writes, and switching over takes time."
     },
     {
-     "text": "The site never goes down, and no data is lost.",
+     "text": "The site never goes down, and no data is lost because Tokyo has a full copy.",
      "correct": false,
      "feedback": "Switching to the standby takes minutes. Asynchronous copying also means the newest writes may not have reached Tokyo."
     },
     {
-     "text": "The site returns in under a minute with no data lost.",
+     "text": "The site returns in under a minute with no data lost, as in the multi-AZ option.",
      "correct": false,
      "feedback": "These figures belong to the multi-AZ option, where the two buildings are milliseconds apart."
     },
     {
-     "text": "The site is down until the primary region is repaired.",
+     "text": "The site is down until the primary region is repaired, however long that takes.",
      "correct": false,
      "feedback": "The standby in Tokyo exists so that the site can run while the primary region is down."
     }

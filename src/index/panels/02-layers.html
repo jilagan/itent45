@@ -1,13 +1,15 @@
     <section class="panel" id="p-layers">
       <div class="head">
         <h2>How network messages are layered (protocol layers)</h2>
-        <p>Think of sending a parcel by LBC. You put your item in a box, the branch adds a waybill with the destination, and a hub may stick on a new label. Nobody opens the box until it reaches the receiver. A network message travels the same way, in layers. Each layer follows a protocol, which is an agreement about how a message is shaped. A layer wraps what it receives from the layer above in its own header (a block of labels at the front) and passes the result down. The receiving machine unwraps the layers in reverse order, and each layer reads only the header that its counterpart on the other machine wrote.</p>
-        <div class="ask"><b>Think first</b> The message in this topic is the 24-byte request <code>GET /courses</code>. Before you click anything, guess how many bytes of headers the layers add around it. Then click through the layers to check your guess.</div>
+        <p>Think of sending a parcel by LBC. You put your item in a box, the branch adds a waybill with the destination, and a hub may stick on a new label. Nobody opens the box until it reaches the receiver.</p>
+        <p>A network message travels the same way, in layers. Each layer follows a protocol, which is an agreement about how a message is shaped. A layer wraps what it receives from the layer above in its own header (a block of labels at the front) and passes the result down.</p>
+        <p>The receiving machine unwraps the layers in reverse order, and each layer reads only the header that its counterpart wrote. This panel shows the five layers, then what happens when a reply is too big for one packet.</p>
+        <div class="ask"><b>Think first.</b> The application hands the layers a 24-byte message, such as a short form submission. Before you click anything, guess how many bytes of headers the five layers add around it. Then click through the layers to check your guess.</div>
         <div class="instructor">The total is 121 bytes: 38 (HTTP) + 29 (TLS) + 20 (TCP) + 20 (IP) + 14 (Ethernet) around the 24-byte message, 145 bytes in all. Students find it by adding the header bars.</div>
       </div>
 
       <div class="sec" data-sec="layers-of-a-message" data-title="The layers of a message">
-        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Click each layer to see what its header adds. The 24-byte request you wrote stays inside, unchanged.</p>
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Click each layer to see what its header adds. The 24-byte message from the application stays inside, unchanged. The header sizes are round numbers chosen for illustration, and real headers vary.</p>
         <div class="layer-wrap">
           <div class="nest" id="nest"></div>
           <div class="card">

@@ -2,14 +2,14 @@
 const BK={
 1:{
  title:"Group exercise 1: inspect an HTTP exchange",
- intro:"Work in groups of three. If the server is not running yet, \"What an HTTP request and response look like\" has the setup at the bottom, with commands ready to copy. For this exercise, use no slides or notes and do not ask an AI. Find the answers by looking at what the server does.",
+ intro:"Work in groups of three. If the server is not running yet, \"HTTP messages\" has the setup at the bottom, with commands ready to copy. For this exercise, use no slides or notes and do not ask an AI. Find the answers by looking at what the server does.",
  taskT:"Task: 20 minutes, then report back",
  roles:[
   ["Driver","Types the commands the group agrees on."],
   ["Prober","Decides what to try next and keeps off the keyboard."],
   ["Scribe","Writes down what surprised the group and gives the report."]],
  task:[
-  "Open a terminal. A terminal is a window where you type commands as text and the computer prints the result. Start the server with <code>python3 start.py demo</code>, or <code>python start.py demo</code> on Windows. Leave that terminal visible, because the server prints every byte a client sends it. The commands for the remaining steps are at the bottom of \"What an HTTP request and response look like\", ready to copy for both kinds of shell.",
+  "Open a terminal. A terminal is a window where you type commands as text and the computer prints the result. Start the server with <code>python3 start.py demo</code>, or <code>python start.py demo</code> on Windows. Leave that terminal visible, because the server prints every byte a client sends it. The commands for the remaining steps are at the bottom of \"HTTP messages\", ready to copy for both kinds of shell.",
   "Send a request with <code>curl http://localhost:8080/courses</code>. curl is a command-line program that sends a web request and prints the reply. Then open the same URL in a browser. <b>Count the headers each one sends.</b> Headers are the extra lines of information that travel with a request. Why does the browser send so many more?",
   "Make the server return a 404 (page not found). Read the <code>Content-Length</code> header in the response, then count the characters in the body yourself. <b>Do the two numbers agree?</b>",
   "Send a POST request, which submits data: <code>curl -X POST localhost:8080/enrollments -d '{\"code\":\"ITENT 45\"}'</code>. In the server log, find the blank line. <b>What is on each side of it?</b>",
@@ -19,20 +19,20 @@ const BK={
  listen:[
   "<b>Good sign:</b> a group says the browser sends cookies, cache validators and Accept-Language that curl does not, and connects that to why the same URL can return different bytes to different clients.",
   "<b>Good sign:</b> someone notices <code>Host</code> is the one header that cannot be dropped, and works out that one IP address serves many sites.",
-  "<b>Good sign:</b> on the <code>/slow</code> test, a group describes the second request waiting for the first, and names the queue from \"Server capacity: workers, queues and requests per second\" without being prompted.",
+  "<b>Good sign:</b> on the <code>/slow</code> test, a group describes the second request waiting for the first, and names the queue from \"Server capacity\" without being prompted.",
   "<span class='bad'>Watch for:</span> a group reporting what they expected to see without checking the terminal. Ask them to scroll back and point at the line.",
-  "<span class='bad'>Watch for:</span> a group describing threading as free. Ask once: what did you spend to get that? The answer is memory per thread, from \"How a server's memory is used\"."]},
+  "<span class='bad'>Watch for:</span> a group describing threading as free. Ask once: what did you spend to get that? The answer is memory per thread, from \"Server memory\"."]},
 2:{
  title:"Group exercise 2: design for a load",
- intro:"Use the same groups and rotate roles. Each group gets one scenario. Use the tool in \"Scaling out with a load balancer\" to size it. You will be asked for numbers. Another group then tries to find weaknesses in your design.",
+ intro:"Use the same groups and rotate roles. Each group gets one scenario. Use the tool in \"Load balancers and scaling\" to size it. You will be asked for numbers. Another group then tries to find weaknesses in your design.",
  taskT:"Task: 25 minutes to build, 10 minutes of questions",
  roles:[
   ["Architect","Owns the design and says the numbers out loud during the defense."],
-  ["Operator","Operates the \"Scaling out with a load balancer\" tool and reads out the ceiling and the named bottleneck."],
+  ["Operator","Operates the \"Load balancers and scaling\" tool and reads out the ceiling and the named bottleneck."],
   ["Skeptic","Writes the two hardest questions to ask another group, then asks them."]],
  task:[
   "Take your scenario card. <b>Write the load number first</b>, before changing anything else. If the card does not give it directly, work it out and show the arithmetic.",
-  "Build a configuration in the \"Scaling out with a load balancer\" tool that serves that load. Record the number of instances (copies of the server), the handler time, the cache, the replicas (extra copies of the database) and the queue.",
+  "Build a configuration in the \"Load balancers and scaling\" tool that serves that load. Record the number of instances (copies of the server), the handler time, the cache, the replicas (extra copies of the database) and the queue.",
   "State your <b>system ceiling</b>, the most requests per second the design can serve, and your <b>headroom multiple</b>, which is how many times the ceiling exceeds your load. A design with 1.0× headroom fails on the first busy day.",
   "Name the <b>next bottleneck</b>, the tier that gives way first when the load doubles. Every design has one. If you cannot name it, the design is not finished.",
   "Name <b>one move you chose not to make</b>, and why. Cost, complexity and \"we do not need it yet\" are all valid reasons if you can defend them.",
@@ -56,7 +56,7 @@ const SCEN=[
   d:[["Load","900 rps sustained through the day"],
      ["Shape","Steady. Read-only browsing"],
      ["Work","3 queries per request, 40 ms handler. Most students request the same 20 pages"]],
-  c:"Curveball: a third of your users are on mobile data abroad, at 120 ms one way. Go back to \"Why loading a page takes several round trips\". Does any amount of server capacity fix their experience? What would?"},
+  c:"Curveball: a third of your users are on mobile data abroad, at 120 ms one way. Go back to \"Round trips and latency\". Does any amount of server capacity fix their experience? What would?"},
  {n:"Card C",t:"Grade upload",
   d:[["Load","Only 40 rps. Faculty, not students"],
      ["Shape","Bursty around deadline week"],
@@ -86,7 +86,6 @@ const SCEN=[
 let bk="1";
 function renderBk(){
   const d=BK[bk];
-  $("#bkTitle").textContent=d.title;
   $("#bkIntro").textContent=d.intro;
   $("#bkTaskT").textContent=d.taskT;
   $("#bkTask").innerHTML=d.task.map(t=>`<li>${t}</li>`).join("");

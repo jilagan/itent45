@@ -34,23 +34,35 @@ function vecRender(){
   const best=(VS.exclude ? ranked.find(r=>!r[2]) : ranked[0])[0];
   const topOverall=ranked[0][0];
 
-  const X=w=>60+WV[w][0]*3.1, Y=w=>28+WV[w][1]*1.28;
-  const RX=60+R[0]*3.1, RY=28+R[1]*1.28;
+  const X=w=>30+(WV[w][0]-14)*3.7, Y=w=>24+(WV[w][1]-16)*1.4;
+  const RX=30+(R[0]-14)*3.7, RY=24+(R[1]-16)*1.4;
   let svg=`<svg viewBox="0 0 640 300" xmlns="http://www.w3.org/2000/svg">`;
   svg+=`<line x1="${X(q.b)}" y1="${Y(q.b)}" x2="${X(q.a)}" y2="${Y(q.a)}" stroke="var(--req)" stroke-width="1.8" stroke-dasharray="4 3"/>`;
   svg+=`<line x1="${X(q.c)}" y1="${Y(q.c)}" x2="${RX}" y2="${RY}" stroke="var(--req)" stroke-width="1.8" stroke-dasharray="4 3"/>`;
-  for(const [w,p] of Object.entries(WV)){
+  const ws=Object.keys(WV);
+  const rank=w=>w===best?0:inputs.includes(w)?1:2;
+  const items=ws.map(w=>({w,text:w,cx:X(w),cy:Y(w),r:inputs.includes(w)||w===best?5:3}));
+  items.push({w:"\u0000result",text:"result",cx:RX,cy:RY,r:7});
+  const order=items.map((it,i)=>i).sort((p,q)=>(items[p].w==="\u0000result"?-1:rank(items[p].w))-(items[q].w==="\u0000result"?-1:rank(items[q].w)));
+  const pl=placeLabels(order.map(i=>items[i]),13.5,640,300,[[X(q.b),Y(q.b),X(q.a),Y(q.a)],[X(q.c),Y(q.c),RX,RY]]);
+  order.forEach((i,k)=>{
+    const it=items[i], L=pl[k], w=it.w;
+    if(w==="\u0000result"){
+      svg+=`<text x="${L.x.toFixed(1)}" y="${L.y.toFixed(1)}" text-anchor="${L.an}" font-family="monospace" font-size="13.5" fill="var(--res)" font-weight="600">result</text>`;
+      return;
+    }
     const isIn=inputs.includes(w), isBest=w===best, skipped=isIn&&VS.exclude;
-    svg+=`<circle cx="${X(w)}" cy="${Y(w)}" r="${isIn||isBest?5:3}"
-       fill="${isBest?"var(--res)":isIn?"var(--req)":"var(--line3)"}" opacity="${skipped?.4:1}"/>
-      <text x="${X(w)+8}" y="${Y(w)+4}" font-family="monospace" font-size="11"
-       fill="${isBest?"var(--res)":isIn?"var(--req)":"var(--faint)"}" opacity="${skipped?.5:1}"
+    svg+=`<text x="${L.x.toFixed(1)}" y="${L.y.toFixed(1)}" text-anchor="${L.an}" font-family="monospace" font-size="13.5"
+       fill="${isBest?"var(--res)":isIn?"var(--req)":"var(--faint)"}" opacity="${skipped?.55:1}"
        text-decoration="${skipped?"line-through":"none"}"
        font-weight="${isIn||isBest?"600":"400"}">${w}</text>`;
-
+  });
+  for(const w of ws){
+    const isIn=inputs.includes(w), isBest=w===best, skipped=isIn&&VS.exclude;
+    svg+=`<circle cx="${X(w)}" cy="${Y(w)}" r="${isIn||isBest?5:3}"
+       fill="${isBest?"var(--res)":isIn?"var(--req)":"var(--line3)"}" opacity="${skipped?.4:1}"/>`;
   }
-  svg+=`<circle cx="${RX}" cy="${RY}" r="7" fill="none" stroke="var(--res)" stroke-width="2"/>
-        <text x="${RX+10}" y="${RY-8}" font-family="monospace" font-size="10" fill="var(--res)">result</text>`;
+  svg+=`<circle cx="${RX}" cy="${RY}" r="7" fill="none" stroke="var(--res)" stroke-width="2"/>`;
   $("#vcMap").innerHTML=svg+`</svg>`;
 
   $("#vcSum").innerHTML=`<span class="kw">${q.a}</span> &minus; <span class="kw">${q.b}</span> + <span class="kw">${q.c}</span>`+
@@ -70,7 +82,7 @@ function vecRender(){
   const v=$("#vcVerdict");
   if(!VS.exclude && inputs.includes(best)){
     v.className="verdict warn";
-    v.innerHTML=`<b>The nearest word is ${best}, which is one of the three input words</b>See the ranking above. <code>${q.a}</code> is closer to the result than any other word, because taking away ${q.b} and adding ${q.c} moves the point only part of the way. Most of <code>${q.a}</code> is still there.<br><br>This is why the well-known demonstration has a rule that is rarely mentioned: the answer may not be one of the three words you started with. Turn the option back on to see those three crossed out.`;
+    v.innerHTML=`<b>The nearest word is ${best}, which is one of the three input words</b>See the ranking above. <code>${q.a}</code> is closer to the result than any other word, because taking away ${q.b} and adding ${q.c} moves the point only part of the way. Most of <code>${q.a}</code> is still there.<br><br>The well-known demonstration has a rule that is rarely mentioned: the answer may not be one of the three words you started with. Turn the option back on to see those three crossed out.`;
   } else if(VS.exclude && topOverall!==best){
     v.className="verdict ok";
     v.innerHTML=`<b>${best}, once ${topOverall} is ruled out</b><code>${topOverall}</code> is nearer, but it is crossed out above because it was one of the input words. Of the remaining words, <code>${best}</code> is closest.<br><br>${q.v.replace(/^<b>.*?<\/b>/,"")}`;
@@ -118,18 +130,18 @@ function simRender(){
        stroke="${on?"var(--req)":"var(--line2)"}" stroke-width="${on?2.6:1.2}" opacity="${on?1:.5}"/>
       <circle cx="${px.toFixed(1)}" cy="${py.toFixed(1)}" r="${on?5:3}" fill="${on?"var(--req)":"var(--line3)"}"/>
       <text x="${(px+ (x.deg>60?4:10)).toFixed(1)}" y="${(py-7).toFixed(1)}"
-       font-family="monospace" font-size="10.5" fill="${on?"var(--req)":"var(--faint)"}"
+       font-family="monospace" font-size="13" fill="${on?"var(--req)":"var(--faint)"}"
        font-weight="${on?"600":"400"}">${x.id.toUpperCase()}</text>`;
   });
   const mid=(lo+hi)/2;
   svg+=`<text x="${ox+72*Math.cos(mid*Math.PI/180)}" y="${oy-72*Math.sin(mid*Math.PI/180)}"
-     font-family="monospace" font-size="11" fill="var(--req)">${(hi-lo)}&deg;</text>`;
+     font-family="monospace" font-size="13" fill="var(--req)">${(hi-lo)}&deg;</text>`;
   svg+=`<line x1="${ox}" y1="${oy}" x2="${ox+R+14}" y2="${oy}" stroke="var(--line2)"/>
         <line x1="${ox}" y1="${oy}" x2="${ox}" y2="${oy-R-14}" stroke="var(--line2)"/>`;
   SIMS.forEach((x,i)=>{
     const on=SIM.pick.includes(x.id);
-    svg+=`<text x="250" y="${34+i*26}" font-family="monospace" font-size="10.5"
-       fill="${on?"var(--req)":"var(--faint)"}" font-weight="${on?"600":"400"}">${x.id.toUpperCase()}  ${x.t.length>30?x.t.slice(0,29)+"\u2026":x.t}</text>`;
+    svg+=`<text x="250" y="${34+i*26}" font-family="monospace" font-size="12"
+       fill="${on?"var(--req)":"var(--faint)"}" font-weight="${on?"600":"400"}">${x.id.toUpperCase()}  ${x.t.length>27?x.t.slice(0,26)+"\u2026":x.t}</text>`;
   });
   $("#simMap").innerHTML=svg+`</svg>`;
 

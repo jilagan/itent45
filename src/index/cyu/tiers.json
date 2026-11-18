@@ -8,22 +8,22 @@
    "stem": "A developer wants to skip the application tier and let the browser send SQL straight to the database. What is the main problem?",
    "options": [
     {
-     "text": "The database password would have to be stored in code on the user's device, where anyone could read it and run any query.",
+     "text": "The database password would have to sit in code on the user's device.",
      "correct": true,
      "feedback": "The browser runs on a device the user controls. Anything stored there can be read, so the middle tier must hold the password."
     },
     {
-     "text": "Browsers are too slow to send SQL.",
+     "text": "Browsers are too slow to send SQL queries across the internet to a database.",
      "correct": false,
      "feedback": "Speed is not the issue. The issue is who holds the credentials and who decides which queries are allowed."
     },
     {
-     "text": "The database cannot accept connections from more than one place.",
+     "text": "A database can only accept connections from a single computer at a time.",
      "correct": false,
      "feedback": "Databases accept many connections. The application tier is needed for security and rules, not for connection limits."
     },
     {
-     "text": "The page would no longer be able to show HTML.",
+     "text": "Without the middle tier, the page could no longer show HTML to the user.",
      "correct": false,
      "feedback": "The browser would still show HTML. The change would remove the one tier that enforces permissions."
     }
@@ -36,22 +36,22 @@
    "stem": "A student edits the student number in the address bar and sees another student's grades. Which tier should have refused the request?",
    "options": [
     {
-     "text": "The application tier, which checks permissions before it asks the database for anything.",
+     "text": "The application tier, which checks who is logged in before querying.",
      "correct": true,
      "feedback": "The application tier knows who is logged in and decides which rows that person may see."
     },
     {
-     "text": "The browser, because it knows who is logged in.",
+     "text": "The browser, because it already knows which student is logged in.",
      "correct": false,
      "feedback": "The browser runs on the user's device and the user can change anything in it. It cannot be trusted to enforce rules."
     },
     {
-     "text": "The database, because it holds the grades.",
+     "text": "The database, because it holds the grades and knows who owns them.",
      "correct": false,
      "feedback": "The database answers any query it is given by a trusted caller. It does not know which student is logged in."
     },
     {
-     "text": "None of them. The address bar is public.",
+     "text": "None of them, because anything in the address bar is public.",
      "correct": false,
      "feedback": "The address bar is visible, but access to the data still has to be checked on the server."
     }
@@ -64,7 +64,7 @@
    "stem": "Before you play the trace: the database has returned two rows. What happens next, before the browser receives anything?",
    "options": [
     {
-     "text": "The application tier turns the rows into objects and then into JSON.",
+     "text": "The application tier turns the rows into objects, then JSON.",
      "correct": true,
      "feedback": "Rows go back to the application tier, which builds objects and converts them to JSON text for the response."
     },
@@ -93,22 +93,22 @@
    "stem": "A team rewrites its application tier from Django to Express. What changes in the twelve steps?",
    "options": [
     {
-     "text": "The code and file names in the application tier change. The browser, the database and the order of the steps stay the same.",
+     "text": "Only the application tier's code changes. The browser, database and step order stay the same.",
      "correct": true,
      "feedback": "A framework is a toolkit for the application tier. The three tiers and the path of a request are the same for every framework."
     },
     {
-     "text": "The database must be replaced with a different kind.",
+     "text": "The database must be replaced with a different kind, because Express cannot use it.",
      "correct": false,
      "feedback": "The database is a separate program. It does not know which framework calls it."
     },
     {
-     "text": "The browser must be rewritten.",
+     "text": "The browser must be rewritten, because it has to talk to the new framework.",
      "correct": false,
      "feedback": "The browser only sends requests and reads responses. It does not know which framework answers."
     },
     {
-     "text": "The request no longer needs to cross the network.",
+     "text": "The request no longer has to cross the network, because the framework is faster.",
      "correct": false,
      "feedback": "The request still travels from the browser to the server, whatever the framework."
     }

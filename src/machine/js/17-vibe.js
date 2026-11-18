@@ -36,7 +36,7 @@ const SNIP=[
          '    return JsonResponse({"error": "full"}, status=409)'],
   bad:2, also:[5],
   cat:"Fails when two requests overlap (race condition)",
-  why:`Line 3 reads the seat count, and line 6 writes it back. Between those two lines, another request can read the same number.<br><br>On a quiet afternoon this works. On enlistment morning, two students both see one free seat, both pass the check, and both are enrolled. This is the problem in the Module 1 site, "Transactions and two users changing the same data".<br><br>The code is <b class="i">only correct when nobody else is using it</b>, and you cannot see that by reading it.`},
+  why:`Line 3 reads the seat count, and line 6 writes it back. Between those two lines, another request can read the same number.<br><br>On a quiet afternoon this works. On enlistment morning, two students both see one free seat, both pass the check, and both are enrolled. This is the problem in the Module 1 site, "Transactions".<br><br>The code is <b class="i">only correct when nobody else is using it</b>, and you cannot see that by reading it.`},
  {id:"hall", label:"Fetch one course", task:"Asked for: return a course, or 404 if there is no such code.",
   lines:["def course_detail(request, code):",
          "    course = Course.objects.get_or_none(code=code)",

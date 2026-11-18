@@ -15,7 +15,7 @@ const SH_ANS={
  docs:{
   schedule:{k:"ok", t:"One read, no join", d:"The student document already contains the enrollments and their titles. One lookup by key returns the whole page. Documents are designed for this case, and it is faster here than in the relational version."},
   roster:{k:"bad", t:"Every student document is scanned", d:"Nothing is indexed by course unless you build a second structure for it. Without one, the database must scan every student document. With one, you must keep it up to date yourself."},
-  rename:{k:"bad", t:"Every document that contains the title", d:"The title was copied into each student's document, so a rename must find and rewrite all of them. This is the missed-rows problem from \"Normalization: storing each fact once\", with no single table to check your work against."}
+  rename:{k:"bad", t:"Every document that contains the title", d:"The title was copied into each student's document, so a rename must find and rewrite all of them. This is the missed-rows problem from \"Normalization\", with no single table to check your work against."}
  }
 };
 function shRender(){

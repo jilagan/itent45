@@ -1,18 +1,20 @@
     <section class="panel" id="p-norm">
       <div class="head">
         <h2>Normalization: storing each fact once</h2>
-        <p>Suppose you keep a class list in Excel and type the course title on every student's row. When the course changes its title, you have to fix every row, and if you miss one, the sheet holds two titles for the same course. The better layout is a second sheet that lists each course once, with each student row pointing to it. In a database this is called <b style="color:var(--ink)">normalization</b>: store each fact once and point to it from everywhere else. A table is a grid of rows and columns, like one sheet. Below, the same enrollments are stored two ways, as one flat table that holds everything and as two linked tables.</p>
-        <div class="ask"><b>Think first.</b> A course changes its title. In a spreadsheet where the title is typed on every row, how many cells do you edit? How sure are you that you changed all of them?</div>
+        <p>Suppose you keep a class list in Excel and type the course title on every student's row. When the course changes its title, you have to fix every row, and if you miss one, the sheet holds two titles for the same course.</p>
+        <p>The better layout is a second sheet that lists each course once, with each student row pointing to it. In a database this is called <b style="color:var(--ink)">normalization</b>: store each fact once and point to it from everywhere else. A table is a grid of rows and columns, like one sheet.</p>
+        <p>Below, the same enrollments are stored two ways, as one flat table that holds everything and as two linked tables.</p>
+        <div class="ask"><b>Think first.</b> Suppose the title is stored once on a course sheet, and each student row holds only a course number. What must you do each time you print a student's schedule with the course titles? Write down your answer, then compare it with the two tables below.</div>
       </div>
 
       <div class="srv">
         <div class="card">
-          <div class="card-t">One flat table &nbsp;<span style="font-family:var(--mono);font-size:.7em;color:var(--faint)">enrollments</span></div>
+          <div class="card-t">One flat table &nbsp;<span style="color:var(--faint)">enrollments</span></div>
           <div style="overflow-x:auto"><table class="db" id="flatTbl"></table></div>
           <div class="verdict" id="flatVerdict" style="margin-top:12px"></div>
         </div>
         <div class="card">
-          <div class="card-t">Split in two &nbsp;<span style="font-family:var(--mono);font-size:.7em;color:var(--faint)">courses + enrollments</span></div>
+          <div class="card-t">Split in two &nbsp;<span style="color:var(--faint)">courses + enrollments</span></div>
           <div style="overflow-x:auto"><table class="db" id="normTbl"></table></div>
           <div style="overflow-x:auto;margin-top:9px"><table class="db" id="normTbl2"></table></div>
           <div class="verdict" id="normVerdict" style="margin-top:12px"></div>
@@ -44,7 +46,7 @@
           </div>
           <div class="rtt-note" style="margin-top:14px">
             The flat table repeats the title once for each enrollment. The split version stores it once and points to it.
-            <br><br>Both designs are valid. The flat table can show one student's schedule without a join, which is a query that combines rows from two tables, and that is why people keep proposing it. Changing a course title in the flat table costs one write for each enrollment.
+            <br><br>Both designs are valid. The flat table can show one student's schedule without a join, which is a query that combines rows from two tables. People propose it for that reason. Changing a course title in the flat table costs one write for each enrollment.
           </div>
         </div>
       </div>

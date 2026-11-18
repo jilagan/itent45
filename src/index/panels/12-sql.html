@@ -1,13 +1,15 @@
     <section class="panel" id="p-sql">
       <div class="head">
         <h2>Reading and changing data with SQL</h2>
-        <p>In Excel you can filter rows, add a row, change a cell and delete a row. A database does the same four things, and each has a command in a language called <b style="color:var(--ink)">SQL</b>. A table is like one sheet. <code>SELECT</code> reads rows, <code>INSERT</code> adds a row, <code>UPDATE</code> changes rows and <code>DELETE</code> removes rows. Your Django code, the Python web framework used in this course, eventually turns into one of these four commands. A tool called an ORM (object-relational mapper) writes them for you, so you rarely type them. You should still be able to read them, because when something is slow or wrong, the logs show SQL. The table below is the same one used in "HTTP methods, URLs and status codes (REST)", this time with no API in front of it.</p>
+        <p>In Excel you can filter rows, add a row, change a cell and delete a row. A database does the same four things, and a table is like one sheet.</p>
+        <p>Each of the four has a command in a language called <b style="color:var(--ink)">SQL</b>. <code>SELECT</code> reads rows, <code>INSERT</code> adds a row, <code>UPDATE</code> changes rows and <code>DELETE</code> removes rows.</p>
+        <p>Your Django code, the Python web framework used in this course, eventually turns into one of these four commands. A tool called an ORM (object-relational mapper) writes them for you, so you rarely type them. You should still be able to read them, because when something is slow or wrong, the logs show SQL. The table below is the same one used in "HTTP verbs and status codes", this time with no API in front of it.</p>
         <div class="ask"><b>Think first.</b> Make a guess for each question. Which of the four commands never changes the table? Which commands leave the table in the same state when you run them a second time?</div>
       </div>
 
       <div class="srv">
         <div class="card">
-          <div class="card-t">courses <span style="float:right;font-size:.7em;color:var(--res)" id="sqlCount">3 rows</span></div>
+          <div class="card-t">courses <span style="float:right;color:var(--res)" id="sqlCount">3 rows</span></div>
           <table class="db"><thead><tr>
             <th>code</th><th>title</th><th>units</th><th>slots</th>
           </tr></thead><tbody id="sqlBody"></tbody></table>
@@ -36,7 +38,7 @@
           <tr><td>Remove a row</td><td><code>DELETE</code></td><td><code>DELETE</code></td><td class="y">already gone, still gone</td></tr>
         </tbody></table>
       </div>
-      <p style="margin:11px 0 0;font-size:.8em;color:var(--faint);line-height:1.6">The commands and the HTTP methods match because REST was designed around the same four operations. An API that exposes resources is easy to build on top of a relational database.</p>
+      <p style="margin:11px 0 0;color:var(--faint);line-height:1.6">The commands and the HTTP methods match because REST was designed around the same four operations. An API that exposes resources is easy to build on top of a relational database.</p>
 
       <div class="whynot" style="margin-top:20px">
         <b>Always use WHERE with UPDATE and DELETE</b>

@@ -67,7 +67,7 @@ rows = Enrollment.objects.filter(student=me)      <span class="c"># 1 query</spa
     v.innerHTML=`<b>1 query, and the ceiling rose from ${Math.round(naive.rps)} to ${Math.round(m.rps)} rps</b>The page, the rows and the output are the same. <code>select_related("course")</code> tells the database to return the courses together with the enrollments in one query, so the template finds them already loaded. One line of code gives <b class="i">${(m.rps/naive.rps).toFixed(1)}×</b> the capacity.<br><br>AI tools often leave this line out, because the version without it also produces a correct page.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>Also 1 query, with no join needed</b>Course titles change a few times a year, so a cache, which is a copy kept in memory, can hold them for an hour at almost no cost. The title lookups then leave the request entirely. This works well when the table is small and rarely changes. It works badly when the data changes often, because then you hold two copies of the same fact and one of them is out of date. "Normalization: storing each fact once" describes the same problem.`;
+    v.innerHTML=`<b>Also 1 query, with no join needed</b>Course titles change a few times a year, so a cache, which is a copy kept in memory, can hold them for an hour at almost no cost. The title lookups then leave the request entirely. This works well when the table is small and rarely changes. It works badly when the data changes often, because then you hold two copies of the same fact and one of them is out of date. "Normalization" describes the same problem.`;
   }
 }
 $("#sQRows").oninput=e=>{Q.rows=+e.target.value;$("#vQRows").textContent=Q.rows;qRender()};

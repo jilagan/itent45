@@ -19,10 +19,10 @@ function rnRender(){
   if(asking){
     $("#rnSent").innerHTML=
       `<div style="opacity:.22;text-decoration:line-through">${W.join(" ")} .</div>
-       <div style="margin-top:12px;font-family:var(--sans);font-size:.82em;color:var(--warn)">
+       <div style="margin-top:12px;font-family:var(--sans);color:var(--warn)">
          The sentence is gone. Each word was read once and then discarded.</div>
        <div style="margin-top:14px;padding-top:13px;border-top:1px solid var(--line);
-                   font-family:var(--sans);font-size:.95em;color:var(--ink)">
+                   font-family:var(--sans);color:var(--ink)">
          <b style="color:var(--req)">Question:</b> in that sentence, what did <code>it</code> refer to?</div>`;
   } else {
     $("#rnSent").innerHTML=W.map((w,k)=>{
@@ -53,7 +53,7 @@ function rnRender(){
     return `<div class="pr"><span class="tok" style="color:${key?"var(--req)":"inherit"};opacity:${v<0.2&&!key?.5:1}">${w}</span>
       <div class="lane"><div class="bar" style="width:${(v/mx*100).toFixed(0)}%;background:${v<0.2?"var(--line3)":"var(--res)"}"></div></div>
       <span class="pc">${(v*100).toFixed(0)}%</span></div>`;
-  }).join("") : `<p style="margin:0;font-size:.8em;color:var(--faint)">The note is empty.</p>`;
+  }).join("") : `<p style="margin:0;color:var(--faint)">The note is empty.</p>`;
 
   const idxOf=w=>W.indexOf(w);
   const surv=w=>at>idxOf(w) ? Math.pow(RNDECAY, at-1-idxOf(w))*100 : 0;

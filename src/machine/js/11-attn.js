@@ -13,7 +13,7 @@ const ATT=[
   words:["The","animal","didn't","cross","the","street","because","it","was","too","tired","."],
   w:{it:{animal:.62,street:.09,cross:.05,tired:.14,The:.02,didn_t:.03,because:.04,was:.01},
      tired:{animal:.41,it:.28,street:.06,was:.12,too:.09,cross:.04}},
-  v:`<b><code>it</code> is looking hardest at <code>animal</code></b>The weight is 0.62 for animal against 0.09 for street. No grammar rule decides this, and word order does not explain it, because street is the nearer of the two words to <code>it</code>.<br><br>The weight is a <strong>similarity score</strong>. <code>it</code> sends out a question, every other word describes what it offers, and the score shows how well the two match. In a real model, both are positions in the space described in "Vectors and similarity of meaning", so the match is a distance, calculated fresh for each sentence.<br><br>What <code>it</code> asks for depends on the words around it, and one of those words is <em>tired</em>. Switch to the other sentence to see what changes.`},
+  v:`<b><code>it</code> is looking hardest at <code>animal</code></b>The weight is 0.62 for animal against 0.09 for street. No grammar rule decides this, and word order does not explain it, because street is the nearer of the two words to <code>it</code>.<br><br>The weight is a <strong>similarity score</strong>. <code>it</code> sends out a question, every other word describes what it offers, and the score shows how well the two match. In a real model, both are positions in the space described in "Vectors and similarity", so the match is a distance, calculated fresh for each sentence.<br><br>What <code>it</code> asks for depends on the words around it, and one of those words is <em>tired</em>. Switch to the other sentence to see what changes.`},
  {id:"wide", asks:{it:"a noun that can be wide", wide:"a thing this could describe"},
   offers:{animal:"a living thing that acts, and gets tired",
           street:"a place, a surface, something with width",
@@ -57,18 +57,18 @@ function attRender(){
     const top=Object.entries(src).sort((x,y)=>y[1]-x[1]).slice(0,3);
     $("#atWhy").innerHTML =
       `<div style="font-size:max(14px,.8em);font-weight:600;color:var(--req);margin-bottom:7px">What ${AS.word.replace(/_/g,"'")} is asking for</div>`+
-      `<div style="font-size:.86em;color:var(--ink);margin-bottom:11px">&ldquo;${ask}&rdquo;</div>`+
+      `<div style="font-size:.95em;color:var(--ink);margin-bottom:11px">&ldquo;${ask}&rdquo;</div>`+
       `<div style="font-size:max(14px,.8em);font-weight:600;color:var(--res);margin-bottom:7px">What the others offer</div>`+
       top.map(([w,v])=>{
         const off=(a.offers||{})[w] || "no strong meaning of its own";
         const strong=v>.3;
-        return `<div style="display:grid;grid-template-columns:74px 1fr 42px;gap:9px;align-items:baseline;
+        return `<div style="display:grid;grid-template-columns:96px 1fr 48px;gap:9px;align-items:baseline;
                  padding:5px 0;border-top:1px solid var(--line)">
-          <span style="font-family:var(--mono);font-size:.72em;color:${strong?"var(--res)":"var(--faint)"};font-weight:${strong?600:400}">${w.replace(/_/g,"'")}</span>
-          <span style="font-size:.79em;color:var(--dim)">${off}</span>
-          <span style="font-family:var(--mono);font-size:.7em;text-align:right;color:${strong?"var(--res)":"var(--faint)"}">${v.toFixed(2)}</span></div>`;
+          <span style="font-family:var(--mono);font-size:.9em;color:${strong?"var(--res)":"var(--faint)"};font-weight:${strong?600:400}">${w.replace(/_/g,"'")}</span>
+          <span style="font-size:.9em;color:var(--dim)">${off}</span>
+          <span style="font-family:var(--mono);font-size:.9em;text-align:right;color:${strong?"var(--res)":"var(--faint)"}">${v.toFixed(2)}</span></div>`;
       }).join("");
-  } else $("#atWhy").innerHTML=`<span style="font-size:.82em;color:var(--faint)">Click <b>it</b> or the last word to see what it is asking for.</span>`;
+  } else $("#atWhy").innerHTML=`<span style="font-size:.9em;color:var(--faint)">Click <b>it</b> or the last word to see what it is asking for.</span>`;
   $("#atVerdict").className="verdict ok"; $("#atVerdict").innerHTML=a.v;
   attCost();
 }

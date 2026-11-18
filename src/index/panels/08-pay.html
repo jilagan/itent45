@@ -1,13 +1,15 @@
     <section class="panel" id="p-pay">
       <div class="head">
         <h2>Online payments and payment gateways</h2>
-        <p>At a store counter you pay the cashier and get a receipt or claim stub. The shop does not process your card itself, because the cashier's terminal talks to the bank. An online checkout works the same way. The shop's server hands the payment to a payment gateway, a company such as PayMongo, Stripe or Xendit that handles card payments for shops, and gets back a token, which works like a claim stub. The analogy stops in one place: online, the customer's browser sends the card straight to the gateway, and the shop's server never sees it. Until now your server has only answered requests. In a checkout it also sends them, over the same HTTP and with the same verbs and status codes described in "HTTP verbs, URLs and status codes (REST)". What is new is that several parties each hold a piece of one transaction, and each can fail separately.</p>
-        <div class="ask"><b>Think first</b> When you type your card number into a checkout page, which machines does the number pass through on its way to the bank? List them, then check your list against the trace below.</div>
+        <p>At a store counter you pay the cashier and get a receipt or claim stub. The shop does not process your card itself, because the cashier's terminal talks to the bank.</p>
+        <p>An online checkout works the same way. The shop's server hands the payment to a payment gateway, a company such as PayMongo, Stripe or Xendit that handles card payments for shops, and gets back a token, which works like a claim stub. The analogy stops in one place: online, the customer's browser sends the card straight to the gateway, and the shop's server never sees it.</p>
+        <p>Until now your server has only answered requests. In a checkout it also sends them, over the same HTTP and with the same verbs and status codes described in "HTTP verbs and status codes". Several parties each hold a piece of one transaction, and each can fail separately. This panel follows one payment, compares message formats, and covers double charges.</p>
+        <div class="ask"><b>Think first.</b> When you type your card number into a checkout page, which machines does the number pass through on its way to the bank? List them, then check your list against the trace below.</div>
         <div class="instructor">Most students include the shop's server in their list. The correct list leaves it out. Ask them to say why that matters for the shop.</div>
       </div>
 
       <div class="sec" data-sec="checkout-flow" data-title="The checkout flow">
-      <p>Four parties take part in a checkout: the shopper's browser, your server, the payment gateway and the bank. Step through the flow below, or press Play. The ball shows where the data is at each step.</p>
+      <p>Four parties take part in a checkout: the shopper's browser, your server, the payment gateway and the bank. Step through the flow below, or press Play. On wide screens the ball shows where the data is at each step. On every screen the highlighted box shows it.</p>
 
 <div class="pflow" id="pflow">
         <div class="pty" data-k="browser" id="pBrowser"></div>
@@ -56,7 +58,7 @@
           </div>
           <div class="whynot">
             <b>Why the card skips your server</b>
-            The browser sends the card directly to the gateway and gets back a token, which is an opaque code that stands for the card. Your server only handles the token. This is deliberate. If card numbers passed through a machine you own, that machine would fall under PCI DSS (the card industry's security rules), and so would every system it talks to. With a token, that burden stays with the gateway, whose whole business is carrying it.
+            The browser sends the card directly to the gateway and gets back a token, which is an opaque code that stands for the card. Your server only handles the token. This is deliberate. If card numbers passed through a machine you own, that machine would fall under PCI DSS (the card industry's security rules), and so would every system it talks to. With a token, that burden stays with the gateway, which is set up to meet those rules.
           </div>
           <div class="rtt-note" style="margin-top:14px">
             <b>Step 9 reverses the roles.</b> The gateway calls your server, so your API is the server in that exchange. The signature header is the only check that stops anyone on the internet from marking their own order paid.
@@ -109,7 +111,7 @@
 
       <div class="card" style="margin-top:20px">
         <div class="card-t">How a slow gateway affects server capacity</div>
-        <p>Capacity here means requests per second (rps): the number of workers divided by the seconds each request takes. "Inside the server" shows how to measure it.</p>
+        <p>Capacity here means requests per second (rps): the number of workers divided by the seconds each request takes. How to measure it is covered later in "Server capacity".</p>
         <div class="cmp">
           <div>
             <div class="artlbl" style="margin-top:0">Charging inside the request</div>
@@ -122,7 +124,7 @@
 4 workers ÷ 0.040 s = <span class="s">100 rps</span></div>
           </div>
         </div>
-        <p style="margin:14px 0 0">In the second case, the gateway call goes on a queue, which is a waiting list of jobs that a separate process works through, and the gateway reports the result later by webhook. If your server waits for the payment gateway, your site is as slow as the gateway. The twenty times higher capacity here comes from moving the call out of the request. The same change solves Card C in "Breakouts".</p>
+        <p style="margin:14px 0 0">In the second case, the gateway call goes on a queue, which is a waiting list of jobs that a separate process works through, and the gateway reports the result later by webhook. If your server waits for the payment gateway, your site is as slow as the gateway. The twenty times higher capacity here comes from moving the call out of the request. The same change solves Card C, covered later in "Group exercises".</p>
       </div>
       </div>
     </section>

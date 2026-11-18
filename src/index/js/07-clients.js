@@ -24,7 +24,7 @@ User-Agent: Mozilla/5.0 (Macintosh...)`,
     &lt;li key={c.code}&gt;{c.code} &amp;middot; {c.units}u&lt;/li&gt;
   )}
 &lt;/ul&gt;`,
-  note:"The browser attaches the session cookie by itself. The server set the cookie at login and the browser has stored it since then, so you never wrote code to send it. The same convenience is why cookies need protection against CSRF (cross-site request forgery): the browser also attaches them to a request that another website triggers.",
+  note:"The browser attaches the session cookie by itself. The server set the cookie at login and the browser has stored it since then, so you never wrote code to send it. Cookies therefore need protection against CSRF (cross-site request forgery), because the browser also attaches them to a request that another website triggers.",
   cons:["Stable network","Large screen","You control every deploy","Cookie login, automatic"]},
 
  {id:"ios", n:"iOS app", s:"Native app written in Swift",
@@ -142,7 +142,7 @@ function renderDrift(){
   const v=$("#driftVerdict");
   if(!DRIFT.breaking){
     v.className="verdict ok";
-    v.innerHTML=`<b>Nothing breaks on any platform</b>You added a field and removed nothing. Old clients read the response, ignore the field they do not know, and carry on. This is why the rule for a public API is <em>additive changes only</em>: adding is free, and removing is almost never safe.`;
+    v.innerHTML=`<b>Nothing breaks on any platform</b>You added a field and removed nothing. Old clients read the response, ignore the field they do not know, and carry on. So the rule for a public API is <em>additive changes only</em>. Adding a field is safe, and removing one breaks old clients.`;
   } else if(d===0){
     v.className="verdict warn";
     v.innerHTML=`<b>You shipped the change a moment ago</b>Everyone is still on the old version, as expected on day zero. Nothing has failed yet. Drag the slider to see who updates and who does not.`;

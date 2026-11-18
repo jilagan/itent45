@@ -94,22 +94,22 @@
    "stem": "Which situation is the best reason to split one part of your application into its own service?",
    "options": [
     {
-     "text": "One part, such as transcript PDF generation, needs far more memory and time than the rest, and you can name it.",
+     "text": "One part, such as PDF generation, needs far more memory and time than the rest.",
      "correct": true,
      "feedback": "A split pays off when one part's needs really differ from the rest. The memory comparison shows the saving."
     },
     {
-     "text": "Microservices are the modern way to build applications.",
+     "text": "Microservices are the modern way to build applications and look good on a CV.",
      "correct": false,
      "feedback": "Fashion is not a reason. Most failures start with a team that split before it had a reason."
     },
     {
-     "text": "Two parts call each other on every request.",
+     "text": "Two parts need each other's data on every request, so splitting them looks tidy.",
      "correct": false,
      "feedback": "Parts that need each other on every request should stay together. Splitting them gives you a distributed monolith."
     },
     {
-     "text": "The team wants to practice using several services in the capstone.",
+     "text": "The team wants to practice running several services in the capstone project.",
      "correct": false,
      "feedback": "Splitting adds network calls, version drift, retry rules and scattered logs. A capstone rarely has a scaling problem that justifies this."
     }

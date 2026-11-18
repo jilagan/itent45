@@ -8,7 +8,7 @@
    "stem": "A language model is given \"The capital of France is\" and shows Paris with a probability of 0.89. What does the 0.89 mean?",
    "options": [
     {
-     "text": "When the model picks at random in proportion to the probabilities, it chooses Paris about 89 times in 100.",
+     "text": "If it picks at random in proportion to these numbers, it chooses Paris about 89 times in 100.",
      "correct": true,
      "feedback": "A probability says how likely the model is to pick that word. It comes from patterns in the training text."
     },
@@ -18,12 +18,12 @@
      "feedback": "The model has no fact lookup step. The 0.89 comes from how often sentences that begin this way ended with Paris in the training text."
     },
     {
-     "text": "Paris appears in 89 percent of the training text.",
+     "text": "Paris appears in 89 percent of all the sentences in the training text.",
      "correct": false,
      "feedback": "The number describes what usually follows this particular start of a sentence. It does not describe how often Paris appears overall."
     },
     {
-     "text": "The answer is 89 percent accurate.",
+     "text": "The model's answer is 89 percent likely to be factually correct.",
      "correct": false,
      "feedback": "The number says how likely the word is to be picked. It does not say whether the answer is true, and a wrong word can also have a high probability."
     }
@@ -93,7 +93,7 @@
    "stem": "A model is writing a long answer, and its third word is slightly wrong. What is most likely to happen to the rest of the answer?",
    "options": [
     {
-     "text": "Later words are chosen to fit the wrong word, so the answer reads smoothly and carries the error forward.",
+     "text": "Later words are chosen to fit the wrong word, so the error carries forward.",
      "correct": true,
      "feedback": "Each word is chosen as a likely continuation of the text so far, and that text now includes the wrong word."
     },
@@ -108,7 +108,7 @@
      "feedback": "Each word is chosen with all the earlier words in the prompt, so an early error shapes everything after it."
     },
     {
-     "text": "The model stops and reports an error.",
+     "text": "The model stops at the wrong word and reports an error to the user.",
      "correct": false,
      "feedback": "Nothing in the process detects a wrong word, so no error is reported."
     }

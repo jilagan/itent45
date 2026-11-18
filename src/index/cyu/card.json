@@ -10,7 +10,7 @@
     {
      "text": "Many-to-many.",
      "correct": true,
-     "feedback": "Correct. Each side can pair with many rows on the other side, so the database needs a third table with one row for each order and product pairing."
+     "feedback": "Each side can pair with many rows on the other side, so the database needs a third table with one row for each order and product pairing."
     },
     {
      "text": "One-to-many, because one order holds many products.",
@@ -38,7 +38,7 @@
     {
      "text": "In the sections table, as a column holding the course id.",
      "correct": true,
-     "feedback": "Correct. The foreign key goes on the many side, so each section stores the id of its one course."
+     "feedback": "The foreign key goes on the many side, so each section stores the id of its one course."
     },
     {
      "text": "In the courses table, as a column holding the section ids.",
@@ -66,7 +66,7 @@
     {
      "text": "In the enrollments table, in the row for that student and that course.",
      "correct": true,
-     "feedback": "Correct. The grade describes the pairing, so it lives in the table that has one row for each pairing."
+     "feedback": "The grade describes the pairing, so it lives in the table that has one row for each pairing."
     },
     {
      "text": "In the students table, in a column called grade.",

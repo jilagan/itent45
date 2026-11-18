@@ -37,7 +37,7 @@ function nmRender(){
   $("#normVerdict").className="verdict "+(NM.renamed?"ok":"");
   $("#normVerdict").innerHTML = NM.renamed
     ? `<b>One row rewritten</b>The enrollments never stored the title, so they needed no change. Two rows cannot disagree, because only one row holds the title.`
-    : `<b>The title is stored once</b>Each enrollment holds the course id and nothing else about the course. Reading a schedule now needs a join, which combines the two tables when you read. "The N+1 query problem" measures what that costs.`;
+    : `<b>The title is stored once</b>Each enrollment holds the course id and nothing else about the course. Reading a schedule now needs a join, which combines the two tables when you read. What that costs is measured later in "The N+1 query problem".`;
 
   const set=(id,v,hot,good)=>{const g=$(id);g.querySelector(".gv").firstChild.nodeValue=v;
     g.classList.toggle("hot",!!hot);g.classList.toggle("good",!!good)};

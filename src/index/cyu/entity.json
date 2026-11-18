@@ -8,22 +8,22 @@
    "stem": "A registrar's sheet has one row per student, with the columns ID number, name and program. How does a data model describe this sheet?",
    "options": [
     {
-     "text": "Student is the entity, the three columns are attributes, and each row is an instance.",
+     "text": "Student is the entity, the columns are attributes, and each row is an instance.",
      "correct": true,
-     "feedback": "Correct. The entity is the kind of thing the school keeps data about. Attributes describe it, and each row is one example."
+     "feedback": "The entity is the kind of thing the school keeps data about. Attributes describe it, and each row is one example."
     },
     {
-     "text": "The ID number is the entity, because it identifies each row.",
+     "text": "The ID number is the entity, because it is what identifies each row.",
      "correct": false,
      "feedback": "The ID number is a fact about a student, so it is an attribute. It helps tell instances apart, but the thing being described is the student."
     },
     {
-     "text": "Each row is an entity and each column is an instance.",
+     "text": "Each row is an entity and each column is an instance of that entity.",
      "correct": false,
      "feedback": "The roles are reversed. A column is an attribute, and a row is one instance of the entity."
     },
     {
-     "text": "Maria Santos is an entity because she is a real person.",
+     "text": "Maria Santos is an entity, because she is a real person in the school.",
      "correct": false,
      "feedback": "Maria Santos is one student, which makes her an instance. The entity is the kind of thing, Student."
     }
@@ -38,7 +38,7 @@
     {
      "text": "An entity, because a room has facts of its own and many classes refer to it.",
      "correct": true,
-     "feedback": "Correct. Capacity and projector describe the room, and one room hosts many classes. Both are signs that Room needs its own table."
+     "feedback": "Capacity and projector describe the room, and one room hosts many classes. Both are signs that Room needs its own table."
     },
     {
      "text": "An attribute, because a room is only a name such as SOM 407.",
@@ -66,10 +66,10 @@
     {
      "text": "In an Enrollment entity that links the student and the course.",
      "correct": true,
-     "feedback": "Correct. The date and the grade describe the pairing of one student with one course, so the pairing is an entity."
+     "feedback": "The date and the grade describe the pairing of one student with one course, so the pairing is an entity."
     },
     {
-     "text": "As attributes of Student, because the student earns the grade.",
+     "text": "As attributes of Student, because the student receives the grade.",
      "correct": false,
      "feedback": "A student has many courses and would then need many grades. The grade belongs to one student in one course."
     },

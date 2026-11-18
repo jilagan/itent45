@@ -1,7 +1,9 @@
     <section class="panel" id="p-backprop">
       <div class="head">
         <h2>Backpropagation</h2>
-        <p>Suppose a dish is sent back to the kitchen because it is too salty. Several people handled it before it reached the customer. To decide who should change what they do, you start from the complaint and work backward through each person, asking how much that person's work affected the result. A neural network needs the same kind of trace. A weight is a number that sets how strongly one input counts, and a slope tells you how much the loss would change if that weight were nudged up a little. In the panel "Training: adjusting a model to reduce its errors", each of the three numbers touched the answer directly, so finding its slope took one step of arithmetic. With hidden units that shortcut stops working, because a weight in the middle affects the answer only through the units after it. The method that solves this is called <b style="color:var(--ink)">backpropagation</b>.</p>
+        <p>Suppose a dish is sent back to the kitchen because it is too salty. Several people handled it before it reached the customer. To decide who should change what they do, you start from the complaint and work backward through each person, asking how much that person's work affected the result.</p>
+        <p style="margin-top:11px">A neural network needs the same kind of trace. A weight is a number that sets how strongly one input counts, and a slope tells you how much the loss would change if that weight were nudged up a little. In "How training works", each of the three numbers touched the answer directly, so finding its slope took one step of arithmetic. With hidden units that shortcut stops working, because a weight in the middle affects the answer only through the units after it.</p>
+        <p style="margin-top:11px">The method that solves this is called <b style="color:var(--ink)">backpropagation</b>. This panel traces it through a small network.</p>
         <div class="ask"><b>Think first.</b> Suppose the sauce station uses a little less salt. How much would the customer's complaint change? What would you need to know about the steps after the sauce station to answer?</div>
       </div>
       <div class="srv">
@@ -35,7 +37,7 @@
 
       <div class="whynot" style="margin-top:16px">
         <b>What you can skip</b>
-        You can skip the derivation, the notation and the proof that the method is correct. You will not implement this, because every machine learning library does it for you. It is still worth a few minutes. One common cause of a training run that produces nothing is that the blame stopped flowing backward somewhere, and people describe that problem in these words.
+        You can skip the derivation, the notation and the proof that the method is correct. You will not implement this, because every machine learning library does it for you. One common cause of a training run that produces nothing is that the blame stopped flowing backward somewhere, and people describe that problem in these words.
       </div>
     </section>
 

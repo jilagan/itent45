@@ -1,13 +1,14 @@
     <section class="panel" id="p-vectors">
       <div class="head">
         <h2>Vectors and similarity of meaning</h2>
-        <p>On a map, two pins that are close together mark places that are near each other. Words can be treated the same way. A token is only an ID number, and an ID number carries no meaning, so each token is converted into a <b>vector</b>: a list of numbers that gives the word a position. Real models use a few hundred numbers per word, so their map has a few hundred directions. This list of numbers is the word's embedding. Words that appear in similar company end up in similar places, as the previous panel, "Word embeddings: how words get positions", showed. Nobody labels the words.</p>
+        <p>On a map, two pins that are close together mark places that are near each other. Words can be treated the same way. A token is only an ID number, and an ID number carries no meaning, so each token is converted into a <b>vector</b>: a list of numbers that gives the word a position.</p>
+        <p style="margin-top:11px">Real models use a few hundred numbers per word, so their map has a few hundred directions. This list of numbers is the word's embedding. Words that appear in similar company end up in similar places, as "Word embeddings" showed. Nobody labels the words.</p>
         <div class="ask"><b>Think first.</b> Which other words would you want a search for <em>enroll</em> to find? Why might a computer place those words near <em>enroll</em> without anyone telling it they mean the same thing?</div>
       </div>
       <div class="sec" data-sec="words" data-title="Words as positions">
         <div class="whynot" style="margin-top:0">
           <b>Before you read the map</b>
-          The sixteen words on this map were placed by hand so the relationships come out cleanly. The previous panel showed the real process on a corpus small enough to watch. This panel skips ahead to what a large corpus produces. A real embedding has hundreds of dimensions, and its positions are learned from text. The map is a diagram of the idea, and the word arithmetic was set up to work.
+          The sixteen words on this map were placed by hand so the relationships come out cleanly. "Word embeddings" showed the real process on a corpus small enough to watch. This panel skips ahead to what a large corpus produces. A real embedding has hundreds of dimensions, and its positions are learned from text. The map is a diagram of the idea, and the word arithmetic was set up to work.
         </div>
         <p style="margin:14px 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Each button shows a sum of three word positions: the first word, minus the second, plus the third. The circle marked <em>result</em> is where the sum ends up, and the nearest word to it is the answer.</p>
         <div class="ctab" id="vcPick"></div>

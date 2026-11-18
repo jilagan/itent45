@@ -24,7 +24,7 @@ const BPSTEP=[
  {dir:"b", lb:"Slopes", txt:`h1&larr;x1: ${(bpDh[0]*BPX[0]).toFixed(4)} &nbsp; h1&larr;x2: ${(bpDh[0]*BPX[1]).toFixed(4)} &nbsp; h2&larr;x1: ${(bpDh[1]*BPX[0]).toFixed(4)} &nbsp; h2&larr;x2: ${(bpDh[1]*BPX[1]).toFixed(4)}`,
   note:`The same rule applies one layer further back. Every weight in the network now has a slope, and the backward pass is finished.`},
  {dir:"u", lb:"Update", txt:`every weight moves against its own slope`,
-  note:`This is the rule from "Training: adjusting a model to reduce its errors", applied to all six weights at once. Then the whole process repeats with the next example.`}
+  note:`This is the rule from "How training works", applied to all six weights at once. Then the whole process repeats with the next example.`}
 ];
 let bpAt=0, bpTimer=null;
 function bpRender(){
@@ -38,18 +38,18 @@ function bpRender(){
     g+=edge(ix[j]+11,iy[j],hx[i]-11,hy[i], bpAt>=1 && (phase!=="b"||bpAt>=7), phase==="b"&&bpAt>=7);
   for(let i=0;i<2;i++)
     g+=edge(hx[i]+11,hy[i],ox-11,oy, bpAt>=2, phase==="b"&&bpAt>=5&&bpAt<7);
-  const node=(x,y,lb,val,on,col)=>`<circle cx="${x}" cy="${y}" r="17" fill="var(--panel2)"
+  const node=(x,y,lb,val,on,col)=>`<circle cx="${x}" cy="${y}" r="19" fill="var(--panel2)"
      stroke="${on?col:"var(--line3)"}" stroke-width="${on?2.2:1.4}"/>
-    <text x="${x}" y="${y+4}" text-anchor="middle" font-size="10"
+    <text x="${x}" y="${y+4}" text-anchor="middle" font-size="12"
      fill="${on?col:"var(--faint)"}">${val}</text>
-    <text x="${x}" y="${y-24}" text-anchor="middle" font-size="9" fill="var(--faint)">${lb}</text>`;
+    <text x="${x}" y="${y-26}" text-anchor="middle" font-size="12" fill="var(--faint)">${lb}</text>`;
   for(let j=0;j<2;j++) g+=node(ix[j],iy[j],"x"+(j+1),BPX[j].toFixed(1),bpAt>=1,"var(--res)");
   for(let i=0;i<2;i++) g+=node(hx[i],hy[i],"h"+(i+1),bpAt>=1?bpH[i].toFixed(2):"?",bpAt>=1,
       (phase==="b"&&bpAt>=6)?"var(--req)":"var(--res)");
   g+=node(ox,oy,"out",bpAt>=2?bpO.toFixed(2):"?",bpAt>=2,(phase==="b")?"var(--req)":"var(--res)");
-  if(bpAt>=3) g+=`<text x="${ox}" y="${oy+40}" text-anchor="middle" font-size="9.5"
+  if(bpAt>=3) g+=`<text x="${ox}" y="${oy+40}" text-anchor="middle" font-size="12"
      fill="var(--warn)">target ${BPT}</text>`;
-  g+=`<text x="${(ix[0]+hx[0])/2}" y="18" text-anchor="middle" font-size="9"
+  g+=`<text x="${(ix[0]+hx[0])/2}" y="16" text-anchor="middle" font-size="12"
      fill="${phase==="b"?"var(--req)":"var(--faint)"}">${phase==="b"?"&larr; blame flows back":"forward &rarr;"}</text>`;
   $("#bpNet").innerHTML=g+`</svg>`;
 

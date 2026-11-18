@@ -2,7 +2,7 @@
       <div class="head">
         <h2>What is a server?</h2>
         <p>A sari-sari store is a store only while it is open and someone is behind the counter. With the shutter down, it is a room with shelves. A server works the same way. It is a program that waits for requests from other computers and answers them. Any computer can run one, including the laptop in front of you. The program that sends the requests, such as your web browser, is called the client.</p>
-        <div class="ask"><b>Think first</b> Is the laptop in front of you a server at this moment? Decide, then write down one thing you could check to find out.</div>
+        <div class="ask"><b>Think first.</b> Is the laptop in front of you a server at this moment? Decide, then write down one thing you could check to find out.</div>
         <div class="instructor">Let students commit to an answer before they click anything below. The answer depends on whether a program on the laptop is waiting for connections right now.</div>
         <div class="card" style="margin-top:14px;padding:13px 15px">
           <div class="card-t">Where this page came from</div>
@@ -22,7 +22,7 @@
           <div class="cmp">
             <div>
               <div class="artlbl" style="margin-top:0">The machine</div>
-              <p style="margin:0;font-size:.82em;color:var(--dim);line-height:1.6">A physical computer. It has a processor (the chip that runs programs), memory and a network connection. See "How a server's memory is used" for how a server's memory is divided up.</p>
+              <p style="margin:0;font-size:.82em;color:var(--dim);line-height:1.6">A physical computer. It has a processor (the chip that runs programs), memory and a network connection. How a server's memory is divided up is covered later in "Server memory".</p>
             </div>
             <div>
               <div class="artlbl" style="margin-top:0">The program</div>
@@ -79,16 +79,16 @@
           </div>
           <div class="card">
             <div class="card-t">Reading the three addresses</div>
-            <p style="margin:0 0 10px;font-size:.8em;color:var(--dim);line-height:1.55"><b style="color:var(--ink)">127.0.0.1</b> is a real address, and nothing sent to it leaves the machine. The packet goes down into the operating system's network code and turns straight back up to another program on the same computer. It still works with the wifi unplugged.</p>
-            <p style="margin:0 0 10px;font-size:.8em;color:var(--dim);line-height:1.55"><b style="color:var(--ink)">192.168.x.x</b> is a private range. Millions of homes use the same numbers at the same time, so the number alone cannot identify anything on the wider internet. Your router assigns these addresses and keeps track of which device asked for what.</p>
-            <p style="margin:0;font-size:.8em;color:var(--dim);line-height:1.55">The <b style="color:var(--ink)">public address</b> belongs to your router, and everyone in the building shares it. Many private addresses sit behind that one public address, so nothing on the internet can start a conversation with your laptop.</p>
+            <p style="margin:0 0 10px;font-size:.85em;color:var(--dim);line-height:1.55"><b style="color:var(--ink)">127.0.0.1</b> is a real address, and nothing sent to it leaves the machine. The packet goes down into the operating system's network code and turns straight back up to another program on the same computer. It still works with the wifi unplugged.</p>
+            <p style="margin:0 0 10px;font-size:.85em;color:var(--dim);line-height:1.55"><b style="color:var(--ink)">192.168.x.x</b> is a private range. Millions of homes use the same numbers at the same time, so the number alone cannot identify anything on the wider internet. Your router assigns these addresses and keeps track of which device asked for what.</p>
+            <p style="margin:0;font-size:.85em;color:var(--dim);line-height:1.55">The <b style="color:var(--ink)">public address</b> belongs to your router, and everyone in the building shares it. Many private addresses sit behind that one public address, so nothing on the internet can start a conversation with your laptop.</p>
           </div>
         </div>
       </div>
 
       <div class="sec" data-sec="host-the-capstone" data-title="Hosting the capstone on your laptop">
         <div class="card-t">Can you host the capstone on your laptop?</div>
-        <p style="margin:0 0 6px;font-size:.85em;color:var(--dim);line-height:1.6">Students ask this every year. Your laptop is a server in the sense defined at the start of this topic. Serving the public internet from it needs six things, and your laptop has one of them.</p>
+        <p style="margin:0 0 6px;font-size:.85em;color:var(--dim);line-height:1.6">Students ask this every year. A laptop meets the definition of a server, because a program on it can wait for requests. Serving the public internet from it needs six things, and your laptop has one of them.</p>
         <div class="card" style="padding:12px 16px;overflow-x:auto;margin-top:12px">
           <table class="hostreq"><thead><tr>
             <th>What public traffic needs</th><th>Your laptop</th><th>A rented server</th>
@@ -103,7 +103,7 @@
         </div>
         <div class="whynot" style="margin-top:16px">
           <b>What a rented server adds</b>
-          Each row your laptop fails is something a hosting company sells: a public address that does not change, an always-on machine with real upload capacity, and a network that leaves the needed ports open. See "Virtualization and what the cloud means" for how one physical machine is divided into many rented servers, and "Cloud cost: capital expenditure and operating expenditure" for what that costs. A laptop does meet the definition of a server. The table shows what it lacks for public hosting.
+          Each row your laptop fails is something a hosting company sells: a public address that does not change, an always-on machine with real upload capacity, and a network that leaves the needed ports open. How one physical machine is divided into many rented servers is covered later in "Virtual machines and the cloud", and the cost in "CapEx and OpEx". A laptop does meet the definition of a server. The table shows what it lacks for public hosting.
         </div>
       </div>
     </section>

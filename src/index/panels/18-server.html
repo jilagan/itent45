@@ -1,11 +1,14 @@
     <section class="panel" id="p-server">
       <div class="head">
         <h2>Server capacity: workers, queues and requests per second</h2>
-        <p>A fast-food branch has a few cashiers and one line. Customers arrive whether or not a cashier is free. They wait in the line, and each cashier serves one customer at a time. If customers arrive faster than the cashiers can serve them, the line keeps growing. A server works the same way. Each request, which is a message from a browser asking for a page or for data, is a customer. The workers are the cashiers and the queue is the line. A worker takes the next request from the queue only when it has finished the one it is handling.</p>
-        <p>This panel uses the same machine and the same workers as "How a server's memory is used". There you counted how many workers fit in RAM. Here you see how many requests those workers can finish. Throughput is the number of requests finished per second (rps). Latency is the time from a request arriving to its answer being finished, and p95 latency is the time that 95 out of 100 requests stay under. Handler time is how long one worker spends on one request. Utilization is the arrival rate divided by the most the workers can finish per second. When arrivals exceed that maximum, the queue grows, latency keeps rising and throughput stops increasing. Several machines appear in "Scaling out with a load balancer".</p>
-        <div class="ask"><b>Think first</b> Set workers to 4 and handler time to 200&nbsp;ms. What is the maximum number of requests per second this machine can serve? Work it out on paper. Then raise the arrival rate above your answer and watch p95 latency.</div>
+        <p>A fast-food branch has a few cashiers and one line. Customers arrive whether or not a cashier is free, and each cashier serves one customer at a time. If customers arrive faster than the cashiers can serve them, the line keeps growing.</p>
+        <p>A server works the same way. Each request, which is a message from a browser asking for a page or for data, is a customer. The workers are the cashiers and the queue is the line. A worker takes the next request from the queue only when it has finished the one it is handling.</p>
+        <p>This panel uses the same machine and workers as "Server memory". There you counted how many workers fit in RAM. Here you see how many requests those workers can finish. Several machines are covered later in "Load balancers and scaling".</p>
+        <div class="ask"><b>Think first.</b> Set workers to 4 and handler time to 200&nbsp;ms (the time one worker spends on one request). What is the maximum number of requests per second this machine can serve? Work it out on paper. Then raise the arrival rate above your answer and watch p95 latency.</div>
         <div class="instructor">The answer is 4 workers divided by 0.2 seconds, which is 20 requests per second. Watch for students who multiply the two numbers. Ask what they expect p95 latency to do when arrivals reach 30 per second.</div>
       </div>
+
+      <p>Throughput is the number of requests finished per second (rps). Latency is the time from a request arriving to its answer being finished, and p95 latency is the time that 95 out of 100 requests stay under. Utilization is the arrival rate divided by the most the workers can finish per second. When arrivals exceed that maximum, the queue grows, latency keeps rising and throughput stops increasing.</p>
 
       <div class="srv">
         <div>
@@ -57,7 +60,7 @@
           <div class="rtt-note" style="margin-top:14px">
             Maximum rate = workers ÷ handler time.<br>
             <b id="capLine">4 ÷ 0.05 s = 80 rps</b>
-            <br><br><span style="color:var(--faint)">These are the same workers as in "How a server's memory is used": separate processes on this one machine.</span><br>
+            <br><br><span style="color:var(--faint)">These are the same workers as in "Server memory": separate processes on this one machine.</span><br>
             <b id="memLink" style="color:var(--res)"></b>
           </div>
         </div>

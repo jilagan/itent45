@@ -1,9 +1,10 @@
     <section class="panel" id="p-region">
       <div class="head">
         <h2>Regions, availability zones and failover</h2>
-        <p>Think of a bank with branches in Manila and Cebu. A customer in Manila is served faster at the Manila branch. If a typhoon closes that branch, the Cebu branch can keep serving customers only if it already has a copy of the records. Cloud providers organize their locations in a similar way. A <b>region</b> is a geographic area that contains several data centers, like a city. An <b>availability zone</b> is one data center in a region, like one building in that city. Zones in the same region are far enough apart to fail separately and close enough to copy data between them almost instantly. <b>Failover</b> means switching to a standby copy when the main one fails.</p>
-        <p>In "Why loading a page takes several round trips", most of a page load was round trips, and more server capacity did not make a slow round trip shorter. Latency is the delay before a response arrives, and it depends on distance. Choosing a region trades speed, survival and cost against each other.</p>
-        <div class="ask"><b>Think first</b> Light in fiber travels about 200,000 km per second. A round trip between Manila and Virginia covers 27,000 km. What is the fastest a response could come back on a perfect network with no server at all?</div>
+        <p>Think of a bank with branches in Manila and Cebu. A customer in Manila is served faster at the Manila branch. If a typhoon closes that branch, the Cebu branch can keep serving customers only if it already has a copy of the records.</p>
+        <p>Cloud providers organize their locations in a similar way. A <b>region</b> is a geographic area that contains several data centers, like a city. An <b>availability zone</b> is one data center in a region, like one building in that city. Zones in the same region are far enough apart to fail separately and close enough to copy data between them almost instantly. <b>Failover</b> means switching to a standby copy when the main one fails.</p>
+        <p>Latency is the delay before a response arrives, and it depends on distance. In "Round trips and latency", most of a page load was round trips, and more server capacity did not make a slow round trip shorter. Choosing a region trades speed, survival and cost against each other.</p>
+        <div class="ask"><b>Think first.</b> Light in fiber travels about 200,000 km per second. A round trip between Manila and Virginia covers 27,400 km. What is the fastest a response could come back on a perfect network with no server at all?</div>
       </div>
 
       <div class="sec" data-sec="distance" data-title="What distance costs">
@@ -31,12 +32,12 @@
                 <label>Region <span class="val" id="vRegion">Singapore</span></label>
                 <input type="range" id="sRegion" min="0" max="7" value="1">
               </div>
-              <p style="margin:8px 0 0;font-size:.74em;color:var(--faint);line-height:1.5">You can also click a region on the map.</p>
+              <p style="margin:8px 0 0;color:var(--faint);line-height:1.5">You can also click a region on the map.</p>
             </div>
             <div class="rtt-note" style="margin-top:15px">
-              The physics floor is the round-trip distance divided by the speed of light in glass fiber. Real networks take about 1.5 times that, because packets pass through switches and rarely travel in a straight line.
+              The minimum round trip is the round-trip distance divided by the speed of light in glass fiber. Real networks take about 1.5 times that, because packets pass through switches and rarely travel in a straight line.
               <br><br>Time to first byte is the wait before the first part of the page arrives. Here it is five round trips plus the 40 ms your code takes to run.
-              <br><br>No code, purchase or optimization gets you below the floor. Only moving closer does.
+              <br><br>No code, purchase or optimization gets below this minimum. Only moving closer does.
             </div>
           </div>
         </div>
@@ -44,7 +45,7 @@
 
       <div class="sec" data-sec="failover" data-title="What happens when something fails">
         <div class="card-t">What happens when something fails</div>
-        <p style="margin:0 0 14px;font-size:.85em;color:var(--dim);line-height:1.6">A load balancer uses health checks to stop sending traffic to a failed machine, as in "Scaling out with a load balancer". Health checks help when one machine fails. A data center failure needs one of the four options below, listed from cheapest to most expensive.</p>
+        <p style="margin:0 0 14px;font-size:.85em;color:var(--dim);line-height:1.6">A load balancer uses health checks to stop sending traffic to a failed machine, as in "Load balancers and scaling". Health checks help when one machine fails. A data center failure needs one of the four options below, listed from cheapest to most expensive.</p>
 
         <div class="srv">
           <div class="card">

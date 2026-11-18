@@ -8,9 +8,9 @@
    "stem": "A university already has a web API that returns course data as JSON. It now wants an Android app that shows the same courses. What does the Android app need from the backend?",
    "options": [
     {
-     "text": "Nothing new. The app can call the same URLs and display the JSON in its own way",
+     "text": "Nothing new. The app can call the same URLs and show the JSON its own way",
      "correct": true,
-     "feedback": "The API does not know which client is calling. Any client that can send HTTP requests and read JSON can use it."
+     "feedback": "The API returns the same data whatever client calls it. Any client that can send HTTP requests and read JSON can use it."
     },
     {
      "text": "A separate backend for Android, because Android apps cannot read JSON",
@@ -18,7 +18,7 @@
      "feedback": "Android apps read JSON without difficulty. A second backend would also mean two copies of the data and the business rules."
     },
     {
-     "text": "The web page's HTML, shown inside the app",
+     "text": "The web page's HTML, shown inside the app in a built-in browser",
      "correct": false,
      "feedback": "HTML contains layout decisions for a browser. A native app is built to draw its own screens from the data."
     }
@@ -31,17 +31,17 @@
    "stem": "A system returns finished HTML tables from its server. The university wants an iOS app that shows the same course list. What is the main difficulty?",
    "options": [
     {
-     "text": "The data is mixed with layout, so the app must scrape the HTML or the team must build an API first",
+     "text": "The data is mixed with layout, so someone must scrape the HTML or build an API.",
      "correct": true,
      "feedback": "There is no separate data layer to call. Scraping breaks whenever the page layout changes, so building an API means pulling the logic out of the page-generating code."
     },
     {
-     "text": "iOS cannot connect to a server that returns HTML",
+     "text": "iOS apps cannot open a connection to a server that returns HTML.",
      "correct": false,
      "feedback": "Any app can connect to the server. The problem is that the response is built for a browser and not for another program."
     },
     {
-     "text": "The server does not hold enough data for an app",
+     "text": "The server does not hold enough data to fill a mobile app's screens.",
      "correct": false,
      "feedback": "The data is the same. It is the form of the response that makes the app hard to build."
     }
@@ -59,12 +59,12 @@
      "feedback": "This is an additive change. Old clients read the fields they expect and skip the rest."
     },
     {
-     "text": "The old app crashes until the user updates",
+     "text": "The old app crashes until the user updates to the new version",
      "correct": false,
      "feedback": "A crash would happen if a field the app expects had been renamed or removed. Adding a field removes nothing that the app needs."
     },
     {
-     "text": "The old app shows the new field automatically",
+     "text": "The old app shows the new field automatically without an update",
      "correct": false,
      "feedback": "An app can only show fields its code knows about. The new field appears after the user updates."
     }

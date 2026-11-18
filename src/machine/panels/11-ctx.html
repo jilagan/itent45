@@ -1,7 +1,8 @@
     <section class="panel" id="p-ctx">
       <div class="head">
         <h2>The context window</h2>
-        <p>A classroom whiteboard has room for a fixed number of lines. When it is full, someone erases the oldest line to make space for a new one. A language model's <b>context window</b> works like that whiteboard. It is the amount of text, counted in tokens (see "Tokens: how text is fed to a model"), that the model can see when it writes a reply. The system prompt, which is the standing instructions an app gives the model, the files you pasted, every turn of the conversation and the reply being written all share the same window. The model only sees what fits in its context window. Older text drops out without any warning. On the whiteboard a person decides what to erase. Here the oldest text is usually the part that goes.</p>
+        <p>A classroom whiteboard has room for a fixed number of lines. When it is full, someone erases the oldest line to make space for a new one. A language model's <b>context window</b> works like that whiteboard. On the whiteboard a person decides what to erase. In the model, the oldest text usually goes first, without any warning.</p>
+        <p style="margin-top:11px">The context window is the amount of text, counted in tokens (see "Tokens"), that the model can see when it writes a reply. The system prompt, which is the standing instructions an app gives the model, the files you pasted, every turn of the conversation and the reply being written all share the same window. The model only sees what fits.</p>
         <div class="ask"><b>Think first.</b> You have been working with an AI coding assistant for an hour, and it has started ignoring an instruction you gave at the start. What could explain this?</div>
       </div>
       <div class="srv">
@@ -30,7 +31,7 @@
               <input type="range" id="sTurns" min="0" max="40" value="0"></div>
           </div>
           <div class="rtt-note" style="margin-top:14px">
-            This works like the memory budget in the Module 1 site, "What a server holds". There, the operating system and other programs use part of the server's memory before your code starts. Here, the system prompt and whatever you paste use part of the window.
+            This works like the memory budget in the Module 1 site, "Server memory". There, the operating system and other programs use part of the server's memory before your code starts. Here, the system prompt and whatever you paste use part of the window.
             <br><br>Move the files slider past half the window and watch what happens to the conversation.
           </div>
         </div>

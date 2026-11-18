@@ -8,22 +8,22 @@
    "stem": "Students drop a course when they study very little and when they take on far too many other commitments. The students in the middle stay. Why can a single straight line not separate the stayers from the dropouts?",
    "options": [
     {
-     "text": "The stayers are in the middle with dropouts on both sides, and a line can only split the plot into two sides.",
+     "text": "A line makes only two sides, and the stayers have dropouts on both sides of them.",
      "correct": true,
      "feedback": "Whichever way you angle one line, some stayers end up on the same side as dropouts."
     },
     {
-     "text": "There are too few students to place a line.",
+     "text": "There are too few students in the data to place a line between the groups.",
      "correct": false,
      "feedback": "The number of students is not the issue. The shape of the groups is."
     },
     {
-     "text": "The line has not been trained for long enough.",
+     "text": "The line has not been trained for long enough to find the right angle.",
      "correct": false,
      "feedback": "More training cannot fix a limit in the shape of a straight line."
     },
     {
-     "text": "Attendance matters more than hours studied.",
+     "text": "Attendance matters more than hours studied, so one line cannot weigh both.",
      "correct": false,
      "feedback": "Which measurement matters more does not change the fact that the stayers are surrounded."
     }
@@ -36,22 +36,22 @@
    "stem": "Before you try it: you switch off \"Keep the nonlinearity\" and move the Units slider from 1 up to 8. What do you expect to happen to the accuracy?",
    "options": [
     {
-     "text": "It does not improve. Adding straight lines together gives another straight line.",
+     "text": "It stays flat. Adding straight lines together gives another straight line.",
      "correct": true,
      "feedback": "Without the nonlinearity, the layer can only add its units, and the sum of straight lines is a straight line. More units give no new shape."
     },
     {
-     "text": "It rises to 100 percent as units are added.",
+     "text": "It rises to 100 percent as units are added, because more lines fit better.",
      "correct": false,
      "feedback": "That happens only when the nonlinearity is on. Switched off, the units cannot combine into a curve."
     },
     {
-     "text": "It rises a little with each unit.",
+     "text": "It rises a little with each unit, because each line cuts off a few more students.",
      "correct": false,
      "feedback": "Each extra unit adds nothing new when the nonlinearity is off."
     },
     {
-     "text": "It falls to zero.",
+     "text": "It falls to zero, because the lines cancel each other out completely.",
      "correct": false,
      "feedback": "The network still draws a straight line, so some students are classified correctly."
     }
@@ -65,22 +65,22 @@
    "stem": "A neural network diagram for the dropout problem has four circles in the middle row. What does each circle correspond to on the plot?",
    "options": [
     {
-     "text": "One straight line, whose angle and position come from that unit's weights and bias",
+     "text": "One straight line, set by that unit's weights and bias",
      "correct": true,
      "feedback": "A unit is one line. Its two input weights set the angle and its bias sets how far out it sits."
     },
     {
-     "text": "One student in the data",
+     "text": "One student in the data, shown as a point on the plot",
      "correct": false,
      "feedback": "Students are the points on the plot. The circles in the diagram are units."
     },
     {
-     "text": "One of the four regions where students stay",
+     "text": "One of the four regions of the plot where students stay",
      "correct": false,
      "feedback": "The stay region is the overlap of all the lines. It is not assigned to one unit."
     },
     {
-     "text": "One of the measurements a person chose to feed in",
+     "text": "One of the measurements a person chose to feed into the network",
      "correct": false,
      "feedback": "The measurements are the inputs on the left of the diagram. The middle circles are hidden units that the network sets up itself."
     }
@@ -93,22 +93,22 @@
    "stem": "A bank uses a deep learning model to score loan applications. The model is very accurate, but a regulator asks which measurements drove a particular rejection. Why is that hard to answer?",
    "options": [
     {
-     "text": "The model works out its own features inside its hidden layers, and no single number inside it has a plain meaning.",
+     "text": "It builds its own features inside hidden layers, and no single number there has a plain meaning.",
      "correct": true,
      "feedback": "With hand-picked features you could point at the one that was wrong. In a deep network, billions of numbers combine and none of them means anything alone."
     },
     {
-     "text": "Deep learning models are always less accurate than simpler ones.",
+     "text": "Deep learning models are always less accurate than simple ones, so the question has no good answer.",
      "correct": false,
      "feedback": "Deep models are often more accurate. The difficulty is explaining them."
     },
     {
-     "text": "The bank did not keep the applicant's data.",
+     "text": "The bank did not keep the applicant's data, so there is nothing to examine.",
      "correct": false,
      "feedback": "Having the data does not explain what the hidden layers did with it."
     },
     {
-     "text": "The output unit does not produce an answer.",
+     "text": "The output unit does not produce an answer for rejected applications.",
      "correct": false,
      "feedback": "The output unit does produce an answer. The hidden units that fed it are hard to interpret."
     }

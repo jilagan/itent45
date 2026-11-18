@@ -7,7 +7,7 @@
 
       <div class="sec" data-sec="linear-algebra" data-title="Vectors and the dot product">
         <div class="card-t" style="margin-top:8px">1 &middot; Vectors and the dot product</div>
-        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Suppose a course grades exams at weight 0.6 and projects at weight 0.4, and you score 80 on exams and 90 on projects. Your grade is 80 &times; 0.6 + 90 &times; 0.4 = 84. You multiplied each pair of numbers and added the results to get one number. That is a <b style="color:var(--ink)">dot product</b>. A <b style="color:var(--ink)">vector</b> is a list of numbers, so your scores [80, 90] are a vector and the weights [0.6, 0.4] are another. Two numbers can mark a position on a page. Three hundred numbers mark a position in a space you cannot draw, which is where words are placed in "Vectors and similarity of meaning".</p>
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">Suppose a course grades exams at weight 0.6 and projects at weight 0.4, and you score 80 on exams and 90 on projects. Your grade is 80 &times; 0.6 + 90 &times; 0.4 = 84. You multiplied each pair of numbers and added the results to get one number. That is a <b style="color:var(--ink)">dot product</b>. A <b style="color:var(--ink)">vector</b> is a list of numbers, so your scores [80, 90] are a vector and the weights [0.6, 0.4] are another. Two numbers can mark a position on a page. Three hundred numbers mark a position in a space you cannot draw, which is where words are placed in "Vectors and similarity".</p>
         <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">In the picture, vector <b>a</b> is fixed and you swing vector <b>b</b>. The dot product is large when the two arrows point the same way. It is zero at a right angle and negative when they point apart.</p>
         <div class="srv">
           <div>
@@ -26,7 +26,7 @@
             <div class="rtt-note" style="margin-top:12px" id="mtDotNote"></div>
             <div class="whynot" style="margin-top:13px">
               <b>Where you have met it</b>
-              The attention weight in "Attention and the transformer" is a dot product between what one word is asking for and what another word offers. The similarity score in "Vectors and similarity of meaning" is the same operation with the lengths divided out, which is called cosine similarity. A unit in "Neural networks: combining several lines" multiplies each input by a weight and adds the results, which is a dot product with a fixed number called a bias added at the end.
+              The attention weight in "Attention and transformers" is a dot product between what one word is asking for and what another word offers. The similarity score in "Vectors and similarity" is the same operation with the lengths divided out, which is called cosine similarity. A unit in "Neural networks" multiplies each input by a weight and adds the results, which is a dot product with a fixed number called a bias added at the end.
               <br><br>A <b style="color:var(--ink)">matrix</b> is a grid of numbers, which you can read as a stack of vectors. Multiplying by a matrix performs many dot products at once. This is the meaning of the notation <code>Wx</code>: <code>W</code> is the matrix of weights and <code>x</code> is the input vector.
             </div>
           </div>
@@ -58,7 +58,7 @@
             </div>
             <div class="whynot" style="margin-top:13px">
               <b>Where you have met it</b>
-              The One step button in "Training: adjusting a model to reduce its errors" does exactly this. It works out the slope for each of the three numbers, moves each one against its slope, and repeats. The learning-rate slider sets how far each move goes.
+              The One step button in "How training works" does exactly this. It works out the slope for each of the three numbers, moves each one against its slope, and repeats. The learning-rate slider sets how far each move goes.
             </div>
           </div>
         </div>
@@ -66,7 +66,7 @@
 
       <div class="sec" data-sec="statistics" data-title="Probability distributions and loss">
         <div class="card-t" style="margin-top:8px">3 &middot; Probability distributions and loss</div>
-        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A weather forecast might say 60% rain, 30% cloudy and 10% clear. That is a <b style="color:var(--ink)">distribution</b>: a set of outcomes, each with a probability, adding up to 100%. The model's choice of next word in "How a language model writes: predicting the next word" is a distribution over words. A <b style="color:var(--ink)">loss</b> is one number that says how wrong the model was, given what turned out to be true.</p>
+        <p style="margin:0 0 12px;font-size:.85em;color:var(--dim);line-height:1.6">A weather forecast might say 60% rain, 30% cloudy and 10% clear. That is a <b style="color:var(--ink)">distribution</b>: a set of outcomes, each with a probability, adding up to 100%. The model's choice of next word in "Predicting the next word" is a distribution over words. A <b style="color:var(--ink)">loss</b> is one number that says how wrong the model was, given what turned out to be true.</p>
         <div class="srv">
           <div>
             <div class="probs" id="mtDist"></div>
@@ -88,7 +88,7 @@
             </div>
             <div class="whynot" style="margin-top:13px">
               <b>Where you have met it</b>
-              This is the number that falls in "Training: adjusting a model to reduce its errors". Temperature, in "How a language model writes: predicting the next word", changes the shape of the distribution the model samples from. The loss measures how much probability sits on the right answer.
+              This is the number that falls in "How training works". Temperature, in "Predicting the next word", changes the shape of the distribution the model samples from. The loss measures how much probability sits on the right answer.
             </div>
           </div>
         </div>

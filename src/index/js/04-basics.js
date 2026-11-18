@@ -6,19 +6,19 @@ const CTX=(()=>{
     mode:"file",
     line:`Your address bar starts with <code>file://</code>. <b class="i">No server is involved.</b> The browser opened this document straight from your disk, the way it opens a photo. No program is listening and no network was used.`,
     laptop:`Not at this moment. Your address bar says <code>file://</code>, so the browser read this file from the disk and no program is listening. If you run <code>python3 start.py</code> in a terminal (a window where you type commands) from the course folder, the address becomes <code>localhost:8080</code>. From that point your laptop is a server.`,
-    close:`Right now it is not. The address bar shows <code>file://</code>, which means the browser opened a file and did not make a connection. If you run <code>python3 start.py</code> in a terminal (a window where you type commands), Python starts a program that waits in a loop on port 8080, a number that identifies one program on your computer. Your browser then connects to it, and the two exchange HTTP messages, the request and reply format of the web. The same computer plays both roles. So <code>localhost:8080</code> means this computer, port 8080. A classmate who opens that link reaches their own computer, because localhost always means the computer you are typing on. The next topic is "The three tiers of a web application".`
+    close:`Right now it is not. The address bar shows <code>file://</code>, which means the browser opened a file and did not make a connection. If you run <code>python3 start.py</code> in a terminal (a window where you type commands), Python starts a program that waits in a loop on port 8080, a number that identifies one program on your computer. Your browser then connects to it, and the two exchange HTTP messages, the request and reply format of the web. The same computer plays both roles. So <code>localhost:8080</code> means this computer, port 8080. A classmate who opens that link reaches their own computer, because localhost always means the computer you are typing on. The next topic is "Three tiers".`
   };
   if(host==="localhost"||host==="127.0.0.1") return {
     mode:"local",
     line:`<code>${host}${port?":"+port:""}</code>. This page arrived over HTTP from a program running on <b class="i">your own machine</b>, most likely the one you started with <code>python3 start.py</code>. Your laptop is the server and the client at the same time.`,
     laptop:`Yes, right now, and this page is the proof. It did not come from your disk. It came over HTTP from a program listening on port ${port||"8080"} of this machine. If you stop that program, this page can no longer be reloaded.`,
-    close:`Yes, it already is. This page came over HTTP from a program listening on port ${port||"8080"} of this computer, which is what <code>${host}${port?":"+port:""}</code> in your address bar means. Python started that program, and it waits in a loop for connections. Your browser connected to it and the two exchanged HTTP messages, the request and reply format of the web. The same computer plays both roles. A classmate who opens the same link reaches their own computer, because localhost always means the computer you are typing on. The next topic is "The three tiers of a web application".`
+    close:`Yes, it already is. This page came over HTTP from a program listening on port ${port||"8080"} of this computer, which is what <code>${host}${port?":"+port:""}</code> in your address bar means. Python started that program, and it waits in a loop for connections. Your browser connected to it and the two exchanged HTTP messages, the request and reply format of the web. The same computer plays both roles. A classmate who opens the same link reaches their own computer, because localhost always means the computer you are typing on. The next topic is "Three tiers".`
   };
   return {
     mode:"remote",
     line:`<code>${host}</code>. This page came over the network from a machine you have never seen, and your laptop is <b class="i">the client</b> in that exchange. Nothing on your computer is serving it.`,
     laptop:`Not at this moment. This page came from <code>${host}</code>, a machine somewhere else. If you download the course files and run <code>python3 start.py</code>, your laptop starts listening on port 8080 and is a server for as long as that program runs.`,
-    close:`Not at this moment. This copy came from <code>${host}</code>, so your laptop is the client. If you download the course files and run <code>python3 start.py</code> in a terminal (a window where you type commands), that changes. Python starts a program that waits in a loop on port 8080, a number that identifies one program on your computer. Your browser connects to it and the two exchange HTTP messages, the request and reply format of the web. The same computer plays both roles. So <code>localhost:8080</code> means this computer, port 8080. A classmate who opens that link reaches their own computer, because localhost always means the computer you are typing on. The next topic is "The three tiers of a web application".`
+    close:`Not at this moment. This copy came from <code>${host}</code>, so your laptop is the client. If you download the course files and run <code>python3 start.py</code> in a terminal (a window where you type commands), that changes. Python starts a program that waits in a loop on port 8080, a number that identifies one program on your computer. Your browser connects to it and the two exchange HTTP messages, the request and reply format of the web. The same computer plays both roles. So <code>localhost:8080</code> means this computer, port 8080. A classmate who opens that link reaches their own computer, because localhost always means the computer you are typing on. The next topic is "Three tiers".`
   };
 })();
 {
@@ -37,7 +37,7 @@ const GUESS=[
   x:"Many real websites run on hardware weaker than this. A server needs a program that waits and a network that can reach it. It does not need expensive equipment."},
  {n:"A rented cloud server", d:"rented by the hour from a company",
   a:"yes",
-  x:"Most people picture this one. It is a share of a larger machine, used by several customers at once and created by software in about a minute. See \"Virtualization and what the cloud means\"."},
+  x:"Most people picture this one. It is a share of a larger machine, used by several customers at once and created by software in about a minute. This is covered later in \"Virtual machines and the cloud\"."},
  {n:"Your phone", d:"in your pocket",
   a:"yes, technically",
   x:"A phone has a processor, memory and a network connection. Apps exist that turn one into a web server. It is a bad idea for other reasons, but nothing in the definition rules it out."},
@@ -63,11 +63,11 @@ $("#guessVerdict").className="verdict";
 $("#guessVerdict").innerHTML="<b>Decide first</b>Say yes or no to yourself, then click a device to check.";
 
 const URLP=[
- {t:"https", c:"scheme", d:"<b>How to talk.</b> <code>https</code> means HTTP with the conversation encrypted (scrambled so only the two ends can read it), so anyone between you and the server sees scrambled data and never your password. <code>http</code> is the same conversation without encryption. See \"Why loading a page takes several round trips\" for what the encryption costs in waiting time."},
+ {t:"https", c:"scheme", d:"<b>How to talk.</b> <code>https</code> means HTTP with the conversation encrypted (scrambled so only the two ends can read it), so anyone between you and the server sees scrambled data and never your password. <code>http</code> is the same conversation without encryption. The cost in waiting time is covered later in \"Round trips and latency\"."},
  {t:"://",  c:"", d:"Punctuation. It separates the scheme from the host and has no meaning of its own."},
  {t:"enlist.university.edu", c:"host", d:"<b>Which machine.</b> A name, because a number such as <code>18.141.62.7</code> is hard to remember and hard to change. Before anything else happens, the name has to be turned into an IP address, which is the number that identifies a machine on the network. That lookup is called DNS (the Domain Name System). The first lookup costs a round trip of its own, a message out and the reply back."},
  {t:":443", c:"port", d:"<b>Which program on that machine.</b> One computer can run many programs that listen, so the port number says which one you want. By convention <code>443</code> is for HTTPS and <code>80</code> is for HTTP, so browsers add them for you and hide them. The starter project for this course uses <code>8000</code>, which has no special meaning."},
- {t:"/api/courses", c:"path", d:"<b>Which thing on that program.</b> The developers of the server decide this part. See \"HTTP methods, URLs and status codes (REST)\" for how to design it well. The short rule is that a path should name a thing, such as courses."},
+ {t:"/api/courses", c:"path", d:"<b>Which thing on that program.</b> The developers of the server decide this part. How to design it well is covered later in \"HTTP verbs and status codes\". The short rule is that a path should name a thing, such as courses."},
  {t:"?sem=1", c:"query", d:"<b>Extra detail.</b> Filters, page numbers and search terms. It is part of the address, so it appears in server logs and browser history. Never put a password here."}
 ];
 $("#urlBar").innerHTML=URLP.map((p,i)=>
@@ -113,13 +113,13 @@ renderIface();
 const WHO=[
  {id:"me",   n:"You, on your own laptop", s:"the machine running it",
   r:[true,true,true],
-  v:`<b>Everything works</b>All three addresses reach it, because you are on the machine itself. This is why a project that "works on my machine" can still fail for everyone else.`},
+  v:`<b>Everything works</b>All three addresses reach it, because you are on the machine itself. A project that "works on my machine" can still fail for everyone else.`},
  {id:"lan",  n:"A classmate on the same wifi", s:"same room, same network",
   r:[false,true,true],
   v:`<b>The local network address works. Localhost does not.</b>When your classmate types <code>localhost</code>, their own computer answers, because localhost always means the computer you type it on. If you give them <code>192.168.1.7:8080</code>, it works as long as you are both on the same wifi.`},
  {id:"far",  n:"Someone at home in Cebu", s:"a different network entirely",
   r:[false,false,true],
-  v:`<b>Only the public address works</b>The row that works is the university's own public server, which is not your laptop. Your laptop has no address that the wider internet can reach. <code>192.168.x.x</code> is a private range used inside thousands of networks at once, so it means nothing from outside. To let this person in, you would need a public address and something that forwards the traffic to your laptop. Cloud providers sell machines with public addresses. See "Virtualization and what the cloud means".`}
+  v:`<b>Only the public address works</b>The row that works is the university's own public server, which is not your laptop. Your laptop has no address that the wider internet can reach. <code>192.168.x.x</code> is a private range used inside thousands of networks at once, so it means nothing from outside. To let this person in, you would need a public address and something that forwards the traffic to your laptop. Cloud providers sell machines with public addresses. This is covered later in "Virtual machines and the cloud".`}
 ];
 const TARGETS=[
  {a:"127.0.0.1:8080", s:"localhost, this machine"},

@@ -1,7 +1,8 @@
     <section class="panel" id="p-prompt">
       <div class="head">
         <h2>Writing better prompts</h2>
-        <p>If you tell a tricycle driver "somewhere near the market," you could be dropped at any of a dozen places. If you say "the Loyola Heights gate on Katipunan," only one place fits. A prompt works the same way. A prompt is the text you give a language model, and a constraint is a fact or limit you add to it. Each constraint rules out some of the answers the model might give. Unlike the driver, the model does not ask what you meant. It picks one answer from the range that is left. See "How a language model writes: predicting the next word" for how that choice works.</p>
+        <p>If you tell a tricycle driver "somewhere near the market," you could be dropped at any of a dozen places. If you say "the Loyola Heights gate on Katipunan," only one place fits.</p>
+        <p style="margin-top:11px">A prompt works the same way. A prompt is the text you give a language model, and a constraint is a fact or limit you add to it. Each constraint rules out some of the answers the model might give. A driver can ask what you meant. The model picks one answer from the range that is left, as described in "Predicting the next word".</p>
         <div class="ask"><b>Think first.</b> Suppose you ask a model for "a function to enroll a student in a course." How many different working answers could that describe? Which one do you expect the model to give you most often, and why?</div>
         <div class="instructor">Let students commit to a guess before they open the widget. Most guess the careful-looking answer that checks the seat count first. Ask them what happens when two students click at the same moment.</div>
       </div>
@@ -38,7 +39,7 @@
       </div>
       <div class="whynot" style="margin-top:20px">
         <b>Why the most likely answer is wrong</b>
-        With nothing specified, the most likely answer reads the seat count, checks it, and then creates the row. It looks careful and most tutorials show it. It fails when two students click at the same moment, because both can read the same count before either one writes. This failure is called a race condition. You can see it in the Module 1 site, "Transactions and two users changing the same data", and in "Finding mistakes in AI-written code".
+        With nothing specified, the most likely answer reads the seat count, checks it, and then creates the row. It looks careful and most tutorials show it. It fails when two students click at the same moment, because both can read the same count before either one writes. This failure is called a race condition. You can see it in the Module 1 site, "Transactions", and later in "Checking AI-written code".
         <br><br>The model gives this answer because it is the most common pattern in the text it learned from, and nothing in your prompt ruled it out.
       </div>
     </section>

@@ -47,7 +47,7 @@ function sqlRender(){
     const cls=add?"added":hit?"picked":"";
     const c=f=>`<td class="${f==="code"?"k ":""}${chg&&f!=="code"?"hl":""}">${r[f]}</td>`;
     return `<tr class="${cls}">${c("code")}${c("title")}${c("units")}${c("slots")}</tr>`;
-  }).join("") : `<tr><td colspan="4" style="color:var(--warn);font-size:.8em">no rows</td></tr>`;
+  }).join("") : `<tr><td colspan="4" style="color:var(--warn);font-size:.85em">no rows</td></tr>`;
   $("#sqlCount").textContent=SQ.rows.length+" rows";
 
   $("#sqlList").innerHTML=STMTS.map(q=>`

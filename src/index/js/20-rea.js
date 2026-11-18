@@ -12,13 +12,13 @@ const ERD_E={
 const ERD_R=[["enrollment","student"],["enrollment","section"],
              ["payment","student"],["section","course"],["section","room"]];
 const ERD_POS={
-  tidy:{payment:[34,20],enrollment:[214,92],section:[396,166],
-        student:[396,292],course:[606,232],room:[606,318]},
-  messy:{payment:[430,300],enrollment:[70,180],section:[610,60],
-         student:[250,40],course:[440,140],room:[80,320]}
+  tidy:{payment:[30,30],enrollment:[250,110],section:[470,190],
+        student:[470,326],course:[680,262],room:[680,350]},
+  messy:{payment:[473,330],enrollment:[77,198],section:[671,66],
+         student:[275,44],course:[484,154],room:[88,352]}
 };
 let erdMode="messy";
-const ERD_W=150, ERD_H=42;
+const ERD_W=180, ERD_H=54;
 function erdFill(v){ return v==="high"?"var(--req)":v==="mid"?"var(--line3)":"var(--res)"; }
 /* where a line from the centre of a box towards (tx,ty) crosses that box's edge */
 function edgePt(bx,by,bw,bh,tx,ty){
@@ -40,11 +40,11 @@ function crow(ex,ey,tx,ty){
 function renderErd(){
   const P=ERD_POS[erdMode];
   const c=id=>[P[id][0]+ERD_W/2, P[id][1]+ERD_H/2];
-  let svg=`<svg viewBox="0 0 800 380" xmlns="http://www.w3.org/2000/svg">`;
+  let svg=`<svg viewBox="0 0 880 430" style="min-width:880px" xmlns="http://www.w3.org/2000/svg">`;
   if(erdMode==="tidy")
-    svg+=`<text x="210" y="18" fill="var(--faint)" font-family="var(--sans)" font-size="12">changes often &#8598;</text>
-          <text x="330" y="372" fill="var(--faint)" font-family="var(--sans)" font-size="12">&#8600; changes rarely</text>
-          <line x1="18" y1="30" x2="782" y2="352" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 6"/>`;
+    svg+=`<text x="250" y="22" fill="var(--faint)" font-family="var(--sans)" font-size="14">changes often &#8598;</text>
+          <text x="400" y="420" fill="var(--faint)" font-family="var(--sans)" font-size="14">&#8600; changes rarely</text>
+          <line x1="18" y1="34" x2="862" y2="398" stroke="var(--line)" stroke-width="1" stroke-dasharray="3 6"/>`;
   ERD_R.forEach(([ch,pa])=>{
     const [cx1,cy1]=c(ch), [cx2,cy2]=c(pa);
     const [x1,y1]=edgePt(P[ch][0],P[ch][1],ERD_W,ERD_H,cx2,cy2);   // leaves the child's edge
@@ -58,8 +58,8 @@ function renderErd(){
     svg+=`<g class="erdBox" transform="translate(${x},${y})">
       <rect width="${ERD_W}" height="${ERD_H}" rx="6" fill="var(--panel2)"
             stroke="${erdFill(e.vol)}" stroke-width="1.6"/>
-      <text x="10" y="18" fill="var(--ink)" font-family="var(--sans)" font-size="13" font-weight="600">${e.n}</text>
-      <text x="10" y="33" fill="var(--faint)" font-family="monospace" font-size="10">${e.rows}</text>
+      <text x="12" y="22" fill="var(--ink)" font-family="var(--sans)" font-size="15" font-weight="600">${e.n}</text>
+      <text x="12" y="43" fill="var(--faint)" font-family="var(--sans)" font-size="14">${e.rows}</text>
     </g>`;
   });
   $("#erdDia").innerHTML=svg+`</svg>`;
@@ -81,7 +81,7 @@ renderErd();
 
 
 const REA=[
- {id:"enrol", n:"Enrollment",
+ {id:"enroll", n:"Enrollment",
   give:{res:"Class seat", resS:"one of 40 in a section", evt:"Enrollment", evtS:"a row per student per course",
         agtIn:"Registrar", agtOut:"Student"},
   take:{res:"Tuition", resS:"cash, or a promise of it", evt:"Payment", evtS:"a row per amount received",
@@ -92,7 +92,7 @@ const REA=[
         agtIn:"Merchant", agtOut:"Customer"},
   take:{res:"Cash", resS:"what the gateway settles", evt:"Payment", evtS:"a row per charge",
         agtIn:"Merchant", agtOut:"Customer"},
-  gap:"Goods were shipped and no payment has settled. \"Online payments and payment gateways\" covers the same problem as it appears on the network. Here it appears as a missing row in the data."},
+  gap:"Goods were shipped and no payment has settled. \"Payments and gateways\" covers the same problem as it appears on the network. Here it appears as a missing row in the data."},
  {id:"lib", n:"Library loan",
   give:{res:"Book copy", resS:"a physical thing, one at a time", evt:"Loan", evtS:"a row per borrowing",
         agtIn:"Librarian", agtOut:"Borrower"},
@@ -106,16 +106,16 @@ const REA=[
         agtIn:"Clinic", agtOut:"Patient or insurer"},
   gap:"A consultation that was given and never billed, which is a missing Billing row."}
 ];
-let reaSel="enrol";
-const RB_W=210, RB_H=54;
+let reaSel="enroll";
+const RB_W=240, RB_H=60;
 function reaBox(x,y,kind,label,val,sub){
   const col=kind==="res"?"var(--res)":kind==="evt"?"var(--req)":"var(--line3)";
   const bg =kind==="evt"?"rgba(194,65,12,.08)":"var(--panel2)";
   return `<g transform="translate(${x},${y})">
     <rect width="${RB_W}" height="${RB_H}" rx="7" fill="${bg}" stroke="${col}" stroke-width="1.7"/>
-    <text x="11" y="17" fill="${col}" font-family="var(--sans)" font-size="11" font-weight="600">${label}</text>
-    <text x="11" y="34" fill="var(--ink)" font-family="var(--sans)" font-size="14" font-weight="600">${val}</text>
-    <text x="11" y="47" fill="var(--faint)" font-family="var(--sans)" font-size="11">${sub}</text>
+    <text x="12" y="18" fill="${col}" font-family="var(--sans)" font-size="13" font-weight="600">${label}</text>
+    <text x="12" y="37" fill="var(--ink)" font-family="var(--sans)" font-size="15" font-weight="600">${val}</text>
+    <text x="12" y="54" fill="var(--faint)" font-family="var(--sans)" font-size="13">${sub}</text>
   </g>`;
 }
 function reaSide(d, dir, ox){
@@ -133,7 +133,7 @@ function reaSide(d, dir, ox){
       +`<circle cx="${x2}" cy="${y2}" r="3" fill="var(--res)"/>`
       +crow(x1,y1,x2,y2);
     g+=`<text x="${ox+RB_W/2+8}" y="${(y1+y2)/2+3}" fill="var(--faint)"
-          font-family="var(--sans)" font-size="11">${dirn>0?"changes":"acts in"}</text>`;
+          font-family="var(--sans)" font-size="13">${dirn>0?"changes":"acts in"}</text>`;
   });
   return g;
 }
@@ -143,22 +143,22 @@ function renderRea(){
     `<button data-r="${x.id}" aria-pressed="${x.id===reaSel}">${x.n}</button>`).join("");
   $$("#reaTab button").forEach(el=>el.onclick=()=>{reaSel=el.dataset.r;renderRea()});
 
-  const L=20, R=470, yE=118;
-  const svg=`<svg viewBox="0 0 700 300" xmlns="http://www.w3.org/2000/svg">
+  const L=10, R=510, yE=118;
+  const svg=`<svg viewBox="0 0 760 300" style="min-width:760px" xmlns="http://www.w3.org/2000/svg">
     ${reaSide(r.give,"give",L)}
     ${reaSide(r.take,"take",R)}
     <line x1="${L+RB_W}" y1="${yE+RB_H/2}" x2="${R}" y2="${yE+RB_H/2}"
           stroke="var(--req)" stroke-width="1.6" stroke-dasharray="5 4"/>
     <text x="${(L+RB_W+R)/2}" y="${yE+RB_H/2-10}" fill="var(--req)" text-anchor="middle"
-          font-family="var(--sans)" font-size="12" font-weight="600">Duality</text>
+          font-family="var(--sans)" font-size="14" font-weight="600">Duality</text>
     <text x="${(L+RB_W+R)/2}" y="${yE+RB_H/2+20}" fill="var(--faint)" text-anchor="middle"
-          font-family="var(--sans)" font-size="11">one pays for the other</text>
+          font-family="var(--sans)" font-size="13">one pays for the other</text>
   </svg>`;
   $("#reaDia").innerHTML=svg;
 
   const v=$("#reaVerdict");
   v.className="verdict ok";
-  v.innerHTML=`<b>The same structure in every case</b>Switch between the four cases. The labels change and the structure stays the same: a resource, an event that moved it, two agents, and a second event that pairs with the first.<br><br>Look at where the crow's feet sit. One resource appears in many events, and one agent takes part in many events, so <b class="i">the event table holds both foreign keys</b>. This follows the rule from "Relationships: one-to-one, one-to-many, many-to-many" that the foreign key goes on the many side.<br><br><b class="i">A question this model answers directly:</b> ${r.gap}`;
+  v.innerHTML=`<b>The same structure in every case</b>Switch between the four cases. The labels change and the structure stays the same: a resource, an event that moved it, two agents, and a second event that pairs with the first.<br><br>Look at where the crow's feet sit. One resource appears in many events, and one agent takes part in many events, so <b class="i">the event table holds both foreign keys</b>. This follows the rule from "Relationships" that the foreign key goes on the many side.<br><br><b class="i">A question this model answers directly:</b> ${r.gap}`;
 }
 renderRea();
 

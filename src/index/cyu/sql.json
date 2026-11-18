@@ -10,7 +10,7 @@
     {
      "text": "All three rows.",
      "correct": true,
-     "feedback": "Correct. With no WHERE clause the command applies to every row, and the database does not ask for confirmation."
+     "feedback": "With no WHERE clause the command applies to every row, and the database does not ask for confirmation."
     },
     {
      "text": "None. The database refuses a command with no WHERE clause.",
@@ -37,9 +37,9 @@
    "stem": "By accident, you run `DELETE FROM courses WHERE code = 'ITMGT 25';` twice. What does the table look like after the second run?",
    "options": [
     {
-     "text": "The same as after the first run. The row is gone, and the second run removes nothing.",
+     "text": "The same as after the first run, because the row is already gone.",
      "correct": true,
-     "feedback": "Correct. DELETE with a WHERE clause is idempotent, so repeating it leaves the same end state."
+     "feedback": "DELETE with a WHERE clause is idempotent, so repeating it leaves the same end state."
     },
     {
      "text": "The second run deletes a different course.",
@@ -67,7 +67,7 @@
     {
      "text": "INSERT, and the table gets two rows for the same course.",
      "correct": true,
-     "feedback": "Correct. POST matches INSERT, which is not idempotent, so each repeat adds another row."
+     "feedback": "POST matches INSERT, which is not idempotent, so each repeat adds another row."
     },
     {
      "text": "UPDATE, and the table ends in the same state as after one request.",

@@ -25,7 +25,7 @@ const FMTS=[
   <span class="d">&lt;tr&gt;&lt;td&gt;</span>CSCI 21<span class="d">&lt;/td&gt;&lt;td&gt;</span>Data Structures<span class="d">&lt;/td&gt;</span>
       <span class="d">&lt;td align="center"&gt;</span>3<span class="d">&lt;/td&gt;&lt;td align="center"&gt;</span>0<span class="d">&lt;/td&gt;&lt;/tr&gt;</span>
 <span class="d">&lt;/table&gt;</span>`,
-  v:`<b>385 bytes, 13% of it your data</b>The largest of the three. It also carries decisions unrelated to the courses: a table width, cell padding and column order. A phone app cannot use any of that. This is the server-rendered response from "One API for the web, iOS and Android", measured.`}
+  v:`<b>385 bytes, 13% of it your data</b>The largest of the three. It also carries decisions unrelated to the courses: a table width, cell padding and column order. A phone app cannot use any of that. This is the server-rendered response from "One API, many clients", measured.`}
 ];
 let fmtSel="json";
 function renderFmt(){
@@ -83,7 +83,7 @@ function renderNav(){
     v.innerHTML=`<b>Server-rendered is still ahead by ${KB(m.spa-m.mpa)}</b>The bundle is a fixed cost paid at the start, and later pages have not made up for it yet. Keep dragging.`;
   } else {
     v.className="verdict ok";
-    v.innerHTML=`<b>Single-page app ahead by ${KB(m.mpa-m.spa)}</b>Past about seven pages, the 4 KB navigations make up for the bundle, and the gap grows with every click. This is why the model suits tools that people use for a long time, and suits a brochure site (a site of a few fixed pages) poorly. The first screen is still slower, and more clicking does not change that.`;
+    v.innerHTML=`<b>Single-page app ahead by ${KB(m.mpa-m.spa)}</b>Past about seven pages, the 4 KB navigations make up for the bundle, and the gap grows with every click. The model suits tools that people use for a long time. It suits a brochure site (a site of a few fixed pages) poorly. The first screen is still slower, and more clicking does not change that.`;
   }
 }
 $("#sPages").oninput=e=>{NAV.pages=+e.target.value;$("#vPages").textContent=NAV.pages;renderNav()};

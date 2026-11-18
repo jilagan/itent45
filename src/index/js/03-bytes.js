@@ -20,13 +20,13 @@ const SCN={
     ]},
   post:{
     req:[
-      ["POST /enrollments HTTP/1.1","start","Request line","POST means create or submit. The request has side effects, so repeating it may create a second enrollment. This is why buttons are disabled after the first click."],
+      ["POST /enrollments HTTP/1.1","start","Request line","POST means create or submit. The request has side effects, so repeating it may create a second enrollment. Buttons are often disabled after the first click to prevent this."],
       ["Host: api.example.com","k","Host header","Same role as before: which website on this IP address."],
       ["Content-Type: application/json","k","Content-Type on a request","Describes the format of the data you are sending. The server needs this to read the body correctly."],
       ["Content-Length: 41","k","Content-Length","Tells the server how many bytes of body to read. If it reads fewer, it waits forever. If it reads more, it consumes part of the next request."],
       ["Authorization: Bearer eyJhbGciOi...","k","Authorization","Proof of who you are. The text after Bearer is a token, a long random string that the server issued at login. Anyone who holds it can act as you, so it must only travel over TLS (encrypted connections)."],
       ["","blank","The blank line","The headers end here."],
-      ['{"studentId":"20-1234","code":"ITENT 45"}',"body","Request body","The data being submitted. Unlike a query string, it is not part of the URL, so it does not appear in server logs or browser history."]
+      ['{"studentId":"20-1234","code":"ITENT 45"}',"body","Request body","The data being submitted. It travels after the headers and is not part of the URL, so it does not appear in server logs or browser history the way a query string does."]
     ],
     res:[
       ["HTTP/1.1 201 Created","start","201 Created","A new resource now exists on the server. The client should not send this request again, because doing so would create a duplicate."],

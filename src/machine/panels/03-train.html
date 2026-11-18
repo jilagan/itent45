@@ -1,7 +1,9 @@
     <section class="panel" id="p-train">
       <div class="head">
         <h2>Training: adjusting a model to reduce its errors</h2>
-        <p>Suppose you are standing on a hillside in thick fog and want to reach the bottom. You cannot see the bottom, but you can feel which way the ground slopes under your feet. So you take a step downhill, feel the slope again, and repeat. Training a model follows the same routine. The previous panel used a boundary line without showing where it came from. The process is as follows. Start with a line placed at random, measure how wrong it is with a single number called the <b style="color:var(--ink)">loss</b>, nudge the line in whichever direction makes the loss smaller, and repeat a few hundred times. The fog stands for the fact that the program never sees the best line in advance. It only measures the slope where it is standing.</p>
+        <p>Suppose you are standing on a hillside in thick fog and want to reach the bottom. You cannot see the bottom, but you can feel which way the ground slopes under your feet. So you take a step downhill, feel the slope again, and repeat.</p>
+        <p style="margin-top:11px">Training a model follows the same routine. Start with a line placed at random. Measure how wrong it is with a single number called the <b style="color:var(--ink)">loss</b>. Nudge the line in whichever direction makes the loss smaller, and repeat a few hundred times. The fog stands for the fact that the program never sees the best line in advance and only measures the slope where it is standing.</p>
+        <p style="margin-top:11px">The panel "Training and test data" used a boundary line without showing where it came from. This panel shows how the line is found.</p>
         <div class="ask"><b>Think first.</b> Each step downhill in the fog has a size. What could go wrong if every step is very large? What could go wrong if every step is very small? Write down your guesses, then test them with the step size control below.</div>
       </div>
       <div class="srv">

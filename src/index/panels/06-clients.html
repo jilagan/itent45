@@ -1,9 +1,11 @@
     <section class="panel" id="p-clients">
       <div class="head">
         <h2>One API for the web, iOS and Android</h2>
-        <p>A restaurant kitchen can serve dine-in customers, the drive-thru window and a delivery app. The kitchen prepares the same order for all three, and each channel presents it in its own way. A web page, an iPhone app and an Android app can work the same way. They all use one backend, which is the server and database that hold the data. They reach it through an API (application programming interface), a set of URLs that return data. The server does not check who is calling. It sends the data as JSON, a plain-text format for data, and each client displays it however it likes.</p>
-        <div class="ask"><b>Think first</b> Suppose the enlistment system released a mobile app tomorrow. How much of its backend could the app reuse? Answer first for the diagram below, then for the enlistment system as it is described later in this panel.</div>
-        <div class="instructor">For the diagram the answer is all of it. The real enlistment system returns finished web pages, so the answer is much less. Ask students to explain the difference after the second section.</div>
+        <p>A restaurant kitchen can serve dine-in customers, the drive-thru window and a delivery app. The kitchen prepares the same order for all three, and each channel presents it in its own way.</p>
+        <p>A web page, an iPhone app and an Android app can work the same way. They all use one backend, which is the server and database that hold the data. They reach it through an API (application programming interface), a set of URLs that return data.</p>
+        <p>The server does not care whether the caller is a browser, an iPhone or an Android app. It sends the data as JSON, a plain-text format for data, and each client displays it however it likes. This panel covers the three clients, a system that has no API, and what happens when an API changes.</p>
+        <div class="ask"><b>Think first.</b> A university has one web API that returns course data as JSON. It now wants an Android app. Which parts of the backend would have to be rewritten, and which could be reused? Write down your answer, then check it against the diagram below.</div>
+        <div class="instructor">For the diagram the answer is that the whole backend is reused. The real enlistment system returns finished web pages, so the answer there is much less. Ask students to explain the difference after the second section.</div>
       </div>
 
       <div class="sec" data-sec="one-backend" data-title="One API, three clients">
@@ -14,7 +16,7 @@
         <div class="fanArrow">→</div>
         <div class="apibox">
           <div class="an">One API</div>
-          <div class="ad">GET /api/courses<br>Uses HTTP and JSON. It does not know which client is calling.</div>
+          <div class="ad">GET /api/courses<br>Uses HTTP and JSON. It works the same way for every client.</div>
         </div>
         <div class="fanArrow">→</div>
         <div class="apibox" style="border-color:var(--line2);background:var(--panel2)">
@@ -53,7 +55,9 @@
       </div>
 
       <div class="sec" data-sec="server-rendered" data-title="Systems without an API">
-      <p>Older systems, such as the enlistment system, return finished web pages that contain both the data and the layout. These pages are built on the server, so the business logic (the rules for what the system does) sits inside the code that writes the page. There is no separate layer that a mobile app could call.</p>
+      <p>Older systems, such as the enlistment system, return finished web pages that contain both the data and the layout. These pages are built on the server, and the business logic (the rules for what the system does) sits inside the code that writes each page.</p>
+      <div class="ask"><b>Think first.</b> Suppose the enlistment system released a mobile app tomorrow. How much of its backend could the app reuse? Write down your answer, then compare the two responses below.</div>
+      <div class="instructor">The answer is much less. There is no separate layer that a mobile app could call, because the data and the layout are mixed in one response.</div>
 
       <div class="cmp" style="margin-top:16px">
         <div>

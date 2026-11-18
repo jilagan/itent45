@@ -8,22 +8,22 @@
    "stem": "A page takes 200 ms to load for users in Manila and 900 ms for users in Frankfurt. The server is in Manila and its code takes 40 ms in both cases. What explains most of the difference?",
    "options": [
     {
-     "text": "Each round trip takes longer over the greater distance, and loading a page needs several of them.",
+     "text": "Each round trip takes longer over distance, and a page load needs several.",
      "correct": true,
      "feedback": "DNS lookup, connection setup, encryption setup and the request each need at least one round trip, and each is longer for Frankfurt."
     },
     {
-     "text": "The server runs slower code for Frankfurt users.",
+     "text": "The server runs slower code when the request comes from Frankfurt.",
      "correct": false,
      "feedback": "The server's code takes the same 40 ms for both groups."
     },
     {
-     "text": "The server has less memory for users far away.",
+     "text": "The server has less memory available for users who are far away.",
      "correct": false,
      "feedback": "Memory is not shared out by distance. The difference comes from travel time."
     },
     {
-     "text": "Browsers in Europe are slower than browsers in Manila.",
+     "text": "Browsers in Europe take longer to draw a page than browsers in Manila.",
      "correct": false,
      "feedback": "Nothing about the browser changes with location. The network path does."
     }
@@ -51,7 +51,7 @@
      "feedback": "This reverses the effect. Distance changes network time and has no effect on how long your code runs."
     },
     {
-     "text": "Neither changes.",
+     "text": "Neither changes, because distance does not affect the server.",
      "correct": false,
      "feedback": "The network time changes because each round trip takes twice as long."
     }
@@ -65,22 +65,22 @@
    "stem": "A company moves its Manila site to a bigger server. The handler time drops from 40 ms to 10 ms. What happens to the wait of a user in Berlin?",
    "options": [
     {
-     "text": "It improves by about 30 ms, but the round trips still make up most of the wait.",
+     "text": "It falls by about 30 ms, but round trips still dominate the wait.",
      "correct": true,
      "feedback": "A faster server shortens only the handler step. The setup steps still need several long round trips."
     },
     {
-     "text": "It drops by three quarters.",
+     "text": "It drops by about three quarters, in line with the handler time.",
      "correct": false,
      "feedback": "Only the handler step got faster. The network steps are unchanged."
     },
     {
-     "text": "It does not change at all.",
+     "text": "It does not change, because the user is still far from the server.",
      "correct": false,
      "feedback": "The handler time did drop by 30 ms, so the total drops by that amount."
     },
     {
-     "text": "It gets worse, because a bigger server is further away.",
+     "text": "It gets worse, because a bigger server is further away from users.",
      "correct": false,
      "feedback": "A bigger server in the same place is no further away. The distance is unchanged."
     }

@@ -1,7 +1,9 @@
     <section class="panel" id="p-embed">
       <div class="head">
         <h2>Word embeddings: how words get positions</h2>
-        <p>At a barkada party, nobody hands out seat numbers, yet people who keep talking to each other end up sitting together. Word positions are found in a similar way. Every word starts at a random spot on a map. The program then reads sentences one at a time, and each sentence moves the words in it a little closer together while all other words drift slightly apart. Unlike party guests, the words do not choose where to go. Each sentence moves them by a small, fixed step. The set of sentences used is called a <b>corpus</b>. The position a word ends up with is called its <b>embedding</b>. Here the map has two directions, called dimensions, so each embedding is two numbers. Real models use hundreds of numbers per word. The next panel, "Vectors and similarity of meaning", uses words that already have positions. This panel shows how they get them.</p>
+        <p>At a barkada party, nobody hands out seat numbers, yet people who keep talking to each other end up sitting together. Word positions are found in a similar way. Every word starts at a random spot on a map. The program then reads sentences one at a time, and each sentence moves the words in it a little closer together while all other words drift slightly apart.</p>
+        <p style="margin-top:11px">Each sentence moves the words by a small, fixed step, so no word chooses where it goes. The set of sentences used is called a <b>corpus</b>. The position a word ends up with is called its <b>embedding</b>. Here the map has two directions, called dimensions, so each embedding is two numbers. Real models use hundreds of numbers per word.</p>
+        <p style="margin-top:11px">This panel shows how words get their positions. Using those positions is covered later in "Vectors and similarity".</p>
         <div class="ask"><b>Think first.</b> Suppose the only rule is that words appearing in the same sentence move closer together. Where would you expect <em>king</em> and <em>queen</em> to end up? Where would you expect <em>king</em> and <em>hospital</em> to end up?</div>
       </div>
       <div class="srv">
@@ -17,7 +19,7 @@
         </div>
         <div class="card">
           <div class="card-t">The whole corpus</div>
-          <div class="art" id="emCorpus" style="font-size:.66em"></div>
+          <div class="art" id="emCorpus"></div>
           <div class="rtt-note" style="margin-top:12px">
             The corpus is fourteen sentences, and that is all the input there is. There is no dictionary and there are no labels. Nobody marks which words are about royalty and which are about hospitals. The colors on the map only show the groups afterward. The training does not use them.
             <br><br>The positions on the map are computed from those sentences while you watch. Nothing is placed by hand.
@@ -32,7 +34,7 @@
       <div class="whynot" style="margin-top:20px">
         <b>How this differs from real training</b>
         This is the idea behind a method called word2vec, run small enough to watch. Words that appear together are pulled together, other words are pushed apart, and the steps repeat. Real training uses billions of words and hundreds of dimensions, where this demo uses fourteen sentences and two. In real text each word also appears in far more varied sentences.
-        <br><br>A corpus this small produces the clusters. It does not produce the finer structure that makes the word arithmetic in the next panel work, because that needs the same word to appear in thousands of different contexts. The next panel points this out.
+        <br><br>A corpus this small produces the clusters. It does not produce the finer structure that makes the word arithmetic in "Vectors and similarity" work, because that needs the same word to appear in thousands of different contexts. That panel points this out.
         <br><br><b style="color:var(--ink)">Nobody assigns the positions.</b> Words that appear together end up close together, and the positions come from that.
       </div>
     </section>

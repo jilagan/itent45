@@ -1,7 +1,9 @@
     <section class="panel" id="p-learn">
       <div class="head">
         <h2>Training data and test data</h2>
-        <p>Suppose you were given the exam paper a week early and memorized every answer. A model faces a similar problem, because it is built from examples and then has to be judged on how well it works. The simplest useful model is a boundary. You collect examples of something that already happened, such as which students finished a course, and find a line that separates one outcome from the other. Nobody writes the line down. It starts in a poor position and is adjusted until it makes fewer mistakes. Adjusting a model to match examples is called <b style="color:var(--ink)">fitting</b> it, and the final line is the model.</p>
+        <p>Suppose you were given the exam paper a week early and memorized every answer. A model faces a similar problem, because it is built from examples and then has to be judged on how well it works.</p>
+        <p style="margin-top:11px">The simplest useful model is a boundary. You collect examples of something that already happened, such as which students finished a course, and find a line that separates one outcome from the other. Nobody writes the line down. It starts in a poor position and is adjusted until it makes fewer mistakes. Adjusting a model to match examples is called <b style="color:var(--ink)">fitting</b> it, and the final line is the model.</p>
+        <p style="margin-top:11px">This panel fits a line to some students and then tests it on students the line has not seen.</p>
         <div class="ask"><b>Think first.</b> You see the exam questions a week early and score 100 percent. What does that score tell anyone about whether you understood the subject? How would you design a fairer test?</div>
         <div class="instructor">Let students propose a fairer test before they open the widget. Most will suggest new questions or a separate exam. Name that idea as a held-out test set and connect it to the five dashed students in the widget.</div>
       </div>
@@ -43,7 +45,7 @@
       </div>
 
       <div class="sec" data-sec="train-vs-test" data-title="Training set and test set">
-        <p>A model that has seen every answer can remember them, and from the inside remembering looks the same as learning. Two terms describe how to guard against that.</p>
+        <p>A model that has seen every answer can remember them, and from the inside remembering looks the same as learning. Two terms describe how to guard against memorizing.</p>
         <div class="cmp">
           <div class="card">
             <div class="card-t" style="color:var(--res)">Training set</div>
@@ -51,13 +53,13 @@
           </div>
           <div class="card">
             <div class="card-t" style="color:var(--req)">Test set</div>
-            <p style="margin:0;font-size:.84em;color:var(--dim);line-height:1.6">The part you set aside before you started and never looked at. It stands in for the people the model has not met yet. Its score is the only one worth quoting.</p>
+            <p style="margin:0;font-size:.84em;color:var(--dim);line-height:1.6">The part you set aside before you started and never looked at. It stands in for the people the model has not met yet. Report this score as the model's result.</p>
           </div>
         </div>
         <div class="whynot" style="margin-top:16px">
           <b>Split the data before fitting, and only once</b>
           If you look at the test set, adjust something and try again, you have quietly trained on it. It is no longer a test, and you have no honest score left. This mistake is called <b style="color:var(--ink)">leakage</b>, because information from the test set leaks into the model. People make it often without noticing, and results that looked strong during development then fall apart in front of real users.
-          <br><br>The gap between the two scores tells you what happened. A small gap means the model found the general shape of the data. A large gap means the model memorized its examples, which is called <b style="color:var(--ink)">overfitting</b>. The bent line in the widget above shows this directly.
+          <br><br>The gap between the two scores tells you what happened. A small gap means the model found the general shape of the data. A large gap means the model memorized its examples, which is called <b style="color:var(--ink)">overfitting</b>. The bent line in the section "Setting data aside and testing" shows this directly.
         </div>
       </div>
     </section>

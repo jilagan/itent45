@@ -41,17 +41,17 @@
      "feedback": "This is the only point where the request exists as text and nothing has changed yet."
     },
     {
-     "text": "After the client runs it, by pressing undo.",
+     "text": "After the client runs it, by pressing undo to restore the rows.",
      "correct": false,
      "feedback": "Once the client runs a delete, the rows are gone. There is no undo in this setup."
     },
     {
-     "text": "While the model is writing the request.",
+     "text": "While the model is still writing the request, by interrupting it.",
      "correct": false,
      "feedback": "The request is not complete until the model finishes it, so there is nothing yet to approve or refuse."
     },
     {
-     "text": "Nowhere. The model decides and cannot be stopped.",
+     "text": "Nowhere, because the model decides and cannot be stopped.",
      "correct": false,
      "feedback": "The client decides whether to run each request, so a person can place a check there."
     }
@@ -65,7 +65,7 @@
    "stem": "An agent keeps calling the wrong tool for a task. Where is the first place to look?",
    "options": [
     {
-     "text": "The tool descriptions, because the model chooses a tool by reading its description.",
+     "text": "The tool descriptions, since the model picks a tool by reading them.",
      "correct": true,
      "feedback": "A vague or misleading description leads to the wrong choice. The model has no other information about the tool."
     },
@@ -80,7 +80,7 @@
      "feedback": "Speed does not affect which tool the model chooses."
     },
     {
-     "text": "Retrain the model from scratch.",
+     "text": "Retrain the model from scratch, because it learned the wrong tool.",
      "correct": false,
      "feedback": "The description can be edited in minutes. Retraining is not needed for this kind of problem."
     }
@@ -118,7 +118,7 @@
    "id": "tools-5",
    "sec": "mcp",
    "type": "mc",
-   "stem": "Which problem does MCP not solve?",
+   "stem": "Which of these stays your responsibility even when you use MCP?",
    "options": [
     {
      "text": "Deciding whether a request to delete data should be made.",
@@ -131,9 +131,9 @@
      "feedback": "This is what MCP is for. Each client and each server is written once."
     },
     {
-     "text": "Giving you a place where calls can be approved, logged or refused.",
+     "text": "Having an MCP client that lets you approve, log or refuse calls.",
      "correct": false,
-     "feedback": "Every call passes through the client, so MCP does provide this place."
+     "feedback": "Every call passes through the client, so an MCP client gives you a place to approve, log or refuse it. MCP does cover this."
     },
     {
      "text": "Using the same server in a different editor later.",

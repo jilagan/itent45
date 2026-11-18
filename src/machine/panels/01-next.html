@@ -1,9 +1,11 @@
     <section class="panel" id="p-next">
       <div class="head">
         <h2>How a language model writes: predicting the next word</h2>
-        <p>When you type a message on your phone, the keyboard suggests the next word. It has not understood your message. It has learned which words usually follow the ones you typed. A language model is a program trained on huge amounts of text, and it works on the same idea at a much larger scale. Every answer it gives comes from one repeated step. It reads all the text so far, which is called the <b style="color:var(--ink)">context</b>. It works out a probability for every word that could come next, where a probability is a number from 0 to 1 that says how likely that word is. It picks one word, and then it repeats the step. There is no plan, no draft, and no separate step that checks whether the sentence is true.</p>
-        <div class="ask"><b>Think first.</b> Finish this sentence and write down your answer: "The capital of France is". Then ask yourself whether you looked a fact up, or whether the words led you to the ending.</div>
-        <div class="instructor">After students answer, point out that almost everyone said the same word instantly. The model does the same thing with numbers attached. The distinction between recalling a fact and continuing a pattern comes up again in the code example below.</div>
+        <p>When you type a message on your phone, the keyboard suggests the next word. It has not understood your message. It has learned which words usually follow the ones you typed. A language model is a program trained on huge amounts of text, and it works on the same idea at a much larger scale.</p>
+        <p style="margin-top:11px">Every answer it gives comes from one repeated step. The model reads all the text so far, which is called the <b style="color:var(--ink)">context</b>. It works out a probability for every word that could come next, where a probability is a number from 0 to 1 that says how likely that word is. It picks one word and repeats the step. The model does not write a draft and revise it, and no separate step checks whether the sentence is true.</p>
+        <p style="margin-top:11px">This panel shows one step, then the same step repeated to write an answer.</p>
+        <div class="ask"><b>Think first.</b> A model has read the words "The capital of France is". Guess how much of the probability it gives to its top word: about 30 percent, about 60 percent or about 90 percent. Then check the first prompt in the widget below.</div>
+        <div class="instructor">Collect guesses before students open the widget. Most pick 90 percent or more, and the widget shows 89 percent. The distinction between recalling a fact and continuing a pattern comes up again in the code example below.</div>
       </div>
 
       <div class="sec" data-sec="one-word" data-title="Choosing one word">
@@ -70,7 +72,7 @@
 
         <div class="whynot" style="margin-top:20px">
           <b>Generative models and classifiers</b>
-          In the panel "Training data and test data", the boundary answered a closed question: which side is this student on? The answer was one choice from a set that existed before the model ran, and nothing new was made. A program that sorts inputs into fixed categories like this is called a <b style="color:var(--ink)">classifier</b>.
+          In "Training and test data", the boundary answered a closed question: which side is this student on? The answer was one choice from a set that existed before the model ran, and nothing new was made. A program that sorts inputs into fixed categories like this is called a <b style="color:var(--ink)">classifier</b>.
           <br><br>The model in this panel answers an open question. The set of possible answers is every sequence of words there is. The word <em>generative</em> refers to this open set. A generative model's output can be fluent, new and wrong at the same time. A classifier can only be wrong in the ways its fixed set of answers allows.
         </div>
 

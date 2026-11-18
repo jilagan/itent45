@@ -42,8 +42,8 @@ function drawLayers(){
       </div>
       <div class="lyr-inner">
         <div class="lyr-bar">
-          ${l.hdr?`<div class="hdr" style="width:${hp}%">${hp<14?`+${l.hdr}B`:`+${l.hdr}B header`}</div>`:""}
-          <div class="pay" style="width:${100-hp}%">${l.hdr?"everything above":"the whole message, as bits"}</div>
+          ${l.hdr?`<div class="hdr" style="width:${hp}%">+${l.hdr}B</div>`:""}
+          <div class="pay" style="width:${100-hp}%">${l.hdr?(i===0?"app message":"everything above"):"the whole message, as bits"}</div>
         </div>
       </div></div>`;
   }).join("");

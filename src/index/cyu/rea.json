@@ -10,7 +10,7 @@
     {
      "text": "Resource: the soda. Event: the sale. Agents: the owner and the customer.",
      "correct": true,
-     "feedback": "Correct. The resource is the thing of value, the event records that it changed hands, and the agents are the people on each side."
+     "feedback": "The resource is the thing of value, the event records that it changed hands, and the agents are the people on each side."
     },
     {
      "text": "Resource: the owner. Event: the soda. Agents: the 20 pesos.",
@@ -36,17 +36,17 @@
    "stem": "Maria pays ₱18,000 in one transfer for three subjects. Juan pays the ₱7,500 for one subject in two installments. Why does the model need a separate allocations table that links payments and enrollments?",
    "options": [
     {
-     "text": "One payment can cover many enrollments and one enrollment can be paid by many payments, and the amount applied belongs to the pairing.",
+     "text": "One payment can cover many enrollments, and one enrollment can have many payments.",
      "correct": true,
-     "feedback": "Correct. A pairing that is many-to-many needs its own table, and the amount applied to each enrollment can be stored only there."
+     "feedback": "A pairing that is many-to-many needs its own table, and the amount applied to each enrollment can be stored only there."
     },
     {
-     "text": "Banks require payments to be recorded in a separate table.",
+     "text": "Banking rules require payments to be kept in a table of their own.",
      "correct": false,
      "feedback": "The reason comes from the shape of the data, not from banking rules."
     },
     {
-     "text": "A separate table makes the payments table faster to search.",
+     "text": "A separate table makes the payments table faster to search and back up.",
      "correct": false,
      "feedback": "Speed is not the reason. Without the allocations table you could not store installments or shared transfers at all."
     },
@@ -64,22 +64,22 @@
    "stem": "In a diagram where every crow's foot points up and to the left, which tables end up in the top left?",
    "options": [
     {
-     "text": "The tables on the many side of relationships, such as Payment and Enrollment, which grow fastest.",
+     "text": "The tables on the many side of relationships, such as Payment and Enrollment.",
      "correct": true,
-     "feedback": "Correct. The crow's foot marks the many side, which is usually the entity that records events, so those tables move to the top left."
+     "feedback": "The crow's foot marks the many side, which is usually the entity that records events, so those tables move to the top left."
     },
     {
-     "text": "The most important tables, such as Student and Course.",
+     "text": "The most important tables to the business, such as Student and Course.",
      "correct": false,
      "feedback": "Importance does not decide the position. Student and Course are on the one side of their relationships, so they end up at the bottom right."
     },
     {
-     "text": "The tables whose names come first alphabetically.",
+     "text": "The tables whose names come first in alphabetical order, such as Course.",
      "correct": false,
      "feedback": "Names play no part. The position comes from which side of each relationship a table is on."
     },
     {
-     "text": "The tables with the fewest columns.",
+     "text": "The tables with the fewest columns, because they are simplest to draw.",
      "correct": false,
      "feedback": "Column count does not decide it. The position comes from the many side of the relationships."
     }
@@ -94,7 +94,7 @@
     {
      "text": "Which students hold a seat and have not paid?",
      "correct": true,
-     "feedback": "Correct. This question looks for a gap between two events that should pair up, an enrollment with no matching payment."
+     "feedback": "This question looks for a gap between two events that should pair up, an enrollment with no matching payment."
     },
     {
      "text": "How many seats does ITENT 45 have?",

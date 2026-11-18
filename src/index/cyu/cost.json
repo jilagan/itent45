@@ -8,22 +8,22 @@
    "stem": "A department buys a server for ₱180,000 and uses it for four years. A second department rents equivalent capacity and pays ₱3,000 each month. How does accounting record each?",
    "options": [
     {
-     "text": "The purchase is capital expenditure, recorded as an asset and depreciated over several years. The rental is operational expenditure, recorded as an expense each month.",
+     "text": "The purchase is CapEx, an asset depreciated over years. The rental is OpEx, an expense each month.",
      "correct": true,
      "feedback": "Owning creates an asset whose cost is spread over its useful life. Renting creates a monthly expense for what was used."
     },
     {
-     "text": "Both are operational expenditure, because both involve servers.",
+     "text": "Both are operational expenditure, because both pay for the same kind of equipment.",
      "correct": false,
-     "feedback": "The classification depends on whether you own an asset, not on what the asset is."
+     "feedback": "The classification depends on whether you own an asset. The type of asset does not matter."
     },
     {
-     "text": "The purchase is expensed in full in the first year, and the rental is depreciated.",
+     "text": "The purchase is expensed in full in year one, and the rental is depreciated over four years.",
      "correct": false,
      "feedback": "This reverses the treatment. Purchases are capitalized, and rental payments are expensed."
     },
     {
-     "text": "Both are capital expenditure, because both give the department computing power.",
+     "text": "Both are capital expenditure, because both give the department the same computing power.",
      "correct": false,
      "feedback": "Rented capacity is not an asset the department owns, so it is an operating expense."
     }
@@ -33,7 +33,7 @@
    "id": "cost-2",
    "sec": null,
    "type": "predict",
-   "stem": "Before you try it: you buy capacity equal to the highest peak of the year (320 units). What will the chart and the three figures show?",
+   "stem": "Before you try it: you buy capacity above the highest peak of the year (320 units, the slider maximum). What will the chart and the three figures show?",
    "options": [
     {
      "text": "Almost nobody is turned away, but most of the capacity you paid for sits unused.",
@@ -65,17 +65,17 @@
    "stem": "At 120 units the chart shows both idle capacity and demand turned away in the same year. Why can no single fixed capacity avoid both?",
    "options": [
     {
-     "text": "Demand rises far above its usual level for short periods, so capacity large enough for those periods sits idle the rest of the time.",
+     "text": "Demand spikes briefly, so capacity sized for the spikes sits idle for the rest of the year.",
      "correct": true,
      "feedback": "A flat line cannot match a spiky curve. Raising the line removes the lost demand and increases the idle capacity."
     },
     {
-     "text": "The slider range is too small to reach the right setting.",
+     "text": "The slider range is too small to reach a setting where both problems disappear.",
      "correct": false,
      "feedback": "The slider reaches the highest peak, and at that setting nothing is turned away but most capacity is idle."
     },
     {
-     "text": "Idle capacity shows that the servers were set up incorrectly.",
+     "text": "Idle capacity means the servers were configured incorrectly for this demand.",
      "correct": false,
      "feedback": "The servers work correctly. The idle capacity comes from the shape of demand."
     },

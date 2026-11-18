@@ -8,22 +8,22 @@
    "stem": "A response begins with `HTTP/1.1 404 Not Found`. What does this tell the developer?",
    "options": [
     {
-     "text": "The server understood the request and works normally, but the thing asked for does not exist.",
+     "text": "The request was valid, but the thing asked for does not exist.",
      "correct": true,
      "feedback": "A 4xx code means the request was wrong. A 404 means the named resource is not there."
     },
     {
-     "text": "The server's code crashed.",
+     "text": "The server's code crashed while it was handling the request.",
      "correct": false,
      "feedback": "A crash would produce a 5xx code, such as 500."
     },
     {
-     "text": "The request was malformed and could not be read.",
+     "text": "The request was malformed, so the server could not read it.",
      "correct": false,
      "feedback": "A malformed request would produce a 400 code. In a 404, the request was valid."
     },
     {
-     "text": "The connection to the server failed.",
+     "text": "The connection to the server failed before any reply came.",
      "correct": false,
      "feedback": "If the connection failed, no response with a status line would have arrived."
     }
@@ -93,22 +93,22 @@
    "stem": "In the server log you see some lines of text, then an empty line, then `{\"code\":\"ITENT 45\"}`. What is the empty line?",
    "options": [
     {
-     "text": "The blank line that ends the headers. The JSON below it is the body.",
+     "text": "The blank line that ends the headers, with the body below it.",
      "correct": true,
      "feedback": "A single empty line separates the headers from the body in every HTTP message."
     },
     {
-     "text": "The end of the whole request, with nothing after it.",
+     "text": "The end of the request, so nothing follows the empty line.",
      "correct": false,
      "feedback": "The body follows the blank line, so the request continues past it."
     },
     {
-     "text": "A formatting accident from the terminal.",
+     "text": "A formatting accident caused by how the terminal prints text.",
      "correct": false,
      "feedback": "The blank line is part of the HTTP format and is required."
     },
     {
-     "text": "The start of a second request.",
+     "text": "The start of a second request sent on the same connection.",
      "correct": false,
      "feedback": "A new request would begin with a request line such as `POST /enrollments HTTP/1.1`."
     }

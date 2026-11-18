@@ -30,11 +30,11 @@ const TRACE=[
   render(<span class="kw">await</span> r.json());   <span class="c">// address bar stays on /my-courses</span>
 }`},
  {t:1,h:"The browser builds a request",
-  x:"The browser turns that URL into the plain text message described in \"What an HTTP request and response look like\". Your application code has not run yet, and the server does not know you exist.",
+  x:"The browser turns that URL into the plain text message described later in \"HTTP messages\". Your application code has not run yet, and the server does not know you exist.",
   l:"The HTTP request text (tier 1)",
   a:`<span class="kw">GET</span> /api/enrollments?student=20-1234 HTTP/1.1\nHost: enlist.university.edu\nAccept: application/json\nCookie: sessionid=8f2a...`},
  {t:0,h:"The request crosses the network",
-  x:"The request is wrapped in the layers described in \"How network messages are layered (protocol layers)\" and passes through the routers between you and the server. This takes milliseconds that no amount of code can remove. See \"Why loading a page takes several round trips\".",
+  x:"The request is wrapped in the layers described later in \"Protocol layers\" and passes through the routers between you and the server. This takes milliseconds that no amount of code can remove. Its cost is covered later in \"Round trips and latency\".",
   l:"The path across the network",
   a:`<span class="c">laptop → wifi → internet provider → ... → data center → server</span>\n<span class="c">each router replaces the outer frame and leaves everything inside unchanged</span>`},
  {t:2,h:"The framework matches the URL",
@@ -55,9 +55,9 @@ const TRACE=[
   x:"An ORM (object-relational mapper) is a library that turns objects in your code into SQL text, and rows back into objects. The lines below describe the data you want. The ORM turns them into a SQL string and hands that string to the database. Anything you can do here, you could do by writing the SQL yourself.",
   lv:{django:"The Django ORM (tier 2)", express:"The Prisma ORM (tier 2)", laravel:"The Eloquent ORM (tier 2)"},
   av:{
-   django:`qs = (Enrollment.objects\n        .filter(student_id=sid)\n        .select_related(<span class="s">"course"</span>))\n\n<span class="c"># select_related fetches each course in the same query,</span>\n<span class="c"># so the total stays at one query (see "The N+1 query problem")</span>`,
-   express:`<span class="kw">const</span> rows = <span class="kw">await</span> prisma.enrollment.findMany({\n  where:   { studentId: sid },\n  include: { course: <span class="kw">true</span> }\n});\n\n<span class="c">// include fetches each course in the same query,</span>\n<span class="c">// so the total stays at one query (see "The N+1 query problem")</span>`,
-   laravel:`$rows = Enrollment::where(<span class="s">'student_id'</span>, $sid)\n        ->with(<span class="s">'course'</span>)\n        ->get();\n\n<span class="c">// with() fetches each course in the same query,</span>\n<span class="c">// so the total stays at one query (see "The N+1 query problem")</span>`}},
+   django:`qs = (Enrollment.objects\n        .filter(student_id=sid)\n        .select_related(<span class="s">"course"</span>))\n\n<span class="c"># select_related fetches each course in the same query,</span>\n<span class="c"># so the total stays at one query (covered later in "The N+1 query problem")</span>`,
+   express:`<span class="kw">const</span> rows = <span class="kw">await</span> prisma.enrollment.findMany({\n  where:   { studentId: sid },\n  include: { course: <span class="kw">true</span> }\n});\n\n<span class="c">// include fetches each course in the same query,</span>\n<span class="c">// so the total stays at one query (covered later in "The N+1 query problem")</span>`,
+   laravel:`$rows = Enrollment::where(<span class="s">'student_id'</span>, $sid)\n        ->with(<span class="s">'course'</span>)\n        ->get();\n\n<span class="c">// with() fetches each course in the same query,</span>\n<span class="c">// so the total stays at one query (covered later in "The N+1 query problem")</span>`}},
  {t:3,h:"The database receives SQL",
   x:"The database is a separate program, often on a separate machine. It reads the SQL text, works out how to answer it, and reads the data from disk or memory. It knows nothing about your framework. The query below asks for this student's enrollments, with the details of each course.",
   l:"The SQL query (tier 3)",
@@ -74,14 +74,14 @@ const TRACE=[
    express:`[ { id: 881, course: { code: <span class="s">'ITENT 45'</span>, units: 3 } },\n  { id: 882, course: { code: <span class="s">'CSCI 21'</span>,  units: 3 } } ]`,
    laravel:`Illuminate\\Support\\Collection {\n  <span class="d">#items:</span> [ App\\Models\\Enrollment {...},\n            App\\Models\\Enrollment {...} ]\n}`}},
  {t:2,h:"Objects become text",
-  x:"Objects cannot travel over the network, so the server converts them to JSON, a plain text format for structured data. This step is called serialization. The result is the body of a response like the ones in \"What an HTTP request and response look like\".",
+  x:"Objects cannot travel over the network, so the server converts them to JSON, a plain text format for structured data. This step is called serialization. The result is the body of a response like the ones shown later in \"HTTP messages\".",
   lv:{django:"Converting the objects to JSON (tier 2)", express:"Converting the objects to JSON (tier 2)", laravel:"Converting the objects to JSON (tier 2)"},
   av:{
    django:`<span class="kw">return</span> JsonResponse({\n  <span class="s">"enrollments"</span>: [\n    {<span class="s">"code"</span>: <span class="s">"ITENT 45"</span>, <span class="s">"units"</span>: 3},\n    {<span class="s">"code"</span>: <span class="s">"CSCI 21"</span>,  <span class="s">"units"</span>: 3}\n  ]\n})`,
    express:`res.json({\n  enrollments: [\n    { code: <span class="s">"ITENT 45"</span>, units: 3 },\n    { code: <span class="s">"CSCI 21"</span>,  units: 3 }\n  ]\n});`,
    laravel:`<span class="kw">return</span> response()->json([\n  <span class="s">'enrollments'</span> => [\n    [<span class="s">'code'</span> => <span class="s">'ITENT 45'</span>, <span class="s">'units'</span> => 3],\n    [<span class="s">'code'</span> => <span class="s">'CSCI 21'</span>,  <span class="s">'units'</span> => 3]\n  ]\n]);`}},
  {t:0,h:"The response crosses back",
-  x:"The server sends a status line, headers, a blank line and the body, the same layout as every response in \"What an HTTP request and response look like\". The trip home costs the same network time as the trip out.",
+  x:"The server sends a status line, headers, a blank line and the body, the same layout as every response shown later in \"HTTP messages\". The trip home costs the same network time as the trip out.",
   l:"The HTTP response text",
   a:`<span class="kw">HTTP/1.1 200 OK</span>\nContent-Type: application/json\nContent-Length: 94\n\n{<span class="s">"enrollments"</span>: [ ... ]}`},
  {t:1,h:"The browser renders it",
@@ -98,18 +98,18 @@ html,body{height:100%}
 body{margin:0;font:15px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
   background:#fff;color:var(--panel);padding:20px 24px;display:flex;flex-direction:column}
 h1{font-size:19px;margin:0 0 3px}
-.sub{color:var(--dim2);font-size:13px;margin-bottom:16px}
+.sub{color:var(--dim2);font-size:14px;margin-bottom:16px}
 a{color:var(--link);text-decoration:none;font-weight:600;font-size:15px}
 ul{list-style:none;padding:0;margin:0}
 li{display:flex;justify-content:space-between;align-items:center;
   padding:12px 14px;border:1px solid var(--ink);border-radius:7px;margin-bottom:8px}
 .code{font-weight:600;font-size:15px}
-.units{color:var(--dim2);font-size:13px}
+.units{color:var(--dim2);font-size:14px}
 .mid{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:12px}
 .spin{width:26px;height:26px;border-radius:50%;border:3px solid var(--ink);
   border-top-color:var(--link);animation:sp .8s linear infinite}
 @keyframes sp{to{transform:rotate(360deg)}}
-.wait{color:var(--dim2);font-size:13px}
+.wait{color:var(--dim2);font-size:14px}
 @media (prefers-reduced-motion:reduce){.spin{animation:none;border-top-color:var(--dim2)}}
 </style>`;
 
@@ -249,18 +249,18 @@ function placeBall(i){
   if(!el) return;
   const returning = i>=7;
   if(flowStacked()){
-    const fb2=flow.getBoundingClientRect(), tb2=el.getBoundingClientRect();
-    ball.style.left=(tb2.right-fb2.left-14)+"px";
-    ball.style.top =(tb2.top-fb2.top+tb2.height/2)+"px";
-    ball.classList.toggle("res", returning);
+    // stacked layout has no horizontal rail for the ball; the lit tier box shows where the request is
+    ball.style.display="none";
     return;
   }
+  ball.style.display="";
   // outbound rides the upper rail (request / query); the return leg rides the lower one (response / rows)
   const rail = $(returning ? "#railAb" : "#railAf");
   const fb=flow.getBoundingClientRect(), tb=el.getBoundingClientRect();
   const railY = rail.getBoundingClientRect().top - fb.top;
   ball.style.left = (tb.left - fb.left + tb.width/2) + "px";
-  ball.style.top  = railY + 1 + "px";
+  // inside a tier the ball sits on the top border of its box, clear of the text; on a lane it rides the rail
+  ball.style.top  = (key.startsWith("tb") ? tb.top - fb.top : railY + 1) + "px";
   ball.classList.toggle("res", returning);
 }
 function animateHop(i){

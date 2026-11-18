@@ -147,8 +147,8 @@ function updateGauges(){
   if(ml && typeof memModel==="function"){
     const mm=memModel(), gb=(MEM.ram/1024).toFixed(1).replace(/\.0$/,"");
     ml.innerHTML = S.workers>mm.maxW
-      ? `<span style="color:var(--warn)">"How a server's memory is used" showed that only ${mm.maxW} workers fit in ${gb} GB, so these ${S.workers} would not all start.</span>`
-      : `"How a server's memory is used" showed that ${mm.maxW} workers fit in ${gb} GB of RAM.`;
+      ? `<span style="color:var(--warn)">"Server memory" showed that only ${mm.maxW} workers fit in ${gb} GB, so these ${S.workers} would not all start.</span>`
+      : `"Server memory" showed that ${mm.maxW} workers fit in ${gb} GB of RAM.`;
   }
 
   const v=$("#verdict"); const rho=S.lam/cap;
@@ -206,7 +206,7 @@ srv.listen(<span class="s">64</span>)                     <span class="c"># allo
 
 <span class="kw">while</span> <span class="s">True</span>:
     conn, addr = srv.accept()      <span class="c"># wait here until a client connects</span>
-    raw = conn.recv(<span class="s">65536</span>).decode()  <span class="c"># the raw request text, as in "What an HTTP request and response look like"</span>
+    raw = conn.recv(<span class="s">65536</span>).decode()  <span class="c"># the raw request text, as in "HTTP messages"</span>
     <span class="kw">print</span>(raw)                    <span class="c"># show the raw request on screen</span>
 
     line = raw.split(<span class="s">"\\r\\n"</span>)[<span class="s">0</span>]

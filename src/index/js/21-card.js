@@ -17,7 +17,7 @@ const CARDS=[
   tables:[{n:"students",c:["<b>id</b> pk","name"]},
           {n:"courses",c:["<b>id</b> pk","code","title"]},
           {n:"enrollments",c:["<b>id</b> pk","<i>student_id</i> fk","<i>course_id</i> fk","enrolled_on","status","grade"],new:true}],
-  note:"Neither table can hold the foreign key, because each row would have to point at many rows in the other table. A third table is needed, with one row for each pairing of a student and a course.<br><br>Look at the last three columns. A date, a status and a grade describe the pairing, so they cannot be stored in the student or the course. This is why Enrollment counts as an entity in \"Entities, attributes and instances\".",
+  note:"Neither table can hold the foreign key, because each row would have to point at many rows in the other table. A third table is needed, with one row for each pairing of a student and a course.<br><br>Look at the last three columns. A date, a status and a grade describe the pairing, so they cannot be stored in the student or the course. Enrollment counts as an entity for this reason, as in \"Entities and attributes\".",
   v:`<b>A third table appears</b>Neither side can store the other's key, so each pairing gets its own row in a new table. <b class="i">enrollments</b> holds enrolled_on, status and grade, because those facts describe the pairing and neither side owns them.`}
 ];
 let cardSel="o2m";
@@ -28,9 +28,9 @@ function renderCard(){
   $$("#cardTab button").forEach(el=>el.onclick=()=>{cardSel=el.dataset.c;renderCard()});
 
   $("#cardDia").innerHTML=
-    `<div style="font-family:var(--mono);font-size:.86em;color:var(--res)">`+
+    `<div style="font-size:.86em;color:var(--res)">`+
     `${c.tables[0].n} &nbsp;<span style="color:var(--req)">${c.sym}</span>&nbsp; ${c.tables[1].n}</div>`+
-    `<div style="margin-top:9px;font-size:.8em;color:var(--dim)">${c.q}</div>`;
+    `<div style="margin-top:9px;font-size:.85em;color:var(--dim)">${c.q}</div>`;
 
   $("#cardTables").innerHTML=c.tables.map(t=>
     `<div class="tbl3${t.new?" newt":""}"><div class="tname">${t.n}${t.new?" &nbsp;&larr; new":""}</div>
